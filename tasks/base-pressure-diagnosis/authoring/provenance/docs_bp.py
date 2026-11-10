@@ -89,6 +89,10 @@ through a small conductance. Its gas load falls as a single exponential in the t
 with Q_v0 its gas load at the vent and tau its time constant in hours. A trapped volume holds air, so its gas is of
 atmospheric composition.
 
+A trapped volume of this shop's chambers has a time constant of **%(taumax).0f hours or less**. A source that does not
+fall measurably over a pumpdown is a leak and is reported as one: fitting it as a trapped volume of some hundreds
+of hours describes the same constant and names the wrong mechanism.
+
 ### 3.4 Permeation
 
 Atmospheric gas passes through the chamber's elastomer seals. Its gas load is proportional to the length of seal
@@ -155,7 +159,7 @@ For each chamber the audit reports three things, all at the reference condition 
 - its total gas load Q_total, in mbar L/s;
 - its actual effective pumping speed S_eff, in L/s.
 """ % dict(ref=F.REF_H, t0=P.T_REF - 273.15, tk=P.T_REF, nf=P.N2_FACTOR, ew=P.E_W / 1e3, ep=P.E_P / 1e3,
-           hold=P.T_HOLD, gate=P.PUMP_GATE, gas=gas)
+           hold=P.T_HOLD, gate=P.PUMP_GATE, gas=gas, taumax=P.TAU_MAX)
 
 
 def vacuum_data():

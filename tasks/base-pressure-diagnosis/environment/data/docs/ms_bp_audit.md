@@ -62,6 +62,10 @@ through a small conductance. Its gas load falls as a single exponential in the t
 with Q_v0 its gas load at the vent and tau its time constant in hours. A trapped volume holds air, so its gas is of
 atmospheric composition.
 
+A trapped volume of this shop's chambers has a time constant of **48 hours or less**. A source that does not
+fall measurably over a pumpdown is a leak and is reported as one: fitting it as a trapped volume of some hundreds
+of hours describes the same constant and names the wrong mechanism.
+
 ### 3.4 Permeation
 
 Atmospheric gas passes through the chamber's elastomer seals. Its gas load is proportional to the length of seal

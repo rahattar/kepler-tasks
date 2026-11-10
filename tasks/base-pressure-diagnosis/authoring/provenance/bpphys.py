@@ -84,6 +84,9 @@ SPECIES = {
 GAS_FACTOR = dict(h2o=1.12, h2=0.42, n2=1.00, o2=1.01, ar=1.29, co2=1.42)
 
 CAUSES = ("air-leak", "virtual-leak", "wall-outgassing", "permeation", "pump-speed")
+TAU_MAX = 48.0                      # h, the longest time constant a trapped volume of this shop has; a source
+                                    # constant over a pumpdown is a leak, not a trapped volume of some hundreds
+                                    # of hours, and MS-BP clause 3.3 says so
 PUMP_GATE = 0.75                    # S_eff below this fraction of the rated S_eff makes the pump the cause
 
 

@@ -86,6 +86,17 @@ Documented:
   CC-7107's real 1.42 factor along with the clerical error, putting VC07's gas load 29 % low. That slip is
   available only because two gauge problems sit on neighbouring chambers.
 
+- **Round 4, xhigh**: **3 of 3, ten of ten each.** All three found every layer: VC07's pump from the controller
+  signature, VC01's certificate from the reference instrument it disagrees with, the crossed serials, the fouling
+  cathodes, and the one order that works. By `difficulty-calibration.md` a local 3/3 is to be read as too easy,
+  so on the repo's own rule this is not shippable yet, even though the easiness side is at the bar. What the
+  rounds do show is a real effort gap: low 1 of 3 against xhigh 3 of 3.
+- **A fairness gap the xhigh rounds exposed.** All three independently flagged VC04 as their one risk: a source
+  constant over a 12 to 24 h window fits a leak and a trapped volume of some hundreds of hours equally well, and
+  the standard did not say which to report. That is an unstated convention deciding a graded field, so MS-BP
+  clause 3.3 now bounds a trapped volume at 48 h and says a source that does not fall over a pumpdown is a leak.
+  The two real trapped volumes are at 6 h and 9 h, well inside it.
+
 ### What the probe rounds establish
 
 - **Only the layers no residual can show have ever caught a low-effort probe.** The certificate error has caught 3
