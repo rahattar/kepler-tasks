@@ -45,7 +45,8 @@ def config(ch, date=AUDIT):
     """The chamber's true physical configuration on a date, after every change logged on or before it."""
     r = ch["reg"]
     t = ch["true"]
-    c = dict(volume=r["volume"], turbo=r["turbo"], c_port=r["c_port"], seal=r["seal"], seal_cm=r["seal_cm"],
+    c = dict(volume=r["volume"], turbo=t.get("pump_actual", r["turbo"]), c_port=r["c_port"], seal=r["seal"],
+             seal_cm=r["seal_cm"],
              surfaces=[(a * 1e4, m) for a, m in r["surfaces"]], leak=t.get("leak", 0.0),
              qv0=t.get("qv0", 0.0), tau=t.get("tau", 1.0), f_pump=1.0,
              wall_factor=t.get("wall_factor", 1.0))
@@ -116,7 +117,11 @@ EX = Ch(
 
 # ----------------------------------------------------------------------------------------------------------------
 FLEET = [
-    # VC01 wall-outgassing: a large bead-blasted chamber. Nitrogen vents on two pumpdowns, a fixture set in on two.
+    # VC01 wall-outgassing: a large chamber relined mid-log. Nitrogen vents on two pumpdowns, a fixture set in on
+    # two, and a cold cathode whose certificate the calibration laboratory issued 14 per cent out. That error
+    # cancels in the gas load and shows only in the speed, which its throughput tests then report above what the
+    # pump and port can deliver. Its reference instrument reads true, so which of the two gauges is out is
+    # determinate rather than a choice between a wrong gauge and a wrong register.
     Ch("VC01",
        reg_entry(3200, "TMP-1600", 2400, "fluoroelastomer", 260,
                  [(9.0, "stainless steel, bead blasted")], 2.0e-7),
@@ -129,9 +134,12 @@ FLEET = [
             ("2026-08-18", "P2", "nitrogen", 16.0, 24.7, "CC-7101", None),
             ("2026-09-01", "P3", "air", 12.0, 23.5, "CC-7101", None),
             ("2026-09-22", "P4", "air", 20.0, 21.0, "CC-7101", "carrier set A"),
+            ("2026-09-22", "P4", "air", 20.0, 21.0, "IG-7201", "carrier set A"),
             ("2026-10-13", "P5", "nitrogen", 24.0, 17.9, "CC-7101", None),
-            ("2026-10-27", "P6", "air", 16.0, 15.8, "CC-7101", "carrier set A")],
-       certs={"CC-7101": [("2026-02-03", 1.00)]},
+            ("2026-10-13", "P5", "nitrogen", 24.0, 17.9, "IG-7201", None),
+            ("2026-10-27", "P6", "air", 16.0, 15.8, "CC-7101", "carrier set A"),
+            ("2026-10-27", "P6", "air", 16.0, 15.8, "IG-7201", "carrier set A")],
+       certs={"CC-7101": [("2026-02-03", 1.00)], "IG-7201": [("2026-02-03", 1.00)]},
        speed=[("2025-03-25", 16.0, 12.4), ("2026-06-23", 18.0, 24.5)],
        ctrl=["2026-07-01", "2026-07-08", "2026-07-15", "2026-07-22", "2026-07-29", "2026-08-05", "2026-08-12", "2026-08-19", "2026-08-26", "2026-09-02", "2026-09-09", "2026-09-16", "2026-09-23", "2026-09-30", "2026-10-07", "2026-10-14", "2026-10-21", "2026-10-28"]),
 
@@ -231,9 +239,9 @@ FLEET = [
     # VC07 virtual-leak: a trapped volume behind a fixture plate fitted in July. Nitrogen vents on two pumpdowns, and
     # its gauge serial is the one crossed with VC03's in October.
     Ch("VC07",
-       reg_entry(1600, "TMP-700", 1100, "fluoroelastomer", 170,
+       reg_entry(1600, "TMP-1600", 1100, "fluoroelastomer", 170,
                  [(4.8, "stainless steel, electropolished")], 1.5e-7),
-       true=dict(wall_factor=1.40, leak=9.0e-6),
+       true=dict(wall_factor=1.40, leak=9.0e-6, pump_actual="TMP-700"),
        events=[("2026-07-20", "trapped", (2.0e-3, 6.0)),
                ("2026-07-20", "note", "Substrate fixture plate refitted with new clamping bars.")],
        log=[("2026-08-03", "P1", "air", 16.0, 25.5, "CC-7107", None),

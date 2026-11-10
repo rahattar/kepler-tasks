@@ -42,7 +42,7 @@ wrong on the cause of the chamber it reattributes, whatever its quantity does.
 On every chamber a wrong attribution also puts the gas load outside the band.
 
 the reference's own answers, for comparison:
-  VC01 wall-outgassing  q 4.1861e-04  s   910.4
+  VC01 wall-outgassing  q 4.1459e-04  s   910.4
   VC02 wall-outgassing  q 2.1414e-03  s   621.3
   VC03 air-leak         q 2.8966e-04  s   254.4
   VC04 air-leak         q 6.0306e-04  s   470.8

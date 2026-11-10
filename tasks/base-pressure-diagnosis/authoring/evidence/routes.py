@@ -10,6 +10,7 @@ Flags, one per layer:
     register_port       keep the register's port conductance, ignoring the trap fitted in the high-vacuum port
     register_seal       keep the register's seal material, ignoring the seal replaced in the maintenance log
     trust_certificate   take every gauge certificate as right, even where the speed it yields is above rated
+    register_pump       take the pump the register names, whatever the controller's own figures report
     latest_speed_test   take the latest speed test whatever the controller rows show since
     commissioning_speed take the commissioning speed test
     no_gas_correction   take the nitrogen-equivalent pressure as the true pressure
@@ -42,13 +43,15 @@ TASK = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, os.path.join(TASK, "solution"))
 import diagnose as D                                                    # noqa: E402
 
-FACE_VALUE = dict(register_surfaces=True, register_port=True, register_seal=True, trust_certificate=True, latest_speed_test=True, logged_serials=True,
+FACE_VALUE = dict(register_surfaces=True, register_port=True, register_seal=True, trust_certificate=True,
+                  register_pump=True, latest_speed_test=True, logged_serials=True,
                   all_entries=True, uncorrected_cathode=True, no_gas_correction=True, ignore_vent_gas=True,
                   ignore_load=True, ignore_temperature=True, table_outgassing=True, leak_only=True)
 
 VARIATIONS = ["drop_oldest", "median_constant", "second_speed_test"]
 
-ROUTES = ["register_surfaces", "register_port", "register_seal", "trust_certificate", "latest_speed_test", "commissioning_speed", "no_gas_correction",
+ROUTES = ["register_surfaces", "register_port", "register_seal", "trust_certificate", "register_pump",
+          "latest_speed_test", "commissioning_speed", "no_gas_correction",
           "all_entries", "uncorrected_cathode", "logged_serials", "ignore_vent_gas", "ignore_load",
           "ignore_temperature", "table_outgassing", "no_time_reference", "leak_only", "skip_pump_gate",
           "face_value"]
@@ -79,6 +82,8 @@ def no_correction():
 # ----------------------------------------------------------------------------------------------------------------
 def config_for(cid, data, o):
     cfg = D.chamber_config(cid, data)
+    if not o["register_pump"]:
+        cfg = D.with_controller_pump(cid, cfg, data)
     if o["register_surfaces"]:
         reg = [r for r in data["register"] if r["chamber"] == cid]
         cfg["surfaces"] = [(float(r["surface_area_m2"]), r["surface"]) for r in reg]
@@ -104,9 +109,9 @@ def speed_for(cid, cfg, data, o, vac, changed):
     if o["second_speed_test"] and not changed:
         ok = [x for x in rows if not (cfg["trap_from"] and x["date"] < cfg["trap_from"])]
         if len(ok) >= 2:
-            k = D.certificate_error(cid, cfg, data)
+            k = D.certificate_error(cid, cfg, data)[0]
             return float(ok[-2]["s_eff_l_s"]) / k
-    k = 1.0 if o["trust_certificate"] else D.certificate_error(cid, cfg, data)
+    k = 1.0 if o["trust_certificate"] else D.certificate_error(cid, cfg, data)[0]
     s, from_gauge = D.ordered_speed(cid, cfg, vac)
     if s is None:
         s, from_gauge = D.surviving_speed(cid, cfg, data, changed), True
@@ -191,9 +196,10 @@ def audit(cid, data, certs, fix, vac, o):
     s_eff = speed_for(cid, cfg, data, o, vac, changed)
     pts = points_for(cid, cfg, data, certs, fix, o, changed)
     if not o["trust_certificate"]:
-        k = D.certificate_error(cid, cfg, data)
+        k, k_serial = D.certificate_error(cid, cfg, data)
         if k != 1.0:
-            pts = [dict(q, p_n2=q["p_n2"] * k) for q in pts]
+            pts = [dict(q, p_n2=q["p_n2"] * k) if (k_serial is None or q["serial"] == k_serial) else q
+                   for q in pts]
     parts, q_total = identify(cid, cfg, pts, s_eff, data, vac, o)
     s_rated = D.series(D.curve(D.TURBO[cfg["turbo"]], q_total / max(s_eff, 1.0)), cfg["c_port"])
     if not o["skip_pump_gate"] and s_eff < D.PUMP_GATE * s_rated:

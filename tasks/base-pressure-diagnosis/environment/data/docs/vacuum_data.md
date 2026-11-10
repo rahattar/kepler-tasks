@@ -5,14 +5,15 @@ The tables MS-BP refers to. All values are for the shop reference temperature of
 ## Turbomolecular pumps
 
 Speed against inlet pressure for nitrogen, as the maker publishes it. Between table points the speed is linear in
-log10 p; beyond the ends it is held at the end value.
+log10 p; beyond the ends it is held at the end value. The last three columns are what a pump of that model in good
+order reports to its controller at its rated speed, which is how a controller record is read.
 
-| pump | speed curve, mbar: L/s |
-|---|---|
-| TMP-1100 | 1e-09: 1010; 1e-03: 1010; 1e-02: 640; 5e-02: 230; 2e-01: 55 |
-| TMP-1600 | 1e-09: 1480; 1e-03: 1480; 1e-02: 900; 5e-02: 310; 2e-01: 70 |
-| TMP-400 | 1e-09: 360; 1e-03: 360; 1e-02: 250; 5e-02: 100; 2e-01: 28 |
-| TMP-700 | 1e-09: 640; 1e-03: 640; 1e-02: 420; 5e-02: 160; 2e-01: 40 |
+| pump | speed curve, mbar: L/s | rotor, Hz | drive power, W | bearing, C |
+|---|---|---|---|---|
+| TMP-1100 | 1e-09: 1010; 1e-03: 1010; 1e-02: 640; 5e-02: 230; 2e-01: 55 | 700 | 130 | 45 |
+| TMP-1600 | 1e-09: 1480; 1e-03: 1480; 1e-02: 900; 5e-02: 310; 2e-01: 70 | 600 | 170 | 48 |
+| TMP-400 | 1e-09: 360; 1e-03: 360; 1e-02: 250; 5e-02: 100; 2e-01: 28 | 1000 | 60 | 38 |
+| TMP-700 | 1e-09: 640; 1e-03: 640; 1e-02: 420; 5e-02: 160; 2e-01: 40 | 820 | 95 | 42 |
 
 ## Outgassing of internal surfaces after an air vent
 

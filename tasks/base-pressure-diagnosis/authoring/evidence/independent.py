@@ -50,6 +50,12 @@ ELAST = {
     "nitrile": (3.40e-7, (1.00, 2.60, 0.40, 10.0)),
     "perfluoroelastomer": (4.20e-8, (1.00, 2.80, 0.30, 11.0)),
 }
+CTRL = {
+    "TMP-400": (1000.0, 60.0, 38.0),
+    "TMP-700": (820.0, 95.0, 42.0),
+    "TMP-1100": (700.0, 130.0, 45.0),
+    "TMP-1600": (600.0, 170.0, 48.0),
+}
 DRY_AIR = (0.7808, 0.2095, 0.00934, 0.00042)            # n2, o2, ar, co2
 SENS = dict(h2=0.42, h2o=1.12, n2=1.00, o2=1.01, ar=1.29, co2=1.42)
 WALL_GAS = dict(h2o=0.960, h2=0.015, n2=0.025)
@@ -165,6 +171,9 @@ def state_on(cid, data, date):
               seal=head["seal_material"], seal_cm=float(head["seal_length_cm"]),
               surfaces=[(float(r["surface_area_m2"]), r["surface"]) for r in mine],
               spec=float(head["p_spec_mbar"]), relined=None, ported=None)
+    fitted = pump_fitted(cid, data)
+    if fitted:
+        st["pump"] = fitted
     for row in sorted([r for r in data["mnt"] if r["chamber"] == cid], key=lambda r: r["date"]):
         if row["date"] > date:
             continue
@@ -184,6 +193,20 @@ def state_on(cid, data, date):
         if "Seal length after the work:" in txt:
             st["seal_cm"] = float(txt.split("Seal length after the work:", 1)[1].strip().split()[0])
     return st
+
+
+def pump_fitted(cid, data):
+    """The pump the controller's figures say is turning, which a register can get wrong. Chosen by the smallest
+    relative distance to each model's rated rotor frequency, drive power and bearing temperature over the
+    chamber's earliest rows."""
+    seq = sorted([r for r in data["ctl"] if r["chamber"] == cid], key=lambda r: r["date"])[:4]
+    if not seq:
+        return None
+    got = (float(np.mean([float(r["rotor_hz"]) for r in seq])),
+           float(np.mean([float(r["drive_power_w"]) for r in seq])),
+           float(np.mean([float(r["bearing_temp_c"]) for r in seq])))
+    scored = sorted((sum(((g - n) / n) ** 2 for g, n in zip(got, nom)), m) for m, nom in CTRL.items())
+    return scored[0][1] if scored[0][0] < 0.02 else None
 
 
 def turbo_altered(cid, data):
@@ -256,7 +279,7 @@ def readings(cid, data, st, swaps):
             if 0.2 < ratio < 5.0:
                 shown /= ratio
         out.append(dict(date=date, hours=float(pick["pumpdown_h"]), t_c=float(pick["wall_temp_c"]),
-                        vent=pick["vent_gas"], load=pick["load"].strip(), shown=shown))
+                        vent=pick["vent_gas"], load=pick["load"].strip(), shown=shown, tag=tag))
     return out
 
 
@@ -384,12 +407,18 @@ def cert_out_by(cid, data, st):
     the ratio is how far its gauge certificate is out: its pressures are low by it and its reported speeds high by
     it, which is why the gas load looks right and only the speed does not."""
     rated = rated_of(st)
-    good = [float(r["s_eff_l_s"]) / rated for r in data["spd"] if r["chamber"] == cid
-            and not (st["ported"] and r["date"] < st["ported"])]
+    good, tags = [], set()
+    for r in data["spd"]:
+        if r["chamber"] != cid or (st["ported"] and r["date"] < st["ported"]):
+            continue
+        good.append(float(r["s_eff_l_s"]) / rated)
+        tags.add(r["gauge"])
     if not good:
-        return 1.0
+        return 1.0, None
     k = float(np.mean(good))
-    return k if k > 1.02 else 1.0
+    if k <= 1.02:
+        return 1.0, None
+    return k, (sorted(tags)[0] if len(tags) == 1 else None)
 
 
 def speed_of(cid, data, st, vac, altered):
@@ -426,7 +455,7 @@ def rated_of(st, p=1e-6):
 def audit_one(cid, data, vac):
     st = state_on(cid, data, AUDIT_DATE)
     altered = turbo_altered(cid, data)
-    k = cert_out_by(cid, data, st)
+    k, k_tag = cert_out_by(cid, data, st)
     s_eff = speed_of(cid, data, st, vac, altered)
     if k != 1.0 and ordered_speed(cid, st, vac) is None:
         s_eff = s_eff / k                             # a shop speed test was read with the same certificate
@@ -434,7 +463,7 @@ def audit_one(cid, data, vac):
         s_eff = s_eff / k
     reads = readings(cid, data, st, swapped_tags(data))
     if k != 1.0:
-        reads = [dict(r, shown=r["shown"] * k) for r in reads]
+        reads = [dict(r, shown=r["shown"] * k) if (k_tag is None or r["tag"] == k_tag) else r for r in reads]
     if altered:
         reads = [r for r in reads if r["date"] >= altered] or reads
     spans = sorted({round(r["hours"], 2) for r in reads})

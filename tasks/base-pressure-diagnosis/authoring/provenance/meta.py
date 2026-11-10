@@ -23,6 +23,8 @@ The chambers and records are synthetic, written by `authoring/provenance` (`bpph
 - Chambers of 900 to 5200 L, on turbomolecular pumps of 360 to 1480 L/s through ports of 420 to 2600 L/s.
 - Effective pumping speeds of 124 to 943 L/s.
 - Elastomer seals of 120 to 900 cm, in nitrile, fluoroelastomer and perfluoroelastomer.
+- Turbo controllers reporting rotor frequency, drive power and bearing temperature weekly, against the maker's
+  figures for a pump of that model in order.
 - Internal surfaces of 2.6 to 11 m2, electropolished, machined or bead blasted, with anodised aluminium shields.
 - Wall gas load coefficients of 0.6 to 2.6 times the outgassing table's nominal figure.
 - Real air leaks of 7 x 10^-6 to 3.6 x 10^-4 mbar L/s, and trapped volumes emptying with time constants of 6 and
@@ -44,7 +46,7 @@ every convention the audit needs, so a worked answer would add nothing but an en
 against a known figure.
 
 The ten chambers carry the faults that shop records carry. Each looks like ordinary data, and the documents say
-only what was done, never its effect. Eight of the layers are settled by the data alone:
+only what was done, never its effect. Nine of the layers are settled by the data alone:
 - **A fouling cold cathode.** On two chambers a cold cathode reads progressively low. The drift is a ramp and never
   a step, so it shows only as a slow trend in the ratio to the chamber's reference instrument, and on both the
   reference instrument fails part way through, leaving the later pumpdowns to be corrected by the fitted trend
@@ -71,8 +73,17 @@ only what was done, never its effect. Eight of the layers are settled by the dat
   same factor and every speed it yields is high by it, so Q = p S_eff comes out right and the gas budget fits to
   the reading noise - and it shows nowhere else except in the speed, which comes out 14 per cent above what the
   chamber's pump in series with its port can deliver. MS-BP clause 4 says a pump delivers at most its curve, so
-  the chamber's own throughput tests contradict its certificate, and the ratio between them is the correction.
-  A fit that reaches the noise floor is not evidence that the answer is right (VC01).
+  the chamber's own throughput tests contradict its certificate. Which instrument is out is settled rather than
+  guessed: the chamber also carries the hot-filament gauge that clause 5 makes its reference instrument, and the
+  two disagree by exactly that factor, while its controller figures confirm the pump the register names. A fit
+  that reaches the noise floor is not evidence that the answer is right (VC01).
+- **A register that names the wrong pump, which no fit can see.** On one chamber the register names a pump two
+  sizes up from the one that is fitted. Nothing in the gas budget depends on it, because the speed comes from a
+  throughput test, so every fit is as good as ever; what depends on it is the rated speed, and with the register's
+  pump the chamber's sound speed comes to 0.64 of rated and clause 6 calls the pump the cause. The controller
+  reports the rotor frequency, drive power and bearing temperature of the pump that is actually turning, and the
+  vacuum data give those three figures for each model, so the record of what is fitted is there to be read
+  against the register (VC07).
 
 Eight more are recorded somewhere in the documents and have to be found and applied:
 - **Internal surfaces replaced**, so the register's surface no longer applies and the entries before the work
@@ -181,11 +192,12 @@ Why these tolerances, and why every chamber:
   least squares; and three variations of the reference. Over every one of them and every chamber the widest
   deviation is 2.39 per cent on the gas load and 1.43 per cent on the speed, so the tolerances stand at 1.7 and
   2.1 times the spread of sound work.
-- **Defective routes.** Eighteen routes, each the reference with one check left out or done the obvious way, are
-  all rejected (`authoring/evidence/route_study.txt`). All but one miss at least two chambers; the exception,
-  trusting a gauge certificate that the chamber's own throughput tests contradict, misses one chamber by 13 per
-  cent on its speed, four and a half times the tolerance, so no route is rejected by a chamber that merely grazes
-  a band. Every chamber is missed by at least three routes, and by at least one route on its cause alone; a cause
+- **Defective routes.** Nineteen routes, each the reference with one check left out or done the obvious way, are
+  all rejected (`authoring/evidence/route_study.txt`). All but two miss at least two chambers, and each of those
+  two misses its one chamber decisively: trusting a gauge certificate that the chamber's own throughput tests
+  contradict puts its speed 13 per cent out, four and a half times the tolerance, and taking the pump the register
+  names rather than the one the controller reports gets the cause itself wrong. No route is rejected by a chamber
+  that merely grazes a band. Every chamber is missed by at least three routes, and by at least one route on its cause alone; a cause
   is right or wrong whatever the tolerances are, so no chamber's grading rests on the band.
 - **Every chamber.** The allowance of one wrong chamber that earlier tasks carried is not used here, and the
   reason is measured (`authoring/evidence/plan_sweep.txt`): with an allowance of one, the audit test is not

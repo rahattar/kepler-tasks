@@ -163,8 +163,13 @@ def vacuum_data():
     for name in sorted(P.TURBO):
         pts = "; ".join("%.0e: %.0f" % (p, s) for p, s in P.TURBO[name])
         turbo.append([name, pts])
-    out = ["| pump | speed curve, mbar: L/s |", "|---|---|"] + ["| %s | %s |" % (n, p) for n, p in turbo]
-    turbo_tbl = "\n".join(out)
+    rows = []
+    for name, pts in turbo:
+        hz, pw, tb = P.PUMP_CONTROLLER[name]
+        rows.append("| %s | %s | %.0f | %.0f | %.0f |" % (name, pts, hz, pw, tb))
+    turbo_tbl = "\n".join(
+        ["| pump | speed curve, mbar: L/s | rotor, Hz | drive power, W | bearing, C |",
+         "|---|---|---|---|---|"] + rows)
 
     og = _tbl(["surface", "q1, mbar L/(s cm2) at 1 h", "alpha"],
               [[k, "%.1e" % v[0], "%.2f" % v[1]] for k, v in sorted(P.OUTGAS.items())])
@@ -197,7 +202,8 @@ The tables MS-BP refers to. All values are for the shop reference temperature of
 ## Turbomolecular pumps
 
 Speed against inlet pressure for nitrogen, as the maker publishes it. Between table points the speed is linear in
-log10 p; beyond the ends it is held at the end value.
+log10 p; beyond the ends it is held at the end value. The last three columns are what a pump of that model in good
+order reports to its controller at its rated speed, which is how a controller record is read.
 
 %(turbo)s
 

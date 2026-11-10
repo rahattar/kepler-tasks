@@ -23,13 +23,6 @@ import fleet as F                                                        # noqa:
 
 SEED = 20261109
 
-# per pump model: rated rotor frequency Hz, drive power W and bearing temperature C of a pump in order
-PUMP_NOMINAL = {
-    "TMP-400": (1000.0, 60.0, 38.0),
-    "TMP-700": (820.0, 95.0, 42.0),
-    "TMP-1100": (700.0, 130.0, 45.0),
-    "TMP-1600": (600.0, 170.0, 48.0),
-}
 READ_NOISE = 0.006                  # gauge readings, relative
 SPEED_NOISE = 0.005                 # speed-test pressures, relative
 CLIMATE_NOISE = 1.4                 # shop air temperature, C
@@ -125,7 +118,7 @@ def controller_rows(ids):
         for n, date in enumerate(ch["ctrl"]):
             c = F.config(ch, date)
             f = c["f_pump"]
-            hz0, pw0, tb0 = PUMP_NOMINAL[c["turbo"]]
+            hz0, pw0, tb0 = P.PUMP_CONTROLLER[c["turbo"]]
             g = rng_for(cid, "ctrl", n)
             hz = hz0 * (0.93 + 0.07 * f) * (1 + g.normal(0, 0.003))
             pw = pw0 * (1 + 1.10 * (1 - f)) * (1 + g.normal(0, 0.02))

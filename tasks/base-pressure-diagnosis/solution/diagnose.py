@@ -55,6 +55,12 @@ PUMP_GATE = 0.75
 AUDIT = "2026-11-02"
 HE_AIR = 2.69                       # helium leak rate over air leak rate for a channel in molecular flow
 
+PUMP_CONTROLLER = {
+    "TMP-400": (1000.0, 60.0, 38.0),
+    "TMP-700": (820.0, 95.0, 42.0),
+    "TMP-1100": (700.0, 130.0, 45.0),
+    "TMP-1600": (600.0, 170.0, 48.0),
+}
 TURBO = {
     "TMP-400": [(1e-9, 360.0), (1e-3, 360.0), (1e-2, 250.0), (5e-2, 100.0), (2e-1, 28.0)],
     "TMP-700": [(1e-9, 640.0), (1e-3, 640.0), (1e-2, 420.0), (5e-2, 160.0), (2e-1, 40.0)],
@@ -214,7 +220,8 @@ def chamber_config(cid, data):
     cfg = dict(id=cid, volume=float(r0["volume_l"]), turbo=r0["turbo"], c_port=float(r0["c_port_l_s"]),
                seal=r0["seal_material"], seal_cm=float(r0["seal_length_cm"]),
                surfaces=[(float(r["surface_area_m2"]), r["surface"]) for r in reg],
-               p_spec=float(r0["p_spec_mbar"]), internals_from=None, trap_from=None)
+               p_spec=float(r0["p_spec_mbar"]), internals_from=None, trap_from=None,
+               turbo_register=r0["turbo"])
     # the seal is kept as a history, because a seal changed part way through the log means one permeation
     # constant will not serve every entry
     cfg["seal_hist"] = [("0000-00-00", cfg["seal"], cfg["seal_cm"])]
@@ -251,6 +258,29 @@ def seal_at(cfg, date):
         if d <= date:
             mat, cm = m, c
     return mat, cm
+
+
+def pump_from_controller(cid, data):
+    """The pump model the controller's own figures say is fitted.
+
+    A register is a list of what was ordered and can name the wrong pump; a controller reports the rotor
+    frequency, drive power and bearing temperature of the pump actually turning, and the shop's vacuum data give
+    those three figures for each model at its rated speed. The model whose figures fit the chamber's earliest
+    rows, before any change in them, is the pump that is there. Nothing about the gas budget depends on this, and
+    nothing in a fit will show it: what depends on it is the rated speed, and so whether MS-BP clause 6 calls the
+    pump the cause."""
+    rows = sorted([r for r in data["ctrl"] if r["chamber"] == cid], key=lambda r: r["date"])[:4]
+    if not rows:
+        return None
+    hz = sum(float(r["rotor_hz"]) for r in rows) / len(rows)
+    pw = sum(float(r["drive_power_w"]) for r in rows) / len(rows)
+    tb = sum(float(r["bearing_temp_c"]) for r in rows) / len(rows)
+    best, score = None, None
+    for model, (h, w, t) in PUMP_CONTROLLER.items():
+        d = ((hz - h) / h) ** 2 + ((pw - w) / w) ** 2 + ((tb - t) / t) ** 2
+        if score is None or d < score:
+            best, score = model, d
+    return best if score is not None and score < 0.02 else None
 
 
 def pump_changed_on(cid, data):
@@ -320,7 +350,7 @@ def entry_points(cid, cfg, data, certs, fix):
         pts.append(dict(date=date, pd=pd, vent=pick["vent_gas"], t_h=float(pick["pumpdown_h"]),
                         t_k=float(pick["wall_temp_c"]) + 273.15,
                         p_n2=float(pick["reading_mbar"]) * cert_factor(certs, serial, date),
-                        load=load, reference=pick["gauge"].startswith("IG")))
+                        load=load, serial=serial, reference=pick["gauge"].startswith("IG")))
     return pts
 
 
@@ -678,6 +708,14 @@ def rated_at(cfg, p=1e-6):
     return series(curve(TURBO[cfg["turbo"]], p), cfg["c_port"])
 
 
+def with_controller_pump(cid, cfg, data):
+    """The configuration with the pump the controller reports, where that is not the pump the register names."""
+    model = pump_from_controller(cid, data)
+    if model and model != cfg["turbo"]:
+        return dict(cfg, turbo=model)
+    return cfg
+
+
 def certificate_error(cid, cfg, data):
     """How far a chamber's gauge certificate is out, if it is.
 
@@ -692,25 +730,28 @@ def certificate_error(cid, cfg, data):
     A test taken before a trap was fitted measured a larger port and is left out; it is not evidence of anything
     about the certificate."""
     rated = rated_at(cfg)
-    ratios = []
+    ratios, serials = [], set()
     for r in data["speed"]:
         if r["chamber"] != cid:
             continue
         if cfg["trap_from"] and r["date"] < cfg["trap_from"]:
             continue
         ratios.append(float(r["s_eff_l_s"]) / rated)
+        serials.add(r["gauge"])
     if not ratios:
-        return 1.0
+        return 1.0, None
     k = sum(ratios) / len(ratios)
-    return k if k > 1.0 + CERT_SLACK else 1.0
+    if k <= 1.0 + CERT_SLACK:
+        return 1.0, None
+    return k, (sorted(serials)[0] if len(serials) == 1 else None)
 
 
 def audit_chamber(cid, data, certs, fix, vac):
-    cfg = chamber_config(cid, data)
+    cfg = with_controller_pump(cid, chamber_config(cid, data), data)
     changed = pump_changed_on(cid, data)
     # the certificate is checked first, because every pressure and every reported speed of this chamber has to be
     # put right by the same factor before anything is fitted
-    k = certificate_error(cid, cfg, data)
+    k, k_serial = certificate_error(cid, cfg, data)
     s_eff, from_gauge = ordered_speed(cid, cfg, vac)
     if s_eff is None:
         s_eff, from_gauge = surviving_speed(cid, cfg, data, changed), True
@@ -725,7 +766,10 @@ def audit_chamber(cid, data, certs, fix, vac):
     if changed:
         pts = [p for p in pts if p["date"] >= changed] or pts
     if k != 1.0:
-        pts = [dict(q, p_n2=q["p_n2"] * k) for q in pts]
+        # only the readings taken with the gauge whose certificate is out need putting right; a chamber that also
+        # carries the reference instrument of clause 5 has readings that were never affected
+        pts = [dict(q, p_n2=q["p_n2"] * k) if (k_serial is None or q["serial"] == k_serial) else q
+               for q in pts]
 
     rga = rga_says(cid, vac)
     nd = len(durations(pts))

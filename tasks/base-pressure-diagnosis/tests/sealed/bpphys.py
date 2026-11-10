@@ -42,6 +42,14 @@ TURBO = {
     "TMP-1600": [(1e-9, 1480.0), (1e-3, 1480.0), (1e-2, 900.0), (5e-2, 310.0), (2e-1, 70.0)],
 }
 
+# what a pump in order reports to its controller: rated rotor frequency Hz, drive power W, bearing temperature C
+PUMP_CONTROLLER = {
+    "TMP-400": (1000.0, 60.0, 38.0),
+    "TMP-700": (820.0, 95.0, 42.0),
+    "TMP-1100": (700.0, 130.0, 45.0),
+    "TMP-1600": (600.0, 170.0, 48.0),
+}
+
 # the shop's outgassing table after an air vent, at 1 h and 20 C: q1 mbar L/(s cm2), decay exponent alpha
 OUTGAS = {
     "stainless steel, electropolished": (7.0e-9, 1.00),
