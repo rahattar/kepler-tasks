@@ -1,0 +1,10 @@
+the survey read off as it stands (nominal radius, half space, report's T, no corrections)  8 of 72  right: C2 1k C2 2k C2 A C4 63 C4 8k C5 1k C8 63 C8 4k
+the same, the background subtracted and the invalid positions dropped       9 of 72  right: C2 500 C2 1k C2 2k C4 63 C4 8k C5 1k C7 8k C8 63 C8 4k
+the same again, with the true radius and quarter space for C3              10 of 72  right: C2 500 C2 1k C2 2k C3 8k C4 63 C4 8k C5 1k C7 8k C8 63 C8 4k
+the guaranteed A-weighted level as LwA, the survey read off for the bands   9 of 72  right: C2 1k C2 2k C4 63 C4 8k C4 A C5 1k C5 A C8 63 C8 4k
+the survey's own A-weighted pressure column as LwA                          7 of 72  right: C2 1k C2 2k C4 63 C4 8k C5 1k C8 63 C8 4k
+a flat 95.0 dB everywhere                                                  18 of 72  right: C1 63 C2 125 C2 4k C3 125 C3 250 C3 500 C4 500 C4 1k C5 63 C5 125 C5 2k C6 A C7 125 C7 250 C7 4k C8 250 C8 500 C8 1k
+the survey read off with the best single offset (-1.7 dB, chosen with the truth) 15 of 72  right: C2 250 C2 500 C4 63 C4 125 C4 250 C4 2k C4 4k C4 8k C4 A C8 63 C8 125 C8 250 C8 2k C8 4k C8 A
+
+values no answer above gets right: C1 125 C1 250 C1 500 C1 1k C1 2k C1 4k C1 8k C1 A C2 63 C2 8k C3 63 C3 1k C3 2k C3 4k C3 A C5 250 C5 500 C5 4k C5 8k C6 63 C6 125 C6 250 C6 500 C6 1k C6 2k C6 4k C6 8k C7 63 C7 500 C7 1k C7 2k C7 A C8 8k
+the gate is all 72 values, so none of these answers is accepted.

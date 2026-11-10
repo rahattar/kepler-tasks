@@ -1,0 +1,10 @@
+method | right of 72 (seed 7101) | worst error dB | seeds 7101-7120 all right
+reference (solution/solve.py)                              | 72 | C1 250 +0.53 | 20 of 20
+the three differences measured in another order            | 72 | C1 1k  -0.55 | 20 of 20
+the differences at other positions of their arrays         | 72 | C1 125 +0.49 | 20 of 20
+the louvred-wall positions kept and corrected by subtraction | 72 | C1 250 +0.53 | 20 of 20
+one more position dropped from each array                  | 72 | C1 250 +0.54 | 20 of 20
+the mean background of the valid positions subtracted      | 72 | C1 250 +0.53 | 20 of 20
+the background left out where the standard's margin is met | 72 | C1 250 +0.53 | 20 of 20
+the room check against the background of P40 instead of P1 | 72 | C1 250 +0.53 | 20 of 20
+the room check against the mean background of the quiet positions | 72 | C1 250 +0.53 | 20 of 20

@@ -67,3 +67,64 @@
     from repeated readings of a standard.
   - A quantity that must be identified from noisy measurements, where the natural model is biased.
   - Conflicts no record resolves, where only physics or a consistency check settles which source is right.
+
+## What does not open the effort gap (Nov 2026, skid-noise-guarantee and recip-cylinder-limits)
+Two tasks in a row failed the easiness gate with low effort solving 3/3, in five and two rounds respectively.
+Both were of the shape **reduce supplied records by a fully documented method to a computed quantity**. What was
+tried and did not help:
+- More records, more machines, more positions, more work orders. Scaling the data scales the reading, not the
+  difficulty.
+- More trap layers. recip-cylinder-limits carries sixteen; every one of them is load-bearing by route_study, and
+  low effort found all sixteen.
+- A test budget smaller than the number of unknowns, with escapes hidden in records. Low effort planned the
+  allowance correctly in 6 of 6 runs, including both deductions.
+- Extra computed steps in place of handed-over numbers (a pocket given as a volume to convert, a shop ticket given
+  as two weights to difference, a liner history to pick by date, an exponent that must be iterated with the
+  discharge temperature). None of these changed a single probe's answer.
+
+What the probes' own reports say is that when the standard states the method in full and every fact is in a
+record, the work is bounded: read the records, implement the formulas, scan. The model does that reliably at low
+effort however many layers are stacked on it.
+
+A third design was then tried: the same subject with the **duty itself unsolved** - two interstage pressures
+settling on a molar balance, a speed set by a contract flow, a range edge the solver has to find, and every
+cylinder coupled to every other through the machine. Low effort solved that 3/3 as well, each probe in minutes,
+each validating its own duty model against the plant's measured pressures and speed before reporting. Modelling
+depth is not the lever either: a two-equation nonlinear solve is no harder for the model than the fixed point it
+already did, and both have to be written down in the standard for the task to be fair.
+
+Three corollaries for the next task:
+- **Precision is not the lever.** I had thought impeller-shrink-fits was hard because its answer was a 7-12 um
+  window built from a dozen micron-scale contributions. The official run above settles that: agents placed bores
+  to within micrometres and one passed with a relative margin of 0.00004. A tight band makes a task unforgiving,
+  not hard.
+- **Coupling is not the lever either.** Making the duty itself the unknown, so that no cylinder can be worked out
+  on its own, cost me a day and moved nothing.
+- **Signposting is worth removing anyway,** but do not expect it to move the gate. It was worth about nothing here.
+
+Which leaves the three things listed above as untried: inference from raw data, identification where the natural
+model is biased, and conflicts that only physics resolves. Two more of the same kind, from the twelve probe
+reports:
+- **the agent could always check itself.** Every probe validated its own answer before reporting - against a
+  measured value in the records, against a stated figure in the standard, or by re-deriving a few cylinders with
+  separate code - and every one of those checks passed. A task where the answer cannot be confirmed from the
+  inputs would make effort buy something;
+- **the measurement plan was always recoverable.** A budget smaller than the number of unknowns is not a squeeze
+  if every allocation still leaves the answer obtainable. A plan that leaves the system under-determined - the
+  wrong set of measurements and two of six unknowns are simply not identifiable - cannot be fixed by working
+  harder afterwards.
+
+## Fairness note
+Removing a signpost is not the same as removing a fact. The register must still record that a weight was not
+taken, or the reading cannot fairly be required; what it must not do is tell the solver which reading to buy.
+
+## Fairness note from the coupled design
+The sloppy clause that cost round 3a is worth remembering. The standard said the speed follows the molar flow of
+the first stage; the definition used the flow the last stage delivers, which is what the export meter reads. All
+three probes followed the clause, got a speed 1.8 per cent from the record's measured value, said so, and carried
+on. Two lessons:
+- put a measured value of every solved quantity in the records (here the interstage pressures and the speed).
+  It costs nothing in difficulty - the answers are at other field pressures - and it is what lets a solver tell a
+  misreading from a modelling error. It is also what caught my own bug;
+- any clause that names a derived quantity ("the flow", "the load", "the temperature") has to say *which* one, at
+  which point in the machine. A quantity that a solver can reasonably read two ways is a defect, not a layer.

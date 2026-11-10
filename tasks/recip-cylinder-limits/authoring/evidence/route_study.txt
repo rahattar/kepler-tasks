@@ -1,0 +1,52 @@
+Defective routes on the shipped seed 4101. The bar is two tolerances (1.0 per cent) on a pressure, or a
+different governing requirement.
+
+| route | right of 12 | worst value | over the bar | seeds right of 20 |
+|---|---|---|---|---|
+| the speed taken from the data sheet, not the drive | 6 | 1A +16.19 % | yes | 0 of 20 |
+| the rated rod load taken from the nameplate, not the bulletin | 8 | 2B -30.23 % | yes | 0 of 20 |
+| the de-rating of the repaired throw not applied | 10 | 3B -5.40 % | yes | 0 of 20 |
+| the nameplate bore used where the liner is at the repair size | 11 | 2B -12.25 % | yes | 0 of 20 |
+| the first liner entry used instead of the latest | 11 | 2B -12.25 % | yes | 0 of 20 |
+| the common piston rod used for every throw | 7 | 3A -41.64 % | yes | 0 of 20 |
+| the clearance taken from the data sheet, the open pockets missed | 11 | 3A +7.33 % | yes | 0 of 20 |
+| the open pocket taken over the swept volume of both ends | 11 | 3A +3.72 % | yes | 0 of 20 |
+| the head end's clearance used for both ends | 10 | 3A -48.62 % | yes | 0 of 20 |
+| the design suction temperatures used, the fouling missed | 11 | 2A -8.85 % | yes | 0 of 20 |
+| the bottle-mounted element not corrected to the valve flange | 11 | 2A -8.85 % | yes | 0 of 20 |
+| the data sheet's gas analysis used | 10 | 2A -7.33 % | yes | 0 of 20 |
+| the feed analysis used for every stage | 10 | 2A -4.63 % | yes | 0 of 20 |
+| the weights taken from the data sheet, the overhaul missed | 9 | 3B -5.40 % | yes | 0 of 20 |
+| the shop ticket's piston as fitted read as the difference | 11 | 2B +12.10 % | yes | 0 of 20 |
+| the valve losses left out of the ratio | 10 | 3A -4.11 % | yes | 0 of 20 |
+| the inertia load left out of the rod load | 0 | 1A no answer | yes | 0 of 20 |
+| the secondary inertia term left out | 4 | 2B +29.74 % | yes | 0 of 20 |
+| the gas load checked against the frame's rated rod load | 10 | 1B -6.13 % | yes | 0 of 20 |
+| the piston rod area ignored at the crank end | 2 | 3A +26.83 % | yes | 0 of 20 |
+| the isentropic exponent taken at the suction temperature, not iterated | 10 | 2A +9.55 % | yes | 0 of 20 |
+| the isentropic exponent taken at the discharge temperature | 10 | 2A -10.84 % | yes | 0 of 20 |
+| the isentropic exponent taken as 1.30 | 10 | 2A +27.15 % | yes | 0 of 20 |
+| the range scanned upward to the first acceptable pressure | 10 | 3A -48.62 % | yes | 0 of 20 |
+| the second stage's analysis not drawn, the feed carried forward | 10 | 2A -4.63 % | yes | 0 of 20 |
+| the spare assembly not weighed, the data sheet's weight used | 10 | 3B -5.40 % | yes | 0 of 20 |
+| the bypassed separator missed, the feed used for the third stage | 9 | 3B -5.58 % | yes | 0 of 20 |
+| pin reversal not checked | 12 | 3B -0.03 % | passes | 20 of 20 |
+
+| value | routes that fail it over the bar |
+|---|---|
+| 1A pressure | 5 |
+| 1A governing requirement | 3 |
+| 1B pressure | 6 |
+| 1B governing requirement | 6 |
+| 2A pressure | 12 |
+| 2A governing requirement | 3 |
+| 2B pressure | 9 |
+| 2B governing requirement | 3 |
+| 3A pressure | 16 |
+| 3A governing requirement | 4 |
+| 3B pressure | 9 |
+| 3B governing requirement | 6 |
+
+These routes pass, and the record says so rather than leaving them out: pin reversal not checked.
+Nothing in the answer turns on them.
+Every value is failed over the bar by at least 3 routes.

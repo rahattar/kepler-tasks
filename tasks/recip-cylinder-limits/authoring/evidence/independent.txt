@@ -1,0 +1,15 @@
+A second solution, written separately. Readings: gc 2, weigh 3B
+
+| cylinder | this solution | the definition | apart | requirement |
+|---|---|---|---|---|
+| 1A | 20.76 bar | 20.75 bar | +0.048 % | rod_load_tension |
+| 1B | 21.38 bar | 21.38 bar | +0.000 % | gas_load |
+| 2A | 31.09 bar | 31.09 bar | +0.000 % | discharge_temperature |
+| 2B | 44.56 bar | 44.56 bar | +0.000 % | rod_load_compression |
+| 3A | 88.72 bar | 88.72 bar | +0.000 % | cylinder_power |
+| 3B | 116.73 bar | 116.77 bar | -0.034 % | rod_load_compression |
+
+12 of 12 right on the shipped seed, the worst value 0.048 per cent from the definition against a
+tolerance of 0.5 per cent.
+On the twenty laboratory seeds 4101 to 4120 it gets all twelve every time, the worst value over all of them 0.051
+per cent from the definition.

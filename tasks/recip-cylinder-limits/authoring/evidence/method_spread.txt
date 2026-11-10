@@ -1,0 +1,19 @@
+Sound variations, on the shipped seed 4101. All twelve values right is the gate.
+
+| variation | right of 12 | worst value | seeds right of 20 |
+|---|---|---|---|
+| the reference | 12 | 3B -0.034 % | 20 of 20 |
+| the readings booked in the other order | 12 | 3B -0.034 % | 20 of 20 |
+| the third stage's sample stream drawn instead of the second's | 12 | 3B -0.034 % | 20 of 20 |
+| the crank swept every half degree | 12 | 1A +0.048 % | 20 of 20 |
+| the crank swept every two degrees | 12 | 1A -0.048 % | 20 of 20 |
+| the pressure scanned in steps of 0.001 bar | 12 | 3B -0.043 % | 20 of 20 |
+| the margins written as a difference, not a ratio | 12 | 3B -0.034 % | 20 of 20 |
+| the bore taken at the largest of the liner record | 12 | 3A +0.169 % | 20 of 20 |
+| the bore taken at the smallest of the liner record | 12 | 3A -0.079 % | 20 of 20 |
+| the second stage's temperature taken from the last month of the trend | 12 | 3B -0.034 % | 20 of 20 |
+| the clearance pockets read from the maintenance log rather than the register | 12 | 3B -0.034 % | 20 of 20 |
+| the discharge temperature iterated to a thousandth of its tolerance | 12 | 3B -0.034 % | 20 of 20 |
+
+The worst value of any sound variation is 0.169 per cent from the definition, against a tolerance of 0.5 per cent: 34 per cent of the band.
+every variation gets all twelve, on the shipped seed and on all twenty

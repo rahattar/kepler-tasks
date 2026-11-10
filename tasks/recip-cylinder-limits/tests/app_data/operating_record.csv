@@ -1,0 +1,10 @@
+item,value,unit,instrument
+field pressure at the unit suction,26.0,bar a,PI-1102
+pipeline pressure at the unit discharge,170.0,bar a,PI-4201
+contract flow,460.0,kmol/h,FI-4101
+first interstage pressure measured,50.1,bar a,PI-2103
+second interstage pressure measured,99.3,bar a,PI-3104
+frame speed measured,230,rev/min,SI-4101
+first stage suction temperature,38.0,C,TI-1201
+second stage suction temperature,45.0,C,TI-2201
+third stage suction temperature,70.0,C,TI-3201

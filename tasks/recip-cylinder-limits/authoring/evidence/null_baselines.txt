@@ -1,0 +1,14 @@
+Null answers, graded value by value. The gate is all 12.
+
+| answer | right of 12 | which |
+|---|---|---|
+| the machine as the data sheet describes it, no readings drawn | 4 | 1B pressure, 1B limit, 2B limit, 3A limit |
+| the pressure each stage runs at today, as the limit | 2 | 2B limit, 3B limit |
+| the bottom of the standard's range, with the temperature as the limit | 1 | 2A limit |
+| half the discharge pressure, with the rod load as the limit | 2 | 2B limit, 3B limit |
+| a flat 50 bar and the commonest requirement everywhere | 2 | 2B limit, 3B limit |
+| the right pressures with one requirement named for all six | 8 | 1A pressure, 1B pressure, 2A pressure, 2B pressure, 2B limit, 3A pressure, 3B pressure, 3B limit |
+| the right requirements with the data sheet's machine behind the pressures | 7 | 1A limit, 1B pressure, 1B limit, 2A limit, 2B limit, 3A limit, 3B limit |
+| the requirement guessed as the one with the least margin at today's pressure | 10 | 1A pressure, 1A limit, 1B pressure, 2A pressure, 2B pressure, 2B limit, 3A pressure, 3A limit, 3B pressure, 3B limit |
+
+The best of them gets 10 of 12, and the gate is 12: none is accepted.

@@ -1,0 +1,60 @@
+solution/solve.py output:
+readings used: gc 2, weigh 3B
+1A    20.75 bar  rod_load_tension
+1B    21.38 bar  gas_load
+2A    31.09 bar  discharge_temperature
+2B    44.56 bar  rod_load_compression
+3A    88.72 bar  cylinder_power
+3B   116.73 bar  rod_load_compression
+
+the reports the services wrote:
+  # reading 1: gas analysis, stage 2 sample stream | component,mol_per_cent | methane,86.52 | ethane,8.36 | propane,2.67 | butane,0.41 | nitrogen,0.71 | carbon_dioxide,1.34
+  # reading 2: weigh shop, reciprocating assembly of cylinder 3B | cylinder,reciprocating_weight_kg | 3B,330.8
+
+a third reading, over the allowance:
+  exit 1: allowance used: 2 of 2 readings
+
+a reading of something that does not exist:
+  exit 2: usage: gc <stage>        (stages: 1 2 3) |        weigh <cylinder>  (cylinders: 1A 1B 2A 2B 3A 3B)
+
+tests/grade_limits.py:
+1A  ok     20.75 bar  +0.000 % rod_load_tension       
+1B  ok     21.38 bar  +0.000 % gas_load               
+2A  ok     31.09 bar  +0.000 % discharge_temperature  
+2B  ok     44.56 bar  +0.000 % rod_load_compression   
+3A  ok     88.72 bar  +0.000 % cylinder_power         
+3B  ok    116.73 bar  -0.034 % rod_load_compression   
+12 of 12 values right (tolerance 0.5 per cent, gate 12): accepted
+
+cylinder_limits.csv:
+cylinder,suction_pressure_bar,governing_limit
+1A,20.75,rod_load_tension
+1B,21.38,gas_load
+2A,31.09,discharge_temperature
+2B,44.56,rod_load_compression
+3A,88.72,cylinder_power
+3B,116.73,rod_load_compression
+
+the sealed definition, for the record:
+  1A     20.75 bar  rod_load_tension
+  1B     21.38 bar  gas_load
+  2A     31.09 bar  discharge_temperature
+  2B     44.56 bar  rod_load_compression
+  3A     88.72 bar  cylinder_power
+  3B    116.77 bar  rod_load_compression
+
+its constants: tolerance 0.005 relative, resolution 0.01 bar, allowance 2 readings, valve losses 0.35 and 0.70 bar,
+least reversal 15 degrees, bottle correction 6.0 K, allowable discharge temperature 135.0 C
+
+the gas of each stage, as the records and the laboratory report it:
+  stage 1  meth 82.12 etha 9.40 prop 4.16 buta 1.59 nitr 1.35 carb 1.38
+  stage 2  meth 86.52 etha 8.36 prop 2.67 buta 0.41 nitr 0.71 carb 1.34
+  stage 3  meth 86.52 etha 8.36 prop 2.67 buta 0.41 nitr 0.71 carb 1.34
+
+the exponent and the discharge temperature of each cylinder at its lowest allowable pressure, which the standard's iteration settles together:
+  1A  k 1.2325  suction  38.0 C  discharge   93.5 C
+  1B  k 1.2330  suction  38.0 C  discharge   91.5 C
+  2A  k 1.2301  suction  48.0 C  discharge  135.0 C
+  2B  k 1.2365  suction  48.0 C  discharge  109.6 C
+  3A  k 1.2426  suction  45.0 C  discharge   88.6 C
+  3B  k 1.2474  suction  45.0 C  discharge   70.1 C

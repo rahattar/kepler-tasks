@@ -1,0 +1,7 @@
+date,sample_point,work_order,component,mol_per_cent
+2026-10-02,V-4111 outlet (unit suction),WO-22048,methane,82.12
+2026-10-02,V-4111 outlet (unit suction),WO-22048,ethane,9.40
+2026-10-02,V-4111 outlet (unit suction),WO-22048,propane,4.16
+2026-10-02,V-4111 outlet (unit suction),WO-22048,butane,1.59
+2026-10-02,V-4111 outlet (unit suction),WO-22048,nitrogen,1.35
+2026-10-02,V-4111 outlet (unit suction),WO-22048,carbon_dioxide,1.38

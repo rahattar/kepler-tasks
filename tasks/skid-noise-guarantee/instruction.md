@@ -1,0 +1,7 @@
+The eight compressor packages of the plant's compressor hall, C1 to C8, each came with a guaranteed sound power level from its supplier, and the acceptance survey the supplier's contractor carried out in September has been handed over. The plant's acoustic consultant wants the determination made again from the measured levels. For each of the eight machines, work out its sound power level in each octave band from 63 Hz to 8 kHz, and its A-weighted sound power level, for the machine as it stands now, to plant standard NS-7 in `/app/data/docs/standard.md`.
+
+The available records are `/app/data/machines.csv`, `/app/data/positions.csv`, `/app/data/survey_levels.csv`, `/app/data/background_levels.csv`, `/app/data/rss_levels.csv`, `/app/data/maintenance_log.csv`, `/app/data/docs/room_report.md`, `/app/data/docs/meter_certificates.md`, `/app/data/docs/room_check.md` and `/app/data/docs/survey_report.md`. Laboratory information is in `/app/data/docs/laboratory.md`. From `/app`, use `slm <position> <state>` and `rt <position>` for laboratory work; the booking is 2 readings in all. Reports are written under `/app/lab_reports`.
+
+Write the completed sheet to `/app/output/sound_power.csv` with the header `machine,lw_63,lw_125,lw_250,lw_500,lw_1k,lw_2k,lw_4k,lw_8k,lwa`. Include one row for each of C1 to C8, in that order, with every level in dB to one decimal place. Every level must be the level of that machine as it stands now, to NS-7.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

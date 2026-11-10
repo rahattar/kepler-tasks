@@ -1,0 +1,11 @@
+shipped seed 7101: readings [('slm', 'P10', 'c1'), ('slm', 'P29', 'c3')]
+C1   96.0   98.1  100.2  101.8  102.9  100.9   98.4   93.2  107.4  ok   worst +0.40 dB  (difference measured at P10)
+C2   93.1   95.1   97.2   99.1  100.0   98.0   95.1   89.9  104.4  ok   worst +0.20 dB  (referred from 2508 rpm)
+C3   92.1   94.2   95.7   94.1   92.6   91.1   88.1   83.9   98.0  ok   worst +0.70 dB  (difference measured at P29)
+C4   90.2   92.1   93.1   94.1   94.0   91.9   89.1   85.0   98.7  ok   worst +0.20 dB  (as surveyed)
+C5   94.1   96.0   97.0   97.9   97.1   95.1   92.0   87.0  101.9  ok   worst +0.10 dB  (referred from 1500 rpm)
+C6   88.1   90.1   91.1   90.0   89.1   87.0   84.0   80.0   94.0  ok   worst +0.10 dB  (referred from 3000 rpm)
+C7   92.2   94.2   96.1   98.1   99.0   96.9   94.1   89.0  103.4  ok   worst +0.20 dB  (certified insertion loss from the register)
+C8   91.1   93.0   94.1   95.0   94.9   92.9   90.0   86.0   99.6  ok   worst +0.10 dB  (as surveyed)
+right 72 of 72; worst error +0.70 dB
+seeds 7101-7120: all right on 20 of 20 (right counts [72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72, 72])

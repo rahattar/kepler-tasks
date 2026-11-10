@@ -1,0 +1,13 @@
+tag,service,mounting,last_calibration,error_K_or_bar
+TI-1201,first stage suction temperature,valve flange thermowell,2026-02-18,0.2
+TI-2201,second stage suction temperature,valve flange thermowell,2026-02-18,0.2
+TI-3201,third stage suction temperature,suction bottle boss,2026-04-02,0.3
+TI-1301,first stage discharge temperature,discharge bottle boss,2026-02-18,0.3
+TI-2301,second stage discharge temperature,discharge bottle boss,2026-02-18,0.3
+TI-3301,third stage discharge temperature,discharge bottle boss,2026-02-18,0.4
+PI-1102,field suction pressure,suction line,2026-10-23,0.05
+PI-2103,first interstage pressure,suction line,2026-05-29,0.08
+PI-3104,second interstage pressure,suction line,2026-07-01,0.10
+PI-4201,pipeline pressure,discharge line,2026-05-29,0.15
+FI-4101,export flow,pipeline orifice,2026-06-11,1.0
+SI-4101,frame speed,shaft end,2026-03-11,1

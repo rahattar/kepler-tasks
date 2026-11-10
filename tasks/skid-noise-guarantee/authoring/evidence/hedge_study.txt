@@ -1,0 +1,33 @@
+the reference's own worst error on the shipped seed is +0.53 dB, inside the band of +/- 1.0 dB
+
+choice | values moved | wrong answer still inside | midpoint inside | whole sheet hedged
+the environmental correction left out                              | 72 | 16 | 18 | no
+the environmental correction with 1 + S / A, the 4 dropped         | 72 | 17 | 24 | no
+the acoustic report's reverberation time used                      | 72 | 29 | 40 | no
+a reading spent on a reverberation measurement, so one difference is left | 72 | 63 | 63 | no
+the same, and one reverberation time for every band                | 72 | 51 | 59 | no
+the same, and the absorption area taken as 0.161 V T               | 72 |  9 | 15 | no
+the speed referral left out, so C2, C5 and C6 stay as surveyed     | 27 |  0 |  0 | no
+the speed referral taken as 20 lg instead of 50 lg                 | 27 |  0 |  5 | no
+the speed referral applied the wrong way                           | 27 |  0 |  0 | no
+no configuration difference applied                                | 27 |  0 |  0 | no
+the differences applied as one A-weighted figure                   | 18 |  9 | 13 | no
+the differences applied with the wrong sign                        | 18 |  0 |  0 | no
+only the two differences the September work orders name, C7's October one missed |  9 |  0 |  0 | no
+C7 measured instead of taken from its certified insertion loss, so one difference is left | 27 | 18 | 18 | no
+a reading spent on C8, whose cover was refitted before the survey, not after | 18 |  9 |  9 | no
+a reading spent on a machine the speed rule settles                | 18 |  9 |  9 | no
+every position kept, no background subtracted                      | 72 | 52 | 52 | no
+every position kept, the first position's background for all       | 72 | 52 | 52 | no
+every position kept, each position's own background subtracted     | 27 |  9 |  9 | no
+the background rule applied but not the radius rule                | 18 |  0 |  0 | no
+the machines against a wall taken to radiate into a half space     | 18 |  0 |  1 | no
+the array radii taken from the register's nominal value            | 18 |  0 |  0 | no
+the survey sheet's own machine column trusted                      | 18 |  6 |  9 | no
+no instrument certificate correction applied                       | 34 | 29 | 30 | no
+M-2's certificate applied to every row                             | 26 | 24 | 24 | no
+M-9's certificate applied to every row                             | 38 | 36 | 36 | no
+the levels averaged arithmetically, not in energy                  | 72 | 72 | 72 | idle
+no readings at all: the report's reverberation time and no differences | 72 | 17 | 24 | no
+
+No choice that decides the result can be hedged across a whole sheet. Every such choice moves at least one value by more than 2 x 1.0 dB, and there no single number is inside the band under both answers. The choices marked idle are those whose wrong answer is inside the band on every value it moves, so nothing turns on them: route_study.txt shows them passing.

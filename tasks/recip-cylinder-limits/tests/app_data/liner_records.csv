@@ -1,0 +1,8 @@
+cylinder,date,size_designation,mean_bore_mm,largest_bore_mm,smallest_bore_mm,work_order
+1A,2024-03-15,nominal,205.00,205.02,204.99,WO-18802
+1B,2024-03-15,nominal,205.00,205.02,204.99,WO-18802
+2A,2024-03-15,nominal,150.00,150.02,149.99,WO-18802
+2B,2024-03-15,nominal,150.00,150.02,149.99,WO-18802
+3A,2024-03-15,nominal,112.00,112.02,111.99,WO-18802
+3B,2024-03-15,nominal,116.00,116.02,115.99,WO-18802
+2B,2026-06-18,first repair size,154.00,154.02,153.99,WO-21661

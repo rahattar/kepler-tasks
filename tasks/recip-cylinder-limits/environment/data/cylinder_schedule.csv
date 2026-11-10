@@ -1,0 +1,7 @@
+cylinder,throw,stage,nominal_bore_mm,piston_rod_mm,acting,clearance_head_end_sheet,clearance_crank_end_sheet,clearance_pocket_cm3,reciprocating_weight_kg_sheet,rated_power_kW,allowable_gas_load_kN,rated_rod_load_kN_sheet
+1A,1,1,205,65,double,0.110,0.130,0,340.0,130,115,125
+1B,2,1,205,85,double,0.110,0.132,0,346.0,122,120,130
+2A,3,2,150,65,double,0.140,0.160,200,300.0,132,130,140
+2B,4,2,150,65,double,0.140,0.160,0,302.0,140,140,145
+3A,5,3,112,55,double,0.155,0.175,165,298.0,224,150,235
+3B,6,3,116,60,double,0.160,0.180,0,294.0,244,160,200

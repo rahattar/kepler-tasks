@@ -1,0 +1,1 @@
+seed 4101: largest offset of a weighing 1.33 sigma, sound variations all right, their worst error 0.169 per cent, every defective route fails  <- chosen

@@ -1,0 +1,1 @@
+seed 7101: largest offset of a drawn reading 3.05 sigma, sound methods all right, their worst error 0.55 dB, every defective route fails  <- chosen

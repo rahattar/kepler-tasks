@@ -1,0 +1,82 @@
+date,machine,entry
+2025-05-14,C2,WO-2811 Package: oil filter and separator elements changed; oil sample to the laboratory.
+2025-05-29,,WO-2824 Hall: emergency lighting units 4 and 7 replaced.
+2025-06-05,C4,WO-2832 Package: inlet filter panels changed.
+2025-06-10,C1,WO-2838 Package: inlet filter panels changed; differential gauge reset.
+2025-06-24,C3,WO-2851 Package: coupling guard refitted after the quarterly inspection.
+2025-07-01,C5,WO-2859 Package: inlet filter panels changed.
+2025-07-05,C7,WO-2863 Package: oil sample taken; result within limits.
+2025-07-08,,WO-2866 Hall: floor drain in bay 1 rodded.
+2025-07-21,C2,WO-2879 Package: vibration route readings taken; all within the alert band.
+2025-08-05,C1,WO-2894 Package: oil cooler fan motor bearings regreased.
+2025-08-19,,WO-2908 Hall: roller shutter door 2 track realigned.
+2025-09-02,C3,WO-2921 Package: inlet filter panels changed.
+2025-09-16,C1,WO-2934 Package: condensate drain valve replaced.
+2025-09-30,C2,WO-2948 Package: oil change and filter elements; sample to the laboratory.
+2025-10-07,C4,WO-2955 Package: oil change and filter elements; sample to the laboratory.
+2025-10-14,,"WO-2962 Hall: fire detection heads cleaned, bays 1 to 4."
+2025-10-28,C1,WO-2976 Package: intercooler drain line cleared.
+2025-11-05,C6,WO-2983 Package: inlet filter panels changed.
+2025-11-08,C8,WO-2986 Package: vibration route readings taken; all within the alert band.
+2025-11-11,C3,WO-2989 Package: motor terminal box gland replaced.
+2025-11-25,C2,WO-3003 Package: inlet filter panels changed; gauge reset.
+2025-12-09,,WO-3017 Hall: ventilation louvre actuator on the east wall serviced.
+2025-12-18,C1,WO-3029 Package: vibration route readings taken; all within the alert band.
+2026-01-13,C3,WO-3044 Package: oil change and filter elements.
+2026-01-27,,WO-3058 Hall: lighting survey; 6 fittings relamped.
+2026-02-03,C4,WO-3065 Package: vibration route readings taken; all within the alert band.
+2026-02-10,C2,WO-3072 Package: cooling water strainer cleaned.
+2026-02-24,C1,WO-3086 Package: inlet filter panels changed.
+2026-03-03,C5,WO-3093 Package: oil change and filter elements.
+2026-03-06,C7,WO-3096 Package: cooling water strainer cleaned.
+2026-03-10,C3,WO-3100 Package: vibration route readings taken; all within the alert band.
+2026-03-24,,WO-3114 Hall: eyewash station recommissioned.
+2026-04-07,C2,WO-3128 Package: oil cooler cleaned on the water side.
+2026-04-14,C8,WO-3135 Package: inlet filter panels changed; gauge reset.
+2026-04-17,C6,WO-3138 Package: oil sample taken; result within limits.
+2026-04-21,C1,WO-3142 Package: condensate drain valve replaced.
+2026-05-04,,WO-3155 Adjacent bay: ventilation blower VB-2 commissioned and handed over; it runs continuously.
+2026-05-19,C3,WO-3169 Package: inlet filter panels changed.
+2026-05-26,C4,WO-3176 Package: cooling water strainer cleaned.
+2026-06-02,C2,WO-3183 Package: vibration route readings taken; all within the alert band.
+2026-06-15,,WO-3380 Bays 2 to 4: roof deck leak over the walkway; ceiling lining panels taken down for access.
+2026-06-18,,WO-3391 Bays 2 to 4: roof deck patched and tested; the lining panels were not refitted (MOC-402 raised).
+2026-06-30,C1,WO-3402 Package: oil change and filter elements; sample to the laboratory.
+2026-07-03,C7,WO-3406 Package: inlet filter panels changed.
+2026-07-06,C5,WO-3408 Package: vibration route readings taken; all within the alert band.
+2026-07-09,,"WO-3410 Hall: crane runway inspection, no defects."
+2026-07-14,C3,WO-3415 Package: motor space heater replaced.
+2026-07-23,C2,WO-3421 Package: inlet filter panels changed; gauge reset.
+2026-08-04,C1,WO-3428 Package: intercooler drain line cleared.
+2026-08-07,C4,WO-3430 Package: inlet filter panels changed; gauge reset.
+2026-08-12,,WO-3433 Hall: east wall louvre blades washed down.
+2026-08-18,C6,WO-3435 Package: cooling water strainer cleaned.
+2026-08-20,C3,WO-3437 Package: coupling alignment checked after the motor was refitted.
+2026-08-26,C5,WO-3438 Package: drive speed limit set to 1500 rpm at the variable speed drive while the inlet guide vanes are away for overhaul.
+2026-09-02,C2,WO-3445 Package: cooling water strainer cleaned.
+2026-09-08,C6,WO-3448 Package: drive speed limit set to 3000 rpm at the variable speed drive pending the impeller inspection.
+2026-09-09,C2,WO-3450 Package: drive speed limit set to 2508 rpm at the variable speed drive for the plant trial.
+2026-09-10,C7,WO-3447 Package: acoustic lagging stripped from the discharge pipework to change the non-return valve (MOC-409).
+2026-09-11,C1,WO-3440 Package: oil change and filter elements; drive-end access cover removed for the pump change and left off for the oil sample.
+2026-09-12,C8,WO-3452 Package: inlet guard refitted after the cooler fan change.
+2026-09-13,C7,WO-3454 Package: oil sample taken; result within limits.
+2026-09-14,,WO-3455 Hall: acceptance survey of C1 to C8 by the supplier's contractor (survey report); machines run one at a time at their working load.
+2026-09-17,C3,WO-3460 Package: inlet filter panels changed.
+2026-09-20,C1,WO-3465 Package: drive-end access cover refitted and latched; fasteners torqued.
+2026-09-22,C4,WO-3466 Package: oil sample taken; result within limits.
+2026-09-24,,WO-3468 Hall: walkway handrail in bay 2 repaired.
+2026-09-28,C2,WO-3471 Package: drive speed limit removed; the package runs at its rated 2950 rpm.
+2026-10-02,C3,WO-3478 Package: intake silencer SL-3 installed (MOC-407).
+2026-10-05,C7,WO-3480 Package: acoustic lagging on the discharge pipework refitted (MOC-409).
+2026-10-06,C5,WO-3481 Package: drive speed limit removed; the package runs at its rated 1800 rpm.
+2026-10-07,C6,WO-3482 Package: inlet filter panels changed.
+2026-10-09,C1,WO-3484 Package: vibration route readings taken; all within the alert band.
+2026-10-12,C6,WO-3486 Package: drive speed limit removed; the package runs at its rated 3550 rpm.
+2026-10-15,,"WO-3490 Hall: floor marking repainted, bays 1 to 4."
+2026-10-21,C2,WO-3496 Package: oil cooler fan motor bearings regreased.
+2026-10-24,C4,WO-3499 Package: vibration route readings taken; all within the alert band.
+2026-10-28,,WO-3502 Hall: fire extinguishers serviced.
+2026-10-30,C7,WO-3504 Package: oil change and filter elements.
+2026-11-01,C4,WO-3506 Package: inlet filter panels changed.
+2026-11-02,C8,WO-3507 Package: vibration route readings taken; all within the alert band.
+2026-11-03,C3,WO-3509 Package: condensate drain valve replaced.

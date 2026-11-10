@@ -1,0 +1,32 @@
+reference sheet                                                accepted 72 of 72  as expected
+reference sheet, CRLF line ends and a blank line               accepted 72 of 72  as expected
+reference sheet, spaces around the fields                      accepted 72 of 72  as expected
+rows in another order                                          accepted 72 of 72  as expected
+levels with four decimals                                      accepted 72 of 72  as expected
+a level +1.0 dB out, at the edge of the band                   accepted 72 of 72  as expected
+a level +1.05 dB out, just past the edge                       graded, 71 of 72 right  as expected
+C3's A-weighted level 2 dB out                                 graded, 71 of 72 right  as expected
+empty file                                                     rejected: the first line must be exactly: machine,lw_63,lw_125,lw_250,lw_500,lw_1k,lw_2k,lw_4k,lw_8k,lwa  
+header only                                                    rejected: the sheet must have one row for each of C1, C2, C3, C4, C5, C6, C7, C8  
+header misspelt                                                rejected: the first line must be exactly: machine,lw_63,lw_125,lw_250,lw_500,lw_1k,lw_2k,lw_4k,lw_8k,lwa  
+header with an extra column                                    rejected: the first line must be exactly: machine,lw_63,lw_125,lw_250,lw_500,lw_1k,lw_2k,lw_4k,lw_8k,lwa  
+no header                                                      rejected: the first line must be exactly: machine,lw_63,lw_125,lw_250,lw_500,lw_1k,lw_2k,lw_4k,lw_8k,lwa  
+a machine missing                                              rejected: the sheet must have one row for each of C1, C2, C3, C4, C5, C6, C7, C8  
+a machine twice                                                rejected: machine C1 appears twice  
+an unknown machine                                             rejected: machine C4 appears twice  
+a machine in lower case                                        rejected: unknown machine 'c2'  
+a row with an extra field                                      rejected: every row must have 10 fields: ['C2', '93.1', '95.1', '97.2', '99.1', '100.0', '98.0', '95.1', '89.9', '104.4', '0']  
+a row with a field missing                                     rejected: every row must have 10 fields: ['C2', '93.1', '95.1', '97.2', '99.1', '100.0', '98.0', '95.1', '89.9']  
+a non-ASCII character                                          rejected: the sound power sheet is not ASCII text  
+C1's 1 kHz level NaN                                           rejected: C1 lw_1k must be finite  
+C1's 1 kHz level Infinity                                      rejected: C1 lw_1k must be finite  
+C1's 1 kHz level empty                                         rejected: C1 lw_1k is not a number: ''  
+C1's 1 kHz level text                                          rejected: C1 lw_1k is not a number: 'abc'  
+C1's 1 kHz level negative                                      rejected: C1 lw_1k must be from 40 to 160 dB  
+C1's 1 kHz level 39.9                                          rejected: C1 lw_1k must be from 40 to 160 dB  
+C1's 1 kHz level 160.1                                         rejected: C1 lw_1k must be from 40 to 160 dB  
+C2's A-weighted level as 1e2 (100.0)                           graded, 71 of 72 right  as expected
+the sheet a symlink to a correct sheet                         rejected: the sound power sheet is not a regular file
+no sheet                                                       rejected: no sound power sheet at /tmp/tmp44fqera7/absent.csv
+
+30 cases run, none crashed the grader

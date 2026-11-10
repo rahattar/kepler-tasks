@@ -1,0 +1,36 @@
+reference sheet                                                accepted 12 of 12  as expected
+reference sheet, CRLF line ends and a blank line               accepted 12 of 12  as expected
+reference sheet, spaces around the fields                      accepted 12 of 12  as expected
+rows in another order                                          accepted 12 of 12  as expected
+pressures with four decimals                                   accepted 12 of 12  as expected
+a pressure in exponent notation                                accepted 12 of 12  as expected
+a pressure +0.5 per cent out, at the edge of the band          accepted 12 of 12  as expected
+a pressure +0.55 per cent out, just past the edge              graded, 11 of 12 right  as expected
+3A's pressure 5 per cent out                                   graded, 11 of 12 right  as expected
+2B's governing requirement the runner-up                       graded, 11 of 12 right  as expected
+empty file                                                     rejected: the first line must be exactly: cylinder,suction_pressure_bar,governing_limit  
+header only                                                    rejected: the sheet must have one row for each of 1A, 1B, 2A, 2B, 3A, 3B  
+header misspelt                                                rejected: the first line must be exactly: cylinder,suction_pressure_bar,governing_limit  
+header with an extra column                                    rejected: the first line must be exactly: cylinder,suction_pressure_bar,governing_limit  
+no header                                                      rejected: the first line must be exactly: cylinder,suction_pressure_bar,governing_limit  
+a cylinder missing                                             rejected: the sheet must have one row for each of 1A, 1B, 2A, 2B, 3A, 3B  
+a cylinder twice                                               rejected: cylinder 1A appears twice  
+an unknown cylinder                                            rejected: unknown cylinder '4C'  
+a cylinder in lower case                                       rejected: unknown cylinder '2a'  
+a row with an extra field                                      rejected: every row must have 3 fields: ['2A', '31.09', 'discharge_temperature', '0']  
+a row with a field missing                                     rejected: every row must have 3 fields: ['2A', '31.09']  
+a non-ASCII character                                          rejected: the sheet is not ASCII text  
+1A's pressure NaN                                              rejected: 1A suction pressure must be finite  
+1A's pressure Infinity                                         rejected: 1A suction pressure must be finite  
+1A's pressure empty                                            rejected: 1A suction pressure is not a number: ''  
+1A's pressure text                                             rejected: 1A suction pressure is not a number: 'abc'  
+1A's pressure negative                                         rejected: 1A suction pressure must be from 1 to 500 bar  
+1A's pressure 0.9                                              rejected: 1A suction pressure must be from 1 to 500 bar  
+1A's pressure 500.1                                            rejected: 1A suction pressure must be from 1 to 500 bar  
+1A's requirement not one of the standard's names               rejected: 1A: the governing limit must be one of gas_load rod_load_compression rod_load_tension discharge_temperature cylinder_power pin_reversal, not 'rod_load'  
+1A's requirement in upper case                                 rejected: 1A: the governing limit must be one of gas_load rod_load_compression rod_load_tension discharge_temperature cylinder_power pin_reversal, not 'ROD_LOAD_TENSION'  
+1A's requirement empty                                         rejected: 1A: the governing limit must be one of gas_load rod_load_compression rod_load_tension discharge_temperature cylinder_power pin_reversal, not ''  
+the sheet a symlink to a correct sheet                         rejected: the sheet is not a regular file
+no sheet                                                       rejected: no sheet at /tmp/tmpu9dqn1fd/absent.csv
+
+34 cases run, none crashed the grader

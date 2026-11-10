@@ -1,0 +1,24 @@
+The allowance is 2 readings. Four facts want one:
+
+  gc 2       no record settles it
+  gc 3       on record: the third stage's separator is bypassed, so its gas is the second stage's
+  weigh 2B   on record: the overhaul register's shop ticket gives the new piston against the one removed
+  weigh 3B   no record settles it
+
+So the two readings go on gc 2, weigh 3B, and the other two come out of the records.
+
+| plan | readings | right of 12 | what it costs |
+|---|---|---|---|
+| the analysis of the second stage and the weighing of 3B | gc 2, weigh 3B | 12 | nothing |
+| the same two, booked in the other order | weigh 3B, gc 2 | 12 | nothing |
+| the analysis of the third stage and the weighing of 3B | gc 3, weigh 3B | 12 | nothing |
+| both analyses, no weighing | gc 2, gc 3 | 10 | 3B pressure, 3B limit |
+| both weighings, no analysis | weigh 2B, weigh 3B | 10 | 2A pressure, 3A pressure |
+| the analysis of the first stage, which the records already hold, and the weighing | gc 1, weigh 3B | 10 | 2A pressure, 3A pressure |
+| the weighing of 2B, whose difference the register gives, and the analysis | gc 2, weigh 2B | 10 | 3B pressure, 3B limit |
+| one reading: the analysis only | gc 2 | 10 | 3B pressure, 3B limit |
+| one reading: the weighing only | weigh 3B | 10 | 2A pressure, 3A pressure |
+| no readings at all | none | 8 | 2A pressure, 3A pressure, 3B pressure, 3B limit |
+
+A plan that spends a reading on a fact the records already settle leaves one that they do not, and the
+allowance cannot be refilled: environment/rig/lab.py refuses the third reading (see reference_run.txt).
