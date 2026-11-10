@@ -53,6 +53,7 @@ E_P = 42.0e3
 N2_FACTOR = 0.25
 PUMP_GATE = 0.75
 AUDIT = "2026-11-02"
+HE_AIR = 2.69                       # helium leak rate over air leak rate for a channel in molecular flow
 
 TURBO = {
     "TMP-400": [(1e-9, 360.0), (1e-3, 360.0), (1e-2, 250.0), (5e-2, 100.0), (2e-1, 28.0)],
@@ -572,6 +573,41 @@ def _base_pressure(path):
     return None
 
 
+def helium_says(cid, vac):
+    """From a helium leak test: the chamber's real air leak, and nothing else.
+
+    A channel in molecular flow answers within seconds, so its signal is a step; gas crossing an elastomer seal by
+    permeation answers over minutes, so its signal is a ramp that is still climbing when the hood comes off. The
+    real leak is the largest step any region shows, converted from the helium rate the detector reads to an air
+    rate by HE_AIR. What the test cannot show is a trapped volume, which vents into the chamber and never reaches
+    a hood at all: that is why a helium test tells a leak from permeation but leaves the rest of a constant gas
+    load unexplained."""
+    path = os.path.join(vac, "helium_%s.csv" % cid.lower()) if vac else None
+    if not path or not os.path.exists(path):
+        return None
+    by_region = {}
+    with open(path) as f:
+        for line in f:
+            if line.startswith("#") or line.startswith("region"):
+                continue
+            region, sec, val = line.strip().split(",")
+            by_region.setdefault(region, []).append((float(sec), float(val)))
+    best = 0.0
+    for region, pts in by_region.items():
+        pts.sort()
+        early = [v for t, v in pts if t <= 30.0]
+        late = [v for t, v in pts if t >= 240.0]
+        if not early or not late:
+            continue
+        base = early[0]
+        rise_early = max(early) - base
+        rise_late = (sum(late) / len(late)) - base
+        # a step has most of its rise in the first half minute; a ramp is still well short of its end value there
+        if rise_late > 0 and rise_early > 0.5 * rise_late:
+            best = max(best, rise_early)
+    return dict(leak=best / HE_AIR) if best > 0 else dict(leak=0.0)
+
+
 def ordered_speed(cid, cfg, vac):
     """The effective speed from an ordered test, and whether it came through a gauge certificate: a throughput
     test does, so a wrong certificate carries into it, while a rate-of-rise test is read with a spinning rotor
@@ -755,6 +791,35 @@ def identify_from_rga(cid, cfg, pts, s_eff, data, rga, vac=None):
 
     Everything is done at the test's own pumping time and wall temperature, and only then referred to the
     reference condition, so the log's temperature never enters."""
+    hel = helium_says(cid, vac)
+    if rga is None and hel is not None:
+        # The helium test gives the real leak and leaves everything else as it was. The gas load at the single
+        # pumping time is p S_eff as before; permeation is computable; the leak is measured; and the wall and any
+        # trapped volume share what remains. A trapped volume is what a chamber worked on since it was last sound
+        # has, and the wall takes the rest at the table's nominal coefficient.
+        q_meas = sum(q["p_n2"] for q in pts) / len(pts) * s_eff
+        qp = q_perm(*seal_at(cfg, AUDIT), t_k=pts[-1]["t_k"])
+        w_t = q_wall_nominal(cfg["surfaces"], pts[-1]["t_h"], "air", pts[-1]["t_k"])
+        corr = 1.0
+        for _ in range(20):
+            total = q_meas * corr
+            rest = max(total - qp - hel["leak"], 0.0)
+            trapped = rest if was_sound_and_worked_on(cid, cfg, data) else 0.0
+            wall = 0.0 if trapped else rest
+            new = gas_correction({"wall-outgassing": wall, "permeation": qp, "air-leak": hel["leak"],
+                                  "virtual-leak": trapped}, seal_at(cfg, pts[-1]["date"])[0])
+            if abs(new - corr) < 1e-10:
+                corr = new
+                break
+            corr = new
+        total = q_meas * corr
+        rest = max(total - qp - hel["leak"], 0.0)
+        if was_sound_and_worked_on(cid, cfg, data):
+            tau = 9.0
+            c_w = 1.0 * 0.0
+            return at_reference(cfg, c_w, hel["leak"], rest * math.exp(pts[-1]["t_h"] / tau), tau)
+        c_w = rest / w_t if w_t > 0 else 1.0
+        return at_reference(cfg, c_w, hel["leak"], 0.0, None)
     ror = rate_of_rise_says(cid, cfg, vac)
     if rga is None and ror is not None:
         # A rate-of-rise is read with a spinning rotor gauge, so it gives the whole gas load at its own condition

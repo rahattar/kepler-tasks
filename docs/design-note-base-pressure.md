@@ -73,7 +73,36 @@ Documented:
   The one that failed blamed the register's port conductance rather than the gauge certificate, and also missed
   two causes. The two that passed each spent a test on the certificate chamber, which is what the spare slots
   bought them.
-- **Round 3** (budget 1, VC06 given a third pumpdown so its split is settled by its records): running.
+- **Round 3** (budget 1, VC06 given a third pumpdown so its split is settled by its records): low
+  **10/10, 10/10, 9/10**. The one that failed failed on VC01 alone, the certificate layer: shown a throughput test
+  reporting 1038 L/s against a rated 915, it concluded the register's port figure was a typo and trusted the
+  measurement, so its gas load came out 11.7 % low and its speed 13.4 % high with sub-1 % fit residuals
+  throughout. Still 2 of 3, so still above the easiness bar.
+
+### What the probe rounds establish
+
+- **The only layer that has ever caught a low-effort probe is the one no residual can show.** It has now caught 2
+  of 5 (round 2's M2 and round 3's N3), and both failed it the same way: told that a measured speed exceeds what
+  the pump and port can deliver, they blamed the register's conductance rather than the gauge certificate. Every
+  other layer - every document fault, every dated change, every crossed label - was found by every probe,
+  including at low effort, because a missed one shows up as a large residual and the probes all fit until the
+  residuals reach the reading-noise floor.
+- **Tightening a measurement budget does not help much.** Cutting it from four tests to one, so that only two of
+  forty orders work, cost the probes nothing: they identified the one chamber that needed the test and spent it
+  there. The budget is worth keeping because it is load-bearing and because getting it wrong is fatal, but it is
+  not what separates effort levels.
+- **Where that points.** Each residual-invisible layer independently catches about a third of low-effort probes.
+  Authoring two more of them - a chamber whose records fit perfectly yet whose answer is wrong unless an outside
+  consistency check is made - would be expected to put low effort near 1 of 3, which is the bar. Candidates:
+  a register volume that only a rate-of-rise can contradict; a port conductance whose value is contradicted by
+  the speed a healthy pump reports; a seal length that only the permeation's temperature slope contradicts. Each
+  is cheap to add to the generator and each needs a route, a method-spread entry and a probe round.
+
+## Probe tooling
+
+`tools/mkprobe-vacwork.sh` builds a sandbox for a bundle whose rig is a submit-once order program;
+`tools/gradeprobe.sh` grades the sheets with the task's own grader and reports the order each probe placed;
+`tools/brief-bpd.txt` is the brief.
 
 ## Lessons
 
@@ -105,4 +134,10 @@ Documented:
 
 ## Status
 
-Zip not yet cut. Probe rounds in progress. The instruction is a draft awaiting Alex's rewrite, with a fact sheet.
+**Zip not cut.** Everything else is finished and verified: reference and independent audit both get all ten, five
+sound methods accepted at 1.52x and 2.58x margin, eighteen routes rejected, nulls 0 of 10, 33 verifier cases
+clean, preflight 196 checks, and a byte-identical rebuild from the provenance. The one thing standing in the way
+is the easiness bar: low effort is at 2 of 3 after three rounds of hardening, against a bar of at most 1 of 3.
+The measured path to the bar is above; it is Alex's call whether to spend it.
+
+The instruction is a draft awaiting Alex's rewrite, with the fact sheet in `fact-sheet-base-pressure.md`.

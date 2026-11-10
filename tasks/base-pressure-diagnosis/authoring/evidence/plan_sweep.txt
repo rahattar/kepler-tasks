@@ -6,7 +6,7 @@ order                   tests  right  verdict   chambers wrong
 no order at all         0      9/10   rejected  VC08
 an analysis on VC08     1      10/10  accepted  -
 a rate-of-rise on VC08  1      9/10   rejected  VC08
-a helium test on VC08   1      9/10   rejected  VC08
+a helium test on VC08   1      10/10  accepted  -
 a speed test on VC08    1      9/10   rejected  VC08
 an analysis on VC06     1      9/10   rejected  VC08
 an analysis on VC01     1      9/10   rejected  VC08

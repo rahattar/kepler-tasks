@@ -29,6 +29,7 @@ import routes as R                                                      # noqa: 
 
 PLANS = {
     "the reference order": C.REFERENCE_PLAN,
+    "a helium test instead": [dict(chamber="VC08", test="helium")],
 }
 
 

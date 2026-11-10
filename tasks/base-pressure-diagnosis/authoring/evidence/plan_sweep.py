@@ -1,15 +1,18 @@
 """What the audit test order is worth: the reference method under a range of orders.
 
-The budget is one test across ten chambers, placed once before any result is known, and the fleet admits exactly
-one order that works. VC08's log holds a single pumping time, so nothing in it separates a trapped volume from
-wall gas, and only the composition of its gas does: a rate-of-rise gives the whole gas load but not what the gas
-is, and a helium test finds the real leak but not the trapped volume. Every other chamber is settleable from the
-records - the two whose turbo has changed, from their pumpdowns either side of the change; the one whose gauge
-certificate is out, from the speed its own throughput tests report; the one whose constant gas load could be a
-leak or permeation, from how it follows the shop temperature - so a test spent anywhere else is the test taken
-from where it was needed.
+The budget is one test across ten chambers, placed once before any result is known. VC08's log holds a single
+pumping time, so nothing in it separates a trapped volume from wall gas, and the test has to be spent there and
+has to be one that answers that question: a residual gas analysis, which gives the composition outright, or a
+helium test, which measures the real leak and so leaves what remains to be the trapped volume. A rate-of-rise
+gives VC08's whole gas load but not what the gas is, and a throughput test gives a speed that was never in
+doubt.
 
-This is what makes the order load-bearing: there are forty ways to spend it and one of them is right.
+Every other chamber is settleable from the records - the two whose turbo has changed, from their pumpdowns either
+side of the change; the one whose gauge certificate is out, from the speed its own throughput tests report; the
+one whose constant gas load could be a leak or permeation, from how it follows the shop temperature - so a test
+spent anywhere else is the test taken from where it was needed.
+
+That is what makes the order load-bearing: there are forty ways to spend it and two of them work.
 
 This script places each order through the real `vacwork` program and scores the reference's sheet, so the worth of
 an order is measured and not assumed.

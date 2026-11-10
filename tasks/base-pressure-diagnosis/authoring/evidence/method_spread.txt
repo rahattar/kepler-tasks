@@ -1,21 +1,23 @@
 Sound methods, each scored through the task's grader
 ====================================================
 
-method               right  verdict   worst q deviation  worst s deviation  causes missed
--------------------  -----  --------  -----------------  -----------------  -------------
-the reference order  10/10  accepted  +1.45%             +0.96%             -
-independent audit    10/10  accepted  +1.47%             +1.16%             -
-drop oldest          10/10  accepted  +1.43%             +0.96%             -
-median constant      10/10  accepted  +1.52%             +0.96%             -
-second speed test    10/10  accepted  +1.62%             +0.94%             -
+method                 right  verdict   worst q deviation  worst s deviation  causes missed
+---------------------  -----  --------  -----------------  -----------------  -------------
+the reference order    10/10  accepted  +1.45%             +0.96%             -
+a helium test instead  10/10  accepted  +2.64%             +0.96%             -
+independent audit      10/10  accepted  +1.47%             +1.16%             -
+drop oldest            10/10  accepted  +1.43%             +0.96%             -
+median constant        10/10  accepted  +1.52%             +0.96%             -
+second speed test      10/10  accepted  +1.62%             +0.94%             -
 
-widest deviation over every sound method and chamber: gas load 1.62%, speed 1.16%
-tolerances: gas load 4.0%, speed 3.0% (margin 2.47x and 2.58x)
+widest deviation over every sound method and chamber: gas load 2.64%, speed 1.16%
+tolerances: gas load 4.0%, speed 3.0% (margin 1.52x and 2.58x)
 
   the reference order        q  +1.45%  s  +0.96%
+  a helium test instead      q  +2.64%  s  +0.96%
   independent audit          q  +1.47%  s  +1.16%
   drop oldest                q  +1.43%  s  +0.96%
   median constant            q  +1.52%  s  +0.96%
   second speed test          q  +1.62%  s  +0.94%
 
-all 5 sound methods accepted
+all 6 sound methods accepted
