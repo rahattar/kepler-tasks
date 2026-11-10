@@ -79,24 +79,41 @@ Documented:
   measurement, so its gas load came out 11.7 % low and its speed 13.4 % high with sub-1 % fit residuals
   throughout. Still 2 of 3, so still above the easiness bar.
 
+- **Round 4** (two more residual-invisible layers: a register naming the wrong pump, and VC01's certificate error
+  made determinate by its reference instrument): low **9/10, 9/10, 10/10** - **1 of 3, which is the bar.** The
+  progression over the four rounds is 3/3, 2/3, 2/3, 1/3. P2 failed on VC01, the certificate; P1 read VC07's
+  controller correctly and caught the wrong pump, then over-corrected on the crossed gauge serials and threw away
+  CC-7107's real 1.42 factor along with the clerical error, putting VC07's gas load 29 % low. That slip is
+  available only because two gauge problems sit on neighbouring chambers.
+
 ### What the probe rounds establish
 
-- **The only layer that has ever caught a low-effort probe is the one no residual can show.** It has now caught 2
-  of 5 (round 2's M2 and round 3's N3), and both failed it the same way: told that a measured speed exceeds what
-  the pump and port can deliver, they blamed the register's conductance rather than the gauge certificate. Every
-  other layer - every document fault, every dated change, every crossed label - was found by every probe,
-  including at low effort, because a missed one shows up as a large residual and the probes all fit until the
-  residuals reach the reading-noise floor.
+- **Only the layers no residual can show have ever caught a low-effort probe.** The certificate error has caught 3
+  of 11 (M2, N3, P2), every time the same way: told that a measured speed exceeds what the pump and port can
+  deliver, they look for something other than the certificate to blame. Every layer that perturbs a residual -
+  every document fault, every dated change, every crossed label - was found by every probe, including at low
+  effort, because the probes all fit until the residuals reach the reading-noise floor and a missed layer
+  announces itself.
+- **An invisible layer can also be made fairer by adding a witness.** VC01's certificate error was at first
+  ambiguous between a wrong gauge and a wrong port conductance, and both probes it caught chose the port - a
+  reading the records could not exclude. Giving VC01 the reference instrument of clause 5, so the two gauges
+  disagree by exactly the certificate's error while the controller confirms the register's pump, made it
+  determinate without making it easier: it caught another probe in the next round.
+- **Two faults of the same kind on neighbouring units make a new slip available.** Catching the crossed gauge
+  serials on VC03 and VC07 is routine; what caught a probe was over-correcting - treating the real 1.42
+  certificate as part of the clerical error and discarding it too.
 - **Tightening a measurement budget does not help much.** Cutting it from four tests to one, so that only two of
   forty orders work, cost the probes nothing: they identified the one chamber that needed the test and spent it
   there. The budget is worth keeping because it is load-bearing and because getting it wrong is fatal, but it is
   not what separates effort levels.
-- **Where that points.** Each residual-invisible layer independently catches about a third of low-effort probes.
-  Authoring two more of them - a chamber whose records fit perfectly yet whose answer is wrong unless an outside
-  consistency check is made - would be expected to put low effort near 1 of 3, which is the bar. Candidates:
-  a register volume that only a rate-of-rise can contradict; a port conductance whose value is contradicted by
-  the speed a healthy pump reports; a seal length that only the permeation's temperature slope contradicts. Each
-  is cheap to add to the generator and each needs a route, a method-spread entry and a probe round.
+- **The arithmetic held.** Each residual-invisible layer independently catches roughly a third of low-effort
+  probes, so three of them put low effort at the bar, which is what round 4 measured. If another task of this
+  shape needs hardening, this is the lever: not a tighter band and not a smaller budget, but a record that is
+  wrong in a way no fit can see, with a physical consistency check as the only witness.
+- **A register volume is not a candidate.** It enters only a rate-of-rise test and nothing else, so getting it
+  wrong is invisible and also harmless unless a test is spent there. A port conductance is not a candidate
+  either: without a second instrument, a wrong port and a wrong gauge give identical records, so a chamber
+  carrying one would be unfair.
 
 ## Probe tooling
 
