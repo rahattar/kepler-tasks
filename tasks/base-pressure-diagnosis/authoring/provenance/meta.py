@@ -11,8 +11,8 @@ TASK = os.path.dirname(os.path.dirname(HERE))
 
 DIFFICULTY = """In practice this is the work of a vacuum process engineer auditing a shop's chambers: naming what
 limits each one's base pressure and quantifying it, so that the shutdown can be planned around the chambers worth
-opening. The engineer has the chambers' own records and a contractor's test order that has to be placed before any
-of its results are known. Its research analogue is the identification of vacuum systems from operating data: the
+opening. The engineer has the chambers' own records and a single contractor's test that has to be ordered before its
+result is known. Its research analogue is the identification of vacuum systems from operating data: the
 steady gas balance p = Q / S_eff of a lumped volume, water desorption from chamber walls and its temperature
 dependence, permeation of atmospheric gas through elastomer seals and the composition it admits, the emptying of a
 trapped volume, gas corrections for nitrogen-calibrated gauges, and residual gas analysis read as a mixture of
@@ -56,7 +56,8 @@ only what was done, never its effect. Eight of the layers are settled by the dat
   temperature dependence across the log, or the oxygen and argon of a residual gas analysis, separates them
   (VC04 against VC06).
 - **A trapped volume against wall gas.** Both decay, one exponentially and one as a power law, and on the chamber
-  where the log cannot tell them apart the composition must (VC08 against VC01, VC02).
+  whose log holds a single pumping time nothing but the composition of its gas can tell them apart - which is
+  what the one test the audit can order is for (VC08 against VC01, VC02).
 - **A pump with an ordinary gas load.** Two chambers are limited by speed while their gas loads are unremarkable
   and wall-dominated, so an audit that puts every shortfall down to gas names the wrong cause and reaches the wrong
   figure for both quantities (VC09, VC10).
@@ -96,9 +97,12 @@ its cause alone, so no chamber's grading turns on where the tolerance is drawn. 
 the register's surfaces, seal and port, the latest speed test, the logged serials, every entry pooled, the table's
 gas load and no gauge correction - gets all ten wrong.
 
-The audit test order is load-bearing and measured to be so (`authoring/evidence/plan_sweep.txt`): an order that
-buys nothing for the chamber whose own records cannot settle its cause is rejected, and so is an order of
-rate-of-rise tests where the composition is what is needed."""
+The audit test is load-bearing and measured to be so (`authoring/evidence/plan_sweep.txt`). There are forty ways
+to spend it - four kinds of test on ten chambers - and one of them is right: a residual gas analysis on VC08,
+whose log holds a single pumping time, so that nothing in its records separates a trapped volume from wall gas.
+A rate-of-rise there gives the whole gas load but not what the gas is; a helium test finds a real leak but not a
+trapped volume; and a test spent on any other chamber is spent where the records already answer. Every one of the
+other nine orders in that record is rejected, as is placing no order at all."""
 
 SOLUTION = """`solution/diagnose.py` is the reference audit and `solution/solve.sh` places the order and runs it.
 For each chamber it does the following.
@@ -184,9 +188,9 @@ Why these tolerances, and why every chamber:
   a band. Every chamber is missed by at least three routes, and by at least one route on its cause alone; a cause
   is right or wrong whatever the tolerances are, so no chamber's grading rests on the band.
 - **Every chamber.** The allowance of one wrong chamber that earlier tasks carried is not used here, and the
-  reason is measured (`authoring/evidence/plan_sweep.txt`): with an allowance of one, the audit test order is not
-  load-bearing, because the reference passes with no order placed at all. Requiring every chamber makes the
-  chamber whose own records cannot settle its cause decide the sheet, which is what the order is for. It is not a
+  reason is measured (`authoring/evidence/plan_sweep.txt`): with an allowance of one, the audit test is not
+  load-bearing at all, because the reference passes with no test ordered. Requiring every chamber makes the one
+  chamber whose own records cannot settle its cause decide the sheet, which is what the test is for. It is not a
   knife edge: every sound method gets all ten right, with the margins above.
 
 Method-free answers are all rejected and none of them gets a single chamber right
@@ -246,9 +250,8 @@ The records are the chamber register, the base-pressure log, the shop's throughp
 controllers' weekly rows, the maintenance log, the gauge certificates and the shop's daily climate record, with the
 standard and the shop's vacuum data in `docs/` and an example chamber's records, without a result, in `example/`.
 
-Beyond the records there is one contractor's test order, of four tests across the whole fleet, placed once through
-the `vacwork` command before any of its results are known. Its tests are a rate-of-rise, a throughput speed test, a
-residual gas analysis and a helium leak test.
+Beyond the records there is one contractor's test, ordered once through the `vacwork` command before its result is
+known, from four kinds: a rate-of-rise, a throughput speed test, a residual gas analysis and a helium leak test.
 
 ## Difficulty
 

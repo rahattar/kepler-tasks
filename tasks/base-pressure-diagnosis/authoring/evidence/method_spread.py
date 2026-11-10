@@ -5,8 +5,9 @@ scored through the task's own grader, exactly as the verifier scores a submissio
 
 The methods are:
 - the reference, on the test order it places;
-- the reference on three other sound test orders, including one that buys no test for the two chambers whose turbo
-  has changed and works their speed out from their own records instead;
+- the reference on the one order the fleet admits: an analysis on the single chamber whose own records cannot
+  separate a trapped volume from wall gas. Every other order is a misallocation rather than another sound method,
+  and `plan_sweep.txt` measures what each of them costs;
 - a structurally independent second audit (`independent.py`), which shares no code with the reference;
 - the reference with the oldest surviving entry left out, on each chamber that has four or more;
 - the reference taking the constant part of each gas load as the median of the entries' residuals;
@@ -27,16 +28,7 @@ import independent as I                                                 # noqa: 
 import routes as R                                                      # noqa: E402
 
 PLANS = {
-    "reference plan": C.REFERENCE_PLAN,
-    "rise instead of speed": [dict(chamber="VC06", test="rga"), dict(chamber="VC08", test="rga"),
-                              dict(chamber="VC09", test="rate-of-rise"),
-                              dict(chamber="VC10", test="rate-of-rise")],
-    "rise on the thin logs": [dict(chamber="VC06", test="rga"), dict(chamber="VC08", test="rga"),
-                              dict(chamber="VC09", test="rate-of-rise"),
-                              dict(chamber="VC04", test="helium")],
-    "no test for the pumps": [dict(chamber="VC06", test="rga"), dict(chamber="VC08", test="rga"),
-                              dict(chamber="VC05", test="rate-of-rise"),
-                              dict(chamber="VC01", test="rate-of-rise")],
+    "the reference order": C.REFERENCE_PLAN,
 }
 
 

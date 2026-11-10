@@ -696,7 +696,7 @@ def audit_chamber(cid, data, certs, fix, vac):
     if nd >= 2:
         parts, q_total = identify_from_log(cid, cfg, pts, s_eff, data, rga)
     else:
-        parts, q_total = identify_from_rga(cid, cfg, pts, s_eff, data, rga)
+        parts, q_total = identify_from_rga(cid, cfg, pts, s_eff, data, rga, vac)
 
     s_rated = series(curve(TURBO[cfg["turbo"]], q_total / max(s_eff, 1.0)), cfg["c_port"])
     if s_eff < PUMP_GATE * s_rated:
@@ -743,7 +743,7 @@ WALL_WATER = (SPECIES["wall-outgassing"]["h2o"] + SPECIES["wall-outgassing"]["h2
     SPECIES["wall-outgassing"].values())
 
 
-def identify_from_rga(cid, cfg, pts, s_eff, data, rga):
+def identify_from_rga(cid, cfg, pts, s_eff, data, rga, vac=None):
     """A chamber whose log holds only one pumping time. The wall gas load cannot be separated from the constant
     part by the log alone, so the split comes from the composition instead.
 
@@ -755,7 +755,19 @@ def identify_from_rga(cid, cfg, pts, s_eff, data, rga):
 
     Everything is done at the test's own pumping time and wall temperature, and only then referred to the
     reference condition, so the log's temperature never enters."""
+    ror = rate_of_rise_says(cid, cfg, vac)
+    if rga is None and ror is not None:
+        # A rate-of-rise is read with a spinning rotor gauge, so it gives the whole gas load at its own condition
+        # without any correction for composition. The split is then needed only to carry that total from the
+        # test's wall temperature to 20 C, where it moves the answer by a fraction of what it would if it had to
+        # fix the total as well: permeation is computable, and the wall takes the rest.
+        qp_t = q_perm(*seal_at(cfg, AUDIT), t_k=ror["t_k"])
+        w_t = q_wall_nominal(cfg["surfaces"], ror["t_h"], "air", ror["t_k"])
+        c_w = max((ror["q_total"] - qp_t) / w_t, 0.0) if w_t > 0 else 1.0
+        return at_reference(cfg, c_w, 0.0, 0.0, None)
     if rga is None:
+        # Nothing to separate the wall coefficient from the constant part: a least squares lands anywhere along
+        # the line that fits the single pumping time, and this is the chamber the audit order is for.
         c_w, q_l, _qv, _ss, _q = fit_split(cfg, pts, s_eff)
         return at_reference(cfg, c_w, q_l, 0.0, None)
     pp = rga["pp"]

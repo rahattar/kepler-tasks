@@ -27,7 +27,7 @@ import bpphys as P                                                      # noqa: 
 REF_H = 16.0                        # h from the start of roughing, the audit reference condition
 AUDIT = "2026-11-02"
 CHAMBER_IDS = ["VC%02d" % i for i in range(1, 11)]
-BUDGET = 4                          # tests in the one audit order
+BUDGET = 1                          # tests in the one audit order
 EXAMPLE = "VC00"                    # the worked example chamber, outside the fleet
 
 
@@ -210,10 +210,10 @@ FLEET = [
        speed=[("2025-05-20", 16.0, 19.7), ("2026-09-01", 18.0, 22.4)],
        ctrl=["2026-07-01", "2026-07-08", "2026-07-15", "2026-07-22", "2026-07-29", "2026-08-05", "2026-08-12", "2026-08-19", "2026-08-26", "2026-09-02", "2026-09-09", "2026-09-16", "2026-09-23", "2026-09-30", "2026-10-07", "2026-10-14", "2026-10-21", "2026-10-28"]),
 
-    # VC06 permeation: the thin-log chamber. Its shroud panels were replaced in September by electropolished ones,
+    # VC06 permeation: its shroud panels were replaced in September by electropolished ones,
     # so the register's bead-blasted surface no longer applies; an agent that keeps it finds a wall gas load five
-    # times the truth and calls the cause wall-outgassing. Only two pumpdowns since, both at 16 h and within 0.4 C,
-    # so neither the duration nor the temperature route is open and the cause itself needs a test.
+    # times the truth and calls the cause wall-outgassing. Three pumpdowns since, spanning two pumping times, so
+    # its split is determined by its own records.
     Ch("VC06",
        reg_entry(5200, "TMP-1600", 2600, "perfluoroelastomer", 900,
                  [(11.0, "stainless steel, bead blasted")], 8.0e-8),
@@ -221,7 +221,8 @@ FLEET = [
        events=[("2026-09-28", "internals", ([(11.0, "stainless steel, electropolished")],
                                             "Shroud panels replaced with electropolished panels.")),
                ("2026-09-28", "seal", ("fluoroelastomer", "Shroud seals replaced with fluoroelastomer sections."))],
-       log=[("2026-10-12", "P1", "air", 16.0, 16.2, "CC-7106", None),
+       log=[("2026-10-05", "P0", "air", 26.0, 17.2, "CC-7106", None),
+            ("2026-10-12", "P1", "air", 16.0, 16.2, "CC-7106", None),
             ("2026-10-26", "P2", "air", 16.0, 14.0, "CC-7106", None)],
        certs={"CC-7106": [("2026-03-10", 1.00)]},
        speed=[("2025-06-03", 16.0, 20.7), ("2026-10-05", 14.0, 17.2)],

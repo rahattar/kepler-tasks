@@ -1,27 +1,21 @@
 Sound methods, each scored through the task's grader
 ====================================================
 
-method                 right  verdict   worst q deviation  worst s deviation  causes missed
----------------------  -----  --------  -----------------  -----------------  -------------
-reference plan         10/10  accepted  +1.45%             +1.43%             -
-rise instead of speed  10/10  accepted  +1.45%             +0.96%             -
-rise on the thin logs  10/10  accepted  +1.45%             +0.96%             -
-no test for the pumps  10/10  accepted  +1.45%             +0.96%             -
-independent audit      10/10  accepted  +1.36%             +1.43%             -
-drop oldest            10/10  accepted  +1.26%             +1.43%             -
-median constant        10/10  accepted  +1.45%             +1.43%             -
-second speed test      10/10  accepted  +1.26%             +1.43%             -
+method               right  verdict   worst q deviation  worst s deviation  causes missed
+-------------------  -----  --------  -----------------  -----------------  -------------
+the reference order  10/10  accepted  +1.45%             +0.96%             -
+independent audit    10/10  accepted  +1.47%             +1.16%             -
+drop oldest          10/10  accepted  +1.43%             +0.96%             -
+median constant      10/10  accepted  +1.52%             +0.96%             -
+second speed test    10/10  accepted  +1.62%             +0.94%             -
 
-widest deviation over every sound method and chamber: gas load 1.45%, speed 1.43%
-tolerances: gas load 4.0%, speed 3.0% (margin 2.76x and 2.10x)
+widest deviation over every sound method and chamber: gas load 1.62%, speed 1.16%
+tolerances: gas load 4.0%, speed 3.0% (margin 2.47x and 2.58x)
 
-  reference plan             q  +1.45%  s  +1.43%
-  rise instead of speed      q  +1.45%  s  +0.96%
-  rise on the thin logs      q  +1.45%  s  +0.96%
-  no test for the pumps      q  +1.45%  s  +0.96%
-  independent audit          q  +1.36%  s  +1.43%
-  drop oldest                q  +1.26%  s  +1.43%
-  median constant            q  +1.45%  s  +1.43%
-  second speed test          q  +1.26%  s  +1.43%
+  the reference order        q  +1.45%  s  +0.96%
+  independent audit          q  +1.47%  s  +1.16%
+  drop oldest                q  +1.43%  s  +0.96%
+  median constant            q  +1.52%  s  +0.96%
+  second speed test          q  +1.62%  s  +0.94%
 
-all 8 sound methods accepted
+all 5 sound methods accepted

@@ -3,13 +3,12 @@
 set -eu
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# The two chambers whose records cannot settle their cause get a residual gas analysis; the two whose turbo has
-# changed since its last speed test get a speed test.
+# The order buys the only thing the records cannot supply: the composition of the gas in the one chamber whose log
+# holds a single pumping time, which is what separates a trapped volume from wall gas there. Everything else - the
+# speeds of the two chambers whose turbo has changed, the chamber whose gauge certificate is out, and the leak
+# that has to be told from permeation - comes from the records.
 cat > /tmp/plan.json <<'PLAN'
-{"tests": [{"chamber": "VC06", "test": "rga"},
-           {"chamber": "VC08", "test": "rga"},
-           {"chamber": "VC09", "test": "speed-test"},
-           {"chamber": "VC10", "test": "speed-test"}]}
+{"tests": [{"chamber": "VC08", "test": "rga"}]}
 PLAN
 vacwork submit < /tmp/plan.json
 

@@ -47,8 +47,8 @@ the reference's own answers, for comparison:
   VC03 air-leak         q 2.8966e-04  s   254.4
   VC04 air-leak         q 6.0306e-04  s   470.8
   VC05 permeation       q 2.3000e-04  s   385.7
-  VC06 permeation       q 1.6608e-04  s   944.3
+  VC06 permeation       q 1.6796e-04  s   944.3
   VC07 virtual-leak     q 1.9977e-04  s   408.5
   VC08 virtual-leak     q 2.1096e-04  s   570.6
-  VC09 pump-speed       q 8.4958e-05  s   226.8
-  VC10 pump-speed       q 1.2261e-04  s   124.0
+  VC09 pump-speed       q 8.3001e-05  s   221.5
+  VC10 pump-speed       q 1.2289e-04  s   124.3

@@ -22,9 +22,12 @@ fitted. Clause 5 corrects a nitrogen-calibrated gauge for the composition of the
 the pump as the cause when the actual speed is below 0.75 of rated, and otherwise the largest gas load. The
 reference condition is 16 h after an air vent, 20 C, nothing in the chamber.
 
-**Mechanic.** One contractor's order of 4 tests across the fleet, placed once through `vacwork` before any result
-is known: `rate-of-rise`, `speed-test`, `rga`, `helium`. Submit-once enforcement copied from
-`screen-fatigue-assessment`; the sealed definition and the sudo rule from `impeller-shrink-fits`.
+**Mechanic.** One contractor's test, ordered once through `vacwork` before its result is known, from four kinds:
+`rate-of-rise`, `speed-test`, `rga`, `helium`. Forty ways to spend it and one that works - an analysis on VC08,
+whose log holds a single pumping time, so nothing in its records separates a trapped volume from wall gas. A
+rate-of-rise there gives the gas load but not what the gas is; a helium test finds a real leak but not a trapped
+volume. Submit-once enforcement copied from `screen-fatigue-assessment`; the sealed definition and the sudo rule
+from `impeller-shrink-fits`.
 
 ## Layers (15; chambers in brackets)
 
@@ -51,12 +54,26 @@ Documented:
 ## Calibration
 
 - Tolerances: cause exact, gas load 4.0 %, speed 3.0 %, **every** chamber right.
-- Sound methods: 8, all accepted, widest 2.39 % on the gas load and 1.43 % on the speed (margins 1.67x, 2.10x).
-- Defective routes: 17, all rejected. Every route misses >= 2 chambers; every chamber is missed by >= 3 routes and
-  by >= 1 route on its cause alone.
+- Sound methods: 5, all accepted, widest 1.62 % on the gas load and 1.16 % on the speed (margins 2.47x, 2.58x).
+- Defective routes: 18, all rejected. All but one miss >= 2 chambers, and the exception misses its one chamber by
+  13 % on the speed, 4.5x the tolerance. Every chamber is missed by >= 3 routes and by >= 1 route on its cause
+  alone.
 - Nulls: every method-free answer gets 0 of 10. No chamber has a free pass.
 - Verifier checks: 33 cases, all as the rules say, every one built from the live reference.
 - Preflight: 196 checks clean.
+
+### Probe history
+
+- **Round 1** (budget 4, the example carrying its audited result): **6 of 6 solved it, 10 of 10 each** - three low
+  effort and three xhigh. Every one of the fifteen layers was found unprompted. Diagnosis: the probes built the
+  forward model, fitted it and iterated until the residuals reached the reading-noise floor, so no layer had to be
+  known about - a missed one announced itself as a large residual. The example's published answer let them check
+  the whole chain end to end (0.1 to 0.8 %), and no layer was degenerate with a fitted parameter.
+- **Round 2** (example answer removed, a residual-invisible layer added, budget 4): low **10/10, 7/10, 10/10**.
+  The one that failed blamed the register's port conductance rather than the gauge certificate, and also missed
+  two causes. The two that passed each spent a test on the certificate chamber, which is what the spare slots
+  bought them.
+- **Round 3** (budget 1, VC06 given a third pumpdown so its split is settled by its records): running.
 
 ## Lessons
 

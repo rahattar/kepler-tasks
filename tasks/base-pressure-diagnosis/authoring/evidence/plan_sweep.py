@@ -1,10 +1,15 @@
 """What the audit test order is worth: the reference method under a range of orders.
 
-The budget is four tests across ten chambers, placed once before any result is known. Two chambers, VC06 and VC08,
-hold too few pumpdowns for their own records to settle their cause, so an order that buys them nothing leaves the
-reference guessing on them. Two more, VC09 and VC10, have had their turbo change since their last speed test; for
-those a test is a convenience rather than a necessity, because their speed can be had from their own records
-before the change.
+The budget is one test across ten chambers, placed once before any result is known, and the fleet admits exactly
+one order that works. VC08's log holds a single pumping time, so nothing in it separates a trapped volume from
+wall gas, and only the composition of its gas does: a rate-of-rise gives the whole gas load but not what the gas
+is, and a helium test finds the real leak but not the trapped volume. Every other chamber is settleable from the
+records - the two whose turbo has changed, from their pumpdowns either side of the change; the one whose gauge
+certificate is out, from the speed its own throughput tests report; the one whose constant gas load could be a
+leak or permeation, from how it follows the shop temperature - so a test spent anywhere else is the test taken
+from where it was needed.
+
+This is what makes the order load-bearing: there are forty ways to spend it and one of them is right.
 
 This script places each order through the real `vacwork` program and scores the reference's sheet, so the worth of
 an order is measured and not assumed.
@@ -22,17 +27,15 @@ T = lambda c, k: dict(chamber=c, test=k)                                # noqa: 
 
 PLANS = [
     ("no order at all", []),
-    ("the thin logs only", [T("VC06", "rga"), T("VC08", "rga")]),
-    ("the reference order", C.REFERENCE_PLAN),
-    ("rise for the thin logs", [T("VC06", "rate-of-rise"), T("VC08", "rate-of-rise"),
-                                T("VC09", "speed-test"), T("VC10", "speed-test")]),
-    ("helium for the thin logs", [T("VC06", "helium"), T("VC08", "helium"),
-                                  T("VC09", "speed-test"), T("VC10", "speed-test")]),
-    ("the changed turbos only", [T("VC09", "speed-test"), T("VC10", "speed-test")]),
-    ("four chambers that need nothing", [T("VC01", "rga"), T("VC02", "rga"),
-                                         T("VC03", "rga"), T("VC04", "rga")]),
-    ("everything on one chamber", [T("VC06", "rga"), T("VC06", "helium"),
-                                   T("VC06", "rate-of-rise"), T("VC06", "speed-test")]),
+    ("an analysis on VC08", C.REFERENCE_PLAN),
+    ("a rate-of-rise on VC08", [T("VC08", "rate-of-rise")]),
+    ("a helium test on VC08", [T("VC08", "helium")]),
+    ("a speed test on VC08", [T("VC08", "speed-test")]),
+    ("an analysis on VC06", [T("VC06", "rga")]),
+    ("an analysis on VC01", [T("VC01", "rga")]),
+    ("a rate-of-rise on VC01", [T("VC01", "rate-of-rise")]),
+    ("a helium test on VC04", [T("VC04", "helium")]),
+    ("a speed test on VC09", [T("VC09", "speed-test")]),
 ]
 
 

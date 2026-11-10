@@ -79,8 +79,7 @@ def place_order(plan, tag="order"):
     return out
 
 
-REFERENCE_PLAN = [dict(chamber="VC06", test="rga"), dict(chamber="VC08", test="rga"),
-                  dict(chamber="VC09", test="speed-test"), dict(chamber="VC10", test="speed-test")]
+REFERENCE_PLAN = [dict(chamber="VC08", test="rga")]
 
 
 def reference_answers(plan=None, tag="reference"):

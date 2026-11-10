@@ -1,6 +1,6 @@
 # The audit test order
 
-The audit has a budget of **4 tests across the whole fleet**, ordered once, with the contractor who does
+The audit has a budget of **1 tests across the whole fleet**, ordered once, with the contractor who does
 the shop's vacuum work.
 
     vacwork status
@@ -16,7 +16,7 @@ The plan names a chamber and a test for each of its entries:
     {"tests": [{"chamber": "VC03", "test": "rga"},
                {"chamber": "VC07", "test": "rate-of-rise"}]}
 
-Between 1 and 4 entries, no entry repeated. The reports are written to `/app/vacwork/`.
+Between 1 and 1 entries, no entry repeated. The reports are written to `/app/vacwork/`.
 
 ## The tests
 

@@ -31,11 +31,11 @@ wall at 20 C, nothing in the chamber.** It is MS-BP clause 2.
 - `/app/data/gauge_certificates.md`
 - `/app/data/example/` - one chamber's records with the audit result MS-BP gives for it
 
-## The command and the booking (P: the budget figure 4 and the word vacwork appear)
+## The command and the booking (P: the budget figure 1 and the word vacwork appear)
 
 - `vacwork status` reports the order; `vacwork submit < plan.json` places it.
-- Up to **4 tests** across the whole fleet.
-- Placed **once**: no result is known until the whole order has been placed, and it cannot be changed, extended or
+- Up to **1 test** across the whole fleet.
+- Placed **once**: no result is known until the order has been placed, and it cannot be changed, extended or
   replaced afterwards.
 - Reports are written to `/app/vacwork/`.
 - The plan format is in `vacwork.md`, and `vacwork submit` prints it on a bad plan.

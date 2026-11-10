@@ -182,7 +182,7 @@ def identify(cid, cfg, pts, s_eff, data, vac, o):
         nominal = D.q_wall_nominal(cfg["surfaces"], rga["t_h"], "air", rga["t_k"])
         c_w = q_wall_t / nominal if nominal > 0 else 1.0
         return D.at_reference(cfg, c_w, max(q_total - q_wall_t - q_perm_t, 0.0), 0.0, None)
-    return D.identify_from_rga(cid, cfg, pts, s_eff, data, rga)
+    return D.identify_from_rga(cid, cfg, pts, s_eff, data, rga, vac)
 
 
 def audit(cid, data, certs, fix, vac, o):

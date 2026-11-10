@@ -15,7 +15,7 @@ uncorrected_cathode  2      rejected  VC02 VC09
 logged_serials       2      rejected  VC03 VC07
 ignore_vent_gas      2      rejected  VC01 VC02
 ignore_load          2      rejected  VC01 VC10
-ignore_temperature   3      rejected  VC01 VC05 VC10
+ignore_temperature   5      rejected  VC01 VC05 VC06 VC09 VC10
 table_outgassing     7      rejected  VC01 VC02 VC03 VC07 VC08 VC09 VC10
 no_time_reference    9      rejected  VC02 VC03 VC04 VC05 VC06 VC07 VC08 VC09 VC10
 leak_only            2      rejected  VC07 VC08
@@ -33,7 +33,7 @@ register_port        VC03     cause      pump-speed       +0.4%        +0.3%
 register_port        VC04     cause      pump-speed       -1.0%        -0.9%
 register_port        VC05     cause      pump-speed       +0.1%        +0.4%
 register_seal        VC04     q          air-leak         -7.5%        -0.9%
-register_seal        VC06     cause+q    air-leak         -13.4%       +0.1%
+register_seal        VC06     cause+q    air-leak         -11.2%       +0.1%
 trust_certificate    VC01     s          wall-outgassing  +0.1%        +13.4%
 latest_speed_test    VC01     q+s        wall-outgassing  +14.1%       +13.4%
 latest_speed_test    VC09     cause+q+s  air-leak         +39.2%       +74.9%
@@ -46,41 +46,43 @@ commissioning_speed  VC09     cause+q+s  air-leak         +38.6%       +74.1%
 commissioning_speed  VC10     cause+q+s  wall-outgassing  +63.6%       +91.5%
 no_gas_correction    VC01     q          wall-outgassing  -7.4%        -0.6%
 no_gas_correction    VC02     q          wall-outgassing  -7.4%        +0.3%
-no_gas_correction    VC09     q          pump-speed       -4.6%        +1.4%
-no_gas_correction    VC10     q          pump-speed       -5.0%        -0.3%
+no_gas_correction    VC09     q          pump-speed       -6.8%        -1.0%
+no_gas_correction    VC10     q          pump-speed       -4.8%        -0.0%
 all_entries          VC01     q          wall-outgassing  +106.9%      -0.6%
 all_entries          VC02     q          wall-outgassing  -17.9%       +0.3%
 uncorrected_cathode  VC02     q          wall-outgassing  -7.6%        +0.3%
-uncorrected_cathode  VC09     q          pump-speed       -8.0%        +1.4%
+uncorrected_cathode  VC09     q          pump-speed       -10.1%       -0.9%
 logged_serials       VC03     q          air-leak         +19.1%       +0.3%
 logged_serials       VC07     q          virtual-leak     -7.7%        +1.0%
 ignore_vent_gas      VC01     q          wall-outgassing  -9.4%        -0.6%
 ignore_vent_gas      VC02     cause+q    air-leak         -34.2%       +0.3%
 ignore_load          VC01     q          wall-outgassing  +24.7%       -0.6%
-ignore_load          VC10     q          pump-speed       +6.5%        -0.3%
+ignore_load          VC10     q          pump-speed       +6.8%        -0.0%
 ignore_temperature   VC01     q          wall-outgassing  -8.2%        -0.6%
 ignore_temperature   VC05     q          permeation       -9.4%        +0.4%
-ignore_temperature   VC10     q          pump-speed       +5.5%        -0.3%
+ignore_temperature   VC06     q          permeation       -20.5%       +0.1%
+ignore_temperature   VC09     q          pump-speed       -6.0%        -0.9%
+ignore_temperature   VC10     q          pump-speed       +5.7%        -0.0%
 table_outgassing     VC01     cause+q    air-leak         -14.1%       -0.6%
 table_outgassing     VC02     q          wall-outgassing  -8.4%        +0.3%
 table_outgassing     VC03     q          air-leak         +5.1%        +0.3%
 table_outgassing     VC07     cause      air-leak         -0.4%        +1.0%
 table_outgassing     VC08     cause      air-leak         +2.7%        +0.4%
-table_outgassing     VC09     q          pump-speed       +9.1%        +1.4%
-table_outgassing     VC10     q          pump-speed       +7.4%        -0.3%
+table_outgassing     VC09     q          pump-speed       +9.1%        -0.9%
+table_outgassing     VC10     q          pump-speed       +7.7%        -0.0%
 no_time_reference    VC02     q          wall-outgassing  -23.6%       +0.3%
 no_time_reference    VC03     q          air-leak         -4.4%        +0.3%
 no_time_reference    VC04     q          air-leak         -8.3%        -0.9%
 no_time_reference    VC05     q          permeation       -28.8%       +0.4%
-no_time_reference    VC06     q          permeation       -23.8%       +0.1%
+no_time_reference    VC06     q          permeation       -23.4%       +0.1%
 no_time_reference    VC07     cause      wall-outgassing  +0.8%        +1.0%
 no_time_reference    VC08     cause+q    air-leak         -6.0%        +0.4%
-no_time_reference    VC09     q          pump-speed       -33.0%       +1.4%
-no_time_reference    VC10     q          pump-speed       +8.9%        -0.3%
+no_time_reference    VC09     q          pump-speed       -34.6%       -0.9%
+no_time_reference    VC10     q          pump-speed       +9.1%        -0.0%
 leak_only            VC07     cause+q    wall-outgassing  +15.0%       +1.0%
 leak_only            VC08     cause      air-leak         -0.3%        +0.4%
-skip_pump_gate       VC09     cause      wall-outgassing  +1.3%        +1.4%
-skip_pump_gate       VC10     cause      wall-outgassing  +0.7%        -0.3%
+skip_pump_gate       VC09     cause      wall-outgassing  -1.1%        -0.9%
+skip_pump_gate       VC10     cause      wall-outgassing  +0.9%        -0.0%
 face_value           VC01     q+s        wall-outgassing  +67.2%       +13.4%
 face_value           VC02     q          wall-outgassing  -31.5%       +0.3%
 face_value           VC03     cause+q    pump-speed       +18.8%       +0.3%
@@ -102,10 +104,10 @@ VC02     8                    1                       wall-outgassing
 VC03     6                    2                       air-leak
 VC04     5                    2                       air-leak
 VC05     5                    2                       permeation
-VC06     3                    2                       permeation
+VC06     4                    2                       permeation
 VC07     5                    4                       virtual-leak
 VC08     4                    4                       virtual-leak
-VC09     8                    4                       pump-speed
+VC09     9                    4                       pump-speed
 VC10     9                    4                       pump-speed
 
 gate: at least 10 of 10 chambers right; a route is rejected when more than 0 are wrong
