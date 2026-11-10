@@ -48,3 +48,22 @@
   - a difficulty explanation that says who does the work;
   - the load-bearing document named by absolute path in the instruction;
   - no narration.
+
+## impeller-shrink-fits official difficulty run (Nov 9): 8 of 8 solved, rejected as too easy
+- Every trial found all 12 layers in 14-28 minutes, including those meant to be subtle:
+  - the rotor steel test;
+  - the mill value in a certificate note;
+  - the micrometer error in an inspection-report table;
+  - S4's spin speed in one table column;
+  - the S2 recoat in the log.
+- Frontier agents read every file in full and reconcile every record. A fact that is stated anywhere (a note, a
+  column, a log line) is not a trap, however small.
+- Narrow windows don't help either. Agents placed bores to within micrometres; one passed with an S4 stress margin
+  of +0.00004 (relative).
+- Local xhigh 3/3 predicted this correctly. Treat local 3/3 as "too easy"; don't ship on the hope that official
+  runs are weaker.
+- **What is left to try:** layers that need inference rather than reading.
+  - A fault visible only in raw data: a drifting sensor, swapped tags, an instrument offset that must be estimated
+    from repeated readings of a standard.
+  - A quantity that must be identified from noisy measurements, where the natural model is biased.
+  - Conflicts no record resolves, where only physics or a consistency check settles which source is right.
