@@ -27,16 +27,20 @@ def wilson_error(d, u):
     q = r.glycol_flow_m3h.values / 3600 * hx.RHO_G * hx.CP_G * (r.glycol_in_c.values - tho)
     tco = r.cw_in_c.values + q / (r.cw_flow_m3h.values / 3600 * hx.RHO_CW * hx.CP_CW)
     a, b = r.glycol_in_c.values - tco, tho - r.cw_in_c.values
-    y = 1000.0 / (q * 1000 / (90.0 * (a - b) / np.log(a / b)))
-    xt, xs = (180.0 / r.cw_flow_m3h.values) ** 0.8, (60.0 / r.glycol_flow_m3h.values) ** 0.6
+    A, ft0, fs0, hs0 = (110.0, 220.0, 75.0, 2900.0) if u in hx.NEW else (90.0, 180.0, 60.0, 2500.0)
+    y = 1000.0 / (q * 1000 / (A * (a - b) / np.log(a / b)))
+    xt, xs = (ft0 / r.cw_flow_m3h.values) ** 0.8, (fs0 / r.glycol_flow_m3h.values) ** 0.6
     X = np.c_[xt, np.ones(len(r)), r.day.values]
-    c = np.linalg.lstsq(X, y - 1000.0 / 2500.0 * xs - 0.05, rcond=None)[0]
+    c = np.linalg.lstsq(X, y - 1000.0 / hs0 * xs - 0.05, rcond=None)[0]
     return c[1] + c[2] * hx.T_TEST - hx.rf(FLEET[u], hx.T_TEST)
 
 
-print("E8, tube film fitted from the trend, the bank's median offset (requirement 0.04 m2K/kW)")
+print("tube film fitted from the trend instead of spending a slot (requirement 0.04 m2K/kW); the bank's median")
+print("offset for E8, which never stands by. Same sealed bank, only the generator's noise re-drawn.")
+print("  %-18s %18s %18s" % ("", "E8 error", "E1 error"))
 for seed in (11, 12, 13, 14, 15, 16, 17, 18):
     gen.SEED = seed
     d = tempfile.mkdtemp()
     gen.main(d)
-    print("  noise seed %d%s: error %+.3f" % (seed, " (shipped)" if seed == 11 else "", wilson_error(d, "E8")))
+    print("  noise seed %-11s %+18.3f %+18.3f" % ("%d%s" % (seed, " (shipped)" if seed == 11 else ""),
+                                                  wilson_error(d, "E8"), wilson_error(d, "E1")))

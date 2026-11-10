@@ -1,13 +1,13 @@
 date,units,work_done
-2025-03-10,E1-E9,"Annual outage: bundles hydroblasted, acceptance test with calibrated instruments after cleaning"
+2025-03-10,E1-E9,"Annual outage: bundles hydroblasted, acceptance test with calibrated instruments after cleaning. The sheet for the original E1 was withdrawn when that cooler was replaced in 2026"
 2025-11-04,E4,Glycol outlet RTD replaced (open circuit)
 2026-01-19,E6,Shell gasket replaced
 2026-04-14,E3,"Retubed with ribbed tubes (EC-2026-031, lot A)"
 2026-04-28,E7,"Retubed with ribbed tubes (EC-2026-031, lot C)"
 2026-05-12,E8,"Retubed with ribbed tubes (EC-2026-031, lot B)"
-2026-06-08,E10,New cooler (model C-310) commissioned; vendor datasheet clean coefficient entered in the monitoring sheet
+2026-06-08,E1 and E10,Both original coolers replaced under the capacity upgrade: two new C-310 coolers from one build batch commissioned; the C-310 datasheet clean coefficient entered in the monitoring sheet for both
 2026-07-21,E2,Tube leak: leaking tubes plugged both ends; number plugged not recorded on the work order
 2026-08-17,E5,Bundle replaced (corroded baffles); new bundle from the bundle shop to the revised baffle drawing (see bundle_e5_2026.md)
 2026-09-02,CW,Chlorine dosing pump failed; repaired 2026-09-12. Slime found at the E6 inlet box
-2026-10-05,CW,"Shock chlorination of the cooling-water system, hypochlorite slug 08:00-12:00, after slime was found again at the E6 inlet box"
+2026-09-28,CW,"Shock chlorination of the cooling-water system, hypochlorite slug 08:00-12:00, after slime was found again at the E6 inlet box"
 2026-10-26,E1-E10,Assessment day: three clean-and-test slots booked with the maintenance contractor

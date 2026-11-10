@@ -2,36 +2,46 @@
 treated as pure counterflow). Units: m3/h, C, kW, W/m2K, m2K/kW for fouling resistance.
 
 Overall coefficient: 1/U = 1/h_t + 1/h_s + R_w + R_f, with h_t ~ (tube-side velocity)^0.8 and h_s ~ (shell flow)^0.6.
-- Model C-200 (E1-E9) and C-310 (E10, new). Design-sheet split per model; each unit varies a few per cent.
+- Model C-200 (E2-E9) and C-310 (E1, E10, both commissioned June 2026). Design-sheet split per model; the
+  C-200s wander several per cent from it (bundles rebuilt and repaired over the years), so each one's own 2025
+  acceptance test is its clean performance; the two C-310s are one build batch and are alike to about a per cent.
+- E1 and E10: the only rating either has is the C-310 datasheet, one sheet from the vendor's thermal program for
+  both of them, optimistic by VENDOR_U. The program's optimism is the same for the two of them, so a clean test on
+  either one carries to the other; nothing else on site gives it.
 - E3, E7, E8: 2026 retrofit with enhanced (internally ribbed) tubes: tube-side friction factor x e_f (per unit,
   rib geometry varies between tube lots), tube-side coefficient x e_h = 1 + K_EH (e_f - 1) (one ratio).
 - E2: leaking tubes plugged in 2026 (fraction open N_OPEN; area and tube flow area fall).
 - E5: replacement bundle (Aug 2026) built to a revised baffle drawing (spacing 400 mm, was 300 mm): the shell-side
   crossflow velocity falls to 0.75 and the shell film with it to the power 0.6.
-- E10: new unit; only the vendor's datasheet clean coefficient (optimistic).
-- Fouling resistance grows linearly in time; E6 fast (biofouling after a chlorination outage). The shock
-  chlorination of 2026-10-05 strips part of E6's biofilm (a step down), after which it grows at the same rate.
+- E9: its 2025 acceptance sheet does not close its heat balance (two readings misrecorded, see gen.py).
+- Fouling resistance grows linearly in time, DOSE_FAST times faster over the ten days the cooling water ran with
+  no chlorine (the dosing pump was down, 2026-09-02 to 2026-09-12), then at its own rate again. The shock
+  chlorination of 2026-09-28 strips SHOCK_STRIP of the biofilm each unit grew over those ten days (a step down),
+  after which growth carries on at the same rate. E6 fouls fast, so it grows and loses the most.
 - Process-outlet temperature transmitter reads high by a per-unit bias; visible in standby (cooling water isolated,
   glycol circulating: true outlet = inlet). E8 never stands by.
-Time: days from 2026-09-14 00:00 (start of the trends). Assessment (clean-and-test) day: T_TEST.
+Time: days from 2026-08-24 00:00 (start of the trends). Assessment (clean-and-test) day: T_TEST.
 """
 import numpy as np
 
 UNITS = ["E%d" % i for i in range(1, 11)]
-T_TEST = 42.0                       # 2026-10-26, 4 weeks of trends + 14 days
+T_TEST = 63.0                       # 2026-10-26, seven weeks of trends + 14 days
 TEST_DATE = "2026-10-26"
 RHO_CW, CP_CW = 995.0, 4.18         # kg/m3, kJ/kg K
 RHO_G, CP_G = 1050.0, 3.60          # glycol solution
 K_EH = 0.65
+NEW = ("E1", "E10")                 # the two C-310 coolers commissioned June 2026: one batch, one vendor datasheet
 MODEL = {"C-200": dict(A=90.0, ht=3000.0, hs=2500.0, rw=5e-5, ft=180.0, fs=60.0, dp=42.0),
          "C-310": dict(A=110.0, ht=3200.0, hs=2600.0, rw=5e-5, ft=220.0, fs=75.0, dp=38.0)}
 ENH = {"E3": 1.25, "E7": 2.80, "E8": 1.80}           # tube-side friction factor ratio of the ribbed tubes
 N_OPEN = {"E2": 0.88}                                # fraction of tubes open
 HS_NEW = {"E5": (300.0 / 400.0) ** 0.6}               # replacement bundle: baffle spacing 300 -> 400 mm, crossflow
                                                      # velocity x 0.75, shell film x 0.75^0.6
-VENDOR_U = 1.12                                      # E10 datasheet clean U over the true one
-SHOCK_DAY = 21.5                                     # 2026-10-05 12:00, end of the shock chlorination
-SHOCK_DROP = {"E6": 0.22}
+VENDOR_U = 1.12                                      # C-310 datasheet clean U over the true one, both units
+DOSE_FAIL, DOSE_FIX = 9.0, 19.0     # 2026-09-02 to 2026-09-12: no chlorine in the cooling water
+DOSE_FAST = 8.0                     # fouling rate while the dosing pump is down, times the unit's own rate
+SHOCK_DAY = 35.5                    # 2026-09-28 12:00, end of the shock chlorination
+SHOCK_STRIP = 0.6                   # of the biofilm grown over the dosing outage, the share the shock dose removes
 RF_TEST = {"E4": 0.104, "E1": 0.197, "E10": 0.290, "E5": 0.500, "E2": 0.598, "E9": 0.690, "E6": 0.903,
            "E7": 0.996, "E3": 1.087, "E8": 1.283}  # m2K/kW on 2026-10-26: irregular, at least 0.092 apart
 
@@ -40,11 +50,12 @@ def make_fleet(seed=11):
     rng = np.random.default_rng(seed)
     fleet = {}
     for u in UNITS:
-        model = "C-310" if u == "E10" else "C-200"
+        model = "C-310" if u in NEW else "C-200"
         m = MODEL[model]
         b = dict(unit=u, model=model, A_nom=m["A"])
-        b["ht0"] = m["ht"] * (1 + rng.normal(0, 0.025))
-        b["hs0"] = m["hs"] * (1 + rng.normal(0, 0.025))
+        sd = 0.01 if u in NEW else 0.10          # the two C-310s are one build batch, so they are alike
+        b["ht0"] = m["ht"] * (1 + rng.normal(0, sd))
+        b["hs0"] = m["hs"] * (1 + rng.normal(0, sd))
         b["rw"] = m["rw"]
         b["dp0"] = m["dp"] * (1 + rng.normal(0, 0.015))
         b["e_f"] = ENH.get(u, 1.0)
@@ -58,11 +69,27 @@ def make_fleet(seed=11):
     fleet["E6"]["rate"] = 0.0090
     fleet["E8"]["bias"] = 2.0
     fleet["E9"]["ht0"] *= 0.80          # E9's bundle (rebuilt 2019) has a poorer tube side than its sisters
+    span = T_TEST + (DOSE_FAST - 1.0) * (DOSE_FIX - DOSE_FAIL)      # growth days to the test day
     for u, target in RF_TEST.items():   # as-found fouling on the test day, irregularly spread across the bank
         b = fleet[u]
-        b["rate"] = min(b["rate"], (target - 0.03) / T_TEST) if u != "E6" else b["rate"]
-        b["rf0"] = target - b["rate"] * T_TEST + SHOCK_DROP.get(u, 0.0)
+        b["rate"] = min(b["rate"], (target - 0.03) / span) if u != "E6" else b["rate"]
+        b["rf0"] = target - growth(b, T_TEST) + strip(b)
     return fleet
+
+
+def growth(b, t):
+    """Fouling grown by day t: the unit's own rate, DOSE_FAST times that while the dosing pump is down."""
+    r = b["rate"] * min(t, DOSE_FAIL)
+    if t > DOSE_FAIL:
+        r += b["rate"] * DOSE_FAST * (min(t, DOSE_FIX) - DOSE_FAIL)
+    if t > DOSE_FIX:
+        r += b["rate"] * (t - DOSE_FIX)
+    return r
+
+
+def strip(b):
+    """What the shock chlorination takes off: part of the biofilm grown while the dosing pump was down."""
+    return SHOCK_STRIP * b["rate"] * (DOSE_FAST - 1.0) * (DOSE_FIX - DOSE_FAIL)
 
 
 def h_t(b, ft, now=True):
@@ -83,9 +110,9 @@ def area(b, now=True):
 
 
 def rf(b, t):
-    r = b["rf0"] + b["rate"] * t
+    r = b["rf0"] + growth(b, t)
     if t >= SHOCK_DAY:                  # the shock dose strips part of the biofilm; growth carries on after it
-        r -= SHOCK_DROP.get(b["unit"], 0.0)
+        r -= strip(b)
     return r
 
 

@@ -1,49 +1,71 @@
 tolerance 0.040 m2K/kW
 
-  reference: test E8, E9, E10                                                          worst 0.018 (E2)  fails  0  
+  reference: test E1, E9, E8                                                           worst 0.011 (E9)  fails  0  
 
 shortcuts on the reference plan
-  glycol-outlet transmitter bias not removed                                           worst 0.154 (E6)  fails  7  E1 E2 E3 E4 E5 E6 E7
-  fouling taken as the four-week median (growth not carried to the test day)           worst 0.090 (E6)  fails  4  E1 E3 E4 E6
-  fouling taken from the last two days of the trend                                    worst 0.132 (E6)  fails  1  E6
-  one straight line through the four weeks (shock-chlorination step ignored)           worst 0.067 (E6)  fails  1  E6
-  one straight line through the last two weeks (step ignored)                          worst 0.370 (E6)  fails  1  E6
-  E2 plugging ignored (nominal area and tube velocity)                                 worst 0.155 (E2)  fails  1  E2
-  ribbed-tube gain not applied to E3, E7                                               worst 0.184 (E7)  fails  2  E3 E7
-  E8's measured ribbed-tube gain carried over unchanged to E3, E7                      worst 0.077 (E7)  fails  2  E3 E7
-  2025 split: all of the difference on the shell film                                  worst 0.018 (E2)  fails  0  
-  2025 split: all of the difference on the tube film                                   worst 0.018 (E2)  fails  0  
-  transmitter bias from the standby mean                                               worst 0.017 (E2)  fails  0  
-  E5 from its 2025 test as it stands (the wider baffle spacing ignored)                worst 0.071 (E5)  fails  1  E5
+  glycol-outlet transmitter bias not removed                                           worst 0.144 (E6)  fails  5  E3 E4 E5 E6 E7
+  fouling taken as the seven-week median (growth not carried to the test day)          worst 0.173 (E6)  fails  1  E6
+  fouling taken from the last two days of the trend                                    worst 0.137 (E6)  fails  1  E6
+  one straight line through the seven weeks (both cooling-water events ignored)        worst 0.332 (E6)  fails  3  E2 E3 E6
+  one straight line through the last two weeks (events ignored)                        worst 0.100 (E6)  fails  1  E6
+  the shock-chlorination step fitted, the chlorine-free days not allowed for           worst 0.497 (E6)  fails  5  E10 E2 E3 E6 E7
+  the chlorine-free days allowed for, the shock-chlorination step not fitted           worst 0.335 (E6)  fails  3  E2 E3 E6
+  the untested C-310 twin left on the vendor datasheet                                 worst 0.073 (E10)  fails  1  E10
+  E2 plugging ignored (nominal area and tube velocity)                                 worst 0.151 (E2)  fails  1  E2
+  ribbed-tube gain not applied to E3, E7                                               worst 0.162 (E7)  fails  2  E3 E7
+  E8's measured ribbed-tube gain carried over unchanged to E3, E7                      worst 0.063 (E7)  fails  2  E3 E7
+  (the retube note ties the film gain to the friction gain through one coefficient of the rib form; the
+   three rows below invent another law through E8's measured point instead, and the fourth hedges
+   between them)
+  E3, E7 film gain as the friction gain to a power fitted on E8                        worst 0.011 (E9)  fails  0  
+  E3, E7 film gain as a square-root law fitted on E8                                   worst 0.034 (E7)  fails  0  
+  E3, E7 film gain as a saturating law fitted on E8                                    worst 0.033 (E7)  fails  0  
+  E3, E7 film gain split between those laws (hedge)                                    worst 0.017 (E7)  fails  0  
+  2025 split: all of the difference on the shell film                                  worst 0.017 (E5)  fails  0  
+  2025 split: all of the difference on the tube film                                   worst 0.023 (E7)  fails  0  
+  transmitter bias from the standby mean                                               worst 0.011 (E9)  fails  0  
+  E5 from its 2025 test as it stands (the wider baffle spacing ignored)                worst 0.081 (E5)  fails  1  E5
+  one glycol-outlet offset for the whole bank (the bank's median) instead of each unit's own worst 0.134 (E7)  fails  6  E10 E3 E4 E5 E6 E7
+  the design-sheet film split for every unit (each unit's own 2025 test not used)      worst 0.123 (E5)  fails  2  E5 E7
+
+the mirror plan, testing the other C-310 of the pair (test E10, E9, E8)
+  reference on the mirror plan                                                         worst 0.011 (E9)  fails  0  
+  the untested C-310 twin left on the vendor datasheet                                 worst 0.069 (E1)  fails  1  E1
+  glycol-outlet transmitter bias not removed                                           worst 0.144 (E6)  fails  6  E1 E3 E4 E5 E6 E7
+  one straight line through the seven weeks (both cooling-water events ignored)        worst 0.332 (E6)  fails  4  E1 E2 E3 E6
 
 plans that spend the slots differently (E9 untested: its 2025 sheet, whose heat balance is 5 % open)
-  test E8, E5, E10; E9: glycol-side duty as recorded                                   worst 0.139 (E9)  fails  1  E9
-  test E8, E5, E10; E9: water-side duty as recorded                                    worst 0.199 (E9)  fails  1  E9
-  test E8, E5, E10; E9: glycol outlet rebuilt from the water side                      worst 0.258 (E9)  fails  1  E9
-  test E8, E5, E10; E9: water outlet rebuilt from the glycol side                      worst 0.131 (E9)  fails  1  E9
-  test E8, E5, E10; E9: mean of the two duties                                         worst 0.168 (E9)  fails  1  E9
-  test E8, E5, E10; E9: glycol inlet rebuilt from the water side                       worst 0.168 (E9)  fails  1  E9
-  test E8, E5, E10; E9: water inlet rebuilt from the glycol side                       worst 0.157 (E9)  fails  1  E9
-  test E8, E5, E10; E9: sheet set aside, design split                                  worst 0.086 (E9)  fails  1  E9
-  test E8, E5, E10; E9: sheet set aside, the sister units' median factor               worst 0.090 (E9)  fails  1  E9
-  test E8, E9, E5                                                                      worst 0.081 (E10)  fails  1  E10
-  test E3, E9, E10                                                                     worst 0.273 (E8)  fails  1  E8
-  test E7, E9, E10                                                                     worst 0.275 (E8)  fails  1  E8
-  test E8, E7, E10                                                                     worst 0.139 (E9)  fails  1  E9
-  test E8, E2, E10                                                                     worst 0.139 (E9)  fails  1  E9
-  test E8, E6, E10                                                                     worst 0.139 (E9)  fails  1  E9
-  test E9, E10, E5                                                                     worst 0.184 (E7)  fails  3  E3 E7 E8
-  test E8, E3, E9                                                                      worst 0.081 (E10)  fails  1  E10
+  test E1, E8, E5; E9: glycol-side duty as recorded                                    worst 0.136 (E9)  fails  1  E9
+  test E1, E8, E5; E9: water-side duty as recorded                                     worst 0.206 (E9)  fails  1  E9
+  test E1, E8, E5; E9: glycol outlet rebuilt from the water side                       worst 0.273 (E9)  fails  1  E9
+  test E1, E8, E5; E9: water outlet rebuilt from the glycol side                       worst 0.126 (E9)  fails  1  E9
+  test E1, E8, E5; E9: mean of the two duties                                          worst 0.170 (E9)  fails  1  E9
+  test E1, E8, E5; E9: glycol inlet rebuilt from the water side                        worst 0.170 (E9)  fails  1  E9
+  test E1, E8, E5; E9: water inlet rebuilt from the glycol side                        worst 0.156 (E9)  fails  1  E9
+  test E1, E8, E5; E9: sheet set aside, design split                                   worst 0.096 (E9)  fails  1  E9
+  test E1, E8, E5; E9: sheet set aside, the sister units' median factor                worst 0.112 (E9)  fails  1  E9
+  test E1, E10, E9                                                                     worst 0.162 (E7)  fails  3  E3 E7 E8
+  test E1, E10, E8                                                                     worst 0.136 (E9)  fails  1  E9
+  test E9, E8, E5                                                                      worst 0.073 (E10)  fails  2  E1 E10
+  test E3, E9, E1                                                                      worst 0.274 (E8)  fails  1  E8
+  test E7, E9, E10                                                                     worst 0.271 (E8)  fails  1  E8
+  test E1, E8, E7                                                                      worst 0.136 (E9)  fails  1  E9
+  test E1, E8, E2                                                                      worst 0.136 (E9)  fails  1  E9
+  test E1, E8, E6                                                                      worst 0.136 (E9)  fails  1  E9
+  test E1, E9, E5                                                                      worst 0.162 (E7)  fails  3  E3 E7 E8
+  test E10, E9, E3                                                                     worst 0.268 (E8)  fails  1  E8
 
 no slot: the unknown film fitted from the trend's own flow variation (Wilson plot); the bank runs at
 nearly fixed flows, so the fit cannot separate the film from the fouling (error on that unit)
-  E10, tube film fitted                                                  error +0.150, the fit's own standard error +-0.037
-  E10, shell film fitted                                                 error -0.312, the fit's own standard error +-0.039
-  E9, tube film fitted                                                   error +0.263, the fit's own standard error +-0.049
-  E9, shell film fitted                                                  error -0.462, the fit's own standard error +-0.060
-  E8, tube film fitted                                                   error -0.002, the fit's own standard error +-0.108
-  E8, shell film fitted                                                  error -0.250, the fit's own standard error +-0.107
-  E3, tube film fitted                                                   error +0.105, the fit's own standard error +-0.058
-  E7, tube film fitted                                                   error +0.053, the fit's own standard error +-0.045
+  E1, tube film fitted                                                   error -0.332, the fit's own standard error +-0.123
+  E1, shell film fitted                                                  error -0.316, the fit's own standard error +-0.120
+  E10, tube film fitted                                                  error +0.213, the fit's own standard error +-0.077
+  E10, shell film fitted                                                 error +0.529, the fit's own standard error +-0.080
+  E9, tube film fitted                                                   error +0.153, the fit's own standard error +-0.064
+  E9, shell film fitted                                                  error +0.034, the fit's own standard error +-0.065
+  E8, tube film fitted                                                   error +0.066, the fit's own standard error +-0.100
+  E8, shell film fitted                                                  error -0.207, the fit's own standard error +-0.107
+  E3, tube film fitted                                                   error +0.499, the fit's own standard error +-0.129
+  E7, tube film fitted                                                   error -0.382, the fit's own standard error +-0.081
   (with flows this steady the fit's own standard error is 0.04 to 0.11, comparable to or above the 0.04
    requirement: an error near zero, as on E8's tube fit, is chance inside that band)

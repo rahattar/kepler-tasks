@@ -15,18 +15,25 @@ sealed definition or the verifier.
    crossflow velocity at a given flow falls to 0.75 and its shell film to 0.75^0.6 of the 2025 one.
 3. Fouling in the trend: for every running hour, U from the glycol-side duty (bias removed) over the counterflow
    LMTD (the water outlet from the same duty: the units share one return header), then R_f = 1/U - 1/U_clean at
-   that hour's flows; a least-squares line in time, with a step at the shock chlorination in the maintenance log
-   (biofilm stripped; the dose day left out), carries it to the test day.
-4. What the records cannot settle gets a slot: the new unit (E10: only the vendor's datasheet, rated, not
-   measured), a unit whose 2025 test sheet does not close its heat balance (E9: water-side duty 5 percent below the
-   glycol side, where every other sheet closes within about 1 percent; which reading is wrong cannot be told from
-   the sheet), and a ribbed unit that never stands by (E8: neither its bias nor its clean coefficient is known). A
-   tested unit's as-found R_f is 1/U_as_found - 1/U_clean from the reference instruments.
+   that hour's flows. The trend spans the ten days the cooling water ran without chlorine (dosing pump down, in the
+   maintenance log), over which every unit fouled several times faster, and the shock chlorination that followed.
+   A least-squares fit of one rate in time plus a level shift across the dosing outage plus a step at the shock
+   dose (the outage days and the dose day left out of the fit) carries each unit to the test day.
+4. What the records cannot settle: the two new coolers (E1, E10: no site test, only the vendor's datasheet, rated
+   and optimistic), a unit whose 2025 test sheet does not close its heat balance (E9: water-side duty 5 percent
+   below the glycol side, where every other sheet closes within about 1 percent; which reading is wrong cannot be
+   told from the sheet), and a ribbed unit that never stands by (E8: neither its bias nor its clean coefficient is
+   known). That is four units for three slots, so one slot has to serve two units: the datasheet is one rating for
+   both C-310s, built to the same drawing in one batch, so a clean test on either gives the factor the datasheet is
+   out by and it carries to the other. A tested unit's as-found R_f is 1/U_as_found - 1/U_clean from the reference
+   instruments.
 5. Plugged tubes (E2): tube-side dp at a given water flow rises as (1/open fraction)^1.8, so the dp ratio to the
    unit's 2025 test gives the open fraction, the actual area and the tube velocity.
-6. Ribbed tubes: dp ratio to the unit's 2025 test is the friction-factor gain. The tested ribbed unit's clean test
-   gives its tube-film gain (clean U minus the shell film and wall, over its 2025 tube film); the ratio of
-   (film gain - 1) to (friction gain - 1) carries to the other ribbed units through their own friction gain.
+6. Ribbed tubes: dp ratio to the unit's 2025 test is the friction-factor gain. The retube note ties the two gains
+   of a rib form through one coefficient, (film gain - 1) = K (friction gain - 1), the same K for all three tube
+   lots whatever their rib height. The tested ribbed unit's clean test gives its tube-film gain (clean U minus the
+   shell film and wall, over its 2025 tube film), so its two gains fix K, and each other ribbed unit's film gain
+   follows from its own friction gain.
 """
 import csv, json, os, re, sys, time, urllib.request
 import numpy as np
@@ -36,7 +43,7 @@ DATA, URL, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
 RHO_G, CP_G = 1050.0, 3.60
 DESIGN = {"C-200": dict(A=90.0, ht=3000.0, hs=2500.0, rw=5e-5, ft=180.0, fs=60.0),
           "C-310": dict(A=110.0, ht=3570.0, hs=2900.0, rw=5e-5, ft=220.0, fs=75.0)}     # C-310: vendor datasheet
-T0 = pd.Timestamp("2026-09-14 00:00")
+T0 = pd.Timestamp("2026-08-24 00:00")
 T_TEST = (pd.Timestamp("2026-10-26 08:00") - T0).total_seconds() / 86400.0
 BUDGET = 3
 
@@ -81,6 +88,11 @@ def main():
     sp_old, sp_new = [float(x) for x in re.search(r"from (\d+) mm to (\d+) mm", note).groups()]
     hs_factor = {"E5": (sp_old / sp_new) ** 0.6}
 
+    # the ribbed tubes' two gains, tied by the retube note through one coefficient of the rib form (same for every
+    # tube lot): the tested ribbed unit's own two gains fix it, and the others follow from their friction gain
+    rib_note = open(os.path.join(DATA, "docs", "retube_2026.md")).read()
+    assert "h_ribbed / h_plain - 1 = K * (f_ribbed / f_plain - 1)" in rib_note, "retube note: relation not found"
+
     def scale(u):
         """(tube, shell) factors on the design split from the unit's 2025 clean test."""
         m = reg.loc[u, "model"]
@@ -105,12 +117,24 @@ def main():
         sb = tr[u][tr[u].state == "standby"]
         return float(np.median(sb.glycol_out_c - sb.glycol_in_c)) if len(sb) >= 3 else None
 
-    # shock chlorination of the cooling water strips biofilm: a step in the fouling trend on that day
-    shocks = [(pd.Timestamp(r.date) - T0).total_seconds() / 86400.0 for _, r in log.iterrows()
-              if "shock chlorination" in str(r.work_done).lower() and pd.Timestamp(r.date) > T0]
+    # what the cooling water did to every unit's fouling: the days it ran with no chlorine (dosing pump down, so
+    # the biofilm grew several times faster) and the shock dose that stripped part of what had grown
+    def day_of(ts):
+        return (pd.Timestamp(ts) - T0).total_seconds() / 86400.0
 
-    # what the records cannot settle
-    plan = [u for u in units if u not in acc.index]                       # no site clean test (vendor datasheet only)
+    outages, shocks = [], []
+    for _, r in log.iterrows():
+        w = str(r.work_done).lower()
+        if "dosing pump failed" in w:
+            back = re.search(r"repaired (\d{4}-\d{2}-\d{2})", w)
+            outages.append((day_of(r.date), day_of(back.group(1))))
+        if "shock chlorination" in w and pd.Timestamp(r.date) > T0:
+            shocks.append(day_of(r.date))
+
+    # what the records cannot settle. Four units for three slots: the two new coolers share one vendor rating, so
+    # a clean test on either one gives the factor that rating is out by and it carries to the other.
+    new = [u for u in units if u not in acc.index]                        # no site clean test (datasheet only)
+    plan = new[:1]
     plan += [u for u in acc.index if abs(gap(u)) > 0.02 and u not in plan]  # 2025 sheet whose heat balance does not close
     plan += [u for u in ribbed if bias(u) is None and u not in plan]      # ribbed, never stands by
     if not any(u in ribbed for u in plan):
@@ -132,7 +156,7 @@ def main():
                            DESIGN[reg.loc[u, "model"]]["A"])), r["cw_flow_m3h"], r["glycol_flow_m3h"]
 
     est = {}
-    gains = []
+    gains, new_scale = [], None
     for u in plan:
         ua, _, _ = test_u(u, "as_found")
         uc, ft, fs = test_u(u, "after_cleaning")
@@ -141,6 +165,10 @@ def main():
             ht_old, hs, rw = films(reg.loc[u, "model"], ft, fs, scale(u))
             ht_now = 1 / (1 / uc - 1 / hs - rw)
             gains.append((ht_now / ht_old - 1) / (dp_ratio(u) - 1))
+        if u in new:                 # how far the shared C-310 datasheet is from a measured clean coefficient
+            ht, hs, rw = films(reg.loc[u, "model"], ft, fs)
+            f = (1 / ht + 1 / hs) / (1 / uc - rw)
+            new_scale = (f, f)
     k_rib = float(np.mean(gains))
     for u in units:
         if u in est:
@@ -150,17 +178,21 @@ def main():
         if any(("plugged" in str(r.work_done).lower()) and u in str(r.units).split(",") for _, r in log.iterrows()):
             open_ = dp_ratio(u) ** (-1 / 1.8)
         eh = 1 + k_rib * (dp_ratio(u) - 1) if u in ribbed else 1.0
+        sc = new_scale if u in new else scale(u)      # the twin's measured factor stands in for its own clean test
         b = bias(u)
         r = tr[u][tr[u].state == "run"]
         tho = r.glycol_out_c.values - b
         q = r.glycol_flow_m3h.values / 3600 * RHO_G * CP_G * (r.glycol_in_c.values - tho)
         tco = r.cw_in_c.values + q / (r.cw_flow_m3h.values / 3600 * 995.0 * 4.18)      # no water-outlet RTD
         U = u_obs(r.glycol_flow_m3h.values, r.cw_in_c.values, tco, r.glycol_in_c.values, tho, DESIGN[m]["A"] * open_)
-        ht, hs, rw = films(m, r.cw_flow_m3h.values, r.glycol_flow_m3h.values, scale(u), open_, eh)
+        ht, hs, rw = films(m, r.cw_flow_m3h.values, r.glycol_flow_m3h.values, sc, open_, eh)
         rf = 1000 * (1 / U - (1 / ht + 1 / hs + rw))
         day = r.day.values
         keep = np.ones(len(day), bool)
         cols = [np.ones(len(day)), day]
+        for d0, d1 in outages:       # fast growth with no chlorine: one rate either side, a level shift across it
+            keep &= (day < d0) | (day >= d1 + 1)
+            cols.append((day >= d1 + 1).astype(float))
         for s0 in shocks:                       # a step at each shock dose; the dose day itself is left out
             keep &= (day < s0) | (day >= s0 + 1)
             cols.append((day >= s0 + 1).astype(float))

@@ -1,7 +1,7 @@
-sound methods: 108 estimates (the passing allocation in every run order x method choices)
-worst-unit error: min 0.017, median 0.018, max 0.020 m2K/kW; fail at 0.04: 0
-  0.020 at E2 | E8,E9,E10 | split shell, standby median, line and step, 14 d
-  0.020 at E2 | E8,E10,E9 | split shell, standby median, line and step, 14 d
-  0.020 at E2 | E9,E8,E10 | split shell, standby median, line and step, 14 d
-  0.020 at E2 | E9,E10,E8 | split shell, standby median, line and step, 14 d
-  0.020 at E2 | E10,E8,E9 | split shell, standby median, line and step, 14 d
+sound methods: 216 estimates (each passing allocation in every run order x method choices)
+worst-unit error: min 0.008, median 0.017, max 0.026 m2K/kW; fail at 0.04: 0
+  0.026 at E7 | E8,E1,E9 | split tube, standby mean, rate, outage shift and shock step, 49 d
+  0.026 at E7 | E8,E9,E1 | split tube, standby mean, rate, outage shift and shock step, 49 d
+  0.026 at E7 | E8,E10,E9 | split tube, standby mean, rate, outage shift and shock step, 49 d
+  0.026 at E7 | E8,E9,E10 | split tube, standby mean, rate, outage shift and shock step, 49 d
+  0.025 at E7 | E8,E1,E9 | split tube, standby mean, rate, outage shift and shock step, 21 d

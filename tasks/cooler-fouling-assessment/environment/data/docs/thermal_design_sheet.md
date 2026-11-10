@@ -1,4 +1,4 @@
-# Glycol cooler bank: thermal design sheet (model C-200, units E1-E9)
+# Glycol cooler bank: thermal design sheet (model C-200, units E2-E9)
 
 Shell-and-tube coolers, glycol solution on the shell side, cooling water in the tubes, counter-current. Rate them
 as pure counterflow (the duty is computed with the log-mean temperature difference, no correction factor).
@@ -16,7 +16,9 @@ as pure counterflow (the duty is computed with the log-mean temperature differen
 - Overall coefficient: 1/U = 1/h_tube + 1/h_shell + R_wall + R_fouling.
 - The tube-side film coefficient follows the water velocity in the tubes to the power 0.8; the shell-side film
   coefficient follows the glycol crossflow velocity across the tube bank to the power 0.6 (for a given bundle, the
-  glycol flow to the power 0.6). Original C-200 bundles: baffle spacing 300 mm, 25 percent baffle cut.
+  glycol flow to the power 0.6). The crossflow area between two baffles is the baffle spacing times the free width
+  across the bundle, so at a given glycol flow the crossflow velocity goes inversely with the baffle spacing.
+  Original C-200 bundles: baffle spacing 300 mm, 25 percent baffle cut.
 - Tube-side pressure drop follows the water velocity in the tubes to the power 1.8, times the tube friction factor.
 - Fluids: cooling water 995 kg/m3, 4.18 kJ/kg K; glycol solution 1050 kg/m3, 3.60 kJ/kg K.
 - Individual units differ from the design split, most by a few per cent, some by more (bundles rebuilt or

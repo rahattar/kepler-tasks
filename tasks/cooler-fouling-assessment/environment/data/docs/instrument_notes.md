@@ -11,4 +11,4 @@
 - Standby: when a unit is not needed, its cooling-water valves are shut and glycol keeps circulating through the
   shell. With no water flowing nothing is removed, and the glycol leaves at the temperature it entered; the trend
   logs these hours as `standby`. E8 cools the reactor jacket glycol and runs continuously.
-- Trends: hourly averages, 2026-09-14 00:00 to 2026-10-11 23:00, one file per unit.
+- Trends: hourly averages, 2026-08-24 00:00 to 2026-10-11 23:00, one file per unit.

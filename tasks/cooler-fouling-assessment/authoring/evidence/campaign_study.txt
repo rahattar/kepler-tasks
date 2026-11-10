@@ -1,1 +1,1 @@
-allocations of three slots over ten units: 120; passing: [(('E8', 'E9', 'E10'), 0.018)]; best failing allocation: 0.081 m2K/kW
+allocations of three slots over ten units: 120; passing: [(('E1', 'E8', 'E9'), 0.008), (('E8', 'E9', 'E10'), 0.011)]; best failing allocation: 0.073 m2K/kW

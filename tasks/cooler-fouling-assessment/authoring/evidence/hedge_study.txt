@@ -1,0 +1,42 @@
+requirement 0.040 m2K/kW (stated in no file the solver can read)
+
+tested ribbed unit E8: friction gain 1.786 from its tube-side dp (sealed 1.80), film gain 1.469 measured
+from its clean test; the retube note's relation gives K = 0.596 (sealed 0.65)
+
+ribbed film gain at the untested units, from laws that all reproduce E8's measured point
+  law                                E3 gain      E7 gain      E3 error   E7 error  
+  1 + K (f - 1)   [retube note]      1.132        2.050        -0.009     -0.003
+  f ** n                             1.142        1.960        -0.006     -0.010
+  1 + a sqrt(f - 1)                  1.249        1.702        +0.018     -0.034
+  1 + a (1 - exp(-(f - 1)))          1.171        1.713        +0.001     -0.033
+  middle of the four above (hedge)   1.190        1.876        +0.005     -0.017
+  sealed definition                  1.163        2.170       
+  E3: the four laws span 0.027 m2K/kW; worst of them +0.018; the note's law -0.009
+  E7: the four laws span 0.031 m2K/kW; worst of them -0.034; the note's law -0.003
+
+E5's replacement bundle, baffle spacing 300 -> 400 mm
+  crossflow velocity inversely with the spacing [design sheet] error -0.007
+  2025 test used as it stands                              error +0.081
+  middle of the two (hedge)                                error +0.037
+
+the new C-310 pair, one vendor rating for both
+  the tested twin's measured factor [datasheet note]       error +0.006
+  the shared datasheet as it stands                        error +0.073
+  middle of the two (hedge)                                error +0.039
+
+whether one number can satisfy two readings at once (|reading A - reading B| against 2 x 0.04)
+  E3  stated      vs saturating  gap 0.010 -> a split answer satisfies both
+  E7  stated      vs saturating  gap 0.030 -> a split answer satisfies both
+  E7  stated      vs power       gap 0.007 -> a split answer satisfies both
+  E7  stated      vs root        gap 0.031 -> a split answer satisfies both
+  E10 twin factor vs datasheet   gap 0.068 -> a split answer satisfies both
+  E5  design sheet vs 2025 flat   gap 0.088 -> no number satisfies both
+
+conclusion: each reading is settled in the documents, not left to the solver's judgement. The retube
+note ties the film gain to the friction gain through one coefficient of the rib form, so the single
+tested ribbed unit fixes that coefficient and every other ribbed unit follows from its own dp; the
+design sheet ties the shell-side crossflow velocity to the baffle spacing, so the rebuilt bundle's
+shell film follows from its new spacing. Read that way there is one figure per unit, and it is the one
+the records support. The gaps between readings are under 2 x the requirement, so a number split
+between two readings could in principle satisfy both: that is why the requirement appears in no file
+the solver can read, and a split answer cannot be aimed at a band it cannot see.
