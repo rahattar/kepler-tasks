@@ -1,0 +1,12 @@
+Miss in percent, (output, heat rate) per condition; the bound is 0.5 %.
+
+reference                                                worst  0.01   as_found +0.01 -0.01   as_left +0.00 +0.01
+last qualifying 30-minute window of each run             worst  0.01   as_found +0.01 -0.01   as_left -0.01 -0.00
+every base-load minute of each run                       worst  0.02   as_found +0.01 -0.02   as_left -0.00 +0.00
+RTD bias from the noon reference-thermometer spot checks worst  0.03   as_found +0.01 -0.01   as_left +0.03 +0.00
+fuel zero as the mean of the standstill minutes          worst  0.01   as_found +0.01 -0.01   as_left +0.00 +0.01
+contaminated gas sample with its air removed             worst  0.01   as_found +0.01 -0.01   as_left +0.00 +0.01
+corrections applied minute by minute, then averaged      worst  0.01   as_found +0.01 -0.01   as_left +0.00 +0.01
+one LHV for both days                                    worst  0.03   as_found +0.01 -0.02   as_left +0.00 +0.03
+
+Largest miss over all variants: 0.03 %

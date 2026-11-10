@@ -1,0 +1,9 @@
+Hidden presses wrong (of 8); the bound is 1.
+
+reference (solution/hpu.py)                                              0
+pressures taken as logged (no scale check against the power balance)     3  p-12 (hyd -19.0 %, eff -0.132); p-15 (hyd +22.9 %, eff +0.166); p-17 (hyd +22.9 %, eff +0.172)
+precharge taken from the unit record (no check against the charging)     3  p-14 (peak +53.7 %); p-17 (peak +60.0 %); p-18 (peak +55.8 %)
+neither check (the procedure as written)                                 5  p-12 (hyd -19.0 %, peak +25.6 %, eff -0.132); p-14 (peak +53.7 %); p-15 (hyd +23.0 %, peak -19.1 %, eff +0.166); p-17 (hyd +22.9 %, peak +27.2 %, eff +0.172); p-18 (peak +55.8 %)
+motor speed taken as the rated speed (no slip)                           0  
+volumetric efficiency taken as 1                                         8  p-11 (oil +6.8 %, hyd +6.8 %, eff +0.051); p-12 (oil +7.7 %, hyd +6.8 %, eff +0.047); p-13 (oil +7.2 %, hyd +7.3 %, peak +6.2 %, eff +0.055); p-14 (oil +7.5 %, hyd +7.5 %, peak +8.2 %, eff +0.054); p-15 (oil +8.2 %, hyd +7.3 %, eff +0.053); p-16 (oil +6.3 %, hyd +6.3 %, eff +0.045); p-17 (oil +8.4 %, hyd +7.6 %, peak +8.3 %, eff +0.057); p-18 (oil +5.7 %, hyd +5.7 %, eff +0.041)
+gas law from the precharge state (isothermal mean state left out)        8  p-11 (peak +22.1 %); p-12 (peak +23.9 %); p-13 (peak +21.4 %); p-14 (peak +40.2 %); p-15 (peak +23.1 %); p-16 (peak +22.2 %); p-17 (peak +37.8 %); p-18 (peak +38.6 %)

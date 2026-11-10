@@ -1,0 +1,13 @@
+Method spread: sound ways of doing the selection, each graded by the sealed definition.
+Shipped scenario, laboratory seed 7318.
+
+reference: O1 20/60/160, O2 20/160/200/260, engage S16 65 AC                   12/12  smallest true margin +0.036  
+reference tests in reverse order (other scatter draws)                         12/12  smallest true margin +0.040  
+reference tests, shape-preserving cubic (PCHIP) through the friction points    12/12  smallest true margin +0.028  
+reference tests, engagement t100 (1 + kappa ln(100/setting))                   12/12  smallest true margin +0.036  
+reference tests, friction held at the duty temperature through the stop        12/12  smallest true margin +0.036  
+reference tests, backdriving efficiency taken as eta                           12/12  smallest true margin +0.036  
+reference tests, engagement test at S16 70 instead of 65                       12/12  smallest true margin +0.036  
+temperatures 10 C lower: O1 20/50/150, O2 20/150/190/250, engage S16 66        12/12  smallest true margin +0.026  
+temperatures 10 C higher: O1 20/70/170, O2 20/170/210/270, engage S16 62       12/12  smallest true margin +0.033  
+reference tests, setting in the middle of the widest window                    12/12  smallest true margin +0.025  

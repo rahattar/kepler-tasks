@@ -1,0 +1,20 @@
+NOISE RESEEDS: shipped hidden set, every wafer's noise seed redrawn
+shipped noise seeds                reward 1  ratio 1.030  failed none         worst zone 24.62 K  hottest 49.73 C
+noise draw 1                       reward 1  ratio 1.030  failed none         worst zone 24.59 K  hottest 49.71 C
+noise draw 2                       reward 1  ratio 1.032  failed none         worst zone 24.62 K  hottest 49.73 C
+noise draw 3                       reward 1  ratio 1.030  failed none         worst zone 24.61 K  hottest 49.69 C
+noise draw 4                       reward 1  ratio 1.032  failed none         worst zone 24.56 K  hottest 49.73 C
+noise draw 5                       reward 1  ratio 1.030  failed none         worst zone 24.61 K  hottest 49.65 C
+noise draw 6                       reward 1  ratio 1.030  failed none         worst zone 24.59 K  hottest 49.73 C
+-> 7 of 7 pass
+
+INSTANCE RESEEDS: generator rerun under a new seed, reference run end to end
+seed 20261101 (fit rms 1.04)       reward 1  ratio 1.031  failed none         worst zone 24.74 K  hottest 49.64 C  [159 s]
+seed 20261102 (fit rms 1.03)       reward 1  ratio 1.032  failed none         worst zone 24.61 K  hottest 49.52 C  [165 s]
+seed 20261103 (fit rms 1.03)       reward 1  ratio 1.028  failed none         worst zone 24.75 K  hottest 49.68 C  [161 s]
+seed 20261104 (fit rms 1.04)       reward 1  ratio 1.030  failed none         worst zone 24.50 K  hottest 49.62 C  [161 s]
+seed 20261105 (fit rms 1.03)       reward 1  ratio 1.033  failed none         worst zone 24.61 K  hottest 49.66 C  [160 s]
+seed 20261106 (fit rms 1.03)       reward 1  ratio 1.032  failed none         worst zone 24.52 K  hottest 49.62 C  [161 s]
+-> 6 of 6 pass
+
+[1681 s]

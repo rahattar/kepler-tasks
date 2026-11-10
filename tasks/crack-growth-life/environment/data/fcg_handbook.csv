@@ -1,0 +1,4 @@
+item,value
+"BS 7910 simplified crack growth law, mean + 2 SD, steels in air","da/dN = 5.21e-13 dK^3 (mm/cycle, dK in N/mm^1.5), that is 1.65e-11 dK^3 (m/cycle, dK in MPa sqrt(m))"
+"BS 7910 recommended threshold, steels in air",dK0 = 170 - 214 R N/mm^1.5 (5.38 - 6.77 R MPa sqrt(m)) for 0 <= R < 0.5; 63 N/mm^1.5 (2.0 MPa sqrt(m)) for R >= 0.5
+Single-edge crack in a plate under tension (Tada),"K = S Y sqrt(pi a), Y = 1.12 - 0.231 (a/W) + 10.55 (a/W)^2 - 21.72 (a/W)^3 + 30.39 (a/W)^4, a/W <= 0.6"

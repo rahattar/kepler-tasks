@@ -1,0 +1,5 @@
+tag,measurement,unit,location
+FT-450,oil flow,kg/s,"Coriolis meter, oil supply to the cooler"
+TI-451,oil temperature,degC,cooler oil inlet nozzle
+TI-452,cooling water temperature,degC,cooler water inlet nozzle
+TI-453,cooling water temperature,degC,"cooling tower basin outlet, upstream of the CW pumps; the cooler is the first user on the pumps' discharge header"

@@ -1,0 +1,63 @@
+date_local,turbine,system,description,status
+2026-01-01 09:40,T05,rotor,Rotor upgraded to the HW120-2.5 blade set (rotor diameter 120 m) under supply agreement amendment 4; HW120-2.5 controller parameter set loaded. Warranted power curve per appendix C for HW120-2.5 from completion.,closed
+2026-01-01 12:35,T03,general,Gearbox oil sample taken.,closed
+2026-01-01 14:10,T07,rotor,Rotor upgraded to the HW120-2.5 blade set (rotor diameter 120 m) under supply agreement amendment 4; HW120-2.5 controller parameter set loaded. Warranted power curve per appendix C for HW120-2.5 from completion.,closed
+2026-01-11 13:42,T08,general,"Blade inspection by drone, no findings.",closed
+2026-01-15 13:59,T04,general,Grease system refilled.,closed
+2026-01-16 11:18,T04,general,Gearbox oil sample taken.,closed
+2026-01-18 10:01,T02,general,Gearbox oil sample taken.,closed
+2026-01-22 15:08,T06,general,"Blade inspection by drone, no findings.",closed
+2026-01-24 09:16,T08,general,Gearbox oil sample taken.,closed
+2026-01-25 14:07,T03,general,Main bearing temperature sensor checked.,closed
+2026-01-28 10:22,T02,general,Grease system refilled.,closed
+2026-02-02 16:42,T07,general,Gearbox oil sample taken.,closed
+2026-02-05 16:34,T06,general,Annual service completed.,closed
+2026-02-07 12:15,T02,general,Aviation light replaced.,closed
+2026-02-09 14:31,T07,general,Pitch battery test.,closed
+2026-02-10 10:50,T03,general,Gearbox oil sample taken.,closed
+2026-02-13 07:42,T07,general,Pitch battery test.,closed
+2026-02-15 14:32,T08,general,Pitch battery test.,closed
+2026-02-17 16:44,T05,general,Converter cooling fan replaced.,closed
+2026-02-27 14:37,T03,general,Annual service completed.,closed
+2026-02-28 16:26,T02,general,Yaw brake pads inspected.,closed
+2026-03-03 10:24,T01,general,Grease system refilled.,closed
+2026-03-18 14:18,T06,general,Main bearing temperature sensor checked.,closed
+2026-03-21 13:09,T05,general,Nacelle filter mats replaced.,closed
+2026-03-26 14:07,T02,general,Aviation light replaced.,closed
+2026-03-29 10:03,T04,general,Pitch battery test.,closed
+2026-04-01 13:54,T08,general,Pitch battery test.,closed
+2026-04-04 11:39,T07,general,Gearbox oil sample taken.,closed
+2026-04-07 10:27,T03,general,Nacelle filter mats replaced.,closed
+2026-04-07 11:05,T03,general,Gearbox oil sample taken.,closed
+2026-04-09 07:49,T07,general,Annual service completed.,closed
+2026-04-10 15:40,T03,general,Yaw brake pads inspected.,closed
+2026-04-12 10:07,T02,general,Grease system refilled.,closed
+2026-04-18 16:27,T03,general,Yaw brake pads inspected.,closed
+2026-04-25 16:34,T08,general,Converter cooling fan replaced.,closed
+2026-04-28 14:15,T04,general,Main bearing temperature sensor checked.,closed
+2026-05-02 10:52,T08,general,Tower ladder inspection.,closed
+2026-05-03 08:00,T03,general,"Blade inspection by drone, no findings.",closed
+2026-05-04 16:28,T04,general,Converter cooling fan replaced.,closed
+2026-05-05 07:04,T05,general,Gearbox oil sample taken.,closed
+2026-05-05 08:49,T08,general,Annual service completed.,closed
+2026-05-05 10:56,T03,general,"Blade inspection by drone, no findings.",closed
+2026-05-08 08:55,T07,general,"Blade inspection by drone, no findings.",closed
+2026-05-10 08:49,T07,general,Grease system refilled.,closed
+2026-05-11 13:09,T07,general,Nacelle filter mats replaced.,closed
+2026-05-14 12:22,T05,general,Converter cooling fan replaced.,closed
+2026-05-15 14:33,T05,general,Annual service completed.,closed
+2026-05-15 16:55,T01,general,Nacelle filter mats replaced.,closed
+2026-05-16 07:52,T07,general,Aviation light replaced.,closed
+2026-05-16 14:57,T03,general,"Blade inspection by drone, no findings.",closed
+2026-05-16 16:51,T07,general,Pitch battery test.,closed
+2026-05-19 16:52,T02,general,Nacelle filter mats replaced.,closed
+2026-05-22 13:24,T05,general,Yaw brake pads inspected.,closed
+2026-05-26 15:23,T03,general,Gearbox oil sample taken.,closed
+2026-06-02 07:25,T06,general,Yaw brake pads inspected.,closed
+2026-06-11 09:18,T03,general,Grease system refilled.,closed
+2026-06-14 15:48,T01,general,Gearbox oil sample taken.,closed
+2026-06-18 09:14,T04,general,Converter cooling fan replaced.,closed
+2026-06-19 09:39,T04,general,Tower ladder inspection.,closed
+2026-06-21 15:10,T06,general,Main bearing temperature sensor checked.,closed
+2026-06-26 12:19,T01,general,Pitch battery test.,closed
+2026-06-29 16:57,T08,general,Aviation light replaced.,closed

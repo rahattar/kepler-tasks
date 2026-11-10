@@ -1,0 +1,22 @@
+#!/bin/bash
+# Starts the clean-and-test service as the contractor user. Takes no arguments and passes no environment from the
+# caller to the server. Idempotent: a running service is left as it is. The slot count is kept on disk, so a
+# restart does not reset it.
+set -u
+URL=http://127.0.0.1:8000
+if curl -sf -o /dev/null "$URL/status"; then
+    echo "clean-and-test service already running at $URL"
+    exit 0
+fi
+cd /opt/hxtest || exit 1
+setsid nohup env -i PATH=/usr/local/bin:/usr/bin:/bin OMP_NUM_THREADS=1 python3 -I /opt/hxtest/server.py 8000 \
+    /app/test_reports /var/lib/hxtest/state.json > /var/lib/hxtest/server.log 2>&1 < /dev/null &
+for _ in $(seq 1 100); do
+    if curl -sf -o /dev/null "$URL/status"; then
+        echo "clean-and-test service running at $URL"
+        exit 0
+    fi
+    sleep 0.2
+done
+echo "clean-and-test service did not start" >&2
+exit 1

@@ -1,0 +1,72 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/damage.json"]
+
+[task]
+name = "afterquery/screen-fatigue-assessment"
+description = "Estimate the accumulated fatigue damage at the gusset weld toe of ten vibrating screens from four months of strain records, five years of operating logs and the plant's documents, with one outage programme of up to three field tests that has to be planned before any of its results are known."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "fatigue",
+    "welded-structures",
+    "hot-spot-stress",
+    "vibrating-screens",
+    "structural-dynamics",
+    "experiment-design",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only textbook fatigue assessment of welded joints (hot-spot stress, rainflow counting, S-N curves, Miner's rule) and structural dynamics (a two-mode suspended body driven by a rotating unbalance), on a synthetic screen house, records and parameters. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "fatigue of welded structures and structural dynamics"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "fatigue",
+    "welded-structures",
+    "hot-spot-stress",
+    "vibrating-screens",
+    "structural-dynamics",
+    "experiment-design",
+]
+expert_time_estimate_hours = 10
+relevant_experience = """I am a control scientist and thermal engineer with a PhD in mechanical engineering. Vibration of rotating machinery and its supports, reading strain and drive records against maintenance history, and deciding which field measurements an outage can afford are part of my work on industrial equipment and of my teaching. The screen house, its records and parameters are synthetic."""
+difficulty_explanation = """A structural or reliability engineer assessing a house of vibrating screens before an outage has this: strain gauges at the weld toe that has been cracking, a few months of logger records, years of daily operating logs, a maintenance log of uneven quality, and a contractor who can do a handful of field tests that must be ordered at once. The screens, records and parameters here are synthetic, written by authoring/provenance from a sealed definition.
+
+The damage is a Miner sum from the plant's hot-spot standard, and three sources feed it. Steady running is one stress cycle per exciter revolution whose range rises with the feed; its damage has to be integrated over five years of feed-band hours. Starts and the braked stops since March 2026 are in the records. But until the brakes were fitted every stop coasted down slowly through the suspension's two lightly damped modes, and none of those stops was recorded: they have to be reconstructed by fitting the two modes to the braked stops' records (ring-down after standstill, then the forced response with the drive speed) and simulating the coast-down. On four screens these stops are 57 to 100 percent of the damage. A single-mode fit fails six screens (up to 175 percent off), a quasi-static resonance curve fails six, and counting them as braked stops fails two.
+
+The records need reading as an engineer would: a gauge lot with another gauge factor, gauges at non-standard positions, swapped channels, a wet gauge, a gauge that drops with nothing logged, a 32 mm plate, a redesigned gusset class, a replaced gusset, a pilot historian that counts start and stop commands, a missing year that only a production report covers, and a bearing job that doubled one screen's coast-down time; each costs its screen 26 percent to more than tenfold. What the records cannot settle at all decides the field work: one screen has no strain records, one has no event records though its pre-brake stops are 91 percent of its damage, and the larger drive on two screens was never timed. The plan that works is a strain survey on the first, a coast-down on the second and one coast-down on either large-drive screen (they share the drive); the other untimed or record-short screens are decoys whose shares make a sibling proxy good enough. Every other programme of up to three tests fails at least one screen; the closest still leaves one 34 percent off."""
+
+solution_explanation = """solution/solve.py reads /app/data, orders the programme, then reads /app/fieldwork. Hot spot: linear extrapolation to the toe from each pair's actual positions (S2 at 10 and 30 mm), E = 207 GPa, S4's strain x 2.00/2.12, channels swapped where the rear gauge reads more (S7), S8 at 200 samples/s from its logger swap. A gauge whose ratio to its partner shifts in the campaign is rescaled from the date of the shift: the channel that leaves its own relation to the feed is the one that moved (S1's G2, S9's G1; event records are classed by their own ratio). FAT 90 or 100 by gusset revision, x (25/32)^0.3 for S9. Steady: the median full-cycle range of each steady record, linear in feed; band damage integrates the S-N rate across each band, at one cycle per revolution. Starts and braked stops: rainflow damage of their records. Coast-downs: two decaying sinusoids fitted to each braked stop's free ring-down give the two modes; a forced fit (speed channel, a phase per record, then all parameters jointly) gives their weights; the coast-down w_op exp(-t/tau) is simulated over 8 phases and rainflow-counted, tau from the commissioning table (S2: 25.0 s after its bearing job). Programme: strain survey S5, coast-downs S6 and S8. S5's steady fit comes from the survey; S6's and S8's coast-down damage from their test records; S10 from its own modes with S8's measured tau; S3 at the standard-drive median tau; S4's and S5's event damage and S6's starts and braked stops from the siblings' median damage per event / (empty-running range)^3. Log: S8's starts halved from 2024-07-01, S9's 2024 from the production report in its usual band split, S6 from its replacement. Largest miss on the shipped house: 7 percent."""
+
+verification_explanation = """tests/grade_screens.py reads /app/output/damage.json and the single pytest test passes only when it holds one JSON object with exactly S1-S10, finite non-negative values, each within 20 percent of the sealed damage (tests/screens.py, DAMAGE; the sealed model is calibrated to these values exactly, and authoring/evidence/calibration.txt recomputes them from the operating log and event ensembles, agreeing to 1e-6). Per-screen misses go to /logs/verifier/metrics.json and do not affect the reward. The verifier never runs the solution, never reads /app/data or the field results.
+
+Evidence for 20 percent (authoring/evidence): sound variants of the reference (either large-drive screen as the third test, median or smallest sibling proxy, 8 or 16 coast-down phases, S1's change from the data or from the log) all pass, the worst at 7.1 percent (method_spread.txt). Each record trap left in misses its screen by 26 percent to more than tenfold, and each coast-down shortcut fails two to six screens (route_study.txt). Of the 1350 programmes of one to three tests, each with three proxy choices, only the two intended ones pass; every other leaves at least one screen 34 percent or more off (plan_sweep.txt). The true values are irregular, neighbours 1.52 or 2.4 times apart: no constant satisfies two screens, and filling a screen from its neighbours' spacing misses every screen that needs a test by 26 percent (constant_null.txt).
+
+The agent's container holds the records, the output directory and the contractor's field-work command; the programme, its sealed definition and its state belong to another user, reached through one sudo rule that takes only status or submit. A programme is charged before any record is made and cannot be reordered. The verifier runs separately without network, and /logs/verifier is root-only."""
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 10800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

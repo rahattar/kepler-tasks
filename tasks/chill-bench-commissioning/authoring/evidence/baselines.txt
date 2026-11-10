@@ -1,0 +1,45 @@
+fit validation: S06 coefficient recovered as 0.3500 from one bench trace, true 0.3463 (error 0.0037)
+
+fleet: 16 stations, 12 lots, budget 8, gate 15 of 16
+
+Every rung below is one complete draw, graded by the shipped verifier. 'noise'
+is the fraction of 400 further identification-noise draws on the same fleet that
+clear the gate, from the exact per-station windows (design_mc.py), and 'windows'
+checks that those windows predict exactly the stations the verifier failed.
+
+strategy                                            u  max err   comm  reward   noise  windows  stations lost to
+----------------------------------------------------------------------------------------------------------------------------
+no bench runs, literature coefficient 0.40     0.0000   0.1632   2/16       0    nan%        -  temperature (10), uniformity (4)   [249s]
+probe standard, lot intercepts                 0.0000   0.0871   8/16       0      0%    agree  temperature (7), uniformity (1)   [429s]
+hull + 1, lot intercepts                       0.0000   0.1709   9/16       0      0%    agree  temperature (6), uniformity (1)   [618s]
+probe standard, straight line in bath temp     0.0759   0.0590  10/16       0      0%    agree  temperature (4), uniformity (2)   [897s]
+hull + 1, straight line in bath temp           0.0642   0.1023  12/16       0      0%    agree  temperature (3), uniformity (1) -- S03 S08 S10 S13   [1091s]
+probe standard, quadratic in bath temp         0.0256   0.0565  10/16       0      0%    agree  uniformity (6)   [1291s]
+hull + 1, quadratic in bath temp               0.0227   0.0467  13/16       0      0%    agree  temperature (1), uniformity (2) -- S08 S12 S14   [1492s]
+first 8 listed, hinge                          0.0151   0.0319  14/16       0     38%    agree  uniformity (2) -- S09 S12   [1675s]
+probe standard, hinge in lumped coefficient    0.0041   0.0218  14/16       0      4%    agree  uniformity (2) -- S09 S12   [1879s]
+probe standard, hinge                          0.0127   0.0188  15/16       1     19%    agree  uniformity (1) -- S12   [2066s]
+eight lots (previous reference), hinge         0.0113   0.0220  14/16       0     49%    agree  uniformity (2) -- S09 S12   [2269s]
+probe + corner, hinge in lumped coefficient    0.0118   0.0153  16/16       1     97%    agree  -   [2470s]
+probe + corner, hinge                          0.0133   0.0131  16/16       1     99%    agree  -   [2665s]
+hull + 1, hinge in lumped coefficient          0.0194   0.0203  15/16       1    100%    agree  uniformity (1) -- S12   [2859s]
+hull + 1 (the reference's plan), hinge         0.0127   0.0131  16/16       1    100%    agree  -   [3041s]
+----------------------------------------------------------------------------------------------------------------------------
+windows predicted the verifier's verdict on every station of 14 of 14 rungs; any difference is listed under its rung with its distance from the window edge
+      per station on the correct-model rung:
+        S01  predicted a=0.3469 true=0.3523 err=-0.0055 marg=0.0000 | P=17.13 dw= 6.763 T= 47.76 dT=24.27 x1.064
+        S02  predicted a=0.3761 true=0.3750 err=+0.0011 marg=0.0000 | P=13.01 dw= 8.083 T= 48.14 dT=23.96 x1.065
+        S03  predicted a=0.4898 true=0.4974 err=-0.0077 marg=0.0000 | P= 7.62 dw= 9.872 T= 47.83 dT=24.26 x1.062
+        S04  measured  a=0.3884 true=0.3962 err=-0.0078 marg=0.0000 | P=12.14 dw= 7.511 T= 47.50 dT=24.38 x1.065
+        S05  measured  a=0.2618 true=0.2526 err=+0.0092 marg=0.0000 | P=22.23 dw= 8.210 T= 49.01 dT=23.54 x1.065
+        S06  measured  a=0.3468 true=0.3463 err=+0.0005 marg=0.0000 | P=10.97 dw=10.280 T= 48.29 dT=23.94 x1.063
+        S07  measured  a=0.5584 true=0.5632 err=-0.0048 marg=0.0000 | P= 7.45 dw= 7.938 T= 47.99 dT=24.17 x1.065
+        S08  predicted a=0.3631 true=0.3709 err=-0.0078 marg=0.0000 | P=11.89 dw=10.021 T= 47.58 dT=24.31 x1.064
+        S09  measured  a=0.2941 true=0.2824 err=+0.0117 marg=0.0000 | P=15.63 dw= 8.948 T= 49.30 dT=23.35 x1.064
+        S10  predicted a=0.3407 true=0.3469 err=-0.0061 marg=0.0000 | P=16.00 dw= 7.603 T= 47.84 dT=24.30 x1.065
+        S11  measured  a=0.5200 true=0.5266 err=-0.0066 marg=0.0000 | P= 9.59 dw= 8.605 T= 47.83 dT=24.20 x1.065
+        S12  predicted a=0.2996 true=0.3127 err=-0.0131 marg=0.0000 | P=14.72 dw= 9.161 T= 46.89 dT=24.72 x1.065
+        S13  predicted a=0.3149 true=0.3140 err=+0.0008 marg=0.0000 | P=15.41 dw= 8.282 T= 48.26 dT=23.95 x1.064
+        S14  predicted a=0.3690 true=0.3804 err=-0.0114 marg=0.0000 | P=14.46 dw= 8.340 T= 47.44 dT=24.45 x1.065
+        S15  measured  a=0.4732 true=0.4761 err=-0.0029 marg=0.0000 | P= 8.70 dw= 9.278 T= 48.01 dT=24.10 x1.064
+        S16  measured  a=0.3492 true=0.3520 err=-0.0028 marg=0.0000 | P=14.05 dw= 7.355 T= 47.90 dT=24.15 x1.064

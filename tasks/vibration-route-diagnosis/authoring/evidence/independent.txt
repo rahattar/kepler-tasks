@@ -1,0 +1,10 @@
+Independent program on the hidden route packages (60 machines; the bound is 2 wrong):
+
+a1-2026-09-14    0 wrong
+a3-2026-09-22    0 wrong
+b2-2026-10-05    0 wrong
+c1-2026-10-08    0 wrong
+c4-2026-10-13    0 wrong
+d2-2026-10-27    0 wrong
+
+0 of 60 misdiagnosed

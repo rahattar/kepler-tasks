@@ -1,0 +1,11 @@
+Hidden cases wrong (of 8); the bound is 1.
+
+reference (solution/design.py)                                              0
+calibration as-found errors not applied                                     5  e120-k100-lube 1.000x oil 47.92 C; e450-c400-lube 0.952x oil 49.31 C; e560-k500-lube 0.966x oil 50.39 C; e780-k700-lube 0.958x oil 49.93 C; e890-k800-lube 0.973x oil 49.04 C
+instrument glitches kept                                                    4  e230-g200-lube 1.257x oil 43.13 C; e450-c400-lube 1.144x oil 46.17 C; e670-t600-lube 1.168x oil 51.97 C; e890-k800-lube 1.202x oil 45.90 C
+inlet water transmitter trusted as recorded                                 4  e120-k100-lube 1.477x oil 42.26 C; e340-k300-seal 0.924x oil 53.40 C; e560-k500-lube 0.932x oil 50.72 C; e780-k700-lube 1.299x oil 45.09 C
+frozen transmitter caught, but not one that stops tracking the water        2  e120-k100-lube 1.477x oil 42.26 C; e780-k700-lube 1.299x oil 45.09 C
+oil grade change after the latest analysis ignored                          2  e340-k300-seal 0.924x oil 52.52 C; e670-t600-lube 0.911x oil 56.17 C
+design values from the highest 10-minute value, not the one-hour mean       7  e120-k100-lube 1.139x oil 46.09 C; e230-g200-lube 1.100x oil 44.61 C; e340-k300-seal 1.103x oil 50.26 C; e560-k500-lube 1.079x oil 48.60 C; e670-t600-lube 1.099x oil 52.39 C; e780-k700-lube 1.081x oil 48.08 C; e890-k800-lube 1.077x oil 47.61 C
+
+Every check or step left out gets at least 2 hidden cases wrong.

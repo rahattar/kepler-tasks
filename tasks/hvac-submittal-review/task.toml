@@ -1,0 +1,78 @@
+schema_version = "1.4"
+
+artifacts = ["/app/review.json"]
+
+[task]
+name = "afterquery/hvac-submittal-review"
+description = "Review a contractor's cooling load calculations and rooftop unit selections for a 2004 college building: ASHRAE 62.1 multiple-zone outdoor air, coil entering conditions, extended catalogue performance, and the building as it exists under a field-verification budget."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "building-hvac",
+    "submittal-review",
+    "cooling-load-calculation",
+    "ashrae-62-1-ventilation",
+    "psychrometrics",
+    "equipment-selection",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products or processes. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "building HVAC design review and equipment sizing"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "building-hvac",
+    "submittal-review",
+    "cooling-load-calculation",
+    "ashrae-62-1-ventilation",
+    "psychrometrics",
+    "equipment-selection",
+]
+expert_time_estimate_hours = 12
+relevant_experience = """I am a control scientist working on model-based control and thermal process modelling, with a PhD in mechanical engineering and an undergraduate background in HVAC. Residential and commercial HVAC design and control, cooling load calculation and equipment selection are core areas of my work and teaching, including the review of contractors' load calculations on existing buildings where the record drawings no longer describe the rooms. The building, its records and the contractor's submittal are synthetic; the method is a simplified owner's standard written for this review."""
+difficulty_explanation = """In practice this is the work of an owner's reviewing mechanical engineer, or on larger projects the commissioning authority's HVAC reviewer: a design-build contractor has sized seven packaged rooftop units for the renovation of a 2004 building, and the engineer must say, unit by unit, whether each selection is acceptable under the owner's standard. The building, its records and the submittal are synthetic, written by the disclosed generator in authoring/provenance, and realistic in their numbers: design conditions close to Chicago's 0.4 percent values at its 98.9 kPa station pressure, the outdoor air rates of ASHRAE 62.1-2019 Table 6-1, and extended performance tables with the form and trends of published packaged-unit data. The load tables are the owner's simplified CLTD/SCL/CLF set.
+
+The standard names the methods and supplies the design data; it does not spell the methods out. Outdoor air follows ASHRAE 62.1-2019 for multiple-zone recirculating systems (Normative Appendix A), where the zone with the highest primary outdoor air fraction sets the system ventilation efficiency. The coil entering condition is the adiabatic mixture of outdoor and return air at the station pressure, and the selected unit's capacity is read from the manufacturer's extended tables at that entering wet bulb, the scheduled airflow and the design outdoor temperature, applying the manufacturer's corrections for entering dry bulb (bypass factor), dry coil and indoor fan heat on a draw-through unit. Acceptance tests net total, sensible and latent capacity separately. The contractor's sheet sums the zone outdoor airflows and quotes AHRI-rated gross capacity, the common shortcuts; on that basis every selection passes. Against the method, the addition's unit, RTU-4, fails on sensible capacity with nothing in question about the building.
+
+The documents also describe the building as drawn in 2004. The facilities records (work orders, an asset inventory, user-group minutes) show, without numbers, that a 2019 reorganisation refurnished seventeen rooms with higher headcounts following the furniture planner's room-size rules, that the teaching lab gained instruments of unstated draw, and that the server room has had its own split system since 2019. The standard reviews the building as it exists, and the facilities office can verify at most eight of thirty-seven items. The refurnished rooms fall into five classes by use and size (the 14 m2 offices, the 16 m2 offices, the mid-size offices, the open offices and the conference rooms), each changed differently, and the two lab rooms changed on their own. One verification of each class and of each lab room, seven in all, lets every other room be inferred; leaving any one of them unverified misstates some unit's outdoor air or loads beyond what the review accepts. Removing the server room makes RTU-1 oversized, the refurnished conference room and offices make RTU-7 undersized, the shortfalls of RTU-3 and RTU-6 deepen, and the shell tenant space must be reported as undetermined rather than reviewed on the contractor's assumed loads."""
+solution_explanation = """The reference reads the standard's design data and tables from the owner's document, the room schedule and envelope areas from the architect's workbook, the zoning, scheduled zone and unit airflows and selections from the submittal, and the extended performance tables (by airflow, entering wet bulb and outdoor dry bulb, with bypass factors and fan motor heat) from the manufacturer's PDF. It mines the facilities records: the 2019 furniture work orders give the refurnished rooms, the minutes say the new layouts followed room-size standards and that the lab instruments' draw is unknown, and the work order, asset inventory and minutes agree that the server room is served by the existing split system, which the standard excludes from the new unit's scope.
+
+Its verification campaign spends two of the eight verifications on the lab rooms and one on the largest room of each refurnished class by use and size band, seven in all; identical rooms take the verified values and non-identical ones the verified ratios. For each unit it computes the breathing-zone outdoor airflows, the system ventilation efficiency by Appendix A from the scheduled zone and unit airflows, and the outdoor air intake flow; the space loads by the CLTD/SCL/CLF method with the District's tables at the four design hours plus the ventilation load, taking the hour of largest total; the mixed-air dry bulb, humidity ratio and wet bulb at 98.9 kPa (Hyland-Wexler saturation pressure); and the catalogue capacity by linear interpolation at the scheduled airflow, the entering wet bulb and 33 C, with the entering-dry-bulb correction, the dry-coil cap and the fan motor heat deducted. The verdict follows section 7.
+
+On the shipped instance the reference reproduces the District's review: RTU-1 oversized, RTU-2 acceptable, RTU-3, RTU-4, RTU-6 and RTU-7 undersized, RTU-5 undetermined for tenant fit-out loads, and the submittal returned for revision. Its largest deviation is 0.44 percent, on RTU-2's block sensible load, 0.15 of that tolerance (authoring/evidence/reference.txt); under nine draws of the plug-load drift in the rooms that were not refurnished it stays within 0.37 of every tolerance (authoring/evidence/campaign_study.txt). The reference reads only the shipped files and the service's reports, imports nothing from the sealed definition or the verifier and shares no code with them, so its agreement with the District's review is an independent check of the verifier's truth."""
+verification_explanation = """The verifier holds the sealed as-built definition of the building and the review method (the same modules that drive the verification service, with fixed seeds) and computes the District's review from them: per unit, the outdoor air intake flow, the coil entering wet bulb, the design block loads, the net capacities of the selected model and the verdict, or undetermined for the shell space. It never runs the reference solution and never reads the shipped files.
+
+One test gates the reward. It reads /app/review.json strictly: a regular file (a symlink fails) holding one JSON object without duplicate keys, with exactly the keys units and submittal, units holding exactly RTU-1 to RTU-7; a unit marked undetermined holds exactly verdict and missing, any other unit exactly verdict and the eight quantities, each a finite number (NaN, infinities, booleans, strings and nulls fail). A file that breaks any of this fails as a whole; the 19 malformed cases in authoring/evidence/verifier_checks.txt all fail and the District's own review passes. Then every unit's verdict must match; for determined units, outdoor air and the total and sensible block loads must be within 3 percent, the latent block load within 5 percent, the net total and sensible capacities within 2 percent, the net latent capacity within 5 percent and the coil entering wet bulb within 0.3 K; the undetermined unit needs its missing-information code; and the submittal decision must match. No unit may be wrong. The instruction asks for the values the standard's method gives and does not state these tolerances.
+
+The tolerances are set from the spread of correct methods (authoring/evidence/method_spread.txt). Station pressure taken as 101.325 kPa, the Magnus saturation-pressure correlation, mixing by volume with a linear dry bulb, 1.20/3000 air constants and altitude-corrected constants leave outdoor air unchanged and move the coil entering wet bulb by at most 0.050 K, the total and sensible block loads by at most 0.927 and 0.472 percent, the latent block load by at most 3.357 percent, the net total and sensible capacities by at most 0.180 and 0.466 percent and the net latent capacity by at most 1.765 percent. The shortcuts fall outside: AHRI-rated capacity misses net total, sensible and latent capacity by 10.063, 16.010 and 14.319 percent and flips RTU-4; capacity at the 19.4 C rating wet bulb by 6.783, 14.161 and 18.039 percent, flipping RTU-4; no entering-dry-bulb correction misses sensible and latent capacity by 20.280 and 68.235 percent and flips RTU-2; gross capacity misses total and sensible by 7.951 and 10.315 percent, flipping RTU-4; summed zone outdoor air (Ev = 1) misses RTU-1's outdoor air by 20.160 percent and the simplified-procedure efficiency of 0.75 misses outdoor air by 32.807 percent and flips RTU-2. The 3 percent on loads and outdoor air also covers the inference of unverified rooms: the reference campaign uses at most 0.37 of any tolerance under nine drift draws, while a campaign that leaves the lab rooms or any one refurnished class unverified misses by 1.6 to 6.3 times a tolerance (authoring/evidence/campaign_study.txt). Constant reviews fail: the contractor's figures with every unit accepted, undersized or oversized get all seven units wrong, every unit undetermined gets six wrong, and the District's verdicts with the contractor's figures get six wrong (authoring/evidence/constant_null.txt).
+
+The full per-unit record goes to /logs/verifier/metrics.json and never gates. test.sh writes reward 0 first and 1 only when pytest exits 0 and its ctrf report holds exactly one test, passed; it locks /logs/verifier to root before grading and again before writing the reward. The verifier runs no submitted code, so no process of the agent's can outlive grading.
+
+The verification service runs in the agent's container as a separate user, facilities. The agent runs as the user agent ([agent] user); the service's code, the sealed definition and the budget state are owned by facilities with mode 700, so the agent cannot read the as-built values of items it did not verify, signal the service, or edit its state. The agent starts the service with start-verification, which runs one fixed script as facilities through a single sudo rule that takes no arguments and passes no environment; the service saves the budget before returning each report, so restarting it does not reset the count. The verifier runs separately with no network."""
+
+[verifier]
+timeout_sec = 900.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 28800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

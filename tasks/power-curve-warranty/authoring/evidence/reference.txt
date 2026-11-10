@@ -1,0 +1,74 @@
+Reference program solution/pp12.py, run through tests/grade.py as the verifier runs it (as nobody); tolerance 0.01 on the ratio, claim exact, at most 1 wrong turbine.
+
+Example ridgeback-2026h1 against the engineer's reported results (3 decimals):
+  worst |ratio - reported| 0.0039; claims equal: True
+
+package                turb     truth      ref    error  claim   true
+cedar-flats-2026h1     T01     0.9979   0.9968  -0.0011     no     no
+cedar-flats-2026h1     T02     1.0021   1.0015  -0.0006     no     no
+cedar-flats-2026h1     T03     0.9506   0.9498  -0.0008    yes    yes
+cedar-flats-2026h1     T04     1.0000   0.9990  -0.0010     no     no
+cedar-flats-2026h1     T05     0.9551   0.9538  -0.0013    yes    yes
+cedar-flats-2026h1     T06     0.9979   0.9982  +0.0003     no     no
+cedar-flats-2026h1     T07     1.0000   0.9998  -0.0002     no     no
+cedar-flats-2026h1     T08     0.9549   0.9549  +0.0000    yes    yes
+hollins-ridge-2026h1   T01     1.0000   0.9975  -0.0025     no     no
+hollins-ridge-2026h1   T02     0.9979   0.9952  -0.0027     no     no
+hollins-ridge-2026h1   T03     0.9957   0.9930  -0.0027     no     no
+hollins-ridge-2026h1   T04     0.9506   0.9477  -0.0029    yes    yes
+hollins-ridge-2026h1   T05     1.0000   0.9972  -0.0028     no     no
+hollins-ridge-2026h1   T06     0.9979   0.9955  -0.0024     no     no
+hollins-ridge-2026h1   T07     1.0000   0.9968  -0.0032     no     no
+hollins-ridge-2026h1   T08     1.0000   0.9974  -0.0026     no     no
+hollins-ridge-2026h1   T09     0.9979   0.9949  -0.0030     no     no
+hollins-ridge-2026h1   T10     0.9979   0.9946  -0.0033     no     no
+hollins-ridge-2026h1   T11     0.9571   0.9542  -0.0029    yes    yes
+hollins-ridge-2026h1   T12     0.9957   0.9929  -0.0028     no     no
+north-branch-2025h2    T01     0.9979   0.9950  -0.0029     no     no
+north-branch-2025h2    T02     1.0000   0.9970  -0.0030     no     no
+north-branch-2025h2    T03     0.9528   0.9496  -0.0032    yes    yes
+north-branch-2025h2    T04     1.0021   0.9992  -0.0029     no     no
+north-branch-2025h2    T05     0.9979   0.9950  -0.0029     no     no
+north-branch-2025h2    T06     1.0000   0.9972  -0.0028     no     no
+north-branch-2025h2    T07     0.9957   0.9929  -0.0028     no     no
+north-branch-2025h2    T08     0.9979   0.9949  -0.0030     no     no
+north-branch-2025h2    T09     0.9506   0.9471  -0.0035    yes    yes
+north-branch-2025h2    T10     1.0000   0.9970  -0.0030     no     no
+pike-hollow-2026h1     T01     1.0000   0.9968  -0.0032     no     no
+pike-hollow-2026h1     T02     0.9979   0.9944  -0.0035     no     no
+pike-hollow-2026h1     T03     1.0000   0.9965  -0.0035     no     no
+pike-hollow-2026h1     T04     0.9506   0.9464  -0.0042    yes    yes
+pike-hollow-2026h1     T05     1.0021   0.9987  -0.0034     no     no
+pike-hollow-2026h1     T06     0.9979   0.9941  -0.0038     no     no
+pike-hollow-2026h1     T07     1.0000   0.9971  -0.0029     no     no
+pike-hollow-2026h1     T08     0.9959   0.9920  -0.0039     no     no
+pike-hollow-2026h1     T09     0.9572   0.9526  -0.0046    yes    yes
+pike-hollow-2026h1     T10     1.0000   0.9959  -0.0041     no     no
+ridgeback-2026h2       T01     1.0000   0.9969  -0.0031     no     no
+ridgeback-2026h2       T02     0.9506   0.9471  -0.0035    yes    yes
+ridgeback-2026h2       T03     0.9957   0.9937  -0.0020     no     no
+ridgeback-2026h2       T04     0.9979   0.9949  -0.0030     no     no
+ridgeback-2026h2       T05     1.0000   0.9970  -0.0030     no     no
+ridgeback-2026h2       T06     0.9549   0.9517  -0.0032    yes    yes
+ridgeback-2026h2       T07     0.9979   0.9953  -0.0026     no     no
+ridgeback-2026h2       T08     0.9957   0.9921  -0.0036     no     no
+ridgeback-2026h2       T09     0.9511   0.9469  -0.0042    yes    yes
+ridgeback-2026h2       T10     1.0020   0.9988  -0.0032     no     no
+tallow-creek-2026h1    T01     0.9978   0.9950  -0.0028     no     no
+tallow-creek-2026h1    T02     0.9469   0.9443  -0.0026    yes    yes
+tallow-creek-2026h1    T03     1.0000   0.9971  -0.0029     no     no
+tallow-creek-2026h1    T04     1.0022   0.9995  -0.0027     no     no
+tallow-creek-2026h1    T05     0.9978   0.9956  -0.0022     no     no
+tallow-creek-2026h1    T06     1.0000   0.9973  -0.0027     no     no
+tallow-creek-2026h1    T07     0.9956   0.9928  -0.0028     no     no
+tallow-creek-2026h1    T08     0.9513   0.9485  -0.0028    yes    yes
+tallow-creek-2026h1    T09     1.0000   0.9973  -0.0027     no     no
+
+turbines 59 (claims 14); wrong 0 (accepted); worst |error| 0.0046 (0.46 of the tolerance)
+true ratios: claimed turbines at most 0.9572, others at least 0.9956 (claim threshold 0.97)
+  cedar-flats-2026h1     claims T03 0.9506, T05 0.9551, T08 0.9549
+  hollins-ridge-2026h1   claims T04 0.9506, T11 0.9571
+  north-branch-2025h2    claims T03 0.9528, T09 0.9506
+  pike-hollow-2026h1     claims T04 0.9506, T09 0.9572
+  ridgeback-2026h2       claims T02 0.9506, T06 0.9549, T09 0.9511
+  tallow-creek-2026h1    claims T02 0.9469, T08 0.9513

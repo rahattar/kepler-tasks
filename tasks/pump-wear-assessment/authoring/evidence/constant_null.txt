@@ -1,0 +1,19 @@
+true as-found head deficit on 2026-11-02 (m): P1 2.360, P2 1.700, P3 4.450, P4 5.120, P5 7.250, P6 5.800, P7 9.300, P8 0.450, P9 7.930, P10 3.050
+smallest gap between two units: 0.660 m, against a window of 2 x 0.30 = 0.60
+constants 0 to 10 in steps of 0.001: most units satisfied by any one constant: 1 of 10; constants satisfying none: 40 %
+  zero                                               0.000 -> satisfies 0 of 10 
+  5 % of rated head (2.25 m)                         2.250 -> satisfies 1 of 10 P1
+  10 % of rated head (4.5 m)                         4.500 -> satisfies 1 of 10 P3
+  middle of the bank (median of the true values)     4.785 -> satisfies 0 of 10 
+  mean of the true values                            4.741 -> satisfies 1 of 10 P3
+filling one unit from the other nine (exact) and their spacing; median gap 0.690 m:
+  P8   true 0.450, spacing guess 1.010, error +0.560 (fails)
+  P2   true 1.700, spacing guess 1.405, error -0.295 
+  P1   true 2.360, spacing guess 2.375, error +0.015 
+  P10  true 3.050, spacing guess 3.405, error +0.355 (fails)
+  P3   true 4.450, spacing guess 4.085, error -0.365 (fails)
+  P4   true 5.120, spacing guess 5.125, error +0.005 
+  P6   true 5.800, spacing guess 6.185, error +0.385 (fails)
+  P5   true 7.250, spacing guess 6.865, error -0.385 (fails)
+  P9   true 7.930, spacing guess 8.275, error +0.345 (fails)
+  P7   true 9.300, spacing guess 8.620, error -0.680 (fails)

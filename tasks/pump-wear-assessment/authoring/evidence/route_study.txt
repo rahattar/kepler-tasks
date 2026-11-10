@@ -1,0 +1,29 @@
+requirement 0.3 m
+
+  reference                                                                                worst 0.121 (P2)  fails  0  
+
+records taken at face value
+  header flowmeter's 3 % error before its recalibration left in                            worst 1.277 (P2)  fails  5  P1 P10 P2 P3 P6
+  P2's discharge readings on the wrong range (2026-10-04 to 10-11) left in                 worst 5.254 (P6)  fails  6  P1 P2 P3 P4 P6 P8
+  velocity-head difference between the 250 mm and 350 mm pipes left out                    worst 1.380 (P2)  fails  8  P10 P2 P3 P4 P5 P6 P7 P8
+  tapping heights from the installation sheet (P5 at 0.80 m) instead of the stopped-pump readings worst 0.734 (P5)  fails  2  P5 P6
+  P4's impeller trim (315 of 330 mm) not applied                                           worst 4.552 (P4)  fails  1  P4
+  P3's certificate (run at 1450 rpm) used as if at 1480 rpm                                worst 2.526 (P3)  fails  1  P3
+  P9's VFD speed ignored                                                                   worst 8.591 (P9)  fails  9  P1 P10 P3 P4 P5 P6 P7 P8 P9
+
+events inside the four weeks
+  P1 held at one head ratio across its 2026-10-09 trip (starved, vibrating run before it)  worst 0.937 (P1)  fails  3  P1 P10 P6
+  P6's tapping offset as one median of all its stopped hours, across PT-606's 2026-10-06 calibration worst 0.632 (P6)  fails  1  P6
+  P6's offset from the hours after the calibration applied to the whole window             worst 0.673 (P6)  fails  1  P6
+  both of the above (P1 one ratio, P6 one median)                                          worst 1.065 (P6)  fails  3  P1 P10 P6
+
+pumps without a certificate of their own, and the pair that never runs apart
+  P6 from the sister pumps' median certificate curve                                       worst 1.659 (P6)  fails  1  P6
+  P6 from the OEM type test as run (340 mm), not trimmed to its 330 mm impeller            worst 3.714 (P6)  fails  1  P6
+  P10 from the supplier's catalogue curve                                                  worst 4.005 (P10)  fails  1  P10
+  P10 from its 2026 rig test as run (1490 rpm), not brought to 1480 rpm                    worst 0.789 (P10)  fails  1  P10
+  P7 and P8 split by the header balance alone (the 2026-10-08 flow survey not used)        worst 9.300 (P7)  fails  2  P7 P8
+  survey flows as read (meter keyed for bare 254.46 mm steel; the line is lined to 250 mm) worst 1.228 (P8)  fails  2  P7 P8
+
+a free wear slope per pump over the four weeks (rings wear over years; the balance cannot pin 20 unknowns)
+  slope per pump                                                                           worst 17.781 (P8)  fails  8  P1 P10 P3 P4 P5 P6 P7 P8

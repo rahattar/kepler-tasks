@@ -1,0 +1,8 @@
+Method-free answers as complete programs through tests/grade.py (run as nobody); six hidden mains; accepted when at most 1 is wrong.
+
+columns: ratio of the design to the true smallest vessel (* wrong) for 1 cobb-ridge, 2 fern-gully, 3 lark-hollow, 4 mill-brook, 5 orchard-rise, 6 saddle-hill
+
+the example's reported design on every main        wrong 6   1.011*   0.973*   1.439*   1.320*   0.664*   0.291*  rejected
+a 50 m3 vessel with 25 m3 gas on every main        wrong 6   1.282*   1.235*   1.827*   1.675*   0.843*   0.369*  rejected
+a 100 m3 vessel with 50 m3 gas on every main       wrong 6   2.565*   2.471*   3.653*   3.351*   1.686*   0.739*  rejected
+the example's design scaled by flow x length       wrong 5   0.964*   1.013*   0.949*   0.801*   1.090   0.596*  rejected

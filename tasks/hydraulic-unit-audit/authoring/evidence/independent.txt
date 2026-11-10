@@ -1,0 +1,13 @@
+Independent program on the hidden packages (the bound is 1 wrong of 8); errors in percent (efficiency absolute):
+
+p-11   right {'oil_delivered_l': 0.04, 'hydraulic_energy_kj': 0.03, 'electrical_energy_kj': 0.0, 'peak_flow_l_min': 1.0, 'unit_efficiency': 0.0002}
+p-12   right {'oil_delivered_l': 0.03, 'hydraulic_energy_kj': -0.87, 'electrical_energy_kj': 0.01, 'peak_flow_l_min': 1.67, 'unit_efficiency': -0.0061}
+p-13   right {'oil_delivered_l': 0.02, 'hydraulic_energy_kj': 0.02, 'electrical_energy_kj': 0.0, 'peak_flow_l_min': 0.81, 'unit_efficiency': 0.0002}
+p-14   right {'oil_delivered_l': 0.0, 'hydraulic_energy_kj': 0.01, 'electrical_energy_kj': -0.01, 'peak_flow_l_min': 0.29, 'unit_efficiency': 0.0001}
+p-15   right {'oil_delivered_l': 0.06, 'hydraulic_energy_kj': -0.81, 'electrical_energy_kj': -0.0, 'peak_flow_l_min': 1.81, 'unit_efficiency': -0.0059}
+p-16   right {'oil_delivered_l': 0.05, 'hydraulic_energy_kj': 0.03, 'electrical_energy_kj': 0.0, 'peak_flow_l_min': 0.9, 'unit_efficiency': 0.0002}
+p-17   right {'oil_delivered_l': 0.05, 'hydraulic_energy_kj': -0.75, 'electrical_energy_kj': 0.01, 'peak_flow_l_min': -0.65, 'unit_efficiency': -0.0057}
+p-18   right {'oil_delivered_l': 0.01, 'hydraulic_energy_kj': -0.01, 'electrical_energy_kj': -0.02, 'peak_flow_l_min': -1.47, 'unit_efficiency': 0.0001}
+
+0 of 8 wrong
+largest absolute error: oil 0.06, hyd 0.87, el 0.02, peak 1.81, eff 0.01

@@ -1,0 +1,8 @@
+Independent reduction of the GT-1 test
+
+runs used: A1, A2, L1, L2
+as_found  output 41.618 MW (true 41.62, -0.00 %)   heat rate 10923.0 kJ/kWh (true 10923, -0.00 %)
+as_left   output 42.827 MW (true 42.81, +0.04 %)   heat rate 10697.7 kJ/kWh (true 10702, -0.04 %)
+
+PT-102 zero -0.601 kPa; RTD bias {'2026-10-13': -0.0, '2026-10-15': 1.18}; fuel zero {'2026-10-13': 0.0009, '2026-10-15': 0.034} kg/s
+Largest miss: 0.04 %

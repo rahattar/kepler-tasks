@@ -1,0 +1,13 @@
+Routes on the example boiler-fd-fan.
+
+route                                                                           first rpm second rpm
+reference (no check left out)                                                       940.1     1437.0
+gyroscopic coupling left out (the standstill frequencies of the new rotor)         1046.9     1316.6
+forward-whirl critical speeds only                                                 1437.0     6317.9
+rotor changes dated by the register's entry date                                    940.1     1437.0
+the test modeled with the rotor as it is now                                        940.1     1437.0
+the test modeled with the rotor as built                                            939.9     1436.7
+shaft revisions left out                                                            940.1     1437.0
+the latest test, whatever its condition                                             940.1     1437.0
+the first (commissioning) test                                                      940.1     1437.0
+records taken at face value: latest test, rotor as it is now, entry dates           940.1     1437.0

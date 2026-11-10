@@ -1,0 +1,19 @@
+allocations of the three steps over 8 furnaces x 3 steps: 2024; passing with some defensible fallback: 4
+passing allocations that settle F5, F8 and F3: 4 of 4 (with three steps F3 is settled only by its own 1050 C step, split with its 850 C trend)
+allocations with that coverage that fail: 0
+best failing allocation: 3.25 K
+
+passing allocations:
+  F3@1050 F5@850 F8@850
+  F3@1050 F5@850 F8@1050
+  F3@1050 F5@1050 F8@850
+  F3@1050 F5@1050 F8@1050
+
+best worst-zone error of the failing allocations, by what they leave unsettled
+  F3 drift and offset                                               80 allocations, best  8.23 K
+  F5 offset (new tube)                                              57 allocations, best  3.58 K
+  F8 offset (no site calibration)                                   57 allocations, best  3.25 K
+  F5 offset (new tube), F3 drift and offset                        343 allocations, best  8.00 K
+  F5 offset (new tube), F8 offset (no site calibration)            304 allocations, best  3.46 K
+  F8 offset (no site calibration), F3 drift and offset             343 allocations, best  7.98 K
+  F5 offset (new tube), F8 offset (no site calibration), F3 drift and offset   836 allocations, best  7.77 K

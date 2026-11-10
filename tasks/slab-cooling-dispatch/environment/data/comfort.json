@@ -1,0 +1,11 @@
+{
+  "occupied_hours": "working days 08:00-18:00",
+  "applies_to": "each zone separately",
+  "operative_temp_band_c": [
+    21.0,
+    26.0
+  ],
+  "operative_temperature": "0.5 x air temperature + 0.5 x mean radiant temperature",
+  "mean_radiant_temperature": "0.35 x soffit surface temperature + 0.12 x glazing inner surface temperature + 0.53 x mean temperature of the room's other surfaces and furnishings (view factors from the occupied zone)",
+  "note": "no operative or globe temperature sensor is installed"
+}

@@ -1,0 +1,22 @@
+Malformed and reference results through tests/grade_intervals.score (one temporary file each).
+
+reference result             accepted=True  ok 16 of 16 right
+not JSON                     accepted=False ok the result is not valid JSON: Expecting value: line 1 column 1 (char 0)
+a JSON array                 accepted=False ok the result must be one object with the single key "intervals_months"
+missing key                  accepted=False ok intervals_months must have exactly the keys C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16
+extra crack key              accepted=False ok intervals_months must have exactly the keys C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16
+extra top-level key          accepted=False ok the result must be one object with the single key "intervals_months"
+duplicate key                accepted=False ok duplicate key in the result
+interval NaN                 accepted=False ok interval for C05 must be a finite positive number
+interval Infinity            accepted=False ok interval for C05 must be a finite positive number
+interval -Infinity           accepted=False ok interval for C05 must be a finite positive number
+interval zero                accepted=False ok interval for C05 must be a finite positive number
+interval negative            accepted=False ok interval for C05 must be a finite positive number
+interval boolean             accepted=False ok interval for C05 is not a number
+interval string              accepted=False ok interval for C05 is not a number
+interval array               accepted=False ok interval for C05 is not a number
+interval null                accepted=False ok interval for C05 is not a number
+intervals as a list          accepted=False ok intervals_months must have exactly the keys C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16
+result is a symlink          accepted=False ok the result is not a regular file
+
+18 of 18 cases handled as expected; none crashed the grader.

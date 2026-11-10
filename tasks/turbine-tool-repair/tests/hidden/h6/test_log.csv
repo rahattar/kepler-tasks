@@ -1,0 +1,13 @@
+time,entry
+2026-05-06 07:30,GT-1 start
+2026-05-06 08:15,GT-1 at base load
+2026-05-06 08:30,Gas sample drawn at the fuel skid sample point
+2026-05-06 09:00,Run 1 start
+2026-05-06 10:00,Run 1 end
+2026-05-06 10:15,Gas sample drawn at the fuel skid sample point
+2026-05-06 10:30,Run 2 start
+2026-05-06 11:30,Run 2 end
+2026-05-06 11:45,Gas sample drawn at the fuel skid sample point
+2026-05-06 12:30,Run 3 start
+2026-05-06 13:30,Run 3 end
+2026-05-06 15:00,Data acquisition stopped

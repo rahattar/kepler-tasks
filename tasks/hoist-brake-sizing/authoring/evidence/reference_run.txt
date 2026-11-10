@@ -1,0 +1,59 @@
+Reference run: solution/solve.py in a stand-in for the agent's environment (the shipped laboratory, seed 7318),
+then tests/grade_brakes.py on its result. The first pass (catalogue friction, catalogue engagement times) is the
+basis of the test temperatures; then the fitted model and the selection, with the model's own margins.
+
+$ SHOW_FIRST_PASS=1 python3 solution/solve.py
+first pass H01 S14/60 (O1): duty 62 C, emergency stop to 67 C
+first pass H02 S12/60 (O1): duty 49 C, emergency stop to 55 C
+first pass H03 S25/50 (O2): duty 238 C, emergency stop to 242 C
+first pass H04 S14/95 (O1): duty 30 C, emergency stop to 39 C
+first pass H05 S16/76 (O2): duty 184 C, emergency stop to 200 C
+first pass H06 S08/61 (O1): duty 49 C, emergency stop to 50 C
+first pass H07 S18/61 (O2): duty 143 C, emergency stop to 158 C
+first pass H08 S14/62 (O1): duty 25 C, emergency stop to 33 C
+first pass H09 S18/57 (O2): duty 54 C, emergency stop to 61 C
+first pass H10 S18/50 (O2): duty 233 C, emergency stop to 236 C
+first pass H11 S14/58 (O1): duty 144 C, emergency stop to 148 C
+first pass H12 S18/59 (O2): duty 35 C, emergency stop to 42 C
+friction ratio to 20 C, O1: 20 C 1.000, 60 C 1.031, 160 C 1.315
+friction ratio to 20 C, O2: 20 C 1.000, 160 C 1.100, 200 C 1.274, 260 C 0.989
+engagement time = catalogue time x (100 / setting)^p, p = 0.392 (AC test; DC taken the same)
+H01 S14  57  worst margin +0.054  duty 63 C, e-stop 68 C  hold +0.054 travel +0.488 decel +0.058 temp +3.440 gearbox +1.399
+H02 S10  91  worst margin +0.052  duty 48 C, e-stop 55 C  hold +0.052 travel +0.327 decel +0.059 temp +4.450 gearbox +1.353
+H03 S22  55  worst margin +0.117  duty 263 C, e-stop 269 C  hold +0.564 travel +0.544 decel +0.122 temp +0.117 gearbox +0.213
+H04 S14  94  worst margin +0.056  duty 30 C, e-stop 39 C  hold +0.056 travel +0.063 decel +0.056 temp +6.696 gearbox +1.432
+H05 S16  64  worst margin +0.048  duty 193 C, e-stop 209 C  hold +0.140 travel +0.049 decel +0.048 temp +0.436 gearbox +1.209
+H06 S08  59  worst margin +0.047  duty 49 C, e-stop 50 C  hold +0.047 travel +0.433 decel +0.049 temp +4.947 gearbox +2.035
+H07 S16  83  worst margin +0.052  duty 161 C, e-stop 180 C  hold +0.052 travel +0.428 decel +0.053 temp +0.663 gearbox +1.205
+H08 S12  94  worst margin +0.075  duty 25 C, e-stop 34 C  hold +0.075 travel +0.297 decel +0.077 temp +7.732 gearbox +1.367
+H09 S18  55  worst margin +0.057  duty 56 C, e-stop 64 C  hold +0.061 travel +0.479 decel +0.057 temp +3.703 gearbox +1.435
+H10 S18  50  worst margin +0.035  duty 232 C, e-stop 236 C  hold +0.613 travel +1.376 decel +0.035 temp +0.272 gearbox +0.447
+H11 S12  67  worst margin +0.062  duty 167 C, e-stop 172 C  hold +0.062 travel +0.568 decel +0.068 temp +0.740 gearbox +1.553
+H12 S18  58  worst margin +0.059  duty 35 C, e-stop 42 C  hold +0.059 travel +0.465 decel +0.062 temp +6.139 gearbox +1.344
+
+laboratory reports:
+  test_01_friction_O1_T020.csv: mean 0.3979
+  test_02_friction_O1_T060.csv: mean 0.4104
+  test_03_friction_O1_T160.csv: mean 0.5233
+  test_04_friction_O2_T020.csv: mean 0.3768
+  test_05_friction_O2_T160.csv: mean 0.4146
+  test_06_friction_O2_T200.csv: mean 0.4800
+  test_07_friction_O2_T260.csv: mean 0.3727
+  test_08_engage_S16_65_AC.csv: mean 260.4400
+
+$ python3 tests/grade_brakes.py output/brakes.json   (margins under the sealed definition)
+H01 ok  S14/57  hold +0.0377 travel +0.5075 decel +0.0742 temp +3.4599 gearbox +1.4617  duty 62.8 C, emergency stop 67.3 C
+H02 ok  S10/91  hold +0.0458 travel +0.3059 decel +0.0640 temp +4.4182 gearbox +1.3710  duty 48.2 C, emergency stop 55.4 C
+H03 ok  S22/55  hold +0.5521 travel +0.6553 decel +0.1267 temp +0.1324 gearbox +0.2207  duty 259.8 C, emergency stop 264.9 C
+H04 ok  S14/94  hold +0.0540 travel +0.0624 decel +0.0584 temp +6.6949 gearbox +1.4423  duty 30.0 C, emergency stop 39.0 C
+H05 ok  S16/64  hold +0.1447 travel +0.0473 decel +0.0540 temp +0.4398 gearbox +1.2268  duty 192.2 C, emergency stop 208.4 C
+H06 ok  S08/59  hold +0.0399 travel +0.4742 decel +0.0532 temp +4.9568 gearbox +2.0558  duty 48.8 C, emergency stop 50.4 C
+H07 ok  S16/83  hold +0.0364 travel +0.3951 decel +0.0488 temp +0.6429 gearbox +1.1915  duty 163.0 C, emergency stop 182.6 C
+H08 ok  S12/94  hold +0.0741 travel +0.2930 decel +0.0795 temp +7.7203 gearbox +1.3746  duty 25.0 C, emergency stop 34.4 C
+H09 ok  S18/55  hold +0.0501 travel +0.5361 decel +0.0651 temp +3.8030 gearbox +1.4649  duty 55.3 C, emergency stop 62.5 C
+H10 ok  S18/50  hold +0.6063 travel +1.5901 decel +0.0405 temp +0.2816 gearbox +0.4581  duty 230.7 C, emergency stop 234.1 C
+H11 ok  S12/67  hold +0.0386 travel +0.5115 decel +0.0755 temp +0.7423 gearbox +1.5835  duty 166.3 C, emergency stop 172.2 C
+H12 ok  S18/58  hold +0.0543 travel +0.5379 decel +0.0663 temp +6.1769 gearbox +1.3584  duty 35.0 C, emergency stop 41.8 C
+12 of 12 right (gate 12): accepted
+
+Verifier emulation (tests/test.sh with the pinned packages): this result -> reward 1; no result file -> reward 0.

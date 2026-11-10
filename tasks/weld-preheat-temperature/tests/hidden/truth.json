@@ -1,0 +1,518 @@
+{
+ "boom-chord": {
+  "joint": {
+   "plates": [
+    {
+     "d_mm": 16,
+     "hardness_c": -100.0,
+     "heat": "65110",
+     "hydrogen_c": 19.7,
+     "mark": "P-7301"
+    },
+    {
+     "d_mm": 16,
+     "hardness_c": 125.87,
+     "heat": "65174",
+     "hydrogen_c": 57.52,
+     "mark": "P-7304"
+    }
+   ],
+   "runs": [
+    {
+     "hd_ml_100g": 3.1,
+     "heat_input_kj_mm": 1.1516,
+     "kind": "root"
+    },
+    {
+     "hd_ml_100g": 3.5,
+     "heat_input_kj_mm": 0.8693,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 3.5,
+     "heat_input_kj_mm": 0.8574,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 3.5,
+     "heat_input_kj_mm": 0.8412,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 3.5,
+     "heat_input_kj_mm": 0.9217,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 3.5,
+     "heat_input_kj_mm": 0.8873,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 3.5,
+     "heat_input_kj_mm": 0.9117,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 3.5,
+     "heat_input_kj_mm": 0.8779,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 3.1,
+     "heat_input_kj_mm": 1.1802,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 3.1,
+     "heat_input_kj_mm": 1.2003,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 3.1,
+     "heat_input_kj_mm": 1.0897,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 3.1,
+     "heat_input_kj_mm": 1.1038,
+     "kind": "cap"
+    }
+   ]
+  },
+  "min_preheat_c": 125.871
+ },
+ "column-splice": {
+  "joint": {
+   "plates": [
+    {
+     "d_mm": 32,
+     "hardness_c": -1.27,
+     "heat": "92031",
+     "hydrogen_c": 118.86,
+     "mark": "P-8020"
+    },
+    {
+     "d_mm": 32,
+     "hardness_c": 76.04,
+     "heat": "92077",
+     "hydrogen_c": 130.12,
+     "mark": "P-8026"
+    }
+   ],
+   "runs": [
+    {
+     "hd_ml_100g": 4.396,
+     "heat_input_kj_mm": 1.1804,
+     "kind": "root"
+    },
+    {
+     "hd_ml_100g": 4.733,
+     "heat_input_kj_mm": 1.2072,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 5.028,
+     "heat_input_kj_mm": 1.1475,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 5.296,
+     "heat_input_kj_mm": 1.1298,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 5.579,
+     "heat_input_kj_mm": 1.0868,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 5.849,
+     "heat_input_kj_mm": 1.0228,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 6.075,
+     "heat_input_kj_mm": 1.1146,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 6.368,
+     "heat_input_kj_mm": 1.1365,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 6.649,
+     "heat_input_kj_mm": 1.1549,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 6.947,
+     "heat_input_kj_mm": 1.6788,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 7.299,
+     "heat_input_kj_mm": 1.4385,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 7.67,
+     "heat_input_kj_mm": 1.5509,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 8.023,
+     "heat_input_kj_mm": 1.5109,
+     "kind": "cap"
+    }
+   ]
+  },
+  "min_preheat_c": 130.123
+ },
+ "deck-plate": {
+  "joint": {
+   "plates": [
+    {
+     "d_mm": 40,
+     "hardness_c": 142.75,
+     "heat": "84601",
+     "hydrogen_c": 157.58,
+     "mark": "P-9710"
+    },
+    {
+     "d_mm": 40,
+     "hardness_c": 114.44,
+     "heat": "92031",
+     "hydrogen_c": 145.11,
+     "mark": "P-9715"
+    }
+   ],
+   "runs": [
+    {
+     "hd_ml_100g": 4.403,
+     "heat_input_kj_mm": 1.1589,
+     "kind": "root"
+    },
+    {
+     "hd_ml_100g": 4.739,
+     "heat_input_kj_mm": 1.1707,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 5.018,
+     "heat_input_kj_mm": 1.2393,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 5.309,
+     "heat_input_kj_mm": 1.163,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 5.616,
+     "heat_input_kj_mm": 1.1868,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 5.875,
+     "heat_input_kj_mm": 1.1478,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 6.188,
+     "heat_input_kj_mm": 1.1045,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 4.288,
+     "heat_input_kj_mm": 1.2988,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 4.673,
+     "heat_input_kj_mm": 1.4223,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 5.157,
+     "heat_input_kj_mm": 1.3943,
+     "kind": "cap"
+    }
+   ]
+  },
+  "min_preheat_c": 157.58
+ },
+ "frame-web": {
+  "joint": {
+   "plates": [
+    {
+     "d_mm": 22,
+     "hardness_c": 118.68,
+     "heat": "84655",
+     "hydrogen_c": 51.27,
+     "mark": "P-9402"
+    },
+    {
+     "d_mm": 22,
+     "hardness_c": 52.34,
+     "heat": "84213",
+     "hydrogen_c": 40.69,
+     "mark": "P-9406"
+    }
+   ],
+   "runs": [
+    {
+     "hd_ml_100g": 2.7,
+     "heat_input_kj_mm": 1.2525,
+     "kind": "root"
+    },
+    {
+     "hd_ml_100g": 2.2,
+     "heat_input_kj_mm": 0.9125,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 2.2,
+     "heat_input_kj_mm": 0.886,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 2.2,
+     "heat_input_kj_mm": 0.9302,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 2.2,
+     "heat_input_kj_mm": 1.0078,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 2.2,
+     "heat_input_kj_mm": 0.9453,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 2.2,
+     "heat_input_kj_mm": 0.874,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 2.2,
+     "heat_input_kj_mm": 0.8479,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 2.2,
+     "heat_input_kj_mm": 0.8555,
+     "kind": "cap"
+    }
+   ]
+  },
+  "min_preheat_c": 118.676
+ },
+ "girder-flange": {
+  "joint": {
+   "plates": [
+    {
+     "d_mm": 32,
+     "hardness_c": 72.41,
+     "heat": "84390",
+     "hydrogen_c": 152.2,
+     "mark": "P-5521"
+    },
+    {
+     "d_mm": 32,
+     "hardness_c": -100.0,
+     "heat": "84213",
+     "hydrogen_c": 117.12,
+     "mark": "P-5526"
+    }
+   ],
+   "runs": [
+    {
+     "hd_ml_100g": 4.2,
+     "heat_input_kj_mm": 1.2303,
+     "kind": "root"
+    },
+    {
+     "hd_ml_100g": 5.8,
+     "heat_input_kj_mm": 0.866,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 5.8,
+     "heat_input_kj_mm": 0.9193,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 5.8,
+     "heat_input_kj_mm": 0.8881,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 8.6,
+     "heat_input_kj_mm": 0.882,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 8.6,
+     "heat_input_kj_mm": 0.8548,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 8.6,
+     "heat_input_kj_mm": 0.8843,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 4.2,
+     "heat_input_kj_mm": 1.4885,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 4.2,
+     "heat_input_kj_mm": 1.4192,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 4.2,
+     "heat_input_kj_mm": 1.475,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 4.2,
+     "heat_input_kj_mm": 1.5188,
+     "kind": "cap"
+    }
+   ]
+  },
+  "min_preheat_c": 152.197
+ },
+ "hopper-wall": {
+  "joint": {
+   "plates": [
+    {
+     "d_mm": 15,
+     "hardness_c": -100.0,
+     "heat": "71502",
+     "hydrogen_c": 25.68,
+     "mark": "P-9105"
+    },
+    {
+     "d_mm": 20,
+     "hardness_c": -100.0,
+     "heat": "71588",
+     "hydrogen_c": 65.31,
+     "mark": "P-9190"
+    }
+   ],
+   "runs": [
+    {
+     "hd_ml_100g": 1.7,
+     "heat_input_kj_mm": 0.7491,
+     "kind": "root"
+    },
+    {
+     "hd_ml_100g": 6.2,
+     "heat_input_kj_mm": 0.8928,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 6.2,
+     "heat_input_kj_mm": 0.8882,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 6.2,
+     "heat_input_kj_mm": 0.9625,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 9.1,
+     "heat_input_kj_mm": 0.869,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 9.1,
+     "heat_input_kj_mm": 0.8243,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 9.1,
+     "heat_input_kj_mm": 0.8415,
+     "kind": "cap"
+    }
+   ]
+  },
+  "min_preheat_c": 65.306
+ },
+ "tank-course": {
+  "joint": {
+   "plates": [
+    {
+     "d_mm": 14,
+     "hardness_c": -100.0,
+     "heat": "84213",
+     "hydrogen_c": 5.48,
+     "mark": "P-6102"
+    },
+    {
+     "d_mm": 16,
+     "hardness_c": 137.15,
+     "heat": "84477",
+     "hydrogen_c": 53.24,
+     "mark": "P-6190"
+    }
+   ],
+   "runs": [
+    {
+     "hd_ml_100g": 1.5,
+     "heat_input_kj_mm": 0.7404,
+     "kind": "root"
+    },
+    {
+     "hd_ml_100g": 1.8,
+     "heat_input_kj_mm": 0.9637,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 1.8,
+     "heat_input_kj_mm": 0.9319,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 1.8,
+     "heat_input_kj_mm": 1.0178,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 1.8,
+     "heat_input_kj_mm": 0.9965,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 1.8,
+     "heat_input_kj_mm": 0.9931,
+     "kind": "fill"
+    },
+    {
+     "hd_ml_100g": 1.8,
+     "heat_input_kj_mm": 1.2231,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 1.8,
+     "heat_input_kj_mm": 1.1721,
+     "kind": "cap"
+    },
+    {
+     "hd_ml_100g": 1.8,
+     "heat_input_kj_mm": 1.0909,
+     "kind": "cap"
+    }
+   ]
+  },
+  "min_preheat_c": 137.151
+ }
+}

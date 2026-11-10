@@ -1,0 +1,7 @@
+Method-free answers as complete programs through tests/grade.py (run as nobody); seven hidden jobs; accepted when at most 1 is wrong.
+
+columns: the signed relative deviation from the truth (* wrong) for 1 bracket-pocket, 2 housing-face, 3 lever-profile, 4 manifold-slot, 5 pump-cover, 6 shaft-flat, 7 valve-body
+
+the example's limit (1.995 mm) for every job         wrong 7  -0.466*  +0.491*  +0.688*  +1.456*  +1.412*  +0.918*  +0.256*  rejected
+2.5 mm for every job                                 wrong 7  -0.331*  +0.869*  +1.116*  +2.077*  +2.023*  +1.404*  +0.574*  rejected
+the example's limit scaled by 1 / (teeth x Kt)       wrong 7  -0.544*  -0.526*  +0.688*  +1.096*  -0.756*  -0.496*  -0.196*  rejected

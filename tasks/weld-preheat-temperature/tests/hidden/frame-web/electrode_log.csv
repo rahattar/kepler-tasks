@@ -1,0 +1,6 @@
+time,station,batch,event
+2026-06-16 06:44,WS-1,E-7690,issued to unheated quiver
+2026-06-16 07:00,WS-3,E-7840,issued to heated quiver
+2026-06-16 07:05,WS-2,N-2190,issued to heated quiver
+2026-06-16 10:35,WS-1,E-7690,returned to oven
+2026-06-16 10:46,WS-2,N-2190,returned to oven

@@ -1,0 +1,17 @@
+{
+ "shell_id_mm": 591,
+ "tube": "19.05x2.11",
+ "tube_length_m": 3.66,
+ "tube_passes": 2,
+ "layout_deg": 30,
+ "baffle_cut_pct": 20,
+ "baffle_spacing_mm": 200,
+ "shells_in_series": 2,
+ "price_usd": 176160.0,
+ "design_case": {
+  "oil": "ISO VG 68",
+  "oil_kg_s": 23.217,
+  "oil_in_c": 86.684,
+  "cw_in_c": 35.039
+ }
+}

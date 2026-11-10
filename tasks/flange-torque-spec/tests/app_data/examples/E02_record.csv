@@ -1,0 +1,17 @@
+item,value
+joint_id,E02
+thread,M20
+grade,8.8
+bolt_count,8
+bolt_circle_diameter_mm,280
+flange_class,B
+flange_thickness_mm,28
+flank_roughness_Ra_um,1.9
+plating_thickness_um,6.5
+threads,new
+target_preload_per_bolt_kN,102.9
+trial_torque_Nm,370.4
+trial_bolt_preload_kN,133.12
+assembly_torque_Nm,292.0
+tightening_sequence,"cross pattern in passes at 30, 70 and 100 percent of the assembly torque, then two circular passes at 100 percent"
+assembled_preload_per_bolt_kN_measured,102.63

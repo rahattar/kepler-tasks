@@ -1,0 +1,7 @@
+Twelve electric wire-rope hoists, H01 to H12, are getting new motor brakes across the foundry and its shops. For each hoist, choose a series SB brake size and a torque setting that meet every requirement of MS-14 in `/app/data/docs/procedure.md`, using the hoist as it is now and in its working duty.
+
+The records are the hoist register `/app/data/hoist_register.csv`, the brake wiring list `/app/data/brake_wiring.csv`, the 2025 duty survey `/app/data/duty_survey.csv`, the maintenance log `/app/data/maintenance_log.csv`, the brake catalogue in `/app/data/brake_catalogue.csv` and `/app/data/docs/catalogue.md`, and the plant standard `/app/data/docs/procedure.md`. The brake laboratory's tests are described in `/app/data/docs/laboratory.md`. Run the lab commands from `/app`: `friction <T> [<lining>]` and `engage <size> <setting> <AC|DC>` each use one test, with 8 tests in total available for the whole selection. Each test's readings are saved under `/app/lab_reports`.
+
+Write the final selection to `/app/output/brakes.json` in this form: `{"brakes": {"H01": {"size": "<size>", "setting": <percent>}, ..., "H12": {"size": "<size>", "setting": <percent>}}}`. Use a catalogue size for every hoist and a torque setting that is a whole percent from 50 to 100. H01 through H12 must each appear exactly once. Every hoist's brake must meet all of the requirements in MS-14.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

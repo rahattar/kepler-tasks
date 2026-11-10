@@ -1,0 +1,23 @@
+How the laboratory's scatter seed was chosen.
+Candidates 7301-7400, in order.
+
+seed 7301: scatter screen fails (friction 3.42 sigma, engagement 3.94 sigma)
+seed 7302: scatter screen fails (friction 2.85 sigma, engagement 3.34 sigma)
+seed 7303: scatter screen fails (friction 3.92 sigma, engagement 3.37 sigma)
+seed 7304: scatter screen fails (friction 3.28 sigma, engagement 3.93 sigma)
+seed 7305: scatter screen fails (friction 3.64 sigma, engagement 3.04 sigma)
+seed 7306: scatter screen fails (friction 3.13 sigma, engagement 4.01 sigma)
+seed 7307: scatter screen fails (friction 3.58 sigma, engagement 3.51 sigma)
+seed 7308: scatter screen fails (friction 3.18 sigma, engagement 4.56 sigma)
+seed 7309: scatter screen fails (friction 3.09 sigma, engagement 3.53 sigma)
+seed 7310: scatter screen fails (friction 3.02 sigma, engagement 3.29 sigma)
+seed 7311: scatter screen fails (friction 3.08 sigma, engagement 3.50 sigma)
+seed 7312: scatter screen fails (friction 3.71 sigma, engagement 3.86 sigma)
+seed 7313: scatter screen fails (friction 3.18 sigma, engagement 3.19 sigma)
+seed 7314: scatter screen fails (friction 3.42 sigma, engagement 3.71 sigma)
+seed 7315: scatter screen fails (friction 2.90 sigma, engagement 3.90 sigma)
+seed 7316: scatter screen fails (friction 3.52 sigma, engagement 3.21 sigma)
+seed 7317: scatter screen fails (friction 3.27 sigma, engagement 3.03 sigma)
+seed 7318: scatter 2.95 / 3.05 sigma; reference 12/12 (smallest true margin +0.036); reversed 12/12 (smallest true margin +0.040); lower 12/12 (smallest true margin +0.026); higher 12/12 (smallest true margin +0.033); pchip 12/12 (smallest true margin +0.028)
+
+Shipped seed: 7318 (the first candidate passing both stages).

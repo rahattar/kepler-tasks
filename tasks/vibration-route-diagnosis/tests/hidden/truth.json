@@ -1,0 +1,254 @@
+{
+ "a1-2026-09-14": {
+  "PA-101": [
+   "NONE",
+   "none"
+  ],
+  "PA-102": [
+   "UNBALANCE",
+   "pump"
+  ],
+  "PA-103": [
+   "CAVITATION",
+   "pump"
+  ],
+  "FA-104": [
+   "NONE",
+   "none"
+  ],
+  "FA-105": [
+   "UNBALANCE",
+   "fan"
+  ],
+  "CTA-106": [
+   "LOOSENESS",
+   "motor"
+  ],
+  "PA-107": [
+   "UNBALANCE",
+   "pump"
+  ],
+  "CTA-108": [
+   "NONE",
+   "none"
+  ],
+  "PA-109": [
+   "BEARING_OUTER",
+   "pump"
+  ],
+  "PA-110": [
+   "LOOSENESS",
+   "pump"
+  ]
+ },
+ "a3-2026-09-22": {
+  "PA-301": [
+   "CAVITATION",
+   "pump"
+  ],
+  "CTA-302": [
+   "BEARING_INNER",
+   "motor"
+  ],
+  "PA-303": [
+   "BEARING_CAGE",
+   "pump"
+  ],
+  "FA-304": [
+   "ELECTRICAL",
+   "motor"
+  ],
+  "VPA-305": [
+   "UNBALANCE",
+   "motor"
+  ],
+  "PA-306": [
+   "ELECTRICAL",
+   "motor"
+  ],
+  "FA-307": [
+   "BELT",
+   "belt"
+  ],
+  "VPA-308": [
+   "RESONANCE",
+   "structure"
+  ],
+  "FA-309": [
+   "BEARING_BALL",
+   "fan"
+  ],
+  "FA-310": [
+   "BEARING_OUTER",
+   "fan"
+  ]
+ },
+ "b2-2026-10-05": {
+  "PB-201": [
+   "NONE",
+   "none"
+  ],
+  "PB-202": [
+   "UNBALANCE",
+   "pump"
+  ],
+  "PB-203": [
+   "CAVITATION",
+   "pump"
+  ],
+  "PB-204": [
+   "BEARING_INNER",
+   "pump"
+  ],
+  "VPB-205": [
+   "RESONANCE",
+   "structure"
+  ],
+  "ACB-206": [
+   "ELECTRICAL",
+   "motor"
+  ],
+  "PB-207": [
+   "BEARING_BALL",
+   "pump"
+  ],
+  "CTB-208": [
+   "GEAR_TOOTH",
+   "gear"
+  ],
+  "CTB-209": [
+   "GEAR_TOOTH",
+   "pinion"
+  ],
+  "PB-210": [
+   "ROTOR_BAR",
+   "motor"
+  ]
+ },
+ "c1-2026-10-08": {
+  "PC-101": [
+   "BEARING_BALL",
+   "motor"
+  ],
+  "PC-102": [
+   "BEARING_OUTER",
+   "pump"
+  ],
+  "FC-103": [
+   "LOOSENESS",
+   "motor"
+  ],
+  "ACC-104": [
+   "BEARING_OUTER",
+   "compressor"
+  ],
+  "PC-105": [
+   "MISALIGNMENT",
+   "coupling"
+  ],
+  "PC-106": [
+   "MISALIGNMENT",
+   "coupling"
+  ],
+  "VPC-107": [
+   "NONE",
+   "none"
+  ],
+  "ACC-108": [
+   "LOOSENESS",
+   "compressor"
+  ],
+  "PC-109": [
+   "BEARING_INNER",
+   "pump"
+  ],
+  "FC-110": [
+   "BELT",
+   "belt"
+  ]
+ },
+ "c4-2026-10-13": {
+  "PC-401": [
+   "NONE",
+   "none"
+  ],
+  "PC-402": [
+   "UNBALANCE",
+   "pump"
+  ],
+  "FC-403": [
+   "BEARING_CAGE",
+   "fan"
+  ],
+  "CTC-404": [
+   "GEAR_TOOTH",
+   "gear"
+  ],
+  "PC-405": [
+   "LOOSENESS",
+   "motor"
+  ],
+  "PC-406": [
+   "ELECTRICAL",
+   "motor"
+  ],
+  "ACC-407": [
+   "ROTOR_BAR",
+   "motor"
+  ],
+  "FC-408": [
+   "BELT",
+   "belt"
+  ],
+  "FC-409": [
+   "BELT",
+   "belt"
+  ],
+  "PC-410": [
+   "BEARING_INNER",
+   "pump"
+  ]
+ },
+ "d2-2026-10-27": {
+  "ACD-201": [
+   "BEARING_INNER",
+   "motor"
+  ],
+  "CTD-202": [
+   "GEAR_TOOTH",
+   "pinion"
+  ],
+  "PD-203": [
+   "ROTOR_BAR",
+   "motor"
+  ],
+  "ACD-204": [
+   "NONE",
+   "none"
+  ],
+  "PD-205": [
+   "UNBALANCE",
+   "pump"
+  ],
+  "CTD-206": [
+   "MISALIGNMENT",
+   "coupling"
+  ],
+  "PD-207": [
+   "BEARING_OUTER",
+   "motor"
+  ],
+  "PD-208": [
+   "NONE",
+   "none"
+  ],
+  "ACD-209": [
+   "MISALIGNMENT",
+   "coupling"
+  ],
+  "PD-210": [
+   "NONE",
+   "none"
+  ]
+ }
+}

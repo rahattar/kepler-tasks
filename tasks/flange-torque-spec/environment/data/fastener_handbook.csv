@@ -1,0 +1,11 @@
+item,value
+nut_factor_K_zinc_plated,0.18
+thread_tolerance_class,6g/6H
+proof_load_kN_M12_grade_8.8,50.6
+proof_load_kN_M12_grade_10.9,70.0
+proof_load_kN_M16_grade_8.8,94.2
+proof_load_kN_M16_grade_10.9,130.3
+proof_load_kN_M20_grade_8.8,147.0
+proof_load_kN_M20_grade_10.9,203.3
+proof_load_kN_M24_grade_8.8,211.8
+proof_load_kN_M24_grade_10.9,293.0

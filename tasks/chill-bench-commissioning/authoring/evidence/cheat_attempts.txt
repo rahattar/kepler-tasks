@@ -1,0 +1,46 @@
+shortcut                                                                      reward   comm  why it fails
+------------------------------------------------------------------------------------------------------------------------
+nop: no recipe file at all                                                         0      -  /tmp/cheat.json does not exist
+empty object                                                                       0      -  top level must be an object with a 'stations' array
+empty station list                                                                 0      -  recipe is missing stations: S01, S02, S03, S04, S05, S06
+not JSON at all                                                                    0      -  /tmp/cheat.json is not valid JSON: Expecting value: line
+go slow: 3 Torr and a 30 s dwell everywhere                                        0   0/16  dwell budget
+go slow: 6 Torr and a 20 s dwell everywhere                                        0   0/16  dwell budget
+maximum pressure, generous dwell                                                   0   0/16  uniformity, dwell budget
+maximum pressure, minimum dwell                                                    0   0/16  temperature, uniformity
+one mid recipe copied to all sixteen                                               0   0/16  temperature, uniformity, dwell budget
+zero dwell everywhere                                                              0   0/16  temperature
+negative dwell                                                                     0      -  station S01: negative dwell
+pressure below the supply range                                                    0      -  station S01: pressure 1.0 Torr is outside the 3.0-60.0 T
+pressure above the supply range                                                    0      -  station S01: pressure 120.0 Torr is outside the 3.0-60.0
+only the first eight stations                                                      0      -  recipe is missing stations: S09, S10, S11, S12, S13, S14
+a station that does not exist                                                      0      -  recipe is missing stations: S16
+one station listed twice, one omitted                                              0      -  station S01 appears more than once
+the oracle with every dwell padded 15%                                             0   0/16  dwell budget
+the oracle with every dwell shaved 10%                                             0   0/16  temperature
+the oracle with every pressure raised 15%                                          0   0/16  uniformity
+the oracle's pressures, all dwells set to the fleet mean                           0   1/16  temperature, dwell budget
+the oracle's dwells, all pressures set to the fleet mean                           0   3/16  temperature, uniformity
+the oracle on the eight measurable stations, one mid recipe on the other eight       0   8/16  temperature, uniformity, dwell budget
+------------------------------------------------------------------------------------------------------------------------
+gate requires 15 of 16 commissioned; highest reward any shortcut achieved: 0  PASS
+
+  per-station commissionable dwell windows [optimum, +8%]:
+    S01  [ 6.358,  6.866] s
+    S16  [ 6.914,  7.468] s
+    S04  [ 7.054,  7.618] s
+    S10  [ 7.140,  7.711] s
+    S07  [ 7.456,  8.053] s
+    S02  [ 7.591,  8.198] s
+    S05  [ 7.709,  8.326] s
+    S13  [ 7.786,  8.408] s
+    S14  [ 7.831,  8.458] s
+    S11  [ 8.080,  8.727] s
+    S09  [ 8.409,  9.082] s
+    S12  [ 8.604,  9.292] s
+    S15  [ 8.724,  9.421] s
+    S03  [ 9.292, 10.035] s
+    S08  [ 9.414, 10.167] s
+    S06  [ 9.669, 10.442] s
+  best single constant dwell: 7.84 s commissions 5 of 16 stations
+  gate requires 15, so a constant dwell still fails

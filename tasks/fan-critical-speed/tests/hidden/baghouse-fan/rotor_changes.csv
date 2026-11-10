@@ -1,0 +1,4 @@
+entered,work_order,part,property,value
+2020-08-03,WO-2020-3606,impeller,mass_kg,580.0
+2020-08-03,WO-2020-3606,impeller,polar_inertia_kg_m2,117.5
+2020-08-03,WO-2020-3606,impeller,transverse_inertia_kg_m2,64.6

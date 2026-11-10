@@ -1,0 +1,7 @@
+The plant assesses changes to its overhung fans to its rotordynamic standard MS-RD, one fan at a time from the fan's package. Write `/app/output/fan.py` so that `python3 fan.py FAN_DIR OUT_JSON` assesses the fan in `FAN_DIR` with its new impeller fitted and writes `OUT_JSON` with `first_critical_rpm` and `second_critical_rpm`, the two lowest critical speeds of the fan as it will run with the new impeller. `/app/data/docs/ms_rd_critical_speeds.md` is the standard and `/app/data/docs/package_format.md` describes a package. One fan's package is in `/app/data/examples/boiler-fd-fan/`.
+
+The program must also handle the packages of six other fans of the plant, in the same format. Each critical speed must be within 2 percent of the fan's true critical speed. `OUT_JSON` must be a regular file no larger than 65536 bytes holding one JSON object with only those two keys, each exactly once and each a finite positive number, and the program must exit with status 0.
+
+The six packages run one after another, each through `python3 -I fan.py FAN_DIR OUT_JSON` in a scratch directory containing a copy of `fan.py` alone, so the program must not read or import any other file from `/app/output`. Each run has 10 minutes, under an unprivileged user without network access, with the package read-only. `/app/data` remains readable at the same path. Python 3, numpy, scipy and pandas are available.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

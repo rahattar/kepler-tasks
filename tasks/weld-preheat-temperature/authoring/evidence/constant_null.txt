@@ -1,0 +1,7 @@
+Method-free answers as complete programs through tests/grade.py (run as nobody); seven hidden joints; accepted when at most 1 is wrong.
+
+columns: the signed deviation from the truth in C (* wrong) for 1 boom-chord, 2 column-splice, 3 deck-plate, 4 frame-web, 5 girder-flange, 6 hopper-wall, 7 tank-course
+
+the example's preheat (93.1 C) for every joint                 wrong 7  -32.7*  -37.0*  -64.4*  -25.5*  -59.1*  +27.8*  -44.0*  rejected
+150 C for every joint                                          wrong 6  +24.1*  +19.9*  -7.6*  +31.3*  -2.2  +84.7*  +12.8*  rejected
+the example's preheat moved 75 C per 0.05 of the highest CEV   wrong 6  +117.3*  +83.0*  +40.6*  +34.5*  +0.9  -32.2*  -44.0*  rejected

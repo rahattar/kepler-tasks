@@ -1,0 +1,27 @@
+sound methods on the shipped bay: 12288 calibrations (24 plans and run orders x 512 method choices)
+worst-zone error: min 0.98 K, median 1.00 K, 95th percentile 1.05 K, max 1.05 K; fail at 2 K: 0
+
+worst-zone error by choice (max over everything else)
+  rho        ls 1.05 K  median 1.05 K  t4 1.05 K  fat 1.05 K
+  stat       median 1.05 K  mean 1.05 K
+  growth     fit 1.05 K  ends 1.05 K
+  split      junction 1.05 K  setpoint 1.05 K
+  split_gap  fit 1.05 K  ends 1.05 K
+  base_stat  median 1.05 K  mean 1.05 K
+  base_set   quartz 1.05 K  standby 1.05 K
+  boats      full 1.05 K  regress 1.05 K
+
+ten worst calibrations
+  1.05 K at F3Z1 | F5@850 F3@1050 F8@850 | rho ls, stat median, growth fit, split junction, split_gap fit, base_stat median, base_set quartz, boats full
+  1.05 K at F3Z1 | F5@850 F3@1050 F8@850 | rho ls, stat median, growth fit, split junction, split_gap fit, base_stat median, base_set quartz, boats regress
+  1.05 K at F3Z1 | F5@850 F3@1050 F8@850 | rho ls, stat median, growth fit, split junction, split_gap fit, base_stat median, base_set standby, boats full
+  1.05 K at F3Z1 | F5@850 F3@1050 F8@850 | rho ls, stat median, growth fit, split junction, split_gap fit, base_stat median, base_set standby, boats regress
+  1.05 K at F3Z1 | F5@850 F3@1050 F8@850 | rho ls, stat median, growth fit, split junction, split_gap fit, base_stat mean, base_set quartz, boats full
+  1.05 K at F3Z1 | F5@850 F3@1050 F8@850 | rho ls, stat median, growth fit, split junction, split_gap fit, base_stat mean, base_set quartz, boats regress
+  1.05 K at F3Z1 | F5@850 F3@1050 F8@850 | rho ls, stat median, growth fit, split junction, split_gap fit, base_stat mean, base_set standby, boats full
+  1.05 K at F3Z1 | F5@850 F3@1050 F8@850 | rho ls, stat median, growth fit, split junction, split_gap fit, base_stat mean, base_set standby, boats regress
+  1.05 K at F3Z1 | F5@850 F3@1050 F8@850 | rho ls, stat median, growth fit, split junction, split_gap ends, base_stat median, base_set quartz, boats full
+  1.05 K at F3Z1 | F5@850 F3@1050 F8@850 | rho ls, stat median, growth fit, split junction, split_gap ends, base_stat median, base_set quartz, boats regress
+
+reference (F3@1050 F5@1050 F8@1050; ratio ls, soak median, growth by line, split at the junction): worst 0.98 K at F3Z1
+ratio estimates: ls 0.3993, median 0.4000, t4 0.4066, fat 0.4100

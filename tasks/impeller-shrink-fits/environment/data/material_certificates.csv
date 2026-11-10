@@ -1,0 +1,9 @@
+part,material,yield_strength_MPa,heating_limit_C,note
+S1,FV520B,890,400,
+S2,FV520B,905,260,anti-fouling coating: do not exceed 260 C
+S3,FV520B,880,400,
+S4,FV520B,895,400,
+S5,Ti-6Al-4V,860,285,replacement impeller to OEM data sheet rev. B: do not exceed 285 C
+S6,FV520B,885,375,re-aged at 430 C after a blade-tip weld repair: do not exceed 375 C
+BD,42CrMo4,650,220,abradable labyrinth coating: do not exceed 220 C; mill test of the forging: mean expansion 20-250 C 12.40 um/m K
+TC,42CrMo4,700,190,induction-hardened thrust faces: do not exceed 190 C

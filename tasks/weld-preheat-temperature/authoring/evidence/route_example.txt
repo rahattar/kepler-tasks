@@ -1,0 +1,24 @@
+Routes on the example joint-ex.
+
+route                                                                                                     preheat C
+reference (no check left out)                                                                                 93.14
+the joint sheet's plates, not the replacement in the shop log                                                 93.14
+the joint sheet's heat of a plate, not the heat whose certificate lists the plate                             93.14
+the heat's cast analysis, not the plate's product analysis                                                    93.14
+another plate's product analysis of the heat, for a plate without its own                                     93.14
+the batch certificate's hydrogen, no moisture pick-up                                                         93.14
+exposure from the first issue, through a return to the oven                                                   93.14
+the joint sheet's electrode batch, not the batch the oven issued to the station                               93.14
+the climate logger of bay 1 for every station                                                                 93.14
+mean current x mean voltage for the pulsed runs                                                               93.14
+the sensed voltage as the arc voltage at monitors that sense at the power source                              93.14
+the cable drop of a pulsed run from its mean current only                                                     93.14
+the monitor's current as recorded before its recalibration                                                    93.14
+the joint sheet's consumable batch, not the spool fitted later                                                93.14
+every run the station's monitor recorded, other joints' runs too                                              93.14
+the WPS's nominal current, voltage and travel speed                                                           94.35
+the hardness limit on every run, not only the capping runs                                                    93.14
+the hydrogen clause only (EN 1011-2 method B)                                                                 93.14
+the 3D cooling time only (thick-plate formula)                                                                93.14
+the 2D cooling time only (thin-plate formula)                                                                288.47
+the records at face value: sheet plates, heats and batches, cast analyses, no pick-up, U x I as sensed, all runs      93.14

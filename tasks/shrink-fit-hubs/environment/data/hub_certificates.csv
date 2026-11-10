@@ -1,0 +1,13 @@
+joint,hub_material,yield_strength_MPa,heating_limit_C,note
+J01,C45+N,390,350,
+J02,AlSi10Mg-T6,200,190,T6 temper: do not exceed 190 C
+J03,CuSn12-C,160,230,do not exceed 230 C
+J04,42CrMo4+QT,490,270,"induction-hardened teeth, tempered 300 C: do not exceed 270 C"
+J05,EN-GJS-600-3,370,300,
+J06,42CrMo4+QT,480,270,abradable seal coating on the shroud: do not exceed 270 C
+J07,EN-GJS-400-15,250,300,
+J08,EN-GJS-400-15,250,300,
+J09,42CrMo4+QT,530,280,"induction-hardened coupling teeth, tempered 320 C: do not exceed 280 C"
+J10,S355J2,345,350,
+J11,C45+N,390,350,
+J12,S355J2,345,350,

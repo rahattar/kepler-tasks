@@ -1,0 +1,14 @@
+Routes as complete programs through tests/grade.py (run as nobody); seven hidden jobs; accepted when at most 1 is wrong.
+
+route                                                                                wrong  jobs wrong (signed relative deviation from the truth)
+the lowest limit over all speeds (the speed-independent bound)                           7  bracket-pocket -0.750, housing-face -0.525, lever-profile -0.229, manifold-slot -0.274, pump-cover -0.302, shaft-flat -0.230, valve-body -0.547  rejected
+the programmed speed, not the machine's speed limit                                      2  lever-profile +1.183, valve-body -0.501  rejected
+the insert pockets of a face mill as its teeth                                           2  housing-face -0.759, pump-cover -0.646  rejected
+every FRF file taken as receptance                                                       3  housing-face -1.000, pump-cover error, shaft-flat error  rejected
+the accelerometer's flank ignored                                                        2  manifold-slot +0.760, valve-body -0.422  rejected
+the accelerometer's mass left in                                                         2  bracket-pocket -0.184, lever-profile -0.163  rejected
+the feed taken along machine X                                                           3  bracket-pocket -0.852, lever-profile -0.676, manifold-slot +1.384  rejected
+every operation taken as climb milling                                                   2  manifold-slot +1.551, shaft-flat -0.795  rejected
+the latest test of the assembly, whatever its stickout                                   2  lever-profile -0.503, manifold-slot -0.491  rejected
+the first test of the assembly at its stickout (before the spindle work)                 2  lever-profile +0.999, valve-body +1.068  rejected
+the records at face value: programmed speed, pockets, the latest test of the assembly     5  housing-face -0.759, lever-profile -0.061, manifold-slot -0.491, pump-cover -0.601, valve-body -0.501  rejected

@@ -1,0 +1,221 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/surge.py"]
+
+[task]
+name = "afterquery/surge-vessel-sizing"
+description = "Write a program that sizes the air vessel protecting a pumping main against surge on pump trip, by the method of characteristics to the utility's standard, from the main's drawings, pump data, SCADA records and maintenance log, and that stays right on mains it has never seen."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "hydraulic-transients",
+    "water-hammer",
+    "method-of-characteristics",
+    "surge-protection",
+    "pipeline-model-calibration",
+    "engineering-software",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only published hydraulic transient practice (method of characteristics, homologous pump characteristics, air vessel gas laws, Colebrook-White friction) on synthetic mains, pumps and records. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "hydraulic transients and surge protection"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "hydraulic-transients",
+    "water-hammer",
+    "method-of-characteristics",
+    "surge-protection",
+    "pipeline-model-calibration",
+    "engineering-software",
+]
+expert_time_estimate_hours = 10
+relevant_experience = """I am a control scientist and thermal engineer with a PhD in mechanical engineering. Fluid systems, pumps and their transients, calibrating models of equipment against field measurements, and writing the engineering software that does it are part of my work on industrial equipment and of my teaching. The mains, pumps and records are synthetic."""
+difficulty_explanation = """In practice this is the work of a water utility's surge analyst, who sizes the vessels of a programme of pump
+replacements main by main with one program, so the program has to be right on mains nobody has looked at. Its
+research analogue is the calibration of a transient hydraulic model against field data, identifying a pipeline's
+as-built profile and friction from its operating records, before a model-based design. The mains, pumps and records
+are synthetic, written by `authoring/provenance` (`moc.py`, `mains.py`, `docs_main.py`, `build.py`) from a sealed
+definition, and realistic in their numbers:
+- Ductile iron rising mains of 4.3 to 7.1 km, DN500 to DN700, wave speed 1100 m/s, lifting 54 to 71 m to a service
+  reservoir over a high point 2.6 to 4.5 km out. This is the profile on which a pump trip separates the water column
+  at the high point unless the vessel holds the crown pressure up.
+- Two or three new sets of 210 to 400 L/s at 70 to 85 m each, with 12 to 24 kg m2 of inertia and no flywheel, so the
+  flow stops within seconds of the trip.
+- A month of 15-minute SCADA with the existing pumps (one or two running, a few outages), with flowmeter, pressure and
+  level noise, and the month's maintenance log.
+- The smallest compliant vessels of the hidden mains are 27.4 to 135.3 m3 (`authoring/evidence/reference.txt`).
+
+The example main, `kestrel-lane`, comes with the design the utility's engineer reported, and its records are sound:
+its drawings are as laid, its roughness is the design value and its transmitter sits on the crown tapping. MS-SV
+applied to its package as it stands reproduces the reported design, and so does every program that reads the
+standard correctly. The six hidden mains carry the faults that main records carry in the field. Each looks like
+ordinary data, and the documents say only what was done (a stretch diverted, a transmitter fitted, a valve
+throttled), never its effect:
+- A stretch of 300 m around the high point that was diverted during construction, with its as-laid levels not
+  recorded; the profile table still gives the design levels there. The main was laid 4.5 and 4.0 m above the drawing
+  at the high point on orchard-rise and cobb-ridge, and 3.8 and 3.5 m below it on fern-gully and lark-hollow. The
+  chamber transmitter's static readings fix the crown at the chamber, and the system description puts the chamber at
+  the high point of the main, so no level of the stretch is above it.
+- On mill-brook, fern-gully and cobb-ridge, the chamber transmitter sits in the chamber 2.4, 1.8 and 2.0 m below the
+  crown tapping it is connected to, so its static readings give its own level, not the crown's.
+- Roughness other than the design 0.15 mm: aged to 0.40, 0.37 and 0.25 mm on orchard-rise, fern-gully and
+  lark-hollow, relined to 0.05 mm on saddle-hill, and 0.13 mm on cobb-ridge. It is found from the head loss in the
+  SCADA records.
+- On saddle-hill and cobb-ridge, the pump station outlet valve was throttled for 16 and 15 days of the month, more
+  than half of it, logged with its start and end. Over those days the header transmitter's head loss to the reservoir
+  is not the main's.
+
+MS-SV clause 2 requires the analysis on the main as installed. The checks have to be written for faults the example
+does not show. Each one left out or done the obvious way gets mains wrong, against an allowance of one wrong main
+(`authoring/evidence/route_study.txt`):
+- The drawing's levels of the diversion kept: 4 wrong mains. cobb-ridge and orchard-rise are 0.830 and 0.889 of the
+  smallest vessel (unsafe); fern-gully and lark-hollow are 2.204 and 1.968 (oversized).
+- Only the chamber's level replaced by the crown found there, the rest of the drawing's diversion kept: 4, at 0.979
+  and 0.973 (cobb-ridge, orchard-rise) and 1.586 and 1.629 (fern-gully, lark-hollow, where the drawing's hump stays
+  above the chamber).
+- The transmitter taken to sit on the crown tapping: 2, cobb-ridge 0.838 and fern-gully 0.831.
+- The drawing's level at every chamber replaced from the transmitter, which is taken to sit on the crown tapping: 3,
+  adding mill-brook at 0.947.
+- The design roughness: 3, fern-gully 1.191 and orchard-rise 1.201 (oversized), saddle-hill 0.926 (unsafe).
+- The roughness from the header transmitter over every running period, throttled days included: 2, cobb-ridge 0.496
+  and saddle-hill 0.385.
+- The middle reservoir level only: all 6, at 0.837 to 0.901.
+- The drawing, the design roughness and the middle level together: all 6, at 0.674 to 1.805.
+
+Every route misses at least two mains, and every hidden main is missed by at least two routes. On the example, the
+routes that keep all three levels give 39.26 to 40.04 m3 against the reported 39.4 m3, so the example does not show
+them; the middle level alone gives 33.48 m3, 15 percent short of it (`authoring/evidence/route_example.txt`)."""
+solution_explanation = """`solution/surge.py` is the reference program; `solution/solve.sh` installs it as `/app/output/surge.py` and runs it
+on the example. For one main it does the following:
+- Reads the system description (length, diameter, wave speed, design roughness, profile table, diverted stretch,
+  chamber and its transmitter, levels), the datasheet (rated point, homologous characteristics, inertia of pump and
+  motor) and the maintenance log (throttled periods, from their start to their end).
+- Finds the elevation of the chamber transmitter's tapping from the static readings (pumps stopped: head equals the
+  reservoir level), and the crown from it by where the system description puts the transmitter.
+- Takes a diverted stretch that contains the chamber through the crown found there, in straight lines to the recorded
+  levels at the ends of the stretch.
+- Finds the Colebrook roughness from the head loss between the chamber transmitter and the reservoir over the running
+  periods, leaving out any the log names as throttled (the median over the periods).
+- Runs the method of characteristics (an integer number of reaches at a 0.02 s step, the wave speed adjusted to fit)
+  for the trip of all running sets at the bottom, middle and top water levels. The Colebrook friction factor is that
+  of each level's steady flow with the new sets. Each set runs down from the total inertia of pump and motor, the
+  non-return valves close at flow reversal, and the vessel's gas follows pV^1.2 with the differential orifice.
+- Finds the least gas volume that holds the crown pressure at -3 m by bisection, sets the gas 2 percent above it,
+  and makes the vessel 3 percent above the volume the gas expands to at 85 percent.
+
+Run through `tests/grade.py` as the verifier runs a submission, its designs meet MS-SV clause 3 on all six hidden
+mains, at 1.052 to 1.092 of the smallest vessel against the 1.15 of clause 5. The worst crown pressure is -2.60 to
+-2.88 m, and the gas fills 0.822 to 0.825 of the vessel. On the example it gives 40.04 m3 with 19.85 m3 of gas, 1.016
+and 1.023 of the reported design (`authoring/evidence/reference.txt`)."""
+verification_explanation = """`tests/grade.py` runs the submitted `/app/output/surge.py` on each of the six hidden mains (`tests/hidden`; the
+agent's image does not contain them). The verifier image has the agent's `/app/data` at the same path, read-only
+(`tests/app_data`, written by the same `build.py`).
+
+How each main is run:
+- The program alone and the package are copied to a scratch directory owned by root, where the package is read-only.
+- The program runs as the unprivileged user nobody, with only PATH and HOME set, as
+  `python3 -I surge.py MAIN_DIR OUT_JSON`, within 900 s, in its own process group.
+- When the run ends or times out, its process group and every process of nobody are killed before the output is
+  read. The six runs are sequential, so the worst case (5400 s, plus the checks) fits the 6600 s verifier timeout.
+- The instruction states these run conditions, including the 15 minutes and that `surge.py` must be self-contained.
+
+The output must be a regular file, not a symlink, of at most 65536 bytes, holding one JSON object with exactly the
+keys `vessel_volume_m3` and `gas_volume_m3`, each once, each a finite positive number (not a string or a boolean; NaN
+and Infinity are rejected), with the gas volume below the vessel volume. The program must exit with status 0. A main
+whose output breaks any of this is wrong. The instruction states every one of these rules.
+
+A main is right when its design meets MS-SV clause 3 on the main as installed and its vessel volume is at most 15
+percent above the smallest vessel that does (MS-SV clause 5). `tests/surge_check.py` runs the trip with the submitted
+vessel and gas volume on the sealed main (`tests/hidden/truth.json`, root-only in `/tests`: the as-laid profile, the
+installed roughness, the new sets, the levels) at the bottom, middle and top water levels with `tests/moc.py`, and
+checks the crown pressure (not below -3 m), the largest pressure (not above 160 m) and the gas volume (not above 85
+percent of the vessel) over 120 s. The smallest vessel of each main (`vmin_m3` in truth.json) is the volume
+that the least gas volume holding the crown pressure (30 bisection steps, `mains.py`) expands to, over 0.85; the
+vessel volume itself does not enter the dynamics. The truth is a computation on the sealed main, not on its records. The
+single pytest test passes when at most 1 of the 6 mains is wrong. The 15 percent is MS-SV's own; the allowance of one
+main is not in the instruction. `tests/test.sh` does the following:
+- Locks `/logs/verifier` to root before grading and again before the reward.
+- Writes reward 0 first, and 1 only when pytest exits 0 and the ctrf report holds exactly one test, passed, with none
+  failed, skipped, pending or other.
+- Writes the per-main results to `/logs/verifier/metrics.json`, where they do not affect the reward.
+
+Every calibration number below is measured by the verifier itself. Each method, route and method-free answer is a
+complete JSON-writing program, run through `tests/grade.py` exactly as a submission: `authoring/evidence/common.py`
+writes the program file and calls `score()`. It runs as nobody from a scratch copy, as `python3 -I surge.py MAIN_DIR
+OUT_JSON`, and grade.py reads and judges the JSON. No evidence script calls a program's functions directly.
+
+Why the 15 percent and at most 1 wrong main:
+- The 15 percent is MS-SV clause 5. Correct methods (`authoring/evidence/method_spread.txt`), each as designed with
+  its own margins, meet clause 3 on every main at 1.038 to 1.109 of the smallest vessel. This covers the reference and
+  `authoring/evidence/independent.py`, a second program that shares no code with it (1.072 to 1.093). The second
+  program runs the method of characteristics on a fixed 20 m reach grid, with a two-stage Runge-Kutta pump rundown and
+  Newton's method for the gas. It fits the tapping elevation and the downstream loss together by least squares on the
+  running periods, and finds the roughness from the whole main outside the logged throttled periods. It shapes a
+  diversion as the drawing shifted to the crown at the chamber, tapered to the ends and never above the chamber. It
+  uses five reservoir levels and a secant search, with margins of 3 and 4 percent. Four more variants of the reference
+  change its time step (0.01 s), its reservoir levels (seven), its atmospheric head (10.33 m) and the shape of a
+  diversion (the drawing's shape shifted and tapered, as in the second program).
+- With their margins removed, the same six programs give their own smallest vessel at 0.993 to 1.058 of the true
+  one, and 6 of those 36 designs fail clause 3 by a hair. A sound program therefore carries a margin of a few percent,
+  which clause 5 leaves room for.
+- Clause 3 has no tolerance: below the smallest vessel, the crown pressure falls below -3 m at some level or the gas
+  expands past 85 percent of the vessel. Every route above misses at least two mains, and all but two of its misses
+  are more than 5 percent off. Those two, 0.973 and 0.979, come from a route that also misses fern-gully and
+  lark-hollow at 1.586 and 1.629.
+- One wrong main is allowed so that a sound program with a single marginal main is not failed. No route and no
+  method-free answer stays within it.
+
+Method-free answers (`authoring/evidence/constant_null.txt`) write a fixed design, or the example's design scaled by
+the main's length and flow. All are rejected:
+
+| Method-free answer | Wrong mains | Ratio to the smallest vessel |
+|---|---|---|
+| the example's reported design (39.4 / 19.4 m3) on every main | 6 | 0.291 to 1.439 |
+| 50 m3 with 25 m3 gas on every main | 6 | 0.369 to 1.827 |
+| 100 m3 with 50 m3 gas on every main | 6 | 0.739 to 3.653 |
+| the example's design scaled by the main's length times its rated flow | 5 | 0.596 to 1.090 |
+
+The scaled rule lands within MS-SV on orchard-rise alone (1.090) and misses the other five, at 0.596 to 1.013; on
+fern-gully, at 1.013, its gas is short of the crown limit. On cobb-ridge the example's reported design is 1.011 of the
+smallest vessel, but its 19.4 m3 of gas is short of the 19.54 m3 the crown limit needs there.
+
+Malformed output and misbehaving programs (`authoring/evidence/verifier_checks.txt`) write the reference's design for
+each main and then corrupt it; they are run through `grade.py` as the verifier runs them. Each of the following has
+every main counted wrong, and none crashes the verifier:
+- an output that is a symlink;
+- a missing, extra, renamed or repeated key, or a list instead of an object;
+- a NaN, infinite, string, boolean or negative volume, or a gas volume equal to the vessel volume;
+- an empty file, bytes that are not UTF-8, or a correct object padded past 65536 bytes;
+- a non-zero exit status, or a run past the time limit.
+
+A background process left running is killed when its run ends, and no process of nobody survives any case.
+
+The agent works as a separate user that can only write to `/app/output`; `/app/data` is read-only. The verifier runs
+separately without network."""
+
+[verifier]
+timeout_sec = 6600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 28800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

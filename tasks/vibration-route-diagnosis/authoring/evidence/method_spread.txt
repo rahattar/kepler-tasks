@@ -1,0 +1,14 @@
+Hidden machines misdiagnosed (of 60); the bound is 2.
+
+reference                                                    0
+unbalance at 1x above 3.0 mm/s (not 3.5)                     0  
+unbalance at 1x above 4.5 mm/s                               0  
+misalignment at 2x above 2.0 mm/s (not 2.5)                  0  
+electrical line above 2.0 mm/s (not 2.5)                     0  
+envelope band 1000-8000 Hz (not 1500-7000)                   0  
+envelope lines 6x and 3x the floor (not 8x and 4x)           0  
+channel drift limit 1.0 mm/s (not 0.5)                       0  
+half-order prominence 4x (not 5x)                            0  
+1x read within one bin either side                           0  
+
+Largest count over all variants: 0

@@ -1,0 +1,50 @@
+Recorded output of ladder.py on the shipped graded weeks. Gate: total cost <= 1.15 x benchmark, at most
+1 of 16 zone-weeks above 0.5 K h of occupied operative temperature outside 21-26 C.
+
+## python3 ladder.py exact
+exact models and states; removed            total $  ratio  zone-weeks > 0.5 K h
+benchmark (margin 0.3 K)                     26.328  1.000                     0
+margin 0                                     24.143  0.917                     2
+forecast used as issued                      27.506  1.045                     0
+COP taken at 16 C (efficiency ignored)       27.267  1.036                     0
+chiller capacity ignored                     28.485  1.082                     2
+Labor Day treated as a working day           26.458  1.005                     0
+all four ignored                             30.816  1.170                     0
+
+## python3 ladder.py agent
+fitted from the public data                 ratio fails worst K h  gate
+reference as shipped (margins 0.2 / 0.2 K)  1.117     0      0.09  pass
+margins 0.3 / 0.3 K                         1.144     0      0.01  pass
+margins 0 / 0 K                             1.071     3      0.96  fail
+forecast used as issued                     1.167     0      0.18  fail
+COP taken at 16 C (efficiency ignored)      1.138     0      0.12  pass
+chiller capacity ignored                    1.152     1      1.25  fail
+Labor Day treated as a working day          1.123     0      0.09  pass
+all four ignored, margins 0.3 K             1.257     0      0.05  fail
+
+## python3 ladder.py rules
+model-free sequence (all 24 tried)          ratio fails  gate
+outdoor reset 24 h, a=21 b=0.3              1.872     1  fail
+reactive on air, 23 C                       3.033     1  fail
+reactive on air, 22.5 C                     3.175     1  fail
+night only 22-07 h, a=21                    0.937     7  fail
+night only 20-07 h, a=21                    1.020     7  fail
+night only 22-07 h, a=20                    1.029     5  fail
+night only 22-07 h, a=19                    1.102     6  fail
+night only 20-07 h, a=20                    1.136     5  fail
+night only 22-07 h, a=18                    1.160     8  fail
+night only 20-07 h, a=19                    1.247     8  fail
+night only 18-07 h, a=21                    1.278     7  fail
+night only 20-07 h, a=18                    1.342    12  fail
+night only 18-07 h, a=20                    1.423     6  fail
+outdoor reset 24 h, a=23 b=0.3              1.429     7  fail
+night only 18-07 h, a=19                    1.571    13  fail
+outdoor reset 24 h, a=22 b=0.3              1.617     7  fail
+outdoor reset 24 h, a=23 b=0.6              1.707     5  fail
+night only 18-07 h, a=18                    1.716    15  fail
+outdoor reset 24 h, a=22 b=0.6              1.947     6  fail
+outdoor reset 24 h, a=20 b=0.3              2.156     9  fail
+outdoor reset 24 h, a=21 b=0.6              2.230     8  fail
+outdoor reset 24 h, a=20 b=0.6              2.532    13  fail
+reactive on air, 24 C                       2.734     4  fail
+reactive on air, 23.5 C                     2.884     2  fail

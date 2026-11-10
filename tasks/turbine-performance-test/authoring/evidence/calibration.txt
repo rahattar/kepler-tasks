@@ -1,0 +1,5 @@
+condition  definition (MW, kJ/kWh)  tests/gt1_truth.py
+as_found   41.6200 10923.0            41.6200 10923.0
+as_left    42.8100 10702.0            42.8100 10702.0
+largest difference 0.00e+00
+product of output factors at reference 1.000000, of heat rate factors 1.000000

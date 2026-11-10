@@ -1,0 +1,22 @@
+column,description,unit
+time,"end of the 1-minute averaging interval, plant local time",
+gen_mw_jt001,"generator active power, test wattmeter JT-001 (on the generator PT and CT secondaries, primary values as scaled in the meter)",MW
+gen_mvar_jt001,"generator reactive power, JT-001",Mvar
+freq_hz,generator frequency,Hz
+cit_1_c,"compressor inlet temperature, RTD 1 of the 8-point array in the inlet plenum",degC
+cit_2_c,"compressor inlet temperature, RTD 2 of the 8-point array in the inlet plenum",degC
+cit_3_c,"compressor inlet temperature, RTD 3 of the 8-point array in the inlet plenum",degC
+cit_4_c,"compressor inlet temperature, RTD 4 of the 8-point array in the inlet plenum",degC
+cit_5_c,"compressor inlet temperature, RTD 5 of the 8-point array in the inlet plenum",degC
+cit_6_c,"compressor inlet temperature, RTD 6 of the 8-point array in the inlet plenum",degC
+cit_7_c,"compressor inlet temperature, RTD 7 of the 8-point array in the inlet plenum",degC
+cit_8_c,"compressor inlet temperature, RTD 8 of the 8-point array in the inlet plenum",degC
+pdt101_filter_dp_kpa,"PDT-101, differential pressure across the inlet filter stages",kPa
+pt102_inlet_total_kpa_abs,"PT-102, compressor inlet (bellmouth) total pressure",kPa abs
+pdt201_exhaust_kpa_g,"PDT-201, turbine exhaust static pressure above atmosphere at the diffuser exit",kPa g
+fuel_coriolis_kg_s,"FT-301, fuel gas Coriolis mass flowmeter",kg/s
+te301_fuel_meter_c,"TE-301, fuel gas temperature at FT-301",degC
+te305_fuel_skid_c,"TE-305, fuel gas temperature at the turbine fuel skid inlet (after the fuel heater)",degC
+igv_deg,compressor inlet guide vane angle,deg
+texh_avg_c,"turbine exhaust temperature, average of the control thermocouples",degC
+ttrf_c,exhaust temperature control reference,degC

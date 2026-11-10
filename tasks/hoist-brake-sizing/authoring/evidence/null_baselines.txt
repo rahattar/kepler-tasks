@@ -1,0 +1,25 @@
+Null baselines: selections made without the laboratory or without modelling the hoists, and the hoists each one
+gets right by chance (per-hoist free passes).
+Shipped scenario. The selection is accepted only with all 12 right.
+
+1. one brake for all: best S16 at 64 % gets 3 of 12 (H04 H05 H10)
+2. holding alone: best f = 1.60 gets 8 of 12 (H01 H02 H04 H06 H07 H08 H09 H12)
+3. motor rule: best f = 1.2 gets 7 of 12 (H01 H02 H04 H07 H08 H09 H12)
+4. reference model, no tests: 8 of 12 (H01 H03 H04 H06 H07 H09 H10 H12)
+5. register as it stands, no tests: 7 of 12 (H01 H03 H06 H07 H09 H10 H12)
+
+Per-hoist free passes (null answers above that happen to be right on the hoist):
+H01:  19 of 459 single-brake answers; holding x1.60, holding x1.65, holding x1.70, motor x1.2, 4 no-test model, 5 no-test model
+H02:  19 of 459 single-brake answers; holding x1.60, holding x1.65, holding x1.70, holding x1.75, holding x1.80, holding x1.85, motor x1.2, motor x1.3, motor x1.4
+H03:  31 of 459 single-brake answers; holding x2.40, motor x1.9, motor x2.0, motor x2.1, 4 no-test model, 5 no-test model
+H04:  18 of 459 single-brake answers; holding x1.60, holding x1.65, holding x1.70, holding x1.75, holding x1.80, holding x1.85, holding x1.90, motor x1.2, motor x1.3, 4 no-test model
+H05:   7 of 459 single-brake answers; motor x1.1
+H06:   8 of 459 single-brake answers; holding x1.60, holding x1.65, holding x1.70, holding x1.75, motor x1.0, 4 no-test model, 5 no-test model
+H07:  24 of 459 single-brake answers; holding x1.60, holding x1.65, holding x1.70, holding x1.85, motor x1.1, motor x1.2, motor x1.4, 4 no-test model, 5 no-test model
+H08:  21 of 459 single-brake answers; holding x1.60, holding x1.65, holding x1.70, holding x1.75, holding x1.80, holding x1.85, holding x1.90, holding x1.95, holding x2.00, motor x1.2, motor x1.3, motor x1.4
+H09:  17 of 459 single-brake answers; holding x1.60, holding x1.65, holding x1.70, motor x1.2, 4 no-test model, 5 no-test model
+H10:  17 of 459 single-brake answers; holding x1.85, holding x1.90, holding x1.95, holding x2.00, holding x2.05, holding x2.10, holding x2.15, holding x2.20, holding x2.25, motor x1.3, motor x1.4, motor x1.5, 4 no-test model, 5 no-test model
+H11:  15 of 459 single-brake answers; no other null answer
+H12:  19 of 459 single-brake answers; holding x1.60, holding x1.65, holding x1.70, holding x1.75, motor x1.2, motor x1.3, 4 no-test model, 5 no-test model
+
+No null answer gets more than 8 of 12, even with its factor chosen with the truth in hand; the selection needs all 12. The best single brake gets 3. A factor that suits some hoists does not suit others: no one f of answers 2 and 3 is right on more than 8. Right under none of answers 2 to 5: H11.

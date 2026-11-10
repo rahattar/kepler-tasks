@@ -1,0 +1,13 @@
+{
+  "currency": "USD",
+  "unit": "kWh electricity",
+  "on_peak": {
+    "days": "Monday-Friday except federal holidays",
+    "hours": "12:00-19:00",
+    "price": 0.18
+  },
+  "off_peak": {
+    "price": 0.06,
+    "applies": "all other times"
+  }
+}

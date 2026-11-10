@@ -1,0 +1,7 @@
+Reviews that ignore the building or reuse the contractor's figures; each must fail.
+
+the contractor's sheet: every unit accepted, approve   FAIL  units wrong 7 of 7, submittal wrong
+every unit undetermined (tenant fit-out), return       FAIL  units wrong 6 of 7
+every unit undersized, contractor's figures, return    FAIL  units wrong 7 of 7
+every unit oversized, contractor's figures, return     FAIL  units wrong 7 of 7
+the District's verdicts, contractor's figures          FAIL  units wrong 6 of 7

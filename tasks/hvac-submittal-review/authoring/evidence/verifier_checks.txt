@@ -1,0 +1,22 @@
+Verifier robustness: only the well-formed District review may pass; every malformed file fails as a whole.
+
+the District's review                  PASS  
+NaN quantity                           FAIL  ValueError('NaN is not a finite number')
+infinite quantity                      FAIL  ValueError('Infinity is not a finite number')
+boolean quantity                       FAIL  ValueError('RTU-3 block_latent_kw is not a finite number')
+string quantity                        FAIL  ValueError('RTU-3 block_latent_kw is not a finite number')
+null quantity                          FAIL  ValueError('RTU-4 net_capacity_total_kw is not a finite number')
+duplicate key in a unit                FAIL  ValueError("duplicate key ['verdict']")
+duplicate unit                         FAIL  ValueError("duplicate key ['RTU-1']")
+missing quantity                       FAIL  ValueError("RTU-6 must hold exactly ['block_latent_kw', 'block_sensible_kw', 'block_total_
+extra key in a unit                    FAIL  ValueError("RTU-6 must hold exactly ['block_latent_kw', 'block_sensible_kw', 'block_total_
+quantities on the undetermined unit    FAIL  ValueError("RTU-5 must hold exactly ['missing', 'verdict'], got ['block_total_kw', 'missin
+missing unit                           FAIL  ValueError("units must hold exactly ['RTU-1', 'RTU-2', 'RTU-3', 'RTU-4', 'RTU-5', 'RTU-6',
+extra unit                             FAIL  ValueError("units must hold exactly ['RTU-1', 'RTU-2', 'RTU-3', 'RTU-4', 'RTU-5', 'RTU-6',
+extra top-level key                    FAIL  ValueError("top-level keys must be exactly ['submittal', 'units'], got ['notes', 'submitta
+no submittal                           FAIL  ValueError("top-level keys must be exactly ['submittal', 'units'], got ['units']")
+array instead of an object             FAIL  ValueError('not a JSON object')
+not JSON                               FAIL  JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+symlink to a correct review            FAIL  ValueError('not a regular file')
+directory                              FAIL  ValueError('not a regular file')
+no file                                FAIL  FileNotFoundError(2, 'No such file or directory')

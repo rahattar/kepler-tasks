@@ -1,0 +1,16 @@
+joint  part                    hub       prep   window um  width  bottom set by     top set by             p at bottom MPa  oven C at top (limit)
+J01    pump coupling hub      steel     dry      54-61        8   torque rest       stress running             36          216 (350)
+J02    fan hub                AlSi10Mg  dry     182-191      10   torque running    stress rest                30          174 (190)
+J03    worm wheel             CuSn12    oiled   135-142       8   torque running    stress rest                22          154 (230)
+J04    gear hub               steel     paste   274-295      22   torque running    clearance at 270 C        115          270 (270)
+J05    brake drum hub         GJS       dry     125-132       8   torque running    stress rest                47          268 (300)
+J06    compressor impeller    steel     dry     114-121       8   torque running    clearance at 270 C        106          270 (270)
+J07    crane wheel            GJS       paste   133-141       9   torque running    stress rest                47          218 (300)
+J08    flywheel               GJS       dry     203-217      15   torque running    stress rest                69          218 (300)
+J09    rolling-mill coupling  steel     paste   435-469      35   torque running    clearance at 280 C        131          280 (280)
+J10    conveyor pulley hub    steel     oiled   146-156      11   torque running    stress running             65          243 (350)
+J11    gear on hollow shaft   steel     dry     244-262      19   torque running    stress rest                79          276 (350)
+J12    timing pulley          steel     paste    37-44        8   torque rest       stress running             25          207 (350)
+
+Every window is one contiguous run of whole micrometres. Steel's mean expansion from 20 C is 11.90 (to 100 C), 12.45 (270 C) and 12.48 (280 C) um/m K.
+In steady running J01 and J12 gain 22.8 and 16.1 um of interference (shaft hotter than hub); J02, J03 and J05 lose 47.8, 36.3 and 40.7 um.

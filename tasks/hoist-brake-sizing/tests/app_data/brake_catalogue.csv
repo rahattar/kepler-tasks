@@ -1,0 +1,10 @@
+size,rated_torque_Nm,friction_lining,rotor_inertia_kgm2,heat_capacity_J_per_K,heat_dissipation_W_per_K,engagement_time_DC_switching_ms,engagement_time_AC_switching_ms
+S08,60,O1,0.0025,480,0.55,20,90
+S10,100,O1,0.0045,700,0.70,25,110
+S12,160,O1,0.0070,950,0.85,30,140
+S14,250,O1,0.0120,1300,1.05,35,170
+S16,400,O2,0.0200,1800,1.30,45,220
+S18,630,O2,0.0350,2600,1.65,55,280
+S20,1000,O2,0.0600,3600,2.10,70,350
+S22,1250,O2,0.0820,4300,2.40,80,400
+S25,1600,O2,0.1100,5200,2.70,90,450

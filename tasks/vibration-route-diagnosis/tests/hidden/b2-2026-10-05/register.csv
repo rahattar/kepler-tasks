@@ -1,0 +1,11 @@
+machine,kind,location,motor_poles,nameplate_rpm,drive,impeller_vanes,fan_blades,compressor_lobes,motor_bearings_de_nde,driven_bearings_de_nde,gearbox_pinion_teeth,gearbox_gear_teeth,motor_sheave_mm,fan_sheave_mm,belt_length_mm,points,tach
+PB-201,end-suction pump,skid b2-01,4,1775,direct,7,,,6313/6310,6310/6310,,,,,,MOT PMP,yes
+PB-202,end-suction pump,skid b2-01,4,1775,direct,7,,,6313/6310,6310/6310,,,,,,MOT PMP,yes
+PB-203,end-suction pump,,2,3565,direct,7,,,6313/6310,6310/6310,,,,,,MOT PMP,yes
+PB-204,end-suction pump,,2,3565,direct,7,,,6314/6312,6310/6310,,,,,,MOT PMP,yes
+VPB-205,vertical turbine pump,,4,1775,direct,5,,,7310/6310,,,,,,,MOT,yes
+ACB-206,screw compressor,,4,1775,direct,,,5,6311/6309,NU310/7310,,,,,,MOT CMP,yes
+PB-207,end-suction pump,,2,3565,direct,6,,,6313/6310,6310/6310,,,,,,MOT PMP,yes
+CTB-208,cooling tower fan,,4,1775,right-angle gearbox,,4,,6313/6310,,14,50,,,,MOT GBX,no
+CTB-209,cooling tower fan,,4,1775,right-angle gearbox,,4,,6312/6310,,13,65,,,,MOT GBX,no
+PB-210,end-suction pump,,4,1775,direct,6,,,6314/6312,6310/6310,,,,,,MOT PMP,yes

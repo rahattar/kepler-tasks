@@ -1,0 +1,13 @@
+method | right of 8 (seed 5437) | smallest margin: retention, stress, clearance | seeds 5301-5320 with 8
+reference (solution/solve.py)                            | 8 | +0.0841 +0.0034 +0.0191 | 20 of 20
+tests in another order (Ti-6Al-4V, FV520B, rotor steel)  | 8 | +0.1271 +0.0034 +0.0152 | 20 of 20
+tests in part order (FV520B, Ti-6Al-4V, rotor steel)     | 8 | +0.1342 +0.0034 +0.0068 | 20 of 20
+the rotor steel tested to 200 C                          | 8 | +0.0841 +0.0037 +0.0191 | 20 of 20
+the rotor steel tested to 250 C                          | 8 | +0.0841 +0.0034 +0.0191 | 20 of 20
+FV520B tested to 400 C (above every FV520B limit)        | 8 | +0.0841 +0.0034 +0.0191 | 16 of 20
+Ti-6Al-4V tested to 300 C                                | 8 | +0.1271 +0.0034 +0.0152 | 20 of 20
+every part heated to its limit                           | 8 | +0.0841 +0.0034 +0.0191 | 20 of 20
+allowance 1 % of the oven expansion                      | 8 | +0.0627 +0.0034 +0.0282 | 17 of 20
+allowance 2 % of the oven expansion                      | 5 | -0.1022 +0.0034 +0.0520 |  0 of 20
+middle of the window                                     | 8 | +0.0627 +0.0074 +0.0282 | 20 of 20
+least of the window + 2 um                               | 8 | +0.0073 +0.0130 +0.0373 | 17 of 20

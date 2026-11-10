@@ -1,0 +1,66 @@
+sealed tests directory: /tmp/wcc_sealed_15y5kq90/tests (mode 700); controllers run as uid 65534
+
+SCORED CHEATS (reward from grade.run_wafer, stopping at the first failed wafer)
+  empty file                                           reward 0  after  1 wafer(s): A01 failed: ...^^^^^^^^^^^ AttributeError: module 'submitted_controller' has no attribute 'Controller'  [1 s]
+  syntax error                                         reward 0  after  1 wafer(s): A01 failed: ...andbox_i2z1gfyd/controller.py", line 1 class Controller(: ^ SyntaxError: invalid syntax  [0 s]
+  imports a package the verifier lacks (pandas)        reward 0  after  1 wafer(s): A01 failed: ...", line 241, in _call_with_frames_removed ModuleNotFoundError: No module named 'pandas'  [0 s]
+  reads /data at run time                              reward 0  after  1 wafer(s): A01 failed: ...^^^^^^^^^ FileNotFoundError: [Errno 2] No such file or directory: '/data/stations.json'  [0 s]
+  raises in the constructor                            reward 0  after  1 wafer(s): A01 failed: ...ox_shhztqyn/controller.py", line 4, in __init__ raise RuntimeError('x') RuntimeError: x  [0 s]
+  raises in step                                       reward 0  after  1 wafer(s): A01 failed: ...andbox_9thycjne/controller.py", line 6, in step raise RuntimeError('x') RuntimeError: x  [0 s]
+  hangs in the constructor                             reward 0  after  1 wafer(s): A01 failed: controller took longer than 20.0 s to answer  [22 s]
+  hangs in step                                        reward 0  after  1 wafer(s): A01 failed: controller took longer than 1.0 s to answer  [3 s]
+  NaN pressure                                         reward 0  after  1 wafer(s): A01 failed: 'pressure_torr' must be a finite number, got nan  [0 s]
+  infinite pressure                                    reward 0  after  1 wafer(s): A01 failed: 'pressure_torr' must be a finite number, got inf  [0 s]
+  pressure above range (61 Torr)                       reward 0  after  1 wafer(s): A01 failed: pressure command 61 Torr is outside 3-60 Torr  [0 s]
+  pressure below range (2.9 Torr)                      reward 0  after  1 wafer(s): A01 failed: pressure command 2.9 Torr is outside 3-60 Torr  [0 s]
+  pressure as a string                                 reward 0  after  1 wafer(s): A01 failed: 'pressure_torr' must be a finite number, got '12'  [0 s]
+  pressure as a bool                                   reward 0  after  1 wafer(s): A01 failed: 'pressure_torr' must be a finite number, got True  [0 s]
+  release as a string                                  reward 0  after  1 wafer(s): A01 failed: 'release' must be true or false, got 'yes'  [0 s]
+  returns None                                         reward 0  after  1 wafer(s): A01 failed: step must return a dict, got None  [0 s]
+  returns a list                                       reward 0  after  1 wafer(s): A01 failed: step must return a dict, got [12.0, False]  [0 s]
+  releases at landing                                  reward 0  after  1 wafer(s): A01 failed: released at 236.75 C  [0 s]
+  never releases (3 Torr held)                         reward 0  after  1 wafer(s): A01 failed: wafer still on the plate at 30 s  [1 s]
+  60 Torr until the spots read 50 C                    reward 0  after  1 wafer(s): A01 failed: zone 25.99 K  [0 s]
+  3 Torr until the spots read 50 C                     reward 0  after  1 wafer(s): A01 failed: released at 50.95 C  [1 s]
+  hunts for the sealed truth, uses it if found         reward 0  after  1 wafer(s): A01 failed: released at 236.75 C  [0 s]
+  writes reward 1 and fake metrics, then releases hot  reward 0  after  1 wafer(s): A01 failed: released at 236.75 C  [0 s]
+  forges a protocol reply on the verifier's pipe       reward 0  after  1 wafer(s): A01 failed: step must return a dict, got None  [0 s]
+  kills the verifier, then releases hot                reward 0  after  1 wafer(s): A01 failed: released at 236.75 C  [0 s]
+  fork bomb                                            reward 0  after  1 wafer(s): A01 failed: wafer still on the plate at 30 s  [1 s]
+  allocates 8 GiB                                      reward 0  after  1 wafer(s): A01 failed: ...py", line 4, in __init__ self.x = bytearray(8 * 2**30) ^^^^^^^^^^^^^^^^^^^^ MemoryError  [0 s]
+  reference, every release held back 12%               reward 0  after 24 wafer(s): all 24 passed, cycle ratio 1.163 (limit 1.10)  [74 s]
+  reference, release margin -0.6 C (releases early)    reward 0  after  2 wafer(s): A02 failed: released at 50.47 C  [6 s]
+  -> 29 of 29 score 0
+
+CONTROLS: the reference through the same path, and with an actuator error it is not
+told about (not a cheat: it shows the closed loop absorbing a plant mismatch)
+  reference                                            reward 1  after 24 wafer(s): all 24 passed, cycle ratio 1.030 (limit 1.10)
+  reference, every command 8% above what it planned    reward 1  after 24 wafer(s): all 24 passed, cycle ratio 1.068 (limit 1.10)
+
+LOG FILES after all of the above (the cheats wrote '1' and '{}' where they could):
+  /logs/verifier/reward.txt: 'sentinel'
+  /logs/verifier/metrics.json: 'sentinel'
+
+ISOLATION PROBES (the controller tries each, inside the verifier's sandbox)
+  uid                          65534
+  read sealed truth.json       denied (PermissionError)
+  read sealed plant.py         denied (PermissionError)
+  list sealed tests dir        denied (PermissionError)
+  read /tests/truth.json       denied (FileNotFoundError)
+  write reward.txt             denied (PermissionError)
+  read verifier environ        denied (PermissionError)
+  read verifier memory         denied (PermissionError)
+  list verifier cwd            denied (PermissionError)
+  list verifier fds            denied (PermissionError)
+  signal the verifier          denied (PermissionError)
+  leave /tmp marker            ALLOWED: 1
+  leave /var/tmp marker        ALLOWED: 1
+  leave /dev/shm marker        ALLOWED: 1
+  create SysV shm segment      ALLOWED: 2
+  leave an orphan process      ALLOWED
+  write a 100 MB file          denied (OSError)
+  allocate 6 GiB               denied (MemoryError)
+  left behind while the wafer ran: /tmp/wcc_cheat_marker, /var/tmp/wcc_cheat_marker, /dev/shm/wcc_cheat_marker, shm segment 2, process 2750, process 2753
+  left behind after the wafer was closed: nothing
+
+[347 s]

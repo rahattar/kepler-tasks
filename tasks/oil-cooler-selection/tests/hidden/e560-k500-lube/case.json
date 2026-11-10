@@ -1,0 +1,16 @@
+{
+ "cooler": "E560",
+ "service": "lube oil cooler of K500",
+ "period": [
+  "2026-06-01",
+  "2026-09-15"
+ ],
+ "cw_allotment_kg_s": 48.0,
+ "oil_outlet_max_c": 50.0,
+ "oil_dp_max_kpa": 100.0,
+ "cw_dp_max_kpa": 75.0,
+ "cw_velocity_m_s": [
+  0.6,
+  2.4
+ ]
+}

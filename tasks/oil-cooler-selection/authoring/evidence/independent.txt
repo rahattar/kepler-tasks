@@ -1,0 +1,12 @@
+Independent program on the hidden cases (the bound is 1 wrong of 8):
+
+e120-k100-lube   right {'price_ratio': 1.0, 'oil_out_c': 47.98, 'dp_oil_kpa': 86.5, 'dp_cw_kpa': 48.6, 'tube_velocity_m_s': 1.47}
+e230-g200-lube   right {'price_ratio': 1.0, 'oil_out_c': 45.79, 'dp_oil_kpa': 86.6, 'dp_cw_kpa': 38.3, 'tube_velocity_m_s': 1.41}
+e340-k300-seal   right {'price_ratio': 1.0, 'oil_out_c': 51.96, 'dp_oil_kpa': 20.5, 'dp_cw_kpa': 27.6, 'tube_velocity_m_s': 1.06}
+e450-c400-lube   right {'price_ratio': 1.0, 'oil_out_c': 48.69, 'dp_oil_kpa': 92.5, 'dp_cw_kpa': 38.1, 'tube_velocity_m_s': 1.29}
+e560-k500-lube   right {'price_ratio': 1.0, 'oil_out_c': 49.74, 'dp_oil_kpa': 99.8, 'dp_cw_kpa': 47.5, 'tube_velocity_m_s': 1.4}
+e670-t600-lube   right {'price_ratio': 1.0, 'oil_out_c': 54.11, 'dp_oil_kpa': 116.4, 'dp_cw_kpa': 11.3, 'tube_velocity_m_s': 0.96}
+e780-k700-lube   right {'price_ratio': 1.0, 'oil_out_c': 49.89, 'dp_oil_kpa': 51.0, 'dp_cw_kpa': 61.5, 'tube_velocity_m_s': 1.47}
+e890-k800-lube   right {'price_ratio': 1.0, 'oil_out_c': 48.64, 'dp_oil_kpa': 65.7, 'dp_cw_kpa': 28.9, 'tube_velocity_m_s': 1.08}
+
+0 of 8 wrong

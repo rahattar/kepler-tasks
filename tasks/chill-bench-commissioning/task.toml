@@ -1,0 +1,81 @@
+schema_version = "1.4"
+
+artifacts = ["/app/recipe.json"]
+
+[task]
+name = "afterquery/chill-bench-commissioning"
+description = "Commission sixteen newly installed vacuum wafer chill stations from a fixed budget of eight bench runs, half the number of stations."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "design-of-experiments",
+    "measurement-budget",
+    "rarefied-gas-conduction",
+    "temperature-jump",
+    "wafer-thermal-management",
+    "semiconductor-equipment",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC, a silicon wafer manufacturer, and this task is adjacent to semiconductor equipment work. I also author evaluation tasks for other AI benchmark programs."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "rarefied gas heat transfer and commissioning design of experiments"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "design-of-experiments",
+    "measurement-budget",
+    "rarefied-gas-conduction",
+    "temperature-jump",
+    "wafer-thermal-management",
+    "semiconductor-equipment",
+]
+expert_time_estimate_hours = 10
+relevant_experience = """I am a control scientist at MEMC working on 300 mm silicon wafer manufacturing equipment, with a PhD in mechanical engineering and a background in model-based control, system identification and process modeling. My work has included production equipment from crystal growth through wafer handling, along with analysis of wafer-level measurements and equipment behavior. That experience includes building physics-based models from limited tool data, separating geometry and process effects, and turning those models into operating decisions that can be checked against measurements. I have not treated this benchmark as a copy of a proprietary tool; the released data and parameters are synthetic."""
+difficulty_explanation = """In a wafer fab this work is done by the equipment engineer and the process engineer who qualify a newly installed tool. They get a handful of instrumented monitor wafers and a schedule, not a characterisation campaign per station, so they choose which stations to spend those wafers on, infer the rest from incoming-inspection metrology, and sign a recipe for every station in the set. I have run this kind of qualification on 300 mm production equipment; the judgement it takes is the judgement this task asks for.
+
+The data are synthetic and come from a disclosed seeded generator. The agent is given inspection metrology for sixteen stations and a commissioning bench that will run only eight test wafers, so eight stations can never be measured and must be reached through a model fitted across the ones that were. Each station's accommodation coefficient depends on two printed fields, plate roughness and the bath temperature of the passivation lot its plate came from, through a relation that is not stated: steep below a knee in bath temperature and flat above it. There are twelve lots, so per-lot offsets cannot be fitted from eight runs, and a straight line or a quadratic in bath temperature cannot follow a short ramp and a long plateau.
+
+The throughput limit is what makes that bind. In the temperature-jump form the gap conductance depends on pressure and accommodation coefficient only through P*a/(2-a), so each station's optimum dwell does not depend on its coefficient at all, and an error in the coefficient is exactly an error in pressure. With every dwell held within 8 percent of that station's own optimum, a recipe centred in its pressure band tolerates a coefficient error of only 5 to 8 percent, measured per station, which is the scale of an eight-run campaign's prediction error. Where the runs are spent therefore decides the outcome. Seven stations are vertices of the fleet's convex hull in roughness and bath temperature; a campaign that leaves one unmeasured extrapolates to it, and only 9 of the 12,870 possible eight-station campaigns avoid that. On the shipped fleet the vertex that matters is the low-roughness corner of the plateau, reached otherwise only by extrapolating from the lowest-roughness plate, which sits 2.9 standard deviations below the structure. With the right model, a campaign built around the one same-lot roughness pair and the bath extremes clears the gate on 19.5 percent of identification-noise draws and the hull campaign on 99.5 percent; with a straight line, a quadratic or lot offsets, no campaign clears it. Conservatism is no escape, because the same 8 percent that bounds the dwell bounds how far the pressure can be backed off.
+
+The length comes from the work being sequential and dependent rather than from volume. The campaign has to be planned against a covariate structure nobody has stated and spent irreversibly; each measured station's coefficient identified against a plate that is not at setpoint; the shape of the bath-temperature dependence chosen from eight noisy points; the eight unmeasured stations predicted; and every recipe placed inside an 8 percent window using a degeneracy that has to be recognised rather than assumed. Each step constrains the next, and the campaign decision has to be made before any of the information that would justify it exists."""
+solution_explanation = """The reference buys its own data through the same bench client and budget the agent has, and never reads the sealed fleet parameters. It plans its campaign from the inspection report alone. Every vertex of the fleet's convex hull in roughness and bath temperature is measured, so each station the budget cannot reach is an interpolation in both covariates at once; on this fleet that is seven stations, and the eighth run goes to the station that minimises the worst prediction variance over the stations left unmeasured, taken over every knee position the covariate model could find.
+
+Each measured station's accommodation coefficient is identified in three stages, so the plate is not assumed isothermal: a first pass with the plate pinned at setpoint, then one plate heat capacity and chiller conductance fitted across the fleet from the RTD traces, recovering 1940 J/K and 551 W/K against sealed values of 2000 and 550, then a refit of the coefficients with that plate model in place. The coefficient itself, not a lumped conductance, is then regressed on roughness and bath temperature twice, as a straight line and as a hinge whose knee is chosen on a grid, and the fit with the smaller residual per degree of freedom is kept after charging the hinge for its extra parameter: 0.069 for the line against 0.011 for the hinge, with the knee at 48.0 C.
+
+The recipes use the temperature-jump degeneracy directly. Each dwell is that station's own optimum times (1 + 0.08 - 0.015), which needs no coefficient at all; each pressure sits at the geometric centre of the band that dwell opens at the estimated coefficient, with the top of the band held 0.35 K under the zone limit, so the whole allowance becomes tolerance to coefficient error in both directions.
+
+The reference is independent of the grader in four ways rather than one. It does not import the grading module. It discretises the wafer into equal-area annuli where the grader uses equal radial width. It integrates with scipy's adaptive LSODA where the grader uses fixed-step RK4. And it identifies each coefficient by matching the times at which the mass mean crosses four temperature thresholds, rather than by least squares over the curve.
+
+It commissions all sixteen stations against a gate of fifteen: hottest station 49.07 C against 50.0, worst zone difference 24.75 K against 25.0, and every dwell between 1.065 and 1.069 times that station's own optimum against a limit of 1.080. Run end to end on twelve instances with the unexplained scatter redrawn, it clears the gate on nine. Every failure is the same mechanism, two unmeasured stations whose scatter alone carries them outside a window of about 6 percent, which is the price of an 8 percent allowance with eight runs. That is why the shipped instance's robustness was measured directly rather than inferred: across 1000 identification-noise draws on the shipped fleet, the reference's campaign and model clear the gate 99.5 percent of the time."""
+verification_explanation = """The verifier reads the submitted /app/recipe.json and rejects malformed recipes, missing or repeated stations, unknown stations, non-finite values, negative dwell times and helium pressures outside the allowed range. For each station it replays that station's recipe through the sealed simulator and checks the quantities the instruction states: mass-mean wafer temperature at the end of dwell at or below 50.0 C, maximum inner-to-outer zone difference over the whole dwell at or below 25.0 K, and pressure between 3.0 and 60.0 Torr. Each station's dwell must also stay within 8 percent of that station's own shortest feasible dwell. That budget is per station, not summed across the fleet, so slack on one station cannot pay for overrun on another.
+
+A station is commissioned when it meets all three criteria, and the reward is gated on how many are: at least fifteen of the sixteen. The threshold ships in the machine-readable spec the agent reads, as min_stations_commissioned in /data/spec.json, as well as in the instruction prose. The count exists because on an earlier fleet a conjunction over every condition turned the verdict on a 0.08 K excess at one station while every other margin was healthy. Fifteen is the count that separates campaigns: with the right model on the shipped fleet, requiring all sixteen would leave even the reference's campaign at 32 percent of identification-noise draws, because one station's scatter runs against its neighbours', and allowing two would pass a campaign that never reaches the plateau corner 90 percent of the time. It forgives one station, not several: in the ablation ladder every wrong covariate model loses three to eight stations and clears the gate on none of 400 identification-noise draws, the shortcut that applies the reference to the eight stations it measures and a plausible mid recipe to the other eight commissions eight, and the best single constant dwell commissions five. The per-criterion breakdown is still reported per station, in the failing assertion and in /logs/verifier/metrics.json, but only the count gates, so no diagnostic can zero an otherwise valid run.
+
+Ground truth is never produced by running the reference solution. The sealed simulator evaluates whatever recipe was submitted, and each station's constrained optimum is re-derived from the hidden parameters at grade time, so the grader cannot drift away from the model that produced the bench traces the agent bought. The generator and its fixed seed ship in authoring/provenance and reproduce every data file byte for byte. The physics module contains no randomness; measurement noise exists only in the bench service.
+
+The graded quantities are defined on area means rather than on cell values, and the grading model's convergence is measured rather than asserted: authoring/evidence/method_study.py sweeps the ring count and the time step independently across three stations, including the two carrying the least temperature and zone margin, and at the shipped 80 rings and 0.01 s the end temperature is within 0.001 C, the zone difference within 0.019 K and the constrained optimum within 0.001 percent of the converged solution. Each is under a tenth of the margin the reference carries, so a better-resolved model is not penalised for being right. Twenty-two adversarial shortcuts ship as a runnable script and all twenty-two score 0, including the reference with every dwell padded 15 percent, which fails the throughput budget on all sixteen stations, with every dwell shaved 10 percent, which fails the temperature limit on all sixteen, and with every pressure raised 15 percent, which fails the zone limit on all sixteen. There is no conservatism that buys a pass, no shortcut that survives shaving, and no way to reach the threshold by sacrificing stations."""
+
+[verifier]
+timeout_sec = 1800.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 14400.0
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+network_mode = "public"

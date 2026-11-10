@@ -1,0 +1,15 @@
+date_local,asset,description,status
+2026-09-02 10:47,PS-2,Wet well level sensor cleaned.,closed
+2026-09-03 09:59,main,Pump set 1 bearing temperature check.,closed
+2026-09-05 08:53,PS-2,Pump set 2 gland adjusted.,closed
+2026-09-05 09:13,main,Wet well level sensor cleaned.,closed
+2026-09-08 07:56,main,Header drain valve exercised.,closed
+2026-09-14 14:50,PS-2,Header drain valve exercised.,closed
+2026-09-17 15:49,PS-2,Wet well level sensor cleaned.,closed
+2026-09-19 11:36,main,"Flowmeter FT201 zero check, within tolerance.",closed
+2026-09-21 14:10,main,Washout WO-3 flushed.,closed
+2026-09-23 07:14,PS-2,"Motor insulation test, set 2.",closed
+2026-09-23 10:52,main,Washout WO-3 flushed.,closed
+2026-09-23 13:08,main,Header drain valve exercised.,closed
+2026-09-26 09:50,main,Wet well level sensor cleaned.,closed
+2026-09-30 07:52,main,Header drain valve exercised.,closed

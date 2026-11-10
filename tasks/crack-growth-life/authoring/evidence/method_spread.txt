@@ -1,0 +1,18 @@
+Method spread on the shipped scenario (seed 9704); window 0.40-0.50 of the true life, gate 16.
+
+method                                                                                           right
+reference fit: m 3.11, p 0.55, closure-free threshold 2.37 (BS 7910's line 5.38 - 6.77 R where higher), U0 0.642, closure-free from R 0.41; heat rate factors H1 1.00, H2 1.25, H3 1.34, H4 1.34 (H2 from E02); E01 needs x0.996
+
+reference: Paris H1 .20 .35 .45 .90, H4 .70; interval 0.447 x life                               16/16  life/true 0.997-1.023  interval/life 0.446-0.457  E01 1.00 E02 1.00
+reference, interval 0.430 x life                                                                 16/16  life/true 0.997-1.023  interval/life 0.429-0.440  E01 1.00 E02 1.00
+reference, interval 0.460 x life                                                                 16/16  life/true 0.997-1.023  interval/life 0.459-0.471  E01 1.00 E02 1.00
+reversed order (other scatter draws)                                                             16/16  life/true 0.982-1.058  interval/life 0.439-0.473  E01 0.97 E02 1.00
+reference tests, threshold scaled to low R by the Paris closure                                  16/16  life/true 0.991-1.020  interval/life 0.443-0.456  E01 1.00 E02 1.00
+reference tests, one fitted threshold for every R                                                16/16  life/true 0.989-1.022  interval/life 0.442-0.457  E01 1.00 E02 1.00
+paris 0.10 H1, paris 0.30 H1, paris 0.50 H1, paris 0.90 H1, paris 0.60 H3                        16/16  life/true 0.985-1.042  interval/life 0.440-0.466  E01 0.99 E02 1.00
+paris 0.10 H1, paris 0.25 H1, paris 0.45 H1, paris 0.90 H1, paris 0.50 H3                        16/16  life/true 0.960-1.025  interval/life 0.429-0.458  E01 0.96 E02 1.00
+paris 0.20 H1, paris 0.35 H1, paris 0.90 H1, paris 0.45 H2, paris 0.70 H4                        16/16  life/true 0.986-1.040  interval/life 0.441-0.465  E01 0.99 E02 1.01
+paris 0.10 H1, paris 0.30 H1, paris 0.90 H1, paris 0.50 H3                                       16/16  life/true 0.960-1.070  interval/life 0.429-0.478  E01 0.97 E02 1.00
+paris 0.15 H1, paris 0.30 H1, paris 0.80 H1, paris 0.50 H3, paris 0.50 H4                        16/16  life/true 0.982-1.040  interval/life 0.439-0.465  E01 1.02 E02 1.00
+
+Every method above gets 16 of 16 or more; across them the interval lies within 0.429 to 0.478 of the true life, against the window 0.40-0.50.

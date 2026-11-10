@@ -1,0 +1,223 @@
+{
+ "seed": 20261003,
+ "allowance": 0.1,
+ "stations": {
+  "A": {
+   "inner_um": 150.0,
+   "outer_um": 300.0,
+   "setpoint_C": 20.0,
+   "_alpha_plate": 0.4
+  },
+  "B": {
+   "inner_um": 120.0,
+   "outer_um": 260.0,
+   "setpoint_C": 18.0,
+   "_alpha_plate": 0.33
+  }
+ },
+ "films": {
+  "bare": {
+   "_alpha_wafer": 0.36
+  },
+  "oxide": {
+   "_alpha_wafer": 0.29
+  },
+  "nitride": {
+   "_alpha_wafer": 0.45
+  }
+ },
+ "wafers": [
+  {
+   "id": "A01",
+   "station": "A",
+   "film": "oxide",
+   "_sag_um": -43.61,
+   "_T0_C": 236.75,
+   "_noise_seed": 445780723
+  },
+  {
+   "id": "A02",
+   "station": "A",
+   "film": "nitride",
+   "_sag_um": -40.87,
+   "_T0_C": 264.9,
+   "_noise_seed": 404948996
+  },
+  {
+   "id": "A03",
+   "station": "A",
+   "film": "bare",
+   "_sag_um": -27.92,
+   "_T0_C": 246.28,
+   "_noise_seed": 212606117
+  },
+  {
+   "id": "A04",
+   "station": "A",
+   "film": "bare",
+   "_sag_um": -16.75,
+   "_T0_C": 260.1,
+   "_noise_seed": 1910125171
+  },
+  {
+   "id": "A05",
+   "station": "A",
+   "film": "nitride",
+   "_sag_um": -16.57,
+   "_T0_C": 239.69,
+   "_noise_seed": 1986787187
+  },
+  {
+   "id": "A06",
+   "station": "A",
+   "film": "oxide",
+   "_sag_um": -1.38,
+   "_T0_C": 253.56,
+   "_noise_seed": 727384343
+  },
+  {
+   "id": "A07",
+   "station": "A",
+   "film": "nitride",
+   "_sag_um": 6.57,
+   "_T0_C": 242.28,
+   "_noise_seed": 1867685246
+  },
+  {
+   "id": "A08",
+   "station": "A",
+   "film": "bare",
+   "_sag_um": 12.07,
+   "_T0_C": 259.84,
+   "_noise_seed": 1410099015
+  },
+  {
+   "id": "A09",
+   "station": "A",
+   "film": "nitride",
+   "_sag_um": 23.17,
+   "_T0_C": 257.47,
+   "_noise_seed": 1634204515
+  },
+  {
+   "id": "A10",
+   "station": "A",
+   "film": "oxide",
+   "_sag_um": 31.3,
+   "_T0_C": 248.11,
+   "_noise_seed": 1270406255
+  },
+  {
+   "id": "A11",
+   "station": "A",
+   "film": "oxide",
+   "_sag_um": 40.47,
+   "_T0_C": 244.21,
+   "_noise_seed": 1355488192
+  },
+  {
+   "id": "A12",
+   "station": "A",
+   "film": "bare",
+   "_sag_um": 41.91,
+   "_T0_C": 250.77,
+   "_noise_seed": 2057614483
+  },
+  {
+   "id": "B01",
+   "station": "B",
+   "film": "bare",
+   "_sag_um": -49.78,
+   "_T0_C": 244.27,
+   "_noise_seed": 1395061541
+  },
+  {
+   "id": "B02",
+   "station": "B",
+   "film": "oxide",
+   "_sag_um": -33.44,
+   "_T0_C": 250.96,
+   "_noise_seed": 2078013212
+  },
+  {
+   "id": "B03",
+   "station": "B",
+   "film": "nitride",
+   "_sag_um": -25.77,
+   "_T0_C": 252.72,
+   "_noise_seed": 909285182
+  },
+  {
+   "id": "B04",
+   "station": "B",
+   "film": "oxide",
+   "_sag_um": -19.55,
+   "_T0_C": 248.2,
+   "_noise_seed": 5359639
+  },
+  {
+   "id": "B05",
+   "station": "B",
+   "film": "bare",
+   "_sag_um": -10.01,
+   "_T0_C": 236.91,
+   "_noise_seed": 1845125108
+  },
+  {
+   "id": "B06",
+   "station": "B",
+   "film": "nitride",
+   "_sag_um": -7.96,
+   "_T0_C": 242.28,
+   "_noise_seed": 1026503198
+  },
+  {
+   "id": "B07",
+   "station": "B",
+   "film": "nitride",
+   "_sag_um": 6.82,
+   "_T0_C": 257.04,
+   "_noise_seed": 876899919
+  },
+  {
+   "id": "B08",
+   "station": "B",
+   "film": "nitride",
+   "_sag_um": 10.56,
+   "_T0_C": 237.8,
+   "_noise_seed": 121777544
+  },
+  {
+   "id": "B09",
+   "station": "B",
+   "film": "bare",
+   "_sag_um": 16.9,
+   "_T0_C": 264.05,
+   "_noise_seed": 1784824875
+  },
+  {
+   "id": "B10",
+   "station": "B",
+   "film": "oxide",
+   "_sag_um": 32.05,
+   "_T0_C": 260.09,
+   "_noise_seed": 1395620033
+  },
+  {
+   "id": "B11",
+   "station": "B",
+   "film": "bare",
+   "_sag_um": 34.39,
+   "_T0_C": 245.19,
+   "_noise_seed": 1132208101
+  },
+  {
+   "id": "B12",
+   "station": "B",
+   "film": "oxide",
+   "_sag_um": 43.33,
+   "_T0_C": 257.65,
+   "_noise_seed": 2030179735
+  }
+ ]
+}

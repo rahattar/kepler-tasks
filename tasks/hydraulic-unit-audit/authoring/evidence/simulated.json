@@ -1,0 +1,50 @@
+{
+ "p-11": {
+  "oil_delivered_l": 3.914,
+  "peak_flow_l_min": 70.0,
+  "hydraulic_energy_kj": 74.284,
+  "electrical_energy_kj": 100.168
+ },
+ "p-12": {
+  "oil_delivered_l": 2.3,
+  "peak_flow_l_min": 50.0,
+  "hydraulic_energy_kj": 39.359,
+  "electrical_energy_kj": 56.618
+ },
+ "p-13": {
+  "oil_delivered_l": 5.85,
+  "peak_flow_l_min": 95.0,
+  "hydraulic_energy_kj": 119.309,
+  "electrical_energy_kj": 158.54
+ },
+ "p-14": {
+  "oil_delivered_l": 2.002,
+  "peak_flow_l_min": 42.0,
+  "hydraulic_energy_kj": 32.484,
+  "electrical_energy_kj": 45.336
+ },
+ "p-15": {
+  "oil_delivered_l": 3.55,
+  "peak_flow_l_min": 65.0,
+  "hydraulic_energy_kj": 65.324,
+  "electrical_energy_kj": 90.527
+ },
+ "p-16": {
+  "oil_delivered_l": 2.638,
+  "peak_flow_l_min": 52.0,
+  "hydraulic_energy_kj": 45.786,
+  "electrical_energy_kj": 63.796
+ },
+ "p-17": {
+  "oil_delivered_l": 6.057,
+  "peak_flow_l_min": 90.0,
+  "hydraulic_energy_kj": 115.792,
+  "electrical_energy_kj": 153.603
+ },
+ "p-18": {
+  "oil_delivered_l": 1.889,
+  "peak_flow_l_min": 40.0,
+  "hydraulic_energy_kj": 29.055,
+  "electrical_energy_kj": 40.247
+ }
+}

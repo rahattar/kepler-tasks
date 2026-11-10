@@ -1,0 +1,10 @@
+Discretisation study (convergence.py). Benchmark recomputed and the reference (fitted from the
+shipped public data) graded on each plant; same seeds, same graded weeks.
+
+slab cells  sub-step  benchmark $  reference $  ratio  benchmark worst K h  reference worst K h
+12 shipped  60 s           26.328       29.417  1.117                 0.04                 0.09
+24          30 s           26.232       29.486  1.124                 0.05                 0.10
+
+Doubling the cells and halving the sub-step moves the benchmark total by -0.4 percent and the
+reference's ratio by +0.007, against 0.033 of headroom under the 1.15 allowance. The reference's
+worst zone-week stays below a fifth of the 0.5 K h limit on both plants.

@@ -1,0 +1,5 @@
+material,E_GPa,poisson,density_kg_m3,expansion_20_100C_um_per_m_K
+FV520B,196,0.29,7800,10.60
+Ti-6Al-4V,114,0.34,4430,8.60
+42CrMo4,210,0.30,7850,11.90
+26NiCrMoV14-5,206,0.30,7850,11.40

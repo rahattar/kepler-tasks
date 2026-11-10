@@ -1,0 +1,5 @@
+Independent solution on the shipped scenario (seed 4315).
+singles ['J16', 'J06', 'J12', 'J05', 'J04', 'J14'] at 55 percent of the default torque, pattern trial on J07 (8 of 8 slots)
+fit K = 0.0803 + 0.0312 Ra + 0.0223 softplus(coating - |es|/4) + 0.0548 (1 - exp(-n / 1.36)), n earlier assemblies
+crew loss factor 4.11 x recorded; crew ratios {'A': 0.837, 'B': 0.909}
+result: 16 of 16 right (gate 15): accepted; worst error +4.05 percent of target, rms 1.83 percent; wrong: -

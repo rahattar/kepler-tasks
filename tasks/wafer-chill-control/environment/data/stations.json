@@ -1,0 +1,18 @@
+{
+  "description": "Inspection records of the two chill stations. Zone standoffs from the capacitance gauge, gauge uncertainty 1.5 um. Both stations use the same chiller part.",
+  "zone_split_radius_mm": 75.0,
+  "stations": [
+    {
+      "station": "A",
+      "inner_standoff_um": 150.0,
+      "outer_standoff_um": 300.0,
+      "plate_setpoint_C": 20.0
+    },
+    {
+      "station": "B",
+      "inner_standoff_um": 120.0,
+      "outer_standoff_um": 260.0,
+      "plate_setpoint_C": 18.0
+    }
+  ]
+}

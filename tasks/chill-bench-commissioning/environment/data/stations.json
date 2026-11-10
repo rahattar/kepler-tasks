@@ -1,0 +1,166 @@
+{
+  "description": "Newly installed vacuum chill stations. Zone standoffs from the capacitance gauge at incoming inspection, gauge uncertainty 1.5 um. Plate surface roughness from the same inspection. Passivation lot and that lot's bath temperature from the plate traveller. The chiller module is the same part number across the fleet. No thermal data: the bench is the only source of that.",
+  "zone_split_radius_mm": 75.0,
+  "stations": [
+    {
+      "station": "S01",
+      "inner_standoff_um": 120.0,
+      "outer_standoff_um": 250.0,
+      "plate_roughness_Ra_um": 0.42,
+      "passivation_lot": "L04",
+      "passivation_bath_C": 46.0,
+      "incoming_temperature_C": 250.0,
+      "plate_setpoint_C": 20.0
+    },
+    {
+      "station": "S02",
+      "inner_standoff_um": 150.0,
+      "outer_standoff_um": 300.0,
+      "plate_roughness_Ra_um": 1.18,
+      "passivation_lot": "L10",
+      "passivation_bath_C": 58.0,
+      "incoming_temperature_C": 265.0,
+      "plate_setpoint_C": 18.0
+    },
+    {
+      "station": "S03",
+      "inner_standoff_um": 170.0,
+      "outer_standoff_um": 380.0,
+      "plate_roughness_Ra_um": 0.61,
+      "passivation_lot": "L02",
+      "passivation_bath_C": 42.0,
+      "incoming_temperature_C": 240.0,
+      "plate_setpoint_C": 22.0
+    },
+    {
+      "station": "S04",
+      "inner_standoff_um": 110.0,
+      "outer_standoff_um": 250.0,
+      "plate_roughness_Ra_um": 1.34,
+      "passivation_lot": "L08",
+      "passivation_bath_C": 54.0,
+      "incoming_temperature_C": 258.0,
+      "plate_setpoint_C": 20.0
+    },
+    {
+      "station": "S05",
+      "inner_standoff_um": 180.0,
+      "outer_standoff_um": 350.0,
+      "plate_roughness_Ra_um": 0.29,
+      "passivation_lot": "L05",
+      "passivation_bath_C": 48.0,
+      "incoming_temperature_C": 245.0,
+      "plate_setpoint_C": 19.0
+    },
+    {
+      "station": "S06",
+      "inner_standoff_um": 140.0,
+      "outer_standoff_um": 320.0,
+      "plate_roughness_Ra_um": 0.95,
+      "passivation_lot": "L12",
+      "passivation_bath_C": 64.0,
+      "incoming_temperature_C": 270.0,
+      "plate_setpoint_C": 24.0
+    },
+    {
+      "station": "S07",
+      "inner_standoff_um": 130.0,
+      "outer_standoff_um": 300.0,
+      "plate_roughness_Ra_um": 0.74,
+      "passivation_lot": "L01",
+      "passivation_bath_C": 40.0,
+      "incoming_temperature_C": 235.0,
+      "plate_setpoint_C": 21.0
+    },
+    {
+      "station": "S08",
+      "inner_standoff_um": 200.0,
+      "outer_standoff_um": 400.0,
+      "plate_roughness_Ra_um": 1.07,
+      "passivation_lot": "L05",
+      "passivation_bath_C": 48.0,
+      "incoming_temperature_C": 255.0,
+      "plate_setpoint_C": 20.0
+    },
+    {
+      "station": "S09",
+      "inner_standoff_um": 160.0,
+      "outer_standoff_um": 330.0,
+      "plate_roughness_Ra_um": 0.35,
+      "passivation_lot": "L06",
+      "passivation_bath_C": 50.0,
+      "incoming_temperature_C": 262.0,
+      "plate_setpoint_C": 19.0
+    },
+    {
+      "station": "S10",
+      "inner_standoff_um": 125.0,
+      "outer_standoff_um": 270.0,
+      "plate_roughness_Ra_um": 0.88,
+      "passivation_lot": "L07",
+      "passivation_bath_C": 52.0,
+      "incoming_temperature_C": 248.0,
+      "plate_setpoint_C": 23.0
+    },
+    {
+      "station": "S11",
+      "inner_standoff_um": 190.0,
+      "outer_standoff_um": 360.0,
+      "plate_roughness_Ra_um": 1.26,
+      "passivation_lot": "L03",
+      "passivation_bath_C": 44.0,
+      "incoming_temperature_C": 252.0,
+      "plate_setpoint_C": 20.0
+    },
+    {
+      "station": "S12",
+      "inner_standoff_um": 145.0,
+      "outer_standoff_um": 310.0,
+      "plate_roughness_Ra_um": 0.53,
+      "passivation_lot": "L07",
+      "passivation_bath_C": 52.0,
+      "incoming_temperature_C": 268.0,
+      "plate_setpoint_C": 21.0
+    },
+    {
+      "station": "S13",
+      "inner_standoff_um": 135.0,
+      "outer_standoff_um": 290.0,
+      "plate_roughness_Ra_um": 0.66,
+      "passivation_lot": "L06",
+      "passivation_bath_C": 50.0,
+      "incoming_temperature_C": 258.0,
+      "plate_setpoint_C": 21.0
+    },
+    {
+      "station": "S14",
+      "inner_standoff_um": 175.0,
+      "outer_standoff_um": 345.0,
+      "plate_roughness_Ra_um": 1.12,
+      "passivation_lot": "L09",
+      "passivation_bath_C": 56.0,
+      "incoming_temperature_C": 246.0,
+      "plate_setpoint_C": 20.0
+    },
+    {
+      "station": "S15",
+      "inner_standoff_um": 155.0,
+      "outer_standoff_um": 325.0,
+      "plate_roughness_Ra_um": 0.47,
+      "passivation_lot": "L02",
+      "passivation_bath_C": 42.0,
+      "incoming_temperature_C": 263.0,
+      "plate_setpoint_C": 22.0
+    },
+    {
+      "station": "S16",
+      "inner_standoff_um": 115.0,
+      "outer_standoff_um": 260.0,
+      "plate_roughness_Ra_um": 0.99,
+      "passivation_lot": "L11",
+      "passivation_bath_C": 61.0,
+      "incoming_temperature_C": 250.0,
+      "plate_setpoint_C": 19.0
+    }
+  ]
+}

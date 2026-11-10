@@ -1,0 +1,25 @@
+Chooses the laboratory's scatter seed.
+
+seed 6401: smallest margin over the nine sound plans -0.071 HRC, largest reading offset 2.97 sigma rejected
+seed 6402: smallest margin over the nine sound plans +0.496 HRC, largest reading offset 2.30 sigma rejected
+seed 6403: smallest margin over the nine sound plans +0.431 HRC, largest reading offset 1.86 sigma rejected
+seed 6404: smallest margin over the nine sound plans +0.712 HRC, largest reading offset 2.86 sigma rejected
+seed 6405: smallest margin over the nine sound plans +0.222 HRC, largest reading offset 2.41 sigma rejected
+seed 6406: smallest margin over the nine sound plans +0.298 HRC, largest reading offset 3.13 sigma rejected
+seed 6407: smallest margin over the nine sound plans +0.046 HRC, largest reading offset 2.37 sigma rejected
+seed 6408: smallest margin over the nine sound plans +0.298 HRC, largest reading offset 3.05 sigma rejected
+seed 6409: smallest margin over the nine sound plans -0.184 HRC, largest reading offset 2.70 sigma rejected
+seed 6410: smallest margin over the nine sound plans +0.569 HRC, largest reading offset 2.55 sigma rejected
+seed 6411: smallest margin over the nine sound plans +0.046 HRC, largest reading offset 2.70 sigma rejected
+seed 6412: smallest margin over the nine sound plans +0.046 HRC, largest reading offset 2.15 sigma rejected
+seed 6413: smallest margin over the nine sound plans +0.129 HRC, largest reading offset 3.18 sigma rejected
+seed 6414: smallest margin over the nine sound plans +0.298 HRC, largest reading offset 2.14 sigma rejected
+seed 6415: smallest margin over the nine sound plans +0.431 HRC, largest reading offset 2.62 sigma rejected
+seed 6416: smallest margin over the nine sound plans +0.129 HRC, largest reading offset 2.09 sigma rejected
+seed 6417: smallest margin over the nine sound plans +0.046 HRC, largest reading offset 2.39 sigma rejected
+seed 6418: smallest margin over the nine sound plans +0.129 HRC, largest reading offset 2.45 sigma rejected
+seed 6419: smallest margin over the nine sound plans +0.046 HRC, largest reading offset 2.81 sigma rejected
+seed 6420: smallest margin over the nine sound plans +0.402 HRC, largest reading offset 2.59 sigma rejected
+seed 6421: smallest margin over the nine sound plans +0.569 HRC, largest reading offset 2.36 sigma ACCEPTED
+
+chosen seed 6421 (limits: margin >= 0.5 HRC, offsets <= 2.5 sigma)

@@ -1,0 +1,38 @@
+tests/grade.py on corrupted copies of the reference's values, run as nobody; seven hidden jobs, accepted when at most 1 is wrong.
+
+reference values, unchanged                                              wrong 0  accepted; nobody's processes left: 0
+output is a symlink to a correct file                                    wrong 7  rejected; nobody's processes left: 0
+    ValueError('the output is not a regular file')
+the key missing (an empty object)                                        wrong 7  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly max_depth_um')
+an extra key                                                             wrong 7  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly max_depth_um')
+a key twice                                                              wrong 7  rejected; nobody's processes left: 0
+    ValueError('a key appears twice')
+the key in other words (depth_um)                                        wrong 7  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly max_depth_um')
+the value NaN                                                            wrong 7  rejected; nobody's processes left: 0
+    ValueError('NaN is not a finite number')
+the value Infinity                                                       wrong 7  rejected; nobody's processes left: 0
+    ValueError('Infinity is not a finite number')
+the value as a string                                                    wrong 7  rejected; nobody's processes left: 0
+    ValueError('max_depth_um is not a finite positive number')
+the value true                                                           wrong 7  rejected; nobody's processes left: 0
+    ValueError('max_depth_um is not a finite positive number')
+the value negative                                                       wrong 7  rejected; nobody's processes left: 0
+    ValueError('max_depth_um is not a finite positive number')
+the value zero                                                           wrong 7  rejected; nobody's processes left: 0
+    ValueError('max_depth_um is not a finite positive number')
+a list, not an object                                                    wrong 7  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly max_depth_um')
+empty file                                                               wrong 7  rejected; nobody's processes left: 0
+    JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+bytes that are not UTF-8                                                 wrong 7  rejected; nobody's processes left: 0
+    UnicodeDecodeError('utf-8', b'{"max_depth_um": 10.73}\xff\xfe', 23, 24, 'invalid start byte')
+correct object padded to 70 kB                                           wrong 7  rejected; nobody's processes left: 0
+    ValueError('the output is larger than 65536 bytes')
+correct output, exit status 1                                            wrong 7  rejected; nobody's processes left: 0
+    exit status 1:
+correct output, a background process left running                        wrong 0  accepted; nobody's processes left: 0
+correct output, then runs past the time limit (limit set to 20 s here)   wrong 7  rejected; nobody's processes left: 0
+    time limit of 20 s exceeded

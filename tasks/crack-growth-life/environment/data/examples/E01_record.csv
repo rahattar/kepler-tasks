@@ -1,0 +1,28 @@
+item,value
+component,E01
+member,unloader 1 boom
+position,"frame 12, top flange"
+attachment,transverse stiffener
+flange_thickness_mm,30
+attachment_thickness_mm,16
+fillet_weld_leg_mm,10
+flange_plate_heat,H1
+member_fabrication,as welded
+dead_load_stress_MPa,0
+crack_depth_found_mm,3
+depth_found_by,TOFD
+date_found,2024-02-12
+date_repaired,2024-12-09
+repair,ground out and re-welded (procedure FA-3)
+excavation_depth_mm,5.9
+operating_days_found_to_repair,211
+survey,"2023 strain-gauge survey at this attachment, 35 days of normal operation"
+survey_days,35
+survey_range_170_MPa_cycles,21
+survey_range_144.5_MPa_cycles,105
+survey_range_119_MPa_cycles,420
+survey_range_95.2_MPa_cycles,1470
+survey_range_74.8_MPa_cycles,4725
+survey_range_56.1_MPa_cycles,12600
+survey_range_40.8_MPa_cycles,29400
+survey_range_27.2_MPa_cycles,56248

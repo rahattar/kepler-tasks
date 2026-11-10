@@ -1,0 +1,7 @@
+The shop sets the minimum preheat of its butt-welded joints from its preheat standard MS-PH, one joint at a time from the joint's package. Write `/app/output/preheat.py` so that `python3 preheat.py JOB_DIR OUT_JSON` writes `OUT_JSON` with `min_preheat_c`, the joint's minimum preheat temperature in degrees Celsius. `/app/data/docs/ms_ph_preheat.md` is the standard, `/app/data/docs/welding_data.md` the shop's welding data and `/app/data/docs/package_format.md` describes a package. One joint's package is in `/app/data/examples/joint-ex/`.
+
+The program must also handle the packages of seven other joints of the shop, in the same format. The value must be within 6 C of the joint's true minimum preheat. `OUT_JSON` must be a regular file no larger than 65536 bytes holding one JSON object with only that key, exactly once, and its value a finite positive number, and the program must exit with status 0.
+
+The seven packages run one after another, each through `python3 -I preheat.py JOB_DIR OUT_JSON` in a scratch directory containing a copy of `preheat.py` alone, so the program must not read or import any other file from `/app/output`. Each run has 10 minutes, under an unprivileged user without network access, with the package read-only. `/app/data` remains readable at the same path. Python 3, numpy, scipy and pandas are available.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

@@ -1,0 +1,13 @@
+machine,fault,component
+CWP-1,ELECTRICAL,motor
+CWP-2,MISALIGNMENT,coupling
+CWP-3,BEARING_OUTER,pump
+CTF-4,GEAR_TOOTH,gear
+CTF-5,LOOSENESS,motor
+SF-6,BELT,belt
+AC-7,ROTOR_BAR,motor
+HWP-8,BEARING_INNER,pump
+HWP-9,NONE,none
+HWP-10,UNBALANCE,pump
+VTP-11,RESONANCE,structure
+BP-12,CAVITATION,pump

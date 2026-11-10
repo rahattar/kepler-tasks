@@ -1,0 +1,11 @@
+machine,kind,location,motor_poles,nameplate_rpm,drive,impeller_vanes,fan_blades,compressor_lobes,motor_bearings_de_nde,driven_bearings_de_nde,gearbox_pinion_teeth,gearbox_gear_teeth,motor_sheave_mm,fan_sheave_mm,belt_length_mm,points,tach
+PC-401,end-suction pump,skid c4-01,4,1775,direct,5,,,6312/6310,6309/6309,,,,,,MOT PMP,yes
+PC-402,end-suction pump,skid c4-01,4,1775,direct,5,,,6312/6310,6309/6309,,,,,,MOT PMP,yes
+FC-403,belt-driven fan,,4,1775,V-belt,,9,,6314/6312,22218/22218,,,230,360,3200,MOT FAN,no
+CTC-404,cooling tower fan,,4,1775,right-angle gearbox,,6,,6311/6309,,19,65,,,,MOT GBX,no
+PC-405,end-suction pump,,4,1775,direct,6,,,6311/6309,6310/6310,,,,,,MOT PMP,yes
+PC-406,end-suction pump,,2,3565,direct,6,,,6312/6310,6310/6310,,,,,,MOT PMP,yes
+ACC-407,screw compressor,,4,1775,direct,,,4,6313/6310,NU310/7310,,,,,,MOT CMP,yes
+FC-408,belt-driven fan,,4,1775,"V-belt, VFD",,13,,6314/6312,22213/22213,,,200,300,3000,MOT FAN,no
+FC-409,belt-driven fan,,4,1775,V-belt,,14,,6312/6310,22213/22213,,,220,340,2800,MOT FAN,no
+PC-410,end-suction pump,,2,3565,direct,5,,,6312/6310,6309/6309,,,,,,MOT PMP,yes

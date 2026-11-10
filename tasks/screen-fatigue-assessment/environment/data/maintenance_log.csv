@@ -1,0 +1,22 @@
+date,screen,work_done
+2021-03-15,S1,Commissioned; gusset rev A
+2021-03-15,S2,Commissioned; gusset rev A
+2021-09-01,S3,Commissioned; gusset rev A
+2021-09-01,S4,Commissioned; gusset rev A
+2021-10-05,S2,Exciter bearings renewed (both shafts); coast-down re-timed after the job: full to half speed 25.0 s
+2022-02-07,S5,"Commissioned; gusset rev B (redesigned, non-load-carrying)"
+2022-02-07,S6,Commissioned; gusset rev A
+2022-10-03,S7,Commissioned; gusset rev A
+2023-04-17,S8,Commissioned; gusset rev A
+2023-04-17,S9,Commissioned; gusset rev A
+2024-01-22,S10,Commissioned; gusset rev A
+2025-11-12,S6,"Crack found at the exciter-beam gusset weld toe, drive side; screen stopped"
+2025-11-14,S6,"Gusset and adjacent side-plate panel replaced (rev A, like for like); screen returned to service"
+2026-03-02,S1-S10,Motor brakes fitted to every screen drive (stop programme after the S6 crack); stops now brake to standstill
+2026-05-18,S1-S10,Strain gauges installed at the monitored gusset weld toes (see gauge installation sheet); loggers fitted
+2026-05-18,S5,Logger fitted but its firmware never armed the recording: no strain records from S5 (found at the October download)
+2026-05-18,"S4,S6",Loggers' start/stop trigger inputs left unwired: no event records from S4 or S6 (steady records unaffected)
+2026-06-03,S7,Junction box JB-7 rewired after cable damage by a falling liner
+2026-07-01,S8,Logger failed; replaced with the spare logger from stores
+2026-09-08,S1,Gauge G2 protective cover found torn and the gauge wet; cover renewed
+2026-10-20,S9,Magnetic-particle inspection of the drive-side gusset weld toes during a stop: no indications

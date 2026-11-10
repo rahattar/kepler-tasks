@@ -1,0 +1,4 @@
+entered,work_order,part,property,value
+2021-04-14,WO-2021-9648,impeller,mass_kg,510.0
+2021-04-14,WO-2021-9648,impeller,polar_inertia_kg_m2,98.7
+2021-04-14,WO-2021-9648,impeller,transverse_inertia_kg_m2,54.3

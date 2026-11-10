@@ -1,0 +1,42 @@
+tag,description,unit
+C1_riser_flow,"riser flowmeter, cell C1",US gpm
+C1_fan_pct,"fan VFD speed reference, cell C1",% of full speed
+C1_fan_kw,"fan motor input power, cell C1 (power transducer at the MCC)",kW
+C1_hw_in_c,"hot water temperature in the cell riser above the distribution header tee, cell C1",degC
+C1_cw_out_c,"cold water temperature at the cell's basin outlet weir, cell C1",degC
+C2_riser_flow,"riser flowmeter, cell C2",US gpm
+C2_fan_pct,"fan VFD speed reference, cell C2",% of full speed
+C2_fan_kw,"fan motor input power, cell C2 (power transducer at the MCC)",kW
+C2_hw_in_c,"hot water temperature in the cell riser above the distribution header tee, cell C2",degC
+C2_cw_out_c,"cold water temperature at the cell's basin outlet weir, cell C2",degC
+C3_riser_flow,"riser flowmeter, cell C3",US gpm
+C3_fan_pct,"fan VFD speed reference, cell C3",% of full speed
+C3_fan_kw,"fan motor input power, cell C3 (power transducer at the MCC)",kW
+C3_hw_in_c,"hot water temperature in the cell riser above the distribution header tee, cell C3",degC
+C3_cw_out_c,"cold water temperature at the cell's basin outlet weir, cell C3",degC
+C4_riser_flow,"riser flowmeter, cell C4",US gpm
+C4_fan_pct,"fan VFD speed reference, cell C4",% of full speed
+C4_fan_kw,"fan motor input power, cell C4 (power transducer at the MCC)",kW
+C4_hw_in_c,"hot water temperature in the cell riser above the distribution header tee, cell C4",degC
+C4_cw_out_c,"cold water temperature at the cell's basin outlet weir, cell C4",degC
+C5_riser_flow,"riser flowmeter, cell C5",m3/h
+C5_fan_pct,"fan VFD speed reference, cell C5",% of full speed
+C5_fan_kw,"fan motor input power, cell C5 (power transducer at the MCC)",kW
+C5_hw_in_c,"hot water temperature in the cell riser above the distribution header tee, cell C5",degC
+C5_cw_out_c,"cold water temperature at the cell's basin outlet weir, cell C5",degC
+C6_riser_flow,"riser flowmeter, cell C6",m3/h
+C6_fan_pct,"fan VFD speed reference, cell C6",% of full speed
+C6_fan_kw,"fan motor input power, cell C6 (power transducer at the MCC)",kW
+C6_hw_in_c,"hot water temperature in the cell riser above the distribution header tee, cell C6",degC
+C6_cw_out_c,"cold water temperature at the cell's basin outlet weir, cell C6",degC
+C7_riser_flow,"riser flowmeter, cell C7",m3/h
+C7_fan_pct,"fan VFD speed reference, cell C7",% of full speed
+C7_fan_kw,"fan motor input power, cell C7 (power transducer at the MCC)",kW
+C7_hw_in_c,"hot water temperature in the cell riser above the distribution header tee, cell C7",degC
+C7_cw_out_c,"cold water temperature at the cell's basin outlet weir, cell C7",degC
+C8_riser_flow,"riser flowmeter, cell C8",m3/h
+C8_fan_pct,"fan VFD speed reference, cell C8",% of full speed
+C8_fan_kw,"fan motor input power, cell C8 (power transducer at the MCC)",kW
+C8_hw_in_c,"hot water temperature in the cell riser above the distribution header tee, cell C8",degC
+C8_cw_out_c,"cold water temperature at the cell's basin outlet weir, cell C8",degC
+header_flow_m3h,hot water supply header flowmeter (feeds the eight risers and the C1 freeze-protection bypass),m3/h

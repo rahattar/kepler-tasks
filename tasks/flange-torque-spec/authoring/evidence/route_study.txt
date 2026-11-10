@@ -1,0 +1,73 @@
+Route study on the shipped scenario (seed 4315). Window +/-6 percent of target preload, gate 15 of 16.
+
+route                                                                                                    right  joints wrong (error, percent of target; Y = bolt yielded)
+handbook K for every joint, no trials                                                                     4/16  J01 +23.5% Y, J03 +11.1%, J04 -7.7%, J06 -13.7%, J08 -19.3%, J09 -16.1%, J11 -22.4%, J12 -15.8%, J13 -12.0%, J14 -29.5%, J15 +12.1%, J16 +30.1% Y
+8 single-bolt trials, ISO-allowance fit, the records' pattern ratios (the general approach)               6/16  J01 -10.9%, J03 -11.4%, J06 -11.1%, J07 -12.0%, J09 -11.5%, J11 -9.3%, J12 -6.6%, J13 -11.1%, J14 -12.7%, J15 -6.5%
+8 single-bolt trials, one fitted plating threshold, the records' pattern ratios                           5/16  J01 -10.9%, J03 -11.6%, J06 -11.1%, J07 -11.6%, J08 -15.7%, J09 -17.7%, J11 -17.9%, J12 -6.6%, J13 -11.2%, J14 -22.4%, J15 -6.4%
+4 pattern trials (the whole allowance), torques scaled from them, K_eff fit for the rest                 10/16  J04 -20.4%, J08 -25.0%, J10 -28.6%, J11 -23.7%, J13 -19.4%, J14 -26.0%
+reference campaign, class B kept at the record ratio (class A measured)                                  13/16  J02 -6.4%, J10 -7.6%, J15 -6.6%
+one reused joint trialled (J14), reuse straight in the number of assemblies                              12/16  J04 -8.4%, J10 -9.3%, J11 -7.0%, J13 -9.4%
+one reused joint trialled (J14), its excess held for every reused joint                                  12/16  J04 +14.1%, J10 +7.0%, J11 +6.6%, J13 +13.7%
+one reused joint trialled (J04), reuse straight in the number of assemblies                              12/16  J08 +25.1%, J10 +12.5%, J11 +10.8%, J14 +30.7% Y
+two reused joints trialled (J13, J14), reuse straight in the number of assemblies                        14/16  J04 -6.9%, J10 -6.3%
+reference campaign, no reuse term                                                                         8/16  J02 +10.4%, J04 -9.4%, J07 +8.4%, J10 -21.5%, J11 -13.8%, J14 -14.9%, J15 +7.6%, J16 +6.4%
+reference campaign, one fitted plating threshold for all sizes                                           13/16  J05 +15.8%, J10 +18.6%, J16 +10.7%
+reference campaign, LINEAR plating term                                                                  13/16  J05 +12.1%, J10 +17.3%, J16 +17.1%
+reference campaign, quadratic plating term                                                               13/16  J05 +32.7% Y, J10 +10.7%, J12 +22.5%
+reference campaign at the rig's default torque (J01 clipped at proof)                                    14/16  J01 +7.0%, J16 +7.7%
+near-sound: reference campaign, one constant reuse offset fitted to its two reused joints                16/16  -
+careful: the reference (6 single-bolt trials, pattern pair on J06, ISO fit, reuse curve, crew ratios)    16/16  -
+
+Per-joint matrix ('x' = joint right, '.' = wrong); routes numbered as listed above:
+    01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16
+ 1  .  x  .  .  x  .  x  .  .  x  .  .  .  .  .  .    4/16
+ 2  .  x  .  x  x  .  .  x  .  x  .  .  .  .  .  x    6/16
+ 3  .  x  .  x  x  .  .  .  .  x  .  .  .  .  .  x    5/16
+ 4  x  x  x  .  x  x  x  .  x  .  .  x  .  .  x  x   10/16
+ 5  x  .  x  x  x  x  x  x  x  .  x  x  x  x  .  x   13/16
+ 6  x  x  x  .  x  x  x  x  x  .  .  x  .  x  x  x   12/16
+ 7  x  x  x  .  x  x  x  x  x  .  .  x  .  x  x  x   12/16
+ 8  x  x  x  x  x  x  x  .  x  .  .  x  x  .  x  x   12/16
+ 9  x  x  x  .  x  x  x  x  x  .  x  x  x  x  x  x   14/16
+10  x  .  x  .  x  x  .  x  x  .  .  x  x  .  .  .    8/16
+11  x  x  x  x  .  x  x  x  x  .  x  x  x  x  x  .   13/16
+12  x  x  x  x  .  x  x  x  x  .  x  x  x  x  x  .   13/16
+13  x  x  x  x  .  x  x  x  x  .  x  .  x  x  x  x   13/16
+14  .  x  x  x  x  x  x  x  x  x  x  x  x  x  x  .   14/16
+15  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x   16/16
+16  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x  x   16/16
+
+Defective routes (1 to 14) that get each joint right; a joint every one of them got right would not
+discriminate:
+  J01  10 of 14  (4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
+  J02  12 of 14  (1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14)
+  J03  11 of 14  (4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
+  J04   8 of 14  (2, 3, 5, 8, 11, 12, 13, 14)
+  J05  11 of 14  (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14)
+  J06  11 of 14  (4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
+  J07  11 of 14  (1, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14)
+  J08  10 of 14  (2, 5, 6, 7, 9, 10, 11, 12, 13, 14)
+  J09  11 of 14  (4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
+  J10   4 of 14  (1, 2, 3, 14)
+  J11   6 of 14  (5, 9, 11, 12, 13, 14)
+  J12  10 of 14  (4, 5, 6, 7, 8, 9, 10, 11, 12, 14)
+  J13   8 of 14  (5, 8, 9, 10, 11, 12, 13, 14)
+  J14   8 of 14  (5, 6, 7, 9, 11, 12, 13, 14)
+  J15   9 of 14  (4, 6, 7, 8, 9, 11, 12, 13, 14)
+  J16   9 of 14  (2, 3, 4, 5, 6, 7, 8, 9, 13)
+Every joint is failed by at least 2 of the 14 defective routes.
+
+Smallest miss among the wrong joints of each rejected route: 7.7, 6.5, 6.4, 19.4, 6.4, 7.0, 6.6, 10.8, 6.3, 6.4, 10.7, 12.1, 10.7, 7.0 percent of target.
+
+Notes:
+- The records' pattern ratios {'A': 0.96, 'B': 0.978} are for their own sequence (incremental cross-pattern passes and two
+  circular passes). The crew's single cross-pattern pass loses more: the reference's pair of trials on J06 gives
+  crew ratios {'A': 0.842, 'B': 0.912}, a loss 3.98 times the recorded one.
+- At the rig's default torque (handbook K at the joint's target) the low-friction joints J01 and J16 are taken
+  past proof; a trial preload read there is clipped and the nut factor read from it is too high.
+- Zinc-plated threads gain friction with every tightening, steeply over the first few and then levelling off.
+  The maintenance log lists one to four earlier assemblies on J04, J08, J10, J11, J13 and J14. One reused trial
+  cannot show the curve; a straight line through two over-reaches at the ends. With the curve flattening, one
+  constant offset fitted to two mid-range counts lands close (the near-sound route above).
+- The zinc galls only where the coating is thicker than the 6g thread's allowance |es|/4 (9.5 um on M16, 10.5
+  on M20, 12.0 on M24): J05, J09 and J12. J10 (10.5 um on M24) is within its allowance.

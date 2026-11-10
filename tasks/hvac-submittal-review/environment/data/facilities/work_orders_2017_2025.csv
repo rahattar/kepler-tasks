@@ -1,0 +1,425 @@
+wo_id,date,building,room,trade,description,status
+WO-2017-0379,2017-01-01,Whitlock Hall,214,locks,Repair blind,closed
+WO-2017-0208,2017-01-05,Whitlock Hall,232,locks,Replace smoke detector head,closed
+WO-2017-0316,2017-01-11,Whitlock Hall,233,locks,Patch and paint wall,closed
+WO-2017-0370,2017-02-02,Whitlock Hall,162,glazing,"Replace lamp, corridor fixture",closed
+WO-2017-0271,2017-02-07,Whitlock Hall,143,painting,Patch and paint wall,closed
+WO-2017-0010,2017-02-11,Whitlock Hall,214,lighting,Adjust door closer,closed
+WO-2017-0109,2017-02-13,Whitlock Hall,223,lighting,Re-hang whiteboard,closed
+WO-2017-0118,2017-02-14,Whitlock Hall,214,locks,Tighten loose handrail,closed
+WO-2017-0082,2017-02-18,Whitlock Hall,220,roofing,Replace thermostat batteries,closed
+WO-2017-0262,2017-02-21,Whitlock Hall,122,locks,"Replace lamp, corridor fixture",closed
+WO-2017-0163,2017-03-16,Whitlock Hall,171,carpentry,Adjust door closer,closed
+WO-2017-0298,2017-04-08,Whitlock Hall,108,plumbing,Repair window latch,closed
+WO-2017-0361,2017-04-13,Whitlock Hall,101,electrical,Tighten loose handrail,closed
+WO-2017-0019,2017-04-20,Whitlock Hall,230,lighting,Clean roof drains,closed
+WO-2017-0145,2017-04-25,Whitlock Hall,109,plumbing,Replace smoke detector head,closed
+WO-2017-0253,2017-05-15,Whitlock Hall,114,painting,Re-hang whiteboard,closed
+WO-2017-0181,2017-05-18,Whitlock Hall,205,roofing,Repair window latch,closed
+WO-2017-0307,2017-05-22,Whitlock Hall,144,glazing,Patch and paint wall,closed
+WO-2017-0046,2017-05-27,Whitlock Hall,107,locks,Replace lavatory faucet cartridge,closed
+WO-2017-0199,2017-07-07,Whitlock Hall,123,roofing,Replace lavatory faucet cartridge,closed
+WO-2017-0064,2017-07-09,Whitlock Hall,202,glazing,Tighten loose handrail,closed
+WO-2017-0352,2017-07-13,Whitlock Hall,160,HVAC,Replace smoke detector head,closed
+WO-2017-0280,2017-08-01,Whitlock Hall,106,plumbing,Replace damaged floor tile,closed
+WO-2017-0091,2017-08-05,Whitlock Hall,171,roofing,Replace lavatory faucet cartridge,closed
+WO-2017-0037,2017-08-08,Whitlock Hall,101,electrical,Adjust door closer,closed
+WO-2017-0217,2017-08-12,Whitlock Hall,116,roofing,Re-hang whiteboard,closed
+WO-2017-0397,2017-08-15,Whitlock Hall,222,HVAC,Patch and paint wall,closed
+WO-2017-0136,2017-08-17,Whitlock Hall,215,plumbing,Replace broken chair,closed
+WO-2017-0226,2017-08-17,Whitlock Hall,145,locks,Clean roof drains,closed
+WO-2017-0244,2017-08-26,Whitlock Hall,107,locks,Replace smoke detector head,closed
+WO-2017-0325,2017-09-08,Whitlock Hall,210,HVAC,Seal roof penetration at vent,closed
+WO-2017-0127,2017-09-09,Whitlock Hall,163,painting,Replace broken chair,closed
+WO-2017-0235,2017-09-22,Whitlock Hall,103,roofing,Repair blind,closed
+WO-2017-0406,2017-10-17,Whitlock Hall,118,painting,Seal roof penetration at vent,closed
+WO-2017-0028,2017-10-18,Whitlock Hall,162,locks,Replace broken chair,closed
+WO-2017-0289,2017-10-18,Whitlock Hall,162,electrical,Seal roof penetration at vent,closed
+WO-2017-0154,2017-11-04,Whitlock Hall,242,painting,Re-hang whiteboard,closed
+WO-2017-0343,2017-11-06,Whitlock Hall,109,roofing,Replace smoke detector head,closed
+WO-2017-0388,2017-11-10,Whitlock Hall,208,glazing,Adjust door closer,closed
+WO-2017-0055,2017-11-16,Whitlock Hall,240,glazing,Rekey office lock,closed
+WO-2017-0190,2017-11-17,Whitlock Hall,241,locks,Tighten loose handrail,closed
+WO-2017-0172,2017-11-23,Whitlock Hall,209,locks,Repair window latch,closed
+WO-2017-0100,2017-12-12,Whitlock Hall,203,locks,Clean roof drains,closed
+WO-2017-0073,2017-12-17,Whitlock Hall,231,electrical,Repair blind,closed
+WO-2017-0334,2017-12-17,Whitlock Hall,123,electrical,Clean roof drains,closed
+WO-2018-0227,2018-01-02,Whitlock Hall,107,carpentry,Replace lavatory faucet cartridge,closed
+WO-2018-0020,2018-01-07,Whitlock Hall,232,HVAC,"Reset tripped breaker, panel LP-6",closed
+WO-2018-0128,2018-01-12,Whitlock Hall,163,HVAC,"Replace lamp, corridor fixture",closed
+WO-2018-0317,2018-01-18,Whitlock Hall,201,carpentry,Repair window latch,closed
+WO-2018-0326,2018-01-24,Whitlock Hall,108,HVAC,Seal roof penetration at vent,closed
+WO-2018-0335,2018-02-04,Whitlock Hall,103,HVAC,Replace smoke detector head,closed
+WO-2018-0146,2018-02-20,Whitlock Hall,242,roofing,Repair window latch,closed
+WO-2018-0371,2018-03-06,Whitlock Hall,220,plumbing,Repair window latch,closed
+WO-2018-0056,2018-03-22,Whitlock Hall,163,HVAC,Tighten loose handrail,closed
+WO-2018-0389,2018-04-01,Whitlock Hall,102,roofing,Repair window latch,closed
+WO-2018-0110,2018-04-08,Whitlock Hall,101,electrical,Replace damaged floor tile,closed
+WO-2018-0173,2018-05-04,Whitlock Hall,207,HVAC,Adjust door closer,closed
+WO-2018-0236,2018-05-04,Whitlock Hall,107,lighting,Replace broken chair,closed
+WO-2018-0074,2018-05-06,Whitlock Hall,202,HVAC,"Clear condensate drain, unit EF-3",closed
+WO-2018-0065,2018-05-14,Whitlock Hall,220,painting,"Replace filters, unit EF-3",closed
+WO-2018-0200,2018-05-19,Whitlock Hall,162,electrical,Replace thermostat batteries,closed
+WO-2018-0164,2018-05-22,Whitlock Hall,221,HVAC,Adjust door closer,closed
+WO-2018-0299,2018-05-23,Whitlock Hall,201,roofing,Adjust door closer,closed
+WO-2018-0308,2018-05-25,Whitlock Hall,206,glazing,Replace broken chair,closed
+WO-2018-0209,2018-06-06,Whitlock Hall,121,roofing,"Replace filters, unit RTU-A",closed
+WO-2018-0245,2018-06-11,Whitlock Hall,145,locks,Seal roof penetration at vent,closed
+WO-2018-0011,2018-06-15,Whitlock Hall,225,carpentry,"Replace filters, unit EF-3",closed
+WO-2018-0263,2018-06-20,Whitlock Hall,118,locks,Clean roof drains,closed
+WO-2018-0344,2018-06-20,Whitlock Hall,232,roofing,Replace lavatory faucet cartridge,closed
+WO-2018-0362,2018-07-13,Whitlock Hall,120,painting,Replace exit sign battery,closed
+WO-2018-0353,2018-07-19,Whitlock Hall,109,glazing,Clean roof drains,closed
+WO-2018-0218,2018-07-28,Whitlock Hall,145,roofing,Clean roof drains,closed
+WO-2018-0101,2018-08-04,Whitlock Hall,215,lighting,"Clear condensate drain, unit RTU-A",closed
+WO-2018-0092,2018-08-06,Whitlock Hall,125,lighting,Re-hang whiteboard,closed
+WO-2018-0398,2018-08-14,Whitlock Hall,121,glazing,Patch and paint wall,closed
+WO-2018-0038,2018-08-23,Whitlock Hall,240,plumbing,Patch and paint wall,closed
+WO-2018-0083,2018-08-25,Whitlock Hall,161,painting,Replace thermostat batteries,closed
+WO-2018-0290,2018-09-04,Whitlock Hall,160,plumbing,Replace emergency eyewash in teaching lab 160.,closed
+WO-2018-0137,2018-09-22,Whitlock Hall,222,lighting,Rekey office lock,closed
+WO-2018-0029,2018-09-27,Whitlock Hall,104,locks,Rekey office lock,closed
+WO-2018-0155,2018-10-24,Whitlock Hall,118,roofing,Replace broken chair,closed
+WO-2018-0182,2018-11-02,Whitlock Hall,144,glazing,Replace ceiling tiles (water stain),closed
+WO-2018-0272,2018-11-04,Whitlock Hall,240,glazing,Replace smoke detector head,closed
+WO-2018-0281,2018-11-09,Whitlock Hall,204,roofing,"Replace lamp, corridor fixture",closed
+WO-2018-0119,2018-11-11,Whitlock Hall,206,lighting,Replace ceiling tiles (water stain),closed
+WO-2018-0047,2018-11-17,Whitlock Hall,118,lighting,Patch and paint wall,closed
+WO-2018-0380,2018-11-18,Whitlock Hall,205,roofing,Patch and paint wall,closed
+WO-2018-0407,2018-11-19,Whitlock Hall,106,HVAC,Repair window latch,closed
+WO-2018-0191,2018-11-21,Whitlock Hall,107,lighting,Repair blind,closed
+WO-2018-0254,2018-11-21,Whitlock Hall,242,plumbing,Tighten loose handrail,closed
+WO-2019-0093,2019-01-12,Whitlock Hall,161,lighting,Clean roof drains,closed
+WO-2019-0138,2019-01-13,Whitlock Hall,204,lighting,Replace smoke detector head,closed
+WO-2019-0408,2019-01-18,Whitlock Hall,242,glazing,Clean roof drains,closed
+WO-2019-0012,2019-01-21,Whitlock Hall,170,lighting,"Clear condensate drain, unit AHU-2",closed
+WO-2019-0030,2019-01-21,Whitlock Hall,120,locks,"Reset tripped breaker, panel LP-2",closed
+WO-2019-0102,2019-01-21,Whitlock Hall,114,electrical,Replace thermostat batteries,closed
+WO-2019-0156,2019-02-05,Whitlock Hall,142,painting,Repair blind,closed
+WO-2019-0255,2019-02-11,Whitlock Hall,212,electrical,"Replace filters, unit EF-3",closed
+WO-2019-0237,2019-02-12,Whitlock Hall,124,carpentry,Repair window latch,closed
+WO-2019-0228,2019-02-17,Whitlock Hall,233,plumbing,"Replace lamp, corridor fixture",closed
+WO-2019-0390,2019-03-18,Whitlock Hall,145,electrical,"Clear condensate drain, unit AHU-2",closed
+WO-2019-0246,2019-03-20,Whitlock Hall,230,carpentry,Patch and paint wall,closed
+WO-2019-0084,2019-03-21,Whitlock Hall,206,HVAC,Re-hang whiteboard,closed
+WO-2019-0210,2019-03-24,Whitlock Hall,215,plumbing,Replace ceiling tiles (water stain),closed
+WO-2019-0282,2019-04-27,Whitlock Hall,202,locks,Replace broken chair,closed
+WO-2019-0129,2019-04-28,Whitlock Hall,163,roofing,Replace broken chair,closed
+WO-2019-0500,2019-05-03,Whitlock Hall,110,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 110; remove existing furniture.",closed
+WO-2019-0501,2019-05-06,Whitlock Hall,112,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 112; remove existing furniture.",closed
+WO-2019-0300,2019-05-09,Whitlock Hall,144,carpentry,Replace ceiling tiles (water stain),closed
+WO-2019-0502,2019-05-09,Whitlock Hall,114,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 114; remove existing furniture.",closed
+WO-2019-0057,2019-05-11,Whitlock Hall,170,carpentry,"Replace lamp, corridor fixture",closed
+WO-2019-0363,2019-05-11,Whitlock Hall,162,electrical,Repair blind,closed
+WO-2019-0503,2019-05-12,Whitlock Hall,116,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 116; remove existing furniture.",closed
+WO-2019-0504,2019-05-15,Whitlock Hall,210,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 210; remove existing furniture.",closed
+WO-2019-0183,2019-05-18,Whitlock Hall,123,glazing,Patch and paint wall,closed
+WO-2019-0505,2019-05-18,Whitlock Hall,220,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 220; remove existing furniture.",closed
+WO-2019-0264,2019-05-20,Whitlock Hall,124,electrical,"Replace lamp, corridor fixture",closed
+WO-2019-0506,2019-05-21,Whitlock Hall,221,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 221; remove existing furniture.",closed
+WO-2019-0507,2019-05-24,Whitlock Hall,222,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 222; remove existing furniture.",closed
+WO-2019-0372,2019-05-27,Whitlock Hall,170,locks,"Clear condensate drain, unit RTU-B",closed
+WO-2019-0291,2019-06-03,Whitlock Hall,105,electrical,Re-hang whiteboard,closed
+WO-2019-0509,2019-06-04,Whitlock Hall,230,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 230; remove existing furniture.",closed
+WO-2019-0327,2019-06-06,Whitlock Hall,116,locks,Replace exit sign battery,closed
+WO-2019-0510,2019-06-07,Whitlock Hall,231,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 231; remove existing furniture.",closed
+WO-2019-0511,2019-06-10,Whitlock Hall,232,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 232; remove existing furniture.",closed
+WO-2019-0512,2019-06-13,Whitlock Hall,233,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 233; remove existing furniture.",closed
+WO-2019-0309,2019-06-14,Whitlock Hall,214,lighting,Repair blind,closed
+WO-2019-0066,2019-06-15,Whitlock Hall,231,locks,Repair window latch,closed
+WO-2019-0513,2019-06-16,Whitlock Hall,142,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 142; remove existing furniture.",closed
+WO-2019-0111,2019-06-18,Whitlock Hall,142,roofing,Patch and paint wall,closed
+WO-2019-0219,2019-06-18,Whitlock Hall,110,HVAC,Replace lavatory faucet cartridge,closed
+WO-2019-0514,2019-06-19,Whitlock Hall,143,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 143; remove existing furniture.",closed
+WO-2019-0515,2019-06-22,Whitlock Hall,144,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 144; remove existing furniture.",closed
+WO-2019-0318,2019-06-24,Whitlock Hall,233,locks,Tighten loose handrail,closed
+WO-2019-0508,2019-06-27,Whitlock Hall,223,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 223; remove existing furniture.",closed
+WO-2019-0192,2019-07-07,Whitlock Hall,143,plumbing,Seal roof penetration at vent,closed
+WO-2019-0412,2019-07-22,Whitlock Hall,118,HVAC,"Install 5-ton ductless split system (tag AC-1) to serve server room 118, 24/7 cooling; condenser on grade at east wall. Commissioned 2019-08-30.",closed
+WO-2019-0516,2019-07-25,Whitlock Hall,145,furniture,"Reorganisation plan RO-2019: deliver and install new workstations and seating, room 145; remove existing furniture.",closed
+WO-2019-0273,2019-08-16,Whitlock Hall,108,lighting,Replace smoke detector head,closed
+WO-2019-0075,2019-08-26,Whitlock Hall,240,roofing,Rekey office lock,closed
+WO-2019-0165,2019-09-09,Whitlock Hall,124,plumbing,Replace broken chair,closed
+WO-2019-0381,2019-09-21,Whitlock Hall,122,carpentry,Repair blind,closed
+WO-2019-0345,2019-10-13,Whitlock Hall,118,HVAC,Replace damaged floor tile,closed
+WO-2019-0399,2019-10-15,Whitlock Hall,231,painting,Tighten loose handrail,closed
+WO-2019-0201,2019-11-16,Whitlock Hall,207,glazing,Repair window latch,closed
+WO-2019-0021,2019-11-17,Whitlock Hall,144,glazing,"Reset tripped breaker, panel LP-6",closed
+WO-2019-0039,2019-11-17,Whitlock Hall,170,HVAC,Tighten loose handrail,closed
+WO-2019-0147,2019-11-22,Whitlock Hall,112,lighting,Adjust door closer,closed
+WO-2019-0174,2019-11-26,Whitlock Hall,116,HVAC,Replace thermostat batteries,closed
+WO-2019-0048,2019-12-12,Whitlock Hall,146,carpentry,Repair window latch,closed
+WO-2019-0336,2019-12-12,Whitlock Hall,144,glazing,Clean roof drains,closed
+WO-2019-0354,2019-12-19,Whitlock Hall,233,HVAC,Clean roof drains,closed
+WO-2019-0120,2019-12-24,Whitlock Hall,107,plumbing,Repair window latch,closed
+WO-2020-0364,2020-01-02,Whitlock Hall,107,glazing,Replace broken chair,closed
+WO-2020-0382,2020-01-06,Whitlock Hall,214,carpentry,"Replace filters, unit EF-3",closed
+WO-2020-0337,2020-01-10,Whitlock Hall,119,lighting,"Replace lamp, corridor fixture",closed
+WO-2020-0031,2020-01-13,Whitlock Hall,142,HVAC,Replace lavatory faucet cartridge,closed
+WO-2020-0076,2020-01-25,Whitlock Hall,118,locks,Replace smoke detector head,closed
+WO-2020-0130,2020-02-01,Whitlock Hall,122,painting,"Reset tripped breaker, panel LP-2",closed
+WO-2020-0202,2020-02-24,Whitlock Hall,142,lighting,Repair window latch,closed
+WO-2020-0175,2020-03-01,Whitlock Hall,210,glazing,"Clear condensate drain, unit EF-3",closed
+WO-2020-0319,2020-03-15,Whitlock Hall,112,HVAC,"Reset tripped breaker, panel LP-2",closed
+WO-2020-0274,2020-03-18,Whitlock Hall,240,glazing,"Replace lamp, corridor fixture",closed
+WO-2020-0409,2020-03-18,Whitlock Hall,170,painting,Clean roof drains,closed
+WO-2020-0292,2020-03-20,Whitlock Hall,221,HVAC,Patch and paint wall,closed
+WO-2020-0301,2020-03-26,Whitlock Hall,161,plumbing,"Reset tripped breaker, panel LP-3",closed
+WO-2020-0184,2020-04-12,Whitlock Hall,122,lighting,Tighten loose handrail,closed
+WO-2020-0400,2020-04-22,Whitlock Hall,212,carpentry,"Replace lamp, corridor fixture",closed
+WO-2020-0193,2020-05-07,Whitlock Hall,223,plumbing,Clean roof drains,closed
+WO-2020-0211,2020-05-16,Whitlock Hall,230,electrical,Replace smoke detector head,closed
+WO-2020-0040,2020-05-18,Whitlock Hall,241,roofing,Patch and paint wall,closed
+WO-2020-0085,2020-05-20,Whitlock Hall,231,glazing,"Replace filters, unit RTU-B",closed
+WO-2020-0310,2020-05-27,Whitlock Hall,114,HVAC,"Clear condensate drain, unit AHU-2",closed
+WO-2020-0238,2020-05-28,Whitlock Hall,215,lighting,Tighten loose handrail,closed
+WO-2020-0013,2020-06-04,Whitlock Hall,240,locks,Repair window latch,closed
+WO-2020-0355,2020-06-05,Whitlock Hall,242,lighting,"Reset tripped breaker, panel LP-4",closed
+WO-2020-0103,2020-06-08,Whitlock Hall,209,carpentry,Seal roof penetration at vent,closed
+WO-2020-0049,2020-06-19,Whitlock Hall,232,painting,Re-hang whiteboard,closed
+WO-2020-0157,2020-06-20,Whitlock Hall,210,roofing,Re-hang whiteboard,closed
+WO-2020-0166,2020-06-27,Whitlock Hall,121,plumbing,Re-hang whiteboard,closed
+WO-2020-0256,2020-08-08,Whitlock Hall,118,painting,Replace smoke detector head,closed
+WO-2020-0058,2020-08-11,Whitlock Hall,101,plumbing,Replace exit sign battery,closed
+WO-2020-0346,2020-09-03,Whitlock Hall,209,painting,Patch and paint wall,closed
+WO-2020-0265,2020-09-05,Whitlock Hall,214,carpentry,"Clear condensate drain, unit EF-3",closed
+WO-2020-0022,2020-09-07,Whitlock Hall,207,glazing,Repair blind,closed
+WO-2020-0220,2020-09-20,Whitlock Hall,125,locks,Repair blind,closed
+WO-2020-0139,2020-09-24,Whitlock Hall,214,carpentry,Re-hang whiteboard,closed
+WO-2020-0094,2020-09-25,Whitlock Hall,101,electrical,Patch and paint wall,closed
+WO-2020-0067,2020-11-04,Whitlock Hall,233,roofing,Repair blind,closed
+WO-2020-0247,2020-11-04,Whitlock Hall,225,carpentry,Replace lavatory faucet cartridge,closed
+WO-2020-0328,2020-11-05,Whitlock Hall,206,locks,Repair window latch,closed
+WO-2020-0112,2020-11-06,Whitlock Hall,242,roofing,"Replace filters, unit EF-3",closed
+WO-2020-0229,2020-11-11,Whitlock Hall,203,HVAC,"Replace filters, unit RTU-B",closed
+WO-2020-0283,2020-11-13,Whitlock Hall,220,lighting,Rekey office lock,closed
+WO-2020-0391,2020-11-14,Whitlock Hall,116,HVAC,Replace exit sign battery,closed
+WO-2020-0148,2020-11-22,Whitlock Hall,201,glazing,"Replace lamp, corridor fixture",closed
+WO-2020-0121,2020-12-17,Whitlock Hall,240,lighting,Patch and paint wall,closed
+WO-2020-0373,2020-12-23,Whitlock Hall,161,roofing,Repair blind,closed
+WO-2021-0383,2021-01-10,Whitlock Hall,230,plumbing,Re-hang whiteboard,closed
+WO-2021-0284,2021-01-12,Whitlock Hall,225,lighting,Replace ceiling tiles (water stain),closed
+WO-2021-0230,2021-01-16,Whitlock Hall,120,HVAC,Replace damaged floor tile,closed
+WO-2021-0374,2021-02-06,Whitlock Hall,232,electrical,"Clear condensate drain, unit RTU-B",closed
+WO-2021-0041,2021-02-25,Whitlock Hall,106,glazing,Seal roof penetration at vent,closed
+WO-2021-0194,2021-02-25,Whitlock Hall,225,lighting,Adjust door closer,closed
+WO-2021-0140,2021-02-27,Whitlock Hall,122,roofing,"Reset tripped breaker, panel LP-1",closed
+WO-2021-0176,2021-03-01,Whitlock Hall,107,painting,"Replace filters, unit RTU-B",closed
+WO-2021-0338,2021-03-02,Whitlock Hall,118,lighting,Adjust door closer,closed
+WO-2021-0329,2021-03-17,Whitlock Hall,122,glazing,"Replace filters, unit AHU-2",closed
+WO-2021-0104,2021-04-12,Whitlock Hall,209,painting,Seal roof penetration at vent,closed
+WO-2021-0257,2021-04-13,Whitlock Hall,142,plumbing,Replace smoke detector head,closed
+WO-2021-0239,2021-04-25,Whitlock Hall,108,locks,Replace broken chair,closed
+WO-2021-0392,2021-05-03,Whitlock Hall,171,lighting,Replace ceiling tiles (water stain),closed
+WO-2021-0122,2021-05-22,Whitlock Hall,106,locks,Replace damaged floor tile,closed
+WO-2021-0131,2021-06-18,Whitlock Hall,161,lighting,Replace smoke detector head,closed
+WO-2021-0320,2021-07-01,Whitlock Hall,120,carpentry,"Reset tripped breaker, panel LP-3",closed
+WO-2021-0221,2021-07-08,Whitlock Hall,214,glazing,Clean roof drains,closed
+WO-2021-0248,2021-07-16,Whitlock Hall,215,plumbing,Re-hang whiteboard,closed
+WO-2021-0311,2021-07-26,Whitlock Hall,108,electrical,Clean roof drains,closed
+WO-2021-0032,2021-08-03,Whitlock Hall,171,carpentry,Rekey office lock,closed
+WO-2021-0095,2021-08-05,Whitlock Hall,107,HVAC,Repair window latch,closed
+WO-2021-0212,2021-08-08,Whitlock Hall,125,locks,Replace exit sign battery,closed
+WO-2021-0167,2021-08-18,Whitlock Hall,102,HVAC,Repair blind,closed
+WO-2021-0347,2021-08-18,Whitlock Hall,233,plumbing,"Replace lamp, corridor fixture",closed
+WO-2021-0266,2021-08-26,Whitlock Hall,109,roofing,Replace exit sign battery,closed
+WO-2021-0410,2021-08-27,Whitlock Hall,104,lighting,"Replace lamp, corridor fixture",closed
+WO-2021-0014,2021-08-28,Whitlock Hall,203,carpentry,Replace thermostat batteries,closed
+WO-2021-0293,2021-09-04,Whitlock Hall,222,glazing,Rekey office lock,closed
+WO-2021-0068,2021-09-05,Whitlock Hall,232,roofing,Replace thermostat batteries,closed
+WO-2021-0275,2021-09-11,Whitlock Hall,122,painting,Replace broken chair,closed
+WO-2021-0086,2021-09-15,Whitlock Hall,171,roofing,"Replace lamp, corridor fixture",closed
+WO-2021-0401,2021-09-21,Whitlock Hall,215,lighting,Replace exit sign battery,closed
+WO-2021-0185,2021-09-28,Whitlock Hall,121,plumbing,"Reset tripped breaker, panel LP-6",closed
+WO-2021-0149,2021-10-02,Whitlock Hall,105,lighting,Replace damaged floor tile,closed
+WO-2021-0302,2021-10-03,Whitlock Hall,221,HVAC,Replace damaged floor tile,closed
+WO-2021-0158,2021-10-04,Whitlock Hall,204,locks,Seal roof penetration at vent,closed
+WO-2021-0059,2021-11-14,Whitlock Hall,116,painting,Replace lavatory faucet cartridge,closed
+WO-2021-0113,2021-11-19,Whitlock Hall,104,lighting,Repair blind,closed
+WO-2021-0365,2021-11-21,Whitlock Hall,210,plumbing,Replace thermostat batteries,closed
+WO-2021-0023,2021-11-24,Whitlock Hall,208,lighting,Seal roof penetration at vent,closed
+WO-2021-0050,2021-12-06,Whitlock Hall,108,HVAC,Rekey office lock,closed
+WO-2021-0077,2021-12-12,Whitlock Hall,205,plumbing,Re-hang whiteboard,closed
+WO-2021-0356,2021-12-15,Whitlock Hall,162,lighting,"Reset tripped breaker, panel LP-2",closed
+WO-2021-0203,2021-12-28,Whitlock Hall,201,HVAC,Replace thermostat batteries,closed
+WO-2022-0024,2022-01-01,Whitlock Hall,206,painting,Repair window latch,closed
+WO-2022-0384,2022-01-14,Whitlock Hall,215,painting,Tighten loose handrail,closed
+WO-2022-0312,2022-01-24,Whitlock Hall,230,carpentry,Replace thermostat batteries,closed
+WO-2022-0060,2022-02-01,Whitlock Hall,202,electrical,Patch and paint wall,closed
+WO-2022-0177,2022-02-05,Whitlock Hall,101,lighting,Replace thermostat batteries,closed
+WO-2022-0159,2022-02-08,Whitlock Hall,233,locks,Replace ceiling tiles (water stain),closed
+WO-2022-0123,2022-02-13,Whitlock Hall,171,carpentry,Replace thermostat batteries,closed
+WO-2022-0051,2022-02-14,Whitlock Hall,110,lighting,"LED retrofit of level 1 offices and corridors (rooms 110-119, 142-146): replace fluorescent troffers with LED, same layout.",closed
+WO-2022-0033,2022-02-15,Whitlock Hall,240,HVAC,Replace ceiling tiles (water stain),closed
+WO-2022-0114,2022-02-24,Whitlock Hall,240,plumbing,"Clear condensate drain, unit RTU-B",closed
+WO-2022-0186,2022-03-14,Whitlock Hall,121,plumbing,Replace damaged floor tile,closed
+WO-2022-0321,2022-03-28,Whitlock Hall,207,HVAC,Replace damaged floor tile,closed
+WO-2022-0042,2022-04-06,Whitlock Hall,221,carpentry,Replace smoke detector head,closed
+WO-2022-0411,2022-04-07,Whitlock Hall,114,locks,Seal roof penetration at vent,closed
+WO-2022-0276,2022-04-13,Whitlock Hall,109,glazing,Repair window latch,closed
+WO-2022-0015,2022-04-18,Whitlock Hall,205,locks,"Replace filters, unit RTU-B",closed
+WO-2022-0222,2022-05-15,Whitlock Hall,145,locks,Replace thermostat batteries,closed
+WO-2022-0231,2022-05-15,Whitlock Hall,143,painting,Re-hang whiteboard,closed
+WO-2022-0339,2022-05-24,Whitlock Hall,103,lighting,Repair blind,closed
+WO-2022-0366,2022-05-26,Whitlock Hall,233,lighting,"Replace lamp, corridor fixture",closed
+WO-2022-0240,2022-05-28,Whitlock Hall,125,HVAC,Adjust door closer,closed
+WO-2022-0213,2022-06-15,Whitlock Hall,160,electrical,Tighten loose handrail,closed
+WO-2022-0375,2022-06-25,Whitlock Hall,204,lighting,Replace exit sign battery,closed
+WO-2022-0096,2022-07-03,Whitlock Hall,241,locks,Clean roof drains,closed
+WO-2022-0285,2022-07-07,Whitlock Hall,230,lighting,Replace thermostat batteries,closed
+WO-2022-0330,2022-07-21,Whitlock Hall,212,plumbing,Seal roof penetration at vent,closed
+WO-2022-0303,2022-08-08,Whitlock Hall,114,lighting,Replace thermostat batteries,closed
+WO-2022-0087,2022-08-18,Whitlock Hall,108,HVAC,Replace lavatory faucet cartridge,closed
+WO-2022-0204,2022-08-19,Whitlock Hall,108,electrical,Replace exit sign battery,closed
+WO-2022-0348,2022-09-10,Whitlock Hall,162,painting,Replace exit sign battery,closed
+WO-2022-0294,2022-09-18,Whitlock Hall,204,roofing,"Replace lamp, corridor fixture",closed
+WO-2022-0195,2022-10-10,Whitlock Hall,110,painting,Replace lavatory faucet cartridge,closed
+WO-2022-0393,2022-10-12,Whitlock Hall,163,carpentry,Repair window latch,closed
+WO-2022-0402,2022-10-13,Whitlock Hall,202,plumbing,Adjust door closer,closed
+WO-2022-0168,2022-10-17,Whitlock Hall,233,locks,Adjust door closer,closed
+WO-2022-0249,2022-10-18,Whitlock Hall,102,carpentry,Rekey office lock,closed
+WO-2022-0132,2022-10-22,Whitlock Hall,222,HVAC,Replace thermostat batteries,closed
+WO-2022-0069,2022-10-28,Whitlock Hall,215,carpentry,Re-hang whiteboard,closed
+WO-2022-0105,2022-11-19,Whitlock Hall,201,lighting,"Replace lamp, corridor fixture",closed
+WO-2022-0078,2022-12-05,Whitlock Hall,240,glazing,Replace ceiling tiles (water stain),closed
+WO-2022-0150,2022-12-06,Whitlock Hall,242,locks,Replace broken chair,closed
+WO-2022-0258,2022-12-10,Whitlock Hall,242,painting,Replace exit sign battery,closed
+WO-2022-0141,2022-12-18,Whitlock Hall,101,plumbing,Repair blind,closed
+WO-2022-0357,2022-12-21,Whitlock Hall,171,lighting,Replace smoke detector head,closed
+WO-2022-0267,2022-12-22,Whitlock Hall,125,HVAC,Adjust door closer,closed
+WO-2023-0315,2023-01-12,Whitlock Hall,206,locks,"Reset tripped breaker, panel LP-5",closed
+WO-2023-0324,2023-01-28,Whitlock Hall,242,roofing,Repair window latch,closed
+WO-2023-0027,2023-02-04,Whitlock Hall,108,carpentry,Tighten loose handrail,closed
+WO-2023-0090,2023-02-12,Whitlock Hall,120,HVAC,Replace damaged floor tile,closed
+WO-2023-0036,2023-02-15,Whitlock Hall,225,glazing,Replace smoke detector head,closed
+WO-2023-0117,2023-02-15,Whitlock Hall,212,plumbing,Replace damaged floor tile,closed
+WO-2023-0162,2023-02-23,Whitlock Hall,119,glazing,"Replace filters, unit EF-3",closed
+WO-2023-0243,2023-02-28,Whitlock Hall,225,carpentry,Replace lavatory faucet cartridge,closed
+WO-2023-0387,2023-02-28,Whitlock Hall,206,carpentry,Adjust door closer,closed
+WO-2023-0360,2023-03-02,Whitlock Hall,242,glazing,Seal roof penetration at vent,closed
+WO-2023-0108,2023-03-03,Whitlock Hall,102,locks,Clean roof drains,closed
+WO-2023-0135,2023-03-14,Whitlock Hall,231,electrical,"Clear condensate drain, unit RTU-B",closed
+WO-2023-0153,2023-03-20,Whitlock Hall,225,roofing,"Clear condensate drain, unit EF-3",closed
+WO-2023-0351,2023-04-07,Whitlock Hall,104,electrical,Replace exit sign battery,closed
+WO-2023-0252,2023-04-20,Whitlock Hall,225,glazing,Repair blind,closed
+WO-2023-0054,2023-05-01,Whitlock Hall,107,electrical,Repair blind,closed
+WO-2023-0234,2023-06-27,Whitlock Hall,215,roofing,"Clear condensate drain, unit AHU-2",closed
+WO-2023-0144,2023-07-04,Whitlock Hall,202,HVAC,Replace lavatory faucet cartridge,closed
+WO-2023-0342,2023-07-09,Whitlock Hall,204,roofing,"Clear condensate drain, unit RTU-A",closed
+WO-2023-0297,2023-07-12,Whitlock Hall,101,glazing,Tighten loose handrail,closed
+WO-2023-0009,2023-07-16,Whitlock Hall,161,HVAC,Clean roof drains,closed
+WO-2023-0279,2023-07-22,Whitlock Hall,107,glazing,Clean roof drains,closed
+WO-2023-0216,2023-07-24,Whitlock Hall,163,roofing,Rekey office lock,closed
+WO-2023-0180,2023-07-28,Whitlock Hall,230,roofing,Replace exit sign battery,closed
+WO-2023-0081,2023-08-11,Whitlock Hall,225,HVAC,Adjust door closer,closed
+WO-2023-0126,2023-08-12,Whitlock Hall,143,electrical,"Reset tripped breaker, panel LP-4",closed
+WO-2023-0099,2023-08-28,Whitlock Hall,107,lighting,Clean roof drains,closed
+WO-2023-0018,2023-09-07,Whitlock Hall,203,plumbing,Repair window latch,closed
+WO-2023-0198,2023-09-14,Whitlock Hall,121,plumbing,Repair window latch,closed
+WO-2023-0369,2023-09-15,Whitlock Hall,107,lighting,Replace smoke detector head,closed
+WO-2023-0333,2023-09-26,Whitlock Hall,104,electrical,Repair blind,closed
+WO-2023-0207,2023-10-09,Whitlock Hall,215,locks,Replace thermostat batteries,closed
+WO-2023-0171,2023-11-03,Whitlock Hall,222,roofing,Repair blind,closed
+WO-2023-0045,2023-11-04,Whitlock Hall,206,carpentry,Repair blind,closed
+WO-2023-0072,2023-11-04,Whitlock Hall,161,carpentry,Repair window latch,closed
+WO-2023-0063,2023-11-05,Whitlock Hall,209,painting,Adjust door closer,closed
+WO-2023-0270,2023-11-14,Whitlock Hall,230,locks,Seal roof penetration at vent,closed
+WO-2023-0288,2023-11-15,Whitlock Hall,223,glazing,Replace broken chair,closed
+WO-2023-0378,2023-11-20,Whitlock Hall,104,roofing,Patch and paint wall,closed
+WO-2023-0396,2023-12-03,Whitlock Hall,107,electrical,Replace broken chair,closed
+WO-2023-0306,2023-12-12,Whitlock Hall,146,roofing,Re-hang whiteboard,closed
+WO-2023-0261,2023-12-21,Whitlock Hall,108,glazing,Tighten loose handrail,closed
+WO-2023-0405,2023-12-24,Whitlock Hall,204,plumbing,Patch and paint wall,closed
+WO-2023-0225,2023-12-25,Whitlock Hall,142,locks,Replace ceiling tiles (water stain),closed
+WO-2023-0189,2023-12-27,Whitlock Hall,225,lighting,Replace ceiling tiles (water stain),closed
+WO-2024-0091,2024-01-04,Whitlock Hall,116,locks,Tighten loose handrail,closed
+WO-2024-0028,2024-01-14,Whitlock Hall,124,HVAC,"Clear condensate drain, unit RTU-B",closed
+WO-2024-0325,2024-01-16,Whitlock Hall,110,locks,Tighten loose handrail,closed
+WO-2024-0100,2024-02-12,Whitlock Hall,205,electrical,Replace lavatory faucet cartridge,closed
+WO-2024-0334,2024-02-23,Whitlock Hall,232,glazing,Adjust door closer,closed
+WO-2024-0064,2024-02-26,Whitlock Hall,109,painting,Rekey office lock,closed
+WO-2024-0082,2024-03-07,Whitlock Hall,125,HVAC,Replace thermostat batteries,closed
+WO-2024-0145,2024-03-07,Whitlock Hall,221,roofing,Adjust door closer,closed
+WO-2024-0077,2024-03-11,Whitlock Hall,161,HVAC,"Install ductless fume hood in lab prep 161 (recirculating, no exhaust connection).",closed
+WO-2024-0163,2024-04-07,Whitlock Hall,144,HVAC,"Replace lamp, corridor fixture",closed
+WO-2024-0118,2024-04-11,Whitlock Hall,121,electrical,Replace thermostat batteries,closed
+WO-2024-0298,2024-04-18,Whitlock Hall,121,lighting,Replace smoke detector head,closed
+WO-2024-0379,2024-04-23,Whitlock Hall,225,roofing,Replace ceiling tiles (water stain),closed
+WO-2024-0217,2024-05-04,Whitlock Hall,121,painting,"Replace filters, unit EF-3",closed
+WO-2024-0343,2024-05-04,Whitlock Hall,120,painting,Replace exit sign battery,closed
+WO-2024-0262,2024-05-16,Whitlock Hall,215,painting,Repair blind,closed
+WO-2024-0073,2024-05-24,Whitlock Hall,209,lighting,Seal roof penetration at vent,closed
+WO-2024-0235,2024-05-25,Whitlock Hall,207,electrical,Rekey office lock,closed
+WO-2024-0388,2024-05-25,Whitlock Hall,207,roofing,Clean roof drains,closed
+WO-2024-0181,2024-05-26,Whitlock Hall,160,lighting,"Reset tripped breaker, panel LP-5",closed
+WO-2024-0253,2024-06-07,Whitlock Hall,102,glazing,Adjust door closer,closed
+WO-2024-0226,2024-06-10,Whitlock Hall,124,HVAC,"Reset tripped breaker, panel LP-1",closed
+WO-2024-0109,2024-06-19,Whitlock Hall,233,electrical,"Clear condensate drain, unit RTU-B",closed
+WO-2024-0307,2024-06-26,Whitlock Hall,205,lighting,"Replace filters, unit RTU-A",closed
+WO-2024-0190,2024-06-28,Whitlock Hall,119,roofing,Re-hang whiteboard,closed
+WO-2024-0154,2024-07-09,Whitlock Hall,223,locks,"Replace lamp, corridor fixture",closed
+WO-2024-0019,2024-07-12,Whitlock Hall,221,locks,Rekey office lock,closed
+WO-2024-0316,2024-07-15,Whitlock Hall,240,plumbing,Seal roof penetration at vent,closed
+WO-2024-0397,2024-07-18,Whitlock Hall,207,carpentry,"Replace filters, unit EF-3",closed
+WO-2024-0208,2024-07-26,Whitlock Hall,242,electrical,Rekey office lock,closed
+WO-2024-0406,2024-07-28,Whitlock Hall,203,carpentry,Seal roof penetration at vent,closed
+WO-2024-0172,2024-08-03,Whitlock Hall,231,HVAC,Seal roof penetration at vent,closed
+WO-2024-0370,2024-08-12,Whitlock Hall,114,painting,Patch and paint wall,closed
+WO-2024-0136,2024-08-18,Whitlock Hall,202,HVAC,Replace ceiling tiles (water stain),closed
+WO-2024-0010,2024-08-27,Whitlock Hall,221,plumbing,Replace thermostat batteries,closed
+WO-2024-0127,2024-09-18,Whitlock Hall,108,lighting,"Replace filters, unit RTU-B",closed
+WO-2024-0271,2024-09-24,Whitlock Hall,230,carpentry,"Reset tripped breaker, panel LP-3",closed
+WO-2024-0037,2024-10-13,Whitlock Hall,242,plumbing,"Replace filters, unit EF-3",closed
+WO-2024-0046,2024-10-14,Whitlock Hall,161,locks,Replace damaged floor tile,closed
+WO-2024-0361,2024-11-01,Whitlock Hall,108,plumbing,Replace smoke detector head,closed
+WO-2024-0199,2024-11-02,Whitlock Hall,124,HVAC,"Clear condensate drain, unit EF-3",closed
+WO-2024-0244,2024-11-07,Whitlock Hall,220,plumbing,Replace lavatory faucet cartridge,closed
+WO-2024-0352,2024-11-07,Whitlock Hall,122,carpentry,Replace damaged floor tile,closed
+WO-2024-0280,2024-11-19,Whitlock Hall,242,locks,Re-hang whiteboard,closed
+WO-2024-0055,2024-11-21,Whitlock Hall,110,plumbing,Replace thermostat batteries,closed
+WO-2024-0289,2024-12-14,Whitlock Hall,104,glazing,"Replace lamp, corridor fixture",closed
+WO-2025-0191,2025-01-01,Whitlock Hall,212,plumbing,Replace lavatory faucet cartridge,closed
+WO-2025-0155,2025-01-06,Whitlock Hall,205,electrical,Seal roof penetration at vent,closed
+WO-2025-0263,2025-01-06,Whitlock Hall,102,carpentry,Replace smoke detector head,closed
+WO-2025-0056,2025-01-09,Whitlock Hall,163,roofing,"Replace filters, unit RTU-A",closed
+WO-2025-0227,2025-01-10,Whitlock Hall,215,lighting,Re-hang whiteboard,closed
+WO-2025-0218,2025-01-12,Whitlock Hall,208,plumbing,Rekey office lock,closed
+WO-2025-0335,2025-01-28,Whitlock Hall,201,locks,Seal roof penetration at vent,closed
+WO-2025-0092,2025-02-04,Whitlock Hall,241,roofing,Adjust door closer,closed
+WO-2025-0380,2025-02-12,Whitlock Hall,221,electrical,Patch and paint wall,closed
+WO-2025-0038,2025-02-15,Whitlock Hall,114,carpentry,Replace exit sign battery,closed
+WO-2025-0029,2025-02-28,Whitlock Hall,116,roofing,Replace ceiling tiles (water stain),closed
+WO-2025-0146,2025-03-09,Whitlock Hall,160,roofing,Tighten loose handrail,closed
+WO-2025-0290,2025-03-13,Whitlock Hall,116,locks,"Replace filters, unit EF-3",closed
+WO-2025-0272,2025-04-02,Whitlock Hall,104,roofing,Replace lavatory faucet cartridge,closed
+WO-2025-0362,2025-04-16,Whitlock Hall,104,HVAC,Re-hang whiteboard,closed
+WO-2025-0254,2025-05-13,Whitlock Hall,120,glazing,"Replace filters, unit RTU-A",closed
+WO-2025-0137,2025-05-15,Whitlock Hall,215,electrical,Repair window latch,closed
+WO-2025-0047,2025-05-20,Whitlock Hall,206,locks,Replace damaged floor tile,closed
+WO-2025-0119,2025-05-20,Whitlock Hall,240,roofing,Replace lavatory faucet cartridge,closed
+WO-2025-0065,2025-05-27,Whitlock Hall,171,locks,Repair blind,closed
+WO-2025-0407,2025-06-11,Whitlock Hall,121,lighting,Repair blind,closed
+WO-2025-0164,2025-06-13,Whitlock Hall,144,lighting,Replace lavatory faucet cartridge,closed
+WO-2025-0110,2025-06-26,Whitlock Hall,222,glazing,Replace exit sign battery,closed
+WO-2025-0317,2025-07-15,Whitlock Hall,103,lighting,"Replace filters, unit RTU-B",closed
+WO-2025-0398,2025-08-01,Whitlock Hall,233,painting,Re-hang whiteboard,closed
+WO-2025-0299,2025-08-04,Whitlock Hall,201,glazing,Replace ceiling tiles (water stain),closed
+WO-2025-0236,2025-08-23,Whitlock Hall,215,electrical,Clean roof drains,closed
+WO-2025-0083,2025-09-14,Whitlock Hall,143,glazing,Clean roof drains,closed
+WO-2025-0011,2025-09-24,Whitlock Hall,225,locks,"Clear condensate drain, unit AHU-2",closed
+WO-2025-0200,2025-10-04,Whitlock Hall,208,plumbing,Rekey office lock,closed
+WO-2025-0209,2025-10-05,Whitlock Hall,212,carpentry,Replace exit sign battery,closed
+WO-2025-0308,2025-10-08,Whitlock Hall,103,electrical,Patch and paint wall,closed
+WO-2025-0326,2025-10-28,Whitlock Hall,160,locks,Re-hang whiteboard,closed
+WO-2025-0353,2025-10-28,Whitlock Hall,214,electrical,Rekey office lock,closed
+WO-2025-0389,2025-10-28,Whitlock Hall,171,electrical,Replace thermostat batteries,closed
+WO-2025-0281,2025-11-07,Whitlock Hall,101,plumbing,Replace thermostat batteries,closed
+WO-2025-0128,2025-11-10,Whitlock Hall,112,roofing,Re-hang whiteboard,closed
+WO-2025-0371,2025-11-28,Whitlock Hall,107,lighting,Clean roof drains,closed
+WO-2025-0101,2025-12-02,Whitlock Hall,215,HVAC,Replace exit sign battery,closed
+WO-2025-0182,2025-12-02,Whitlock Hall,231,glazing,Patch and paint wall,closed
+WO-2025-0344,2025-12-06,Whitlock Hall,223,HVAC,Rekey office lock,closed
+WO-2025-0020,2025-12-08,Whitlock Hall,142,glazing,Repair window latch,closed
+WO-2025-0245,2025-12-13,Whitlock Hall,163,electrical,Adjust door closer,closed
+WO-2025-0173,2025-12-18,Whitlock Hall,101,electrical,"Reset tripped breaker, panel LP-1",closed
+WO-2025-0074,2025-12-26,Whitlock Hall,105,painting,Replace smoke detector head,closed

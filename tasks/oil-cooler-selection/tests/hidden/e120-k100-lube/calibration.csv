@@ -1,0 +1,6 @@
+date,tag,as_found_error,error_unit,adjusted
+2026-02-05,TI-123,0.0,K,no
+2026-02-06,TI-124,0.0,K,no
+2026-02-21,TI-122,0.0,K,no
+2026-02-23,FT-121,0.0,% of reading,no
+2026-07-14,FT-121,-9.0,% of reading,yes

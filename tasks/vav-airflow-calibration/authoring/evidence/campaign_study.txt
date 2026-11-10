@@ -1,0 +1,46 @@
+campaigns of five distinct boxes from a pool of 16: 4368; passing with some defensible fallback: 6
+passing campaigns that visit the three 2.4 labs, a vertical drop and a long connector: 6 of 6
+campaigns with that coverage that fail: 0
+
+passing campaigns:
+  36 37 38 25 31   (elbow_v + lab36 + lab37 + lab38 + sagging)
+  36 37 38 25 35   (elbow_v + lab36 + lab37 + lab38 + sagging)
+  36 37 38 28 31   (elbow_v + lab36 + lab37 + lab38 + sagging)
+  36 37 38 28 35   (elbow_v + lab36 + lab37 + lab38 + sagging)
+  36 37 38 27 31   (elbow_v + lab36 + lab37 + lab38 + sagging)
+  36 37 38 27 35   (elbow_v + lab36 + lab37 + lab38 + sagging)
+
+best worst-box error of the failing campaigns, by what they leave out
+  missing lab36                                            57 campaigns, best  20.8 %
+  missing lab37                                            57 campaigns, best  17.3 %
+  missing lab38                                            57 campaigns, best  31.8 %
+  missing lab36, lab37                                    245 campaigns, best  19.4 %
+  missing lab36, lab38                                    245 campaigns, best  34.6 %
+  missing lab37, lab38                                    245 campaigns, best  28.3 %
+  missing vertical drop                                    17 campaigns, best  21.1 %
+  missing long connector                                   27 campaigns, best  13.6 %
+  missing lab36, lab37, lab38                             629 campaigns, best  33.7 %
+  missing lab36, vertical drop                             64 campaigns, best  21.1 %
+  missing lab37, vertical drop                             64 campaigns, best  21.1 %
+  missing lab38, vertical drop                             64 campaigns, best  31.8 %
+  missing lab36, long connector                           109 campaigns, best  20.8 %
+  missing lab37, long connector                           109 campaigns, best  16.6 %
+  missing lab38, long connector                           109 campaigns, best  31.8 %
+  missing lab36, lab37, vertical drop                     140 campaigns, best  21.1 %
+  missing lab36, lab38, vertical drop                     140 campaigns, best  34.2 %
+  missing lab37, lab38, vertical drop                     140 campaigns, best  27.7 %
+  missing lab36, lab37, long connector                    260 campaigns, best  19.4 %
+  missing lab36, lab38, long connector                    260 campaigns, best  34.2 %
+  missing lab37, lab38, long connector                    260 campaigns, best  27.7 %
+  missing vertical drop, long connector                    28 campaigns, best  21.1 %
+  missing lab36, lab37, lab38, vertical drop              196 campaigns, best  33.7 %
+  missing lab36, lab37, lab38, long connector             406 campaigns, best  33.7 %
+  missing lab36, vertical drop, long connector             56 campaigns, best  21.1 %
+  missing lab37, vertical drop, long connector             56 campaigns, best  21.1 %
+  missing lab38, vertical drop, long connector             56 campaigns, best  31.8 %
+  missing lab36, lab37, vertical drop, long connector      70 campaigns, best  21.1 %
+  missing lab36, lab38, vertical drop, long connector      70 campaigns, best  34.2 %
+  missing lab37, lab38, vertical drop, long connector      70 campaigns, best  26.6 %
+  missing lab36, lab37, lab38, vertical drop, long connector   56 campaigns, best  34.1 %
+
+not a method: also giving an unvisited 2.4 lab offset 0 rescues 57 more campaign(s); all of them skip lab 37, whose zero happens to be small

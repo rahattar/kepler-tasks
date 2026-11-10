@@ -1,0 +1,31 @@
+Malformed and reference results through tests/grade_brakes.score (one temporary file each).
+
+reference result                 accepted=True  ok 12 of 12 right
+reference, settings as floats    accepted=True  ok 12 of 12 right
+not JSON                         accepted=False ok the result is not valid JSON: Expecting value: line 1 column 1 (char 0)
+a JSON array                     accepted=False ok the result must be one object with the single key "brakes"
+missing hoist                    accepted=False ok brakes must have exactly the keys H01, H02, H03, H04, H05, H06, H07, H08, H09, H10, H11, H12
+extra hoist                      accepted=False ok brakes must have exactly the keys H01, H02, H03, H04, H05, H06, H07, H08, H09, H10, H11, H12
+extra top-level key              accepted=False ok the result must be one object with the single key "brakes"
+duplicate hoist                  accepted=False ok duplicate key in the result
+brakes as a list                 accepted=False ok brakes must have exactly the keys H01, H02, H03, H04, H05, H06, H07, H08, H09, H10, H11, H12
+size not in the catalogue        accepted=False ok the size for H05 is not a catalogue size
+size lower case                  accepted=False ok the size for H05 is not a catalogue size
+size a number                    accepted=False ok the size for H05 is not a catalogue size
+size null                        accepted=False ok the size for H05 is not a catalogue size
+setting NaN                      accepted=False ok the setting for H05 must be a whole percent
+setting Infinity                 accepted=False ok the setting for H05 must be a whole percent
+setting 49                       accepted=False ok the setting for H05 must be from 50 to 100
+setting 101                      accepted=False ok the setting for H05 must be from 50 to 100
+setting 64.5                     accepted=False ok the setting for H05 must be a whole percent
+setting boolean                  accepted=False ok the setting for H05 is not a number
+setting string                   accepted=False ok the setting for H05 is not a number
+setting null                     accepted=False ok the setting for H05 is not a number
+setting array                    accepted=False ok the setting for H05 is not a number
+entry with an extra key          accepted=False ok the entry for H05 must be an object with exactly the keys "size" and "setting"
+entry missing the setting        accepted=False ok the entry for H05 must be an object with exactly the keys "size" and "setting"
+entry a string                   accepted=False ok the entry for H05 must be an object with exactly the keys "size" and "setting"
+result is a symlink              accepted=False ok the result is not a regular file
+H05 at S16/80 (well formed)      accepted=False ok 11 of 12 right
+
+27 of 27 cases handled as expected; none crashed the grader.

@@ -1,0 +1,338 @@
+{
+ "e120-k100-lube": {
+  "basis": {
+   "oil": {
+    "grade": "ISO VG 46",
+    "rho15": 868.0,
+    "nu40": 45.6,
+    "nu100": 6.89
+   },
+   "oil_kg_s": 16.495,
+   "oil_in_c": 83.56,
+   "cw_in_c": 34.035,
+   "cw_kg_s": 32.0,
+   "fouling_oil": 0.000176
+  },
+  "case": {
+   "cooler": "E120",
+   "service": "lube oil cooler of K100",
+   "period": [
+    "2026-06-01",
+    "2026-09-15"
+   ],
+   "cw_allotment_kg_s": 32.0,
+   "oil_outlet_max_c": 48.0,
+   "oil_dp_max_kpa": 90.0,
+   "cw_dp_max_kpa": 60.0,
+   "cw_velocity_m_s": [
+    0.6,
+    2.4
+   ]
+  },
+  "min_price": 139110.0,
+  "reference_design": {
+   "shell_id_mm": 591,
+   "tube": "19.05x1.65",
+   "tube_length_m": 6.1,
+   "tube_passes": 4,
+   "layout_deg": 30,
+   "baffle_cut_pct": 20,
+   "baffle_spacing_mm": 130,
+   "shells_in_series": 1
+  }
+ },
+ "e230-g200-lube": {
+  "basis": {
+   "oil": {
+    "grade": "ISO VG 32",
+    "rho15": 861.0,
+    "nu40": 31.6,
+    "nu100": 5.48
+   },
+   "oil_kg_s": 27.768,
+   "oil_in_c": 77.517,
+   "cw_in_c": 32.32,
+   "cw_kg_s": 55.0,
+   "fouling_oil": 0.000176
+  },
+  "case": {
+   "cooler": "E230",
+   "service": "lube oil cooler of G200",
+   "period": [
+    "2026-06-01",
+    "2026-09-15"
+   ],
+   "cw_allotment_kg_s": 55.0,
+   "oil_outlet_max_c": 46.0,
+   "oil_dp_max_kpa": 110.0,
+   "cw_dp_max_kpa": 70.0,
+   "cw_velocity_m_s": [
+    0.6,
+    2.4
+   ]
+  },
+  "min_price": 160210.0,
+  "reference_design": {
+   "shell_id_mm": 787,
+   "tube": "19.05x1.65",
+   "tube_length_m": 4.88,
+   "tube_passes": 4,
+   "layout_deg": 30,
+   "baffle_cut_pct": 20,
+   "baffle_spacing_mm": 160,
+   "shells_in_series": 1
+  }
+ },
+ "e340-k300-seal": {
+  "basis": {
+   "oil": {
+    "grade": "ISO VG 68",
+    "rho15": 875.0,
+    "nu40": 68.0,
+    "nu100": 8.7
+   },
+   "oil_kg_s": 12.497,
+   "oil_in_c": 89.352,
+   "cw_in_c": 35.556,
+   "cw_kg_s": 26.0,
+   "fouling_oil": 0.000176
+  },
+  "case": {
+   "cooler": "E340",
+   "service": "lube oil cooler of K300",
+   "period": [
+    "2026-06-01",
+    "2026-09-15"
+   ],
+   "cw_allotment_kg_s": 26.0,
+   "oil_outlet_max_c": 52.0,
+   "oil_dp_max_kpa": 100.0,
+   "cw_dp_max_kpa": 60.0,
+   "cw_velocity_m_s": [
+    0.6,
+    2.4
+   ]
+  },
+  "min_price": 121550.0,
+  "reference_design": {
+   "shell_id_mm": 787,
+   "tube": "19.05x1.65",
+   "tube_length_m": 3.66,
+   "tube_passes": 6,
+   "layout_deg": 30,
+   "baffle_cut_pct": 20,
+   "baffle_spacing_mm": 160,
+   "shells_in_series": 1
+  }
+ },
+ "e450-c400-lube": {
+  "basis": {
+   "oil": {
+    "grade": "ISO VG 46",
+    "rho15": 868.0,
+    "nu40": 46.8,
+    "nu100": 6.77
+   },
+   "oil_kg_s": 20.445,
+   "oil_in_c": 87.754,
+   "cw_in_c": 34.868,
+   "cw_kg_s": 38.0,
+   "fouling_oil": 0.000176
+  },
+  "case": {
+   "cooler": "E450",
+   "service": "lube oil cooler of C400",
+   "period": [
+    "2026-06-01",
+    "2026-09-15"
+   ],
+   "cw_allotment_kg_s": 38.0,
+   "oil_outlet_max_c": 49.0,
+   "oil_dp_max_kpa": 95.0,
+   "cw_dp_max_kpa": 70.0,
+   "cw_velocity_m_s": [
+    0.6,
+    2.4
+   ]
+  },
+  "min_price": 166440.0,
+  "reference_design": {
+   "shell_id_mm": 686,
+   "tube": "19.05x1.65",
+   "tube_length_m": 6.1,
+   "tube_passes": 4,
+   "layout_deg": 30,
+   "baffle_cut_pct": 20,
+   "baffle_spacing_mm": 140,
+   "shells_in_series": 1
+  }
+ },
+ "e560-k500-lube": {
+  "basis": {
+   "oil": {
+    "grade": "ISO VG 46",
+    "rho15": 868.0,
+    "nu40": 45.7,
+    "nu100": 6.73
+   },
+   "oil_kg_s": 24.585,
+   "oil_in_c": 84.406,
+   "cw_in_c": 35.086,
+   "cw_kg_s": 48.0,
+   "fouling_oil": 0.000176
+  },
+  "case": {
+   "cooler": "E560",
+   "service": "lube oil cooler of K500",
+   "period": [
+    "2026-06-01",
+    "2026-09-15"
+   ],
+   "cw_allotment_kg_s": 48.0,
+   "oil_outlet_max_c": 50.0,
+   "oil_dp_max_kpa": 100.0,
+   "cw_dp_max_kpa": 75.0,
+   "cw_velocity_m_s": [
+    0.6,
+    2.4
+   ]
+  },
+  "min_price": 158480.0,
+  "reference_design": {
+   "shell_id_mm": 737,
+   "tube": "19.05x1.65",
+   "tube_length_m": 2.44,
+   "tube_passes": 4,
+   "layout_deg": 30,
+   "baffle_cut_pct": 20,
+   "baffle_spacing_mm": 150,
+   "shells_in_series": 2
+  }
+ },
+ "e670-t600-lube": {
+  "basis": {
+   "oil": {
+    "grade": "ISO VG 100",
+    "rho15": 882.0,
+    "nu40": 100.0,
+    "nu100": 11.2
+   },
+   "oil_kg_s": 13.766,
+   "oil_in_c": 92.424,
+   "cw_in_c": 33.503,
+   "cw_kg_s": 30.0,
+   "fouling_oil": 0.000176
+  },
+  "case": {
+   "cooler": "E670",
+   "service": "lube oil cooler of T600",
+   "period": [
+    "2026-06-01",
+    "2026-09-15"
+   ],
+   "cw_allotment_kg_s": 30.0,
+   "oil_outlet_max_c": 55.0,
+   "oil_dp_max_kpa": 120.0,
+   "cw_dp_max_kpa": 70.0,
+   "cw_velocity_m_s": [
+    0.6,
+    2.4
+   ]
+  },
+  "min_price": 112290.0,
+  "reference_design": {
+   "shell_id_mm": 489,
+   "tube": "19.05x1.65",
+   "tube_length_m": 6.1,
+   "tube_passes": 2,
+   "layout_deg": 30,
+   "baffle_cut_pct": 20,
+   "baffle_spacing_mm": 110,
+   "shells_in_series": 1
+  }
+ },
+ "e780-k700-lube": {
+  "basis": {
+   "oil": {
+    "grade": "ISO VG 68",
+    "rho15": 875.0,
+    "nu40": 69.2,
+    "nu100": 8.65
+   },
+   "oil_kg_s": 18.952,
+   "oil_in_c": 86.428,
+   "cw_in_c": 34.725,
+   "cw_kg_s": 36.0,
+   "fouling_oil": 0.000176
+  },
+  "case": {
+   "cooler": "E780",
+   "service": "lube oil cooler of K700",
+   "period": [
+    "2026-06-01",
+    "2026-09-15"
+   ],
+   "cw_allotment_kg_s": 36.0,
+   "oil_outlet_max_c": 50.0,
+   "oil_dp_max_kpa": 100.0,
+   "cw_dp_max_kpa": 70.0,
+   "cw_velocity_m_s": [
+    0.6,
+    2.4
+   ]
+  },
+  "min_price": 158170.0,
+  "reference_design": {
+   "shell_id_mm": 787,
+   "tube": "19.05x1.65",
+   "tube_length_m": 4.88,
+   "tube_passes": 6,
+   "layout_deg": 30,
+   "baffle_cut_pct": 20,
+   "baffle_spacing_mm": 160,
+   "shells_in_series": 1
+  }
+ },
+ "e890-k800-lube": {
+  "basis": {
+   "oil": {
+    "grade": "ISO VG 46",
+    "rho15": 868.0,
+    "nu40": 46.6,
+    "nu100": 6.77
+   },
+   "oil_kg_s": 21.805,
+   "oil_in_c": 86.045,
+   "cw_in_c": 35.686,
+   "cw_kg_s": 42.0,
+   "fouling_oil": 0.000176
+  },
+  "case": {
+   "cooler": "E890",
+   "service": "lube oil cooler of K800",
+   "period": [
+    "2026-06-01",
+    "2026-09-15"
+   ],
+   "cw_allotment_kg_s": 42.0,
+   "oil_outlet_max_c": 49.0,
+   "oil_dp_max_kpa": 100.0,
+   "cw_dp_max_kpa": 70.0,
+   "cw_velocity_m_s": [
+    0.6,
+    2.4
+   ]
+  },
+  "min_price": 171020.0,
+  "reference_design": {
+   "shell_id_mm": 787,
+   "tube": "19.05x1.65",
+   "tube_length_m": 2.44,
+   "tube_passes": 4,
+   "layout_deg": 30,
+   "baffle_cut_pct": 20,
+   "baffle_spacing_mm": 160,
+   "shells_in_series": 2
+  }
+ }
+}

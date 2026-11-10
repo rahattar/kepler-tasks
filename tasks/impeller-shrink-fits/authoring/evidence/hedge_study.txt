@@ -1,0 +1,16 @@
+the model with every choice right reproduces every true window to within 4 um
+
+choice | parts whose window moves | parts with no bore right under both answers
+seats taken as at 20 C                 | S1 S2 S3 S4 S5 S6 BD TC    | S1 S3 S4
+clearance against the seat at 20 C     | S2 S5 S6 BD TC             | -
+trip at 105 %                          | S1 S2 S3 S4 S5 S6 BD TC    | -
+maintenance log not applied            | S1 S2 S3 S4 S5 S6 BD TC    | -
+seat growth at speed not credited      | S1 S2 S3 S4 S5 S6 BD TC    | -
+micrometer error not applied           | S1 S2 S3 S4 S5 S6 BD       | -
+S4's spin test taken as at MCS         | S4                         | -
+20-100 C table for every material      | S1 S2 S3 S4 S5 S6 BD TC    | S2 S5 S6 BD
+the rotor steel from the 20-100 C table | S1 S2 S3 S5 S6 BD TC       | S3 S6 BD
+42CrMo4 from the 20-100 C table        | BD TC                      | BD
+Ti-6Al-4V from the 20-100 C table      | S5                         | S5
+FV520B extrapolated from 240 C         | S1 S2 S3 S6                | -
+the 375 C FV520B value used flat       | S2 S3 S6                   | S3 S6

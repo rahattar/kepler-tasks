@@ -1,0 +1,3 @@
+#!/bin/bash
+# Starts the metrology group's TC-wafer run service at $TCWAFER_URL (http://127.0.0.1:8000).
+exec sudo -n -u metrology /opt/tcwafer/run-service

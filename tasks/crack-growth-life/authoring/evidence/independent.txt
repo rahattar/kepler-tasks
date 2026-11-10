@@ -1,0 +1,21 @@
+Independent solution: campaign paris 0.10 H1, paris 0.25 H1, paris 0.90 H1, paris 0.50 H2, paris 0.90 H4
+fit: C 6.529e-12, m 3.173, p 0.339, threshold 2.56, U0 0.622, closure-free from R 0.388; heat factors H1 1.000, H2 1.199, H3 1.342, H4 1.342
+
+C01  interval   7.922  true life  17.82  interval/life 0.445 ok
+C02  interval   6.554  true life  15.18  interval/life 0.432 ok
+C03  interval  11.587  true life  25.59  interval/life 0.453 ok
+C04  interval   6.667  true life  15.10  interval/life 0.442 ok
+C05  interval   4.401  true life  10.15  interval/life 0.433 ok
+C06  interval   5.158  true life  11.20  interval/life 0.460 ok
+C07  interval   5.239  true life  12.08  interval/life 0.434 ok
+C08  interval   1.192  true life   2.61  interval/life 0.456 ok
+C09  interval   4.426  true life  10.05  interval/life 0.440 ok
+C10  interval   3.758  true life   8.54  interval/life 0.440 ok
+C11  interval   3.017  true life   6.85  interval/life 0.440 ok
+C12  interval   6.840  true life  15.51  interval/life 0.441 ok
+C13  interval   4.851  true life  10.81  interval/life 0.449 ok
+C14  interval   3.497  true life   7.94  interval/life 0.441 ok
+C15  interval   0.931  true life   2.11  interval/life 0.441 ok
+C16  interval   3.918  true life   8.92  interval/life 0.439 ok
+
+16 of 16 right; interval/life 0.432 to 0.460 against the window 0.40-0.50.

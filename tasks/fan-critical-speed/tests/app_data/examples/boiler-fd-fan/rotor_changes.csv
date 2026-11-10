@@ -1,0 +1,4 @@
+entered,work_order,part,property,value
+2019-07-02,WO-2019-9271,coupling hub,mass_kg,31.0
+2019-07-02,WO-2019-9271,coupling hub,polar_inertia_kg_m2,0.82
+2019-07-02,WO-2019-9271,coupling hub,transverse_inertia_kg_m2,0.48

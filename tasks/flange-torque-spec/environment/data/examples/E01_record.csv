@@ -1,0 +1,17 @@
+item,value
+joint_id,E01
+thread,M16
+grade,8.8
+bolt_count,12
+bolt_circle_diameter_mm,230
+flange_class,A
+flange_thickness_mm,22
+flank_roughness_Ra_um,2.3
+plating_thickness_um,7.0
+threads,new
+target_preload_per_bolt_kN,65.9
+trial_torque_Nm,189.9
+trial_bolt_preload_kN,78.53
+assembly_torque_Nm,166.4
+tightening_sequence,"cross pattern in passes at 30, 70 and 100 percent of the assembly torque, then two circular passes at 100 percent"
+assembled_preload_per_bolt_kN_measured,66.09

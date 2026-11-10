@@ -1,0 +1,24 @@
+Reference program (solution/audit.py) on the hidden audits (the bound is 1 wrong of 8); errors in percent:
+
+s-301   right {'avg_demand_m3_min': -0.31, 'specific_power_kw_per_m3_min': 0.31, 'peak_demand_m3_min': 0.08, 'leak_m3_min': -0.87}
+s-302   right {'avg_demand_m3_min': -0.4, 'specific_power_kw_per_m3_min': 0.4, 'peak_demand_m3_min': -0.21, 'leak_m3_min': -1.14}
+s-303   right {'avg_demand_m3_min': 0.2, 'specific_power_kw_per_m3_min': -0.2, 'peak_demand_m3_min': -0.45, 'leak_m3_min': 0.01}
+s-304   right {'avg_demand_m3_min': -0.19, 'specific_power_kw_per_m3_min': 0.2, 'peak_demand_m3_min': 0.09, 'leak_m3_min': -0.71}
+s-305   right {'avg_demand_m3_min': 0.14, 'specific_power_kw_per_m3_min': -0.14, 'peak_demand_m3_min': -0.14, 'leak_m3_min': -0.0}
+s-306   right {'avg_demand_m3_min': -0.19, 'specific_power_kw_per_m3_min': 0.18, 'peak_demand_m3_min': 0.15, 'leak_m3_min': -1.07}
+s-307   right {'avg_demand_m3_min': 0.61, 'specific_power_kw_per_m3_min': -0.61, 'peak_demand_m3_min': -0.15, 'leak_m3_min': 0.0}
+s-308   right {'avg_demand_m3_min': -0.26, 'specific_power_kw_per_m3_min': 0.26, 'peak_demand_m3_min': -0.03, 'leak_m3_min': -0.71}
+
+0 of 8 wrong
+largest absolute error, percent: avg 0.61, sp 0.61, peak 0.45, leak 1.14
+
+True results of the hidden sites:
+s-301   leak / average demand 0.392, specific power 6.94 kW per m3/min
+s-302   leak / average demand 0.434, specific power 7.43 kW per m3/min
+s-303   leak / average demand 0.352, specific power 6.30 kW per m3/min
+s-304   leak / average demand 0.385, specific power 6.78 kW per m3/min
+s-305   leak / average demand 0.378, specific power 6.49 kW per m3/min
+s-306   leak / average demand 0.382, specific power 7.12 kW per m3/min
+s-307   leak / average demand 0.373, specific power 6.47 kW per m3/min
+s-308   leak / average demand 0.412, specific power 6.82 kW per m3/min
+leak share 35.2 to 43.4 % of average demand; specific power 6.30 to 7.43 kW per m3/min

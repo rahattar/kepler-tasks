@@ -1,0 +1,5 @@
+date,element,measurement,location,value,unit
+2026-10-24,E3,"steam-side oxide thickness, UT, mean of 8 readings",outlet-leg crown,138.0,um
+2026-10-24,E8,"steam-side oxide thickness, UT, mean of 8 readings",outlet-leg crown,88.0,um
+2026-10-24,E9,"minimum wall thickness, UT",outlet-leg crown,7.93,mm
+2026-10-24,E10,"minimum wall thickness, UT",outlet-leg crown,4.0,mm

@@ -1,0 +1,109 @@
+Clean-context probe runs on the sixteen-station fleet. Each agent got only the brief,
+the inspection data and the bench client in an isolated directory -- no sealed physics,
+no grader, no reference -- and its recipe was graded afterwards with the shipped
+verifier. Every run spent the real budget of eight bench runs.
+
+WHY THESE PROBES LOOK THE WAY THEY DO. The previous fleet (twelve stations, three lots,
+a 20% allowance) was solved by the platform's own easiness screen three times out of
+three, at 17 to 43 minutes and 13k to 32k output tokens per attempt. An earlier set of
+local "low-effort" probes had been capped at 30 tool calls and one shot at the recipe,
+and had predicted a pass rate of one in six; they were crippled far below what the
+screen actually allows, and calibrated the task against the wrong thing. The probes
+below are matched to the screen instead: about 60 tool calls and 30 minutes, free to
+check and revise. Full-effort probes get about 200 tool calls and two hours.
+
+The probes were graded when the verifier resolved the wafer in 40 rings. It now uses
+80 (method_study.txt). The five round-2 recipes were re-graded on the 80-ring
+verifier and every verdict is unchanged: A1 16/16, A2 15/16 (lost S12), A3, B1 and
+B2 14/16 (lost S09 and S12), with dwell ratios no higher than 1.073. The figures below
+are from the original grading.
+
+-------------------------------------------------------------------------------------
+ROUND 1 -- sixteen stations, twelve lots, knee at 48 C, 20% allowance, gate 15 of 16
+-------------------------------------------------------------------------------------
+
+  probe  effort   commissioned  verdict   what decided it
+  L2     screen      13/16      fail      forward model: set pressures at 0.62-0.72 of
+                                          the true optimum on MEASURED stations; its
+                                          jump-distance temperature exponent was 0.5
+                                          where the physics wants about 1.2, invisible
+                                          at the calibration pressure, decisive at the
+                                          recipe pressure
+  L3     screen      13/16      fail      the same failure on S01, S05, S08, all
+                                          measured: zone limit placed 20-30% too low
+  L4     screen      16/16      pass      ran each station near its predicted optimum
+  L5     screen      16/16      pass      same; measured S09
+  L6     screen      16/16      pass      same
+  L7     screen      16/16      pass      same; measured S09
+  F1     full        16/16      pass
+  F2     full        16/16      pass
+
+  Screen 4 of 6, full 2 of 2. Below the bar, and the reason is measurable
+  (allowance_window.txt): at a 20% allowance a recipe centred in its pressure band
+  tolerates a coefficient estimate 13-17% low or 14-20% high, because the optimum dwell
+  does not depend on the coefficient at all and the coefficient only places the
+  pressure. Any covariate model that gets the shape roughly right lands inside that. The only thing
+  failing agents was a gross forward-model error -- the twelve-lot hinge structure was
+  invisible behind the tolerance.
+
+  Every one of the six agents that built a sound forward model found the
+  pressure-accommodation degeneracy unprompted, and every one of them found the hinge.
+
+-------------------------------------------------------------------------------------
+ROUND 2 -- the same fleet, 8% allowance (shipped)
+-------------------------------------------------------------------------------------
+
+  probe  effort   commissioned  verdict   campaign reached the     covariate model
+                                          low-Ra plateau corner?   regressed on
+  A1     screen      16/16      pass      yes: S09, chosen by      ensemble across
+                                          simulating every         alpha, a_eff and
+                                          remaining pair against   log a_eff
+                                          candidate models and
+                                          picking the pair that
+                                          minimised expected
+                                          prediction error
+  A2     screen      15/16      pass      yes: S13, S09's lot-     alpha, converted
+                                          mate                     from G by the
+                                                                   Kennard form
+  A3     screen      14/16      fail      no                       1/(G - A)
+  B1     full        14/16      fail      no -- and its own        effective
+                                          report named S09 as its  coefficient
+                                          riskiest station, after
+                                          its budget was spent
+  B2     full        14/16      fail      no                       1/G
+
+  Every failure is the same two stations, S09 and S12, on the zone limit by 0.65-0.98
+  K: their accommodation coefficient predicted low. Both sit on the saturated plateau
+  at low roughness. Every campaign above also ran S05 first or second -- the lowest
+  roughness plate, and half of the only same-lot pair with a large roughness contrast,
+  so the natural anchor for the roughness slope -- and in the shipped draw S05 is a
+  -2.9 sigma outlier (design_mc.txt). A slope anchored on it bends every low-roughness
+  prediction on the plateau. The seed has been 20260919 since the first version of this
+  task; the outlier was always there and only became visible once the throughput limit
+  was tight enough for a few percent to matter.
+
+  The two passes are the two campaigns that reached that corner directly. A1 got there
+  by optimal design: it held back its last two runs and spent them where its candidate
+  models disagreed most. B1, a full-effort run, identified exactly the right risk and
+  could no longer act on it. That is the engineering judgement the task is built to
+  test -- spend the irreversible budget where your prediction is weakest, not where
+  the structure is most obvious -- and it is not reliably bought by effort alone.
+
+WHAT THE TWO ROUNDS TOGETHER SAY
+
+  * The forward model, the pressure-accommodation degeneracy and the hinge are all
+    found reliably by screen-effort agents. None of them is a source of difficulty
+    on its own.
+  * What separates pass from fail at 8% is where the campaign spent its runs, and to a
+    lesser degree whether the agent regressed the physical accommodation coefficient
+    rather than a lumped conductance (design_mc.txt quantifies the second as the
+    smaller effect, and one that only matters for a campaign that missed the corner).
+  * S09 is one of the seven vertices of the fleet's convex hull in (roughness, bath
+    temperature). No failing campaign measured it, or its lot-mate, so each
+    extrapolated to the corner its prediction was weakest at. This is what the
+    reference now plans its campaign from: every hull vertex measured, so every
+    unmeasured station is an interpolation (design_mc.txt).
+  * Measured pass rates at 8%: 2 of 3 screen, 0 of 2 full. Five runs is too few to
+    claim an effort gradient in either direction, and none is claimed. What it does
+    show is a pass rate well away from both 0 and 1, decided by a recognisable
+    experimental-design choice.

@@ -1,0 +1,22 @@
+#!/bin/bash
+# Starts the capture-hood visit service as the tab user. Takes no arguments and passes no environment from the
+# caller to the server. Idempotent: a running service is left as it is. The visit count is kept on disk, so a
+# restart does not reset it.
+set -u
+URL=http://127.0.0.1:8000
+if curl -sf -o /dev/null "$URL/status"; then
+    echo "hood visit service already running at $URL"
+    exit 0
+fi
+cd /opt/hood || exit 1
+setsid nohup env -i PATH=/usr/local/bin:/usr/bin:/bin OMP_NUM_THREADS=1 python3 -I /opt/hood/server.py 8000 \
+    /app/visits /var/lib/hood/state.json > /var/lib/hood/server.log 2>&1 < /dev/null &
+for _ in $(seq 1 100); do
+    if curl -sf -o /dev/null "$URL/status"; then
+        echo "hood visit service running at $URL"
+        exit 0
+    fi
+    sleep 0.2
+done
+echo "hood visit service did not start" >&2
+exit 1

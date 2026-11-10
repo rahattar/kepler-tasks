@@ -1,0 +1,180 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/brakes.json"]
+
+[task]
+name = "afterquery/hoist-brake-sizing"
+description = "Select a spring-applied motor brake size and torque setting for each of twelve foundry crane hoists so that every brake meets the five requirements of a plant standard (holding, emergency-stop travel and deceleration, lining temperature, gearbox torque) on the hoist as it is now and in its working duty, using eight friction and engagement tests in a brake laboratory and the plant's records."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "hoist-brakes",
+    "brake-sizing",
+    "friction-materials",
+    "brake-thermal-model",
+    "test-planning",
+    "cranes",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only textbook machine design and tribology (spring-applied brakes, the friction of organic linings against temperature, lumped thermal models of braking duty, hoist drive mechanics and gear efficiency) on synthetic hoists, brakes, linings and records. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "machine design: brakes and lifting equipment"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "hoist-brakes",
+    "brake-sizing",
+    "friction-materials",
+    "brake-thermal-model",
+    "test-planning",
+    "cranes",
+]
+expert_time_estimate_hours = 6
+relevant_experience = """I am a control scientist and mechanical engineer with a PhD in mechanical engineering. Sizing brakes and drives for industrial machinery, modelling the heat a duty cycle puts into a machine element, planning the few component tests a job allows, and reading plant records for what has changed on a machine since its register was written are part of my work on industrial equipment and of my teaching. The hoists, brakes, linings and records are synthetic."""
+difficulty_explanation = """A crane or maintenance engineer does this when the motor brakes of a fleet of hoists are replaced: each brake's size and spring setting are chosen so that it holds the rated load with a safety factor, stops a lowering load within the permitted travel without decelerating it harder than the crane allows, does not overheat in the hoist's duty, and does not overload the gearbox, the checks that FEM 1.001, EN 14492-2 and the plant standards built on them ask for. Its research analogue is the characterisation of friction materials and of brake heating: dynamometer and friction-rig testing of organic linings across temperature (the friction rise and fade measured by SAE J661 and the SAE J2522 schedule), lumped thermal models of braking duty cycles, and the release dynamics of spring-applied electromagnetic brakes. Here it has to be done as a small design of experiments: eight laboratory tests must establish how two lining grades' friction varies with temperature, and how the engagement time varies with the setting, well enough to place each of twelve settings inside a window of 7 to 15 whole-percent settings. The hoists, brakes, records and laboratory are synthetic, written by authoring/provenance from a sealed definition. They are realistic, and so is the level of challenge they present:
+- The hoists carry 3.2 to 40 t on 2 to 8 falls, with motors of 5.5 to 55 kW at 1430 to 1480 rpm, three-stage helical gearboxes (efficiency 0.93 to 0.94) and one single-stage worm gear (0.72), in bays at 25 to 50 C, making 55 to 360 brake applications an hour at 50 to 70 percent mean load.
+- The series SB brake comes in nine sizes from 60 to 1600 N m, with rotor inertia, heat capacity (480 to 5200 J/K) and heat dissipation (0.55 to 2.7 W/K) in proportion, and engagement times at 100 percent setting of 20 to 90 ms with DC-side switching and 90 to 450 ms with AC-side switching.
+- The four small sizes have lining grade O1 and the five large ones O2. O1's friction is 0.40 at 20 C, rises to 0.52 near 160 C and fades above 200 C; O2's is 0.38, rises to 0.48 near 200 C and fades above 240 C. Organic linings behave like this, their friction rising with temperature to a maximum before it fades, and grades for small and large brakes differ by this much.
+- Engagement takes longer at reduced settings, t = t100 (1 + kappa ln(100 / setting)), with kappa 0.15 for DC-side and 0.45 for AC-side switching: with weaker springs the coil's flux must decay further before the armature is released, and through the rectifier it decays slowly.
+- The laboratory reads friction with 2 percent and engagement time with 3 percent log-normal scatter per reading, from 8 and 5 readings.
+- No size has its best margin within 5 percent below or 3.5 percent above zero on any hoist, so no hoist is decided by a size that only just works or only just fails.
+
+The core difficulty is that none of this is written down. The documents give:
+- standard MS-14's five requirements, stated as an engineer states them (holding at the duty lining temperature without efficiency credit; emergency-stop travel lowering at every permitted load and speed; emergency-stop deceleration for any load and direction at any lining temperature reached; the lining temperature limit; the gearbox's peak torque);
+- the catalogue, which gives the rated torque at 20 C and 100 percent setting, the engagement times at 100 percent only, and each size's lining grade;
+- the register (written before the maintenance log's changes), the brake wiring list, the duty survey and the maintenance log;
+- the laboratory's two tests and its allowance of 8.
+
+What decides the selection has to be found in them and in eight tests:
+- The brake's torque follows the lining temperature, and the hoists' linings run at 25 to 270 C. With the catalogue's 20 C torque and its engagement times, the reference's own model gets 8 of 12 hoists right.
+- The two grades differ: testing O1 alone and taking O2 to behave like it leaves H07's holding wrong.
+- O2's maximum lies inside H05's working range. The re-reeved hoist's linings run near 190 C in its duty and reach 210 C in an emergency stop, and its window (size S16 at 63 to 69 percent) is bounded below by the travel, which needs the friction at the duty temperature, and above by the deceleration, which needs the highest friction reached. A plan without an O2 test in that range underestimates both, moves the window up and fails H05, and no selection meets every requirement for every height the O2 curve could have between tests at 160 and 260 C.
+- H07's holding is decided by O2's friction near 160 C, which interpolation from tests far from it overestimates.
+- Extrapolated beyond the tested temperatures, the friction makes size S14 look right for H05 at 92 percent, where O1 has faded and the brake cannot hold the lowering load.
+- Taking the catalogue's engagement times at reduced settings leaves the travel of four hoists wrong.
+- The records carry four things that change the hoists: the log's three inverter retrofits, which stop the hoist before the brake is applied (two with fast lowering), its re-reeving of H05 to 2 falls, and the register's two pole-changing hoists, which make their working stops from the slow speed.
+- The requirements must be taken as written: deceleration checked with the empty hook only, or lowering only, gets 2 and 1 hoists right; ignoring the engagement delay, 8; holding with the gear's efficiency credited, 10.
+
+Each of these defeats an assumption that the general approach takes for granted on first reading: the catalogue's torque, one friction value or a smooth line through a few tests, the engagement times as listed, the register as current. The gate is all 12 hoists."""
+solution_explanation = """solution/solve.py is the reference; solution/solve.sh runs it in the agent's environment. It uses only the documents in /app/data and the `friction` and `engage` commands.
+
+1. The hoists as they are now: the register with the maintenance log applied. H05 is re-reeved to 2 falls, 10 t and a 300 kg hook block. H04, H08 and H12 are on inverters, which bring the hoist to standstill before the brake is applied, so their working stops do not heat it, and H04 and H08 may lower at 150 and 160 percent of rated speed with up to 50 and 40 percent of rated load. The pole-changing hoists H02 and H09 make their working stops from the slow speed (1/6 and 1/4) and their emergency stops from full speed. Contactor hoists lower above synchronous speed, at the register's lowering speed; an inverter lowers at the set speed.
+2. A first pass with the catalogue's friction and engagement times gives each hoist's likely size and its lining temperatures (authoring/evidence/reference_run.txt), and the eight tests follow from it:
+   - O1 at 20 C (the rating temperature), 60 C (H01, H02 and H06, whose linings run at 48 to 68 C) and 160 C (H11);
+   - O2 at 20 C, 160 C (H07), 200 C (H05, 185 to 210 C) and 260 C (H03 and H10, 230 to 270 C);
+   - the engagement of S16 at 65 percent with AC-side switching: H05's brake near its settings, whose travel bounds the low end of its window, since the catalogue gives engagement times at 100 percent only. There is no DC test: the DC-switched hoists either run near 100 percent (H04) or keep more than 40 percent travel margin.
+3. The fit: for each grade, the ratio of each test's mean to the mean at 20 C, on straight lines between the tested temperatures, held at the end values beyond them, and no brake is selected whose linings leave the tested range by more than 15 C. Torque = rated torque x setting x ratio. The engagement time is the catalogue's x (100 / setting)^p, with p from the test and taken the same for DC switching, which is conservative. On the shipped scenario the ratios are 1.031 at 60 C and 1.315 at 160 C for O1, 1.100 at 160 C, 1.274 at 200 C and 0.989 at 260 C for O2, and p is 0.392.
+4. MS-14 on a lumped brake (heat capacity, heat dissipation to the bay air):
+   - the working duty is alternating hoisting and lowering stops at the survey's rate and mean load, each with its engagement delay (hoisting, the load decelerates before the brake acts; lowering, it accelerates), and the duty lining temperature is the periodic steady state's peak;
+   - holding: the torque at that temperature is at least 1.6 times the static torque of the rated load and hook block, without efficiency;
+   - travel: an emergency stop lowering at every permitted load and speed, from the duty temperature, with free acceleration through the engagement delay and then the brake, its torque following the disc's temperature through the stop; the load drives the gear backwards, at efficiency 2 - 1/eta;
+   - deceleration and gearbox: the highest torque over the temperatures reached, from the bay air to the end of an emergency stop; the worst deceleration is hoisting the rated load, gravity through the gear (1/eta) adding to the brake;
+   - the lining temperature stays below 300 C at the duty peak and at the end of every emergency stop.
+5. For each hoist, the size and setting with the largest smallest margin, the middle of its widest window.
+
+On the shipped scenario the reference meets every requirement on all 12 hoists: H01 S14/57, H02 S10/91, H03 S22/55, H04 S14/94, H05 S16/64, H06 S08/59, H07 S16/83, H08 S12/94, H09 S18/55, H10 S18/50, H11 S12/67, H12 S18/58, with a smallest true margin of +0.036 (H07's holding; authoring/evidence/reference_run.txt).
+
+authoring/evidence/independent.py is a second solution, written separately, and it also meets every requirement on all 12 hoists, with a smallest true margin of +0.022.
+- Its tests are O1 at 20, 70 and 155 C, O2 at 20, 150, 205 and 265 C, and S16 at 67 percent with AC switching.
+- Its fits are a monotone cubic (PCHIP) through the friction ratios and the engagement law t100 (1 + kappa ln(100 / setting)).
+- It marches the working cycle stop by stop instead of using the closed-form steady state, integrates the emergency stops with scipy's solve_ivp, and takes the middle of the widest window."""
+verification_explanation = """The deliverable is one JSON file, /app/output/brakes.json, with a size and a setting for each of the 12 hoists. The verifier (tests/grade_brakes.py, run by tests/test_brakes.py under pytest) grades it against the sealed definition in tests/sealed.
+- For each hoist it evaluates the five MS-14 requirements for the chosen size and setting on the hoist as it is now: the duty lining temperature from the periodic steady state of the working stops, holding at that temperature, the emergency-stop travel at every permitted load and speed, the deceleration and the gearbox torque at the highest friction reached, and the lining temperature limit.
+- A hoist's brake is right when every requirement's margin is at least zero.
+- The selection is accepted only when all 12 are right.
+- One pytest test carries the reward. test.sh writes 0 first, and writes 1 only when pytest exits 0 and the ctrf report shows exactly 1 test, 1 passed.
+
+The truth comes from the sealed definition authoring/provenance/hbsim.py, which gen.py writes out, never from running the reference, and the agent never sees it. The seed (7318) drives only the laboratory's scatter. authoring/provenance/seed_screen.py chose it as the first seed from 7301 on which no friction test at 20 to 320 C and no engagement test of any size and setting, in any of the 8 places of a plan, is a scatter outlier (largest offsets 2.95 and 3.05 sigma, against limits of 3.0 and 3.3), and on which five sound selections all get 12 of 12 (authoring/evidence/seed_screen.txt). In the agent's container the sealed definition and the laboratory's test records live under /opt/lab, in directories owned by the user lab with mode 700. The agent reaches the laboratory only through `friction` and `engage`, sudo wrappers for /opt/lab/lab.py. The program:
+- validates its arguments;
+- creates one exclusive record file for each test;
+- refuses any test beyond the allowance of 8;
+- refuses to run at all if its directories are not as installed.
+
+The verifier runs in a separate container without network.
+
+Why the gate is all 12, measured on the shipped scenario. Every number below is copied from the named file in authoring/evidence.
+
+Every hoist's best size has a window of 7 to 15 settings with a best margin of +0.044 to +0.127, and no size on any hoist has a best margin between -0.05 and +0.035 (windows.txt).
+
+Correct methods (method_spread.txt, independent.txt):
+| Method | Right of 12 | Smallest true margin | File |
+|---|---|---|---|
+| reference | 12 | +0.036 | method_spread.txt |
+| reference tests in reverse order (other scatter draws) | 12 | +0.040 | method_spread.txt |
+| reference tests, PCHIP through the friction points | 12 | +0.028 | method_spread.txt |
+| reference tests, log-law engagement | 12 | +0.036 | method_spread.txt |
+| reference tests, friction held at the duty temperature through the stop, or backdriving at eta | 12 | +0.036 | method_spread.txt |
+| engagement test at S16 70 percent | 12 | +0.036 | method_spread.txt |
+| all test temperatures 10 C lower / 10 C higher | 12 | +0.026 / +0.033 | method_spread.txt |
+| reference tests, setting in the middle of the widest window | 12 | +0.025 | method_spread.txt |
+| independent solution (other tests, fits, numerics and rule) | 12 | +0.022 | independent.txt |
+
+Defective methods (route_study.txt):
+| Route | Right of 12 | Worst hoist |
+|---|---|---|
+| maintenance log missed (register as is) | 8 | H05 decel -0.127 |
+| H05's re-reeving missed | 11 | H05 decel -0.127 |
+| inverter retrofits missed | 9 | H04, H08 -0.110 |
+| fast lowering missed | 11 | H04 travel -0.012 |
+| two-speed hoists' working stops from full speed | 10 | H02 decel -0.157 |
+| no tests: catalogue torque and engagement times | 8 | H05 decel -0.054 |
+| O1 only, O2 taken to behave as O1 | 11 | H07 hold -0.056 |
+| O2 without a test near 200 C (tests at 160 and 260 C) | 11 | H05 decel -0.047 |
+| O2 at 175 and 250 C | 11 | H05 decel -0.015 |
+| O2 without a test near 160 C (two plans) | 11 / 11 | H07 hold -0.012 / -0.002 |
+| a generic grid, each lining at 20, 100, 200 (O2 also 300) C | 10 | H11 decel -0.008 |
+| reference tests, friction extrapolated beyond the tested range | 11 | H05 runaway |
+| reference tests, engagement test ignored | 8 | H02 travel -0.067 |
+| holding with the gear's efficiency credited | 10 | H06 hold -0.101 |
+| deceleration with the empty hook only / lowering only | 2 / 1 | -0.097 / -0.198 |
+| no engagement delay | 8 | H02 travel -0.039 |
+
+- Correct methods meet every requirement on every hoist with at least 0.022 to spare. They test each lining at the temperatures its hoists' linings reach, within about 10 C of them, and they differ in the order of the tests, the curve through the friction points, the engagement law, the treatment of the stop's own heating, the backdriving efficiency and the rule that picks the setting.
+- Plans that leave a gap at a hoist's lining temperatures do not fail by a fixed amount: the error the gap makes in the friction moves that hoist's setting toward one edge of its window, and how far depends on the curve on either side. Such plans fail H05, H07 or H11 by 0.002 to 0.056, and none of them meets every requirement on all 12. Four other departures are absorbed by the windows on this scenario and still get 12 of 12: contactor lowering at rated speed, no O1 test at the cool hoists' 50 to 65 C, the deceleration at the duty temperature only, and a time-average duty temperature (route_study.txt).
+- The gate is all 12, so no hedge across hoists can pass: any split of hoists between two answers to a choice loses the hoists given the wrong one (hedge_study.txt). Within a hoist, a common selection that meets every requirement under both answers exists for most choices, since the reference's own selection is one. It does not exist for the inverter retrofits (H04, H08, H12) or the two-speed stops (H02, H09). Nor does it exist for the O2 friction near 200 C: with O2 tested at 160 and 260 C only, no size and setting meets every requirement on H05 and H10 for every O2 height from 1.10 to 1.35 times the friction at 20 C.
+
+Null answers and per-hoist discrimination (null_baselines.txt, route_study.txt). Each hoist is graded on its own, so a trial-free answer can be right on individual hoists, and null_baselines.txt lists every such free pass hoist by hoist. The trial-free answers tried are:
+- one brake for every hoist;
+- the smallest brake that gives f times the static torque at 20 C;
+- f times the motor's torque;
+- the reference's model without tests, with or without the maintenance log.
+
+The best one brake for all gets 3 of 12. Even with f chosen with the truth in hand, none of the others gets more than 8 of 12, against the 12 required. The rules pass different hoists at different f, so no one f suits them all; H11 is right under none of them, and H05 under only 7 of the 459 single brakes and one f. Among the 22 routes, every hoist but H03 is failed by at least one, and they fail on different hoists (route_study.txt prints the full matrix).
+
+Malformed results are rejected as a whole (verifier_checks.txt). This covers a result that:
+- is a symlink;
+- is not JSON, or not one object with the single key brakes;
+- has duplicate, missing or extra hoist keys;
+- has an entry that is not an object with exactly the keys size and setting;
+- has a size outside the catalogue;
+- has a setting that is NaN, infinite, outside 50 to 100, not a whole number, a boolean, a string, an array or null.
+
+27 such cases were run and none crashed the grader. The reference result is accepted at 12 of 12, with its settings as integers or as floats.
+
+The agent works as a separate user that can write only to /app/output. /app/data is read-only, and the laboratory's sealed definition and records are unreadable to the agent. The verifier runs separately without network, and /logs/verifier is root-only."""
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 28800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

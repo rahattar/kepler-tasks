@@ -1,0 +1,11 @@
+the model with every choice right reproduces the true window to within 1 um at either end
+
+choice | joints whose window moves | joints with no interference right under both answers
+hub stress at rest only                    | J01 J12                      | -
+thermal change in running as a loss only   | J01 J12                      | -
+smoothing not deducted                     | J01 J02 J03 J04 J05 J06 J07 J08 J09 J10 J11 J12 | -
+steel expansion from the 20-100 C table    | J04 J06 J09                  | J06
+steel expansion 13.0 (handbook)            | J04 J06 J09                  | -
+J10 shaft solid                            | J10                          | J10
+J07 oiled                                  | J07                          | -
+J11 at 55 kW torque                        | J11                          | -

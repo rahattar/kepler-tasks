@@ -1,0 +1,97 @@
+# turbine-performance-test
+
+What corrected gross output and corrected heat rate did gas turbine GT-1 deliver before and after its October 2026
+offline compressor wash? The solver works from two days of 1-minute test data, the DCS and met records, the gas
+analyses, the test log and the plant's test procedure, OEM correction curves, generator data, instrument list,
+wattmeter calibration certificate and site data, and writes the four corrected values, each within 0.5 %, to
+`/app/output/gt1_corrected_results.csv`.
+
+## Difficulty
+
+A performance engineer at a power plant, or the turbine maker's field test engineer, does this after maintenance on a gas turbine. Here the maintenance is an offline compressor wash. The corrected results show how much output and efficiency the wash recovered and how far the unit stands from its guarantee, and they set the wash interval. The test follows the plant's procedure, which is based on ASME PTC 22: the measured output and fuel heat input are corrected to the contract reference conditions with the maker's correction curves. The machine, its records and parameters are synthetic, written by authoring/provenance from a sealed definition.
+
+The core difficulty is that the corrected results are very sensitive to every measurement chain, and the test itself shows almost nothing wrong. Output changes by about 0.7 percent per kelvin of inlet temperature, by 1.45 percent per kilopascal of inlet loss, and in proportion to the barometric pressure. A one-percent fault in any input therefore moves the result by more than the half percent the requirement allows. Inside the test runs every reading looks steady and plausible. Most faults show only in records outside the runs, or only when two records that should agree are compared.
+
+Each problem has to be found by checking one record against another:
+- The test wattmeter applies 14 400 : 120 voltage transformers to a machine whose transformers are 13 800 : 120. The DCS generator reading, which could expose this, itself reads 1.5 percent low.
+- The met station's data logger was replaced between the two test days, and the new one reports sea-level pressure.
+- The compressor-inlet pressure transmitter reads 0.6 kPa low. This shows only at standstill, against the barometer. On day 2 the same comparison also contains the logger's 3.7 kPa, and the two have to be separated.
+- On day 2 all eight inlet temperature sensors read 1.2 K high together, which shows only at standstill and in the noon reference-thermometer check.
+- The fuel meter reads 0.034 kg/s with no flow on day 2, again only before start-up.
+- One gas sample contains air.
+- One run starts with a grid disturbance, and another never reaches base load.
+- The LHV has to be built from the gas composition, because the laboratory reports a gross volumetric value.
+
+Missing any one of these puts at least one of the four results 0.85 to 19 percent off (authoring/evidence/route_study.txt), against a requirement of 0.5 percent.
+
+## Reference solution
+
+solution/solve.py follows TP-GT-07. Minutes before 07:20 on each test day are standstill (the unit starts at 07:30, test log).
+
+Ambient pressure: PT-102 reads 0.601 kPa below the met barometer at standstill on day 1. The barometer is calibrated and reads station pressure that day, so 0.601 kPa is PT-102's zero error, and it is removed throughout. On day 2 the standstill gap is 4.26 kPa. Its 3.66 kPa excess equals the amount by which a sea-level reading exceeds station pressure at 310 m under the standard atmosphere, so day 2's barometer is converted with p = QNH (1 - 2.25577e-5 x 310)^5.25588. Inlet loss = ambient pressure minus corrected PT-102.
+
+Inlet temperature: the mean of the eight RTDs minus each day's standstill difference from the met dry bulb (0.0 K on day 1, 1.2 K on day 2; the noon spot checks agree).
+
+Gross output: JT-001's active and reactive power are multiplied by 13 800 / 14 400 (calibration certificate against the generator data sheet).
+
+Fuel: FT-301's standstill median for each day is subtracted (0.0009 and 0.034 kg/s). The LHV per day is the mean of that day's samples by the procedure's ISO 6976 table, leaving out the sample that contains oxygen (2026-10-15 10:15). Heat input = fuel mass flow x (LHV + 2.20 (TE-305 - 15)).
+
+Runs: for each logged run, the first 30 consecutive minutes with the inlet guide vanes at 85.5 deg or more and exhaust temperature within 3 K of its control reference. A2 starts at 10:50, after the disturbance; L3 has no such period and is not valid.
+
+Corrections on the 30-minute averages: power factor through the generator loss formula, then the OEM tables by linear interpolation. Output is divided by the product of the CIT, pressure, humidity, inlet-loss and exhaust-loss factors; heat rate = 3600 Q / P_pf, divided by the product of the heat-rate factors. Each condition is the mean of its valid runs. The largest miss on the shipped records is 0.01 percent.
+
+`solution/solve.sh` runs `solve.py` (about a second).
+
+## Verification
+
+tests/grade_results.py reads /app/output/gt1_corrected_results.csv. The single pytest test passes only when:
+- the file has the columns condition, corrected_output_mw and corrected_heat_rate_kj_kwh;
+- it has one row for each of as_found and as_left and nothing else;
+- every value is a finite positive number;
+- each of the four values is within 0.5 percent of the sealed value (tests/gt1_truth.py). authoring/evidence/calibration.txt recomputes the sealed values from the sealed definition and agrees exactly; it also checks that every correction factor is 1 at the reference conditions.
+
+The misses are written to /logs/verifier/metrics.json and do not affect the reward. The verifier neither runs the solution nor reads /app/data.
+
+Why 0.5 percent (authoring/evidence): it is the typical test uncertainty of corrected output and heat rate in a PTC 22 test.
+
+Correct side: independent.py is a second implementation written apart from the reference and sharing no code with it. It uses:
+- IAPWS-IF97 saturation pressure;
+- a hypsometric station-pressure reduction;
+- PT-102's zero by least squares;
+- the RTD bias from the spot checks;
+- a trimmed-mean fuel zero;
+- the contaminated sample with its air removed instead of left out;
+- the last qualifying 30 minutes of each run;
+- minute-by-minute corrections;
+- cubic-spline curves.
+
+Its largest miss is 0.04 percent (independent.txt). Changing the reference's window choice, RTD bias source, zero statistic, treatment of the contaminated sample, averaging order or per-day LHV keeps it within 0.03 percent (method_spread.txt).
+
+Wrong side: each record trap on its own puts at least one value 0.85 percent or more off (route_study.txt):
+
+| trap | miss (percent) |
+|---|---|
+| fuel temperature at the meter | 0.85 |
+| PT-102's zero | 0.90 |
+| day-2 RTD bias | 0.95 |
+| filter differential pressure as the inlet loss | 0.98 |
+| day-2 sea-level pressure | 1.01 |
+| run L3 kept, or whole runs averaged | 1.18 |
+| fuel zero | 1.39 |
+| DCS generator reading | 1.49 |
+| net output | 1.55 |
+| contaminated sample | 2.14 |
+| PT-102 forced onto the barometer each day | 3.61 |
+| wattmeter scaling | 4.35 |
+| laboratory gross value as LHV | 19.3 |
+
+Leaving out the power factor correction is not a trap (0.26 percent). The bound therefore sits between 0.04 percent for sound methods and 0.85 percent for the nearest trap.
+
+The two conditions differ by 2.9 percent in output and 2.0 percent in heat rate, so no single pair of values satisfies both. The procedure applied to the records as they stand satisfies none of the four values (constant_null.txt).
+
+The agent works as a separate user that can only write to /app/output; /app/data is read-only. The verifier runs separately without network, and /logs/verifier is root-only.
+
+Files in `authoring/evidence/`: `methods.py` (the reference pipeline with one step changed at a time),
+`independent.py` (a second implementation sharing no code with the reference), the studies and their `.txt` outputs,
+and `preflight.py` (structure, names, ASCII, sealed values against the definition, byte-exact regeneration of the
+records by `authoring/provenance/gen.py`).

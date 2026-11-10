@@ -1,0 +1,34 @@
+{
+ "h1": {
+  "heat_rate": 10763.0,
+  "output_mw": 42.64
+ },
+ "h2": {
+  "heat_rate": 10992.0,
+  "output_mw": 41.28
+ },
+ "h3": {
+  "heat_rate": 10871.0,
+  "output_mw": 41.87
+ },
+ "h4": {
+  "heat_rate": 10930.0,
+  "output_mw": 41.55
+ },
+ "h5": {
+  "heat_rate": 10842.0,
+  "output_mw": 42.12
+ },
+ "h6": {
+  "heat_rate": 10688.0,
+  "output_mw": 42.95
+ },
+ "h7": {
+  "heat_rate": 11047.0,
+  "output_mw": 41.02
+ },
+ "h8": {
+  "heat_rate": 10790.0,
+  "output_mw": 42.48
+ }
+}

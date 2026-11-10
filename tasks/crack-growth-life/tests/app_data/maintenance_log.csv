@@ -1,0 +1,16 @@
+date,location,entry
+2017-06-12,"unloader 1 tower, leg B, outer flange",Lug weld toe dressed and re-welded after a coating crack (no crack found under it); vibratory stress relief (VSR) applied after welding.
+2017-06-14,"unloader 2 tower, leg B, inner flange",Bracket weld re-made after a coating crack (no crack found under it); vibratory stress relief (VSR) applied after welding.
+2019-09-03,unloader 1 tower,Ladder brackets re-coated.
+2022-05-16,"unloader 1 tower, leg A, inner flange","Walkway bracket torn off by a grab strike. New bracket fitted and fillet welded on site (E7018, 100 C preheat); MPI clear."
+2023-08-29,"unloader 2 tower, leg C, inner flange","Cable tray cleat added for the new conveyor power cable, fillet welded on site (E7018, 100 C preheat); MPI clear."
+2024-02-12,"unloader 1 boom, frame 12, top flange",Crack E01 found at a transverse stiffener; assessed and left in service (record E01).
+2024-12-09,"unloader 1 boom, frame 12, top flange",E01 ground out and re-welded (record E01).
+2025-01-20,"unloader 1 tower, leg D, outer flange",Crack E02 found at a lifting lug; assessed and left in service (record E02).
+2025-06-23,"unloader 1 tower, leg D, outer flange",E02 ground out and re-welded (record E02).
+2025-09-08,both unloaders,Strain-gauge survey started on both unloaders; rainflow counted on site (strain_survey_rainflow.csv).
+2025-09-22,unloader 1,Slew drive gearbox failed; unloader 1 out of service.
+2025-09-29,unloader 1,Slew drive gearbox replaced; unloader 1 back in service.
+2025-10-12,both unloaders,Strain-gauge survey ended.
+2026-01-20,unloader 2,"Grab G-3 (12.0 t empty, 24.0 t rated payload) replaced by G-5 (15.0 t empty, 30.0 t rated payload). Unloader 1 keeps its G-3 grab. The strain survey was taken with G-3 on both unloaders."
+2026-03-02,both unloaders,Inspection campaign (TOFD): 16 weld-toe cracks recorded (inspection_2026.csv).

@@ -1,0 +1,7 @@
+The shop sets the axial depth of cut of its milling jobs from its stability standard MS-CH, one job at a time from the job's package. Write `/app/output/chatter.py` so that `python3 chatter.py JOB_DIR OUT_JSON` writes `OUT_JSON` with `stable_depth_mm`, the stability limit of the job's operation in mm. `/app/data/docs/ms_ch_milling_stability.md` is the standard, `/app/data/docs/cutting_coefficients.md` the shop's cutting coefficients and `/app/data/docs/package_format.md` describes a package. One job's package is in `/app/data/examples/job-ex/`.
+
+The program must also handle the packages of seven other jobs of the shop, in the same format. The value must be within 5 percent of the job's true stability limit. `OUT_JSON` must be a regular file no larger than 65536 bytes holding one JSON object with only that key, exactly once, and its value a finite positive number, and the program must exit with status 0.
+
+The seven packages run one after another, each through `python3 -I chatter.py JOB_DIR OUT_JSON` in a scratch directory containing a copy of `chatter.py` alone, so the program must not read or import any other file from `/app/output`. Each run has 10 minutes, under an unprivileged user without network access, with the package read-only. `/app/data` remains readable at the same path. Python 3, numpy, scipy and pandas are available.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

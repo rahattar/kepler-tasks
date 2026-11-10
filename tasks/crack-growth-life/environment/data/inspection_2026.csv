@@ -1,0 +1,17 @@
+component,method,crack_location,crack_depth_mm,date
+C01,TOFD,"weld toe, in the flange",3,2026-03-02
+C02,TOFD,"weld toe, in the flange",3,2026-03-02
+C03,TOFD,"weld toe, in the flange",2,2026-03-02
+C04,TOFD,"weld toe, in the flange",1.5,2026-03-02
+C05,TOFD,"weld toe, in the flange",2.5,2026-03-03
+C06,TOFD,"weld toe, in the flange",3,2026-03-03
+C07,TOFD,"weld toe, in the flange",2,2026-03-03
+C08,TOFD,"weld toe, in the flange",6,2026-03-03
+C09,TOFD,"weld toe, in the flange",2,2026-03-04
+C10,TOFD,"weld toe, in the flange",3,2026-03-04
+C11,TOFD,"weld toe, in the flange",7,2026-03-04
+C12,TOFD,"weld toe, in the flange",3,2026-03-04
+C13,TOFD,"weld toe, in the flange",1.5,2026-03-05
+C14,TOFD,"weld toe, in the flange",3,2026-03-05
+C15,TOFD,"weld toe, in the flange",4.5,2026-03-05
+C16,TOFD,"weld toe, in the flange",3,2026-03-05

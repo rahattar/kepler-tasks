@@ -1,0 +1,16 @@
+Correct methods as complete programs through tests/grade.py (run as nobody), six hidden packages, 59 turbines; tolerance 0.01 on the ratio, claim exact.
+
+worst |error| per package: 1 cedar-flats-2026h1, 2 hollins-ridge-2026h1, 3 north-branch-2025h2, 4 pike-hollow-2026h1, 5 ridgeback-2026h2, 6 tallow-creek-2026h1
+
+method                                                                                     wrong    worst        1       2       3       4       5       6
+solution/pp12.py (reference)                                                                   0   0.0046   0.0013  0.0033  0.0035  0.0046  0.0042  0.0029  accepted
+independent.py (shares no code with the reference)                                             0   0.0041   0.0032  0.0032  0.0032  0.0035  0.0039  0.0041  accepted
+NTF re-established on M1 4 to 16 m/s (not 3 to 18)                                             0   0.0051   0.0013  0.0033  0.0051  0.0048  0.0044  0.0033  accepted
+barometer outage: feed reduced to M1 by the barometric formula (not scaled on the overlap)     0   0.0046   0.0024  0.0033  0.0035  0.0046  0.0042  0.0029  accepted
+yaw corrected day by day where the daily offset exceeds 5 deg (not one located step)           0   0.0046   0.0013  0.0033  0.0035  0.0046  0.0042  0.0029  accepted
+calibration-turbine drift against the fleet mean (not median)                                  0   0.0042   0.0013  0.0033  0.0035  0.0039  0.0042  0.0029  accepted
+commissioning NTF verification threshold 2 percent (not 3)                                     0   0.0046   0.0013  0.0033  0.0035  0.0046  0.0042  0.0029  accepted
+M1 clock step at the start of the first lagged week (not at the gap in M1's stamps)            0   0.0046   0.0013  0.0033  0.0035  0.0046  0.0042  0.0029  accepted
+NTF step threshold 3 percent (not 4)                                                           0   0.0046   0.0013  0.0033  0.0035  0.0046  0.0042  0.0029  accepted
+
+largest error of any correct method: 0.0051 (0.51 of the tolerance)

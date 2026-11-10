@@ -1,0 +1,14 @@
+batch,part,heat,ruling_section_diameter_mm,hardness_location,hardness_min_HRC,hardness_max_HRC
+B01,drive shaft,41-7731,50,half-radius,32,36
+B02,crane wheel axle,41-7864,150,half-radius,28,32
+B03,gear blank,43-2210,200,half-radius,30,34
+B04,coupling hub,43-2210,75,surface,38,42
+B05,extruder screw,32-0458,100,half-radius,36,40
+B06,forging die insert,52-1312,200,half-radius,42,46
+B07,die-casting die block,52-1250,300,half-radius,38,42
+B08,hot shear blade,52-1312,150,surface,44,48
+B09,pinion,41-7731,25,surface,31,35
+B10,nitriding core shaft,32-0458,50,surface,40,44
+B11,punch holder,52-1250,100,surface,40,44
+B12,crane hook shank,43-2288,120,half-radius,33,37
+B13,trim die steel,52-1377,60,surface,50,55

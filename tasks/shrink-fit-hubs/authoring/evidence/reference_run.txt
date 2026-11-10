@@ -1,0 +1,41 @@
+solution/solve.py output:
+steel mean expansion 20-275 C measured 12.58 um/m K
+J01   60 um 234 C | friction 0.171 tested at 43 MPa, joint at 43 MPa, torque margin +0.134 with it
+J02  190 um 190 C | friction 0.136 tested at 32 MPa, joint at 32 MPa, torque margin +0.064 with it
+J03  141 um 176 C | friction 0.107 tested at 23 MPa, joint at 23 MPa, torque margin +0.062 with it
+J04  289 um 270 C | friction 0.077 tested at 33 MPa, joint at 123 MPa, torque margin +0.441 with it
+J05  131 um 300 C | friction 0.132 tested at 52 MPa, joint at 52 MPa, torque margin +0.064 with it
+J06  118 um 270 C | friction 0.171 tested at 43 MPa, joint at 111 MPa, torque margin +0.315 with it
+J07  140 um 248 C | friction 0.062 tested at 50 MPa, joint at 50 MPa, torque margin +0.051 with it
+J08  216 um 248 C | friction 0.132 tested at 52 MPa, joint at 74 MPa, torque margin +0.137 with it
+J09  461 um 280 C | friction 0.077 tested at 33 MPa, joint at 139 MPa, torque margin +0.491 with it
+J10  155 um 260 C | friction 0.095 tested at 69 MPa, joint at 69 MPa, torque margin +0.036 with it
+J11  261 um 293 C | friction 0.171 tested at 43 MPa, joint at 85 MPa, torque margin +0.257 with it
+J12   43 um 224 C | friction 0.077 tested at 33 MPa, joint at 33 MPa, torque margin +0.235 with it
+
+laboratory reports:
+  # test 1: dilatometer, steel, mean coefficient of expansion from 20 C to 275 C | expansion_um_per_m_K,12.58
+  # test 2: slip test, steel hub on steel shaft, dry, contact pressure 43 MPa, assembled by heating the hub (shrink) | friction_coefficient,0.171
+  # test 3: slip test, aluminium hub on steel shaft, dry, contact pressure 32 MPa, assembled by heating the hub (shrink) | friction_coefficient,0.136
+  # test 4: slip test, bronze hub on steel shaft, oiled, contact pressure 23 MPa, assembled by heating the hub (shrink) | friction_coefficient,0.107
+  # test 5: slip test, steel hub on steel shaft, paste, contact pressure 33 MPa, assembled by heating the hub (shrink) | friction_coefficient,0.077
+  # test 6: slip test, ductile-iron hub on steel shaft, dry, contact pressure 52 MPa, assembled by heating the hub (shrink) | friction_coefficient,0.132
+  # test 7: slip test, ductile-iron hub on steel shaft, paste, contact pressure 50 MPa, assembled by heating the hub (shrink) | friction_coefficient,0.062
+  # test 8: slip test, steel hub on steel shaft, oiled, contact pressure 69 MPa, assembled by heating the hub (shrink) | friction_coefficient,0.095
+
+tests/grade_fits.py:
+J01 ok    60 um 234 C | torque +0.136 stress +0.017 clearance +0.108 limit +5.80
+J02 ok   190 um 190 C | torque +0.056 stress +0.006 clearance +0.120 limit +0.00
+J03 ok   141 um 176 C | torque +0.062 stress +0.009 clearance +0.180 limit +2.70
+J04 ok   289 um 270 C | torque +0.047 stress +0.086 clearance +0.014 limit +0.00
+J05 ok   131 um 300 C | torque +0.071 stress +0.011 clearance +0.154 limit +0.00
+J06 ok   118 um 270 C | torque +0.038 stress +0.103 clearance +0.017 limit +0.00
+J07 ok   140 um 248 C | torque +0.051 stress +0.010 clearance +0.173 limit +2.60
+J08 ok   216 um 248 C | torque +0.057 stress +0.005 clearance +0.174 limit +2.60
+J09 ok   461 um 280 C | torque +0.049 stress +0.096 clearance +0.012 limit +0.00
+J10 ok   155 um 260 C | torque +0.056 stress +0.006 clearance +0.090 limit +4.50
+J11 ok   261 um 293 C | torque +0.060 stress +0.006 clearance +0.078 limit +2.85
+J12 ok    43 um 224 C | torque +0.243 stress +0.026 clearance +0.113 limit +6.30
+12 of 12 right (gate 12): accepted
+
+fits.json: {"fits": {"J01": {"interference_um": 60, "heating_C": 234}, "J02": {"interference_um": 190, "heating_C": 190}, "J03": {"interference_um": 141, "heating_C": 176}, "J04": {"interference_um": 289, "heating_C": 270}, "J05": {"interference_um": 131, "heating_C": 300}, "J06": {"interference_um": 118, "heating_C": 270}, "J07": {"interference_um": 140, "heating_C": 248}, "J08": {"interference_um": 216, "heating_C": 248}, "J09": {"interference_um": 461, "heating_C": 280}, "J10": {"interference_um": 155, "heating_C": 260}, "J11": {"interference_um": 261, "heating_C": 293}, "J12": {"interference_um": 43, "heating_C": 224}}}

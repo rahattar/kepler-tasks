@@ -1,0 +1,12 @@
+inspection results used: E3 oxide 138 um, E9 wall 7.93 mm; E3 pickup increment after the modification 17.2 K
+E1 independent 0.7326  sealed 0.6769  miss +8.2%
+E2 independent 0.0416  sealed 0.0375  miss +11.0%
+E3 independent 0.8519  sealed 0.8166  miss +4.3%
+E4 independent 0.2397  sealed 0.2340  miss +2.4%
+E5 independent 0.0687  sealed 0.0708  miss -3.0%
+E6 independent 0.3796  sealed 0.3625  miss +4.7%
+E7 independent 0.1873  sealed 0.1867  miss +0.3%
+E8 independent 0.7201  sealed 0.7301  miss -1.4%
+E9 independent 0.0256  sealed 0.0258  miss -1.0%
+E10 independent 0.4208  sealed 0.4417  miss -4.7%
+largest miss 11.0%

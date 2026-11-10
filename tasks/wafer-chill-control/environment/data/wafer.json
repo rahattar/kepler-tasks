@@ -1,0 +1,16 @@
+{
+  "description": "Wafer and chamber properties, measured or datasheet.",
+  "diameter_mm": 300.0,
+  "thickness_um": 775.0,
+  "density_kg_m3": 2329.0,
+  "specific_heat_J_kgK": "703 + 0.28*(T[K] - 300)",
+  "thermal_conductivity_W_mK": 100.0,
+  "top_face_emissivity": 0.7,
+  "chamber_wall_temperature_C": 25.0,
+  "backside_gas": "helium",
+  "backside_films": [
+    "bare",
+    "oxide",
+    "nitride"
+  ]
+}

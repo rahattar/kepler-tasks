@@ -1,0 +1,11 @@
+cell  definition  tests/ct2.py
+C1       96.5000       96.5000
+C2       88.0000       88.0000
+C3      101.0000      101.0000
+C4       92.5000       92.5000
+C5       72.0000       72.0000
+C6       97.5000       97.5000
+C7       79.0000       79.0000
+C8       90.5000       90.5000
+largest difference 0.00e+00 pp
+design point 40/30/24 degC at L/G 1.30: KaV/L 1.1806, C_d 1.4001 (documents: 1.4001); G_d 424.8 kg/s (documents: 424.8); rho_d 1.0654 kg/m3 (documents: 1.0654)

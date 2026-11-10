@@ -1,0 +1,53 @@
+Hedge study: can an assessment that leaves a choice unresolved pass by hedging it?
+Shipped scenario (seed 9704); window 0.40-0.50 of the true life; gate 16 of 16.
+
+heat H4 untested (H3 tested): as its grade-mate H3, or as H1
+  A alone gets 16 of 16. Affected cracks: C10 C13 (B/A life 1.37 to 1.37).
+  No interval fits both on C10 C13, so the hedge must split them.
+  Best hedge: 15 of 16 (worst case of the split); fails at gate 16.
+
+heat H3 untested (H4 tested): as its grade-mate H4, or as H1
+  A alone gets 16 of 16. Affected cracks: C04 C07 (B/A life 1.34 to 1.34).
+  No interval fits both on C04 C07, so the hedge must split them.
+  Best hedge: 15 of 16 (worst case of the split); fails at gate 16.
+
+heat H2: rate factor from E02, or as H1
+  A alone gets 16 of 16. Affected cracks: C03 C06 C08 C09 C14 C15 (B/A life 1.25 to 1.25).
+  One interval fits both on C03 C06 C08 C09 C14 C15; overlap 0.3 to 0.3 percent of the interval, so the hedge tolerates at most 0.1 percent error elsewhere.
+  Best hedge: 11 of 16 (worst case of the split); fails at gate 16.
+
+PWHT residual stress: 0.2 yield (transverse), or 0.3 yield (parallel)
+  A alone gets 16 of 16. Affected cracks: C02 C05 C07 C09 C14 (B/A life 0.78 to 0.86).
+  One interval fits both on C02 C09 C14; overlap 5.5 to 7.7 percent of the interval, so the hedge tolerates at most 2.7 percent error elsewhere.
+  No interval fits both on C05 C07, so the hedge must split them.
+  Best hedge: 15 of 16 (worst case of the split); fails at gate 16.
+
+residual stress from the certificate yield, or from the grade's specified minimum
+  A alone gets 16 of 16. Affected cracks: C02 C05 C07 C09 C14 (B/A life 1.04 to 1.11).
+  One interval fits both on C02 C05 C07 C09 C14; overlap 12.4 to 20.7 percent of the interval, so the hedge tolerates at most 6.2 percent error elsewhere.
+  Best hedge: 16 of 16 (worst case of the split); passes at gate 16.
+
+vibratory stress relief: not credited, or credited as PWHT
+  A alone gets 16 of 16. Affected cracks: C06 C10 (B/A life 1.16 to 1.24).
+  One interval fits both on C06 C10; overlap 0.6 to 7.8 percent of the interval, so the hedge tolerates at most 0.3 percent error elsewhere.
+  Best hedge: 15 of 16 (worst case of the split); fails at gate 16.
+
+attachments welded on site after PWHT: as welded, or as PWHT
+  A alone gets 16 of 16. Affected cracks: C12 C16 (B/A life 1.51 to 1.58).
+  No interval fits both on C12 C16, so the hedge must split them.
+  Best hedge: 15 of 16 (worst case of the split); fails at gate 16.
+
+unloader 1's survey days: 28 operating, or all 35
+  A alone gets 16 of 16. Affected cracks: C01 C02 C03 C05 C06 C08 C12 C13 C14 (B/A life 1.25 to 1.25).
+  One interval fits both on C06 C08 C13 C14; overlap 0.0 to 0.0 percent of the interval, so the hedge tolerates at most 0.0 percent error elsewhere.
+  No interval fits both on C01 C02 C03 C05 C12, so the hedge must split them.
+  Best hedge: 9 of 16 (worst case of the split); fails at gate 16.
+
+unloader 2's grab change: ranges and cycles, or ranges only
+  A alone gets 16 of 16. Affected cracks: C04 C07 C09 C10 C11 C15 C16 (B/A life 0.80 to 0.80).
+  One interval fits both on C04 C07 C09; overlap 0.0 to 0.0 percent of the interval, so the hedge tolerates at most 0.0 percent error elsewhere.
+  No interval fits both on C10 C11 C15 C16, so the hedge must split them.
+  Best hedge: 14 of 16 (worst case of the split); fails at gate 16.
+
+At gate 16, every hedge that splits cracks between A and B loses at least one crack and fails.
+The one choice a hedge survives is "residual stress from the certificate yield, or from the grade's specified minimum": on all 5 cracks it affects the two lives differ by only 1.04 to 1.11, inside the window's ratio of 1.25, so a single interval fits both without splitting any crack; the choice is a sensitivity the window absorbs, and the hedge still needs every other part of the model right.

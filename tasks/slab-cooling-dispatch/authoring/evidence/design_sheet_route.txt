@@ -1,0 +1,15 @@
+Design-sheet route (Oct 5): the reference controller (Kalman filter with an unmeasured-heat state, joint
+48 h LP, forecast damping estimated from the archive, kappa 0.222) with its fitted zone parameters
+replaced by values written from building.json alone, both zones:
+  Cc = Cl = 269.1 kJ/K per m2 (slab split at the pipe plane), Ca = 10 kJ/K, Cm = 60 kJ/K, Rcl = 0.036,
+  hc = 5.0, hr = 5.4, ham = 8.0, UA = 0.65, G = 12.9, solar aperture 0.0825, 30% of solar to air.
+Graded in process with the shipped benchmark (identical gate to tests/grade.py).
+
+comfort margin   cost ratio   zone-weeks over 0.5 K h   worst K h   gate
+0.2 K            1.166        0                          0.06        fail (cost)
+0.1 K            1.139        0                          0.29        pass
+0.0 K            1.103        1                          0.81        pass
+0.2 K, solar x0.6 for blinds   1.650   9                 2.79        fail
+
+The reference itself (fitted, 0.2 K) scores 1.117 with no zone-week over (ladder.txt). Fitting the logs
+therefore buys margin, not feasibility.

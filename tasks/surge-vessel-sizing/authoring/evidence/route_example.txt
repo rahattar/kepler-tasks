@@ -1,0 +1,12 @@
+Routes on the example kestrel-lane; reported design 39.4 m3 vessel / 19.4 m3 gas.
+
+route                                                                                   vessel m3   gas m3 /reported
+reference (no check left out)                                                               40.04    19.85     1.016
+drawing profile kept                                                                        40.04    19.85     1.016
+chamber point only                                                                          40.04    19.85     1.016
+crown tapping assumed                                                                       40.04    19.85     1.016
+drawing corrected at every chamber, crown tapping assumed                                   39.77    19.68     1.009
+design roughness                                                                            39.26    19.43     0.996
+roughness from the pump station over every running period                                   39.26    19.43     0.996
+middle reservoir level only                                                                 33.48    16.16     0.850
+all of the above but the chamber variants (drawings, design roughness, middle level)        32.80    15.80     0.832

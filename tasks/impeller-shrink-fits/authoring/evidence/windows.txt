@@ -1,0 +1,25 @@
+part  description           material  window um  width  top set by                 seat 20 C  seat in bay  oven limit C
+S1    1st stage impeller    FV520B     171-179      9   hub stress at trip         115.212    115.2226     400
+S2    2nd stage impeller    FV520B     151-159      9   clearance at 240 C         120.218    120.2291     240
+S3    3rd stage impeller    FV520B      74-85      12   hub stress at trip         125.224    125.2355     400
+S4    4th stage impeller    FV520B     100-108      9   hub stress at trip         125.207    125.2185     400
+S5    5th stage impeller    Ti64       140-146      7   clearance at 285 C         120.211    120.2221     285
+S6    6th stage impeller    FV520B     337-343      7   clearance at 375 C         115.226    115.2366     375
+BD    balance drum          42CrMo4    137-143      7   clearance at 220 C         110.205    110.2151     220
+TC    thrust collar         42CrMo4     79-85       7   clearance at 190 C         95.161    95.1698     190
+
+Every window is one contiguous run of whole micrometres; the bore is the seat at 20 C less the interference.
+Mean expansion from 20 C (um/m K):
+  FV520B   10.60 to 100 C, 11.36 to 260 C, 11.68 to 375 C
+  Ti64     8.60 to 100 C, 8.97 to 285 C
+  42CrMo4  11.90 to 100 C, 12.20 to 190 C, 12.30 to 220 C
+  rotor    10.83 to 28.5 C, 11.40 to 100 C
+Trip speed 110 % of MCS (the OEM sheet says 105 %); the overhaul bay is at 28.5 C.
+  S1 in running at trip: interference change -131.3 um (thermal -9.7, bore less seat growth 121.6); hoop stress 666 MPa
+  S2 in running at trip: interference change -109.6 um (thermal -21.2, bore less seat growth 88.4); hoop stress 644 MPa
+  S3 in running at trip: interference change -30.0 um (thermal +80.8, bore less seat growth 110.7); hoop stress 651 MPa
+  S4 in running at trip: interference change -55.5 um (thermal +54.7, bore less seat growth 110.2); hoop stress 668 MPa
+  S5 in running at trip: interference change -81.2 um (thermal +36.2, bore less seat growth 117.4); hoop stress 634 MPa
+  S6 in running at trip: interference change -298.1 um (thermal +2.6, bore less seat growth 300.7); hoop stress 629 MPa
+  BD in running at trip: interference change -105.8 um (thermal -16.3, bore less seat growth 89.6); hoop stress 178 MPa
+  TC in running at trip: interference change -50.3 um (thermal +2.4, bore less seat growth 52.7); hoop stress 122 MPa

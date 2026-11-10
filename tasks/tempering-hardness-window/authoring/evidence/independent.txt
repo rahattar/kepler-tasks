@@ -1,0 +1,22 @@
+test 52-1250 648 C 300 mm half-radius double -> 31.3 HRC: offset -8.66 HRC
+test 52-1250 584 C 100 mm surface double -> 42.5 HRC: offset -8.18 HRC
+test 52-1312 611 C 150 mm surface double -> 40.0 HRC: offset -5.95 HRC
+test 52-1377 574 C 60 mm surface double -> 55.2 HRC: offset +2.67 HRC
+test 41-7864 546 C 25 mm surface -> 35.9 HRC: offset +2.91 HRC
+test 43-2288 532 C 120 mm half-radius -> 37.1 HRC: offset +2.15 HRC
+test 32-0458 548 C 50 mm surface -> 41.3 HRC: offset -0.66 HRC
+tempers used 11 of 11
+B01 41-7731 532 C -> true 34.05 HRC, margin +1.95 ok
+B02 41-7864 519 C -> true 30.32 HRC, margin +1.68 ok
+B03 43-2210 527 C -> true 32.38 HRC, margin +1.62 ok
+B04 43-2210 488 C -> true 39.98 HRC, margin +1.98 ok
+B05 32-0458 550 C -> true 38.41 HRC, margin +1.59 ok
+B06 52-1312 564 C -> true 44.06 HRC, margin +1.94 ok
+B07 52-1250 563 C -> true 40.12 HRC, margin +1.88 ok
+B08 52-1312 558 C -> true 46.07 HRC, margin +1.93 ok
+B09 41-7864 570 C -> true 34.43 HRC, margin +0.57 ok
+B10 32-0458 544 C -> true 42.75 HRC, margin +1.25 ok
+B11 52-1250 574 C -> true 41.74 HRC, margin +1.74 ok
+B12 43-2288 534 C -> true 35.77 HRC, margin +1.23 ok
+B13 52-1377 585 C -> true 53.58 HRC, margin +1.42 ok
+independent solution: 13 of 13 batches right; smallest true margin +0.57 HRC

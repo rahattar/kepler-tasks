@@ -1,0 +1,9 @@
+furnace,model,process,liner,profile_tc,spike_tc
+F1,T-200,dry oxidation,quartz,"type S, 5-junction assembly","type S, one per zone"
+F2,T-200,anneal,SiC (2026 retrofit),"type S, 5-junction assembly","type S, one per zone"
+F3,T-200,POCl3 doping,SiC (2026 retrofit),"type S, 5-junction assembly","type S, one per zone"
+F4,T-200,wet oxidation,quartz,"type S, 5-junction assembly","type S, one per zone"
+F5,T-200,anneal,quartz,"type S, 5-junction assembly","type S, one per zone"
+F6,T-200,POCl3 doping,quartz,"type S, 5-junction assembly","type S, one per zone"
+F7,T-200,dry oxidation,SiC (2026 retrofit),"type S, 5-junction assembly","type S, one per zone"
+F8,VX-300,anneal,quartz,"type S, 5-junction assembly","type S, one per zone"

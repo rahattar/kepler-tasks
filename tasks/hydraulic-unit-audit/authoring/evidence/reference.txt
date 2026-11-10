@@ -1,0 +1,24 @@
+Reference program (solution/hpu.py) on the hidden packages (the bound is 1 wrong of 8); errors in percent
+(efficiency: absolute):
+
+p-11   right {'oil_delivered_l': 0.03, 'hydraulic_energy_kj': 0.03, 'electrical_energy_kj': 0.0, 'peak_flow_l_min': 1.01, 'unit_efficiency': 0.0002}
+p-12   right {'oil_delivered_l': 0.04, 'hydraulic_energy_kj': -0.89, 'electrical_energy_kj': 0.01, 'peak_flow_l_min': 1.69, 'unit_efficiency': -0.0062}
+p-13   right {'oil_delivered_l': 0.02, 'hydraulic_energy_kj': 0.02, 'electrical_energy_kj': 0.0, 'peak_flow_l_min': 0.81, 'unit_efficiency': 0.0002}
+p-14   right {'oil_delivered_l': 0.0, 'hydraulic_energy_kj': 0.01, 'electrical_energy_kj': -0.01, 'peak_flow_l_min': 0.38, 'unit_efficiency': 0.0001}
+p-15   right {'oil_delivered_l': 0.06, 'hydraulic_energy_kj': -0.83, 'electrical_energy_kj': -0.0, 'peak_flow_l_min': 1.83, 'unit_efficiency': -0.006}
+p-16   right {'oil_delivered_l': 0.04, 'hydraulic_energy_kj': 0.03, 'electrical_energy_kj': 0.0, 'peak_flow_l_min': 0.9, 'unit_efficiency': 0.0002}
+p-17   right {'oil_delivered_l': 0.05, 'hydraulic_energy_kj': -0.77, 'electrical_energy_kj': 0.01, 'peak_flow_l_min': -0.47, 'unit_efficiency': -0.0058}
+p-18   right {'oil_delivered_l': 0.0, 'hydraulic_energy_kj': -0.01, 'electrical_energy_kj': -0.01, 'peak_flow_l_min': -1.37, 'unit_efficiency': 0.0001}
+
+0 of 8 wrong
+largest absolute error: oil 0.06, hyd 0.89, el 0.01, peak 1.83, eff 0.01
+
+True results (HP-2 on the true log) against the simulated per-cycle means, percent:
+p-11   {'oil_delivered_l': -0.1, 'peak_flow_l_min': 0.71, 'hydraulic_energy_kj': -0.1, 'electrical_energy_kj': -0.08}
+p-12   {'oil_delivered_l': -0.78, 'peak_flow_l_min': 0.46, 'hydraulic_energy_kj': -0.86, 'electrical_energy_kj': -0.77}
+p-13   {'oil_delivered_l': -0.15, 'peak_flow_l_min': 0.4, 'hydraulic_energy_kj': -0.17, 'electrical_energy_kj': -0.15}
+p-14   {'oil_delivered_l': -0.2, 'peak_flow_l_min': -0.71, 'hydraulic_energy_kj': -0.12, 'electrical_energy_kj': -0.07}
+p-15   {'oil_delivered_l': -0.54, 'peak_flow_l_min': 0.8, 'hydraulic_energy_kj': -0.52, 'electrical_energy_kj': -0.44}
+p-16   {'oil_delivered_l': -0.49, 'peak_flow_l_min': 0.5, 'hydraulic_energy_kj': -0.48, 'electrical_energy_kj': -0.41}
+p-17   {'oil_delivered_l': -0.02, 'peak_flow_l_min': 0.12, 'hydraulic_energy_kj': 0.06, 'electrical_energy_kj': 0.09}
+p-18   {'oil_delivered_l': -0.21, 'peak_flow_l_min': 0.48, 'hydraulic_energy_kj': -0.23, 'electrical_energy_kj': -0.18}

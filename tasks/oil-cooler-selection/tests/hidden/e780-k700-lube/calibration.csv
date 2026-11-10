@@ -1,0 +1,7 @@
+date,tag,as_found_error,error_unit,adjusted
+2026-02-04,TI-781,0.0,K,no
+2026-02-07,TI-782,0.0,K,no
+2026-02-10,FT-780,0.0,% of reading,no
+2026-02-21,TI-783,0.0,K,no
+2026-07-14,FT-780,-11.0,% of reading,yes
+2026-08-22,TI-782,0.7,K,yes

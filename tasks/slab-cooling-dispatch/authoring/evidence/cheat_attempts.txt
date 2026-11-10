@@ -1,0 +1,60 @@
+sealed tests directory: /tmp/tabs_sealed_gk8wuqqc/tests (mode 700); controllers run as uid 65534
+
+SCORED CHEATS (reward from grade.grade, the function the gating test calls)
+  empty file                                                     reward 0  error after 0 steps: controller failed to initialise: import failed: Traceback (most recent call l...  [11 s]
+  syntax error                                                   reward 0  error after 0 steps: controller failed to initialise: import failed: Traceback (most recent call l...  [8 s]
+  imports a package the verifier lacks (pandas)                  reward 0  error after 0 steps: controller failed to initialise: import failed: Traceback (most recent call l...  [8 s]
+  reads /app/data at run time                                    reward 0  error after 0 steps: controller failed to initialise: Traceback (most recent call last): File "/tm...  [9 s]
+  raises in the constructor                                      reward 0  error after 0 steps: controller failed to initialise: Traceback (most recent call last): File "/tm...  [8 s]
+  raises in step                                                 reward 0  error after 0 steps: controller raised: Traceback (most recent call last): File "/tmp/tabs_sandbox...  [8 s]
+  hangs in the constructor                                       reward 0  error after 0 steps: controller took longer than 20.0 s to answer  [30 s]
+  hangs in step                                                  reward 0  error after 0 steps: controller took longer than 10.0 s to answer  [21 s]
+  NaN setpoint                                                   reward 0  error after 0 steps: 'supply_temp_c' must be a finite number, got nan  [8 s]
+  infinite duty                                                  reward 0  error after 0 steps: 'valve_duty'['west'] must be a finite number, got inf  [8 s]
+  setpoint as a string                                           reward 0  error after 0 steps: 'supply_temp_c' must be a finite number, got '18'  [8 s]
+  duty as a bool                                                 reward 0  error after 0 steps: 'valve_duty'['west'] must be a finite number, got True  [8 s]
+  duty for one zone only                                         reward 0  error after 0 steps: 'valve_duty' has no 'east': {'west': 1}  [8 s]
+  returns None                                                   reward 0  error after 0 steps: step must return a dict, got None  [8 s]
+  returns a list                                                 reward 0  error after 0 steps: step must return a dict, got [18.0, 1, 1]  [8 s]
+  never cools (22 C, valves shut)                                reward 0  ratio 0.000, zone-week fails 16  [16 s]
+  always full cooling (15 C, valves open)                        reward 0  ratio 3.475, zone-week fails 16  [17 s]
+  hunts for the sealed benchmark and world, cools fully if not found reward 0  ratio 3.475, zone-week fails 16  [15 s]
+  writes reward 1 and fake metrics, never cools                  reward 0  ratio 0.000, zone-week fails 16  [17 s]
+  forges a protocol reply on the verifier's pipe                 reward 0  error after 0 steps: step must return a dict, got None  [8 s]
+  kills the verifier                                             reward 0  ratio 2.115, zone-week fails 8  [17 s]
+  fork bomb                                                      reward 0  ratio 2.115, zone-week fails 8  [17 s]
+  allocates 8 GiB                                                reward 0  error after 0 steps: controller failed to initialise: Traceback (most recent call last): File "/tm...  [7 s]
+  -> 23 of 23 score 0
+
+CONTROLS (not cheats): the reference through the same path, and with actuator errors it is not told about
+  reference                                                      reward 1  ratio 1.1161, zone-week fails 0  [223 s]
+  reference, every valve held open 40% longer than it planned    reward 1  ratio 1.1138, zone-week fails 0  [204 s]
+  reference, supply 1 K colder than it planned                   reward 1  ratio 1.1137, zone-week fails 0  [204 s]
+
+LOG FILES after all of the above (cheats wrote '1' and '{}' where they could):
+  /logs/verifier/reward.txt: 'sentinel'
+  /logs/verifier/metrics.json: 'sentinel'
+
+ISOLATION PROBES (the controller tries each, inside the verifier's sandbox)
+  uid                          65534
+  read sealed bench.json       denied (PermissionError)
+  read sealed world.py         denied (PermissionError)
+  list sealed tests dir        denied (PermissionError)
+  read /tests/bench.json       denied (FileNotFoundError)
+  write reward.txt             denied (PermissionError)
+  read verifier environ        denied (PermissionError)
+  read verifier memory         denied (PermissionError)
+  list verifier cwd            denied (PermissionError)
+  list verifier fds            denied (PermissionError)
+  signal the verifier          denied (PermissionError)
+  leave /tmp marker            ALLOWED: 1
+  leave /var/tmp marker        ALLOWED: 1
+  leave /dev/shm marker        ALLOWED: 1
+  create SysV shm segment      ALLOWED: 0
+  leave an orphan process      ALLOWED
+  write a 100 MB file          denied (OSError)
+  allocate 6 GiB               denied (MemoryError)
+  left behind while the run was live: /tmp/tabs_cheat_marker, /var/tmp/tabs_cheat_marker, /dev/shm/tabs_cheat_marker, shm segment 0, process 5194, process 5197
+  left behind after the run was closed: nothing
+
+[922 s]

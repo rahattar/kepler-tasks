@@ -1,0 +1,71 @@
+date_local,turbine,system,description,status
+2025-07-05 16:39,T04,general,Tower ladder inspection.,closed
+2025-07-07 07:48,T01,general,Grease system refilled.,closed
+2025-07-10 12:20,T05,general,Converter cooling fan replaced.,closed
+2025-07-10 14:35,T10,general,Gearbox oil sample taken.,closed
+2025-07-10 16:32,T03,general,Nacelle filter mats replaced.,closed
+2025-07-11 15:33,T07,general,Grease system refilled.,closed
+2025-07-12 07:00,T06,general,"Blade inspection by drone, no findings.",closed
+2025-07-23 15:59,T09,general,"Blade inspection by drone, no findings.",closed
+2025-07-24 09:45,T04,general,Gearbox oil sample taken.,closed
+2025-07-25 15:02,T04,general,Pitch battery test.,closed
+2025-07-25 15:32,T03,general,Converter cooling fan replaced.,closed
+2025-07-29 08:51,T06,general,Yaw brake pads inspected.,closed
+2025-08-06 07:20,T06,general,Yaw brake pads inspected.,closed
+2025-08-08 12:10,T05,general,Tower ladder inspection.,closed
+2025-08-12 07:24,T02,general,Converter cooling fan replaced.,closed
+2025-08-12 12:37,T07,general,"Blade inspection by drone, no findings.",closed
+2025-08-13 15:39,T05,general,Pitch battery test.,closed
+2025-08-15 11:12,T03,general,"Blade inspection by drone, no findings.",closed
+2025-08-16 08:24,T10,general,Gearbox oil sample taken.,closed
+2025-08-17 07:48,T08,general,"Blade inspection by drone, no findings.",closed
+2025-08-21 07:47,T01,general,"Blade inspection by drone, no findings.",closed
+2025-08-24 07:36,T03,general,Nacelle filter mats replaced.,closed
+2025-08-29 13:52,T07,general,Aviation light replaced.,closed
+2025-09-05 11:01,T09,general,Pitch battery test.,closed
+2025-09-09 10:06,T01,controller,Controller software update 4.2.1 installed per OEM service bulletin SB-2026-03 (grid code and yaw control improvements). Turbine returned to service.,closed
+2025-09-10 10:07,T02,controller,Controller software update 4.2.1 installed per OEM service bulletin SB-2026-03 (grid code and yaw control improvements). Turbine returned to service.,closed
+2025-09-11 10:08,T03,controller,Controller software update 4.2.1 installed per OEM service bulletin SB-2026-03 (grid code and yaw control improvements). Turbine returned to service.,closed
+2025-09-12 10:09,T04,controller,Controller software update 4.2.1 installed per OEM service bulletin SB-2026-03 (grid code and yaw control improvements). Turbine returned to service.,closed
+2025-09-13 10:10,T05,controller,Controller software update 4.2.1 installed per OEM service bulletin SB-2026-03 (grid code and yaw control improvements). Turbine returned to service.,closed
+2025-09-14 10:11,T06,controller,Controller software update 4.2.1 installed per OEM service bulletin SB-2026-03 (grid code and yaw control improvements). Turbine returned to service.,closed
+2025-09-15 10:12,T07,controller,Controller software update 4.2.1 installed per OEM service bulletin SB-2026-03 (grid code and yaw control improvements). Turbine returned to service.,closed
+2025-09-16 10:13,T08,controller,Controller software update 4.2.1 installed per OEM service bulletin SB-2026-03 (grid code and yaw control improvements). Turbine returned to service.,closed
+2025-09-17 10:14,T09,controller,Controller software update 4.2.1 installed per OEM service bulletin SB-2026-03 (grid code and yaw control improvements). Turbine returned to service.,closed
+2025-09-18 10:15,T10,controller,Controller software update 4.2.1 installed per OEM service bulletin SB-2026-03 (grid code and yaw control improvements). Turbine returned to service.,closed
+2025-09-22 07:34,T07,general,Main bearing temperature sensor checked.,closed
+2025-09-27 08:55,T10,general,Pitch battery test.,closed
+2025-09-27 08:56,T09,general,Gearbox oil sample taken.,closed
+2025-09-27 14:59,T09,general,"Blade inspection by drone, no findings.",closed
+2025-09-28 15:21,T07,general,Annual service completed.,closed
+2025-09-30 09:35,T02,general,Main bearing temperature sensor checked.,closed
+2025-10-01 08:29,T08,general,Nacelle filter mats replaced.,closed
+2025-10-09 08:07,T08,general,Aviation light replaced.,closed
+2025-10-13 15:46,T08,general,Converter cooling fan replaced.,closed
+2025-10-20 14:16,T10,general,Yaw brake pads inspected.,closed
+2025-10-24 09:25,T07,general,Tower ladder inspection.,closed
+2025-10-28 16:02,T05,general,Main bearing temperature sensor checked.,closed
+2025-10-29 10:54,T03,general,Nacelle filter mats replaced.,closed
+2025-11-01 10:51,T08,general,Nacelle filter mats replaced.,closed
+2025-11-07 10:15,T05,general,Main bearing temperature sensor checked.,closed
+2025-11-10 16:12,T09,general,Tower ladder inspection.,closed
+2025-11-13 07:51,T04,general,Annual service completed.,closed
+2025-11-15 14:53,T04,general,Nacelle filter mats replaced.,closed
+2025-11-25 13:21,T05,general,Converter cooling fan replaced.,closed
+2025-11-27 08:50,T07,general,Aviation light replaced.,closed
+2025-11-28 16:41,T07,general,Nacelle filter mats replaced.,closed
+2025-11-30 16:48,T06,general,Yaw brake pads inspected.,closed
+2025-12-03 15:44,T07,general,Nacelle filter mats replaced.,closed
+2025-12-04 13:22,T10,general,Tower ladder inspection.,closed
+2025-12-10 08:52,T10,general,Yaw brake pads inspected.,closed
+2025-12-15 10:15,T10,general,Pitch battery test.,closed
+2025-12-16 12:50,T06,general,Gearbox oil sample taken.,closed
+2025-12-17 07:57,T04,general,Tower ladder inspection.,closed
+2025-12-23 15:34,T07,general,Main bearing temperature sensor checked.,closed
+2025-12-24 16:55,T04,general,Annual service completed.,closed
+2025-12-26 15:03,T08,general,Aviation light replaced.,closed
+2025-12-27 09:44,T06,general,Yaw brake pads inspected.,closed
+2025-12-28 14:43,T01,general,Yaw brake pads inspected.,closed
+2025-12-30 10:09,T08,general,Converter cooling fan replaced.,closed
+2025-12-30 11:01,T09,general,Tower ladder inspection.,closed
+2025-12-30 15:39,T04,general,Nacelle filter mats replaced.,closed

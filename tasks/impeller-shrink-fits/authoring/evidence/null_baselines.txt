@@ -1,0 +1,16 @@
+1.0 um per mm of the seat as read, every part at its heating limit             0 of 8  right: -
+1.5 um per mm of the seat as read, every part at its heating limit             0 of 8  right: -
+best single um per mm (1.39, chosen with the truth), at the heating limits     2 of 8  right: S2 BD
+the reference model with no tests (the 20-100 C table, and the mill value for 42CrMo4) 4 of 8  right: S1 S4 BD TC
+the reference model with the 20-100 C table for every material                 2 of 8  right: S1 S4
+no tests, the maintenance log not applied, seats taken as at 20 C              0 of 8  right: -
+
+parts that some single um-per-mm ratio (heating limit) gets right, with the ratios that do:
+S1 1.58-1.65
+S2 1.35-1.42
+S3 0.69-0.78
+S4 0.90-0.96
+S5 1.26-1.31
+S6 3.03-3.08
+BD 1.34-1.39
+TC 0.93-0.99

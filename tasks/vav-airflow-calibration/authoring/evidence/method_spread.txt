@@ -1,0 +1,23 @@
+sound methods on the shipped floor: 3240 calibrations (15 plans x 8 visit orders x 3 fits x 3 transfers x 3 2024-zero assumptions)
+worst-box error: min 4.0 %, median 5.2 %, 95th percentile 5.9 %, max 6.1 %; fail at 10 %: 0
+
+worst-box error by choice (max over everything else)
+  vertical drop visited    25 5.9 %  26 5.9 %  27 5.9 %  28 6.1 %  29 5.9 %
+  long connector visited   31 6.1 %  33 6.1 %  35 6.1 %
+  visit fit                wls 6.0 %  ols 6.1 %  two 6.1 %
+  class transfer           decay 6.1 %  mean 5.9 %  free 6.1 %
+  2024 zero of a 2.4 box   zero 6.1 %  half 6.1 %  full 6.1 %
+
+ten worst calibrations
+  6.1 % at VAV-3-26 | visits 38 28 36 37 35 | fit ols, transfer free, 2024 zero zero
+  6.1 % at VAV-3-26 | visits 36 28 38 35 37 | fit ols, transfer free, 2024 zero zero
+  6.1 % at VAV-3-26 | visits 38 28 36 37 35 | fit ols, transfer decay, 2024 zero zero
+  6.1 % at VAV-3-26 | visits 36 28 38 35 37 | fit ols, transfer decay, 2024 zero zero
+  6.1 % at VAV-3-26 | visits 38 28 36 37 33 | fit ols, transfer free, 2024 zero zero
+  6.1 % at VAV-3-26 | visits 36 28 38 33 37 | fit ols, transfer free, 2024 zero zero
+  6.1 % at VAV-3-26 | visits 38 28 36 37 33 | fit ols, transfer decay, 2024 zero zero
+  6.1 % at VAV-3-26 | visits 36 28 38 33 37 | fit ols, transfer decay, 2024 zero zero
+  6.1 % at VAV-3-26 | visits 38 28 36 37 31 | fit ols, transfer free, 2024 zero zero
+  6.1 % at VAV-3-26 | visits 36 28 38 31 37 | fit ols, transfer free, 2024 zero zero
+
+reference (visits 36 37 38 28 31; wls, decay, half): worst 5.8 % at VAV-3-35

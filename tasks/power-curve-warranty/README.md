@@ -1,0 +1,195 @@
+# power-curve-warranty
+
+A wind farm owner verifies the power curve warranty of its turbines with its own procedure, PP-12: nacelle
+anemometry after IEC 61400-12-2 with a nacelle transfer function (NTF) from a calibration turbine and the farm's met
+mast, data selection with the IEC 61400-12-1 Annex A disturbed sectors, a density-normalised binned power curve, and
+the annual energy ratio against the warranted curve on a Rayleigh 7.5 m/s distribution, with a claim below 0.97. The
+deliverable is `/app/output/pp12.py`, a program that applies PP-12 to one farm-period package (10-minute SCADA of
+every turbine, the met mast, the site description, the noise permit and the farm's records) and writes each
+turbine's annual energy ratio and claim. It is run on six packages it has never seen.
+
+## Difficulty
+
+In practice this is the work of an owner's performance engineer or asset manager, who verifies the warranty farm by
+farm and half-year by half-year with one program, so the program has to be right on packages nobody has looked at.
+The farms, turbines and records are synthetic, written by `authoring/provenance` (`model.py`, `docs.py`,
+`build.py`) from a sealed definition, and realistic in their numbers:
+- Turbines of 2.0 and 2.5 MW with 103 to 120 m rotors at 80 and 90 m hub height, in one or two rows at 4 to 4.5
+  rotor diameters, with a second row 7 to 7.5 diameters downwind where there is one, at 380 to 1450 m elevation.
+  Wind speeds follow a Rayleigh distribution with a 5 percent diurnal cycle and four direction regimes per farm.
+  Seasonal mean temperatures run from -9 to 22 C, with a diurnal swing of 8 K.
+- Wakes come from a Gaussian wake model (Bastankhah and Porte-Agel, k* = 0.04). The power sees the rotor-average
+  deficit and the nacelle anemometer the hub deficit, so waked periods bias a power curve as they do in the field.
+- The records carry what real SCADA carries: power and anemometer noise, downtime with fault, maintenance and
+  manual-stop codes, grid curtailments at half of rated, nightly sound-mode limits that the status does not show,
+  icing, and monthly revenue meter energy.
+- Two or three turbines per package underperform in the knee of the curve. Their true ratios are 0.9469 to 0.9572,
+  and the others' 0.9956 to 1.0022 (`authoring/evidence/reference.txt`). In every hidden package they are other
+  turbines than the example's (T05, T07 and T10), so the example's results carry over to no hidden package.
+
+The example package, `ridgeback-2026h1`, comes with the owner's engineer's results, and its records are sound.
+Applied to its records as they stand, PP-12 reproduces those results, and so does every program that reads the
+procedure correctly. The six hidden packages carry the record faults that wind farm records carry in the field. Each
+one looks like ordinary data. The records mention at most the work done (an update installed, a part replaced, a
+barometer reading zero), never its effect on the data:
+- A controller software update that changes the nacelle wind speed the controller reports, logged on two farms and
+  unlogged on two. The commissioning NTF no longer applies after it (PP-12 section 3, IEC 61400-12-2), and it has to
+  be re-established from the calibration turbine and the mast. On a fifth farm the update came before the period, so
+  the records show no step at all. Only the site description's software line, and the commissioning NTF failing to
+  give M1's wind at the calibration turbine, show that it does not apply anywhere in the period.
+- On one farm, the calibration turbine's nacelle anemometer drifts from January, before that farm's unlogged update
+  in March. An NTF re-established from it as recorded is wrong for every other turbine.
+- On two farms, a mast barometer that reads zero for part of the period. The controllers' pressure feed is there,
+  but it is sea-level pressure (QNH), 12 and 20 percent above the station pressure at those elevations.
+- A replaced power transducer that scales one turbine's SCADA power, logged on one farm and unlogged on the other.
+- On two farms, a replaced yaw encoder (logged on one) that offsets one turbine's yaw position by about 40 degrees,
+  so the Annex A selection takes waked periods as free ones.
+- On two farms, a turbine whose controller clock runs on UTC, so the nightly sound-mode limit falls at the wrong
+  hours of its records.
+- A mast anemometer replaced by a different model, with the new certificate only in the mast service log.
+- On one farm, M1's data logger was replaced and came back on UTC, so from then on M1's records are stamped six hours
+  late. The turbines, the curtailment log and the noise permit keep local standard time, so it is M1 that has to be
+  moved. Aligning the turbines to M1, the usual reference, puts every turbine's records six hours off.
+- On one farm, M1's replaced wind vane reads 28 degrees off, so every turbine's yaw steps against M1 at the same
+  moment. Correcting each turbine to the vane turns every free sector into a waked one.
+- On one farm, two turbines received the larger HW120-2.5 rotor on the first day of the period. The maintenance log
+  records the upgrade and the warranted curve that applies from then on; the site description still lists them as
+  HW116-2.5.
+
+PP-12 requires every record to be checked against the physics and the farm's other records before it is used, and
+corrected where they fix the right value. The checks have to be written for faults the example does not show. Each
+one left out misses turbines, against an allowance of one wrong turbine
+(`authoring/evidence/route_study.txt`):
+- NTF validity (the commissioning NTF kept throughout): 51 wrong turbines, by -0.0541 to -0.1334.
+- The commissioning NTF verified at the calibration turbine: 9, by -0.1320 to -0.1334.
+- M1's clock (the turbines aligned to M1 as recorded): 10, by -0.0509 to +0.0578.
+- M1's vane (every yaw step taken as the turbine's): 11, by -0.0161 to -0.0304.
+- The calibration turbine's anemometer: 9, by -0.0395 to -0.0424.
+- The barometer replacement: 17, by -0.0145 to -0.0544.
+- The mast certificate: 10, by +0.2250 to +0.3205.
+- A turbine's clock: 2 (4 with the power scale check also left out, by -0.0218 to -0.0832).
+- The rotor upgrades: 2, by +0.0232 and +0.0256.
+- A turbine's yaw: 2, by -0.0342 and -0.0796.
+- The power scale: 2, by -0.0218 and -0.0374.
+
+PP-12 applied to the records as they stand gets all 59 turbines wrong. Every hidden package is missed by at least
+two of these routes.
+
+## Reference solution
+
+`solution/pp12.py` is the reference program; `solution/solve.sh` installs it as `/app/output/pp12.py` and runs it
+on the example. For one package it does the following:
+- Reads the site description (turbines, positions, models, north offsets, calibration turbine and sector, NTF table,
+  mast certificate), the mast service log (any later certificate), the noise permit, the warranted curves and the
+  curtailment log. The mast wind speed comes from the certificate in force at each time.
+- Checks the mast's clock against the turbines week by week. A whole-hour lag that the fleet shares, while the
+  turbines' curtailment status matches the curtailment log in local standard time, is the mast's. The mast's records
+  are moved back from the gap in its stamps where the lag starts.
+- Aligns each turbine's records to the corrected mast by the whole-hour lag (within 14 h) that best correlates its
+  hourly nacelle wind speed with the mast's.
+- Takes rotor upgrades from the maintenance log: the new model's warranted curve and rotor diameter, and only the
+  periods after the upgrade.
+- Uses the mast barometer where it reads; elsewhere, the controllers' pressure feed times the median ratio of the
+  barometer to the feed over the periods when both read. It reduces the pressure to hub height and computes the IEC
+  density.
+- Corrects the mast vane by any step larger than 5 degrees that the median of all turbines' daily yaw-minus-vane
+  differences shows at once, located to the 10 minutes. It then compares each turbine's yaw position with the
+  corrected vane by the daily median difference; a step larger than 5 degrees is located to the 10 minutes and
+  corrected. It then applies the Annex A disturbed sectors of the neighbours
+  within 20 rotor diameters.
+- Finds where the commissioning NTF stops applying for each turbine: a step of more than 4 percent in the daily
+  median of nacelle over mast wind speed in its free sectors, located to the 10 minutes. It then verifies the
+  commissioning NTF at the calibration turbine in the calibration sector before any such step. If the median of NTF
+  over mast wind speed there is more than 3 percent from 1, the NTF does not apply at any time in the period.
+- Compares the calibration turbine's daily ratio with the median of the other turbines' on days when all are in one
+  NTF state. It fits a level followed by a linear change from an onset day, and corrects the calibration turbine's
+  nacelle record when the change exceeds 1 percent.
+- Re-establishes the NTF (linear) from the corrected calibration turbine and the mast in the calibration sector after
+  the turbine's update, and applies it to every turbine after its own update.
+- Finds steps in each turbine's daily median power at high wind relative to rated, outside curtailment, icing and
+  sound mode, and corrects the power scale.
+- Then applies PP-12 sections 4 to 6: status 0, no curtailment, no sound mode (permit hours, local standard time), no
+  icing or ice alarm, free sectors; density normalisation; 0.5 m/s bins with at least 3 periods; the measured curve
+  held constant beyond its ends; the Rayleigh annual energy ratio; and the claim below 0.97.
+
+Run through `tests/grade.py` as the verifier runs a submission, it gets every turbine's claim right on the six hidden
+packages, with ratios within 0.0046 of the truth, 0.46 of the tolerance. On the example it is within 0.0039 of the
+reported results, with the same claims (`authoring/evidence/reference.txt`).
+
+## Verification
+
+`tests/grade.py` runs the submitted `/app/output/pp12.py` on each of the six hidden packages (`tests/hidden`; the
+agent's image does not contain them). The verifier image has the agent's `/app/data` at the same path, read-only
+(`tests/app_data`, written by the same `build.py`).
+
+How each package is run:
+- The program alone and the package are copied to a scratch directory owned by root, where the package is read-only.
+- The program runs as the unprivileged user nobody, with only PATH and HOME set, as
+  `python3 -I pp12.py PACKAGE_DIR OUT_CSV`, within 600 s, in its own process group.
+- When the run ends or times out, its process group and every process of nobody are killed before the output is
+  read. The six runs are sequential, so the worst case (3600 s) fits the 4500 s verifier timeout.
+- The instruction states these run conditions, including the 10 minutes and that `pp12.py` must be self-contained.
+
+The output must be a regular file, not a symlink, holding exactly the header `turbine,aep_ratio,warranty_claim` and
+one row per turbine of the package: each turbine once, each ratio a finite number, each claim `yes` or `no`. The
+program must exit with status 0. Blank lines are ignored. A package whose output breaks any of this has all its
+turbines counted wrong.
+
+A turbine is right when its claim equals the true claim and its ratio is within 0.01 of the true ratio. The truth
+(`tests/hidden/truth.json`, root-only in `/tests`) is the annual energy ratio of the turbine's true power curve
+(`model.py`), not a computation on its records. The single pytest test passes when at most 1 of the 59 turbines is
+wrong. These thresholds are not in the instruction, which asks for the ratio and claim PP-12 gives. `tests/test.sh`
+does the following:
+- Locks `/logs/verifier` to root before grading and again before the reward.
+- Writes reward 0 first, and 1 only when pytest exits 0 and the ctrf report holds exactly one test, passed, with none
+  failed, skipped, pending or other.
+- Writes the per-turbine results to `/logs/verifier/metrics.json`, where they do not affect the reward.
+
+Every calibration number below is measured by the verifier itself. Each method, route and method-free answer is a
+complete CSV-writing program, run through `tests/grade.py` exactly as a submission: `authoring/evidence/common.py`
+writes the program file and calls `score()`. It runs as nobody from a scratch copy, as `python3 -I pp12.py PACKAGE_DIR
+OUT_CSV`, and grade.py reads and judges the CSV. No evidence script calls a program's functions directly.
+
+Why a tolerance of 0.01 and at most 1 wrong turbine:
+- Correct methods (`authoring/evidence/method_spread.txt`, worst error per package) stay within 0.0051 on all 59
+  turbines, about half the tolerance, with every claim right. This covers the reference and
+  `authoring/evidence/independent.py`, a second program that shares no code with it (worst 0.0041). The second program
+  aligns clocks on 10-minute data and finds M1's clock by a majority vote of the turbines per 14 days. It reduces the
+  pressure feed with the barometric formula, fits the NTF as a binned table and checks the commissioning NTF over
+  each turbine's first ten days. It finds the calibration turbine's drift against the mast instead of the fleet and
+  M1's vane against the fleet's first week. It leaves wrong-yaw periods out instead of correcting them, and corrects
+  the power scale with the revenue meters. Seven more variants of the reference change its NTF fit range, pressure
+  replacement, yaw correction, fleet statistic, NTF step and verification thresholds, and where M1's clock step is
+  placed.
+- Every route that leaves out a check misses at least 2 turbines, and all but the barometer and vane routes miss by
+  at least twice the tolerance (route list above; per package in `route_study.txt`). On the barometer route, the 8
+  misses on cedar-flats (1450 m) are 0.0504 to 0.0544 off. The 9 on tallow-creek (910 m, outage for the last third of
+  the period) are 0.0145 to 0.0160 off. On the vane route, the 11 misses on hollins-ridge are 0.0161 to 0.0304 off.
+- One wrong turbine is allowed so that a sound program with a single marginal turbine is not failed. No route that
+  leaves out a check stays within it.
+
+Method-free answers (`authoring/evidence/constant_null.txt`) read only the package's turbine list and write a fixed
+answer. All are rejected. On every single hidden package, every one of them gets at least 2 turbines wrong, so no
+graded package is cleared, or brought within the allowance, without the method:
+
+| Method-free answer | Wrong turbines | Fewest in one package |
+|---|---|---|
+| every turbine 1.000 with no claim | 14 | 2 |
+| every turbine 0.995 with no claim | 14 | 2 |
+| every turbine 0.950 with a claim | 45 | 5 |
+| every turbine 0.970 with no claim | 59 | 8 |
+| the example's reported results by turbine number | 28 | 3 |
+
+Malformed output and misbehaving programs (`authoring/evidence/verifier_checks.txt`) are run through `grade.py` as
+the verifier runs them. Each of the following has every turbine counted wrong, and none crashes the verifier:
+- an output that is a symlink;
+- a missing or reordered header, or an extra column;
+- a duplicate, missing or extra turbine;
+- a NaN, infinite or non-numeric ratio, or a claim of `Yes`;
+- an empty or non-UTF-8 file;
+- a non-zero exit status, or a run past the time limit.
+
+A background process left running is killed when its run ends, and no process of nobody survives any case.
+
+The agent works as a separate user that can only write to `/app/output`; `/app/data` is read-only. The verifier runs
+separately without network.

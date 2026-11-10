@@ -1,0 +1,38 @@
+tests/grade.py on corrupted copies of the reference's designs, run as nobody; six hidden mains, accepted when at most 1 is wrong.
+
+reference designs, unchanged                                             wrong 0  accepted; nobody's processes left: 0
+output is a symlink to a correct file                                    wrong 6  rejected; nobody's processes left: 0
+    ValueError('the output is not a regular file')
+a key missing                                                            wrong 6  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly vessel_volume_m3, gas_volume_m3')
+an extra key                                                             wrong 6  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly vessel_volume_m3, gas_volume_m3')
+a key twice                                                              wrong 6  rejected; nobody's processes left: 0
+    ValueError('a key appears twice')
+keys in other words (vessel_m3, gas_m3)                                  wrong 6  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly vessel_volume_m3, gas_volume_m3')
+a volume NaN                                                             wrong 6  rejected; nobody's processes left: 0
+    ValueError('NaN is not a finite number')
+a volume Infinity                                                        wrong 6  rejected; nobody's processes left: 0
+    ValueError('Infinity is not a finite number')
+a volume as a string                                                     wrong 6  rejected; nobody's processes left: 0
+    ValueError('vessel_volume_m3 is not a finite positive number')
+a volume true                                                            wrong 6  rejected; nobody's processes left: 0
+    ValueError('gas_volume_m3 is not a finite positive number')
+a volume negative                                                        wrong 6  rejected; nobody's processes left: 0
+    ValueError('gas_volume_m3 is not a finite positive number')
+gas volume equal to the vessel volume                                    wrong 6  rejected; nobody's processes left: 0
+    ValueError('the gas volume is not below the vessel volume')
+a list, not an object                                                    wrong 6  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly vessel_volume_m3, gas_volume_m3')
+empty file                                                               wrong 6  rejected; nobody's processes left: 0
+    JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+bytes that are not UTF-8                                                 wrong 6  rejected; nobody's processes left: 0
+    deError('utf-8', b'{"vessel_volume_m3": 28.83, "gas_volume_m3": 14.42}\xff\xfe', 51, 52, 'invalid start byte')
+correct object padded to 70 kB                                           wrong 6  rejected; nobody's processes left: 0
+    ValueError('the output is larger than 65536 bytes')
+correct output, exit status 1                                            wrong 6  rejected; nobody's processes left: 0
+    exit status 1:
+correct output, a background process left running                        wrong 0  accepted; nobody's processes left: 0
+correct output, then runs past the time limit (limit set to 20 s here)   wrong 6  rejected; nobody's processes left: 0
+    time limit of 20 s exceeded

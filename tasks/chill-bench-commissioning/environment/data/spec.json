@@ -1,0 +1,9 @@
+{
+  "target_mean_temperature_C": 50.0,
+  "max_zone_difference_K": 25.0,
+  "dwell_budget_fraction": 0.08,
+  "dwell_budget_scope": "per station",
+  "he_pressure_min_torr": 3.0,
+  "he_pressure_max_torr": 60.0,
+  "min_stations_commissioned": 15
+}

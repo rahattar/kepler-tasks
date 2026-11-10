@@ -1,0 +1,3 @@
+#!/bin/bash
+# Starts the facilities office's field-verification service at $VERIFY_URL (http://127.0.0.1:8000).
+exec sudo -n -u facilities /opt/verify/run-service

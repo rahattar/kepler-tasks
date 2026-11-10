@@ -1,0 +1,19 @@
+Miss per cell, percentage points (reported - true); the bound is 3 pp.
+
+reference                                      worst  -0.5 (C5)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+end of record: median of the last 21 days      worst  +0.6 (C7)  C1 +0.4 C2 -0.3 C3 -0.1 C4 -0.2 C5 -0.3 C6 +0.1 C7 +0.6 C8 -0.2
+end of record: median of the last 28 days      worst  -0.8 (C5)  C1 +0.0 C2 -0.3 C3 -0.3 C4 +0.1 C5 -0.8 C6 +0.1 C7 +0.7 C8 -0.2
+end of record: line through daily medians      worst  -1.5 (C5)  C1 +0.2 C2 -0.1 C3 +0.0 C4 +0.2 C5 -1.5 C6 +0.3 C7 -0.0 C8 -0.2
+bypass flow smoothed over 13 h                 worst  -0.4 (C5)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.4 C6 +0.1 C7 +0.2 C8 -0.2
+bypass flow smoothed over 49 h                 worst  -0.7 (C5)  C1 -0.0 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.7 C6 +0.1 C7 +0.2 C8 -0.2
+bypass flow as the daily median                worst  -0.7 (C5)  C1 -0.3 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.7 C6 +0.1 C7 +0.2 C8 -0.2
+C3 meter zero as the mean of the shut hours    worst  -0.5 (C5)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+C3 meter zero from 07-08 to 07-18 only         worst  -0.5 (C5)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+C2 offset against the mean of the others       worst  -0.5 (C5)  C1 -0.2 C2 +0.0 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+C2 offset against C1 alone                     worst  -0.5 (C5)  C1 -0.2 C2 -0.1 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+Simpson's rule with 20 intervals               worst  -0.5 (C5)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+Simpson's rule with 80 intervals               worst  -0.5 (C5)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+C4 power factor from 10 days either side       worst  -0.5 (C5)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+C6 step measured against May only              worst  -0.8 (C1)  C1 -0.8 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.6 C6 +0.5 C7 +0.2 C8 -0.2
+
+Largest miss over all variants: 1.5 pp

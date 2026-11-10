@@ -1,0 +1,70 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/corrections.csv"]
+
+[task]
+name = "afterquery/furnace-tc-calibration"
+description = "Recalibrate the profile thermocouples of a bay of eight diffusion furnaces, corrections at 850 C and 1050 C for all 40 heater zones, from the records, four weeks of controller trends and three TC-wafer temperature steps of your choosing."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "semiconductor-thermal-processing",
+    "thermocouple-calibration",
+    "temperature-measurement",
+    "radiative-heat-transfer",
+    "experiment-design",
+    "diffusion-furnaces",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer that runs thermal processes; this task uses only published thermocouple and radiative heat-transfer behaviour and a synthetic bay, records, trends and parameters. No employer data, equipment, recipes or procedures were used. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "temperature measurement and calibration in semiconductor thermal processing"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "semiconductor-thermal-processing",
+    "thermocouple-calibration",
+    "temperature-measurement",
+    "radiative-heat-transfer",
+    "experiment-design",
+    "diffusion-furnaces",
+]
+expert_time_estimate_hours = 8
+relevant_experience = """I am a control scientist working on model-based control and thermal process modelling in silicon wafer manufacturing, with a PhD in mechanical engineering. Furnace temperature control, thermocouple behaviour in high-temperature service and the calibration of process tools against instrumented wafers are part of my daily work. The bay, its furnaces, records and trends are synthetic; the physics is the published behaviour of drifting Pt-Rh thermocouples and radiative wafer-to-sensor offsets."""
+difficulty_explanation = """In practice this is the work of a thermal-process or equipment engineer at a wafer fab doing the yearly temperature calibration of a furnace bay: each zone's profile thermocouple gets a correction at 850 C and 1050 C so that the wafers, not the thermocouple, sit within 2 K of the setpoint, and instrumented-wafer (TC-wafer) time is the scarce resource. The bay, its records, trends and run readings are synthetic, written by the disclosed generator and sealed definition in authoring/provenance.
+
+Two physical effects set each zone. The profile thermocouple drifts low, in proportion to temperature in C; the wafer-to-junction offset is radiative, zero in an isothermal soak and growing roughly with the fourth power of absolute temperature. The spike thermocouple at the heater reads the junction plus a heater-to-load difference that is radiative in the same way and set by what lies between heater and load. The records settle much of the bay: the 2025 calibration was made with new assemblies, so it is pure offset; any 600 C soak with the boat in and the door closed is isothermal, so spike minus raw there is the drift. One doping furnace has a cracked profile sheath and a growing drift; its only soak is an operator hold, logged under another state name, four weeks before the calibration, and its growth is readable from its process trend. As loaded today, 27 of the 40 zones miss, by up to 17.2 K.
+
+There are three temperature steps. The other doping furnace never soaks and has a 2026 SiC liner, so its drift and its offset are both unknown; a replaced process tube moved another furnace's offsets; the newest furnace has only the vendor's factory profile. One step on each covers them only if each does double duty: the 2025 data give a fixed 850/1050 offset ratio, so one process step gives both corrections, and the doping furnace's 1050 C step, with its 850 C trend, separates drift (proportional to temperature) from the heater-to-load difference (radiative). That leaves the two other retrofitted furnaces with no step. Their slip-cast liners vary in wall thickness and shield differently, so the measured furnace's liner change carried over to them misses by 4.4 K. The liner is one shield between heater and load: it also raises the heater-to-load difference, which every furnace's trend shows against the bare-quartz furnaces of the same model, and the measured furnace gives the ratio between the two changes, so each retrofitted furnace's own trend gives its liner change. Those two furnaces run the low-volume lots without fill dummies, and a partial boat shows a smaller heater-to-load difference: read over every process row instead of full boats (or with the load as a regressor), the rise comes out low and misses by 4.3 K. Spending a step to check the liner on a second retrofitted furnace, on the growing furnace or on a second temperature leaves a furnace without data and misses by 3.4 K or more."""
+solution_explanation = """The reference reads the register, the maintenance log, the 2025 calibration, the loaded corrections and every trend. Drift at 600 C is the median of spike minus raw over the 600 C rows logged as standby or hold (boat in, door closed, nitrogen), carried to the calibration (the run reports' date, morning) by the least-squares slope of spike minus raw over the furnace's process rows, scaled from the process setpoint to 600 C, and to 850 C and 1050 C by T / 600; only F6 grows by more than a few tenths of a kelvin. The offset ratio between 850 C and 1050 C is the least-squares slope through the origin of the 2025 offsets (0.399). From the records it lists what they cannot settle: the offset on F8 (no site calibration) and F5 (process tube replaced after the 2025 calibration, per the log), and drift and offset on F3 (no isothermal rows, SiC retrofit), and runs each at 1050 C. For F3 it carries spike minus raw on its 850 C process rows to the calibration along the same line and solves spike minus raw at 850 C and 1050 C for the drift (proportional to temperature) and the heater-to-load difference (the T^4 law zero at 600 C), each at the junction's own temperature; the run's wafer minus raw less the drift is the new offset, and its change from 2025 is F3's liner change. Every other furnace's heater-to-load difference at 1050 C is spike minus raw on its full-boat process rows (carried to the calibration) less the drift there, over the radiative shape. The median over the bare-quartz T-200 furnaces (F1, F4, F5, F6) is the baseline; each retrofitted furnace's rise over it, zone by zone, times F3's ratio of liner change to rise, is its liner change. Measured furnaces take the measured correction at 1050 C and, at 850 C, drift scaled by T / 600 plus the ratio times the 1050 C offset. F2 and F7 take their 2025 offsets plus their liner change plus their drift; F1, F4 and F6 take the 2025 offsets plus their drift. On the shipped bay every zone is within 0.98 K. It never reads the sealed definition or the verifier."""
+verification_explanation = """The verifier holds the bay's sealed definition (tests/tc.py, the same module that drives the run service, seed 7). For every zone it loads the submitted corrections into the controller (linear between the 850 C and 1050 C points, held outside them), holds the corrected reading at 850 C and at 1050 C, and computes the wafer temperature from the zone's true drift on the calibration day (the date the run reports carry) and its true offset, both evaluated at the junction's actual temperature. One test gates the reward: /app/output/corrections.csv must have the columns furnace, zone, correction_850_c and correction_1050_c, one row for each of the 40 zones and no others, finite numbers, and every zone's wafer must be within 2 K of the setpoint at both temperatures. The per-zone record goes to /logs/verifier/metrics.json and never gates. The verifier never runs the reference solution and never reads the shipped files.
+
+The 2 K is process engineering's requirement, stated in the documents. The evidence in authoring/evidence shows it is wide against the spread of sound methods and narrow against wrong ones (method_spread.txt, route_study.txt, campaign_study.txt; all figures are the worst zone's error in K). 12288 sound calibrations (every complete three-step plan in every run order, four estimates of the offset ratio, median or mean soak readings, two ways of reading the drift growth, four ways of making the spike split, four ways of forming the bare-quartz heater-to-load baseline, and partial boats left out or regressed on the load) all pass, the worst zone at 1.05 K. Carrying the measured liner change over to the other retrofitted furnaces misses by 4.4 K; reading the partial boats as full misses by 4.3 K; other shortcuts and plans that leave something unsettled miss by 3.3 to 17 K; carrying the drift in kelvin against the stated factor misses by 2.2 K. Of the 2024 ways to place the three steps, the 4 that pass are exactly those that run F3 at 1050 C and F5 and F8 at a process temperature; every other placement misses by at least 3.25 K, whichever defensible fallback it uses for what it leaves unmeasured.
+
+The run service runs in the agent's container as a separate user, metrology. The agent runs as the user agent ([agent] user); the service's code, the sealed definition and the step count are owned by metrology with mode 700, so the agent cannot read them, signal the service or edit its state. The agent starts the service with start-tcwafer, which runs one fixed script as metrology through a single sudo rule that admits no arguments and passes no environment. Steps are charged before the readings are taken, so restarting the service does not reset the count; reports are written to /app/runs. /app is owned by root with the sticky bit (group-writable for agent), so the agent can create its own files there but cannot rename or replace /app/runs or /app/data. The service opens /app/runs once at start and refuses it unless it owns it and no one else can write to it; each report is created there as a new file, never through a link and never over an existing file. The step record is read without following links, the steps left are recomputed from the list of runs, and a record that cannot be read or does not add up counts as no steps left; changes to it are locked across threads and processes. The verifier runs separately with no network."""
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 10800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

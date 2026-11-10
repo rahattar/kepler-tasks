@@ -1,0 +1,9 @@
+Hidden sites wrong (of 8); the bound is 1.
+
+full-load threshold 0.95 (not 0.92)                                    0  
+full-load threshold 0.88                                               0  
+blow-down starting level 0.55 (not 0.6)                                0  
+supply high-pass over 11 intervals (not 31) for the clock check        0  
+discharge pressure from the stamped pressure log (no second pass)      0  
+
+Largest count over all variants: 0

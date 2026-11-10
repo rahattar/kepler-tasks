@@ -1,0 +1,15 @@
+Routes on the example job-ex.
+
+route                                                                                  limit mm
+reference (no check left out)                                                            1.9949
+the lowest limit over all speeds (the speed-independent bound)                           1.0597
+the programmed speed, not the machine's speed limit                                      1.9949
+the insert pockets of a face mill as its teeth                                           1.9949
+every FRF file taken as receptance                                                       1.9949
+the accelerometer's flank ignored                                                        1.9949
+the accelerometer's mass left in                                                         1.9949
+the feed taken along machine X                                                           1.9949
+every operation taken as climb milling                                                   1.9949
+the latest test of the assembly, whatever its stickout                                   1.9949
+the first test of the assembly at its stickout (before the spindle work)                 1.9949
+the records at face value: programmed speed, pockets, the latest test of the assembly     1.9949

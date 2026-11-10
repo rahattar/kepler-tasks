@@ -1,0 +1,44 @@
+Route study: defective ways of doing the selection, each graded by the sealed definition.
+Shipped scenario, laboratory seed 7318. Reference: 12 of 12.
+
+maintenance log missed (register as is)                                     8/12  H04 S16/55 hold,travel -0.110 H05 S18/63 decel -0.127 H08 S16/50 travel,decel -0.110 H12 S18/52 hold -0.055
+H05's re-reeving missed (4 falls, 20 t)                                    11/12  H05 S18/63 decel -0.127
+inverter retrofits missed (H04, H08, H12 as contactor hoists)               9/12  H04 S16/55 hold,travel -0.110 H08 S16/50 travel,decel -0.110 H12 S18/52 hold -0.055
+fast lowering missed (H04, H08)                                            11/12  H04 S16/60 travel -0.012
+two-speed hoists' working stops from full speed                            10/12  H02 S14/59 decel -0.157 H09 S20/50 decel -0.118
+contactor lowering at the motor's rated speed (below synchronous)          12/12  
+no tests: catalogue torque at every temperature, catalogue engagement       8/12  H02 S12/60 travel -0.011 H05 S16/76 decel -0.054 H08 S14/62 travel -0.029 H11 S14/58 decel -0.049
+O1 only (20-280 C), O2 taken to behave as O1                               11/12  H07 S16/73 hold -0.056
+O2 without a test near 200 C (probe x2's tests)                            11/12  H05 S16/75 decel -0.047
+O2 at 175 and 250 C, two engagement tests (probe x3's tests)               11/12  H05 S16/71 decel -0.015
+O1 without a test at the cool hoists' 50-65 C (DC engagement instead)      12/12  
+O2 without a test at H07's 160 C (DC engagement instead)                   11/12  H07 S16/78 hold -0.012
+O2 at 70, 190 and 280 C, none at H07's 160 C (probe x1's tests)            11/12  H07 S16/79 hold -0.002
+generic grid: each lining at 20, 100, 200 (O2 also 300) C                  10/12  H07 S16/79 hold -0.002 H11 S14/54 decel -0.008
+reference tests, friction extrapolated beyond the tested range             11/12  H05 S14/92 hold,travel,temp -15.965
+reference tests, engagement test ignored (catalogue times at every setting)  8/12  H02 S12/58 travel -0.067 H05 S16/62 travel -0.009 H07 S18/56 travel -0.017 H08 S14/62 travel -0.029
+holding with the gear's efficiency credited                                10/12  H06 S08/51 hold -0.101 H07 S16/78 hold -0.012
+deceleration checked with the empty hook only                               2/12  H01 S14/71 decel -0.065 H02 S12/71 decel -0.048 H04 S16/77 decel -0.085 H05 S16/76 decel -0.054 H06 S08/77 decel -0.097 H07 S18/69 decel -0.029 H08 S14/79 decel -0.065 H09 S18/69 decel -0.077 H11 S14/55 decel -0.019 H12 S18/73 decel -0.079
+deceleration checked lowering the rated load only                           1/12  H01 S14/87 decel -0.185 H02 S12/85 decel -0.157 H04 S16/93 decel -0.198 H05 S16/97 decel -0.162 H06 S10/56 decel -0.148 H07 S18/81 decel -0.120 H08 S14/96 decel -0.184 H09 S18/84 decel -0.193 H10 S18/56 decel -0.043 H11 S16/51 decel -0.121 H12 S18/86 decel -0.176
+deceleration and gearbox at the duty temperature only                      12/12  
+duty temperature as the time-average, not the peak after a stop            12/12  
+no engagement delay (brake acts when the power is cut)                      8/12  H02 S12/59 travel -0.039 H04 S16/60 travel -0.012 H05 S16/70 decel -0.005 H08 S14/62 travel -0.029
+
+Failed hoists by route (x = fails at least one requirement):
+     1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
+H01  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  x  x  .  .  .   failed by 2
+H02  .  .  .  .  x  .  x  .  .  .  .  .  .  .  .  x  .  x  x  .  .  x   failed by 6
+H03  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .   failed by 0
+H04  x  .  x  x  .  .  .  .  .  .  .  .  .  .  .  .  .  x  x  .  .  x   failed by 6
+H05  x  x  .  .  .  .  x  .  x  x  .  .  .  .  x  x  .  x  x  .  .  x   failed by 10
+H06  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  x  x  x  .  .  .   failed by 3
+H07  .  .  .  .  .  .  .  x  .  .  .  x  x  x  .  x  x  x  x  .  .  .   failed by 8
+H08  x  .  x  .  .  .  x  .  .  .  .  .  .  .  .  x  .  x  x  .  .  x   failed by 7
+H09  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .  .  .  x  x  .  .  .   failed by 3
+H10  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  x  .  .  .   failed by 1
+H11  .  .  .  .  .  .  x  .  .  .  .  .  .  x  .  .  .  x  x  .  .  .   failed by 4
+H12  x  .  x  .  .  .  .  .  .  .  .  .  .  .  .  .  .  x  x  .  .  .   failed by 4
+
+Routes: 1 maintenance log missed (register as is); 2 H05's re-reeving missed (4 falls, 20 t); 3 inverter retrofits missed (H04, H08, H12 as contactor hoists); 4 fast lowering missed (H04, H08); 5 two-speed hoists' working stops from full speed; 6 contactor lowering at the motor's rated speed (below synchronous); 7 no tests: catalogue torque at every temperature, catalogue engagement; 8 O1 only (20-280 C), O2 taken to behave as O1; 9 O2 without a test near 200 C (probe x2's tests); 10 O2 at 175 and 250 C, two engagement tests (probe x3's tests); 11 O1 without a test at the cool hoists' 50-65 C (DC engagement instead); 12 O2 without a test at H07's 160 C (DC engagement instead); 13 O2 at 70, 190 and 280 C, none at H07's 160 C (probe x1's tests); 14 generic grid: each lining at 20, 100, 200 (O2 also 300) C; 15 reference tests, friction extrapolated beyond the tested range; 16 reference tests, engagement test ignored (catalogue times at every setting); 17 holding with the gear's efficiency credited; 18 deceleration checked with the empty hook only; 19 deceleration checked lowering the rated load only; 20 deceleration and gearbox at the duty temperature only; 21 duty temperature as the time-average, not the peak after a stop; 22 no engagement delay (brake acts when the power is cut)
+
+Departures that still get 12 of 12 on this scenario (the windows absorb them): contactor lowering at the motor's rated speed (below synchronous); O1 without a test at the cool hoists' 50-65 C (DC engagement instead); deceleration and gearbox at the duty temperature only; duty temperature as the time-average, not the peak after a stop.

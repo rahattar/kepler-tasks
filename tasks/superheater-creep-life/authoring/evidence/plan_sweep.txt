@@ -1,0 +1,5 @@
+E3 oxide False E9 wall False: 172 plans, outside 25%: E3 -65%, E9 +159%
+E3 oxide False E9 wall True :  19 plans, outside 25%: E3 -65%
+E3 oxide True  E9 wall False:  19 plans, outside 25%: E9 +159%
+E3 oxide True  E9 wall True :   1 plans, outside 25%: none (pass)
+plans considered: 211; passing: 1 (E3 oxide-ut + E9 wall-ut)

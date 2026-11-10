@@ -1,0 +1,34 @@
+tests/grade.py on corrupted copies of the reference program, run as nobody; 59 hidden turbines, accepted when at most 1 is wrong.
+
+reference, unchanged                                                     wrong  0  accepted; nobody's processes left: 0
+output is a symlink to a correct file                                    wrong 59  rejected; nobody's processes left: 0
+    ValueError('the output is not a regular file')
+no header                                                                wrong 59  rejected; nobody's processes left: 0
+    ValueError('the header is not turbine,aep_ratio,warranty_claim')
+header in another order                                                  wrong 59  rejected; nobody's processes left: 0
+    ValueError('the header is not turbine,aep_ratio,warranty_claim')
+an extra column                                                          wrong 59  rejected; nobody's processes left: 0
+    ValueError('the header is not turbine,aep_ratio,warranty_claim')
+a turbine twice                                                          wrong 59  rejected; nobody's processes left: 0
+    ValueError('turbine T01 appears twice')
+a turbine missing                                                        wrong 59  rejected; nobody's processes left: 0
+    ValueError('turbines missing: T08')
+an extra turbine                                                         wrong 59  rejected; nobody's processes left: 0
+    ValueError("not a turbine of the package: 'T99'")
+a ratio NaN                                                              wrong 59  rejected; nobody's processes left: 0
+    ValueError('the ratio of T01 is not a finite number')
+a ratio infinite                                                         wrong 59  rejected; nobody's processes left: 0
+    ValueError('the ratio of T01 is not a finite number')
+a ratio not a number                                                     wrong 59  rejected; nobody's processes left: 0
+    ValueError("could not convert string to float: 'high'")
+a claim 'Yes' (capitalised)                                              wrong 59  rejected; nobody's processes left: 0
+    ValueError('the claim of T01 is not yes or no')
+empty file                                                               wrong 59  rejected; nobody's processes left: 0
+    ValueError('the header is not turbine,aep_ratio,warranty_claim')
+bytes that are not UTF-8                                                 wrong 59  rejected; nobody's processes left: 0
+    UnicodeDecodeError('utf-8', b'turbine,aep_ratio,warranty_claim\r\nT01,
+correct output, exit status 1                                            wrong 59  rejected; nobody's processes left: 0
+    exit status 1: 
+correct output, a background process left running                        wrong  0  accepted; nobody's processes left: 0
+correct output, then runs past the time limit (limit set to 20 s here)   wrong 59  rejected; nobody's processes left: 0
+    time limit of 20 s exceeded

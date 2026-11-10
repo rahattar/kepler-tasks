@@ -1,0 +1,39 @@
+Shipped scenario (seed 6421); the last column counts the scatter seeds 6401-6420 on which the route gets all 13.
+reference                                                                        13 of 13  tempers 11  worst B09 +0.57 HRC  [all 13 on 20 of 20 seeds]
+production log missed (B09 as 41-7731, tested as such)                           12 of 13  tempers 11  worst B09 -1.35 HRC  fails B09  [all 13 on 0 of 20 seeds]
+no tests: supplier curves with every conversion                                   6 of 13  tempers  0  worst B11 -6.46 HRC  fails B06 B07 B08 B09 B11 B12 B13  [all 13 on 0 of 20 seeds]
+soak time ignored (2 h tempers at the setpoint)                                   6 of 13  tempers 11  worst B07 -3.47 HRC  fails B03 B05 B06 B07 B08 B11 B12  [all 13 on 0 of 20 seeds]
+G52 double tempering ignored (one soak; G52 tested once)                          8 of 13  tempers 10  worst B13 -4.79 HRC  fails B06 B07 B08 B11 B13  [all 13 on 0 of 20 seeds]
+section ignored (25 mm half-radius test pieces)                                  12 of 13  tempers 11  worst B02 -2.65 HRC  fails B02  [all 13 on 0 of 20 seeds]
+G52 tested once at the Hollomon-Jaffe equivalent (double = twice the time)        8 of 13  tempers 10  worst B13 -1.24 HRC  fails B06 B07 B08 B11 B13  [all 13 on 0 of 20 seeds]
+G52 tested once, corrected by one single/double pair on 52-1312                  13 of 13  tempers 10  worst B04 +0.70 HRC  [all 13 on 17 of 20 seeds]
+52-1250 untested, as the supplier curve                                          11 of 13  tempers 10  worst B11 -6.46 HRC  fails B07 B11  [all 13 on 0 of 20 seeds]
+52-1250 untested, as 52-1312's test                                              11 of 13  tempers 10  worst B11 -0.57 HRC  fails B07 B11  [all 13 on 0 of 20 seeds]
+52-1312 untested, as the supplier curve                                          11 of 13  tempers 10  worst B06 -3.59 HRC  fails B06 B08  [all 13 on 0 of 20 seeds]
+52-1312 untested, as 52-1250's test                                              12 of 13  tempers 10  worst B06 -0.39 HRC  fails B06  [all 13 on 4 of 20 seeds]
+52-1377 untested, as the supplier curve                                          12 of 13  tempers 10  worst B13 -1.02 HRC  fails B13  [all 13 on 0 of 20 seeds]
+52-1377 untested, as 52-1250's test                                              12 of 13  tempers 10  worst B13 -2.73 HRC  fails B13  [all 13 on 0 of 20 seeds]
+41-7864 tested only at B02's 150 mm half-radius                                  12 of 13  tempers 11  worst B09 -0.49 HRC  fails B09  [all 13 on 1 of 20 seeds]
+43-2288 untested, as the supplier curve                                          12 of 13  tempers 11  worst B12 -0.53 HRC  fails B12  [all 13 on 0 of 20 seeds]
+43-2288 untested, as 43-2210's test                                              12 of 13  tempers 11  worst B12 -0.37 HRC  fails B12  [all 13 on 0 of 20 seeds]
+
+Matrix (routes by batch; + right, . wrong):
+       01 02 03 04 05 06 07 08 09 10 11 12 13
+R00    +  +  +  +  +  +  +  +  +  +  +  +  +   reference
+R01    +  +  +  +  +  +  +  +  .  +  +  +  +   production log missed (B09 as 41-7731, tested as such)
+R02    +  +  +  +  +  .  .  .  .  +  .  .  .   no tests: supplier curves with every conversion
+R03    +  +  .  +  .  .  .  .  +  +  .  .  +   soak time ignored (2 h tempers at the setpoint)
+R04    +  +  +  +  +  .  .  .  +  +  .  +  .   G52 double tempering ignored (one soak; G52 tested once)
+R05    +  .  +  +  +  +  +  +  +  +  +  +  +   section ignored (25 mm half-radius test pieces)
+R06    +  +  +  +  +  .  .  .  +  +  .  +  .   G52 tested once at the Hollomon-Jaffe equivalent (double = twice the time)
+R07    +  +  +  +  +  +  +  +  +  +  +  +  +   G52 tested once, corrected by one single/double pair on 52-1312
+R08    +  +  +  +  +  +  .  +  +  +  .  +  +   52-1250 untested, as the supplier curve
+R09    +  +  +  +  +  +  .  +  +  +  .  +  +   52-1250 untested, as 52-1312's test
+R10    +  +  +  +  +  .  +  .  +  +  +  +  +   52-1312 untested, as the supplier curve
+R11    +  +  +  +  +  .  +  +  +  +  +  +  +   52-1312 untested, as 52-1250's test
+R12    +  +  +  +  +  +  +  +  +  +  +  +  .   52-1377 untested, as the supplier curve
+R13    +  +  +  +  +  +  +  +  +  +  +  +  .   52-1377 untested, as 52-1250's test
+R14    +  +  +  +  +  +  +  +  .  +  +  +  +   41-7864 tested only at B02's 150 mm half-radius
+R15    +  +  +  +  +  +  +  +  +  +  +  .  +   43-2288 untested, as the supplier curve
+R16    +  +  +  +  +  +  +  +  +  +  +  .  +   43-2288 untested, as 43-2210's test
+routes failing each batch: B01 0 B02 1 B03 1 B04 0 B05 1 B06 6 B07 6 B08 5 B09 3 B10 0 B11 6 B12 4 B13 5

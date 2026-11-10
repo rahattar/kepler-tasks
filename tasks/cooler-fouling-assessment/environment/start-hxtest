@@ -1,0 +1,3 @@
+#!/bin/bash
+# Starts the maintenance contractor's clean-and-test service at $HXTEST_URL (http://127.0.0.1:8000).
+exec sudo -n -u contractor /opt/hxtest/run-service

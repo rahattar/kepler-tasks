@@ -1,0 +1,43 @@
+Null baselines on the shipped scenario (seed 4315); gate 15 of 16. 'x' marks a joint the answer gets right.
+
+null answer                                                                right  01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16
+ 1 handbook K, no pattern ratio (the rig's default torque)                  4/16  .  x  .  .  x  .  x  .  .  x  .  .  .  .  .  .
+ 2 handbook K with the records' pattern ratios                              5/16  .  x  .  x  x  .  x  .  .  x  .  .  .  .  .  .
+ 3 handbook K scaled by 0.80, with the records' pattern ratios              0/16  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+ 4 handbook K scaled by 0.85, with the records' pattern ratios              2/16  .  .  x  .  .  .  .  .  .  .  .  .  .  .  x  .
+ 5 handbook K scaled by 0.90, with the records' pattern ratios              2/16  .  .  x  .  .  .  .  .  .  .  .  .  .  .  x  .
+ 6 handbook K scaled by 0.95, with the records' pattern ratios              3/16  .  x  .  .  .  .  x  .  .  x  .  .  .  .  .  .
+ 7 handbook K scaled by 1.05, with the records' pattern ratios              5/16  .  x  .  x  x  x  .  .  .  .  .  .  x  .  .  .
+ 8 handbook K scaled by 1.10, with the records' pattern ratios              5/16  .  .  .  x  .  x  .  .  x  .  .  x  x  .  .  .
+ 9 handbook K scaled by 1.15, with the records' pattern ratios              5/16  .  .  .  .  .  x  .  x  x  .  .  x  x  .  .  .
+10 the record E01's single-bolt K (0.151) for every joint, records' ratios  2/16  .  .  x  .  .  .  .  .  .  .  .  .  .  .  x  .
+11 the record E02's single-bolt K (0.139) for every joint, records' ratios  1/16  x  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+12 one torque for all joints (the median of the handbook torques)           0/16  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+
+Best single constant (the strongest trial-free answer), searched over multipliers 0.50 to 1.60 in steps of 0.005:
+  c x handbook torque                                  best 5/16 at c = 1.225: J06, J08, J09, J11, J12
+  c x handbook torque / records' pattern ratio         best 6/16 at c = 1.030: J02, J04, J05, J07, J10, J13
+  c x the records' mean K x d x target / records' ratio best 6/16 at c = 1.280: J02, J04, J05, J07, J10, J13
+
+Joints a trial-free answer gets right (the numbers are the null answers above that pass it), and the interval
+of multipliers c for which c x handbook torque / records' ratio gets the joint right:
+  J01  nulls 11            c in [0.695, 0.782]
+  J02  nulls 1, 2, 6, 7    c in [0.947, 1.067]
+  J03  nulls 4, 5, 10      c in [0.813, 0.916]
+  J04  nulls 2, 7, 8       c in [0.997, 1.123]
+  J05  nulls 1, 2, 7       c in [0.960, 1.081]
+  J06  nulls 7, 8, 9       c in [1.047, 1.180]
+  J07  nulls 1, 2, 6       c in [0.925, 1.042]
+  J08  nulls 9             c in [1.140, 1.284]
+  J09  nulls 8, 9          c in [1.076, 1.212]
+  J10  nulls 1, 2, 6       c in [0.918, 1.034]
+  J11  nulls none          c in [1.164, 1.311]
+  J12  nulls 8, 9          c in [1.092, 1.230]
+  J13  nulls 7, 8, 9       c in [1.027, 1.157]
+  J14  nulls none          c in [1.281, 1.443]
+  J15  nulls 4, 5, 10      c in [0.821, 0.924]
+  J16  nulls none          c in [0.620, 0.698]
+
+Every joint is passed by some multiple of the handbook torque, since each has its own +/-6 percent window; the
+intervals are spread over c = 0.62 to 1.44 and at most 6 of them overlap, so no single trial-free answer gets
+more than 6 of 16 right against the 15 required. Of the fixed null answers listed, none passes J11, J14, J16.

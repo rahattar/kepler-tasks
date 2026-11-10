@@ -1,0 +1,48 @@
+Windows: whole-degree setpoints from the grade's minimum to 700 C that put the batch inside its range
+(production soak 1 h per 25 mm, at least 2 h; G52 double tempered). Slope: HRC per C at the window's middle.
+
+batch heat      D mm location    range     window C    width  slope minimum
+B01   41-7731     50 half-radius   32-36    516-549       34  0.119 400 C
+B02   41-7864    150 half-radius   28-32    484-557       74  0.037 400 C
+B03   43-2210    200 half-radius   30-34    513-548       36  0.113 400 C
+B04   43-2210     75 surface       38-42    470-504       35  0.114 400 C
+B05   32-0458    100 half-radius   36-40    543-561       19  0.207 500 C
+B06   52-1312    200 half-radius   42-46    553-576       24  0.169 540 C
+B07   52-1250    300 half-radius   38-42    553-575       23  0.173 540 C
+B08   52-1312    150 surface       44-48    546-570       25  0.166 540 C
+B09   41-7864     25 surface       31-35    566-589       24  0.174 400 C
+B10   32-0458     50 surface       40-44    537-557       21  0.194 500 C
+B11   52-1250    100 surface       40-44    562-583       22  0.180 540 C
+B12   43-2288    120 half-radius   33-37    524-551       28  0.146 400 C
+B13   52-1377     60 surface       50-55    577-601       25  0.205 540 C
+windows are contiguous; widths 19 to 74 C
+
+Departure of each batch's heat from the supplier's typical heat of its grade, at the batch's own diameter,
+location and production tempering, at the window's middle (HRC; + harder):
+  B01 41-7731 +0.00
+  B02 41-7864 +1.14
+  B03 43-2210 +0.00
+  B04 43-2210 +0.00
+  B05 32-0458 +0.00
+  B06 52-1312 -3.01
+  B07 52-1250 -5.56
+  B08 52-1312 -3.25
+  B09 41-7864 +3.90
+  B10 32-0458 +0.00
+  B11 52-1250 -5.95
+  B12 43-2288 +2.54
+  B13 52-1377 +6.16
+
+G52: a single temper against a double temper at the same Hollomon-Jaffe parameter (the double temper's
+total time), 25 mm half-radius, HRC (single minus double):
+  52-1250  560 C +2.59   580 C +2.60   600 C +2.60   620 C +2.60
+  52-1312  560 C +2.98   580 C +3.00   600 C +3.00   620 C +3.00
+  52-1377  560 C +3.38   580 C +3.40   600 C +3.40   620 C +3.40
+  52-typ   560 C +2.59   580 C +2.60   600 C +2.60   620 C +2.60
+
+G52 heats against each other at each G52 batch's own conditions, at the batch window's middle (HRC):
+  B06 (52-1312) 565 C: 52-1250 41.10  52-1312 43.89  52-1377 52.97  52-typ 46.90
+  B07 (52-1250) 564 C: 52-1250 39.94  52-1312 42.67  52-1377 51.21  52-typ 45.51
+  B08 (52-1312) 558 C: 52-1250 43.36  52-1312 46.07  52-1377 55.46  52-typ 49.31
+  B11 (52-1250) 573 C: 52-1250 41.92  52-1312 44.73  52-1377 54.12  52-typ 47.87
+  B13 (52-1377) 589 C: 52-1250 40.69  52-1312 43.57  52-1377 52.78  52-typ 46.62

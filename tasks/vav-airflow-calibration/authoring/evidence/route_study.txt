@@ -1,0 +1,29 @@
+acceptance: delivered airflow within 10 % of setpoint at design minimum and maximum, every box
+
+  factory K and offset 0 (as shipped)                                worst  68.8 % (14)  fails 18  04 09 14 16 17 18 25 26 27 28
+  reference: visits 36 37 38 28 31, class transfer                   worst   5.8 % (35)  fails  0  
+
+shortcuts on the reference plan
+  offsets only on firmware 2.4 (failed auto-zero on a 3.1 box missed) worst  26.3 % (04)  fails  1  04
+  no closed-damper offsets                                           worst 100.0 % (25)  fails  7  04 09 14 16 17 18 25
+  2024 report used for the east wing too                             worst  38.1 % (30)  fails  6  26 27 30 33 34 35
+  one elbow model for both orientations                              worst  21.3 % (26)  fails  4  25 26 27 29
+  punch-list connectors taken at their surveyed L/D                  worst  26.7 % (34)  fails  2  30 34
+  visits fitted for K only, at design maximum, offset 0              worst 100.0 % (38)  fails  2  36 38
+
+incomplete plans (each with its most forgiving fallback where several are defensible)
+  no vertical-drop visit (34 instead), drops at factory K            worst  21.1 % (28)  fails  5  25 26 27 28 29
+  no vertical-drop visit (34 instead), drops on the horizontal model worst  29.2 % (28)  fails  5  25 26 27 28 29
+  no long-run visit (34 instead), long runs as ordinary flex         worst  15.6 % (35)  fails  3  31 33 35
+  no long-run visit (34 instead), long runs at the kinked factor     worst  15.8 % (31)  fails  3  31 33 35
+  lab 36 not visited (30 instead), zero = median of the 2.4 zeros    worst  21.8 % (36)  fails  1  36
+  lab 36 not visited (30 instead), zero = mean of the visited labs   worst  21.3 % (36)  fails  1  36
+  lab 37 not visited (30 instead), zero = median of the 2.4 zeros    worst  19.2 % (37)  fails  1  37
+  lab 37 not visited (30 instead), zero = mean of the visited labs   worst  29.2 % (37)  fails  1  37
+  lab 38 not visited (34 instead), zero = median of the 2.4 zeros    worst  42.4 % (38)  fails  1  38
+  lab 38 not visited (34 instead), zero = mean of the visited labs   worst  38.9 % (38)  fails  1  38
+
+not a method, shown for completeness: an unvisited 2.4 lab given offset 0
+  lab 36 not visited, offset 0                                       worst  63.2 % (36)  fails  1  36
+  lab 37 not visited, offset 0                                       worst   5.8 % (35)  fails  0  
+  lab 38 not visited, offset 0                                       worst 100.0 % (38)  fails  1  38

@@ -1,0 +1,137 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/gtperf.py"]
+
+[task]
+name = "afterquery/turbine-tool-repair"
+description = "Repair a power plant's gas turbine performance-test reduction program so that it computes corrected output and heat rate correctly, per the plant's procedure, for any test record set in the documented format."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "gas-turbine",
+    "performance-test",
+    "ptc-22",
+    "engineering-software",
+    "code-review",
+    "heat-rate",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only textbook gas turbine performance testing (ASME PTC 22 practice: OEM correction curves, generator loss correction, fuel heating value from gas composition) on a synthetic machine, program, records and parameters. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "gas turbine performance testing"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "gas-turbine",
+    "performance-test",
+    "ptc-22",
+    "engineering-software",
+    "code-review",
+    "heat-rate",
+]
+expert_time_estimate_hours = 5
+relevant_experience = """I am a control scientist and thermal engineer with a PhD in mechanical engineering. Thermodynamic performance of power and process equipment, test reduction to reference conditions, and writing and reviewing the engineering software that does it are part of my work on industrial thermal equipment and of my teaching. The machine, program, records and parameters are synthetic."""
+difficulty_explanation = """A plant performance engineer, or the turbine maker's test engineer, does this when a plant's own reduction program disagrees with a contractor's test report. The program turns a day of test data into the gas turbine's corrected gross output and corrected heat rate at its contract reference conditions, under a procedure based on ASME PTC 22. Its results decide guarantee claims, maintenance timing and the unit's dispatch cost, and it is reused for every test. The machine, the program, the records and parameters are synthetic, written by authoring/provenance from a sealed definition.
+
+The core difficulty is that the procedure is written the way plant procedures are, in engineering terms, and the program's errors can only be recognised by someone who knows what those terms mean in practice:
+- Power factor: "refer the output to 0.85 power factor with the generator losses" fixes the sign of the loss correction only through the physics of armature current at lower power factor. The program has it backwards.
+- Correction curves: their definition as ratios to the reference value means that measured values are divided by them. The program multiplies the heat rate.
+- Fuel heat input: "sensible heat as the fuel enters the turbine" means the temperature after the fuel heater, not at the flowmeter upstream of it. The program also drops the fuel flow from that term.
+- Heating value: it comes from ISO 6976 component values that the procedure does not tabulate. The program's ethane value is wrong, and it has no hydrogen, helium or neo-pentane for the blended gas the site now burns.
+- Inlet pressure loss: "total-pressure loss from ambient to the compressor inlet" is not the filter differential pressure the program uses, which leaves out the hoods, silencer and ducting.
+- Base load: "on exhaust temperature control" excludes minutes when the exhaust runs well below its reference with the inlet guide vanes open. The program's check is one-sided.
+- Instrument verification: revision 4 of the procedure checks PT-102, the inlet RTDs and the fuel meter against the barometer, the met dry bulb and zero flow "while GT-1 is at rest", and removes each instrument's steady difference for the day. The program, written to revision 3, has no such check. Doing it right takes knowing what rest looks like in the records and what each instrument does there: the rotor on its turning gear, not simply the time before the first logged start; a fuel meter that registers the line packing before every start, so the mean of its rest readings is not its zero; and eight RTDs that are each an instrument, which matters when one of them later fails. The acquisition system flags an RTD as failed only on an open or short circuit; a transmitter frozen at an old reading is not flagged, and no longer measures the inlet air.
+
+The program must also be right for record sets nobody has looked at yet. Two example days and one contractor result can be matched while defects remain that bite only under other conditions: a winter day colder than the correction tables, two mistyped curve entries, an exchanged table, unit and format variants, failed sensor channels, an aborted run, gas samples from another day in the same file, instrument errors that the examples do not have, a day whose only rest follows a midday trip and a day with no rest at all. On the reported example, two of the defects cancel in the heat rate.
+
+The program as shipped has 20 defects. Each alone puts at least one of the eight hidden test days 0.55 percent to more than 40 percent off, or makes the program crash on it (authoring/evidence/route_study.txt), against a requirement of 0.3 percent."""
+
+solution_explanation = """solution/gtperf.py is the corrected program; solution/solve.sh installs it as /app/output/gtperf.py and runs it on the two examples. It is self-contained (tables and ISO 6976 values embedded) and reduces one record set as follows.
+
+Units and records:
+- The barometer comes from met_baro_kpa, or from met_baro_hpa divided by 10.
+- The fuel flow comes from fuel_coriolis_kg_s, or from fuel_coriolis_kg_h divided by 3600.
+- RTD channels reading -999, and channels frozen at one reading over the day (standard deviation 0.01 K or less), are left out of the CIT mean.
+- Inlet pressure loss = barometer minus PT-102, the bellmouth total pressure (not PDT-101, the filter stages only).
+
+Instrument verification:
+- GT-1 is at rest in the minutes with the rotor below 1 percent speed (on the turning gear at about 0.2 percent).
+- Each instrument's error is the median of its difference from its reference over those minutes: PT-102 minus the barometer, each RTD minus the met dry bulb (per channel), and the FT-301 reading itself. The median is not moved by the line-packing flow before a start.
+- Each error is subtracted from all of that instrument's readings. With no minute at rest, the instruments are used as read.
+
+Fuel:
+- The LHV is the mean over the test day's samples only. Each sample's value is ISO 6976 ideal-gas net molar heating values at 15 degC weighted by mole fraction and divided by the molar mass. The 14 components of the record format are used: ethane 1428.84, hydrogen 241.72, helium 0 and neo-pentane 3250.48 kJ/mol among them. A component outside that list raises an error.
+- Heat input = m_f (LHV + 2.20 (T - 15)), with T at TE-305, after the fuel heater.
+
+Runs:
+- Runs logged as aborted, or without an end, are left out.
+- Each run's period is the first 30 successive minutes (no minute missing) inside the logged run with the IGVs fully open (85.5 deg or more; fully open is 86) and the exhaust temperature on its control reference (within 3 K, above or below).
+
+Corrections, on the 30-minute averages:
+- The output is referred to 0.85 power factor at the same shaft power: P_pf = P + L(P, PF) - L(P, 0.85), with PF = |P| / sqrt(P^2 + Q^2) and L = 410 + 560 (S/56)^2 kW.
+- Output and heat rate (3600 Q / P_pf) are divided by the products of the OEM factors: the tables as printed, read by linear interpolation and extrapolated linearly from the end segments.
+- The test result is the mean of the valid runs.
+
+On the eight hidden sets the largest miss is 0.04 percent."""
+
+verification_explanation = """tests/grade_tool.py runs the submitted /app/output/gtperf.py on each of eight hidden GT-1 record sets (tests/hidden; the agent's image does not contain them).
+
+The verifier image has the agent's /app/data at the same path and read-only (tests/app_data, a copy that authoring/provenance/build.py writes and preflight checks byte for byte). A program that reads the documents at run time therefore behaves as it did in development; authoring/evidence/independent_gtperf.py does exactly that.
+
+How each set is run:
+- The program and the set are copied to a scratch directory.
+- It runs as the unprivileged user nobody, with only PATH and HOME set, as `python3 -I gtperf.py SET OUT.csv`, within 300 seconds.
+- The sealed values (tests/hidden/truth.json) stay in /tests, which only root can read.
+
+The single pytest test passes only when, on every set, the program exits normally and writes corrected_output_mw and corrected_heat_rate_kj_kwh, both finite and within 0.3 percent of the sealed values. Per-set results go to /logs/verifier/metrics.json and do not affect the reward.
+
+authoring/evidence/calibration.txt checks:
+- truth.json against the sealed test specifications;
+- the OEM tables against the sealed curves;
+- every correction factor equal to 1 at the reference conditions.
+
+The hidden sets cover, by design:
+- a -12 degC winter day with a kPa barometer, GT-1 in service all day (no rest);
+- a hot day with missing minutes, a fuel-pressure limit and the RTD array reading 0.9 K high;
+- an 8 percent hydrogen blend in kg/h format, with earlier-day samples in the file and a fuel meter zero error;
+- an RTD reading 6 K high that fails before the runs, an aborted run whose fuel meter was in alarm, and a PT-102 zero error;
+- a high-ethane gas at 0.90 power factor, in service from the night before, tripped at midday and restarted (its only rest), with RTD and fuel meter errors;
+- a leading power factor with a fuel-pressure limit at full IGV, with PT-102 and RTD errors;
+- a day warming from 29 to 35 degC with a kPa barometer, a fuel meter zero error and an RTD frozen at an overnight reading;
+- a hydrogen and helium blend with an RTD failed all day and the others reading high.
+
+Every day with a start has the line-packing flow before it, and the two examples have no instrument errors.
+
+Why 0.3 percent:
+- Correct side: independent_gtperf.py, a second program sharing no code with the reference (csv module instead of pandas, OEM tables read from /app/data/docs at run time, mass-fraction LHV, IAPWS-IF97 saturation pressure, corrections minute by minute, rest found from zero frequency below 5 percent speed, trimmed-mean instrument errors, frozen RTDs found by their distinct readings), misses by at most 0.038 percent (independent.txt). Other sound choices, including other ways to find rest and frozen channels, keep the reference within 0.046 percent (method_spread.txt).
+- Wrong side: every defect of the shipped program alone fails at least one set, by 0.55 percent or more or by crashing (route_study.txt).
+
+A program that always writes the same values fails 7 of 8 sets, and the shipped program fails all 8 (constant_null.txt).
+
+The agent works as a separate user that can only write to /app/output; /app/data and /app/tool are read-only. The verifier runs separately without network, and /logs/verifier is root-only."""
+
+[verifier]
+timeout_sec = 3600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 10800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

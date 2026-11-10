@@ -1,0 +1,12 @@
+Independent program on the hidden audits (the bound is 1 wrong of 8); errors in percent:
+
+s-301   right {'avg_demand_m3_min': -0.43, 'specific_power_kw_per_m3_min': 0.43, 'peak_demand_m3_min': 0.08, 'leak_m3_min': -1.2}
+s-302   right {'avg_demand_m3_min': -0.53, 'specific_power_kw_per_m3_min': 0.53, 'peak_demand_m3_min': -0.21, 'leak_m3_min': -1.57}
+s-303   right {'avg_demand_m3_min': 0.18, 'specific_power_kw_per_m3_min': -0.18, 'peak_demand_m3_min': -0.45, 'leak_m3_min': 0.01}
+s-304   right {'avg_demand_m3_min': -0.29, 'specific_power_kw_per_m3_min': 0.29, 'peak_demand_m3_min': 0.09, 'leak_m3_min': -1.07}
+s-305   right {'avg_demand_m3_min': 0.14, 'specific_power_kw_per_m3_min': -0.13, 'peak_demand_m3_min': -0.14, 'leak_m3_min': -0.0}
+s-306   right {'avg_demand_m3_min': -0.26, 'specific_power_kw_per_m3_min': 0.26, 'peak_demand_m3_min': 0.15, 'leak_m3_min': -1.48}
+s-307   right {'avg_demand_m3_min': 0.61, 'specific_power_kw_per_m3_min': -0.61, 'peak_demand_m3_min': -0.15, 'leak_m3_min': 0.0}
+s-308   right {'avg_demand_m3_min': -0.36, 'specific_power_kw_per_m3_min': 0.37, 'peak_demand_m3_min': -0.03, 'leak_m3_min': -1.01}
+
+0 of 8 wrong

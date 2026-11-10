@@ -1,0 +1,12 @@
+Independent program on the hidden record sets (miss in percent, output / heat rate):
+
+h1  -0.006 / -0.014
+h2  -0.003 / +0.003
+h3  -0.018 / +0.002
+h4  +0.000 / +0.038
+h5  -0.005 / -0.013
+h6  +0.000 / +0.009
+h7  -0.007 / -0.005
+h8  -0.000 / -0.034
+
+0 of 8 sets outside 0.3 %; largest miss 0.038 %

@@ -1,0 +1,15 @@
+time,entry
+2026-02-11 07:00,GT-1 in service at base load from the night shift
+2026-02-11 08:00,Run 1 start
+2026-02-11 08:30,Gas sample drawn at the fuel skid sample point
+2026-02-11 09:00,Run 1 end
+2026-02-11 09:30,Run 2 start
+2026-02-11 10:15,Gas sample drawn at the fuel skid sample point
+2026-02-11 10:30,Run 2 end
+2026-02-11 11:45,Gas sample drawn at the fuel skid sample point
+2026-02-11 11:50,GT-1 tripped (fuel gas supply pressure low)
+2026-02-11 12:50,GT-1 start
+2026-02-11 13:35,GT-1 at base load
+2026-02-11 13:40,Run 3 start
+2026-02-11 14:40,Run 3 end
+2026-02-11 15:00,Data acquisition stopped

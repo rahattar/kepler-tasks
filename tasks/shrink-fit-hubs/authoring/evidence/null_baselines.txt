@@ -1,0 +1,19 @@
+rule of thumb 1.0 um per mm of diameter, oven at the heating limit        1 of 12  right: J01
+best single um per mm (2.12, chosen with the truth), oven at the heating limit  2 of 12  right: J02 J09
+top of the range, steel expansion from the 20-100 C table, no tests       9 of 12  right: J01 J02 J03 J05 J07 J08 J10 J11 J12
+handbook friction 0.15 / 0.10 / 0.08, table expansion, mid-window pick    7 of 12  right: J01 J02 J03 J05 J10 J11 J12
+handbook friction, table expansion, maintenance log not applied, mid-window pick  5 of 12  right: J01 J02 J03 J05 J12
+
+joints that some single um-per-mm ratio (oven at the limit) gets right, with the ratios that do:
+J01 0.98-1.11
+J02 2.02-2.12
+J03 1.23-1.29
+J04 1.83-1.96
+J05 1.67-1.76
+J06 1.75-1.86
+J07 1.11-1.17
+J08 1.13-1.20
+J09 1.98-2.13
+J10 1.46-1.56
+J11 1.88-2.01
+J12 0.82-0.98

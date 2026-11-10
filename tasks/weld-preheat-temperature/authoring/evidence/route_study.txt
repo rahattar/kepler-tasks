@@ -1,0 +1,23 @@
+Routes as complete programs through tests/grade.py (run as nobody); seven hidden joints; accepted when at most 1 is wrong.
+
+route                                                                                                    wrong  joints wrong (signed deviation from the truth, C)
+the joint sheet's plates, not the replacement in the shop log                                                2  hopper-wall -39.6, tank-course -131.6  rejected
+the joint sheet's heat of a plate, not the heat whose certificate lists the plate                            2  deck-plate -12.3, frame-web +44.2  rejected
+the heat's cast analysis, not the plate's product analysis                                                   2  boom-chord -64.6, girder-flange -15.5  rejected
+another plate's product analysis of the heat, for a plate without its own                                    2  frame-web +105.3, hopper-wall +74.4  rejected
+the batch certificate's hydrogen, no moisture pick-up                                                        2  column-splice -19.1, deck-plate -14.9  rejected
+exposure from the first issue, through a return to the oven                                                  2  column-splice +18.9, deck-plate +29.5  rejected
+the joint sheet's electrode batch, not the batch the oven issued to the station                              2  column-splice -34.9, deck-plate -14.9  rejected
+the climate logger of bay 1 for every station                                                                2  column-splice -12.5, deck-plate -10.2  rejected
+mean current x mean voltage for the pulsed runs                                                              2  frame-web +55.6, tank-course +65.3  rejected
+the sensed voltage as the arc voltage at monitors that sense at the power source                             2  frame-web -49.0, tank-course -60.7  rejected
+the cable drop of a pulsed run from its mean current only                                                    2  frame-web -20.7, tank-course -25.7  rejected
+the monitor's current as recorded before its recalibration                                                   2  boom-chord -30.4, frame-web -17.0  rejected
+the joint sheet's consumable batch, not the spool fitted later                                               2  girder-flange -16.9, hopper-wall -16.9  rejected
+every run the station's monitor recorded, other joints' runs too                                             2  girder-flange +111.1, tank-course +189.6  rejected
+the WPS's nominal current, voltage and travel speed                                                          6  boom-chord +17.7, column-splice +43.3, deck-plate +44.0, frame-web +85.8, girder-flange +14.8, tank-course +160.1  rejected
+the hardness limit on every run, not only the capping runs                                                   5  boom-chord +89.2, column-splice +48.4, deck-plate +31.0, girder-flange +64.9, tank-course +118.8  rejected
+the hydrogen clause only (EN 1011-2 method B)                                                                3  boom-chord -68.3, frame-web -67.4, tank-course -83.9  rejected
+the 3D cooling time only (thick-plate formula)                                                               2  boom-chord +54.7, tank-course +58.9  rejected
+the 2D cooling time only (thin-plate formula)                                                                5  column-splice +117.1, deck-plate +170.5, frame-web +115.6, girder-flange +94.1, hopper-wall +36.5  rejected
+the records at face value: sheet plates, heats and batches, cast analyses, no pick-up, U x I as sensed, all runs     7  boom-chord -84.8, column-splice -36.8, deck-plate -60.6, frame-web +48.9, girder-flange +64.6, hopper-wall -56.5, tank-course +28.0  rejected

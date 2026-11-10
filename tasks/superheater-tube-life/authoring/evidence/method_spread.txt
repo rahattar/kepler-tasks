@@ -1,0 +1,7 @@
+reference                                worst E2 +9.5%   all: E1 +8.2 E2 +9.5 E3 +2.3 E4 +2.2 E5 -3.6 E6 +4.2 E7 -0.3 E8 -1.6 E9 +1.1 E10 -3.0
+fills from E1 instead of E2              worst E2 +9.5%   all: E1 +8.2 E2 +9.5 E3 +2.3 E4 +2.2 E5 -3.6 E6 +4.2 E7 -0.3 E8 -1.6 E9 +1.1 E10 -3.0
+fills from E10 instead of E7 (E9)        worst E2 +9.5%   all: E1 +8.2 E2 +9.5 E3 +2.3 E4 +2.2 E5 -3.6 E6 +4.2 E7 -0.3 E8 -1.6 E9 +0.1 E10 -3.0
+fill ratios over 6 months                worst E2 +10.8%   all: E1 +8.2 E2 +10.8 E3 +2.3 E4 +2.5 E5 -4.2 E6 +4.0 E7 -0.2 E8 -1.6 E9 +1.4 E10 -3.0
+fill ratios over 2 years                 worst E2 +9.3%   all: E1 +8.2 E2 +9.3 E3 +2.3 E4 +2.6 E5 -3.5 E6 +4.4 E7 -0.6 E8 -1.6 E9 +0.7 E10 -3.0
+2018 headers at their 2017 means         worst E2 +9.5%   all: E1 +8.2 E2 +9.5 E3 +2.3 E4 +2.2 E5 -3.6 E6 +4.2 E7 -0.3 E8 -1.6 E9 +1.1 E10 -3.0
+largest miss over the variants: 10.8%

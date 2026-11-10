@@ -1,0 +1,69 @@
+schema_version = "1.4"
+
+artifacts = ["/app/controller.py"]
+
+[task]
+name = "afterquery/cz-perfect-silicon-control"
+description = "Write the supervisory pull-rate and heater controller that grows perfect-silicon Czochralski bodies on a puller after a hot-zone change: growth rate within 1 % of its V/G program while the diameter runs close to the grind minimum."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "czochralski-crystal-growth",
+    "model-predictive-control",
+    "system-identification",
+    "state-estimation",
+    "dead-time-process",
+    "perfect-silicon",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer that grows Czochralski silicon, and I work on model-based control of crystal growth. This task uses only published physics (the lumped meniscus and growth-angle model, the interface heat balance, a lumped heater-to-melt response and the V/G criterion for defect-free growth) and a synthetic puller, logs, documents and parameters; no employer data, equipment parameters, recipes or procedures were used. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "thermal process control of Czochralski crystal growth"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "czochralski-crystal-growth",
+    "model-predictive-control",
+    "system-identification",
+    "state-estimation",
+    "dead-time-process",
+    "perfect-silicon",
+]
+expert_time_estimate_hours = 16
+relevant_experience = """I am a control scientist working on model-based control of Czochralski crystal growth and other industrial thermal processes, with a PhD in mechanical engineering. Identifying hot-zone dynamics from closed-loop production logs, designing predictive controllers for growth rate and diameter, and moving pullers from fast-pull to defect-free (perfect-silicon) products are core parts of my work. The puller, its records and logs are synthetic; the model is built from published lumped physics."""
+difficulty_explanation = """In practice this is the work of a crystal-growth process control engineer who has to put a puller on a perfect-silicon product after a hot-zone change. Perfect silicon needs the growth rate at the interface (V in V/G, not the pull rate) within about 1 % of a program set by the thermal gradient, while the diameter has to stay above the grind minimum, and every millimetre of diameter above it is silicon ground away. The puller, its records and logs are synthetic, written by the disclosed generator from the sealed definition.
+
+Three things make it hard. First, the recipe steps the crucible rotation three times (oxygen specification), and each step shifts the growth rate by 6 to 10 % within minutes, while the heater reaches the interface only after a dead time of about 24 minutes and two lags (about 30 and 12 minutes). Feedback alone cannot hold V/G through a step: the heater has to move about an hour ahead, with the right size and timing, and the pull rate has to shape the meniscus so that the growth rate does not jump while the heater's correction arrives; the true diameter dips at each step by however much the model's feedforward is wrong, which sets how close to the grind minimum the body can run. Second, the design sheet's dynamics are from the old hot zone (dead time 15 min, heater gain 0.45 K/kW, rotation effect 0.006 mm/min per rpm) and are wrong for HZ-B (about 24 min, 0.36 K/kW and 0.015 mm/min per rpm). They have to be identified from eight bodies logged under the fast-pull loops, closed loop, where the pull rate follows the diameter loop rather than the growth rate, with a pyrometer that drifts several kelvin per body; and the bright-ring camera reads 0.8 mm high on HZ-B, which only the post-growth caliper shows. Third, the result is a controller run on bodies it has not seen, each with its own zero-power offset, growth offset and drift, gain and rotation effect within the logged spread.
+
+The routes separate widely (authoring/evidence/route_study.txt, eight graded bodies). The fab's fast-pull loops miss V/G by 13.9 %. The reference controller on a model from the design sheet misses V/G by 1.85 % and takes the diameter down to 297.5 mm from a 302.0 mm setpoint. Without the rotation preview V/G misses by 1.78 %; with the old hot zone's rotation effect by 1.72 %. With the old heater gain V/G holds (0.78 %) but the diameter falls to 299.6 mm, and still to 300.95 mm with the setpoint raised to 303.4 mm. Taking the camera at face value puts the true diameter 0.8 mm below what the controller believes (300.46 mm). With the identified model the reference holds V/G within 0.58 % and the diameter dips about 0.8 mm below its setpoint."""
+solution_explanation = """solution/fit.py identifies HZ-B from /app/data and writes a self-contained controller. The camera offset is the mean of camera minus caliper over the eight bodies (0.80 mm). An output-error fit over all eight logged bodies at once takes the logged heater power, pull rate and rotation setpoint as inputs and simulates the superheat chain (dead time, two lags, gain kh0 (1 + 0.6 L/1500) on the power above the sheet's zero-superheat power), the convection-lagged rotation effect, the meniscus height and the true diameter with the sheet's growth physics; it matches the camera (true diameter plus offset minus 1.2 mm per mm of meniscus), the caliper, and the pyrometer with a per-body offset and drift, with a per-body growth offset and trend and start diameter. From the HZ-A values it converges to a dead time of 25.7 min, lags of 32.1 and 10.2 min, kh0 0.366 K/kW, a rotation effect of 0.0145 mm/min per rpm and a convection lag of 6.9 min.
+
+The controller is a model predictive controller on both inputs. Every 2 minutes it predicts 180 minutes of growth rate and true diameter from the identified model, with the PS-R07 rotation steps previewed and the past heater power over the dead time, and solves a bounded least-squares problem for heater blocks of 5 minutes and pull-rate blocks of 2 to 10 minutes as increments within the slew limits: the growth rate held on the program (weight 1/0.004 mm/min), the true diameter on a 302.0 mm setpoint approached from the start (weight 1/0.5 mm), small move penalties. A Kalman filter estimates the meniscus height, the true diameter and a growth disturbance from the camera (offset removed), and the zero-power offset is set at the first call from the steady heater. On the eight graded bodies the worst 5 mm growth-rate error is 0.59 %, the lowest true diameter 301.22 mm and the mean 302.13 mm, against +-1 %, 301.0 mm and 303.0 mm."""
+verification_explanation = """The verifier holds the sealed definition (tests/puller.py): the puller model, the hot zone's constants and the body-to-body spread, the same module that wrote the records. For each of eight graded bodies it starts a fresh sandboxed process running the submitted /app/controller.py, constructs Controller() and calls step(obs) every minute from the end of the crown until the body reaches 1500 mm, applying the returned pull-rate and heater setpoints to the plant (clipped to the drive limits, slew-limited, integrated at 15 s). obs carries only the minute-log quantities; true states never leave the verifier. One test gates the reward: every body completes without a controller error; on every body from 50 mm to 1500 mm the true growth rate averaged over each 5 mm of crystal stays within +-1 % of the PS-R07 program and the true diameter never falls below 301.0 mm; and the true diameter averaged from 50 to 1500 mm over all bodies is at most 303.0 mm. The other tests write the full record to /logs/verifier/grade_detail.json and a summary to metrics.json and never gate.
+
+The thresholds are the process's own: the defect-free V/G window of about +-1 %, the grind minimum, and a mean overgrow limit placed between what sound controllers need and what the shortcuts need (authoring/evidence/route_study.txt): the reference runs at a mean of 302.13 mm. Its identified parameters vary little between subsets of the logs (dead time 23.2-25.7 min, gain 0.361-0.371 K/kW, rotation effect 0.0140-0.0149 mm/min per rpm); with the dead time off by 10 %, the lag by 20 % or the gain or rotation effect by 5 % it passes at its 302.0 mm setpoint (one 5 % gain error dips to 300.86 mm there), and with the gain or rotation effect off by 10 % it passes at a 302.6 mm setpoint with a mean of 302.6-302.7 mm. The old hot zone's heater gain still breaks the minimum at a 303.4 mm setpoint, and the design-sheet model would need about 305.5 mm and misses V/G anyway. The controller runs as the unprivileged user nobody from a scratch directory holding only a copy of it and the protocol shim, over private pipes, with limits on CPU time, memory, file size and process count; /tests is mode 700 and the verifier has no network. The constructor has 120 s, each step 5 s and each body 600 s of controller time. When a body ends every process the user owns is killed and everything it left in a world-writable directory or as a System V IPC object is removed. test.sh writes 0 before grading and the reward from pytest's exit status after."""
+
+[verifier]
+timeout_sec = 7200.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 14400.0
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

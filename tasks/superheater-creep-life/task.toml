@@ -1,0 +1,72 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/damage.json"]
+
+[task]
+name = "afterquery/superheater-creep-life"
+description = "Estimate the consumed creep life at the outlet-leg crowns of ten superheater elements from twelve years of daily historian records, wall surveys and the plant's creep standard, with one outage inspection order of up to two measurements placed before any result is known."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "creep",
+    "larson-miller",
+    "boiler-tubes",
+    "steam-side-oxide",
+    "heat-transfer",
+    "inspection-planning",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only textbook creep assessment of boiler tubes (mid-wall temperature through steam-side oxide, parabolic oxide growth, mean-diameter hoop stress, Larson-Miller rupture lines, Robinson's rule) on a synthetic boiler, records and parameters. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "creep life assessment of boiler tubes"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "creep",
+    "larson-miller",
+    "boiler-tubes",
+    "steam-side-oxide",
+    "heat-transfer",
+    "inspection-planning",
+]
+expert_time_estimate_hours = 8
+relevant_experience = """I am a control scientist and thermal engineer with a PhD in mechanical engineering. Heat transfer through fouled and oxidised walls, high-temperature equipment life, and reading plant historian data against maintenance records are part of my work on industrial thermal equipment and of my teaching. The boiler, its records and parameters are synthetic."""
+difficulty_explanation = """A boiler engineer preparing an outage has this for the secondary superheater outlet bank: twelve years of daily historian data (load, pressure, header temperatures and a penthouse pad thermocouple per element), two UT wall surveys, a maintenance log, the element register, the plant's creep standard, and one inspection order of two measurements that must be placed at once. The boiler, records and parameters are synthetic, written by authoring/provenance from a sealed definition.
+
+The life fraction is a day-by-day Robinson sum. Each day the crown flux follows the element's steam pickup and the load; the mid-wall temperature adds the steam film, the steam-side oxide and half the wall to the outlet steam temperature; the oxide itself grows parabolically at its own temperature, so the two are integrated together; the hoop stress follows the wall as it thins; and the Larson-Miller line turns each day into a fraction of a rupture life. A few kelvin double the damage, so every reading has to be right.
+
+The records need reading as an engineer would, and each trap left in puts at least one element 37 percent or more outside: temperatures in degF until the 2019 DCS upgrade (and in the 2018 monthly summary, the only record of that year); the E7 and E8 tags swapped by the 2024 historian migration (E9 -84 %); E2's pad, refitted on its 2021 tube, reading 7 K high (+160 %); E7's pad, renewed in 2020, reading 10 K low (-43 %); E5's pad drifting low since late 2022 with nothing logged (-37 %); oxide removed by the 2023 chemical clean (+121 % on E3 if carried on); E6 built with thinner tube than the register says (-79 % at the register wall); and E1 thinning fast only since the IK-14 soot blower beside it entered service in 2021 (-53 % if the thinning is spread from 2015). Two things the records cannot settle decide the inspection: E3's pad died in March 2022, before the burner modification under E3 and E4 raised its flux by an amount E4's own rise does not tell (-65 % with E4's rise, -78 % with none), and only its oxide grown since the clean measures it; and E9's 2023 spare is heavier-wall stock of unrecorded size (+159 % at the nominal wall). The other gaps are decoys: E4's and E6's dead pads and E9's missing one follow from a neighbour, E1's and E10's soot-blower thinning from their two surveys. Of the 211 orders of up to two measurements only oxide on E3 with wall on E9 passes."""
+
+solution_explanation = """solution/solve.py orders oxide-ut on E3 and wall-ut on E9, then applies PS-14 day by day from each tube's entry into service. Historian and 2018 summary temperatures before 2019-07-01 are converted from degF; E7 and E8 are swapped back from 2024-03-12; off-line days are dropped; 2018 is rebuilt from the monthly summary (hours on line at the month's mean load and pad temperatures, headers at their means). Pickup = pad - 3 K - inlet header. A pad whose ratio to a neighbour jumps or drifts with no change of flux is replaced from that date by its earlier ratio x the neighbour: E2 (to E1, from its replacement), E7 (to E8, 2020-02-10), E5 (to E2, 2022-10-01); dead pads likewise: E4 and E6 (to E2), E9 (to E7). E3: its ratio to E2 until the burner modification, then a factor (1.25) fitted so that the oxide grown since the 2023 clean equals the 137 um measured. Walls (walls()): E9 from its measured 7.96 mm; E1 at its 2015-2019 rate plus, from IK-14's entry, the extra rate its 2023 survey shows; any element whose drop from the register wall to its first survey is more than three times faster than the rate between its surveys was not built at the register wall, and its wall is the line through its surveys alone (this applies to E6 only: 5.92 mm in 2015 falling to 5.59 mm in 2026, against the true 5.90 and 5.66 mm); the others linear through the register wall and their surveys. Oxide restarts at the clean and on each new tube. Largest miss on the shipped boiler: 9.5 percent (E2)."""
+
+verification_explanation = """tests/grade_superheater.py reads /app/output/damage.json and the single pytest test passes only when it holds one JSON object with exactly E1-E10, finite non-negative values, each within 25 percent of the sealed life fraction (tests/superheater.py, DAMAGE; authoring/evidence/calibration.txt recomputes them from the sealed definition, agreeing to 1e-5). Per-element misses go to /logs/verifier/metrics.json and do not affect the reward. The verifier never runs the solution, never reads /app/data or the inspection results.
+
+Evidence for 25 percent (authoring/evidence). Correct side: authoring/evidence/independent.py is a second implementation written separately from the reference (no shared code): pads corrected by additive offsets and a fitted drift instead of ratios, dead pads filled from a neighbour plus their median difference, the oxide integrated as dx/dt with a midpoint step, 2018 as one block per month, walls piecewise linear, E3's post-modification pickup an additive increment found by the secant method. Its largest miss is 11.0 percent (independent.txt). Sensitivity variants of the reference (neighbour, fill window, 2018 headers) stay within 10.8 percent (method_spread.txt). Wrong side: every record trap left in, on its own, puts at least one element 37 percent or more off, and most far more (route_study.txt; leaving out 2018 alone is not a trap and stays within 9 percent: E5's drift 37 %, E7's pad 43 %, E1's thinning onset 53 %, the clean 121 %, E2's pad 160 %, the tag swap 84 %, E6's wall 79 %, degF beyond a hundredfold). So the bound sits between 11 percent for sound methods and 37 percent for the nearest trap. Of the 211 orders of up to two measurements only oxide-ut on E3 with wall-ut on E9 passes; without the first E3 is 65 percent or more off, without the second E9 is 159 percent off (plan_sweep.txt). The true values are irregular: the best single constant satisfies 3 of 10 elements, and a neighbour fill misses every element but one (constant_null.txt).
+
+The agent's container holds the records, the output directory and the contractor's inspection command; the inspection service, its sealed definition and its state belong to another user, reached through one sudo rule that takes only status or submit. An order is charged before any result is made and cannot be changed. The verifier runs separately without network, and /logs/verifier is root-only."""
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 10800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

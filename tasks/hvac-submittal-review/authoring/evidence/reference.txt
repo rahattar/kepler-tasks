@@ -1,0 +1,13 @@
+reference solution vs the District's review, shipped instance
+verifications used: 7 of 8 (room:110, room:112, room:144, room:160, room:161, room:220, room:223)
+unit   verdict            District           deviation per quantity (percent; EWB in K)
+RTU-1  reject_oversized   reject_oversized   OA +0.00  EWB +0.00  load_total +0.00  load_sensible +0.00  load_latent +0.00  cap_total +0.00  cap_sensible +0.00  cap_latent +0.00
+RTU-2  accept             accept             OA +0.00  EWB +0.00  load_total -0.33  load_sensible -0.44  load_latent +0.00  cap_total +0.00  cap_sensible +0.00  cap_latent +0.00
+RTU-3  reject_undersized  reject_undersized  OA +0.00  EWB +0.00  load_total +0.00  load_sensible +0.00  load_latent +0.00  cap_total +0.00  cap_sensible +0.00  cap_latent +0.00
+RTU-4  reject_undersized  reject_undersized  OA +0.00  EWB +0.00  load_total +0.00  load_sensible +0.00  load_latent +0.00  cap_total +0.00  cap_sensible +0.00  cap_latent +0.00
+RTU-5  undetermined       undetermined       missing tenant_fitout_loads (District tenant_fitout_loads)
+RTU-6  reject_undersized  reject_undersized  OA +0.00  EWB +0.00  load_total -0.10  load_sensible -0.13  load_latent +0.00  cap_total +0.00  cap_sensible +0.00  cap_latent +0.00
+RTU-7  reject_undersized  reject_undersized  OA +0.00  EWB +0.00  load_total +0.00  load_sensible +0.00  load_latent +0.00  cap_total +0.00  cap_sensible +0.00  cap_latent +0.00
+submittal return_for_revision (District return_for_revision)
+largest deviation as a fraction of its tolerance: 0.15
+grade: PASS, units wrong 0

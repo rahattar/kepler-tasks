@@ -1,0 +1,34 @@
+# pump-wear-assessment
+
+How much head has each pump of a parallel bank lost to wear-ring wear, when only the common header is metered?
+Ten centrifugal pumps; the solver reconciles four weeks of hourly pressures and header flow with certificates, test
+sheets, a flow survey, the maintenance log and seven plant documents, and reports each pump's deficit at 900 m3/h
+and 1480 rpm on 2026-11-02, within 0.3 m, in `/app/output/overhaul.json`.
+
+## Difficulty
+
+A rotating-equipment engineer ranking a pump bank for overhaul usually has exactly this: identical pumps on one header, a single flowmeter for all of them, pressure transmitters on each pump, and a drawer of certificates, test sheets and work orders of uneven quality. The bank and its records here are synthetic, generated from a sealed model by authoring/provenance.
+
+No pump's flow is measured, so wear has to come out of a reconciliation: wear scales a pump's head curve by a factor (datasheet), each hour the running pumps' flows at their measured heads must add up to the header reading, and the duty rotation varies which pumps share that sum. It only works if every record feeding it is right, and several are not as they look. The header meter read 3 percent high until its recalibration; one pump's discharge pressure was logged on the wrong range for a week; the velocity-head term is about 1 m at rated flow; one discharge tapping was moved and the installation sheet never updated, which only that pump's stopped-hour readings reveal; one impeller is trimmed; one certificate was run at 1450 rpm; one pump runs on a VFD. Missing any one puts one or more pumps 0.73 to 8.6 m off against a 0.3 m requirement.
+
+Three pumps need more than a certificate. One carries a spare impeller of a later pattern whose only curve is the maker's type test at a larger diameter (as run, 3.7 m off; the sister pumps' curve, 1.6 m). One carries a replacement impeller with an optimistic catalogue curve (4.0 m off) and a rig test made on a 1490 rpm shop motor (0.8 m off unless scaled). Two pumps are always started and stopped together, which no document says; the header balance then fixes only their sum (8.6 to 9.2 m off) unless the one clamp-on flow survey taken on one of them is found and folded into the fit. And the survey itself is off: its setup sheet keyed in the bare steel pipe, while the installation sheet says the lines are cement-mortar lined to a 250 mm bore; the meter reports velocity times the keyed bore, so it reads 3.6 percent high, and taken as read it pushes the pair 0.5 and 1.2 m off. Nothing in the data flags it; only reading the setup sheet against the installation sheet does.
+
+Two events inside the four weeks break the easy assumption that nothing changes over a month, and neither is spelled out as a correction. One pump tripped after running starved and vibrating; that kind of run rubs wear rings open, so its head ratio steps down at the trip, and one ratio fitted across the four weeks lands near the average (0.9 m off, and the misfit pushes two other pumps out). Another pump's discharge transmitter was calibrated during that pump's outage; it had been reading 10 kPa high, which shows only in the stopped hours before the calibration, while one median over all stopped hours (most fall after it) looks like the sheet's 0.80 m (0.6 m off). Both need the log read as an engineer would and the trends checked on each side of the event.
+
+## Reference solution
+
+solution/solve.py reads /app/data only. Heads: (discharge - suction)/(rho g) per hour, plus each pump's tapping height taken as the median of suction minus discharge over its stopped hours (0.80 m; 2.10 m for P2; 1.55 m for P5; for P6 separately before and after PT-606's 2026-10-06 10:00 calibration, which removes its earlier 10 kPa zero error), plus the velocity-head difference from the 250 mm and 350 mm bores. Corrections: header flow divided by 1.03 before 2026-10-01 12:00 (certificate), P2's discharge times 1.6 from the transmitter swap to the 2026-10-11 06:00 range fix (log). Curves, each a quadratic through its test points: certificates scaled to 1480 rpm and to the installed impeller (P3 at 1450 rpm, P4 trimmed to 315 mm); P6 from the OEM's rev C type test at 340 mm trimmed to 330 mm; P10 from its 2026 rig test at 1490 rpm scaled to 1480 rpm; P9's logged speed through the affinity laws. One constant head ratio per pump, except P1, which gets a second ratio for the hours before its 2026-10-09 02:10 trip (log: starved suction, vibration); all eleven fitted at once by least squares on the hourly header balance plus the three survey hours of P7's flow, each divided by (254.46/250)^2 because the survey meter was keyed for the unlined steel bore (setup sheet) while the line is lined to 250 mm (installation sheet). Deficit = (1 - ratio) x as-new head at 900 m3/h, P1 from its ratio after the trip. Largest miss on the shipped bank: 0.15 m.
+
+`solution/solve.sh` runs `solve.py` (under a minute).
+
+## Verification
+
+tests/grade_pumps.py recomputes every pump's true deficit from the sealed bank (tests/pumps.py, seed 7, not shipped to the agent) and the single pytest test passes only when /app/output/overhaul.json holds one JSON object with exactly P1-P10, finite values, all ten within 0.3 m. Per-pump misses go to /logs/verifier/metrics.json and do not affect the reward. The verifier never runs the solution and never reads /app/data.
+
+Evidence for 0.3 m (authoring/evidence): 24 sound variants of the reference (fitting all four weeks, the last three, the last two or only the recalibrated period; least squares or a robust loss; the survey weighted half, equal or double) all pass, the worst at 0.12 m (method_spread.txt). Taking any one record at face value misses by 0.73 to 8.6 m, ignoring either event inside the window by 0.63 to 0.94 m, each stand-in for a missing curve by 0.8 to 4.0 m, dropping the flow survey by 9.2 m and using it as read by 1.2 m (route_study.txt); a free wear slope for each pump, which the balance cannot pin, misses by up to 17.8 m. The true deficits run 0.45 to 9.30 m with uneven gaps of at least 0.66 m: no constant satisfies more than one pump, and a pump filled in from its neighbours' spacing fails for seven of the ten, including all four that hinge on the extra records (constant_null.txt).
+
+The agent's container holds only the records and the output directory; the sealed model lives only in the verifier's image. The verifier runs separately without network, and /logs/verifier is root-only.
+
+Files in `authoring/evidence/`: `methods.py` (estimation engine; imports the sealed module only to score), the three
+studies and their `.txt` outputs, and `preflight.py` (structure,
+names, ASCII, identical sealed copies, byte-exact regeneration of the records by `authoring/provenance/gen.py`).

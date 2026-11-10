@@ -1,0 +1,24 @@
+Miss per cell, percentage points (reported - true); the bound is 3 pp.
+
+reference                                            worst    -0.5 (C5)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+dry bulb taken as the wet bulb                       worst   +39.9 (C1)  C1 +39.9 C2 +32.1 C3 +28.8 C4 +34.8 C5 +30.5 C6 +37.4 C7 +32.7 C8 +35.1
+standard sea-level pressure instead of the site's    worst    +6.2 (C6)  C1 +5.9 C2 +5.2 C3 +4.7 C4 +5.9 C5 +3.6 C6 +6.2 C7 +4.9 C8 +5.4
+windy hours kept                                     worst   -22.8 (C3)  C1 -19.6 C2 -19.4 C3 -22.8 C4 -20.8 C5 -12.9 C6 -18.5 C7 -16.3 C8 -19.6
+C1-C4 riser flows left in US gpm                     no valid hours left for C1
+met station time taken as plant time                 worst   -19.8 (C3)  C1 -15.3 C2 -14.7 C3 -19.8 C4 -16.5 C5 -11.2 C6 -16.3 C7 -12.4 C8 -15.6
+met station shifted by 6 h (standard time)           worst    -5.0 (C2)  C1 -3.5 C2 -5.0 C3 -4.4 C4 -2.9 C5 -4.4 C6 -3.8 C7 -3.0 C8 -3.0
+C3 riser meter zero not removed                      worst   -16.6 (C1)  C1 -16.6 C2 -0.0 C3 +11.1 C4 +0.3 C5 -3.2 C6 +0.1 C7 +0.2 C8 -0.2
+C6 riser meter trusted                               worst   -37.1 (C1)  C1 -37.1 C2 -0.0 C3 -0.2 C4 +0.3 C5 -4.4 C6 +27.7 C7 +0.2 C8 -0.2
+C6 flow taken as header minus the other risers       worst   -32.1 (C1)  C1 -32.1 C2 -0.0 C3 -0.2 C4 +0.3 C5 -3.9 C6 +22.3 C7 +0.2 C8 -0.2
+C1 bypass ignored (no bypass flow anywhere)          worst   -22.0 (C1)  C1 -22.0 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.9 C6 +0.1 C7 +0.2 C8 -0.2
+C1 weir temperature not unmixed                      worst   -22.0 (C1)  C1 -22.0 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+C2 replacement thermocouple trusted                  worst   +12.8 (C2)  C1 -0.2 C2 +12.8 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+C4 replacement motor's power trusted                 worst   +12.5 (C4)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +12.5 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+C8 recirculation kept after its stack was extended   worst    +7.6 (C8)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 +7.6
+C5 flume reading taken as C5's basin                 worst   +15.1 (C5)  C1 -0.2 C2 -0.0 C3 -0.2 C4 +0.3 C5 +15.1 C6 +0.1 C7 +0.2 C8 -0.2
+C3 hours before the new fill kept                    worst    +5.5 (C3)  C1 -0.2 C2 -0.0 C3 +5.5 C4 +0.3 C5 -0.5 C6 +0.1 C7 +0.2 C8 -0.2
+median of the whole record instead of the end of it  worst    +5.4 (C7)  C1 -0.1 C2 -0.1 C3 -0.2 C4 -0.0 C5 -0.3 C6 +0.0 C7 +5.4 C8 -0.2
+
+Nearest trap: 5.0 pp
+
+Not a trap: leaving out C8's recirculation altogether (the survey's 2.0 K before the stack too) moves C8 by +1.3 pp, since the end of the record falls after the stack was extended.

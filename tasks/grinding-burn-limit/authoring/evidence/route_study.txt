@@ -1,0 +1,12 @@
+Routes as complete programs through tests/grade.py (run as nobody); seven hidden jobs; accepted when at most 1 is wrong.
+
+route                                                                                        wrong  jobs wrong (signed relative deviation from the truth)
+every power record, whatever the wheel and coolant                                               4  cam-flank +0.285, die-insert -0.083, gauge-block +0.520, race-face -0.162  rejected
+the wheel's state averaged over the records, not the end of the dressing interval                6  bushing-od +0.236, die-insert +0.069, gauge-block +0.220, punch-land +0.060, race-face +0.085, shaft-seat +0.116  rejected
+the first lot's certificate, not the part's lot                                                  3  bushing-od -0.238, gauge-block +0.251, race-face +0.089  rejected
+the first tempering temperature of a re-tempered lot                                             2  punch-land -0.114, shaft-seat -0.166  rejected
+the programmed work speed, not the table's speed limit                                           2  bushing-od -0.142, race-face -0.107  rejected
+the job sheet's coolant temperature while the chiller is out                                     2  gauge-block +0.125, shaft-seat +0.087  rejected
+a dressing interval in parts taken as mm3/mm per part                                            2  die-insert +0.089, punch-land +0.075  rejected
+one idle power for all sessions                                                                  3  die-insert -0.115, gauge-block +0.482, race-face -0.120  rejected
+the records at face value: programmed speed and coolant temperature, every power record          6  bushing-od -0.107, cam-flank +0.285, die-insert -0.083, gauge-block +0.701, race-face -0.251, shaft-seat +0.087  rejected

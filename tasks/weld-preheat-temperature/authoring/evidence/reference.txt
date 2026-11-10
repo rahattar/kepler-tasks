@@ -1,0 +1,15 @@
+Reference program solution/preheat.py through tests/grade.py (run as nobody); a joint is right when its minimum preheat is within 6 C of the truth.
+
+Example joint-ex: 93.14 C
+
+joint             preheat C     true C    dev C   hydrogen C   hardness C  right
+boom-chord           125.89     125.87    +0.02         57.5        125.9   True
+column-splice        129.90     130.12    -0.23        130.1         76.0   True
+deck-plate           157.75     157.58    +0.17        157.6        142.8   True
+frame-web            119.16     118.68    +0.49         51.3        118.7   True
+girder-flange        152.27     152.20    +0.08        152.2         72.4   True
+hopper-wall           65.30      65.31    -0.01         65.3       -100.0   True
+tank-course          137.25     137.15    +0.10         53.2        137.2   True
+
+joints 7; wrong 0 (accepted); largest deviation from the truth 0.49 C
+true minimum preheats of the hidden joints: boom-chord 125.9; column-splice 130.1; deck-plate 157.6; frame-web 118.7; girder-flange 152.2; hopper-wall 65.3; tank-course 137.2 C

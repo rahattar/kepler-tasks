@@ -1,0 +1,33 @@
+route | right of 8 (seed 5437) | worst part, requirement, margin | seeds 5301-5320 with 8 | parts failed on the shipped seed
+FV520B tested at S2's 240 C limit, extrapolated to S6                    | 7 | S6 clear  -0.050 |  0 of 20 | S6
+the same, mid-window pick                                                | 7 | S6 clear  -0.006 |  3 of 20 | S6
+the same, FV520B tested second, mid-window pick                          | 7 | S6 clear  -0.006 |  3 of 20 | S6
+the same, FV520B tested last, mid-window pick                            | 7 | S6 clear  -0.006 |  1 of 20 | S6
+42CrMo4 tested at 220 C, the rotor steel from the 20-100 C table         | 7 | S3 stress -0.021 |  0 of 20 | S3
+the same, mid-window pick                                                | 6 | S3 stress -0.015 |  0 of 20 | S3 S5
+the same, the rotor steel at the slope of 42CrMo4                        | 7 | S3 stress -0.010 |  0 of 20 | S3
+the mill value not used: 42CrMo4 from the table                          | 7 | BD ret    -0.240 |  0 of 20 | BD
+the mill value not used: a handbook 12.6 for 42CrMo4 to 220 C            | 6 | BD clear  -0.036 |  0 of 20 | BD TC
+the rotor steel and 42CrMo4 tested; Ti-6Al-4V from the table             | 7 | S5 ret    -0.131 |  0 of 20 | S5
+the same with a handbook 9.2 for Ti-6Al-4V to 285 C                      | 7 | S5 clear  -0.043 |  0 of 20 | S5
+the 375 C FV520B reading used flat (no interpolation)                    | 6 | S2 clear  -0.071 |  0 of 20 | S2 S3
+no tests: the 20-100 C table for every material                          | 2 | S6 ret    -1.000 |  0 of 20 | S2 S3 S5 S6 BD TC
+seats taken as at 20 C (bay temperature ignored)                         | 5 | S4 ret    -0.171 |  0 of 20 | S1 S3 S4
+clearance checked against the seat at 20 C                               | 3 | BD clear  -0.072 |  0 of 20 | S2 S5 S6 BD TC
+trip at the OEM sheet's 105 %                                            | 5 | S4 stress -0.054 |  0 of 20 | S1 S3 S4
+maintenance log not applied (S5 FV520B, trip 105 %)                      | 3 | S2 limit  -1.000 |  0 of 20 | S1 S2 S3 S4 S5
+the micrometer's calibration error not applied                           | 3 | BD clear  -0.017 |  0 of 20 | S1 S4 S5 S6 BD
+S4's spin test taken as at MCS (it was run at 10500 rpm)                 | 7 | S4 stress -0.071 |  0 of 20 | S4
+S2's heating limit from its certificate (260 C), not the log's recoating (240 C) | 7 | S2 limit  -1.000 |  0 of 20 | S2
+tests in part order, bore 1 sd of the stated repeatability (0.3 %) inside the clearance limit | 7 | S5 clear  -0.002 | 17 of 20 | S5
+seat growth at speed not credited, mid-window pick                       | 6 | S4 ret    -0.042 |  0 of 20 | S3 S4
+
+part: routes above that fail it
+S1: 4
+S2: 5
+S3: 9
+S4: 6
+S5: 8
+S6: 6
+BD: 5
+TC: 3

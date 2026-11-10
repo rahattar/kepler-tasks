@@ -1,0 +1,11 @@
+turbine,aep_ratio,warranty_claim
+T01,1.002,no
+T02,0.998,no
+T03,1.000,no
+T04,0.996,no
+T05,0.951,yes
+T06,1.000,no
+T07,0.957,yes
+T08,0.998,no
+T09,0.996,no
+T10,0.957,yes

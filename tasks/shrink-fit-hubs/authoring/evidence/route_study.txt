@@ -1,0 +1,33 @@
+route | right of 12 (seed 7101) | worst joint, requirement, margin | seeds 7101-7120 with 12 | joints failed on the shipped seed
+maintenance log missed for J07 (oil)                               | 12 | J02 limit  +0.000 | 20 of 20 | 
+maintenance log missed for J10 (solid shaft)                       | 11 | J10 slip   -0.049 |  0 of 20 | J10
+maintenance log missed for J11 (55 kW torque)                      | 12 | J02 limit  +0.000 | 20 of 20 | 
+J07 log missed, with friction at each pair's highest pressure and a mid-window pick | 11 | J07 slip   -0.086 |  0 of 20 | J07
+J11 log missed, with friction at each pair's highest pressure and a mid-window pick | 11 | J11 slip   -0.040 |  0 of 20 | J11
+hub stress checked at rest only                                    | 10 | J01 stress -0.183 |  0 of 20 | J01 J12
+thermal change in running taken as a loss only                     | 10 | J01 stress -0.183 |  0 of 20 | J01 J12
+steady running ignored (torque and stress at rest)                 | 10 | J01 stress -0.183 |  0 of 20 | J01 J12
+smoothing not deducted                                             | 12 | J02 limit  +0.000 | 20 of 20 | 
+smoothing not deducted, friction at each pair's highest pressure, mid-window pick | 11 | J07 slip   -0.006 | 10 of 20 | J07
+steel expansion from the 20-100 C table                            |  9 | J06 slip   -0.056 |  0 of 20 | J04 J06 J09
+steel expansion assumed 12.8 (handbook)                            | 10 | J09 clear  -0.006 |  0 of 20 | J04 J09
+steel expansion assumed 13.0 (handbook)                            |  9 | J09 clear  -0.021 |  0 of 20 | J04 J06 J09
+friction at 80 MPa for every pair, mid-window pick                 | 11 | J09 slip   -0.002 |  3 of 20 | J09
+friction at 80 MPa for every pair, least + 3 um                    |  8 | J09 slip   -0.077 |  0 of 20 | J04 J06 J09 J12
+friction at each pair's lowest pressure, mid-window pick           |  8 | J09 slip   -0.068 |  0 of 20 | J04 J06 J09 J11
+handbook friction (0.15 / 0.10 / 0.08), mid-window pick            |  8 | J09 slip   -0.077 |  0 of 20 | J04 J07 J08 J09
+handbook friction, least + 3 um                                    |  3 | J09 slip   -0.237 |  0 of 20 | J01 J02 J03 J04 J05 J06 J07 J08 J09
+
+joint: routes above that fail it
+J01: 4
+J02: 1
+J03: 1
+J04: 7
+J05: 1
+J06: 5
+J07: 4
+J08: 2
+J09: 8
+J10: 1
+J11: 2
+J12: 4

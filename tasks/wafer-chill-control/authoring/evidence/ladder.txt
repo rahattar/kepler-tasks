@@ -1,0 +1,24 @@
+hidden set: 24 wafers; total perfect-knowledge cycle 144.6 s; gate: every wafer passes and total cycle <= 1.10 x that
+benchmark worst zone difference 24.980 K
+
+CONTROLLERS, graded by the shipped verifier
+rung                                                         ratio   failed  zone  hot  late  worstdT  hottest
+reference: identified model, online sag estimation           1.030     0/24     0    0     0    24.62    49.73   [74 s]
+  same model, no estimation, safe for the whole sag range    1.252     0/24     0    0     0    23.10    48.99   [103 s]
+  same model, every wafer assumed flat                       1.014    23/24    12   11     0    31.07    53.18   [61 s]
+  same model, every wafer assumed at +55 um sag              1.142    23/24     0   23     0    23.10    56.92   [68 s]
+  same model, every wafer assumed at -55 um (dished)         0.925    24/24    24    0     0    47.25    49.19   [55 s]
+  reference with guard 2.0 K and release margin 1.0 C        1.076     0/24     0    0     0    23.21    48.88   [77 s]
+  reference with no guard and no release margin              1.010     8/24     7    1     0    25.23    50.05   [74 s]
+  re-identified without the pressure lag (fit rms 8.84 vs 1.04)   1.202    24/24    24    0     0    35.34    49.32   [80 s]
+  re-identified with the plate held at setpoint (fit rms 20.11 vs 1.04)   1.034    24/24     0   24     0    24.13    51.48   [74 s]
+
+HINDSIGHT BOUNDS, tuned on the hidden wafers themselves (no controller can do better
+within its class)
+one constant pressure and release time per station+film      1.378   (every wafer passes by construction)
+best constant pressure per wafer, sag known, exact release   1.156   (every wafer passes by construction)
+model-free PI on the spot difference, release on spots       1.860     0/24 failed at the best tuning
+      station A: setpoint 18 K, kp 1.5, ki 1.0, base 8 Torr, release when 0.50*centre + 0.50*edge <= 46.50 C -> 0 failed
+      station B: setpoint 18 K, kp 4.0, ki 1.0, base 8 Torr, release when 0.50*centre + 0.50*edge <= 46.75 C -> 0 failed
+
+[ladder 1017 s]

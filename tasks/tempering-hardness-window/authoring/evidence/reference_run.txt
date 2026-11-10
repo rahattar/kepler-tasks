@@ -1,0 +1,24 @@
+seed 6421; plan 52-1250@B11 double, 52-1312@B06 double, 52-1377@B13 double, 41-7864@B09, 43-2288@B12, 32-0458@B05, 43-2210@B03, 41-7731@B01
+test 52-1250 636 C 100 mm surface double -> 33.5 HRC (offset against the model -8.48)
+test 52-1312 623 C 200 mm half-radius double -> 38.5 HRC (offset against the model -5.54)
+test 52-1377 573 C 60 mm surface double -> 56.4 HRC (offset against the model +3.81)
+test 41-7864 546 C 25 mm surface -> 35.8 HRC (offset against the model +2.80)
+test 43-2288 532 C 120 mm half-radius -> 37.3 HRC (offset against the model +2.33)
+test 32-0458 564 C 100 mm half-radius -> 38.1 HRC (offset against the model +0.09)
+test 43-2210 553 C 200 mm half-radius -> 32.8 HRC (offset against the model +0.84)
+test 41-7731 533 C 50 mm half-radius -> 33.4 HRC (offset against the model -0.53)
+tempers used 11 of 11
+B01 41-7731 528 C -> true 34.53 HRC, margin +1.47 (window 516-549 C) ok
+B02 41-7864 529 C -> true 29.94 HRC, margin +1.94 (window 484-557 C) ok
+B03 43-2210 537 C -> true 31.26 HRC, margin +1.26 (window 513-548 C) ok
+B04 43-2210 495 C -> true 39.17 HRC, margin +1.17 (window 470-504 C) ok
+B05 32-0458 552 C -> true 38.00 HRC, margin +2.00 (window 543-561 C) ok
+B06 52-1312 566 C -> true 43.72 HRC, margin +1.72 (window 553-576 C) ok
+B07 52-1250 563 C -> true 40.12 HRC, margin +1.88 (window 553-575 C) ok
+B08 52-1312 560 C -> true 45.73 HRC, margin +1.73 (window 546-570 C) ok
+B09 41-7864 570 C -> true 34.43 HRC, margin +0.57 (window 566-589 C) ok
+B10 32-0458 546 C -> true 42.38 HRC, margin +1.62 (window 537-557 C) ok
+B11 52-1250 573 C -> true 41.92 HRC, margin +1.92 (window 562-583 C) ok
+B12 43-2288 537 C -> true 35.35 HRC, margin +1.65 (window 524-551 C) ok
+B13 52-1377 592 C -> true 52.16 HRC, margin +2.16 (window 577-601 C) ok
+reference: 13 of 13 batches right; smallest true margin +0.57 HRC

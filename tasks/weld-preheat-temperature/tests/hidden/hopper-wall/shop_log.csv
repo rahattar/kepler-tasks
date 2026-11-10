@@ -1,0 +1,8 @@
+time,station,entry
+2026-06-02 07:05,WS-2,"J-2318: plate P-9111 (heat 71502) rejected at UT for a lamination; replaced by plate P-9190, heat 71588, 20 mm."
+2026-06-02 07:15,WS-2,Fit-up of J-2318 checked: root gap and root face within the WPS; plate marks verified (P-9105 heat 71502; P-9190 heat 71588).
+2026-06-02 07:28,WS-2,Shielding gas cylinder checked on WS-2.
+2026-06-02 08:07,WS-2,J-2318: root run inspected (visual): accepted.
+2026-06-02 08:40,WS-2,"Wire spool changed: batch F-2015 used up, T 46 4 P M21 1 H10 batch F-2240 fitted."
+2026-06-02 09:15,WS-1,Grinder disc changed.
+2026-06-02 09:34,WS-2,J-2318: visual inspection of the cap: accepted; released for NDT.

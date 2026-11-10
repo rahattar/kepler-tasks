@@ -1,0 +1,41 @@
+tag,upstream_fitting,straight_run_diameters,flex_length_ft,source
+VAV-3-01,straight duct,3.3,,2023 construction as-built
+VAV-3-02,straight duct,6.4,,2023 construction as-built
+VAV-3-03,straight duct,5.4,,2023 construction as-built
+VAV-3-04,straight duct,6.4,,2023 construction as-built
+VAV-3-05,straight duct,3.2,,2023 construction as-built
+VAV-3-06,straight duct,3.3,,2023 construction as-built
+VAV-3-07,straight duct,3.9,,2023 construction as-built
+VAV-3-08,"hard 90 deg elbow, horizontal turn",4.9,,2023 construction as-built
+VAV-3-09,"hard 90 deg elbow, horizontal turn",1.9,,2023 construction as-built
+VAV-3-10,"hard 90 deg elbow, horizontal turn",3.2,,2023 construction as-built
+VAV-3-11,"hard 90 deg elbow, horizontal turn",4.9,,2023 construction as-built
+VAV-3-12,"hard 90 deg elbow, horizontal turn",3.7,,2023 construction as-built
+VAV-3-13,"hard 90 deg elbow, horizontal turn",1.5,,2023 construction as-built
+VAV-3-14,"hard 90 deg elbow, horizontal turn",2.5,,2023 construction as-built
+VAV-3-15,"hard 90 deg elbow, horizontal turn",1.9,,2023 construction as-built
+VAV-3-16,"hard 90 deg elbow, horizontal turn",1.9,,2023 construction as-built
+VAV-3-17,"hard 90 deg elbow, horizontal turn",0.7,,2023 construction as-built
+VAV-3-18,flex connector,3.6,4.4,2023 construction as-built
+VAV-3-19,flex connector,2.8,3.8,2023 construction as-built
+VAV-3-20,flex connector,3.0,2.3,2023 construction as-built
+VAV-3-21,straight duct,6.0,,2025 renovation as-built
+VAV-3-22,straight duct,4.7,,2025 renovation as-built
+VAV-3-23,straight duct,3.4,,2025 renovation as-built
+VAV-3-24,straight duct,5.1,,2025 renovation as-built
+VAV-3-25,"hard 90 deg elbow, vertical drop",1.9,,2025 renovation as-built
+VAV-3-26,"hard 90 deg elbow, vertical drop",2.0,,2025 renovation as-built
+VAV-3-27,"hard 90 deg elbow, vertical drop",1.9,,2025 renovation as-built
+VAV-3-28,"hard 90 deg elbow, vertical drop",1.7,,2025 renovation as-built
+VAV-3-29,"hard 90 deg elbow, vertical drop",1.8,,2025 renovation as-built
+VAV-3-30,flex connector,2.4,3.0,2025 renovation as-built
+VAV-3-31,flex connector,2.7,8.0,2025 renovation as-built
+VAV-3-32,flex connector,2.6,2.2,2025 renovation as-built
+VAV-3-33,flex connector,2.1,6.4,2025 renovation as-built
+VAV-3-34,flex connector,2.5,4.5,2025 renovation as-built
+VAV-3-35,flex connector,1.4,6.7,2025 renovation as-built
+VAV-3-36,flex connector,3.0,3.7,2025 renovation as-built
+VAV-3-37,flex connector,2.0,3.5,2025 renovation as-built
+VAV-3-38,flex connector,2.6,3.6,2025 renovation as-built
+VAV-3-39,flex connector,2.2,3.1,2025 renovation as-built
+VAV-3-40,flex connector,2.2,2.3,2025 renovation as-built

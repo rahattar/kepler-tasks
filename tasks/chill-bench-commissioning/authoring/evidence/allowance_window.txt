@@ -1,0 +1,18 @@
+How much coefficient error does the dwell allowance tolerate?
+
+dwell fixed at optimum x (1 + allowance - 1.5%); recipe centred in the pressure band;
+each cell: how far LOW / HIGH the coefficient estimate may sit
+
+  station  alpha    P_opt   t_opt  |   allow  20%      allow  12%      allow   8%      allow   6%  
+  S05      0.2526   25.25   7.709  | -17.4%/+20.5%  -11.1%/+12.3%  - 7.3%/+ 7.8%  - 5.3%/+ 5.5% 
+  S09      0.2824   17.60   8.409  | -15.0%/+17.2%  - 9.5%/+10.3%  - 6.2%/+ 6.6%  - 4.5%/+ 4.6% 
+  S07      0.5632    7.90   7.456  | -12.6%/+13.7%  - 7.8%/+ 8.2%  - 5.1%/+ 5.3%  - 3.6%/+ 3.7% 
+
+The tolerance scales almost linearly with the allowance. At 20% any covariate
+model that gets the shape roughly right lands inside it; at 8% the station
+coefficient has to be known to within about six percent, which is the scale on
+which the prediction errors of competent eight-run campaigns actually lie
+(design_mc.txt, baselines.txt). The highest-coefficient stations are the least
+tolerant, because d ln f / d ln a = 2/(2 - a) grows with the coefficient. At 6%
+the reference's 1.5% margin against its own optimum estimate is already a
+quarter of the allowance.

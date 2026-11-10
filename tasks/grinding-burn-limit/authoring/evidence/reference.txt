@@ -1,0 +1,15 @@
+Reference program solution/burn.py through tests/grade.py (run as nobody); a job is right when its burn-limited depth is within 5 percent of the truth.
+
+Example job-ex: 8.5730 um
+
+job                depth um    true um    ratio   speed mm/s  coolant C  right
+bushing-od          10.7300    10.7018   1.0026        200.0         27   True
+cam-flank           41.7520    41.6705   1.0020        333.3         28   True
+die-insert          30.7020    30.8895   0.9939        150.0         26   True
+gauge-block          9.8850    10.0059   0.9879        116.7         44   True
+punch-land          34.8740    34.7864   1.0025        133.3         26   True
+race-face           22.6090    22.6244   0.9993        166.7         24   True
+shaft-seat          11.0350    11.0504   0.9986        233.3         46   True
+
+jobs 7; wrong 0 (accepted); largest deviation from the truth 0.0121
+true burn-limited depths of the hidden jobs: bushing-od 10.70; cam-flank 41.67; die-insert 30.89; gauge-block 10.01; punch-land 34.79; race-face 22.62; shaft-seat 11.05 um

@@ -1,0 +1,11 @@
+Hidden cases wrong (of 8); the bound is 1.
+
+baffle spacing searched in 1 mm steps (not 5 mm)             0  
+baffle spacing searched in 25 mm steps                       0  
+water transmitter offset from the mean, not the median       0  
+tracking limit 0.5 K (not 0.8 K)                             0  
+tracking limit 1.5 K                                         0  
+glitch limit for temperatures halved                         0  
+frozen after 2 h of identical values (not 1 h)               0  
+
+Largest count over all variants: 0

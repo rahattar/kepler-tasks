@@ -1,0 +1,9 @@
+one setpoint for every batch: best 7 of 13 (at 546, 547, 548 C)
+one setpoint for all (best, 546 C)                              7 of 13: B01 B02 B03 B05 B08 B10 B12
+one setpoint per grade, chosen with the truth in hand          10 of 13: B01 B02 B03 B05 B06 B07 B08 B10 B11 B12
+supplier curve as a 2 h temper of the part (no conversions)     5 of 13: B01 B04 B10 B12 B13
+supplier curves with every conversion, no tests                 6 of 13: B01 B02 B03 B04 B05 B10
+the same with the batch list as it stands (B09 on 41-7731)      6 of 13: B01 B02 B03 B04 B05 B10
+
+free passes per batch (of the 5 answers above): B01 5 B02 4 B03 4 B04 3 B05 4 B06 1 B07 1 B08 2 B09 0 B10 5 B11 1 B12 3 B13 1
+batches no answer above gets right: B09

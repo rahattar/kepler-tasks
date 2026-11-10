@@ -1,0 +1,576 @@
+{
+ "route": "C1",
+ "date": "2026-10-08",
+ "captures": [
+  {
+   "machine": "PC-101",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "pc-101_mot.npz"
+  },
+  {
+   "machine": "PC-101",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "pc-101_mot.npz"
+  },
+  {
+   "machine": "PC-101",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 2.8e-05,
+   "file": "pc-101_mot.npz"
+  },
+  {
+   "machine": "PC-101",
+   "point": "PMP",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 6e-06,
+   "file": "pc-101_pmp.npz"
+  },
+  {
+   "machine": "PC-101",
+   "point": "PMP",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "pc-101_pmp.npz"
+  },
+  {
+   "machine": "PC-101",
+   "point": "PMP",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 8e-06,
+   "file": "pc-101_pmp.npz"
+  },
+  {
+   "machine": "PC-102",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 5e-06,
+   "file": "pc-102_mot.npz"
+  },
+  {
+   "machine": "PC-102",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "pc-102_mot.npz"
+  },
+  {
+   "machine": "PC-102",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 5e-06,
+   "file": "pc-102_mot.npz"
+  },
+  {
+   "machine": "PC-102",
+   "point": "PMP",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.3e-05,
+   "file": "pc-102_pmp.npz"
+  },
+  {
+   "machine": "PC-102",
+   "point": "PMP",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 6e-06,
+   "file": "pc-102_pmp.npz"
+  },
+  {
+   "machine": "PC-102",
+   "point": "PMP",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 3.5e-05,
+   "file": "pc-102_pmp.npz"
+  },
+  {
+   "machine": "FC-103",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.5e-05,
+   "file": "fc-103_mot.npz"
+  },
+  {
+   "machine": "FC-103",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "fc-103_mot.npz"
+  },
+  {
+   "machine": "FC-103",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 1.2e-05,
+   "file": "fc-103_mot.npz"
+  },
+  {
+   "machine": "FC-103",
+   "point": "FAN",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2.3e-05,
+   "file": "fc-103_fan.npz"
+  },
+  {
+   "machine": "FC-103",
+   "point": "FAN",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "fc-103_fan.npz"
+  },
+  {
+   "machine": "FC-103",
+   "point": "FAN",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 2.7e-05,
+   "file": "fc-103_fan.npz"
+  },
+  {
+   "machine": "ACC-104",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 0.000126,
+   "file": "acc-104_mot.npz"
+  },
+  {
+   "machine": "ACC-104",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 0.00013,
+   "file": "acc-104_mot.npz"
+  },
+  {
+   "machine": "ACC-104",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 0.000123,
+   "file": "acc-104_mot.npz"
+  },
+  {
+   "machine": "ACC-104",
+   "point": "CMP",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 6e-06,
+   "file": "acc-104_cmp.npz"
+  },
+  {
+   "machine": "ACC-104",
+   "point": "CMP",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "acc-104_cmp.npz"
+  },
+  {
+   "machine": "ACC-104",
+   "point": "CMP",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 3.5e-05,
+   "file": "acc-104_cmp.npz"
+  },
+  {
+   "machine": "PC-105",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.6e-05,
+   "file": "pc-105_mot.npz"
+  },
+  {
+   "machine": "PC-105",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 8e-06,
+   "file": "pc-105_mot.npz"
+  },
+  {
+   "machine": "PC-105",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 1.4e-05,
+   "file": "pc-105_mot.npz"
+  },
+  {
+   "machine": "PC-105",
+   "point": "PMP",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.6e-05,
+   "file": "pc-105_pmp.npz"
+  },
+  {
+   "machine": "PC-105",
+   "point": "PMP",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 9e-06,
+   "file": "pc-105_pmp.npz"
+  },
+  {
+   "machine": "PC-105",
+   "point": "PMP",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 2.2e-05,
+   "file": "pc-105_pmp.npz"
+  },
+  {
+   "machine": "PC-106",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.8e-05,
+   "file": "pc-106_mot.npz"
+  },
+  {
+   "machine": "PC-106",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 6e-06,
+   "file": "pc-106_mot.npz"
+  },
+  {
+   "machine": "PC-106",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 1.6e-05,
+   "file": "pc-106_mot.npz"
+  },
+  {
+   "machine": "PC-106",
+   "point": "PMP",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 0.000138,
+   "file": "pc-106_pmp.npz"
+  },
+  {
+   "machine": "PC-106",
+   "point": "PMP",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 0.000127,
+   "file": "pc-106_pmp.npz"
+  },
+  {
+   "machine": "PC-106",
+   "point": "PMP",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 0.000107,
+   "file": "pc-106_pmp.npz"
+  },
+  {
+   "machine": "VPC-107",
+   "point": "MOT",
+   "capture": "low_x",
+   "direction": "radial x",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 6e-06,
+   "file": "vpc-107_mot.npz"
+  },
+  {
+   "machine": "VPC-107",
+   "point": "MOT",
+   "capture": "low_y",
+   "direction": "radial y",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 7e-06,
+   "file": "vpc-107_mot.npz"
+  },
+  {
+   "machine": "VPC-107",
+   "point": "MOT",
+   "capture": "high_x",
+   "direction": "radial x",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 5e-06,
+   "file": "vpc-107_mot.npz"
+  },
+  {
+   "machine": "ACC-108",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.5e-05,
+   "file": "acc-108_mot.npz"
+  },
+  {
+   "machine": "ACC-108",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "acc-108_mot.npz"
+  },
+  {
+   "machine": "ACC-108",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 1.8e-05,
+   "file": "acc-108_mot.npz"
+  },
+  {
+   "machine": "ACC-108",
+   "point": "CMP",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2.2e-05,
+   "file": "acc-108_cmp.npz"
+  },
+  {
+   "machine": "ACC-108",
+   "point": "CMP",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "acc-108_cmp.npz"
+  },
+  {
+   "machine": "ACC-108",
+   "point": "CMP",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 2.7e-05,
+   "file": "acc-108_cmp.npz"
+  },
+  {
+   "machine": "PC-109",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 4e-06,
+   "file": "pc-109_mot.npz"
+  },
+  {
+   "machine": "PC-109",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "pc-109_mot.npz"
+  },
+  {
+   "machine": "PC-109",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 6e-06,
+   "file": "pc-109_mot.npz"
+  },
+  {
+   "machine": "PC-109",
+   "point": "PMP",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.4e-05,
+   "file": "pc-109_pmp.npz"
+  },
+  {
+   "machine": "PC-109",
+   "point": "PMP",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 5e-06,
+   "file": "pc-109_pmp.npz"
+  },
+  {
+   "machine": "PC-109",
+   "point": "PMP",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 3.6e-05,
+   "file": "pc-109_pmp.npz"
+  },
+  {
+   "machine": "FC-110",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 4e-06,
+   "file": "fc-110_mot.npz"
+  },
+  {
+   "machine": "FC-110",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "fc-110_mot.npz"
+  },
+  {
+   "machine": "FC-110",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 5e-06,
+   "file": "fc-110_mot.npz"
+  },
+  {
+   "machine": "FC-110",
+   "point": "FAN",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 4e-06,
+   "file": "fc-110_fan.npz"
+  },
+  {
+   "machine": "FC-110",
+   "point": "FAN",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "fc-110_fan.npz"
+  },
+  {
+   "machine": "FC-110",
+   "point": "FAN",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 5e-06,
+   "file": "fc-110_fan.npz"
+  }
+ ]
+}

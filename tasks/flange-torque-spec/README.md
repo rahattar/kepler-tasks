@@ -1,0 +1,123 @@
+# flange-torque-spec
+
+Specify the assembly torque for each of sixteen flanged bolted joints so that every bolt ends up at its target
+preload after the crew's tightening sequence, using eight trial slots on a rig (a single-bolt trial takes one, a
+pattern trial two), the fastener handbook and the records of two earlier assemblies. The deliverable is one JSON
+file of torques, graded against a sealed definition of the joints.
+
+## Difficulty
+
+A mechanical or piping engineer does this when a set of flanged joints is to be bolted up and the torque for each joint has to be fixed before the crew starts: the preload must be high enough to seal and hold and low enough that no bolt yields, and only a few trial tightenings can be afforded. Its research analogue is the experimental characterisation of bolted joints: torque-tension testing of fasteners to identify a nut-factor model (the ISO 16047 test), and measurement of elastic-interaction coefficients for a flange and tightening sequence (Bibel and Ezell; Nassar and co-workers). Here it has to be done as a small design of experiments: eight instrumented tightenings must identify a friction model with several competing forms and a sequence-dependent loss, well enough to predict sixteen joints. The joints, fasteners and records are synthetic, written by authoring/provenance from a sealed definition. They are realistic, and so is the level of challenge they present:
+- The fasteners are standard zinc-plated M16 to M24 bolts of grades 8.8 and 10.9 in 6g/6H threads, with proof loads from the ISO 898-1 stress areas and proof stresses and target preloads at 64 to 72 percent of proof, the usual design band.
+- The nut factors realised run from 0.112 to 0.220 against a handbook nominal of 0.18. A spread of that size is what torque-tension testing of plated fasteners shows, and its drivers are the usual ones: thread surface finish; zinc thicker than the thread's coating allowance, which galls under the nut (for a 6g external thread the allowance is a quarter of the fundamental deviation es, ISO 965-1 and ISO 4042: 9.5 um on M16, 10.5 um on M20, 12.0 um on M24); and reuse, since zinc-plated threads gain friction with every tightening, steeply over the first few and then levelling off.
+- Tightening a flange's bolt pattern relaxes each bolt as its neighbours are tightened (elastic interaction). The loss depends on the flange and on the tightening sequence: a single cross-pattern pass leaves most of it, and circular check passes recover much of it. Here a single pass loses 14 percent on the thin flange class and 6 to 7.5 percent on the thick one; the incremental passes with two circular passes of the records left about 30 percent of that.
+- The rig measures to about 1 percent, as an ultrasonic or load-washer measurement does. Its default torque is the handbook torque for the joint's target; on the two lowest-friction joints that takes the trial bolt past proof, a common field incident. A pattern trial ties up a whole joint and costs two of the eight trials.
+
+The core difficulty is that none of this is written down. The documents give the torque-tension relation, the handbook nut factor and tolerance class, proof loads, the schedule with each joint's thread roughness, plating thickness and flange geometry, a maintenance log with the dates of each joint's earlier assemblies, two past-assembly records and the crew's procedure. What a joint will do has to be inferred from them and from eight trial slots:
+- The records give a pattern ratio for each flange class, and using them is the natural first step. But the records state the sequence they were tightened in (incremental cross-pattern passes, then two circular passes), while the procedure says the crew makes one cross-pattern pass and nothing more. Only a pattern trial measures the crew's loss, and only when it is paired with the joint's single-bolt nut factor. The other class can be measured with a second pair, or inferred by scaling its recorded loss by the factor found on the first; both work (method_spread.txt).
+- The handbook nut factor is wrong for every joint. About six single-bolt trials have to be placed so that the rest can be predicted: both ends of the roughness range, an over-coated joint, and reused joints at two different counts. They also have to be run below proof.
+- Six joints have reused threads, with one to four earlier assemblies, which the log gives only as dates. The effect rises steeply and then levels off, so one reused trial cannot show it. Held constant, or extrapolated in proportion to the number of assemblies, a single reused joint's reading misses four other joints by 7 to 31 percent of preload. A straight line through two counts still misses two. The curve has to be sampled at two counts and interpolated with its shape in mind.
+- Plating matters only above the coating allowance, and the allowance depends on the thread size. A linear, quadratic or single-threshold plating term fitted to the trials predicts galling on joints that are within their allowance, or misses its size dependence.
+
+The schedule's joints carry all of these effects. The records are new fasteners with thin plating, trialled within proof. Trusting the handbook leaves 4 joints of 16 right. Eight single-bolt trials with a correct friction model but the records' pattern ratios leave 6. Spending the whole allowance on pattern trials leaves 10. One reused joint trialled, read as a constant or a straight line, leaves 12. A straight line through two reused joints leaves 14. Without a reuse term the result is 8, and with a linear, quadratic or single-threshold plating term, or with class B left at its recorded ratio, it is 13 (authoring/evidence/route_study.txt). The gate is 15.
+
+## Reference solution
+
+solution/solve.py is the reference; solution/solve.sh runs it in the agent's environment. It uses only the documents in /app/data and the `trial` command.
+
+1. From each example record it reads the single-bolt nut factor of the record's trial, K = T / (F d), and the ratio of the assembled per-bolt preload to the single-bolt preload at the assembly torque. The ratios come out 0.96 for class A and 0.978 for class B. These are ratios for the records' own sequence, so the reference uses them only to scale, never as the crew's ratio.
+2. It runs six single-bolt trials at 60 percent of the rig's default torque, so that no trial bolt approaches proof. They are J01 (low roughness), J03 and J06 (mid and high roughness), J09 (coating over the allowance), and J13 and J08 (reused threads, one and three earlier assemblies). Each gives K = T / (F d).
+3. It runs one pattern trial (two slots) on J06 at the same torque as J06's single-bolt trial. The ratio of the two readings is the crew's class-A ratio, 0.842, a loss 3.98 times the one recorded for class A. Class B's crew loss is taken as its recorded loss scaled by the same factor, which gives 0.912 (true 0.925). This is an economy, not a requirement: measuring class B with its own pair on J04 also gets every joint right (method_spread.txt).
+4. For new threads it fits K = a + b (Ra - 2) + c max(0, tp - |es|/4) by least squares to the new-thread trials and the two record trials, with |es|/4 the 6g coating allowance for the joint's thread size. For reused threads it takes each reused trial's excess over that model against the number of earlier assemblies in the maintenance log, interpolates piecewise-linearly through zero, and holds the value flat beyond three: friction from reuse rises steeply and then levels off.
+5. For each joint the assembly torque is K d target / crew ratio, with K the measured value for a trialled joint and the model value otherwise. The implied single-bolt preload is checked against proof.
+
+On the shipped scenario the reference gets all 16 joints right, with a worst error of +3.89 percent of target against the 6 percent window (authoring/evidence/method_spread.txt). authoring/evidence/independent.py is a second solution with its own campaign (J16, J06, J12, J05, J04, J14) and its own fit (scipy least squares on a smooth coating-excess term and a saturating reuse curve). It takes the crew ratio from a pattern trial on J07, whose nut factor comes from the fit, and it also gets 16 of 16, worst error +4.05 percent.
+
+## Verification
+
+The deliverable is one JSON file, /app/output/torques.json, with an assembly torque for each of the 16 joints. The verifier (tests/grade_torques.py, run by tests/test_torques.py under pytest) grades it against the sealed definition in tests/sealed. For each joint it computes the single-bolt preload at the given torque (clipped if the bolt is taken past proof) and applies the joint's pattern loss for the crew's sequence. It calls the joint right when the assembled preload is within 6 percent of the target and the bolt did not yield. The bolt-up is accepted when at least 15 of 16 joints are right. One pytest test carries the reward; test.sh writes 0 first and 1 only when pytest exits 0 and the ctrf report shows exactly 1 test, 1 passed.
+
+The truth comes from the seeded generator authoring/provenance/jointsim.py and gen.py (seed 4315), never from running the reference. The agent never sees it. In the agent's container the sealed definition and the rig's trial records live under /opt/rig, in directories owned by the user rig with mode 700. The agent reaches the rig only through `trial`, a sudo wrapper for /opt/rig/trial.py. The wrapper validates its arguments, creates one exclusive record file for each slot used (a pattern trial uses two), refuses any trial that would exceed 8 slots, and refuses to run at all if its directories are not as installed. The verifier runs in a separate container without network.
+
+Why 6 percent and a gate of 15, measured on the shipped scenario (every number below is copied from the named file in authoring/evidence):
+
+Correct methods (method_spread.txt, independent.txt):
+| Method | Right of 16 | Worst error, percent of target | File |
+|---|---|---|---|
+| reference, trials at 60, 50 or 75 percent of the default torque | 16 | +3.89 | method_spread.txt |
+| reference, reversed trial order (other noise draws) | 16 | -3.04 | method_spread.txt |
+| other campaign (J01 J13 J14 J12 J06 J16), piecewise or sqrt reuse curve | 16 | +3.17 / +3.78 | method_spread.txt |
+| other campaign (J01 J04 J14 J12 J06 J16) | 16 | +3.17 | method_spread.txt |
+| pattern trial on a joint without a single-bolt trial (J07) | 16 | +4.15 | method_spread.txt |
+| both classes measured with their own pairs (J14, J04) | 16 | -3.91 | method_spread.txt |
+| independent solution (other campaign, other fit) | 16 | +4.05 | independent.txt |
+
+Defective methods (route_study.txt):
+| Route | Right of 16 |
+|---|---|
+| handbook K, no trials | 4 |
+| 8 single-bolt trials, correct friction model, the records' pattern ratios | 6 |
+| 8 single-bolt trials, one fitted plating threshold, the records' ratios | 5 |
+| 4 pattern trials (the whole allowance), K_eff fit for the rest | 10 |
+| reference campaign, class B kept at the record ratio | 13 |
+| one reused joint trialled (J14 or J04), reuse straight in the count | 12 |
+| one reused joint trialled (J14), its excess held for every reused joint | 12 |
+| two reused joints trialled (J13, J14), reuse straight in the count | 14 |
+| reference campaign, no reuse term | 8 |
+| reference campaign, one plating threshold for all sizes | 13 |
+| reference campaign, LINEAR plating term | 13 |
+| reference campaign, quadratic plating term | 13 |
+| reference campaign at the default torque (J01 clipped) | 14 |
+
+- Correct methods land within 4.2 percent of target on every joint, inside the 6 percent window, whether class B's crew ratio is measured or scaled from class A, and whether the reuse curve is interpolated piecewise, fitted as a square root or fitted as a saturating exponential.
+- The gate of 15 admits one miss, so that a sound campaign is not failed by one untrialled joint near the window. Every route that misses the crew's sequence, the size dependence of the coating allowance or the shape of the reuse effect loses at least two joints, most by 6 to 31 percent, and is rejected. One route lands close without being a defect: a constant reuse offset fitted to two reused trials at one and three assemblies gets 16, because the curve has flattened by then (route_study.txt, marked near-sound).
+
+Null answers and per-joint discrimination (null_baselines.txt, route_study.txt). Each joint has its own window, so a trial-free answer can land on individual joints, and every such free pass is listed joint by joint in null_baselines.txt. The handbook torque gets J02, J05, J07 and J10 right, and the records' pattern ratio adds J04. Scaled handbook torques (0.85 to 1.15) pick up J03, J06, J08, J09, J12, J13 and J15. The records' single-bolt K for every joint gets J03 and J15 (E01's K) or J01 (E02's K), and one torque for all joints gets none. No fixed null answer gets J11, J14 or J16 right. Searched over every multiplier of the handbook torque, the interval that passes each joint runs from c = 0.62 (J16) to 1.44 (J14), and at most 6 intervals overlap, so the strongest trial-free answer gets 6 of 16 (J02, J04, J05, J07, J10, J13) against the 15 required. Among the defective routes, every joint is failed by at least 2 of the 14, and they fail on different joints (route_study.txt prints the full matrix), so no joint is a free pass for a wrong method.
+
+Malformed results (verifier_checks.txt) are rejected as a whole: a result that is a symlink, is not a JSON object, has duplicate, missing or extra joint keys or an extra top-level key, or has a torque that is NaN, infinite, zero, negative, a boolean, a string or an array. 17 such cases were run and none crashed the grader. The reference result is accepted at 16 of 16.
+
+The agent works as a separate user that can write only to /app/output. /app/data is read-only, and the rig's sealed definition and records are unreadable to the agent. The verifier runs separately without network, and /logs/verifier is root-only.
+
+## Layout (for maintainers)
+
+- `instruction.md`: the task as the agent reads it (the author's own prose).
+- `environment/`: the agent's image. `data/` is installed read-only at /app/data (procedure, schedule, handbook,
+  maintenance log, two example records). `rig/trial.py` is the rig program; `rig/sealed/` (jointsim.py, seed.json)
+  is installed under /opt/rig for the user `rig` with mode 700. The Dockerfile creates the users `agent` and `rig`,
+  the sudo rule and the `trial` wrapper.
+- `tests/`: the verifier image. `grade_torques.py` grades the result against `sealed/`; `test_torques.py` is the one
+  pytest test; `test.sh` writes the reward; `app_data/` is a copy of the agent's documents.
+- `solution/`: `solve.py` (the reference campaign, pattern pair and fit) and `solve.sh`.
+- `authoring/provenance/`: the sealed definition (`jointsim.py`), the generator (`gen.py`, seed 4315) and `build.py`.
+- `authoring/evidence/`: `route_study.py` (wrong side), `method_spread.py` and `independent.py` (right side),
+  `null_baselines.py`, `verifier_checks.py`, `preflight.py`, and their `.txt` outputs; `common.py` emulates the rig,
+  including its deterministic measurement noise, so the numbers are those of the shipped scenario.
+
+## Regenerating
+
+    python3 authoring/provenance/build.py                 # environment/data, environment/rig/sealed, tests/sealed, tests/app_data
+    cd authoring/evidence
+    python3 route_study.py    > route_study.txt
+    python3 method_spread.py  > method_spread.txt
+    python3 independent.py    > independent.txt
+    python3 null_baselines.py > null_baselines.txt
+    python3 verifier_checks.py > verifier_checks.txt
+    python3 preflight.py                                   # offline structural checks
+
+Packages: numpy 2.1.3, scipy 1.14.1, pandas 2.2.3 (environment and verifier), pytest 8.4.1 and pytest-json-ctrf
+0.3.5 (verifier).
+
+## Changing the task
+
+- Joints, coefficients, the coating allowances, the pattern-loss constant C_INT, the records' remaining-loss fraction
+  M_REC, the pattern-trial cost, the window and the gate live in `authoring/provenance/jointsim.py`; the seed in
+  `gen.py`. After any change run `build.py`, regenerate the evidence, and check that `route_study.txt` still rejects
+  every defective route while `method_spread.txt` and `independent.txt` pass.
+- The trial budget is `BUDGET` in `environment/rig/trial.py` (and the procedure text in `gen.py`).
+- The seed was chosen from 4300 to 4699 among those where every sound variant of method_spread gets 16 of 16 and
+  every defective route of route_study stays at 14 or below; its per-joint friction scatter is typical (rms 0.95
+  sigma).
+- Keep the documents free of any statement of the effects (the pattern loss and how the sequence changes it, yield at
+  the default torque, the coating allowance, the growth of friction with each reuse): the task is that they must be found.
+- Modelling note: the grader treats every bolt of a joint as carrying the same assembled preload. A real single
+  cross-pattern pass also leaves a bolt-to-bolt spread; the model keeps only its mean.

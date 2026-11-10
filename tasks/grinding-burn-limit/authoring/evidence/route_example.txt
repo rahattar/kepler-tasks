@@ -1,0 +1,13 @@
+Routes on the example job-ex.
+
+route                                                                                          depth um
+reference (no check left out)                                                                    8.5730
+every power record, whatever the wheel and coolant                                               8.5730
+the wheel's state averaged over the records, not the end of the dressing interval                9.7000
+the first lot's certificate, not the part's lot                                                  8.5730
+the first tempering temperature of a re-tempered lot                                             8.5730
+the programmed work speed, not the table's speed limit                                           8.5730
+the job sheet's coolant temperature while the chiller is out                                     8.5730
+a dressing interval in parts taken as mm3/mm per part                                            8.5730
+one idle power for all sessions                                                                  8.5970
+the records at face value: programmed speed and coolant temperature, every power record          8.5730

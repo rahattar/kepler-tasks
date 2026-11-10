@@ -1,0 +1,72 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/creep_life.csv"]
+
+[task]
+name = "afterquery/superheater-tube-life"
+description = "From a boiler's daily historian, wall surveys, maintenance log, an outage inspection report and the plant's creep standard, work out how much creep life each of ten superheater outlet tubes has used at its hottest point."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "creep",
+    "larson-miller",
+    "boiler-tubes",
+    "steam-side-oxide",
+    "heat-transfer",
+    "plant-data-forensics",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only textbook creep assessment of boiler tubes (mid-wall temperature through steam-side oxide, parabolic oxide growth, mean-diameter hoop stress, Larson-Miller rupture lines, Robinson's rule) on a synthetic boiler, records and parameters. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "creep life assessment of boiler tubes"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "creep",
+    "larson-miller",
+    "boiler-tubes",
+    "steam-side-oxide",
+    "heat-transfer",
+    "plant-data-forensics",
+]
+expert_time_estimate_hours = 8
+relevant_experience = """I am a control scientist and thermal engineer with a PhD in mechanical engineering. Heat transfer through fouled and oxidised walls, high-temperature equipment life, and reading plant historian data against maintenance records are part of my work on industrial thermal equipment and of my teaching. The boiler, its records and parameters are synthetic."""
+difficulty_explanation = """A boiler integrity engineer at a power utility does this before every major outage. Superheater outlet tubes fail by creep, a slow stretching of the metal under steam pressure at high temperature, and the estimate of how much of each tube's creep life has been used decides which tubes are replaced, which are cut out for laboratory tests and which stay in for another run. The estimate is made from the plant's operating records, because the temperature of the tube metal is never measured directly. The boiler, its records and parameters here are synthetic, written by authoring/provenance from a sealed definition.
+
+The core difficulty is that the answer is extremely sensitive to a quantity that has to be reconstructed. Creep life falls steeply with temperature: about 10 K more at the tube's hottest point halves it. That metal temperature is built, day by day over twelve years, from the steam temperature, the heat arriving from the furnace, and the insulating oxide layer that grows inside the tube; the oxide grows faster the hotter it is and in turn makes the metal hotter, so the two have to be computed together, and the wall thins as the years pass, raising the stress. Small errors in any input compound into large errors in the life used.
+
+The records cannot be taken at face value, and each problem has to be found by cross-checking one record against another: temperatures logged in degF before a 2019 control-system upgrade, two thermocouple tags exchanged in a 2024 migration, thermocouples on two tubes refitted with a steady offset, one drifting slowly with nothing logged, a chemical clean that removed the oxide, a tube built thinner than the register says, and thinning that began only when a soot blower was installed. One tube lost its thermocouple just before a burner change raised its heat input, and only the outage oxide measurement, worked back through the oxide history, recovers it; a replacement tube of unrecorded wall thickness needs the outage wall measurement. Missing any one of these puts at least one element 37 percent to more than a hundredfold off (authoring/evidence/route_study.txt), against a requirement of 25 percent."""
+
+solution_explanation = """solution/solve.py works through the records element by element and applies PS-14 daily from each tube's entry into service. Temperatures before 2019-07-01, and the 2018 monthly summary, are converted from degF; the E7 and E8 columns are exchanged back from 2024-03-12; days off line are dropped; 2018 becomes the summary's hours on line at each month's mean load and pad temperatures, with the headers at their mean. Steam rise = pad - 3 K - inlet header temperature. Where a thermocouple's ratio to a neighbour steps or drifts with no change of flux, the rise from that date is the earlier ratio times the neighbour's: E2 (to E1, from its 2021 replacement), E7 (to E8, from 2020-02-10), E5 (to E2, from 2022-10-01); the dead thermocouples of E4 and E6 (to E2) and E9's missing one (to E7) are filled the same way. E3 follows its ratio to E2 until the burner modification; after it, its rise is scaled by a factor (1.25) found by bisection so that the oxide grown since the 2023 clean equals the 138 um of the inspection report. Walls (walls()): E9 from the 7.93 mm of the report; E1 at its 2015-2019 rate plus, from the soot blower's entry in 2021, the extra rate its 2023 survey shows; an element whose fall from the register wall to its first survey is more than three times faster than between its surveys was not built at the register wall, and its wall is the line through its surveys alone (only E6: 5.92 mm in 2015 to 5.59 mm in 2026, true 5.90 and 5.66 mm); the others linear through the register wall and their surveys. Oxide starts from zero at the clean and on each new tube. The largest miss on the shipped boiler is 9.5 percent (E2)."""
+
+verification_explanation = """tests/grade_tubes.py reads /app/output/creep_life.csv, and the single pytest test passes only when it has the columns element and life_fraction with one row for each of E1-E10 and nothing else, finite non-negative values, each within 25 percent of the sealed life fraction (tests/superheater.py, DAMAGE; authoring/evidence/calibration.txt recomputes the ten values from the sealed definition and agrees to 1e-5). The misses per element are written to /logs/verifier/metrics.json and do not affect the reward. The verifier neither runs the solution nor reads /app/data.
+
+Why 25 percent (authoring/evidence). Correct side: independent.py is a second implementation written apart from the reference and sharing no code with it (thermocouple faults removed as additive steps and a fitted drift, dead thermocouples filled from a neighbour plus their median difference, the oxide integrated as dx/dt with a midpoint step, 2018 as twelve monthly blocks, walls piecewise linear, E3's post-modification rise an additive increment found by the secant method); its largest miss is 11.0 percent (independent.txt). Changing the reference's neighbours, fill windows or 2018 header temperatures keeps it within 10.8 percent (method_spread.txt). Wrong side: each record trap or ignored inspection result on its own puts at least one element 37 percent or more off, most of them far more (route_study.txt: E5's drift 37 %, E7's thermocouple 43 %, E1's thinning onset 53 %, E3 without its oxide 65 %, E6's wall 79 %, the E7/E8 tags 83 %, the clean 129 %, E9 without its wall 159 %, E2's thermocouple 160 %, degF beyond a hundredfold); leaving out 2018 alone is not a trap (9 percent). The bound therefore sits between 11 percent for sound methods and 37 percent for the nearest trap. The true values are irregular: one constant satisfies at most 3 of 10 elements and a neighbour fill misses all but one (constant_null.txt).
+
+The agent works as a separate user that can only write to /app/output; /app/data is read-only. The verifier runs separately without network, and /logs/verifier is root-only."""
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 10800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

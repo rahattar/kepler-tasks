@@ -1,0 +1,16 @@
+date_local,asset,description,status
+2026-09-04 14:40,main,Washout WO-3 flushed.,closed
+2026-09-05 14:30,main,"Flowmeter FT201 zero check, within tolerance.",closed
+2026-09-06 15:27,PS-2,"Motor insulation test, set 2.",closed
+2026-09-07 08:44,PS-2,Outlet isolating valve throttled to limit flow while the reservoir inlet works are carried out; valve to stay throttled until 2026-09-22 16:05.,closed
+2026-09-11 10:31,PS-2,"Motor insulation test, set 2.",closed
+2026-09-11 11:59,PS-2,"Motor insulation test, set 2.",closed
+2026-09-12 08:22,PS-2,Pump set 1 bearing temperature check.,closed
+2026-09-21 13:27,main,"Flowmeter FT201 zero check, within tolerance.",closed
+2026-09-21 13:36,PS-2,Wet well level sensor cleaned.,closed
+2026-09-22 09:41,main,Pump set 1 bearing temperature check.,closed
+2026-09-24 07:23,main,"Motor insulation test, set 2.",closed
+2026-09-24 13:05,main,Washout WO-3 flushed.,closed
+2026-09-25 07:35,PS-2,"Flowmeter FT201 zero check, within tolerance.",closed
+2026-09-25 08:31,PS-2,Washout WO-3 flushed.,closed
+2026-09-28 12:26,main,Wet well level sensor cleaned.,closed

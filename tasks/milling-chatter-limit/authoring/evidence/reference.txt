@@ -1,0 +1,15 @@
+Reference program solution/chatter.py through tests/grade.py (run as nobody); a job is right when its stability limit is within 5 percent of the truth.
+
+Example job-ex: 1.9949 mm
+
+job                limit mm    true mm    ratio  speed rpm    teeth  right
+bracket-pocket       3.7499     3.7359   1.0037      17000        3   True
+housing-face         1.3393     1.3379   1.0010       5200        3   True
+lever-profile        1.1941     1.1817   1.0105       9000        3   True
+manifold-slot        0.8105     0.8124   0.9977       9000        3   True
+pump-cover           0.8255     0.8271   0.9981       2800        4   True
+shaft-flat           1.0365     1.0399   0.9967       6500        4   True
+valve-body           1.5860     1.5883   0.9986      12000        4   True
+
+jobs 7; wrong 0 (accepted); largest deviation from the truth 0.0105
+true stability limits of the hidden jobs: bracket-pocket 3.736; housing-face 1.338; lever-profile 1.182; manifold-slot 0.812; pump-cover 0.827; shaft-flat 1.040; valve-body 1.588 mm

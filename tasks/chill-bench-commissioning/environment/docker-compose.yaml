@@ -1,0 +1,20 @@
+services:
+  default:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    depends_on:
+      - bench
+    environment:
+      BENCH_URL: http://bench:8000
+    command: ["sleep", "infinity"]
+
+  bench:
+    build:
+      context: ./bench
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+    environment:
+      BENCH_PORT: "8000"

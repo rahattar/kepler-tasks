@@ -1,0 +1,34 @@
+Null baselines on the shipped scenario (seed 9704); gate 16 of 16.
+
+     null answer                                                                                  right  01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16
+ 1   handbook law and threshold, BS 7910 crack model and loading                                   0/16  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+     best single multiplier on its lives (an oracle choice): 0.784 gets 8
+ 2   handbook law and threshold, BS 7910 crack model and loading, rate x0.60 fitted to the examples  6/16  .  .  x  .  .  .  x  .  x  .  .  x  .  x  .  x
+     best single multiplier on its lives (an oracle choice): 0.467 gets 8
+ 3   handbook law and threshold, BS 7910 crack model and loading, rate x0.73 fitted to the examples at face value  6/16  .  .  .  x  .  x  .  x  .  x  .  .  x  .  x  .
+     best single multiplier on its lives (an oracle choice): 0.570 gets 8
+ 4   handbook law and threshold, no Mk                                                             4/16  .  .  .  .  .  x  x  .  .  .  .  .  x  .  x  .
+     best single multiplier on its lives (an oracle choice): 0.563 gets 7
+ 5   handbook law and threshold, no Mk, rate x0.89 fitted to the examples                          6/16  .  .  x  .  .  .  x  .  x  .  .  .  .  x  x  x
+     best single multiplier on its lives (an oracle choice): 0.499 gets 7
+ 6   handbook law and threshold, no Mk, rate x1.05 fitted to the examples at face value            3/16  .  .  .  .  .  x  x  .  .  .  .  .  x  .  .  .
+     best single multiplier on its lives (an oracle choice): 0.591 gets 7
+ 7   handbook law and threshold, no residual stress                                                0/16  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+     best single multiplier on its lives (an oracle choice): 0.784 gets 8
+ 8   handbook law and threshold, no residual stress, rate x0.63 fitted to the examples             7/16  .  .  .  .  .  x  x  .  x  .  .  x  x  x  .  x
+     best single multiplier on its lives (an oracle choice): 0.497 gets 8
+ 9   handbook law and threshold, no residual stress, rate x0.77 fitted to the examples at face value  6/16  .  .  .  x  .  x  .  x  .  x  .  .  x  .  x  .
+     best single multiplier on its lives (an oracle choice): 0.606 gets 8
+10   handbook law and threshold, survey taken at face value (35 days, ranges only)                 1/16  .  .  .  .  .  .  .  x  .  .  .  .  .  .  .  .
+     best single multiplier on its lives (an oracle choice): 0.730 gets 7
+11   handbook law and threshold, survey taken at face value (35 days, ranges only), rate x0.60 fitted to the examples  6/16  x  x  .  x  x  .  .  .  .  x  .  .  .  .  x  .
+     best single multiplier on its lives (an oracle choice): 0.434 gets 7
+12   handbook law and threshold, survey taken at face value (35 days, ranges only), rate x0.73 fitted to the examples at face value  4/16  x  .  x  .  .  .  .  .  .  .  .  x  .  x  .  .
+     best single multiplier on its lives (an oracle choice): 0.531 gets 7
+13   one interval for every crack (0.447 x the median true life, an oracle value)                  4/16  .  .  .  .  x  x  .  .  x  .  .  .  x  .  .  .
+     best single multiplier on its lives (an oracle choice): 0.479 gets 5
+
+Cracks a trial-free answer gets right (the numbers are the null answers above that pass it):
+  C01 11,12, C02 11, C03 2,5,12, C04 3,9,11, C05 11,13, C06 3,4,6,8,9,13, C07 2,4,5,6,8, C08 3,9,10, C09 2,5,8,13, C10 3,9,11, C11 none, C12 2,8,12, C13 3,4,6,8,9,13, C14 2,5,8,12, C15 3,4,5,9,11, C16 2,5,8
+
+No trial-free answer gets more than 8 of 16, even with the best multiplier chosen with the truth in hand; the gate is 16.

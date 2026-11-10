@@ -1,0 +1,20 @@
+Miss in percent, (output, heat rate) per condition; the bound is 0.5 %.
+
+reference                                          worst   0.01   as_found  +0.01  -0.01   as_left  +0.00  +0.01
+JT-001 taken as scaled (14400:120 PTs)             worst   4.35   as_found  +4.35  -4.16   as_left  +4.34  -4.15
+DCS generator MW instead of JT-001                 worst   1.49   as_found  -1.47  +1.49   as_left  -1.44  +1.48
+unit net MW instead of gross                       worst   1.55   as_found  -1.51  +1.54   as_left  -1.51  +1.55
+day-2 barometer taken as station pressure          worst   1.01   as_found  +0.01  -0.01   as_left  -0.64  -1.01
+PT-102 zero error not removed                      worst   0.90   as_found  +0.90  -0.31   as_left  +0.88  -0.29
+PT-102 zeroed on the barometer each day            worst   3.61   as_found  +0.01  -0.01   as_left  -3.61  +0.01
+day-2 inlet RTD array bias not removed             worst   0.95   as_found  +0.01  -0.01   as_left  +0.95  -0.26
+FT-301 zero error not removed                      worst   1.39   as_found  +0.01  +0.03   as_left  +0.00  +1.39
+air-contaminated gas sample kept                   worst   2.14   as_found  +0.01  -0.01   as_left  +0.00  -2.14
+laboratory gross volumetric CV used as LHV         worst  19.30   as_found  +0.01 -18.69   as_left  +0.00 -19.30
+whole logged runs averaged (A2 disturbance, L3)    worst   1.18   as_found  -0.94  +0.21   as_left  -1.18  +0.25
+run L3 kept                                        worst   1.18   as_found  +0.01  -0.01   as_left  -1.18  +0.25
+filter differential pressure as the inlet loss     worst   0.98   as_found  -0.98  +0.34   as_left  -0.95  +0.35
+fuel temperature at the meter (TE-301)             worst   0.85   as_found  +0.01  -0.85   as_left  +0.00  -0.83
+
+Nearest trap: 0.85 %
+Not a trap: leaving out the power factor correction moves the results by at most 0.26 %.

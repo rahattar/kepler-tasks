@@ -1,0 +1,6 @@
+#!/bin/bash
+# The contractor's inspection order for the boiler B2 outage: fieldwork status | fieldwork submit < plan.json
+case "${1:-}" in
+    status|submit) exec sudo -n -u contractor /opt/fieldwork/run "$1" ;;
+    *) echo "usage: fieldwork status | fieldwork submit < plan.json" >&2; exit 2 ;;
+esac

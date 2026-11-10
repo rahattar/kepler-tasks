@@ -1,0 +1,7 @@
+start_local,end_local,limit,source
+2026-01-20 07:40,2026-01-20 10:20,50 percent of rated power,grid operator dispatch instruction
+2026-02-08 18:10,2026-02-08 20:40,50 percent of rated power,grid operator dispatch instruction
+2026-02-09 07:50,2026-02-09 14:20,50 percent of rated power,grid operator dispatch instruction
+2026-04-04 07:50,2026-04-04 13:20,50 percent of rated power,grid operator dispatch instruction
+2026-04-21 21:40,2026-04-22 00:10,50 percent of rated power,grid operator dispatch instruction
+2026-06-27 14:40,2026-06-27 17:30,50 percent of rated power,grid operator dispatch instruction

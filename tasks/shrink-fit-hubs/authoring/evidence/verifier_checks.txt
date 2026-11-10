@@ -1,0 +1,37 @@
+reference result, integers                                     accepted 12 of 12  as expected
+reference result, integral floats                              accepted 12 of 12  as expected
+empty file                                                     rejected: the result is not valid JSON: Expecting value: line 1 column 1 (char 0)  
+not JSON                                                       rejected: the result is not valid JSON: Expecting value: line 1 column 1 (char 0)  
+a JSON array                                                   rejected: the result must be one object with the single key "fits"  
+top-level extra key                                            rejected: the result must be one object with the single key "fits"  
+top-level key misspelt                                         rejected: the result must be one object with the single key "fits"  
+duplicate top-level key                                        rejected: duplicate key in the result  
+a joint missing                                                rejected: fits must have exactly the keys J01, J02, J03, J04, J05, J06, J07, J08, J09, J10, J11, J12  
+an extra joint                                                 rejected: fits must have exactly the keys J01, J02, J03, J04, J05, J06, J07, J08, J09, J10, J11, J12  
+a joint key misspelt                                           rejected: fits must have exactly the keys J01, J02, J03, J04, J05, J06, J07, J08, J09, J10, J11, J12  
+duplicate key inside a joint                                   rejected: duplicate key in the result  
+a joint entry not an object                                    rejected: J03 must be an object with exactly the keys "interference_um" and "heating_C"  
+a joint entry with an extra key                                rejected: J03 must be an object with exactly the keys "interference_um" and "heating_C"  
+a joint entry missing heating_C                                rejected: J03 must be an object with exactly the keys "interference_um" and "heating_C"  
+interference NaN                                               rejected: J05 interference_um must be a whole number  
+interference Infinity                                          rejected: J05 interference_um must be a whole number  
+interference -Infinity                                         rejected: J05 interference_um must be a whole number  
+interference 130.5                                             rejected: J05 interference_um must be a whole number  
+interference true                                              rejected: J05 interference_um is not a number  
+interference a string                                          rejected: J05 interference_um is not a number  
+interference an array                                          rejected: J05 interference_um is not a number  
+interference an object                                         rejected: J05 interference_um is not a number  
+interference null                                              rejected: J05 interference_um is not a number  
+interference 0                                                 rejected: J05 interference_um must be from 1 to 2000  
+interference 2001                                              rejected: J05 interference_um must be from 1 to 2000  
+interference -5                                                rejected: J05 interference_um must be from 1 to 2000  
+heating 19                                                     rejected: J05 heating_C must be from 20 to 1000  
+heating 1001                                                   rejected: J05 heating_C must be from 20 to 1000  
+heating 299.9                                                  rejected: J05 heating_C must be a whole number  
+heating false                                                  rejected: J05 heating_C is not a number  
+oven above J05's heating limit (301 C): graded, J05 wrong      graded, 11 of 12 right  as expected
+J01 at its at-rest stress limit (84 um): graded, J01 wrong     graded, 11 of 12 right  as expected
+the result a symlink to a correct result                       rejected: the result is not a regular file
+no result file                                                 rejected: no result file at /tmp/tmp0v3azaj_/absent.json
+
+35 cases run, none crashed the grader

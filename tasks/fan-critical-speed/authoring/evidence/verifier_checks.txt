@@ -1,0 +1,38 @@
+tests/grade.py on corrupted copies of the reference's values, run as nobody; six hidden fans, accepted when at most 1 is wrong.
+
+reference values, unchanged                                              wrong 0  accepted; nobody's processes left: 0
+output is a symlink to a correct file                                    wrong 6  rejected; nobody's processes left: 0
+    ValueError('the output is not a regular file')
+a key missing                                                            wrong 6  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly first_critical_rpm, second_critical_rpm')
+an extra key                                                             wrong 6  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly first_critical_rpm, second_critical_rpm')
+a key twice                                                              wrong 6  rejected; nobody's processes left: 0
+    ValueError('a key appears twice')
+keys in other words (first_rpm, second_rpm)                              wrong 6  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly first_critical_rpm, second_critical_rpm')
+a value NaN                                                              wrong 6  rejected; nobody's processes left: 0
+    ValueError('NaN is not a finite number')
+a value Infinity                                                         wrong 6  rejected; nobody's processes left: 0
+    ValueError('Infinity is not a finite number')
+a value as a string                                                      wrong 6  rejected; nobody's processes left: 0
+    ValueError('first_critical_rpm is not a finite positive number')
+a value true                                                             wrong 6  rejected; nobody's processes left: 0
+    ValueError('second_critical_rpm is not a finite positive number')
+a value negative                                                         wrong 6  rejected; nobody's processes left: 0
+    ValueError('second_critical_rpm is not a finite positive number')
+a value zero                                                             wrong 6  rejected; nobody's processes left: 0
+    ValueError('first_critical_rpm is not a finite positive number')
+a list, not an object                                                    wrong 6  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly first_critical_rpm, second_critical_rpm')
+empty file                                                               wrong 6  rejected; nobody's processes left: 0
+    JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+bytes that are not UTF-8                                                 wrong 6  rejected; nobody's processes left: 0
+    tf-8', b'{"first_critical_rpm": 1206.5, "second_critical_rpm": 1887.9}\xff\xfe', 61, 62, 'invalid start byte')
+correct object padded to 70 kB                                           wrong 6  rejected; nobody's processes left: 0
+    ValueError('the output is larger than 65536 bytes')
+correct output, exit status 1                                            wrong 6  rejected; nobody's processes left: 0
+    exit status 1:
+correct output, a background process left running                        wrong 0  accepted; nobody's processes left: 0
+correct output, then runs past the time limit (limit set to 20 s here)   wrong 6  rejected; nobody's processes left: 0
+    time limit of 20 s exceeded

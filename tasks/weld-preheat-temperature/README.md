@@ -1,0 +1,213 @@
+# weld-preheat-temperature
+
+A fabrication shop sets the minimum preheat of its butt-welded joints in structural steel from its own standard,
+MS-PH. The preheat must meet two requirements for each plate of the joint:
+- **Hydrogen cracking.** The preheat of EN 1011-2 (Annex C, method B), with the CET of the plate, its thickness, and
+  the heat input and diffusible hydrogen of every run.
+- **HAZ hardness.** Under the capping runs, the hardness of the plate's heat affected zone must stay at or below
+  380 HV10. The hardness comes from a carbon-equivalent relation of the Dueren form, with the cooling time t8/5 of
+  EN 1011-2 (Annex D) at the preheat.
+
+Heat input comes from the arc monitor's records of arc current, arc voltage and travel speed. The diffusible hydrogen
+of covered electrodes grows with the moisture they pick up from the shop air.
+
+The deliverable is `/app/output/preheat.py`, a program that reads one joint's package and writes the joint's minimum
+preheat. The package holds:
+- the joint sheet;
+- the plate and consumable certificates;
+- the station's arc monitor records, with waveform records of pulsed runs;
+- the electrode oven log, the shop climate log and the shop's work log.
+
+The program is run on seven joints it has never seen.
+
+## Difficulty
+
+In practice this is the work of a welding engineer who sets and audits the preheat of many joints with one program.
+The program has to be right on joints nobody has looked at. Its research analogue is the weldability of structural
+steels: the hydrogen-cracking preheat of Uwer and Hoehne, Rosenthal-type cooling times and the HAZ hardness relation
+of Dueren, the arc energy of waveform-controlled welding, and the moisture pick-up of basic electrodes.
+
+The joints and records are synthetic, written by `authoring/provenance` (`weld.py`, `jobs.py`, `docs_weld.py`,
+`build.py`) from a sealed definition. They are realistic in their numbers:
+- Plates of S355J2+N, S355ML, S420NL and S460ML, 14 to 40 mm thick, with CET of 0.24 to 0.36 and Dueren CE of 0.34 to
+  0.51.
+- Processes 111 (basic covered electrodes), 135 (solid wire, pulsed on the capping runs of two joints), 136 (flux
+  cored wire) and 141 (TIG roots).
+- Heat inputs of 0.74 to 1.68 kJ/mm.
+- Diffusible hydrogen of 1.5 to 9.1 ml/100 g, including the pick-up of electrodes in unheated quivers.
+- Shop air of 13 to 32 C at 23 to 94 percent relative humidity, in a dry bay and a humid bay.
+- Cable drops of 15 and 18 mOhm at the two monitors that sense voltage at the power source.
+- True minimum preheats of 65 to 158 C (`authoring/evidence/reference.txt`).
+
+The example joint, `joint-ex`, has sound records and no reported answer, since MS-PH defines the preheat:
+- the joint sheet's plates, heats and consumable batches;
+- cast analyses only;
+- electrodes in a heated quiver;
+- no pulsed runs, and a monitor that senses voltage at the arc;
+- only the joint's own runs on the monitor that day, and nothing in the shop log but routine entries.
+
+The seven hidden joints carry the faults that shop records carry. Each looks like ordinary data, and the documents say
+only what was done, never its effect:
+- **Plate replaced.** The shop log records that a plate was rejected at UT and replaced by a plate of another heat
+  and thickness (tank-course, hopper-wall). The joint sheet still lists the old plate.
+- **Wrong heat on the joint sheet.** The joint sheet gives a plate the wrong heat. The certificates list the plate
+  under its real heat, and the fit-up check in the shop log names it (deck-plate, frame-web).
+- **Product analyses.** A plate's certificate gives its own product analysis as well as its heat's cast analysis
+  (boom-chord, girder-flange). Two others list a product analysis of another plate of the joint plate's heat
+  (frame-web, hopper-wall).
+- **Electrodes.** The oven issued another batch to the station than the joint sheet names. The electrodes sat in an
+  unheated quiver in the humid bay, were returned to the oven and issued again (column-splice, deck-plate). Another
+  station drew the same batch the same day.
+- **Pulsed capping runs.** The capping runs are waveform-controlled (tank-course, frame-web). Their monitor senses
+  voltage at the power source terminals, so the arc voltage is the sensed voltage less the cable drop, sample by
+  sample.
+- **Monitor recalibration.** The arc monitor's current reading was found high at a check after the joint was welded
+  (boom-chord 8 percent, frame-web 7 percent).
+- **Wire spool changed.** A spool of another, higher-hydrogen batch of the flux cored wire was fitted during the fill
+  runs (girder-flange, hopper-wall).
+- **Other joints on the monitor.** The station's monitor also recorded the runs of another joint that day
+  (girder-flange, tank-course).
+- **Thin plates.** The cooling time of the capping runs follows two-dimensional heat flow on tank-course and
+  boom-chord.
+
+Each check left out or done the obvious way gets joints wrong, against an allowance of one wrong joint
+(`authoring/evidence/route_study.txt`). Each figure is the signed deviation from the truth:
+- The joint sheet's plates, not the replacement in the shop log: 2 wrong, hopper-wall -39.6 and tank-course -131.6 C.
+- The joint sheet's heat of a plate: 2 wrong, deck-plate -12.3 and frame-web +44.2 C.
+- The heat's cast analysis, not the plate's product analysis: 2 wrong, boom-chord -64.6 and girder-flange -15.5 C.
+- Another plate's product analysis for a plate without its own: 2 wrong, frame-web +105.3 and hopper-wall +74.4 C.
+- The batch certificate's hydrogen, with no moisture pick-up: 2 wrong, column-splice -19.1 and deck-plate -14.9 C.
+- The exposure from the first issue, through a return to the oven: 2 wrong, column-splice +18.9 and deck-plate
+  +29.5 C.
+- The joint sheet's electrode batch, not the batch the oven issued: 2 wrong, column-splice -34.9 and deck-plate
+  -14.9 C.
+- The climate logger of the dry bay for every station: 2 wrong, column-splice -12.5 and deck-plate -10.2 C.
+- The mean current times the mean voltage for the pulsed runs: 2 wrong, frame-web +55.6 and tank-course +65.3 C.
+- The sensed voltage as the arc voltage: 2 wrong, frame-web -49.0 and tank-course -60.7 C.
+- The cable drop of a pulsed run from its mean current only: 2 wrong, frame-web -20.7 and tank-course -25.7 C.
+- The monitor's current as recorded before its recalibration: 2 wrong, boom-chord -30.4 and frame-web -17.0 C.
+- The joint sheet's wire batch, not the spool fitted later: 2 wrong, girder-flange and hopper-wall -16.9 C.
+- Every run the monitor recorded, the other joint's too: 2 wrong, girder-flange +111.1 and tank-course +189.6 C.
+- The WPS's nominal current, voltage and travel speed: 6 wrong, +14.8 to +160.1 C.
+- The hardness limit on every run, not only the capping runs: 5 wrong, +31.0 to +118.8 C.
+- The hydrogen clause only (EN 1011-2 method B): 3 wrong, -83.9 to -67.4 C.
+- The 3D cooling time only: 2 wrong, boom-chord +54.7 and tank-course +58.9 C.
+- The 2D cooling time only: 5 wrong, +36.5 to +170.5 C.
+- The records at face value (the sheet's plates, heats and batches, cast analyses, no pick-up, U x I as sensed, every
+  run): 7 wrong.
+
+Every route misses at least two joints, and every hidden joint is missed by at least two routes. On the example, every
+record route gives the reference's 93.14 C, and the WPS's nominal parameters give 94.35 C. Only the 2D cooling time
+differs there (288.47 C), and with no reported answer the example does not expose it
+(`authoring/evidence/route_example.txt`).
+
+## Reference solution
+
+`solution/preheat.py` is the reference program; `solution/solve.sh` installs it as `/app/output/preheat.py` and runs
+it on the example. For one joint it does the following:
+- **Joint sheet and shop log.** Reads the joint number, the station, the arc monitor, the two plates and the
+  consumable batch of each kind of run. From the shop log of the joint's station it takes a plate replacement, the
+  monitor's current error found at a check (the runs before the check are corrected), and a wire spool of another
+  batch (the runs after it use that batch).
+- **Plates.** Each plate's heat is the heat whose certificate lists the plate's mark. Its composition is its own
+  product analysis, or its heat's cast analysis when the certificate gives none for the plate.
+- **Heat input.** For each of the joint's runs on the monitor, k P / v. P is the mean current times the mean arc
+  voltage, or for a pulsed run the mean of the instantaneous arc power over its waveform record. Where the monitor
+  senses voltage at the power source, the arc voltage is that voltage less I R of the welding and return cables,
+  per sample for a waveform. v is the length over the arc time.
+- **Diffusible hydrogen.** The certificate value of the batch the run was welded with: for covered electrodes, the
+  batch the oven last issued to the station. Covered electrodes in an unheated quiver add the pick-up s E. E
+  integrates the vapor pressure from the climate logger of the station's bay, linearly between hourly readings, from
+  the last issue to the start of the run. s is a straight-line fit to the shop's exposure tests.
+- **Preheat.** Per plate, the hydrogen preheat is the highest over the runs. The hardness preheat is the lowest T0 at
+  which every capping run's t8/5 (the larger of t2 and t3) reaches the cooling time at which the HAZ is at 380 HV10,
+  found by Brent's method. The joint's minimum preheat is the highest over the plates and both requirements.
+
+Run through `tests/grade.py` as the verifier runs a submission, its preheats are within 0.49 C of the truth on all
+seven hidden joints. On the example it gives 93.14 C (`authoring/evidence/reference.txt`).
+
+## Verification
+
+`tests/grade.py` runs the submitted `/app/output/preheat.py` on each of the seven hidden joints (`tests/hidden`; the
+agent's image does not contain them). The verifier image has the agent's `/app/data` at the same path, read-only
+(`tests/app_data`, written by the same `build.py`), so a program that reads the welding data from it at run time
+behaves as it did for the agent.
+
+How each joint is run:
+- The program alone and the package are copied to a scratch directory owned by root, where the package is read-only.
+- The program runs as the unprivileged user nobody, with only PATH and HOME set, as
+  `python3 -I preheat.py JOB_DIR OUT_JSON`, within 600 s, in its own process group.
+- When the run ends or times out, its process group and every process of nobody are killed before the output is read.
+  The seven runs are sequential, so the worst case (4200 s) fits the 4800 s verifier timeout.
+- The instruction states these run conditions, including the 10 minutes and that `preheat.py` must be
+  self-contained.
+
+The output must be a regular file, not a symlink, of at most 65536 bytes. It must hold one JSON object with exactly the
+key `min_preheat_c`, once, a finite positive number (not a string or a boolean; NaN and Infinity are rejected). The
+program must exit with status 0. A joint whose output breaks any of this is wrong. The instruction states every one of
+these rules.
+
+A joint is right when its value is within 6 C of its minimum preheat. The instruction states the 6 C as a requirement.
+The truth (`tests/hidden/truth.json`, root-only in `/tests`) is computed by `authoring/provenance/jobs.py` and
+`weld.py` on the sealed joint as it was welded:
+- the plates in the joint, with their own compositions;
+- each run's true arc current, arc voltage, travel speed and process;
+- each run's true diffusible hydrogen: the batch it was welded with and the true pick-up of its electrodes;
+- MS-PH's two requirements.
+
+The truth is a computation on the sealed joint, not on its records.
+
+The single pytest test passes when at most 1 of the 7 joints is wrong; the allowance of one joint is not in the
+instruction. `tests/test.sh` does the following:
+- Locks `/logs/verifier` to root before grading and again before the reward.
+- Writes reward 0 first, and 1 only when pytest exits 0 and the ctrf report holds exactly one test, passed, with none
+  failed, skipped, pending or other.
+- Writes the per-joint results to `/logs/verifier/metrics.json`, where they do not affect the reward.
+
+Every calibration number below is measured by the verifier itself. Each method, route and method-free answer is a
+complete JSON-writing program, run through `tests/grade.py` exactly as a submission. `authoring/evidence/common.py`
+writes the program file and calls `score()`. It runs as nobody from a scratch copy, as
+`python3 -I preheat.py JOB_DIR OUT_JSON`, and grade.py reads and judges the JSON. No evidence script calls a program's
+functions directly.
+
+Why 6 C and at most 1 wrong joint:
+- **Correct methods.** All are right on every joint, within 1.17 C of the truth
+  (`authoring/evidence/method_spread.txt`):
+  - the reference;
+  - `authoring/evidence/independent.py`, a second program that shares no code with it (within 0.84 C);
+  - three variants of the reference: each hourly climate reading held until the next, the first half of each
+    waveform record only, and the pick-up rate fitted to the tests of 4 h or more only.
+
+  The second program fits the pick-up rate through the origin to each test's rise over the unexposed test, and holds
+  each climate reading for the hour. It averages the pulsed arc power by the trapezoidal rule and finds both the
+  cooling time at 380 HV10 and the preheat by bisection.
+- **Defective routes.** The routes above miss by 10.2 C or more. The closest, deck-plate at -10.2 C, comes from the
+  dry bay's climate logger, which also misses column-splice by 12.5 C.
+- **The tolerance.** 6 C sits between the correct methods (1.17 C at most) and the closest defective miss (10.2 C).
+- **The allowance.** One wrong joint is allowed so that a sound program with a single marginal joint is not failed.
+  No route and no method-free answer stays within it.
+
+Method-free answers (`authoring/evidence/constant_null.txt`) are all rejected:
+
+| Method-free answer | Joints wrong | Deviation over the joints (C) |
+|---|---|---|
+| the example's preheat (93.1 C) for every joint | 7 | -64.4 to +27.8 |
+| 150 C for every joint | 6 | -7.6 to +84.7 |
+| the example's preheat moved 75 C per 0.05 of the highest CEV on the certificates | 6 | -44.0 to +117.3 |
+
+Every hidden joint's preheat is at least 25 C from the example's, so the example's answer carries over to none of
+them.
+
+Malformed output and misbehaving programs (`authoring/evidence/verifier_checks.txt`) write the reference's value for
+each joint and then corrupt it. They are run through `grade.py` as the verifier runs them. Each of the following has
+every joint counted wrong, and none crashes the verifier:
+- an output that is a symlink;
+- a missing, extra, renamed or repeated key, or a list instead of an object;
+- a NaN, infinite, string, boolean, negative or zero value;
+- an empty file, bytes that are not UTF-8, or a correct object padded past 65536 bytes;
+- a non-zero exit status, or a run past the time limit.
+
+A background process left running is killed when its run ends, and no process of nobody survives any case.
+
+The agent works as a separate user that can only write to `/app/output`; `/app/data` is read-only. The verifier runs
+separately without network.

@@ -1,0 +1,36 @@
+reference sheet                                                    accepted 8 of 8  as expected
+reference sheet, CRLF line ends and blank lines                    accepted 8 of 8  as expected
+reference sheet, spaces around fields, S1 oven as 281.0            accepted 8 of 8  as expected
+rows in another order                                              accepted 8 of 8  as expected
+empty file                                                         rejected: the first line must be exactly: part,bore_mm,oven_C  
+header only                                                        rejected: the sheet must have one row for each of S1, S2, S3, S4, S5, S6, BD, TC  
+header misspelt                                                    rejected: the first line must be exactly: part,bore_mm,oven_C  
+header with an extra column                                        rejected: the first line must be exactly: part,bore_mm,oven_C  
+no header                                                          rejected: the first line must be exactly: part,bore_mm,oven_C  
+a part missing                                                     rejected: the sheet must have one row for each of S1, S2, S3, S4, S5, S6, BD, TC  
+a part twice                                                       rejected: part S1 appears twice  
+an unknown part                                                    rejected: unknown part 'S7'  
+a part in lower case                                               rejected: unknown part 's3'  
+a row with four fields                                             rejected: every row must have three fields: ['S2', '120.064', '240', 'x']  
+a row with two fields                                              rejected: every row must have three fields: ['S2', '120.064']  
+a non-ASCII character                                              rejected: the bore sheet is not ASCII text  
+S4 bore four decimals                                              rejected: S4 bore_mm has more than three decimals  
+S4 bore NaN                                                        rejected: S4 bore_mm must be finite  
+S4 bore Infinity                                                   rejected: S4 bore_mm must be finite  
+S4 bore empty                                                      rejected: S4 bore_mm is not a number: ''  
+S4 bore text                                                       rejected: S4 bore_mm is not a number: 'abc'  
+S4 bore 1e2 (100.0)                                                graded, 7 of 8 right  as expected
+S4 bore 49.999                                                     rejected: S4 bore_mm must be from 50 to 200  
+S4 bore 200.001                                                    rejected: S4 bore_mm must be from 50 to 200  
+S4 bore negative                                                   rejected: S4 bore_mm must be from 50 to 200  
+S1 oven 280.5                                                      rejected: S1 oven_C must be a whole number  
+S1 oven 19                                                         rejected: S1 oven_C must be from 20 to 1000  
+S1 oven 1001                                                       rejected: S1 oven_C must be from 20 to 1000  
+S1 oven empty                                                      rejected: S1 oven_C is not a number: ''  
+S1 oven NaN                                                        rejected: S1 oven_C must be finite  
+S5 oven above its heating limit (286 C): graded, S5 wrong          graded, 7 of 8 right  as expected
+S1 bore at 115.026 (above its stress limit at trip): graded, S1 wrong graded, 7 of 8 right  as expected
+the sheet a symlink to a correct sheet                             rejected: the bore sheet is not a regular file
+no sheet                                                           rejected: no bore sheet at /tmp/tmp74enw11x/absent.csv
+
+34 cases run, none crashed the grader

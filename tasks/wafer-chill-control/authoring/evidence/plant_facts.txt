@@ -1,0 +1,22 @@
+1. PEAK ZONE DIFFERENCE AT A FIXED 15 Torr, bare film, landing at 250 C
+   station A: sag -50 um -> 17.7 K, sag -25 um -> 20.6 K, sag +0 um -> 23.8 K, sag +25 um -> 27.2 K, sag +50 um -> 31.0 K
+   station B: sag -50 um -> 16.9 K, sag -25 um -> 19.9 K, sag +0 um -> 23.2 K, sag +25 um -> 26.8 K, sag +50 um -> 30.7 K
+
+2. SPOTS VERSUS ZONES while the benchmark rides the 25 K limit (bare, 250 C)
+   |centre - edge| at the instant the zone difference peaks, and the largest gap
+   between the two over the cycle
+   station A sag -50 um: zone 24.97 K, spots 26.22 K at t = 2.3 s; spots minus zone ranges -0.8 to +2.6 K
+   station A sag  +0 um: zone 24.98 K, spots 29.95 K at t = 2.8 s; spots minus zone ranges +0.0 to +5.5 K
+   station A sag +50 um: zone 24.98 K, spots 32.74 K at t = 5.2 s; spots minus zone ranges +0.0 to +8.0 K
+   station B sag -50 um: zone 24.98 K, spots 25.77 K at t = 2.2 s; spots minus zone ranges -1.0 to +2.2 K
+   station B sag  +0 um: zone 24.98 K, spots 30.23 K at t = 3.3 s; spots minus zone ranges +0.0 to +5.3 K
+   station B sag +50 um: zone 24.98 K, spots 32.59 K at t = 5.3 s; spots minus zone ranges +0.0 to +8.0 K
+
+3. PLATE AND PRESSURE during the benchmark cycle (bare, 250 C)
+   station A sag -50 um: cycle 5.8 s, plate up to 3.8 K above setpoint
+   station A sag +50 um: cycle 6.9 s, plate up to 3.2 K above setpoint
+   station B sag -50 um: cycle 5.2 s, plate up to 4.0 K above setpoint
+   station B sag +50 um: cycle 6.4 s, plate up to 3.3 K above setpoint
+   a step in the pressure command has covered 33% of its size after 0.1 s
+   a step in the pressure command has covered 86% of its size after 0.5 s
+   a step in the pressure command has covered 98% of its size after 1.0 s

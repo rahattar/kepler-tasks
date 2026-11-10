@@ -1,0 +1,9 @@
+Hidden sites wrong (of 8); the bound is 1.
+
+reference (solution/audit.py)                                               0
+demand taken as supply (storage in the receiver and piping left out)        8  s-301 (peak -9.1 %); s-302 (peak -9.7 %); s-303 (peak -11.2 %); s-304 (peak -9.8 %); s-305 (peak -10.4 %); s-306 (peak -9.4 %); s-307 (peak -11.4 %); s-308 (peak -9.3 %)
+pressure log taken on its own clock (no clock check)                        3  s-302 (peak -5.1 %); s-305 (peak -7.9 %); s-307 (peak -12.2 %)
+load/unload power logs taken as recorded (no one-CT check)                  2  s-301 (avg -34.6 %, sp +15.2 %, peak -32.2 %); s-304 (avg -61.0 %, sp +50.3 %, peak -55.6 %, leak -100.0 %)
+variable-speed power logs taken as recorded (no one-CT check)               1  s-307 (avg -31.3 %, sp +9.4 %, peak -31.8 %, leak -99.8 %)
+no one-CT check at all                                                      3  s-301 (avg -34.6 %, sp +15.2 %, peak -32.2 %); s-304 (avg -61.0 %, sp +50.3 %, peak -55.6 %, leak -100.0 %); s-307 (avg -31.3 %, sp +9.4 %, peak -31.8 %, leak -99.8 %)
+an interval counted loaded when its power is above half of full load        5  s-301 (avg +8.7 %, sp -8.0 %, leak +24.9 %); s-302 (avg +10.4 %, sp -9.4 %, leak +33.1 %); s-304 (avg +5.8 %, sp -5.5 %, leak +21.9 %); s-306 (avg +6.0 %, sp -5.7 %, leak +33.0 %); s-308 (avg +7.4 %, sp -6.9 %, leak +21.3 %)

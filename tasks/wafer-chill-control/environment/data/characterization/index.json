@@ -1,0 +1,142 @@
+{
+  "description": "Instrumented test-wafer runs, logged at 10 Hz. Each test wafer carries a thermocouple array; tc_* columns are its zone and mass means. The other columns are the production sensors. Sag is the test wafer's measured centre sag.",
+  "columns": [
+    "time_s",
+    "pressure_cmd_torr",
+    "pressure_torr",
+    "center_spot_C",
+    "edge_spot_C",
+    "plate_rtd_C",
+    "tc_inner_mean_C",
+    "tc_outer_mean_C",
+    "tc_mass_mean_C"
+  ],
+  "runs": [
+    {
+      "file": "char_A_bare_sag-40.csv",
+      "station": "A",
+      "film": "bare",
+      "test_wafer_sag_um": -40.0,
+      "command_profile": "const6"
+    },
+    {
+      "file": "char_A_bare_sag+00.csv",
+      "station": "A",
+      "film": "bare",
+      "test_wafer_sag_um": 0.0,
+      "command_profile": "const14"
+    },
+    {
+      "file": "char_A_bare_sag+40.csv",
+      "station": "A",
+      "film": "bare",
+      "test_wafer_sag_um": 40.0,
+      "command_profile": "const30"
+    },
+    {
+      "file": "char_A_oxide_sag-40.csv",
+      "station": "A",
+      "film": "oxide",
+      "test_wafer_sag_um": -40.0,
+      "command_profile": "const55"
+    },
+    {
+      "file": "char_A_oxide_sag+00.csv",
+      "station": "A",
+      "film": "oxide",
+      "test_wafer_sag_um": 0.0,
+      "command_profile": "step4to30"
+    },
+    {
+      "file": "char_A_oxide_sag+40.csv",
+      "station": "A",
+      "film": "oxide",
+      "test_wafer_sag_um": 40.0,
+      "command_profile": "step45to8"
+    },
+    {
+      "file": "char_A_nitride_sag-40.csv",
+      "station": "A",
+      "film": "nitride",
+      "test_wafer_sag_um": -40.0,
+      "command_profile": "ramp3to60"
+    },
+    {
+      "file": "char_A_nitride_sag+00.csv",
+      "station": "A",
+      "film": "nitride",
+      "test_wafer_sag_um": 0.0,
+      "command_profile": "stairs"
+    },
+    {
+      "file": "char_A_nitride_sag+40.csv",
+      "station": "A",
+      "film": "nitride",
+      "test_wafer_sag_um": 40.0,
+      "command_profile": "dip"
+    },
+    {
+      "file": "char_B_bare_sag-40.csv",
+      "station": "B",
+      "film": "bare",
+      "test_wafer_sag_um": -40.0,
+      "command_profile": "step4to30"
+    },
+    {
+      "file": "char_B_bare_sag+00.csv",
+      "station": "B",
+      "film": "bare",
+      "test_wafer_sag_um": 0.0,
+      "command_profile": "step45to8"
+    },
+    {
+      "file": "char_B_bare_sag+40.csv",
+      "station": "B",
+      "film": "bare",
+      "test_wafer_sag_um": 40.0,
+      "command_profile": "ramp3to60"
+    },
+    {
+      "file": "char_B_oxide_sag-40.csv",
+      "station": "B",
+      "film": "oxide",
+      "test_wafer_sag_um": -40.0,
+      "command_profile": "stairs"
+    },
+    {
+      "file": "char_B_oxide_sag+00.csv",
+      "station": "B",
+      "film": "oxide",
+      "test_wafer_sag_um": 0.0,
+      "command_profile": "dip"
+    },
+    {
+      "file": "char_B_oxide_sag+40.csv",
+      "station": "B",
+      "film": "oxide",
+      "test_wafer_sag_um": 40.0,
+      "command_profile": "const6"
+    },
+    {
+      "file": "char_B_nitride_sag-40.csv",
+      "station": "B",
+      "film": "nitride",
+      "test_wafer_sag_um": -40.0,
+      "command_profile": "const14"
+    },
+    {
+      "file": "char_B_nitride_sag+00.csv",
+      "station": "B",
+      "film": "nitride",
+      "test_wafer_sag_um": 0.0,
+      "command_profile": "const30"
+    },
+    {
+      "file": "char_B_nitride_sag+40.csv",
+      "station": "B",
+      "film": "nitride",
+      "test_wafer_sag_um": 40.0,
+      "command_profile": "const55"
+    }
+  ]
+}

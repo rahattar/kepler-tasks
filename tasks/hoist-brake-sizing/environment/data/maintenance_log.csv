@@ -1,0 +1,12 @@
+date,hoist,entry
+2023-04-12,H01,Hoist limit switches adjusted; overload device tested at 110 % of rated load.
+2023-06-20,H07,Wire rope replaced (same construction and diameter).
+2023-09-18,H05,Re-reeved from 4 falls to 2 falls for a faster cycle; drum and gearbox unchanged. Rated load reduced to 10 t; new 2-fall hook block (300 kg).
+2023-11-06,H12,Contactor control replaced by a frequency inverter with closed-loop hoist control (encoder on the motor). The inverter brings the hoist to standstill before it applies the brake.
+2024-01-15,H03,Gearbox oil changed; input shaft seal replaced.
+2024-02-26,H04,Contactor control replaced by a frequency inverter with closed-loop hoist control (encoder on the motor). The inverter brings the hoist to standstill before it applies the brake. Light-load fast lowering enabled: up to 150 % of rated speed for loads up to 50 % of rated load.
+2024-05-02,H09,"Hook and hook block inspected, no defects."
+2024-06-17,H08,Contactor control replaced by a frequency inverter with closed-loop hoist control (encoder on the motor). The inverter brings the hoist to standstill before it applies the brake. Light-load fast lowering enabled: up to 160 % of rated speed for loads up to 40 % of rated load.
+2024-09-09,H10,Brake linings replaced and bedded in (20 stops with rated load).
+2025-03-24,H11,Pendant control replaced by radio remote control; functions unchanged.
+2025-06-30,H02,Motor bearings replaced at the non-drive end.

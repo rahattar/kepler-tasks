@@ -1,0 +1,182 @@
+# tempering-hardness-window
+
+Choose the tempering temperature (a whole degree C) for each of thirteen batches of hardened alloy steel parts (four
+grades, eight heats, ruling sections of 25 to 300 mm), so that every batch meets its drawing's hardness range at the
+named location when tempered as the plant's procedure HT-4 requires (soak for the section, the hot-work grade double
+tempered), using a metallurgical laboratory with a booking of 11 tempers (a test tempered once uses one, twice uses
+two), the mill certificates, the supplier's typical tempering curves and the production records. The deliverable is
+one JSON file of setpoints, graded against a sealed definition of the steels and the heats.
+
+## Difficulty
+
+A heat treater or plant metallurgist does this whenever hardened parts wait for tempering: for each batch a furnace setpoint is chosen so that the parts, soaked for their section and double tempered where the procedure says, land in the drawing's hardness range at the location the drawing names, the job that AMS 2759 and the plant procedures built on it describe and that die makers follow for hot-work tool steels. Its research analogue is the modelling of tempering response and hardenability: time-temperature equivalence by the Hollomon-Jaffe parameter, secondary hardening by molybdenum and vanadium carbides, the transformation of retained austenite in high-alloy tool steels during tempering (the reason they are tempered more than once), and the prediction of section hardness from the Jominy curve through equivalent Jominy distances. Here it has to be done as a small design of experiments: a laboratory booking of 11 tempers must establish how eight heats of four grades actually temper, well enough to place each of thirteen setpoints inside a window of 19 to 74 whole degrees. The steels, records and laboratory are synthetic, written by authoring/provenance from a sealed definition. They are realistic, and so is the level of challenge they present:
+- Four grades: G41 (1 % Cr - 0.2 % Mo), G43 (1.8 % Ni - 0.8 % Cr - 0.25 % Mo), G32 (3 % Cr - 0.9 % Mo - V) and the hot-work grade G52 (5 % Cr - 1.3 % Mo - 1 % V), in eight heats with 0.32 to 0.42 % C, parts of 25 to 300 mm ruling section, ranges of 4 HRC (5 for one die steel) between 28 and 55 HRC, and setpoints of 470 to 601 C.
+- Hardness at a location is the tempered martensite and bainite in the proportion the location's equivalent Jominy distance gives; tempering follows the Hollomon-Jaffe parameter with C = 20; each heat has its own secondary-hardening response; a single temper of G52 leaves 2.6 to 3.4 HRC of fresh martensite from retained austenite, which a second temper removes.
+- The laboratory hardens a test piece of the heat as production does, tempers it once or twice for 2 h, and reads the hardness with 0.4 HRC scatter; a double-tempered test uses two of the 11 tempers.
+- Every window is one contiguous run of whole degrees.
+
+The core difficulty is that none of this is written down. The documents give:
+- procedure HT-4 (soak 1 h per 25 mm, at least 2 h; G52 double tempered; minimum temperatures; the equivalent-Jominy table);
+- the mill certificates (composition and Jominy curve of each heat), the batch list (written before the production log's last entry) and the production log;
+- the supplier's typical curves, each one 2 h temper of a 25 mm round;
+- the laboratory's command and its booking.
+
+What decides the result has to be found in them and in 11 tempers:
+- Production is not the laboratory's 2 h temper: with the supplier curves and every conversion but no tests, 6 of 13 batches are right; ignoring the soak time, 6; ignoring the double temper of G52, 8.
+- The three G52 heats sit 5.6 to 6.0 HRC below (52-1250), 3.0 to 3.3 below (52-1312) and 6.2 above (52-1377) the supplier's typical heat at their batches' conditions, although their certificates differ by at most 0.20 % Mo, 0.06 % V and 0.04 % C. Every one must be tested; an untested G52 heat fails its batches whether it is taken as the supplier's curve, as another heat's test or from a composition trend.
+- A single temper of G52 does not stand for a double one. The Hollomon-Jaffe equivalence that converts the soak treats the double temper as twice the time, and a single laboratory temper at that equivalent temperature costs half as much as a double one; but it reads 2.6 to 3.4 HRC too hard, and setpoints built on it fail all five G52 batches.
+- The booking holds one test of every heat with the G52 heats double tempered and nothing more: a second test of any heat (another temperature, another section, a single/double pair) has to be paid for by leaving another heat untested, and the heats that can be left to the supplier's curves are the ordinary ones, not the G52 heats that look alike.
+- The production log moved the pinions (B09) to heat 41-7864, whose 0.08 % V gives it 3.9 HRC of secondary hardening at the pinions' condition, visible only where the steel is fully hardened: tested at the wheel axles' 150 mm half-radius, it is masked and B09 fails; missed in the log, B09 fails.
+- Heat 43-2288's 0.48 % Mo makes it 2.5 HRC harder than the G43 curve: left to the curve, or taken as its sibling 43-2210, B12 fails.
+- The section matters: with 25 mm test pieces and no section correction, the axles (B02) fail.
+
+Each of these defeats an assumption that the general approach takes for granted on first reading: that the supplier's curve is the heat, that heats with matching certificates temper alike, that a double temper is twice the time, that the batch list is current, that one test of a heat covers all its parts. The gate is all 13 batches.
+
+## Reference solution
+
+solution/solve.py is the reference; solution/solve.sh runs it in the agent's environment. It uses only the documents in /app/data and the `temper` command.
+
+1. The batches as they are now: the batch list with the production log applied, which moves B09 to heat 41-7864.
+2. The model of a batch's hardness at setpoint T: the Hollomon-Jaffe parameter (T + 273.15)(20 + log10 t), with t the total hours at temperature (soak 1 h per 25 mm, at least 2 h, twice for G52), referred to one 2 h temper; the supplier's curve for the grade at that equivalent temperature; the excess over 18 HRC scaled by the heat's as-quenched hardness at the location (its Jominy curve at the procedure's equivalent distance) over its as-quenched hardness at the supplier's 25 mm half-radius; and an offset in HRC from a laboratory test of the heat.
+3. The tests (11 tempers), one of every heat, each made as its batch is made: at the batch's diameter and location, at the laboratory temperature with the same tempering parameter as the setpoint the model then predicts, and for G52 double tempered, because a single temper of G52 does not stand for a double one:
+   - 52-1250 at the punch holders' condition (B11), 52-1312 at the die inserts' (B06) and 52-1377 at the trim dies' (B13), double (6 tempers);
+   - 41-7864 at the pinions' 25 mm surface (B09), 43-2288 at B12, 32-0458 at B05, 43-2210 at B03 and 41-7731 at B01, once.
+4. Each setpoint is the middle of the longest run of whole degrees, from the grade's minimum to 700 C, that the model puts inside the range.
+
+On the shipped scenario the reference's offsets are -8.48 (52-1250), -5.54 (52-1312) and +3.81 (52-1377) HRC for the G52 heats against the supplier curve converted by Hollomon-Jaffe, +2.80 for 41-7864, +2.33 for 43-2288, and +0.09, +0.84 and -0.53 for 32-0458, 43-2210 and 41-7731. Its setpoints are B01 528, B02 529, B03 537, B04 495, B05 552, B06 566, B07 563, B08 560, B09 570, B10 546, B11 573, B12 537 and B13 592 C, and every batch is in range with at least 0.57 HRC to spare (B09; authoring/evidence/reference_run.txt).
+
+authoring/evidence/independent.py is a second solution, written separately, and it also gets all 13 right, with at least 0.57 HRC to spare.
+- Its tests (10 tempers) are 52-1250 at both its batches (B07, B11), 52-1312 at B08 and 52-1377 at B13, all double, and 41-7864 at B09, 43-2288 at B12 and 32-0458 at B10, once; it leaves 41-7731 and 43-2210 to the supplier curves.
+- Its fits are a monotone cubic (PCHIP) of the supplier curve in the tempering parameter itself and a linear section loss of 0.5 HRC per HRC of as-quenched shortfall.
+- It solves each setpoint for the middle of the range.
+
+## Verification
+
+The deliverable is one JSON file, /app/output/tempering.json, with a setpoint for each of the 13 batches. The verifier (tests/grade_tempering.py, run by tests/test_tempering.py under pytest) grades it against the sealed definition in tests/sealed.
+- For each batch it computes the hardness at the drawing's location after tempering at the setpoint as HT-4 requires: soak 1 h per 25 mm of ruling section, at least 2 h, and G52 double tempered.
+- A batch is right when its setpoint is at or above its grade's lowest permitted temperature and the hardness is within the drawing's range.
+- The answer is accepted only when all 13 are right.
+- One pytest test carries the reward. test.sh writes 0 first, and writes 1 only when pytest exits 0 and the ctrf report shows exactly 1 test, 1 passed.
+
+The truth comes from the sealed definition authoring/provenance/tsim.py, which gen.py writes out, never from running the reference, and the agent never sees it. The seed (6421) drives only the laboratory's scatter. authoring/provenance/seed_screen.py chose it as the first seed from 6401 on which nine sound plans all get 13 of 13 with at least 0.5 HRC to spare and no reading they draw is more than 2.5 standard deviations from its mean (smallest margin +0.569 HRC, largest offset 2.36 sigma; authoring/evidence/seed_screen.txt). In the agent's container the sealed definition and the laboratory's test records live under /opt/lab, in directories owned by the user lab with mode 700. The agent reaches the laboratory only through `temper`, a sudo wrapper for /opt/lab/lab.py. The program:
+- validates its arguments;
+- creates one exclusive record file for each test;
+- refuses any test beyond the booking of 11 tempers (a double-tempered test uses two);
+- refuses to run at all if its directories are not as installed.
+
+The verifier runs in a separate container without network.
+
+Why the gate is all 13, measured on the shipped scenario. Every number below is copied from the named file in authoring/evidence.
+
+Every batch's window is one contiguous run of 19 to 74 whole degrees (windows.txt).
+
+Correct methods (method_spread.txt, independent.txt):
+| Method | Right of 13 | Smallest true margin, HRC |
+|---|---|---|
+| reference | 13 | +0.57 |
+| reference tests in reverse order (other scatter draws) | 13 | +0.71 |
+| reference tests, PCHIP through the supplier points | 13 | +0.57 |
+| reference tests, Hollomon-Jaffe constant 19 / 21 | 13 / 13 | +0.57 / +0.57 |
+| reference tests, setpoint solved for the middle of the range | 13 | +0.43 |
+| laboratory temperatures 10 C below / above the equivalent | 13 / 13 | +0.86 / +0.66 |
+| tests at the production setpoint itself | 13 | +0.57 |
+| tests on 25 mm half-radius pieces | 13 | +1.01 |
+| 52-1250 tested at B07; 52-1312 tested at B08 | 13 / 13 | +0.57 / +0.57 |
+| 52-1250 at both batches, 32-0458 and 43-2210 left to the curves | 13 | +0.71 |
+| independent solution (other tests, fits and rule) | 13 | +0.57 |
+
+Defective methods (route_study.txt; the last column counts the scatter seeds 6401 to 6420 on which the route gets all 13):
+| Route | Right of 13 | Worst batch | Seeds with 13 |
+|---|---|---|---|
+| production log missed (B09 on 41-7731) | 12 | B09 -1.35 | 0 of 20 |
+| no tests: supplier curves with every conversion | 6 | B11 -6.46 | 0 of 20 |
+| soak time ignored | 6 | B07 -3.47 | 0 of 20 |
+| G52 double tempering ignored | 8 | B13 -4.79 | 0 of 20 |
+| section ignored, 25 mm half-radius test pieces | 12 | B02 -2.65 | 0 of 20 |
+| G52 tested once at the Hollomon-Jaffe equivalent | 8 | B13 -1.24 | 0 of 20 |
+| 52-1250 untested, as the supplier curve / as 52-1312 | 11 / 11 | B11 -6.46 / -0.57 | 0 / 0 of 20 |
+| 52-1312 untested, as the supplier curve / as 52-1250 | 11 / 12 | B06 -3.59 / -0.39 | 0 / 4 of 20 |
+| 52-1377 untested, as the supplier curve / as 52-1250 | 12 / 12 | B13 -1.02 / -2.73 | 0 / 0 of 20 |
+| 41-7864 tested only at B02's 150 mm half-radius | 12 | B09 -0.49 | 1 of 20 |
+| 43-2288 untested, as the supplier curve / as 43-2210 | 12 / 12 | B12 -0.53 / -0.37 | 0 / 0 of 20 |
+
+- Correct methods get every batch right with at least 0.43 HRC to spare. They test every G52 heat double tempered, 41-7864 fully hardened and 43-2288, and they differ in the order of the tests, the curve through the supplier's points, the tempering-parameter constant, where the tests are made and the rule that picks the setpoint.
+- One more route recognises the fresh martensite instead of avoiding it: it tests the G52 heats once, measures the single-minus-double difference on one heat (52-1312) and subtracts it from the others. It gets 13 of 13 on the shipped scenario, with 0.70 HRC to spare, and on 17 of 20 scatter seeds; the other heats' retained austenite differs by up to 0.4 HRC from the one measured.
+- The gate is all 13, so no hedge across batches can pass: any split of batches between two answers to a choice loses the batches given the wrong one (hedge_study.txt). Within a batch, a common setpoint that is right under both answers exists for some choices, at the edges of the windows (6 to 9 C for reading a single G52 test as a double one). It does not exist for B09's two heats, for an untested G52 heat taken as the supplier curve on B06, B07, B08 and B11, for 52-1377 taken as another G52 heat (B13), for the soak time on B06 and B07, or for the section on B02.
+
+Null answers and per-batch discrimination (null_baselines.txt, route_study.txt). Each batch is graded on its own, so an answer made without the laboratory can be right on individual batches, and null_baselines.txt lists every such free pass batch by batch:
+- one setpoint for every batch: at best 7 of 13;
+- one setpoint per grade, chosen with the truth in hand: 10 of 13;
+- the supplier curve read as a 2 h temper of the part: 5 of 13;
+- the supplier curves with every conversion: 6 of 13, with or without the production log.
+None gets more than 10 of 13 against the 13 required, and none gets B09 right. Among the 16 other routes, every batch but B01, B04 and B10 is failed by at least one, and they fail on different batches (route_study.txt prints the full matrix).
+
+Malformed results are rejected as a whole (verifier_checks.txt). This covers a result that:
+- is a symlink, empty or absent;
+- is not JSON, or not one object with the single key tempering_C;
+- has duplicate, missing, extra or misspelt batch keys;
+- has a temperature that is NaN, infinite, not a whole number, a boolean, a string, an array, an object, null, or outside 0 to 1000 C.
+
+30 cases were run and none crashed the grader. The reference result is accepted at 13 of 13, with its temperatures as integers or as floats; a setpoint below the grade's minimum is graded wrong for that batch.
+
+The agent works as a separate user that can write only to /app/output. /app/data is read-only, and the laboratory's sealed definition and records are unreadable to the agent. The verifier runs separately without network, and /logs/verifier is root-only.
+
+## Layout (for maintainers)
+
+- `instruction.md`: the task as the agent reads it (the author's own prose).
+- `environment/`: the agent's image. `data/` is installed read-only at /app/data (procedure HT-4, laboratory rules,
+  batch list, mill certificates, production log, supplier's curves). `rig/lab.py` is the laboratory program;
+  `rig/sealed/` (tsim.py, seed.json) is installed under /opt/lab for the user `lab` with mode 700. The Dockerfile
+  creates the users `agent` and `lab`, the sudo rule and the `temper` wrapper.
+- `tests/`: the verifier image. `grade_tempering.py` grades the result against `sealed/`; `test_tempering.py` is the
+  one pytest test; `test.sh` writes the reward; `app_data/` is a copy of the agent's documents.
+- `solution/`: `solve.py` (the reference tests, model and setpoint rule) and `solve.sh`.
+- `authoring/provenance/`: the sealed definition (`tsim.py`), the generator (`gen.py`), `build.py`, the seed
+  (`seed.json`) and `seed_screen.py`, which chose it (6421; output in `authoring/evidence/seed_screen.txt`).
+- `authoring/evidence/`: `route_study.py` (wrong side), `method_spread.py` and `independent.py` (right side),
+  `null_baselines.py`, `hedge_study.py`, `windows.py` (every batch's window and every heat's departure from the
+  supplier's curve), `verifier_checks.py`, `reference_run.py`, `preflight.py`, and their `.txt` outputs; `common.py`
+  emulates the laboratory, including its deterministic scatter, so the numbers are those of the shipped scenario.
+
+## Regenerating
+
+    python3 authoring/provenance/build.py            # environment/data, environment/rig/sealed, tests/sealed, tests/app_data
+    python3 authoring/evidence/reference_run.py      # each script writes its .txt beside it
+    python3 authoring/evidence/windows.py
+    python3 authoring/evidence/route_study.py
+    python3 authoring/evidence/method_spread.py
+    python3 authoring/evidence/independent.py
+    python3 authoring/evidence/null_baselines.py
+    python3 authoring/evidence/hedge_study.py
+    python3 authoring/evidence/verifier_checks.py
+    python3 authoring/provenance/seed_screen.py      # only after a change to the scenario
+    python3 authoring/evidence/preflight.py          # offline structural checks
+
+`reference_run.txt` is solution/solve.py's output with the laboratory emulator, which gives exactly the readings
+environment/rig/lab.py gives for the same tests in the same order, graded as tests/grade_tempering.py grades.
+
+Packages: numpy 2.1.3, scipy 1.14.1, pandas 2.2.3 (environment and verifier), pytest 8.4.1 and pytest-json-ctrf
+0.3.5 (verifier).
+
+## Changing the task
+
+- The grades (`GRADES`), the heats and their certificates (`HEATS`), each heat's secondary hardening (`HUMP`), its
+  own tempering resistance (`TSH`), the fresh martensite a single temper leaves in G52 (`RA`), the supplier's typical
+  heats (`SUPPLIER_TYPICAL`, `TYPICAL_HEATS`), the batches (`BATCHES`), the procedure's minimums and tempers (`TMIN`,
+  `NTEMPER`), the laboratory's booking and scatter (`BUDGET`, `NOISE`) live in `authoring/provenance/tsim.py`; the
+  documents' text, the batch list's stale heat for B09 and the production log in `gen.py`. After any change run
+  `build.py`, regenerate the evidence, and check that `route_study.txt` still fails the defective routes while
+  `method_spread.txt` and `independent.txt` get 13 of 13.
+- Keep each G52 heat at least about 2.5 HRC from the supplier's curve converted by Hollomon-Jaffe, from that curve
+  corrected for the fresh martensite, and from the other G52 heats, at its own batches' conditions
+  (`windows.txt`); otherwise an untested heat can pass by coincidence.
+- The seed drives only the laboratory's scatter. After any change to the scenario, rerun `seed_screen.py` and ship the
+  seed it chooses.
+- Keep the documents free of any statement of the effects: that a single temper of G52 does not stand for a double
+  one, that heats differ from the supplier's curve, that vanadium or molybdenum gives secondary hardening. The task is
+  that they must be found. The supplier's curves do say they are one 2 h temper of a 25 mm round, and the procedure
+  does say that G52 is double tempered.
+- Modelling note: hardness is a mixture of tempered martensite and bainite in the proportion the equivalent Jominy
+  distance gives, tempering follows the Hollomon-Jaffe parameter with C = 20, and the fresh martensite after a single
+  G52 temper is a fixed amount per heat above about 520 C. Furnace heat-up, temperature gradients through the section
+  and temper embrittlement are not modelled.

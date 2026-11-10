@@ -1,0 +1,15 @@
+date,pumps,work_done
+2014-05-20,P1-P10,Bank commissioned; factory test certificates filed (factory_tests.csv)
+2018-08-20,P6,"Impeller replaced with OEM spare, pattern rev C, turned to 330 mm; certificate of the original impeller withdrawn; OEM type test of the pattern on file (oem_type_test_rev_c.csv)"
+2024-06-11,"P2,P5",Discharge piping modified; pressure gauge tappings relocated (see installation sheet)
+2025-04-07,P4,Impeller trimmed 330 -> 315 mm (shop job 25-118) to match the reduced duty of the east header
+2025-09-15,P9,VFD installed; speed setpoint from header pressure control
+2026-02-23,P10,Impeller replaced (cracked vane) with a supplier impeller; supplier's typical curve on file (p10_supplier_curve.md)
+2026-02-27,P10,Rig test in the pump shop after fitting the new impeller (p10_rig_test_2026.csv)
+2026-10-01,header,Header flowmeter FT-100 calibrated in place (certificate in docs); adjusted at 12:00
+2026-10-04,P2,Discharge pressure transmitter PT-206 replaced (failed); new transmitter 0-1600 kPa
+2026-10-06,P6,"Instrument PM during the outage: discharge pressure transmitter PT-606 loop-checked and calibrated, returned to service 10:00"
+2026-10-08,P7,"Clamp-on ultrasonic flow survey on the discharge pipe, three hours (flow_survey.csv; setup sheet in docs)"
+2026-10-09,P1,"Tripped 02:10 on low suction pressure, suction strainer blinded by debris; noisy and vibrating for about 20 min before the trip; strainer cleaned, restarted 05:00"
+2026-10-11,P2,DCS range of PT-206 corrected at 06:00 after an operator query
+2026-11-02,P1-P10,Overhaul ranking due

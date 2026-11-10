@@ -1,0 +1,16 @@
+shipped seed 7101: tests [('cte', 'steel', 270, 12.51), ('slip', 'steel', 'dry', 44, True, 0.17), ('slip', 'steel', 'dry', 107, True, 0.134), ('slip', 'steel', 'paste', 85, True, 0.062), ('slip', 'aluminium', 'dry', 30, True, 0.138), ('slip', 'bronze', 'oiled', 20, True, 0.11), ('slip', 'ductile-iron', 'dry', 57, True, 0.131), ('slip', 'steel', 'oiled', 56, True, 0.103)]
+fitted friction exponent 0.268
+J01   58 um 236 C  ok   torque +0.092 stress +0.039 clearance +0.137
+J02  186 um 190 C  ok   torque +0.029 stress +0.026 clearance +0.136
+J03  140 um 180 C  ok   torque +0.052 stress +0.016 clearance +0.217
+J04  285 um 270 C  ok   torque +0.035 stress +0.100 clearance +0.023
+J05  128 um 300 C  ok   torque +0.036 stress +0.033 clearance +0.170
+J06  119 um 270 C  ok   torque +0.047 stress +0.095 clearance +0.012
+J07  141 um 253 C  ok   torque +0.059 stress +0.004 clearance +0.197
+J08  211 um 250 C  ok   torque +0.035 stress +0.027 clearance +0.199
+J09  454 um 280 C  ok   torque +0.036 stress +0.112 clearance +0.022
+J10  151 um 263 C  ok   torque +0.031 stress +0.031 clearance +0.121
+J11  255 um 295 C  ok   torque +0.039 stress +0.028 clearance +0.102
+J12   41 um 226 C  ok   torque +0.165 stress +0.057 clearance +0.147
+right 12 of 12; smallest margin torque +0.0287 stress +0.0037 clearance +0.0118
+seeds 7101-7120: 12 of 12 on 20 of 20 (right counts [12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12])

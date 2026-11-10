@@ -1,0 +1,72 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/calibration.csv"]
+
+[task]
+name = "afterquery/vav-airflow-calibration"
+description = "Flow-calibrate the 40 pressure-independent VAV boxes of a partly re-ducted office and laboratory floor, a K-factor and a velocity-pressure offset per box, from the records, two weeks of BAS trends and five capture-hood visits of your choosing."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "building-hvac",
+    "vav-terminal-units",
+    "airflow-measurement",
+    "test-adjust-balance",
+    "sensor-calibration",
+    "experiment-design",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products or processes. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "building HVAC airflow measurement, testing, adjusting and balancing"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "building-hvac",
+    "vav-terminal-units",
+    "airflow-measurement",
+    "test-adjust-balance",
+    "sensor-calibration",
+    "experiment-design",
+]
+expert_time_estimate_hours = 8
+relevant_experience = """I am a control scientist working on model-based control and thermal process modelling, with a PhD in mechanical engineering and an undergraduate background in HVAC. Commercial HVAC design and control are core areas of my work and teaching, including the airflow calibration of variable-air-volume terminals, the behaviour of their flow sensors and transducers, and reading building automation trends to diagnose them. The building, its records, trends and the contractor's instrument are synthetic; the physics is the published behaviour of averaging flow sensors and differential-pressure transducers."""
+difficulty_explanation = """In practice this is the work of a test-and-balance engineer or commissioning agent handing a floor back after a renovation: every pressure-independent VAV box must be given a K-factor and a velocity-pressure offset so that the airflow it actually delivers is within 10 percent of its setpoint at design minimum and design maximum, and the contractor's capture-hood time is the scarce resource. The floor, its records, its trends and the hood readings are synthetic, written by the disclosed generator and sealed definition in authoring/provenance.
+
+Two physical effects set each box. The averaging cross's amplification depends on the inlet: the factory K assumes a straight inlet of three diameters, a hard elbow close to the inlet changes it by an amount that decays with the straight run and whose sign depends on the turn's orientation relative to the cross, and a flex connector that is bent or sagging at the inlet is the worst case. The transducer's zero drifts; firmware 3.x removes it every hour, firmware 2.4 does not, and a 3.x box whose auto-zero valve has failed carries it unalarmed. A box that closes at night shows its zero error in the trends; a box that never closes does not. Shipped as configured, 18 of the 40 boxes miss, by up to 69 percent.
+
+The records settle most of the floor: straight inlets, the west wing's horizontal elbows and flex boxes (measured in 2024 on ductwork that has not changed), and every zero error that a closed damper exposes, including one firmware 3.1 box whose night readings sit at 0.026 in. w.c. They do not settle the 2025 east wing. The 2024 readings there predate the re-ducting; the renovation dropped the branch ducts into the east boxes from above, so the vertical-drop elbows read the opposite way to the west wing's horizontal turns (+18 to +21 percent against -1 to -18 percent); the punch list names three connectors crushed into tight bends (+32 to +39 percent); the walk-down says unsupported connectors longer than the 5 ft limit sag into the inlet (+16 to +20 percent); and the three laboratory boxes on firmware 2.4 hold their minimum day and night, so their zero errors, 0.008 to 0.040 in. w.c. and a property of each transducer, can only be measured. Five visits cover exactly the three laboratory boxes (one of which is also a crushed connector), one vertical drop and one sagging connector; every other class can then be carried to its unvisited members within the band. Spending a visit to confirm a class that is already measured, guessing a laboratory zero, or carrying a measured class to a different one misses by 14 percent or more."""
+solution_explanation = """The reference reads the factory K-factors from the application note, the schedule, the inlet survey, the 2024 report and every trend. Offsets: the median velocity pressure with the setpoint at zero is each closing box's zero error; firmware 2.4 boxes take it, and a firmware 3.x box takes it when it is not near zero (VAV-3-04, 0.026 in. w.c.). It groups the boxes by inlet class from the survey and the close-out summary (straight, horizontal elbow, vertical-drop elbow, flex within specification, the punch list's crushed connectors, connectors longer than 5 ft) and visits every box whose calibration the records cannot settle: the laboratory boxes on firmware 2.4 that never close (VAV-3-36, 37 and 38, the last also a crushed connector), the vertical drop with the shortest straight run (VAV-3-28) and the longest sagging connector (VAV-3-31). Each visit gives K and offset from a least-squares fit of flow squared against velocity pressure through the three hood totals, weighted toward low flows.
+
+The inlet multiplier m = K / K_factory then reaches the unvisited boxes. West boxes in the 2024 report take their own value (a 2.4 box's zero at the time is unknown and taken as half of today's). Horizontal elbows take a fit m = 1 - a exp(-L/D / lam) to the five reported elbows; flex connectors within the specification and vertical drops take m = 1 + a exp(-L/D / lam) at the elbows' decay length with the amplitude fitted to their measured members; crushed and sagging connectors take their visited member's value; straight inlets 1. Unvisited laboratory boxes on firmware 3.1 keep offset 0. On the shipped floor every box is within 5.8 percent. It never reads the sealed definition or the verifier."""
+verification_explanation = """The verifier holds the floor's sealed definition (tests/vav.py, the same module that drives the hood service, seed 31). For every box it configures the controller with the submitted K and offset, holds the reported airflow at design minimum and at design maximum, and computes the airflow the box delivers from the box's true inlet multiplier and transducer zero error. One test gates the reward: /app/output/calibration.csv must have the columns tag, k_factor and vp_offset_inwc, one row for each of the 40 boxes and no other tags, finite numbers and K above zero, and every box must deliver within 10 percent of its setpoint at both points. The per-box record goes to /logs/verifier/metrics.json and never gates. The verifier never runs the reference solution and never reads the shipped files.
+
+The 10 percent is the owner's acceptance band, stated in the documents. The evidence in authoring/evidence shows it is wide against the spread of sound methods and narrow against wrong ones (method_spread.txt, route_study.txt, campaign_study.txt). 3240 sound calibrations (every complete plan, eight visit orders, weighted, unweighted or two-point visit fits, three ways of carrying a measured class, three assumptions on the 2024 zero of a 2.4 box) all pass, the worst box at 6.1 percent. Every shortcut and incomplete plan in route_study.txt misses, the nearest by 15.6 percent and the others by 15.8 to 100 percent. Of the 4368 five-box campaigns from a pool covering every class, the six that pass are exactly those that visit the three laboratory boxes, a vertical drop and a sagging connector; the others miss by at least 13.6 percent with any defensible fallback for a class left unvisited. Giving an unvisited laboratory box offset 0, which nothing in the records supports, happens to pass for VAV-3-37 alone because its zero error is small; route_study.txt shows it.
+
+The hood service runs in the agent's container as a separate user, tab. The agent runs as the user agent ([agent] user); the service's code, the sealed definition and the visit count are owned by tab with mode 700, so the agent cannot read them, signal the service or edit its state. The agent starts the service with start-hood, which runs one fixed script as tab through a single sudo rule that takes no arguments and passes no environment. A visit is charged before its readings are taken, so restarting the service does not reset the count; reports are written to /app/visits. The verifier runs separately with no network."""
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 10800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

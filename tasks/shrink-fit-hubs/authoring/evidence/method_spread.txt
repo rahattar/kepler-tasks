@@ -1,0 +1,17 @@
+method | right of 12 (seed 7101) | smallest margin: torque, stress, clearance | seeds 7101-7120 with 12
+reference (solution/solve.py)                              | 12 | +0.0378 +0.0046 +0.0122 | 20 of 20
+dilatometer test last                                      | 12 | +0.0101 +0.0046 +0.0252 | 20 of 20
+steel expansion measured to 260 C                          | 12 | +0.0101 +0.0046 +0.0252 | 20 of 20
+steel expansion measured to 270 C                          | 12 | +0.0286 +0.0046 +0.0166 | 20 of 20
+steel expansion measured to 280 C                          | 12 | +0.0286 +0.0046 +0.0180 | 19 of 20
+steel expansion measured to 300 C                          | 12 | +0.0193 +0.0046 +0.0207 | 20 of 20
+friction at each pair's highest pressure                   | 12 | +0.0378 +0.0046 +0.0122 | 20 of 20
+friction at each pair's median pressure                    | 12 | +0.0378 +0.0046 +0.0122 | 20 of 20
+friction at 80 MPa for every pair                          | 12 | +0.0378 +0.0046 +0.0122 | 20 of 20
+every hub heated to its heating limit                      | 12 | +0.0378 +0.0046 +0.0122 | 20 of 20
+allowance 1.5 % of the oven expansion                      | 12 | +0.0470 +0.0046 +0.0065 | 20 of 20
+allowance 3 % of the oven expansion                        | 12 | +0.0193 +0.0046 +0.0224 | 15 of 20
+friction at each pair's highest pressure, mid-window pick  | 12 | +0.0354 +0.0036 +0.0053 | 20 of 20
+friction at each pair's median pressure, mid-window pick   | 12 | +0.0193 +0.0107 +0.0140 | 20 of 20
+pressed specimens at each pair's highest pressure, mid-window pick (conservative) | 12 | +0.0378 +0.0046 +0.0122 | 20 of 20
+top of the range with no slip test at all                  | 12 | +0.0378 +0.0046 +0.0122 | 20 of 20

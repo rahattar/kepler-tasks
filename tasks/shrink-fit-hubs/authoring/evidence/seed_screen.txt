@@ -1,0 +1,1 @@
+seed 7101: all plans 12/12 yes, smallest margin +0.0036, largest reading offset 1.63 sigma  <- chosen

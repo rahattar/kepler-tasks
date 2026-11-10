@@ -1,0 +1,14 @@
+Reference program solution/fan.py through tests/grade.py (run as nobody); a fan is right when both of its two lowest critical speeds with the new impeller are within 2 percent of the truth.
+
+Example boiler-fd-fan: first 940.1 rpm, second 1437.0 rpm
+
+fan                   first rpm         true   second rpm         true  ratio 1  ratio 2  right
+baghouse-fan              857.8        857.8       1327.6       1327.5   1.0000   1.0001   True
+coal-mill-fan            1256.3       1256.4       1946.2       1946.8   0.9999   0.9997   True
+cooler-vent-fan           840.1        840.2       1317.9       1318.0   0.9998   1.0000   True
+dryer-exhaust-fan         806.8        806.8       1225.7       1225.6   1.0000   1.0000   True
+kiln-id-fan               760.5        760.5       1150.5       1150.7   1.0000   0.9998   True
+raw-mill-fan             1206.5       1206.4       1887.9       1887.9   1.0001   1.0000   True
+
+fans 6; wrong 0 (accepted); largest deviation from the truth 0.0003
+true critical speeds of the hidden fans: baghouse-fan 858 and 1328; coal-mill-fan 1256 and 1947; cooler-vent-fan 840 and 1318; dryer-exhaust-fan 807 and 1226; kiln-id-fan 761 and 1151; raw-mill-fan 1206 and 1888 rpm

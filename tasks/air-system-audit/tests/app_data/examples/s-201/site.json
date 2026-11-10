@@ -1,0 +1,100 @@
+{
+ "site": "S-201",
+ "atmospheric_pressure_bar_a": 1.013,
+ "storage_volume_m3": 9.0,
+ "pressure_drop_receiver_to_compressors_bar": 0.3,
+ "pressure_logger": "loggers/pressure.csv",
+ "non_production_hours": [
+  [
+   0,
+   6
+  ],
+  [
+   22,
+   24
+  ]
+ ],
+ "compressors": [
+  {
+   "tag": "C-1",
+   "control": "load/unload",
+   "logger": "loggers/power_c-1.csv",
+   "performance": [
+    {
+     "pressure_bar_g": 6.0,
+     "fad_m3_min": 18.45,
+     "power_kw": 102.85
+    },
+    {
+     "pressure_bar_g": 7.0,
+     "fad_m3_min": 18.0,
+     "power_kw": 110.0
+    },
+    {
+     "pressure_bar_g": 8.0,
+     "fad_m3_min": 17.55,
+     "power_kw": 117.15
+    },
+    {
+     "pressure_bar_g": 9.0,
+     "fad_m3_min": 17.1,
+     "power_kw": 124.3
+    }
+   ]
+  },
+  {
+   "tag": "C-2",
+   "control": "load/unload",
+   "logger": "loggers/power_c-2.csv",
+   "performance": [
+    {
+     "pressure_bar_g": 6.0,
+     "fad_m3_min": 18.45,
+     "power_kw": 102.85
+    },
+    {
+     "pressure_bar_g": 7.0,
+     "fad_m3_min": 18.0,
+     "power_kw": 110.0
+    },
+    {
+     "pressure_bar_g": 8.0,
+     "fad_m3_min": 17.55,
+     "power_kw": 117.15
+    },
+    {
+     "pressure_bar_g": 9.0,
+     "fad_m3_min": 17.1,
+     "power_kw": 124.3
+    }
+   ]
+  },
+  {
+   "tag": "C-3",
+   "control": "load/unload",
+   "logger": "loggers/power_c-3.csv",
+   "performance": [
+    {
+     "pressure_bar_g": 6.0,
+     "fad_m3_min": 12.3,
+     "power_kw": 70.12
+    },
+    {
+     "pressure_bar_g": 7.0,
+     "fad_m3_min": 12.0,
+     "power_kw": 75.0
+    },
+    {
+     "pressure_bar_g": 8.0,
+     "fad_m3_min": 11.7,
+     "power_kw": 79.88
+    },
+    {
+     "pressure_bar_g": 9.0,
+     "fad_m3_min": 11.4,
+     "power_kw": 84.75
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+item,value
+component,E02
+member,unloader 1 tower
+position,"leg D, outer flange"
+attachment,lifting lug
+flange_thickness_mm,20
+attachment_thickness_mm,24
+fillet_weld_leg_mm,10
+flange_plate_heat,H2
+member_fabrication,as welded
+dead_load_stress_MPa,-30
+crack_depth_found_mm,3.5
+depth_found_by,TOFD
+date_found,2025-01-20
+date_repaired,2025-06-23
+repair,ground out and re-welded (procedure FA-3)
+excavation_depth_mm,7.2
+operating_days_found_to_repair,115
+survey,"2023 strain-gauge survey at this attachment, 35 days of normal operation"
+survey_days,35
+survey_range_145_MPa_cycles,70
+survey_range_123.2_MPa_cycles,350
+survey_range_101.5_MPa_cycles,1400
+survey_range_81.2_MPa_cycles,4200
+survey_range_63.8_MPa_cycles,8400
+survey_range_47.9_MPa_cycles,14000
+survey_range_34.8_MPa_cycles,18900
+survey_range_23.2_MPa_cycles,22680

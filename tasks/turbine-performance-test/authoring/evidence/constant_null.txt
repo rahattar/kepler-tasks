@@ -1,0 +1,3 @@
+True values: as_found 41.62 MW, 10923 kJ/kWh; as_left 42.81 MW, 10702 kJ/kWh
+The two conditions differ by 2.86 % in output and -2.02 % in heat rate, so no single pair of values within 0.5 % satisfies both.
+The procedure applied to the records as they stand (every logged run averaged, no record fault removed): 0 of 4 values within 0.5 % (as_found +4.27/-4.21 %, as_left +3.43/-5.90 %)

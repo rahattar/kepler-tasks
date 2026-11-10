@@ -1,0 +1,17 @@
+component,member,position,attachment,flange_thickness_mm,attachment_thickness_mm,fillet_weld_leg_mm,flange_plate_heat,member_fabrication,dead_load_stress_MPa
+C01,unloader 1 boom,"frame 4, top flange",transverse stiffener,25,15,10,H1,as welded,40
+C02,unloader 1 tower,"leg D, inner flange",transverse stiffener,25,15,10,H1,"PWHT 580 C, 2 h, furnace",-30
+C03,unloader 1 tower,"leg A, outer flange",lifting lug,16,36,10,H2,as welded,25
+C04,unloader 2 boom,"frame 2, top flange",diaphragm plate,50,20,10,H3,as welded,60
+C05,unloader 1 tower,"leg B, inner flange",walkway bracket,30,16,10,H1,"PWHT 580 C, 2 h, furnace",-35
+C06,unloader 1 tower,"leg B, outer flange",lifting lug,25,20,10,H2,as welded; vibratory stress relief (VSR) 2017,-40
+C07,unloader 2 tower,"leg D, outer flange",transverse stiffener,45,16,10,H3,"PWHT 580 C, 2 h, furnace",-40
+C08,unloader 1 boom,"frame 11, top flange",cable tray cleat,16,15,9,H2,as welded,35
+C09,unloader 2 tower,"leg A, inner flange",lifting lug,16,32,10,H2,"PWHT 580 C, 2 h, furnace",-35
+C10,unloader 2 tower,"leg B, inner flange",walkway bracket,35,25,10,H4,as welded; vibratory stress relief (VSR) 2017,-45
+C11,unloader 2 tower,"leg B, outer flange",diaphragm plate,20,25,10,H1,as welded,50
+C12,unloader 1 tower,"leg A, inner flange",walkway bracket,30,16,10,H1,"PWHT 580 C, 2 h, furnace",-45
+C13,unloader 1 boom,"frame 3, top flange",cable tray cleat,50,15,10,H4,as welded,40
+C14,unloader 1 tower,"leg C, outer flange",lifting lug,20,40,10,H2,"PWHT 580 C, 2 h, furnace",-35
+C15,unloader 2 boom,"frame 10, top flange",lifting lug,20,24,10,H2,as welded,30
+C16,unloader 2 tower,"leg C, inner flange",cable tray cleat,25,16,10,H1,"PWHT 580 C, 2 h, furnace",-45

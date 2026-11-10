@@ -1,0 +1,120 @@
+{
+  "site": {
+    "location": "Chicago, IL (O'Hare weather station)",
+    "calendar": "working days are Monday-Friday except US federal holidays, when the building is closed"
+  },
+  "zones": {
+    "west": {
+      "floor_area_m2": 120.0,
+      "depth_m": 6.0,
+      "facade_length_m": 20.0,
+      "clear_height_m": 2.9,
+      "floor_to_floor_m": 3.6,
+      "slab": {
+        "system": "thermally activated building system (concrete core activation), cooling only",
+        "thickness_m": 0.26,
+        "concrete": {
+          "conductivity_w_per_m_k": 1.8,
+          "density_kg_per_m3": 2300,
+          "specific_heat_j_per_kg_k": 900
+        },
+        "pipes": {
+          "material": "PE-Xa",
+          "outer_diameter_mm": 20.0,
+          "wall_thickness_mm": 2.0,
+          "spacing_mm": 150,
+          "pipe_plane_above_soffit_m": 0.13
+        },
+        "design_water_flow_kg_per_h_per_m2": 12.0,
+        "soffit": "exposed concrete, painted, no suspended ceiling or acoustic panels; emissivity 0.92",
+        "top_side": "raised access floor over a 150 mm unconditioned plenum; treated as adiabatic in the design calculation",
+        "embedded_sensor_above_soffit_m": 0.17
+      },
+      "envelope": {
+        "facade_area_m2": 72.0,
+        "window_to_wall_ratio": 0.55,
+        "glazing_u_w_per_m2_k": 1.4,
+        "glazing_g_value": 0.25,
+        "glazing": "double, solar-control coating",
+        "shading": "interior roller blinds in five bays, occupant-operated: occupants lower a bay when sun reaches their desks and reset the blinds when they arrive",
+        "opaque_u_w_per_m2_k": 0.35,
+        "design_infiltration_ach": 0.1
+      },
+      "ventilation": {
+        "system": "dedicated outdoor air system, sensible supply at 19 C, no recirculation",
+        "design_flow_l_per_s": 160.0,
+        "schedule": "full flow 06:00-19:00 on working days, 30 % of design flow at all other times"
+      },
+      "internal_gains": {
+        "occupied": "working days 08:00-18:00",
+        "design_occupied_w_per_m2": 22.0,
+        "lunch_hour_12_13_fraction_of_design": 0.8,
+        "unoccupied_w_per_m2": 3.0,
+        "radiant_fraction": 0.6,
+        "note": "actual occupancy varies from day to day and is not metered"
+      },
+      "furnishings": "open-plan desks, storage and glazed partitions",
+      "facade_azimuth_deg": 270,
+      "name": "Level 3 west perimeter"
+    },
+    "east": {
+      "floor_area_m2": 120.0,
+      "depth_m": 6.0,
+      "facade_length_m": 20.0,
+      "clear_height_m": 2.9,
+      "floor_to_floor_m": 3.6,
+      "slab": {
+        "system": "thermally activated building system (concrete core activation), cooling only",
+        "thickness_m": 0.26,
+        "concrete": {
+          "conductivity_w_per_m_k": 1.8,
+          "density_kg_per_m3": 2300,
+          "specific_heat_j_per_kg_k": 900
+        },
+        "pipes": {
+          "material": "PE-Xa",
+          "outer_diameter_mm": 20.0,
+          "wall_thickness_mm": 2.0,
+          "spacing_mm": 150,
+          "pipe_plane_above_soffit_m": 0.13
+        },
+        "design_water_flow_kg_per_h_per_m2": 12.0,
+        "soffit": "exposed concrete, painted, no suspended ceiling or acoustic panels; emissivity 0.92",
+        "top_side": "raised access floor over a 150 mm unconditioned plenum; treated as adiabatic in the design calculation",
+        "embedded_sensor_above_soffit_m": 0.17
+      },
+      "envelope": {
+        "facade_area_m2": 72.0,
+        "window_to_wall_ratio": 0.55,
+        "glazing_u_w_per_m2_k": 1.4,
+        "glazing_g_value": 0.25,
+        "glazing": "double, solar-control coating",
+        "shading": "interior roller blinds in five bays, occupant-operated: occupants lower a bay when sun reaches their desks and reset the blinds when they arrive",
+        "opaque_u_w_per_m2_k": 0.35,
+        "design_infiltration_ach": 0.1
+      },
+      "ventilation": {
+        "system": "dedicated outdoor air system, sensible supply at 19 C, no recirculation",
+        "design_flow_l_per_s": 160.0,
+        "schedule": "full flow 06:00-19:00 on working days, 30 % of design flow at all other times"
+      },
+      "internal_gains": {
+        "occupied": "working days 08:00-18:00",
+        "design_occupied_w_per_m2": 22.0,
+        "lunch_hour_12_13_fraction_of_design": 0.8,
+        "unoccupied_w_per_m2": 3.0,
+        "radiant_fraction": 0.6,
+        "note": "actual occupancy varies from day to day and is not metered"
+      },
+      "furnishings": "open-plan desks, storage and glazed partitions",
+      "facade_azimuth_deg": 90,
+      "name": "Level 3 east perimeter"
+    }
+  },
+  "tabs_group": {
+    "description": "both zones are served by one TABS manifold fed directly by a dedicated chiller; the chiller's leaving water is the slab supply for both zones",
+    "zone_valves": "one on/off valve per zone; the BMS can hold each valve open for any whole number of minutes in a 15-minute interval (valve command = open fraction)",
+    "sensors": "chiller leaving (supply) water temperature, and per zone: air temperature, embedded slab temperature, return water temperature; no flow meters",
+    "balancing_note": "the commissioning report records both zones as balanced to design flow; they were not re-measured after the 2016 manifold replacement"
+  }
+}

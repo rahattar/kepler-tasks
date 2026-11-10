@@ -1,0 +1,25 @@
+Reference run: solution/solve.sh in the agent's environment on the shipped scenario (laboratory seed 9704), its output, and
+the result graded by tests/grade_intervals.py.
+
+$ bash solution/solve.sh
+examples (rate factor the fitted law needs): E01 on H1 x0.993, E02 on H2 x1.242; heat factors H1 1.000, H2 1.242, H3 1.335, H4 1.335
+fit m 3.089 p 0.632 dKth 2.29 U0 0.643 closure-free from R 0.403, S460NL x1.335; survey 35 days, out of service {'unloader 1': 7}; unloader 2 ranges x{'unloader 2': 1.25}, cycles x{'unloader 2': 0.8}; site welded ['unloader 1 tower, leg A, inner flange', 'unloader 2 tower, leg C, inner flange']; wrote /app/output/intervals.json
+
+$ python3 tests/grade_intervals.py /app/output/intervals.json
+C01 ok  {'interval_months': 7.9774, 'life_months': 17.817, 'fraction_of_life': 0.4477, 'ok': True}
+C02 ok  {'interval_months': 6.8713, 'life_months': 15.177, 'fraction_of_life': 0.4527, 'ok': True}
+C03 ok  {'interval_months': 11.6115, 'life_months': 25.592, 'fraction_of_life': 0.4537, 'ok': True}
+C04 ok  {'interval_months': 6.8011, 'life_months': 15.095, 'fraction_of_life': 0.4505, 'ok': True}
+C05 ok  {'interval_months': 4.6226, 'life_months': 10.151, 'fraction_of_life': 0.4554, 'ok': True}
+C06 ok  {'interval_months': 5.027, 'life_months': 11.202, 'fraction_of_life': 0.4488, 'ok': True}
+C07 ok  {'interval_months': 5.5275, 'life_months': 12.078, 'fraction_of_life': 0.4577, 'ok': True}
+C08 ok  {'interval_months': 1.1699, 'life_months': 2.612, 'fraction_of_life': 0.4479, 'ok': True}
+C09 ok  {'interval_months': 4.6012, 'life_months': 10.05, 'fraction_of_life': 0.4579, 'ok': True}
+C10 ok  {'interval_months': 3.8448, 'life_months': 8.542, 'fraction_of_life': 0.4501, 'ok': True}
+C11 ok  {'interval_months': 3.0682, 'life_months': 6.852, 'fraction_of_life': 0.4478, 'ok': True}
+C12 ok  {'interval_months': 6.9165, 'life_months': 15.513, 'fraction_of_life': 0.4458, 'ok': True}
+C13 ok  {'interval_months': 4.9095, 'life_months': 10.811, 'fraction_of_life': 0.4541, 'ok': True}
+C14 ok  {'interval_months': 3.6146, 'life_months': 7.937, 'fraction_of_life': 0.4554, 'ok': True}
+C15 ok  {'interval_months': 0.9429, 'life_months': 2.109, 'fraction_of_life': 0.4472, 'ok': True}
+C16 ok  {'interval_months': 3.9744, 'life_months': 8.924, 'fraction_of_life': 0.4454, 'ok': True}
+16 of 16 right (gate 16): accepted

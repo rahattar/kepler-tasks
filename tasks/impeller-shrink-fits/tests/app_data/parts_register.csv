@@ -1,0 +1,9 @@
+part,description,seat_nominal_mm,hub_outside_diameter_mm,hub_length_mm,material
+S1,1st stage impeller,115,190,80,FV520B
+S2,2nd stage impeller,120,195,80,FV520B
+S3,3rd stage impeller,125,200,78,FV520B
+S4,4th stage impeller,125,200,78,FV520B
+S5,5th stage impeller,120,195,80,FV520B
+S6,6th stage impeller,115,190,80,FV520B
+BD,balance drum,110,252,150,42CrMo4
+TC,thrust collar,95,208,40,42CrMo4

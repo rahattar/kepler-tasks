@@ -1,0 +1,34 @@
+gate: growth rate within +-1 % (5 mm averages), true D >= 301.0 mm, mean true D <= 303.0 mm
+
+  reference: identified HZ-B (fit.py), setpoint 302.0                V/G 0.58 %  D min 301.22  D mean 302.13  pass
+  identified HZ-B, setpoint 301.8                                    V/G 0.58 %  D min 301.03  D mean 301.94  pass
+  identified HZ-B, setpoint 302.4                                    V/G 0.58 %  D min 301.61  D mean 302.50  pass
+  true HZ-B model, setpoint 302.0                                    V/G 0.40 %  D min 301.46  D mean 302.13  pass
+
+shortcuts
+  fab fast-pull loops on PS-R07 (pull rate on camera diameter 304)   V/G 13.88 %  D min 302.47  D mean 303.19  FAIL
+  design-sheet (HZ-A) model, camera taken at face value              V/G 1.85 %  D min 296.70  D mean 301.36  FAIL
+  design-sheet model, camera offset from the caliper                 V/G 1.85 %  D min 297.47  D mean 302.11  FAIL
+  design-sheet model, offset corrected, setpoint 304.5               V/G 1.85 %  D min 299.89  D mean 304.47  FAIL
+  identified model, camera taken at face value                       V/G 0.58 %  D min 300.46  D mean 301.38  FAIL
+  identified model, rotation steps not previewed                     V/G 1.78 %  D min 299.07  D mean 302.30  FAIL
+  identified model but HZ-A rotation effect                          V/G 1.72 %  D min 299.04  D mean 302.37  FAIL
+  identified model but HZ-A heater gain                              V/G 0.78 %  D min 299.59  D mean 301.87  FAIL
+  identified model but HZ-A heater gain, setpoint 303.4              V/G 0.78 %  D min 300.95  D mean 303.18  FAIL
+
+sound variations of the identified model (identification spread over subsets of the logs: dead time
+23.2-25.7 min, kh0 0.361-0.371, rotation effect 0.0140-0.0149, convection lag 6.2-6.9 min)
+  identified, dead x 0.90                                            V/G 0.56 %  D min 301.21  D mean 302.13  pass
+  identified, dead x 1.10                                            V/G 0.65 %  D min 301.18  D mean 302.13  pass
+  identified, kh0 x 0.95                                             V/G 0.53 %  D min 301.59  D mean 302.18  pass
+  identified, kh0 x 1.05                                             V/G 0.64 %  D min 300.86  D mean 302.07  FAIL
+  identified, c_rot x 0.95                                           V/G 0.67 %  D min 301.04  D mean 302.15  pass
+  identified, c_rot x 1.05                                           V/G 0.49 %  D min 301.39  D mean 302.11  pass
+  identified, tau1 x 0.80                                            V/G 0.75 %  D min 301.02  D mean 302.13  pass
+  identified, tau1 x 1.20                                            V/G 0.43 %  D min 301.21  D mean 302.12  pass
+
+larger model errors need a higher setpoint, which the mean limit allows up to about 302.9 mm
+  identified, kh0 x 1.10, setpoint 302.0                             V/G 0.69 %  D min 300.50  D mean 302.01  FAIL
+  identified, kh0 x 1.10, setpoint 302.6                             V/G 0.69 %  D min 301.08  D mean 302.58  pass
+  identified, c_rot x 0.90, setpoint 302.0                           V/G 0.81 %  D min 300.85  D mean 302.17  FAIL
+  identified, c_rot x 0.90, setpoint 302.6                           V/G 0.77 %  D min 301.43  D mean 302.73  pass

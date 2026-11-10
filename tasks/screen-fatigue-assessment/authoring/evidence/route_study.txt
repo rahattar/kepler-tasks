@@ -1,0 +1,27 @@
+requirement: within 20 % of each screen's damage
+
+  reference                                                                                    worst  0.07 (S4)  fails 0  
+
+records taken at face value
+  S4's readings with the loggers' gauge factor 2.00 (its gauges are the 2.12 lot)              worst  0.40 (S4)  fails 1  S4
+  S2's hot spot extrapolated as if its gauges were at 0.4t and 1.0t (they are at 10 and 30 mm) worst  0.41 (S2)  fails 1  S2
+  S7's channels as labelled (swapped at the junction box)                                      worst  2.46 (S4)  fails 3  S4 S5 S7
+  S1's G2 as recorded after it got wet (August)                                                worst  0.49 (S1)  fails 1  S1
+  S9's G1 as recorded after its drop in July (nothing logged)                                  worst  0.74 (S9)  fails 1  S9
+  S8's records at the index's 500 samples per second (the spare logger runs at 200)            worst  0.07 (S4)  fails 0  
+  S9's FAT class without the 32 mm thickness correction                                        worst  0.31 (S9)  fails 1  S9
+  S5's rev B gusset at the rev A class (FAT 90)                                                worst  0.63 (S5)  fails 1  S5
+  S6 counted from commissioning instead of its 2025-11-14 replacement                          worst 11.44 (S6)  fails 1  S6
+  S8's starts since 2024-07-01 as logged (the pilot historian counts start and stop commands)  worst  0.58 (S8)  fails 1  S8
+  S9's missing 2024 left out (the production report has it)                                    worst  0.29 (S9)  fails 1  S9
+  S2's coast-downs after its 2021 bearing job at the commissioning time (the log has 25.0 s)   worst  0.26 (S2)  fails 1  S2
+
+stops before the brakes (2026-03-02)
+  coast-downs simulated from a single-mode fit of the braked stops' ring-down                  worst  1.75 (S10)  fails 6  S1 S10 S2 S3 S4 S5
+  coast-downs from a single-mode quasi-static resonance curve                                  worst  3.65 (S10)  fails 6  S1 S10 S2 S3 S4 S5
+  every pre-brake stop counted as a braked stop                                                worst  0.66 (S10)  fails 2  S10 S2
+  pre-brake stops left out                                                                     worst  0.66 (S10)  fails 2  S10 S2
+  starts and stops left out altogether                                                         worst  1.00 (S8)  fails 4  S10 S2 S6 S8
+
+proxies for what the records do not settle
+  siblings' largest damage per event (a 'conservative' proxy) instead of their median          worst  9.00 (S4)  fails 2  S4 S5

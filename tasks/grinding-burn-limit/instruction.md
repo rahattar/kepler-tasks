@@ -1,0 +1,7 @@
+The shop sets the depth of cut of its surface grinding jobs from its grinding burn standard MS-GB, one job at a time from the job's package. Write `/app/output/burn.py` so that `python3 burn.py JOB_DIR OUT_JSON` writes `OUT_JSON` with `max_depth_um`, the burn-limited depth of cut of the job's operation in micrometers. `/app/data/docs/ms_gb_grinding_burn.md` is the standard, `/app/data/docs/grinding_data.md` the shop's grinding data and `/app/data/docs/package_format.md` describes a package. One job's package is in `/app/data/examples/job-ex/`.
+
+The program must also handle the packages of seven other jobs of the shop, in the same format. The value must be within 5 percent of the job's true burn-limited depth of cut. `OUT_JSON` must be a regular file no larger than 65536 bytes holding one JSON object with only that key, exactly once, and its value a finite positive number, and the program must exit with status 0.
+
+The seven packages run one after another, each through `python3 -I burn.py JOB_DIR OUT_JSON` in a scratch directory containing a copy of `burn.py` alone, so the program must not read or import any other file from `/app/output`. Each run has 10 minutes, under an unprivileged user without network access, with the package read-only. `/app/data` remains readable at the same path. Python 3, numpy, scipy and pandas are available.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

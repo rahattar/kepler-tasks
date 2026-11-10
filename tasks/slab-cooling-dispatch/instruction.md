@@ -1,0 +1,17 @@
+The east and west perimeter office zones share a concrete-core cooling manifold, fed by a dedicated chiller's leaving water and fitted with an on/off valve for each zone. The current BMS sequence needs a replacement supervisory controller to keep occupied rooms comfortable without running up the electricity bill.
+
+Everything known is in `/app/data/`, including eight weeks of 15-minute trend logs from 2017-05-20 to 2017-07-14. The as-built zones may differ from their design values.
+
+The controller belongs in `/app/controller.py`, one self-contained Python file defining `Controller` with a no-argument constructor and `step(obs)`. Calls arrive every 15 minutes from 2017-07-15T00:00 through 2017-09-08T23:45, continuing directly from the end of the trend log.
+
+In `obs`, `time` gives the interval's start in local standard time. `outdoor_temp_c` is the current outdoor temperature. Under `facade_irradiance_w_m2`, the `west` and `east` values are means over the previous interval. `supply_temp_c` is the previous interval's mean chiller leaving-water temperature. The previous setpoint is in `supply_setpoint_c`. Within `zones`, the `west` and `east` records each carry current `air_temp_c` and `slab_temp_c`, plus `return_temp_c` and `valve_duty` from the previous interval. The `forecast` contains `issued`, `step_minutes`, `outdoor_temp_c` and `facade_irradiance_w_m2`, with `west` and `east` under the last key. Forecasts are issued at 00:00, 06:00, 12:00 and 18:00, with 216 values per series at 15-minute spacing, starting at the issue time.
+
+Each call returns `{"supply_temp_c": float, "valve_duty": {"west": float, "east": float}}` for the next 15 minutes. The supply setpoint is clipped to 15-22 C. Each valve duty must be between 0 and 1, opening that valve from the start of the interval for the requested fraction of its duration, rounded to whole minutes. Cooling demand from the open valves beyond the chiller's capacity raises its leaving-water temperature above the setpoint. No heat is removed from a slab colder than the supply, and the system cannot heat.
+
+Both comfort and cost requirements must hold over the eight-week run, with each week running from Saturday 00:00 to Friday 24:00. For each zone and week, occupied-hour operative temperature is evaluated every minute and may accumulate at most 0.5 K h outside 21.0-26.0 C. At most one of the 16 zone-weeks may exceed that allowance. Total cooling electricity cost must be at most 1.15 times the benchmark's. Cost is summed over minutes: heat removed from both zones in kWh, divided by the chiller COP at its actual leaving-water and outdoor temperatures, multiplied by the tariff price.
+
+The benchmark knows both zones' exact models and states and receives the same forecasts with the systematic error shown in the forecast archive removed. It assumes design internal gains and keeps its predicted operative temperatures within 21.3-25.7 C. Its plan looks 48 h ahead, accounts for chiller efficiency and capacity, and is updated every hour.
+
+During the run, `/app/controller.py` runs alone in an empty directory with Python 3, numpy and scipy only. It cannot read any other file. The constructor has 600 s, each `step` call has 10 s, and controller computing time over the whole run is limited to 7200 s. `/app/check_controller.py` checks the interface and timing on logged data.
+
+You have 14400 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

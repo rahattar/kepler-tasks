@@ -1,0 +1,58 @@
+Discretisation convergence of the grading model.
+
+shipped grading model: 80 rings, dt = 0.01 s
+
+  S05  alpha 0.2526, recipe 22.21 Torr for 8.237 s
+    rings        T_end       dT    t_opt      dT_end     d(dT)   d t_opt
+    40 rings    48.838   23.580    7.725     +0.0028   +0.0660   +0.0163  [7s]
+    80 rings    48.836   23.528    7.709     +0.0006   +0.0133   +0.0001  [11s] <- shipped ring count
+    120 rings   48.836   23.518    7.709     +0.0001   +0.0034   +0.0000  [16s]
+    160 rings   48.835   23.514    7.709     +0.0000   +0.0000   +0.0000  [23s]
+    dt           T_end       dT    t_opt      dT_end     d(dT)   d t_opt
+    dt 0.02     48.836   23.528    7.709     +0.0000   -0.0000   +0.0000  [3s]
+    dt 0.01     48.836   23.528    7.709     +0.0000   -0.0000   +0.0000  [6s] <- shipped
+    dt 0.005    48.836   23.528    7.709     +0.0000   +0.0000   +0.0000  [10s]
+    shipped against the finest (160 rings, dt 0.005): T_end +0.0006 C, dT +0.0133 K, t_opt +0.0001 s
+    shipped against the extrapolated limit:         T_end +0.0008 C, dT +0.0177 K
+
+  S07  alpha 0.5632, recipe 7.06 Torr for 7.965 s
+    rings        T_end       dT    t_opt      dT_end     d(dT)   d t_opt
+    40 rings    49.069   23.477    7.477     +0.0030   +0.0662   +0.0205  [5s]
+    80 rings    49.067   23.424    7.456     +0.0006   +0.0133   +0.0001  [6s] <- shipped ring count
+    120 rings   49.066   23.414    7.456     +0.0002   +0.0035   +0.0000  [9s]
+    160 rings   49.066   23.410    7.456     +0.0000   +0.0000   +0.0000  [11s]
+    dt           T_end       dT    t_opt      dT_end     d(dT)   d t_opt
+    dt 0.02     49.067   23.424    7.456     +0.0001   -0.0000   +0.0000  [2s]
+    dt 0.01     49.067   23.424    7.456     +0.0000   -0.0000   +0.0000  [3s] <- shipped
+    dt 0.005    49.067   23.424    7.456     +0.0000   +0.0000   +0.0000  [6s]
+    shipped against the finest (160 rings, dt 0.005): T_end +0.0006 C, dT +0.0133 K, t_opt +0.0001 s
+    shipped against the extrapolated limit:         T_end +0.0008 C, dT +0.0177 K
+
+  S12  alpha 0.3127, recipe 14.75 Torr for 9.190 s
+    rings        T_end       dT    t_opt      dT_end     d(dT)   d t_opt
+    40 rings    46.663   24.808    8.629     +0.0027   +0.0694   +0.0256  [6s]
+    80 rings    46.661   24.753    8.604     +0.0005   +0.0139   +0.0001  [11s] <- shipped ring count
+    120 rings   46.660   24.742    8.604     +0.0001   +0.0036   +0.0000  [15s]
+    160 rings   46.660   24.739    8.604     +0.0000   +0.0000   +0.0000  [19s]
+    dt           T_end       dT    t_opt      dT_end     d(dT)   d t_opt
+    dt 0.02     46.661   24.752    8.604     +0.0001   -0.0001   +0.0000  [3s]
+    dt 0.01     46.661   24.753    8.604     +0.0000   -0.0000   +0.0000  [5s] <- shipped
+    dt 0.005    46.661   24.753    8.604     +0.0000   +0.0000   +0.0000  [10s]
+    shipped against the finest (160 rings, dt 0.005): T_end +0.0005 C, dT +0.0139 K, t_opt +0.0001 s
+    shipped against the extrapolated limit:         T_end +0.0007 C, dT +0.0186 K
+
+  worst drift of the SHIPPED setting, against the finest setting / against the
+  extrapolated limit:
+    end temperature   0.0006 C / 0.0008 C   against 0.930 C of margin
+    zone difference   0.0139 K / 0.0186 K   against 0.250 K of margin
+    optimum dwell     0.0001 s   (0.001% of the optimum)
+
+  The optimum enters the reward only as a ratio, so its fractional drift is
+  what counts: 0.001% shifts every dwell ratio by about 0.0000, against the
+  0.011 the reference carries below the 1.080 limit. The verifier searches for
+  each optimum on a 0.05 Torr pressure step, which can only place it at or after
+  the continuous optimum, so any error from that search is in the solver's favour.
+
+  The time step is converged to the printed precision at twice the shipped
+  step. Every drift above is about a tenth of its margin or less, so a solver
+  resolved finer than the grader is not penalised for it.

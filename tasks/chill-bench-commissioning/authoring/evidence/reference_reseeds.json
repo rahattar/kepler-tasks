@@ -1,0 +1,86 @@
+[
+ {
+  "reward": 1,
+  "commissioned": 16,
+  "max_ratio": 1.0686,
+  "worst_zone": 24.753,
+  "hottest": 49.067
+ },
+ {
+  "reward": 1,
+  "commissioned": 16,
+  "max_ratio": 1.0686,
+  "worst_zone": 24.715,
+  "hottest": 49.264
+ },
+ {
+  "reward": 1,
+  "commissioned": 16,
+  "max_ratio": 1.0686,
+  "worst_zone": 24.258,
+  "hottest": 49.992
+ },
+ {
+  "reward": 1,
+  "commissioned": 16,
+  "max_ratio": 1.0689,
+  "worst_zone": 24.675,
+  "hottest": 49.147
+ },
+ {
+  "reward": 1,
+  "commissioned": 16,
+  "max_ratio": 1.069,
+  "worst_zone": 24.145,
+  "hottest": 49.555
+ },
+ {
+  "reward": 0,
+  "commissioned": 14,
+  "max_ratio": 1.0687,
+  "worst_zone": 24.136,
+  "hottest": 51.543
+ },
+ {
+  "reward": 0,
+  "commissioned": 14,
+  "max_ratio": 1.0691,
+  "worst_zone": 25.378,
+  "hottest": 50.79
+ },
+ {
+  "reward": 1,
+  "commissioned": 16,
+  "max_ratio": 1.0687,
+  "worst_zone": 24.525,
+  "hottest": 49.84
+ },
+ {
+  "reward": 1,
+  "commissioned": 15,
+  "max_ratio": 1.0685,
+  "worst_zone": 25.087,
+  "hottest": 49.455
+ },
+ {
+  "reward": 0,
+  "commissioned": 14,
+  "max_ratio": 1.0687,
+  "worst_zone": 25.123,
+  "hottest": 49.592
+ },
+ {
+  "reward": 1,
+  "commissioned": 16,
+  "max_ratio": 1.0684,
+  "worst_zone": 24.138,
+  "hottest": 49.778
+ },
+ {
+  "reward": 1,
+  "commissioned": 15,
+  "max_ratio": 1.0691,
+  "worst_zone": 25.138,
+  "hottest": 49.16
+ }
+]

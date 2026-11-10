@@ -1,0 +1,11 @@
+#!/bin/bash
+# Runs the outage inspection order as the contractor user: "status", or "submit" with the plan on standard
+# input. Passes no environment from the caller.
+set -u
+case "${1:-}" in
+    status|submit) ;;
+    *) echo '{"error": "usage: fieldwork status | fieldwork submit < plan.json"}'; exit 2 ;;
+esac
+cd /opt/fieldwork || exit 1
+exec env -i PATH=/usr/local/bin:/usr/bin:/bin OMP_NUM_THREADS=1 python3 -I /opt/fieldwork/fieldwork.py "$1" \
+    /app/fieldwork /var/lib/fieldwork/state.json

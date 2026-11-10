@@ -1,0 +1,73 @@
+schema_version = "1.4"
+
+artifacts = ["/app/controller.py"]
+
+[task]
+name = "afterquery/slab-cooling-dispatch"
+description = "Write the supervisory controller for two radiant-slab office zones on one chiller: keep unmeasured operative temperature in band at low electricity cost over eight hidden summer weeks."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "model-predictive-control",
+    "building-hvac",
+    "thermally-activated-slab",
+    "system-identification",
+    "state-estimation",
+    "load-shifting",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products or processes. I also author evaluation tasks for other AI benchmark programs, including a research proposal to Handshake AI on model predictive control of thermal energy storage retrofits; this task shares the general subject of predictive cooling control but is a different system, data set and problem."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "building HVAC supervisory control of thermally activated slabs"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "model-predictive-control",
+    "building-hvac",
+    "thermally-activated-slab",
+    "system-identification",
+    "state-estimation",
+    "load-shifting",
+]
+expert_time_estimate_hours = 16
+relevant_experience = """I am a control scientist working on model-based control and system identification of industrial thermal processes, with a PhD in mechanical engineering and an undergraduate background in HVAC. Residential and commercial HVAC control, model predictive control and building thermal modelling are core areas of my work and teaching. That experience covers identifying grey-box thermal models from operating data, designing state estimators and economic predictive controllers, and judging what a building's existing trend logs can and cannot tell about the quantities that matter. The released building, occupants and logs are synthetic; the weather is real."""
+difficulty_explanation = """In practice this is the work of a building controls engineer commissioning model-based supervisory control on an existing radiant-slab building: replacing a fixed BMS sequence with one that keeps the occupied zones comfortable at lower cost, using only the data the building already has. The building, its occupants and its logs are synthetic, from a disclosed seeded generator; the weather is real (Chicago O'Hare TMY3), resampled day by day with a seeded anomaly for the graded weeks so the public file does not contain them.
+
+Four things compound. The graded quantity, operative temperature from air, soffit, glazing and room surfaces, has no sensor and must be carried by a model, and the as-built zones differ from the design sheet: each zone's water flow, envelope losses, solar gain behind occupant blinds and furnishing mass, with one logged week hiding a valve that failed closed while the BMS kept commanding it open, recorded only in the maintenance log. Fitting the logs buys margin rather than feasibility: the reference's estimator and planner on a model written from the design sheet alone cost 1.166 at the reference's 0.2 K comfort margin and fail, and pass only with the margin cut to 0.1 K or less. The actuator acts across hours: a supply step moves operative temperature 10 percent of the way in about 3 h and halfway in about 12 h, so comfort on a hot afternoon is decided the night before from a forecast that damps the diurnal swing, about 1.2 K too warm before dawn and 1.1 K too cool mid-afternoon, which only a comparison of the forecast archive with the logged outdoor temperature reveals. And the two zones, peaking in the morning and the afternoon, share one chiller and one supply temperature: colder water removes heat faster but at 25 C outdoors the COP falls from 7.8 at 22 C leaving water to 5.2 at 15 C, and the chiller's capacity binds when both zones precool at night, so the optimum couples the zones through a nonlinear efficiency and a shared capacity over a 48 h horizon. The building also closes on federal holidays, one of which falls in the graded weeks.
+
+The allowance makes the pieces necessary. With exact models and states, using the forecast as issued costs 4.5 percent, ignoring the capacity costs 8.2 percent and breaks comfort in two zone-weeks, and ignoring the forecast bias, the efficiency curve, the capacity and the holiday together costs 17 percent. With models fitted from the public data, the reference passes at 1.117 times the benchmark; the same controller using the forecast as issued scores 1.167 and fails, ignoring the capacity scores 1.152 and fails, and with no comfort margin it is cheaper but breaks the comfort limit in three zone-weeks. Every one of the 24 model-free sequences tried either breaks comfort or costs 1.9 to 3.2 times the benchmark."""
+solution_explanation = """The reference identifies both zones from the public data with models of its own and never reads the sealed plant, the benchmark or the verifier. Each zone is a four-state grey-box (pipe-plane slab, soffit-side slab, air, room surfaces and furnishings) with the soffit's convective and radiative coefficients fixed from physics at 5.0 and 5.4 W/m2 K, because the logs cannot separate them; capacities, couplings, envelope, water-side conductance and solar fractions are fitted by multi-step simulation error over two-day windows of the log, with the east valve treated as closed while the maintenance log says it failed. The glazing inner surface comes from a steady-state window balance and operative temperature from the stated view factors. A Kalman filter per zone on the air and slab sensors carries an unmeasured-heat state. The forecast's damping factor is estimated from the archive by regressing the logged outdoor temperature on the forecast's departure from its own 24 h mean, 0.222 against the generator's 0.25, and undone on every issue.
+
+Every hour the controller solves one joint linear program over 48 h for both zones' heat extraction and the common supply temperature: zone dynamics condensed, chiller capacity a constraint, the cost per kWh (tariff over COP) linearised about the previous plan's supply temperatures inside a trust region, comfort a soft constraint 0.2 K inside the band in occupied hours, and federal holidays in the calendar. Valve duty is the planned heat over the available driving difference.
+
+On the shipped instance it costs 1.117 times the benchmark with no zone-week above 0.5 K h (worst 0.09 K h). Run end to end on three redrawn instances, with new graded weather, occupancy, forecast errors and sensor noise and the data regenerated and refitted, it scores 1.075, 1.059 and 1.059 with at most one zone-week over. The allowance was fixed from these before any other controller was graded: the smallest 5 percent step at least 3 percent above the reference's worst total. Its margin is sized rather than padded: widened to 0.3 K it still passes at 1.144, and removed it breaks comfort in three zone-weeks."""
+verification_explanation = """The verifier rebuilds the sealed world from fixed seeds: a warm-up and the eight logged weeks under the building's old sequence, then the eight graded weeks, 2017-07-15 to 2017-09-08. /app/controller.py runs in one sandboxed process for the whole run and keeps its state across all 5376 fifteen-minute steps; each step it receives the sensors, its previous commands and the latest forecast issue, and returns a supply setpoint and a valve duty per zone. The plant integrates each interval in one-minute sub-steps with the valves open for whole minutes and the chiller's leaving temperature floating up when demand exceeds capacity, and evaluates occupied operative temperature every minute in each zone. The reward is 1 when the run completes, at most one of the 16 zone-weeks has more than 0.5 K h of occupied operative temperature outside 21-26 C, and the total cooling cost (heat removed over the COP at the actual leaving and outdoor temperatures, times the tariff, summed over minutes) is at most 1.15 times the benchmark's. One test gates it; the weekly breakdown goes to /logs/verifier/metrics.json and never gates.
+
+Ground truth never comes from the reference. The benchmark is a controller that knows both zones' exact models and states, receives the same forecasts with the generator's damping undone, assumes design internal gains, keeps predicted operative temperature 0.3 K inside the band and plans 48 h with the chiller's efficiency and capacity, re-planned hourly; its weekly costs are computed from the generator by authoring/provenance/run_bench.py and shipped as tests/bench.json. authoring/provenance/regenerate.py reproduces every data file byte for byte and, on request, the benchmark costs. The plant as shipped is twelve slab cells and one-minute sub-steps; doubling the cells and halving the sub-step moves the benchmark total by -0.4 percent and the reference's ratio from 1.117 to 1.124.
+
+The controller runs as the unprivileged user nobody from a scratch directory holding only a copy of it and the protocol shim, over private pipes, with limits on CPU time, memory, file size and process count; /tests is mode 700 and the verifier has no network. The constructor has 600 s, each step 10 s and the whole run 7200 s of controller time. When the run ends every process the user owns is killed and everything it left in a world-writable directory or as a System V IPC object is removed. test.sh writes 0 before grading and the reward from pytest's exit status after. Twenty-three adversarial controllers ship as a runnable script and all score 0, among them ones that hunt for the sealed files, write the reward file, forge replies on the protocol pipe, signal the verifier, fork-bomb, exhaust memory, hang, return non-finite, wrong-typed or missing commands, never cool, or cool flat out; a probe controller confirms that the sealed files, the verifier's memory, environment and file descriptors, and the log files are out of its reach, and that nothing it leaves behind survives the run."""
+
+[verifier]
+timeout_sec = 10800.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 14400.0
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

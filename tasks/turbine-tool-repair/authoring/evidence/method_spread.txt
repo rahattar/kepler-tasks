@@ -1,0 +1,14 @@
+Largest miss over the hidden record sets (percent); the bound is 0.3 %.
+
+reference                                                                    0 fail, largest 0.038 %
+last qualifying 30-minute period of each run                                 0 fail, largest 0.041 %
+run window taken from the start minute inclusive                             0 fail, largest 0.046 %
+LHV of the day's mean composition instead of the mean of the samples' LHVs   0 fail, largest 0.038 %
+power factor from the mean of the minute power factors                       0 fail, largest 0.038 %
+rest taken as zero generator frequency (includes the coast-down)             0 fail, largest 0.038 %
+rest taken as rotor speed below 0.5 %                                        0 fail, largest 0.038 %
+fuel meter zero from rest minutes with no packing flow (mean of readings below 0.1 kg/s) 0 fail, largest 0.039 %
+rest minutes only 15 or more after a stop and 5 or more before a start       0 fail, largest 0.038 %
+frozen RTD found from the spread of its readings during the runs (max - min below 0.05 K) 0 fail, largest 0.038 %
+
+Largest miss over all variants: 0.046 %

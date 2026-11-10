@@ -1,0 +1,89 @@
+Hedge study: can a selection that leaves a choice unresolved pass by hedging it?
+Shipped scenario, laboratory seed 7318; gate 12 of 12.
+
+H05 re-reeved to 2 falls (A) or as the register shows (B)
+    H05: A picks S16/64, B picks S18/63; common S16/64 (both models +0.048), true margin +0.047
+  => a common selection exists on every affected hoist: a sensitivity the windows absorb
+
+inverter retrofits on H04, H08, H12 (A) or contactor control (B)
+    H04: A picks S14/94, B picks S16/55; no size and setting meets both (best -0.003)
+    H08: A picks S12/94, B picks S16/50; no size and setting meets both (best -0.126)
+    H12: A picks S18/58, B picks S18/52; no size and setting meets both (best -0.033)
+  => no hedge: the choice must be resolved (H04 H08 H12)
+
+fast lowering on H04 and H08 (A) or not (B)
+    H04: A picks S14/94, B picks S16/60; common S14/94 (both models +0.056), true margin +0.054
+  => a common selection exists on every affected hoist: a sensitivity the windows absorb
+
+two-speed hoists' working stops from slow speed (A) or full speed (B)
+    H02: A picks S10/91, B picks S14/59; no size and setting meets both (best -0.302)
+    H09: A picks S18/55, B picks S20/50; no size and setting meets both (best -0.249)
+  => no hedge: the choice must be resolved (H02 H09)
+
+contactor lowering above synchronous speed (A) or at rated speed (B)
+    H01: A picks S14/57, B picks S14/58; common S14/57 (both models +0.047), true margin +0.038
+    H02: A picks S10/91, B picks S10/92; common S10/92 (both models +0.052), true margin +0.057
+    H03: A picks S22/55, B picks S22/53; common S22/55 (both models +0.117), true margin +0.127
+    H05: A picks S16/64, B picks S16/63; common S16/64 (both models +0.048), true margin +0.047
+    H07: A picks S16/83, B picks S18/58; common S16/84 (both models +0.047), true margin +0.044
+    H10: A picks S18/50, B picks S16/67; common S18/50 (both models +0.034), true margin +0.041
+  => a common selection exists on every affected hoist: a sensitivity the windows absorb
+
+engagement time from the test (A) or the catalogue's at every setting (B)
+    H02: A picks S10/91, B picks S12/58; common S10/92 (both models +0.052), true margin +0.057
+    H03: A picks S22/55, B picks S22/54; common S22/55 (both models +0.117), true margin +0.127
+    H05: A picks S16/64, B picks S16/62; common S16/64 (both models +0.048), true margin +0.047
+    H07: A picks S16/83, B picks S18/56; common S16/84 (both models +0.047), true margin +0.044
+    H08: A picks S12/94, B picks S14/62; common S12/94 (both models +0.075), true margin +0.074
+  => a common selection exists on every affected hoist: a sensitivity the windows absorb
+
+holding without (A) or with (B) the gear's efficiency
+    H01: A picks S14/57, B picks S14/55; common S14/57 (both models +0.054), true margin +0.038
+    H02: A picks S10/91, B picks S10/88; common S10/91 (both models +0.052), true margin +0.046
+    H06: A picks S08/59, B picks S08/51; common S08/59 (both models +0.047), true margin +0.040
+    H07: A picks S16/83, B picks S16/78; common S16/83 (both models +0.052), true margin +0.036
+    H08: A picks S12/94, B picks S12/91; common S12/94 (both models +0.075), true margin +0.074
+    H09: A picks S18/55, B picks S18/53; common S18/55 (both models +0.057), true margin +0.050
+    H11: A picks S12/67, B picks S12/65; common S12/67 (both models +0.062), true margin +0.039
+    H12: A picks S18/58, B picks S18/56; common S18/58 (both models +0.059), true margin +0.054
+  => a common selection exists on every affected hoist: a sensitivity the windows absorb
+
+deceleration hoisting the rated load (A) or with the empty hook (B)
+    H01: A picks S14/57, B picks S14/71; common S14/57 (both models +0.054), true margin +0.038
+    H02: A picks S10/91, B picks S12/71; common S10/91 (both models +0.052), true margin +0.046
+    H03: A picks S22/55, B picks S22/59; common S22/55 (both models +0.117), true margin +0.127
+    H04: A picks S14/94, B picks S16/77; common S14/94 (both models +0.056), true margin +0.054
+    H05: A picks S16/64, B picks S16/76; common S16/64 (both models +0.048), true margin +0.047
+    H06: A picks S08/59, B picks S08/77; common S08/59 (both models +0.047), true margin +0.040
+    H07: A picks S16/83, B picks S18/69; common S16/83 (both models +0.052), true margin +0.036
+    H08: A picks S12/94, B picks S14/79; common S12/94 (both models +0.075), true margin +0.074
+    H09: A picks S18/55, B picks S18/69; common S18/55 (both models +0.057), true margin +0.050
+    H10: A picks S18/50, B picks S18/52; common S18/50 (both models +0.035), true margin +0.041
+    H11: A picks S12/67, B picks S14/55; common S12/67 (both models +0.062), true margin +0.039
+    H12: A picks S18/58, B picks S18/73; common S18/58 (both models +0.059), true margin +0.054
+  => a common selection exists on every affected hoist: a sensitivity the windows absorb
+
+deceleration at the highest torque reached (A) or at the duty temperature (B)
+    H01: A picks S14/57, B picks S14/58; common S14/57 (both models +0.054), true margin +0.038
+    H02: A picks S10/91, B picks S10/92; common S10/91 (both models +0.052), true margin +0.046
+    H03: A picks S22/55, B picks S25/50; common S22/55 (both models +0.117), true margin +0.127
+    H05: A picks S16/64, B picks S16/65; common S16/64 (both models +0.048), true margin +0.047
+    H07: A picks S16/83, B picks S16/86; common S16/83 (both models +0.052), true margin +0.036
+  => a common selection exists on every affected hoist: a sensitivity the windows absorb
+
+duty temperature the peak after a stop (A) or the time-average (B)
+    H02: A picks S10/91, B picks S10/92; common S10/91 (both models +0.052), true margin +0.046
+    H07: A picks S16/83, B picks S16/84; common S16/84 (both models +0.047), true margin +0.044
+  => a common selection exists on every affected hoist: a sensitivity the windows absorb
+
+backdriving efficiency 2 - 1/eta (A) or eta (B)
+    no hoist's selection changes
+
+O2 near 200 C untested (tests at 160 and 260 C): a selection meeting every requirement for every O2 peak height from 1.10 to 1.35
+    H03: common S22/52 (all heights +0.102), true margin +0.116
+    H05: straight line picks S16/74; no size and setting meets every height (best -0.048)
+    H07: common S16/82 (all heights +0.028), true margin +0.026
+    H10: straight line picks S18/50; no size and setting meets every height (best -0.010)
+  => no hedge: H05 needs O2's friction near 200 C measured (H05 H10)
+
+Across hoists no hedge passes: the gate is all 12, so any split of hoists between two answers loses the hoists given the wrong one.

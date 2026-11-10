@@ -1,0 +1,11 @@
+E1 recomputed 0.676893  sealed 0.676893  ratio 1.000000
+E2 recomputed 0.037493  sealed 0.037493  ratio 1.000009
+E3 recomputed 0.816577  sealed 0.816577  ratio 1.000000
+E4 recomputed 0.234038  sealed 0.234038  ratio 1.000000
+E5 recomputed 0.070814  sealed 0.070814  ratio 0.999993
+E6 recomputed 0.362499  sealed 0.362499  ratio 0.999999
+E7 recomputed 0.186745  sealed 0.186745  ratio 0.999997
+E8 recomputed 0.730069  sealed 0.730069  ratio 1.000000
+E9 recomputed 0.025828  sealed 0.025828  ratio 1.000007
+E10 recomputed 0.441742  sealed 0.441742  ratio 1.000000
+largest relative difference 8.9e-06

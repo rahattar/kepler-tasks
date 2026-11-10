@@ -1,0 +1,13 @@
+Your working environment: the directory /home/claude/isprobe9/PROBE/app stands for /app. Read /app/... as /home/claude/isprobe9/PROBE/app/... and write your output to /home/claude/isprobe9/PROBE/app/output/bore_sheet.csv. Put any scratch files under /home/claude/isprobe9/PROBE/app/work. The laboratory command is /home/claude/isprobe9/PROBE/app/cte (run it as ./cte from that directory). Do not read or list anything under /home/claude/isprobe9/PROBE/rig, /home/claude/is1, /home/claude/sf1, /home/claude/sf2, /home/claude/sfprobe*, /home/claude/isprobe1, /home/claude/isprobe2, /home/claude/isprobe3, /home/claude/isprobe4, /home/claude/isprobe5, /home/claude/isprobe6, /home/claude/isprobe7, /home/claude/isprobe8, /home/claude/tm*, /home/claude/al*, /home/claude/ad1, /home/claude/hb1, /home/claude/hy1, /home/claude/bundle* or any other directory outside /home/claude/isprobe9/PROBE/app (including the other probe directories under /home/claude/isprobe9), do not read the source of the laboratory script, and do not consult any project documents or notes; use only the documents in /app/data and the laboratory command. No internet.
+
+Task:
+
+The rotor of compressor C-201 is being rebuilt after an overhaul. Its six impellers (S1 to S6), the balance drum (BD) and the thrust collar (TC) are spares with undersized bores, each to be finish-honed and shrink-fitted onto its reground seat. For each part, specify the bore diameter, in mm to three decimals, to which it is to be honed, and the oven temperature, in whole degrees C, to which it is heated for fitting, so that the part meets every requirement of plant standard RS-3 in `/app/data/docs/standard.md` on the rotor as it is now.
+
+The records are `/app/data/parts_register.csv`, `/app/data/material_certificates.csv`, `/app/data/rotor_inspection.csv`, `/app/data/thermal_survey.csv`, `/app/data/materials.csv`, `/app/data/maintenance_log.csv`, `/app/data/docs/inspection_report.md` and `/app/data/docs/oem_rotor_data.md`. The materials laboratory is described in `/app/data/docs/laboratory.md`. From `/app`, its command is `cte <material> <T>`; the booking is 3 tests. Reports are written under `/app/lab_reports`.
+
+Write the bore sheet to `/app/output/bore_sheet.csv` with the header `part,bore_mm,oven_C` and one row for each of S1 to S6, BD and TC, with the bore in mm to at most three decimals and the oven temperature a whole number. Every part must meet all the requirements of RS-3.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
+
+When done, reply with a short report: the tests you ran and why, how you computed each part, and your predicted number of parts that meet RS-3.

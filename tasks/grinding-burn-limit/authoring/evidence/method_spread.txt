@@ -1,0 +1,11 @@
+Correct methods as complete programs through tests/grade.py (run as nobody), seven hidden jobs; a job is right when its depth is within 5 percent of the truth.
+
+columns: the signed relative deviation from the truth for 1 bushing-od, 2 cam-flank, 3 die-insert, 4 gauge-block, 5 punch-land, 6 race-face, 7 shaft-seat
+
+solution/burn.py (reference)                                           wrong 0  +0.0026  +0.0020  -0.0061  -0.0121  +0.0025  -0.0007  -0.0014
+independent.py (shares no code with the reference)                     wrong 0  +0.0113  +0.0005  -0.0072  +0.0059  +0.0014  -0.0026  -0.0033
+reference, each session's idle power from its first air pass only      wrong 0  +0.0040  +0.0021  -0.0074  -0.0079  +0.0025  -0.0009  +0.0006
+reference, every second grind pass of the records only                 wrong 0  +0.0117  +0.0020  +0.0022  +0.0138  +0.0035  -0.0047  -0.0007
+reference, the power model fitted per unit width                       wrong 0  +0.0112  +0.0005  -0.0072  +0.0059  +0.0014  -0.0025  -0.0033
+
+every correct method: largest deviation from the truth 0.0138 (tolerance 0.05)

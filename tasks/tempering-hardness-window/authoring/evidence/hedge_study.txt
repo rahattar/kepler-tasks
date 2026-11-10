@@ -1,0 +1,20 @@
+B09 on the batch list's heat 41-7731 or the log's 41-7864: no common setpoint on 1 of 1 batches
+    B09 none
+43-2288 as its sibling 43-2210: no common setpoint on 0 of 1 batches
+    B12 common 524-535 (12 C)
+G52 single test read with double = twice the time: no common setpoint on 0 of 5 batches
+    B06 common 570-576 (7 C); B07 common 567-575 (9 C); B08 common 565-570 (6 C); B11 common 576-583 (8 C); B13 common 595-601 (7 C)
+an untested G52 heat as the supplier curve (Hollomon-Jaffe): no common setpoint on 4 of 5 batches
+    B06 none; B07 none; B08 none; B11 none; B13 common 577-584 (8 C)
+52-1250 as 52-1312: no common setpoint on 0 of 2 batches
+    B07 common 569-575 (7 C); B11 common 578-583 (6 C)
+52-1312 as 52-1250: no common setpoint on 0 of 2 batches
+    B06 common 553-559 (7 C); B08 common 546-554 (9 C)
+52-1377 as 52-1312: no common setpoint on 1 of 1 batches
+    B13 none
+52-1377 as 52-1250: no common setpoint on 1 of 1 batches
+    B13 none
+soak time: 2 h or 1 h per 25 mm: no common setpoint on 2 of 10 batches
+    B02 common 502-557 (56 C); B03 common 537-548 (12 C); B04 common 477-504 (28 C); B05 common 555-561 (7 C); B06 none; B07 none; B08 common 565-570 (6 C); B11 common 574-583 (10 C); B12 common 539-551 (13 C); B13 common 581-601 (21 C)
+section: 25 mm half-radius or the batch's own: no common setpoint on 1 of 12 batches
+    B01 common 522-549 (28 C); B02 none; B03 common 521-548 (28 C); B04 common 470-504 (35 C); B05 common 546-561 (16 C); B06 common 554-576 (23 C); B07 common 554-575 (22 C); B08 common 546-570 (25 C); B10 common 537-557 (21 C); B11 common 562-583 (22 C); B12 common 528-551 (24 C); B13 common 577-601 (25 C)

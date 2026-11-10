@@ -1,0 +1,10 @@
+benchmark variant                 total (s)   vs ship   worst dT  max gain
+shipped benchmark                     144.6    1.0000     24.980      0.0%
+finer (96 commands)                   144.5    0.9993     24.980      1.7%
+longer (2.4 s lookahead)              145.2    1.0041     24.980      0.0%
+no guard                              144.5    0.9993     25.000      1.7%
+escape lookahead                      147.6    1.0207     24.980      0.0%
+escape, 96 commands, no guard         147.6    1.0207     25.000      0.0%
+
+vs ship: total cycle relative to the shipped benchmark; max gain: the largest single-wafer shortening
+[736 s]

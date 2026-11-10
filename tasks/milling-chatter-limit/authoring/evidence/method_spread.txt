@@ -1,0 +1,11 @@
+Correct methods as complete programs through tests/grade.py (run as nobody), seven hidden jobs; a job is right when its limit is within 5 percent of the truth.
+
+columns: the signed relative deviation from the truth for 1 bracket-pocket, 2 housing-face, 3 lever-profile, 4 manifold-slot, 5 pump-cover, 6 shaft-flat, 7 valve-body
+
+solution/chatter.py (reference)                      wrong 0  +0.0037  +0.0010  +0.0105  -0.0023  -0.0019  -0.0033  -0.0014
+independent.py (shares no code with the reference)   wrong 0  -0.0003  -0.0001  +0.0121  -0.0001  -0.0001  +0.0000  -0.0001
+reference, every second frequency point (1 Hz)       wrong 0  -0.0010  -0.0016  +0.0103  +0.0000  -0.0017  -0.0033  +0.0011
+reference, FRF smoothed over 3 points                wrong 0  +0.0024  -0.0007  +0.0123  -0.0014  -0.0007  -0.0011  -0.0016
+reference, chatter frequencies up to 3000 Hz only    wrong 0  +0.0037  +0.0010  +0.0105  -0.0023  -0.0019  -0.0033  -0.0014
+
+every correct method: largest deviation from the truth 0.0123 (tolerance 0.05)

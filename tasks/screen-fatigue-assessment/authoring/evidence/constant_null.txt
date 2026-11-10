@@ -1,0 +1,18 @@
+true Miner sums to 2026-10-31: S3 0.011, S6 0.016, S1 0.038, S8 0.058, S4 0.140, S10 0.213, S7 0.511, S5 0.777, S2 1.865, S9 2.835
+smallest ratio between neighbours 1.520; one constant can satisfy two screens only if their ratio is at most 1.500
+constants 0.01-10 on a log grid: most screens satisfied by one constant: 1 of 10; constants satisfying none: 44 %
+  D = 1 (design life)                    1.000 -> satisfies 0 of 10 
+  D = 0.5                                0.500 -> satisfies 1 of 10 S7
+  geometric mean of the true values      0.173 -> satisfies 1 of 10 S10
+  median of the true values              0.176 -> satisfies 1 of 10 S10
+filling one screen from the other nine (exact) and their spacing; median neighbour ratio 1.524:
+  S3   true 0.011, spacing guess 0.011, miss +0.000
+  S6   true 0.016, spacing guess 0.020, miss +0.253 (fails)
+  S1   true 0.038, spacing guess 0.031, miss -0.203 (fails)
+  S8   true 0.058, spacing guess 0.073, miss +0.256 (fails)
+  S4   true 0.140, spacing guess 0.111, miss -0.204 (fails)
+  S10  true 0.213, spacing guess 0.267, miss +0.256 (fails)
+  S7   true 0.511, spacing guess 0.407, miss -0.204 (fails)
+  S5   true 0.777, spacing guess 0.976, miss +0.256 (fails)
+  S2   true 1.865, spacing guess 1.484, miss -0.204 (fails)
+  S9   true 2.835, spacing guess 2.842, miss +0.002

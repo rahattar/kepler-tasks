@@ -1,0 +1,15 @@
+Method spread on the shipped scenario (seed 4315): careful method, varied choices. Errors in percent of target;
+window +/-6 percent; gate 15 of 16.
+
+variant                                                            right  worst err  rms err   crew A / B     joints wrong
+reference: singles J01 J03 J06 J08 J09 J13, pattern J06, 60 percent 16/16    +3.89%    1.72%  0.842 / 0.912  -
+same, trials at 50 percent of the default torque                   16/16    +3.89%    1.72%  0.842 / 0.912  -
+same, trials at 75 percent of the default torque                   16/16    +3.89%    1.72%  0.842 / 0.912  -
+same, reversed trial order (other noise draws)                     16/16    -3.04%    1.54%  0.850 / 0.917  -
+J01 J13 J14 J12 J06 J16, pair on J01, piecewise reuse curve        16/16    +3.17%    1.43%  0.850 / 0.917  -
+same campaign, reuse as r sqrt(n)                                  16/16    +3.78%    1.40%  0.850 / 0.917  -
+J01 J04 J14 J12 J06 J16, pair on J01                               16/16    +3.17%    1.29%  0.850 / 0.917  -
+pattern on J07 (not single-trialled; its K from the fit), reference singles 16/16    +4.15%    1.95%  0.838 / 0.910  -
+both classes paired (J14 and J04, reused 4 and 1), singles J14 J04 J12 J16 16/16    -3.91%    1.45%  0.839 / 0.927  -
+
+True crew ratios (sealed): A 0.860, B 0.925 (8-bolt) and 0.937 (6-bolt M24).

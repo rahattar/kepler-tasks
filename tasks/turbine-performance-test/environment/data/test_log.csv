@@ -1,0 +1,28 @@
+time,entry
+2026-10-13 07:30,GT-1 start
+2026-10-13 08:15,GT-1 at base load
+2026-10-13 08:30,Gas sample S1 drawn at the fuel skid sample point
+2026-10-13 09:00,Run A1 start
+2026-10-13 10:00,Run A1 end
+2026-10-13 10:15,Gas sample S2 drawn
+2026-10-13 10:30,Run A2 start
+2026-10-13 11:30,Run A2 end
+2026-10-13 11:45,Gas sample S3 drawn
+2026-10-13 12:00,"Inlet plenum air temperature spot check, reference thermometer (calibrated 2026-09) at the RTD array plane: 17.9 degC"
+2026-10-13 15:00,Test day 1 data acquisition stopped
+2026-10-14 06:00,"GT-1 shut down and cooled; offline compressor water wash (detergent, two rinses)"
+2026-10-14 13:00,Inlet filter final-stage cartridges replaced
+2026-10-14 15:30,Met mast data logger replaced (like-for-like unit from stores); sensors unchanged
+2026-10-15 07:30,GT-1 start
+2026-10-15 08:15,GT-1 at base load
+2026-10-15 08:30,Gas sample S4 drawn at the fuel skid sample point
+2026-10-15 09:00,Run L1 start
+2026-10-15 10:00,Run L1 end
+2026-10-15 10:15,Gas sample S5 drawn
+2026-10-15 10:30,Run L2 start
+2026-10-15 11:30,Run L2 end
+2026-10-15 11:45,Gas sample S6 drawn
+2026-10-15 12:00,"Inlet plenum air temperature spot check, reference thermometer (calibrated 2026-09) at the RTD array plane: 20.5 degC"
+2026-10-15 13:00,Run L3 start
+2026-10-15 14:00,Run L3 end
+2026-10-15 15:00,Test day 2 data acquisition stopped

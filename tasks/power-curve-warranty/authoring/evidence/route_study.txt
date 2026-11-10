@@ -1,0 +1,45 @@
+Routes that leave out record checks, as complete programs through tests/grade.py (run as nobody); six hidden packages, 59 turbines; accepted when at most 1 is wrong.
+
+check left out                                            wrong  packages missed (turbines wrong)                           errors on wrong turbines
+clock check                                                   2  cedar-flats-2026h1 (1), north-branch-2025h2 (1)            +0.0653 to +0.0696, 0 claim(s) wrong  rejected
+    cedar-flats-2026h1     wrong  1, |error| 0.0696 to 0.0696
+    north-branch-2025h2    wrong  1, |error| 0.0653 to 0.0653
+clock and SCADA power scale checks                            4  cedar-flats-2026h1 (1), north-branch-2025h2 (1), ridgeback-2026h2 (1), tallow-creek-2026h1 (1) -0.0832 to -0.0218, 3 claim(s) wrong  rejected
+    cedar-flats-2026h1     wrong  1, |error| 0.0832 to 0.0832
+    north-branch-2025h2    wrong  1, |error| 0.0743 to 0.0743
+    ridgeback-2026h2       wrong  1, |error| 0.0218 to 0.0218
+    tallow-creek-2026h1    wrong  1, |error| 0.0374 to 0.0374
+M1 clock check (turbines aligned to M1 as recorded)          10  ridgeback-2026h2 (10)                                      -0.0509 to +0.0578, 6 claim(s) wrong  rejected
+    ridgeback-2026h2       wrong 10, |error| 0.0263 to 0.0578
+barometer replacement scaled to M1                           17  cedar-flats-2026h1 (8), tallow-creek-2026h1 (9)            -0.0544 to -0.0145, 5 claim(s) wrong  rejected
+    cedar-flats-2026h1     wrong  8, |error| 0.0504 to 0.0544
+    tallow-creek-2026h1    wrong  9, |error| 0.0145 to 0.0160
+yaw check                                                     2  hollins-ridge-2026h1 (1), pike-hollow-2026h1 (1)           -0.0796 to -0.0342, 2 claim(s) wrong  rejected
+    hollins-ridge-2026h1   wrong  1, |error| 0.0342 to 0.0342
+    pike-hollow-2026h1     wrong  1, |error| 0.0796 to 0.0796
+M1 vane check (every yaw step taken as the turbine's)        11  hollins-ridge-2026h1 (11)                                  -0.0304 to -0.0161, 1 claim(s) wrong  rejected
+    hollins-ridge-2026h1   wrong 11, |error| 0.0161 to 0.0304
+NTF validity (software update; the commissioning NTF kept throughout)     51  hollins-ridge-2026h1 (12), north-branch-2025h2 (10), pike-hollow-2026h1 (10), ridgeback-2026h2 (10), tallow-creek-2026h1 (9) -0.1334 to -0.0541, 40 claim(s) wrong  rejected
+    hollins-ridge-2026h1   wrong 12, |error| 0.0541 to 0.0747
+    north-branch-2025h2    wrong 10, |error| 0.0747 to 0.0962
+    pike-hollow-2026h1     wrong 10, |error| 0.0697 to 0.0858
+    ridgeback-2026h2       wrong 10, |error| 0.1066 to 0.1319
+    tallow-creek-2026h1    wrong  9, |error| 0.1320 to 0.1334
+commissioning NTF verified at the calibration turbine         9  tallow-creek-2026h1 (9)                                    -0.1334 to -0.1320, 7 claim(s) wrong  rejected
+    tallow-creek-2026h1    wrong  9, |error| 0.1320 to 0.1334
+calibration-turbine anemometer check                          9  pike-hollow-2026h1 (9)                                     -0.0424 to -0.0395, 7 claim(s) wrong  rejected
+    pike-hollow-2026h1     wrong  9, |error| 0.0395 to 0.0424
+SCADA power scale check                                       2  ridgeback-2026h2 (1), tallow-creek-2026h1 (1)              -0.0374 to -0.0218, 1 claim(s) wrong  rejected
+    ridgeback-2026h2       wrong  1, |error| 0.0218 to 0.0218
+    tallow-creek-2026h1    wrong  1, |error| 0.0374 to 0.0374
+mast anemometer certificate from the service log             10  north-branch-2025h2 (10)                                   +0.2250 to +0.3205, 2 claim(s) wrong  rejected
+    north-branch-2025h2    wrong 10, |error| 0.2250 to 0.3205
+rotor upgrades from the maintenance log                       2  cedar-flats-2026h1 (2)                                     +0.0232 to +0.0256, 1 claim(s) wrong  rejected
+    cedar-flats-2026h1     wrong  2, |error| 0.0232 to 0.0256
+all of the above (PP-12 on the records as they stand)        59  cedar-flats-2026h1 (8), hollins-ridge-2026h1 (12), north-branch-2025h2 (10), pike-hollow-2026h1 (10), ridgeback-2026h2 (10), tallow-creek-2026h1 (9) -0.1755 to -0.0259, 44 claim(s) wrong  rejected
+    cedar-flats-2026h1     wrong  8, |error| 0.0259 to 0.1259
+    hollins-ridge-2026h1   wrong 12, |error| 0.0541 to 0.0747
+    north-branch-2025h2    wrong 10, |error| 0.0767 to 0.1356
+    pike-hollow-2026h1     wrong 10, |error| 0.0422 to 0.0858
+    ridgeback-2026h2       wrong 10, |error| 0.1063 to 0.1345
+    tallow-creek-2026h1    wrong  9, |error| 0.1447 to 0.1755

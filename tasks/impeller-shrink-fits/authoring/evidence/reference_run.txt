@@ -1,0 +1,38 @@
+solution/solve.py output:
+trip 1.10 x MCS; mean expansion (um/m K, from 20 C): 42CrMo4 12.40 to 250 C (certificate), 26NiCrMoV14-5 12.15 to 190 C, FV520B 11.70 to 375 C, Ti-6Al-4V 8.93 to 285 C
+S1 bore 115.034 mm (seat at 20 C 115.212, interference 178 um), oven 281 C
+S2 bore 120.064 mm (seat at 20 C 120.218, interference 154 um), oven 240 C
+S3 bore 125.143 mm (seat at 20 C 125.224, interference 81 um), oven 206 C
+S4 bore 125.102 mm (seat at 20 C 125.208, interference 106 um), oven 223 C
+S5 bore 120.068 mm (seat at 20 C 120.211, interference 143 um), oven 285 C
+S6 bore 114.885 mm (seat at 20 C 115.226, interference 341 um), oven 375 C
+BD bore 110.064 mm (seat at 20 C 110.205, interference 141 um), oven 220 C
+TC bore 95.078 mm (seat at 20 C 95.161, interference 83 um), oven 190 C
+
+laboratory reports:
+  # test 1: dilatometer, 26NiCrMoV14-5, mean coefficient of expansion from 20 C to 190 C | expansion_um_per_m_K,12.15
+  # test 2: dilatometer, FV520B, mean coefficient of expansion from 20 C to 375 C | expansion_um_per_m_K,11.70
+  # test 3: dilatometer, Ti-6Al-4V, mean coefficient of expansion from 20 C to 285 C | expansion_um_per_m_K,8.93
+
+tests/grade_bores.py:
+S1 ok   115.034 mm 281 C | retention +0.291 stress +0.003 clearance +0.280 limit +5.95
+S2 ok   120.064 mm 240 C | retention +0.134 stress +0.060 clearance +0.046 limit +0.00
+S3 ok   125.143 mm 206 C | retention +0.233 stress +0.009 clearance +0.263 limit +9.70
+S4 ok   125.102 mm 223 C | retention +0.184 stress +0.005 clearance +0.275 limit +8.85
+S5 ok   120.068 mm 285 C | retention +0.084 stress +0.036 clearance +0.032 limit +0.00
+S6 ok   114.885 mm 375 C | retention +0.153 stress +0.058 clearance +0.020 limit +0.00
+BD ok   110.064 mm 220 C | retention +0.221 stress +1.264 clearance +0.019 limit +0.00
+TC ok    95.078 mm 190 C | retention +0.242 stress +2.103 clearance +0.031 limit +0.00
+8 of 8 right (gate 8): accepted
+
+bore_sheet.csv:
+part,bore_mm,oven_C
+S1,115.034,281
+S2,120.064,240
+S3,125.143,206
+S4,125.102,223
+S5,120.068,285
+S6,114.885,375
+BD,110.064,220
+TC,95.078,190
+

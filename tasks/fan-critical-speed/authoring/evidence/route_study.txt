@@ -1,0 +1,12 @@
+Routes as complete programs through tests/grade.py (run as nobody); six hidden fans; accepted when at most 1 is wrong.
+
+route                                                                          wrong  fans wrong (larger signed deviation of the two critical speeds)
+gyroscopic coupling left out (the standstill frequencies of the new rotor)         6  baghouse-fan +0.140, coal-mill-fan +0.152, cooler-vent-fan +0.069, dryer-exhaust-fan +0.076, kiln-id-fan +0.118, raw-mill-fan +0.090  rejected
+forward-whirl critical speeds only                                                 6  baghouse-fan +2.634, coal-mill-fan +1.907, cooler-vent-fan +3.059, dryer-exhaust-fan +3.038, kiln-id-fan +3.008, raw-mill-fan +2.573  rejected
+rotor changes dated by the register's entry date                                   2  cooler-vent-fan +0.063, kiln-id-fan -0.079  rejected
+the test modeled with the rotor as it is now                                       2  baghouse-fan +0.135, raw-mill-fan -0.031  rejected
+the test modeled with the rotor as built                                           3  coal-mill-fan -0.091, cooler-vent-fan +0.063, kiln-id-fan -0.079  rejected
+shaft revisions left out                                                           2  cooler-vent-fan -0.051, raw-mill-fan -0.043  rejected
+the latest test, whatever its condition                                            2  baghouse-fan -0.185, dryer-exhaust-fan -0.264  rejected
+the first (commissioning) test                                                     2  coal-mill-fan -0.104, cooler-vent-fan +0.073  rejected
+records taken at face value: latest test, rotor as it is now, entry dates          3  baghouse-fan -0.185, dryer-exhaust-fan -0.264, raw-mill-fan -0.031  rejected

@@ -1,0 +1,10 @@
+date,cell,entry
+2026-03-30,C1,Freeze-protection bypass valve opened for the spring start-up
+2026-04-14,C1,Freeze-protection bypass valve closed
+2026-05-02,C5,Drift eliminator panels washed
+2026-06-15,C4,Fan motor replaced after a bearing failure (spare motor from stores)
+2026-06-20,C2,Hot water thermocouple TE-2H replaced (old one noisy)
+2026-06-24,C8,Fan stack extended by 2.4 m (vendor upgrade kit); fan back in service 15:00
+2026-07-06,C3,"Riser isolation valve shut and blind flange fitted, fan locked out, basin drained: cell out of service for fill replacement (new film fill, same type as design)"
+2026-07-20,C3,"Cell returned to service with new fill (blind flange removed, riser valve reopened 14:00)"
+2026-09-28,C1,Inspection: freeze-protection bypass valve found passing; replacement valve ordered for the October outage

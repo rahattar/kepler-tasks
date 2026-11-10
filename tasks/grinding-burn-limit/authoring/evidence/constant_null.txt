@@ -1,0 +1,7 @@
+Method-free answers as complete programs through tests/grade.py (run as nobody); seven hidden jobs; accepted when at most 1 is wrong.
+
+columns: the signed relative deviation from the truth (* wrong) for 1 bushing-od, 2 cam-flank, 3 die-insert, 4 gauge-block, 5 punch-land, 6 race-face, 7 shaft-seat
+
+the example's depth (8.57 um) for every job                    wrong 7  -0.199*  -0.794*  -0.722*  -0.143*  -0.754*  -0.621*  -0.224*  rejected
+15 um for every job                                            wrong 7  +0.402*  -0.640*  -0.514*  +0.499*  -0.569*  -0.337*  +0.357*  rejected
+the example's specific removal rate at the job's work speed    wrong 7  -0.249*  -0.846*  -0.537*  +0.836*  -0.538*  -0.526*  -0.169*  rejected

@@ -1,0 +1,16 @@
+{
+ "cooler": "E890",
+ "service": "lube oil cooler of K800",
+ "period": [
+  "2026-06-01",
+  "2026-09-15"
+ ],
+ "cw_allotment_kg_s": 42.0,
+ "oil_outlet_max_c": 49.0,
+ "oil_dp_max_kpa": 100.0,
+ "cw_dp_max_kpa": 70.0,
+ "cw_velocity_m_s": [
+  0.6,
+  2.4
+ ]
+}

@@ -1,0 +1,13 @@
+hoist,crane,bay,rated_load_t,hook_block_kg,falls,drum_pitch_diameter_mm,hoisting_speed_m_per_min,lowering_speed_rated_load_m_per_min,gearbox,gearbox_ratio,gearbox_efficiency,gearbox_peak_input_torque_Nm,motor_kW,motor_rpm,motor_rotor_inertia_kgm2,gearbox_inertia_at_input_kgm2,control,bay_air_temperature_C,emergency_stop_travel_limit_mm,emergency_stop_deceleration_limit_m_per_s2
+H01,"Maintenance workshop crane, main hoist",workshop,10.0,300,4,400,8.0,8.4,"helical, three stage",57.5,0.94,360,18.5,1465,0.120,0.0168,"contactor, single speed",25,61,1.43
+H02,"Pattern shop crane, main hoist",pattern shop,5.0,150,2,300,10.0,10.6,"helical, three stage",68.6,0.94,220,11,1455,0.060,0.0084,"contactor, two-speed pole-changing motor (4/24 pole); the controller changes down to the slow speed before every stop",25,110,2.23
+H03,"Melt shop charging crane, auxiliary hoist",melt shop,25.0,750,4,550,10.0,10.3,"helical, three stage",63.9,0.93,1060,55,1480,0.580,0.0812,"contactor, single speed",50,85,1.82
+H04,"Machine hall crane 1, main hoist",machine hall,16.0,480,4,450,8.0,8.3,"helical, three stage",64.9,0.94,580,30,1470,0.240,0.0336,"contactor, single speed",30,53,1.19
+H05,"Despatch bay crane, main hoist",despatch bay,20.0,420,4,450,8.0,8.3,"helical, three stage",65.2,0.94,720,37,1475,0.310,0.0434,"contactor, single speed",30,265,2.29
+H06,Tool room jib crane hoist,tool room,3.2,100,2,250,6.0,6.6,"worm, single stage",93.6,0.72,110,5.5,1430,0.024,0.0034,"contactor, single speed",25,24,1.48
+H07,"Casting bay crane, main hoist",casting bay,20.0,600,4,500,10.0,10.3,"helical, three stage",57.9,0.93,870,45,1475,0.400,0.0560,"contactor, single speed",45,215,1.43
+H08,"Machine hall crane 2, main hoist",machine hall,8.0,240,4,350,10.0,10.5,"helical, three stage",40.3,0.94,360,18.5,1465,0.120,0.0168,"contactor, single speed",25,122,1.87
+H09,"Assembly hall crane, main hoist",assembly hall,32.0,960,6,600,6.0,6.2,"helical, three stage",77.2,0.93,870,45,1475,0.400,0.0560,"contactor, two-speed pole-changing motor (4/16 pole); the controller changes down to the slow speed before every stop",35,63,0.79
+H10,"Fettling shop crane, main hoist",fettling shop,12.5,380,4,400,10.0,10.4,"helical, three stage",46.2,0.94,580,30,1470,0.240,0.0336,"contactor, single speed",40,99,1.89
+H11,"Core shop crane, main hoist",core shop,6.3,190,2,320,12.0,12.6,"helical, three stage",61.4,0.94,360,18.5,1465,0.120,0.0168,"contactor, single speed",35,92,2.06
+H12,"Heavy assembly crane, main hoist",assembly hall,40.0,1200,8,700,5.0,5.2,"helical, three stage",81.1,0.93,870,45,1475,0.400,0.0560,"contactor, single speed",35,48,0.69

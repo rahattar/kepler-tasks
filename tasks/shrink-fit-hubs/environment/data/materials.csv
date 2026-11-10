@@ -1,0 +1,5 @@
+material,E_GPa,poisson,density_kg_m3,expansion_20_100C_um_per_m_K
+steel,210,0.30,7850,11.9
+ductile iron,174,0.28,7200,11.2
+tin bronze CuSn12,95,0.34,8700,18.1
+aluminium AlSi10Mg,72,0.33,2680,21.1

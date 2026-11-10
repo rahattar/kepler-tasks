@@ -1,0 +1,13 @@
+defensible variants (must stay inside tolerances):
+station pressure 101.325 kPa       OA 0.000(RTU-7)  EWB 0.050(RTU-1)  load_total 0.927(RTU-6)  load_sensible 0.000(RTU-7)  load_latent 3.357(RTU-6)  cap_total 0.180(RTU-3)  cap_sensible 0.210(RTU-4)  cap_latent 1.569(RTU-3) 
+Magnus saturation pressure         OA 0.000(RTU-7)  EWB 0.010(RTU-1)  load_total 0.087(RTU-1)  load_sensible 0.000(RTU-7)  load_latent 0.353(RTU-6)  cap_total 0.000(RTU-7)  cap_sensible 0.052(RTU-4)  cap_latent 0.244(RTU-7) 
+mixing by volume, linear DB        OA 0.000(RTU-7)  EWB 0.050(RTU-6)  load_total 0.000(RTU-7)  load_sensible 0.000(RTU-7)  load_latent 0.000(RTU-7)  cap_total 0.151(RTU-6)  cap_sensible 0.183(RTU-1)  cap_latent 0.196(RTU-6) 
+air constants 1.20 / 3000          OA 0.000(RTU-7)  EWB 0.000(RTU-7)  load_total 0.439(RTU-6)  load_sensible 0.472(RTU-6)  load_latent 0.238(RTU-7)  cap_total 0.000(RTU-7)  cap_sensible 0.466(RTU-3)  cap_latent 1.765(RTU-3) 
+altitude-corrected constants       OA 0.000(RTU-7)  EWB 0.000(RTU-7)  load_total 0.830(RTU-6)  load_sensible 0.472(RTU-6)  load_latent 1.943(RTU-6)  cap_total 0.000(RTU-7)  cap_sensible 0.466(RTU-3)  cap_latent 1.569(RTU-3) 
+known errors (must fall outside):
+capacity at AHRI rating point      OA 0.000(RTU-7)  EWB 0.000(RTU-7)  load_total 0.000(RTU-7)  load_sensible 0.000(RTU-7)  load_latent 0.000(RTU-7)  cap_total 10.063(RTU-3)  cap_sensible 16.010(RTU-4)  cap_latent 14.319(RTU-2) | VERDICT FLIP RTU-4
+capacity at 19.4 C EWB, 26.7 EDB   OA 0.000(RTU-7)  EWB 0.000(RTU-7)  load_total 0.000(RTU-7)  load_sensible 0.000(RTU-7)  load_latent 0.000(RTU-7)  cap_total 6.783(RTU-3)  cap_sensible 14.161(RTU-3)  cap_latent 18.039(RTU-3) | VERDICT FLIP RTU-4
+no entering-dry-bulb correction    OA 0.000(RTU-7)  EWB 0.000(RTU-7)  load_total 0.000(RTU-7)  load_sensible 0.000(RTU-7)  load_latent 0.000(RTU-7)  cap_total 0.000(RTU-7)  cap_sensible 20.280(RTU-3)  cap_latent 68.235(RTU-3) | VERDICT FLIP RTU-2
+gross (no fan heat)                OA 0.000(RTU-7)  EWB 0.000(RTU-7)  load_total 0.000(RTU-7)  load_sensible 0.000(RTU-7)  load_latent 0.000(RTU-7)  cap_total 7.951(RTU-3)  cap_sensible 10.315(RTU-3)  cap_latent 0.000(RTU-7) | VERDICT FLIP RTU-4
+Ev = 1 (sum of zone rates)         OA 20.160(RTU-1)  EWB 0.190(RTU-1)  load_total 4.293(RTU-1)  load_sensible 1.373(RTU-1)  load_latent 11.905(RTU-1)  cap_total 0.759(RTU-1)  cap_sensible 1.369(RTU-1)  cap_latent 1.275(RTU-1) 
+Ev simplified procedure 0.75       OA 32.807(RTU-4)  EWB 0.500(RTU-6)  load_total 8.931(RTU-6)  load_sensible 5.125(RTU-6)  load_latent 18.905(RTU-6)  cap_total 1.759(RTU-6)  cap_sensible 2.297(RTU-6)  cap_latent 2.745(RTU-3) | VERDICT FLIP RTU-2

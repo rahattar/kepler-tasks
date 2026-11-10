@@ -1,0 +1,216 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/fan.py"]
+
+[task]
+name = "afterquery/fan-critical-speed"
+description = "Write a program that finds the two lowest lateral critical speeds of an overhung fan after an impeller change, identifying its pedestal stiffnesses from standstill impact tests and the fan's own records and modeling the rotor to the plant's rotordynamic standard, and that stays right on fans it has never seen."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "rotordynamics",
+    "critical-speeds",
+    "gyroscopic-effects",
+    "model-updating",
+    "modal-testing",
+    "engineering-software",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only published rotordynamic practice (Euler-Bernoulli rotor finite elements, gyroscopic coupling, synchronous critical speeds, support identification from impact tests) on synthetic fans and records. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "rotordynamics and vibration"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "rotordynamics",
+    "critical-speeds",
+    "gyroscopic-effects",
+    "model-updating",
+    "modal-testing",
+    "engineering-software",
+]
+expert_time_estimate_hours = 8
+relevant_experience = """I am a control scientist and thermal engineer with a PhD in mechanical engineering. Rotating machinery dynamics, identifying models of equipment from vibration measurements, and writing the engineering software that does it are part of my work on industrial equipment and of my teaching. The fans and records are synthetic."""
+difficulty_explanation = """In practice this is the work of a plant's rotating-equipment engineer, who checks a program of fan upgrades fan by
+fan with one program. The program has to be right on fans nobody has looked at. Its research analogue is model
+updating in structural dynamics: identifying the support parameters of a rotor model from modal tests of the machine
+as it stood, then predicting the behavior of the machine after a modification.
+
+The fans and records are synthetic, written by `authoring/provenance` (`rotor.py`, `fans.py`, `docs_fan.py`,
+`build.py`) from a sealed definition. They are realistic in their numbers:
+- Shafts of 1.95 to 2.40 m, stepped to 145 to 160 mm between bearings 1.10 to 1.40 m apart, with an overhang of 0.45
+  to 0.62 m to the impeller.
+- Spherical roller bearings of 0.8 to 1.2 GN/m, on cast pedestals of 160 to 300 kg effective mass.
+- Pedestals three to four and a half times stiffer vertically than horizontally (22 to 50 MN/m horizontal).
+- Impellers of 380 to 660 kg with polar moments of inertia (WR2) of 80 to 165 kg m2, at speeds of 985 to 1490 rpm.
+- Impact test frequencies of 10.7 to 28.7 Hz, reported to 0.01 Hz.
+- True critical speeds of 761 to 1947 rpm (`authoring/evidence/reference.txt`).
+
+Two physical points apply to every fan, and the example fan, `boiler-fd-fan`, shows both:
+- **Gyroscopic coupling.** An overhung impeller's polar inertia couples the horizontal and vertical planes. The
+  natural frequencies therefore move with running speed, and the critical speeds are not the standstill frequencies.
+- **Two kinds of whirl.** The pedestals are anisotropic, so unbalance excites a lower, mostly horizontal, backward
+  whirling mode as well as the forward one. The two lowest critical speeds are one of each.
+
+The example has no reported answer to calibrate against; MS-RD defines what a critical speed is.
+
+The example's records are sound. Its one impact test is of the fan as installed, and its one rotor change (a coupling
+hub) was made and entered in the register before the test. The six hidden fans carry the faults that fan records carry
+in the field. Each looks like ordinary data, and the documents say only what was done, never its effect:
+- **Register dates.** The asset register dates each change by the day the entry was made. The maintenance log dates
+  the work under the same work order. On kiln-id-fan and cooler-vent-fan the work came before the impact test and the
+  entry after it.
+- **Changes after the test.** On raw-mill-fan the shaft was replaced after the test, and on baghouse-fan the impeller
+  was replaced after it. The rotor that was tested is not the rotor as it is now.
+- **Changes before the test.** On coal-mill-fan the impeller was re-bladed before the test, and on cooler-vent-fan the
+  shaft was replaced before it. The rotor that was tested is not the rotor as built.
+- **Shaft revisions.** On raw-mill-fan and cooler-vent-fan the shaft was replaced to a new revision with a larger
+  overhang diameter, recorded in the register.
+- **Pedestal work between tests.** On coal-mill-fan and cooler-vent-fan the pedestal soleplates were regrouted between
+  the commissioning test and a later one.
+- **A stay removed.** On dryer-exhaust-fan and baghouse-fan the latest test was made with the fan-end pedestal's
+  horizontal stay removed for a bearing change. The stay was refitted afterwards, so that test's horizontal frequency
+  is not the fan's as it runs.
+
+MS-RD's model has two identical pedestals and assesses the fan as it will run (clauses 2 and 4). Each check left out or
+done the obvious way gets fans wrong, against an allowance of one wrong fan (`authoring/evidence/route_study.txt`).
+Each figure is the larger relative deviation of a fan's two critical speeds:
+- The gyroscopic coupling left out, so the critical speeds are the new rotor's standstill frequencies: all 6 wrong, at
+  +6.9 to +15.2 percent.
+- Forward whirl only: all 6 wrong. On the example this route reports the true second critical speed, 1437.0 rpm,
+  as the first.
+- Rotor changes dated by the register's entry: 2 wrong, kiln-id-fan -7.9 and cooler-vent-fan +6.3 percent.
+- The test modeled with the rotor as it is now: 2 wrong, baghouse-fan +13.5 and raw-mill-fan -3.1 percent.
+- The test modeled with the rotor as built: 3 wrong, coal-mill-fan -9.1, cooler-vent-fan +6.3 and kiln-id-fan -7.9
+  percent.
+- Shaft revisions left out: 2 wrong, cooler-vent-fan -5.1 and raw-mill-fan -4.3 percent.
+- The latest test, whatever its condition: 2 wrong, baghouse-fan -18.5 and dryer-exhaust-fan -26.4 percent.
+- The first (commissioning) test: 2 wrong, coal-mill-fan -10.4 and cooler-vent-fan +7.3 percent.
+- Records taken at face value (the latest test, the rotor as it is now, entry dates): 3 wrong.
+
+Every route misses at least two fans, and every hidden fan is missed by at least two routes. On the example, every
+record route gives the reference's 940.1 and 1437.0 rpm, or 939.9 and 1436.7 rpm, so the example does not show them
+(`authoring/evidence/route_example.txt`)."""
+solution_explanation = """`solution/fan.py` is the reference program; `solution/solve.sh` installs it as `/app/output/fan.py` and runs it on the
+example. For one fan it does the following:
+- Reads the datasheet (shaft sections, bearing positions and stiffness, pedestal mass, coupling hub, impeller as
+  built), the register's rotor changes, the maintenance log, every impact test report and the new impeller.
+- Dates each rotor change by its work order's date in the maintenance log.
+- Picks the latest impact test of the fan as installed made after the last pedestal work (regrouting, anchor
+  bolts).
+- Builds the rotor as it stood on that test's date: the as-built datasheet with every change made by then.
+- Identifies the horizontal and vertical pedestal springs, the same for both pedestals. Each is found so that the
+  model's lowest standstill frequency in its plane equals the test's (Brent's method on the logarithm of the stiffness).
+- Fits the new impeller to the rotor as it is now and solves for the critical speeds: the running speeds W at which
+  K - W^2 (M - iG) is singular, so that the undamped synchronous response is unbounded. This is a Hermitian generalized
+  eigenproblem in 1/W^2. It reports the two lowest.
+- The shaft is modeled with consistent-mass Euler-Bernoulli elements of at most 20 mm, with its own polar inertia at
+  the nodes, as MS-RD clause 2 sets out.
+
+Run through `tests/grade.py` as the verifier runs a submission, its critical speeds are within 0.03 percent of the
+truth on all six hidden fans. On the example it gives 940.1 and 1437.0 rpm (`authoring/evidence/reference.txt`)."""
+verification_explanation = """`tests/grade.py` runs the submitted `/app/output/fan.py` on each of the six hidden fans (`tests/hidden`; the agent's
+image does not contain them). The verifier image has the agent's `/app/data` at the same path, read-only
+(`tests/app_data`, written by the same `build.py`).
+
+How each fan is run:
+- The program alone and the package are copied to a scratch directory owned by root, where the package is read-only.
+- The program runs as the unprivileged user nobody, with only PATH and HOME set, as
+  `python3 -I fan.py FAN_DIR OUT_JSON`, within 600 s, in its own process group.
+- When the run ends or times out, its process group and every process of nobody are killed before the output is read.
+  The six runs are sequential, so the worst case (3600 s) fits the 4200 s verifier timeout.
+- The instruction states these run conditions, including the 10 minutes and that `fan.py` must be self-contained.
+
+The output must be a regular file, not a symlink, of at most 65536 bytes. It must hold one JSON object with exactly the
+keys `first_critical_rpm` and `second_critical_rpm`, each once, each a finite positive number (not a string or a
+boolean; NaN and Infinity are rejected). The program must exit with status 0. A fan whose output breaks any of this is
+wrong. The instruction states every one of these rules.
+
+A fan is right when both values are within 2 percent of its two lowest critical speeds with the new impeller. The
+instruction states the 2 percent as a requirement. The truth (`tests/hidden/truth.json`, root-only in `/tests`) is
+computed by `authoring/provenance/rotor.py` on the sealed fan as it will run: every change applied, the true pedestal
+stiffnesses after the last pedestal work, and the new impeller. It is the same synchronous eigenproblem, with 20 mm
+elements. `rotor.response()` confirms that each truth critical speed is a peak of the damped unbalance response. The
+truth is a computation on the sealed fan, not on its records.
+
+The single pytest test passes when at most 1 of the 6 fans is wrong; the allowance of one fan is not in the
+instruction. `tests/test.sh` does the following:
+- Locks `/logs/verifier` to root before grading and again before the reward.
+- Writes reward 0 first, and 1 only when pytest exits 0 and the ctrf report holds exactly one test, passed, with none
+  failed, skipped, pending or other.
+- Writes the per-fan results to `/logs/verifier/metrics.json`, where they do not affect the reward.
+
+Every calibration number below is measured by the verifier itself. Each method, route and method-free answer is a
+complete JSON-writing program, run through `tests/grade.py` exactly as a submission. `authoring/evidence/common.py`
+writes the program file and calls `score()`. It runs as nobody from a scratch copy, as `python3 -I fan.py FAN_DIR
+OUT_JSON`, and grade.py reads and judges the JSON. No evidence script calls a program's functions directly.
+
+Why 2 percent and at most 1 wrong fan:
+- **Correct methods.** All of them are right on every fan, within 0.20 percent of the truth
+  (`authoring/evidence/method_spread.txt`):
+  - the reference;
+  - `authoring/evidence/independent.py`, a second program that shares no code with it (within 0.03 percent);
+  - four variants of the reference: shaft elements of 10 and of 50 mm, the shaft's own polar inertia left out, and the
+    test frequencies rounded to 0.1 Hz (the largest spread, 0.20 percent).
+
+  The second program uses lumped-mass elements of at most 30 mm, separate plane models and bisection for the
+  identification, and a Campbell sweep for the critical speeds. At each running speed it counts the state-space
+  natural frequencies below the running frequency, and it bisects each speed at which the count changes.
+- **Defective routes.** The routes above miss by 3.1 percent or more. The closest, raw-mill-fan at -3.1 percent, comes
+  from a route that also misses baghouse-fan by 13.5 percent. Every other miss is 4.3 percent or more.
+- **The tolerance.** 2 percent sits between the correct methods (0.20 percent at most) and the closest defective miss
+  (3.1 percent), with margin on both sides.
+- **The allowance.** One wrong fan is allowed so that a sound program with a single marginal fan is not failed. No
+  route and no method-free answer stays within it.
+
+Method-free answers (`authoring/evidence/constant_null.txt`) are all rejected, each with all 6 fans wrong:
+
+| Method-free answer | Larger deviation over the fans (percent) |
+|---|---|
+| the example's critical speeds (940.1 and 1437.0 rpm) on every fan | 9.6 to 26.2 |
+| 1000 and 1500 rpm on every fan | 16.6 to 31.5 |
+| the latest impact test's frequencies, as rpm | 8.8 to 30.8 |
+| the example's critical speeds scaled by the latest test's frequencies | 6.2 to 36.8 |
+
+Every hidden fan's critical speeds are at least 8 percent from the example's, so the example's answer carries over to
+none of them.
+
+Malformed output and misbehaving programs (`authoring/evidence/verifier_checks.txt`) write the reference's values for
+each fan and then corrupt them. They are run through `grade.py` as the verifier runs them. Each of the following has
+every fan counted wrong, and none crashes the verifier:
+- an output that is a symlink;
+- a missing, extra, renamed or repeated key, or a list instead of an object;
+- a NaN, infinite, string, boolean, negative or zero value;
+- an empty file, bytes that are not UTF-8, or a correct object padded past 65536 bytes;
+- a non-zero exit status, or a run past the time limit.
+
+A background process left running is killed when its run ends, and no process of nobody survives any case.
+
+The agent works as a separate user that can only write to `/app/output`; `/app/data` is read-only. The verifier runs
+separately without network."""
+
+[verifier]
+timeout_sec = 4200.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 28800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

@@ -1,0 +1,14 @@
+Reference program solution/surge.py through tests/grade.py (run as nobody); a main is right when the design meets MS-SV clause 3 on the main as installed and is at most 15 percent above the smallest vessel that does.
+
+Example kestrel-lane: reference 40.04 m3 vessel / 19.85 m3 gas; reported 39.4 / 19.4 (ratio 1.016 / 1.023)
+
+main            vessel m3   gas m3   smallest    its gas    ratio   crown m    gas/V   right
+cobb-ridge          41.64    20.40      38.99      19.54    1.068     -2.79    0.824    True
+fern-gully          42.58    21.23      40.47      20.71    1.052     -2.88    0.824    True
+lark-hollow         28.83    14.42      27.37      14.05    1.053     -2.84    0.825    True
+mill-brook          31.69    15.97      29.84      15.41    1.062     -2.80    0.824    True
+orchard-rise        63.53    31.14      59.30      29.79    1.071     -2.77    0.822    True
+saddle-hill        147.78    82.76     135.34      77.51    1.092     -2.60    0.824    True
+
+mains 6; wrong 0 (accepted); ratio to the smallest vessel 1.052 to 1.092 (limit 1.15)
+smallest vessels of the hidden mains: 39.0, 40.5, 27.4, 29.8, 59.3, 135.3 m3

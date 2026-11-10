@@ -1,0 +1,21 @@
+Verifier robustness (tests/grade_torques.py): each malformed result must be rejected without a crash.
+
+well-formed, handbook values (judged on values)  rejected on values (4 of 16 right)
+NaN torque                                       rejected: torque for J05 must be a finite positive number
+infinite torque                                  rejected: torque for J05 must be a finite positive number
+negative torque                                  rejected: torque for J05 must be a finite positive number
+zero torque                                      rejected: torque for J05 must be a finite positive number
+boolean torque                                   rejected: torque for J05 is not a number
+string torque                                    rejected: torque for J05 is not a number
+array torque                                     rejected: torque for J05 is not a number
+duplicate joint key                              rejected: duplicate key in the result
+missing joint                                    rejected: torques must have exactly the keys J01, J02, J03, J04, J05, J06, J07, J08, J09, J10, J11, J12, J13, J14, J15, J16
+extra joint                                      rejected: torques must have exactly the keys J01, J02, J03, J04, J05, J06, J07, J08, J09, J10, J11, J12, J13, J14, J15, J16
+extra top-level key                              rejected: the result must be one object with the single key "torques"
+torques not an object                            rejected: torques must have exactly the keys J01, J02, J03, J04, J05, J06, J07, J08, J09, J10, J11, J12, J13, J14, J15, J16
+top level an array                               rejected: the result must be one object with the single key "torques"
+empty file                                       rejected: the result is not valid JSON: Expecting value: line 1 column 1 (char 0)
+not JSON                                         rejected: the result is not valid JSON: Expecting value: line 1 column 1 (char 0)
+symlink as the result                            rejected: the result is not a regular file
+no file                                          rejected: no result file at <dir>/torques.json
+reference result                                 accepted, 16 of 16

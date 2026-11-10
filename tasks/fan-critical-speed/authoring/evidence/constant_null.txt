@@ -1,0 +1,8 @@
+Method-free answers as complete programs through tests/grade.py (run as nobody); six hidden fans; accepted when at most 1 is wrong.
+
+columns: the larger signed relative deviation of the two critical speeds (* wrong) for 1 baghouse-fan, 2 coal-mill-fan, 3 cooler-vent-fan, 4 dryer-exhaust-fan, 5 kiln-id-fan, 6 raw-mill-fan
+
+the example's critical speeds (940.1, 1437.0 rpm) on every fan           wrong 6  +0.096*  -0.262*  +0.119*  +0.172*  +0.249*  -0.239*  rejected
+1000 and 1500 rpm on every fan                                           wrong 6  +0.166*  -0.230*  +0.190*  +0.239*  +0.315*  -0.205*  rejected
+the latest impact test's frequencies, as rpm                             wrong 6  -0.252*  -0.214*  +0.308*  -0.161*  +0.135*  -0.088*  rejected
+the example's critical speeds scaled by the latest test's frequencies    wrong 6  -0.368*  -0.203*  +0.228*  -0.292*  -0.062*  -0.112*  rejected

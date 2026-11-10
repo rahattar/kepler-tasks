@@ -1,0 +1,62 @@
+date_local,turbine,system,description,status
+2026-01-05 08:30,T08,general,Converter cooling fan replaced.,closed
+2026-01-05 08:51,T10,general,Tower ladder inspection.,closed
+2026-01-06 09:06,T05,general,Gearbox oil sample taken.,closed
+2026-01-11 09:06,T02,general,"Blade inspection by drone, no findings.",closed
+2026-01-12 09:08,T03,general,Pitch battery test.,closed
+2026-01-13 15:42,T10,general,Grease system refilled.,closed
+2026-01-15 13:31,T09,general,Tower ladder inspection.,closed
+2026-01-19 09:39,T01,general,Yaw brake pads inspected.,closed
+2026-01-25 08:42,T05,general,Grease system refilled.,closed
+2026-01-29 07:51,T03,general,Aviation light replaced.,closed
+2026-01-29 11:30,T07,general,Nacelle filter mats replaced.,closed
+2026-01-30 09:47,T04,general,Converter cooling fan replaced.,closed
+2026-02-03 07:16,T09,general,Annual service completed.,closed
+2026-02-15 15:36,T06,general,Aviation light replaced.,closed
+2026-02-20 11:58,T09,general,Gearbox oil sample taken.,closed
+2026-02-20 14:00,T07,yaw,"Yaw encoder replaced after an encoder fault; yaw system tested in both directions, turbine returned to service.",closed
+2026-02-24 12:46,T06,general,Pitch battery test.,closed
+2026-02-26 08:01,T01,general,Converter cooling fan replaced.,closed
+2026-03-05 08:17,T10,general,Yaw brake pads inspected.,closed
+2026-03-08 10:25,T03,general,Annual service completed.,closed
+2026-03-08 13:10,T03,general,Annual service completed.,closed
+2026-03-11 08:45,T02,general,Yaw brake pads inspected.,closed
+2026-03-12 11:32,T03,general,Annual service completed.,closed
+2026-03-24 08:51,T02,general,"Blade inspection by drone, no findings.",closed
+2026-03-25 08:08,T10,general,Main bearing temperature sensor checked.,closed
+2026-03-25 10:05,T05,general,Nacelle filter mats replaced.,closed
+2026-03-29 10:36,T07,general,Main bearing temperature sensor checked.,closed
+2026-03-30 07:22,T01,general,Main bearing temperature sensor checked.,closed
+2026-04-10 07:27,T07,general,Annual service completed.,closed
+2026-04-10 07:53,T01,general,Pitch battery test.,closed
+2026-04-10 11:01,T04,general,Tower ladder inspection.,closed
+2026-04-10 12:49,T08,general,Annual service completed.,closed
+2026-04-11 07:11,T08,general,Grease system refilled.,closed
+2026-04-11 10:04,T06,general,Converter cooling fan replaced.,closed
+2026-04-11 13:07,T03,general,Main bearing temperature sensor checked.,closed
+2026-04-17 10:27,T06,general,Pitch battery test.,closed
+2026-04-17 14:46,T05,general,Pitch battery test.,closed
+2026-04-17 15:51,T09,general,Pitch battery test.,closed
+2026-04-17 16:31,T02,general,Tower ladder inspection.,closed
+2026-04-18 15:14,T07,general,Gearbox oil sample taken.,closed
+2026-04-25 08:16,T08,general,Gearbox oil sample taken.,closed
+2026-04-27 15:31,T05,general,Grease system refilled.,closed
+2026-05-01 11:27,T03,general,Annual service completed.,closed
+2026-05-03 16:41,T03,general,Aviation light replaced.,closed
+2026-05-10 10:08,T07,general,Nacelle filter mats replaced.,closed
+2026-05-12 09:20,T05,general,"Blade inspection by drone, no findings.",closed
+2026-05-15 09:25,T09,general,Aviation light replaced.,closed
+2026-05-15 13:03,T07,general,Nacelle filter mats replaced.,closed
+2026-05-21 10:14,T10,general,Pitch battery test.,closed
+2026-05-23 10:21,T04,general,Yaw brake pads inspected.,closed
+2026-05-25 11:09,T03,general,Yaw brake pads inspected.,closed
+2026-05-26 12:28,T06,general,Converter cooling fan replaced.,closed
+2026-05-30 10:45,T10,general,Yaw brake pads inspected.,closed
+2026-06-07 14:16,T04,general,"Blade inspection by drone, no findings.",closed
+2026-06-14 15:56,T07,general,Annual service completed.,closed
+2026-06-15 15:12,T06,general,Pitch battery test.,closed
+2026-06-16 16:29,T04,general,"Blade inspection by drone, no findings.",closed
+2026-06-24 11:49,T01,general,Main bearing temperature sensor checked.,closed
+2026-06-26 10:07,T01,general,Converter cooling fan replaced.,closed
+2026-06-29 07:52,T04,general,Converter cooling fan replaced.,closed
+2026-06-29 13:16,T02,general,Gearbox oil sample taken.,closed

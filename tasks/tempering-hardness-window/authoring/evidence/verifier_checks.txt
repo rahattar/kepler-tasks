@@ -1,0 +1,34 @@
+Malformed and reference results through tests/grade_tempering.score (one temporary file each).
+
+reference result                   accepted=True  ok 13 of 13 right
+reference, temperatures as floats  accepted=True  ok 13 of 13 right
+empty file                         accepted=False ok the result is not valid JSON: Expecting value: line 1 column 1 (char 0)
+not JSON                           accepted=False ok the result is not valid JSON: Expecting value: line 1 column 1 (char 0)
+a JSON array                       accepted=False ok the result must be one object with the single key "tempering_C"
+missing batch                      accepted=False ok tempering_C must have exactly the keys B01, B02, B03, B04, B05, B06, B07, B08, B09, B10, B11, B12, B13
+extra batch                        accepted=False ok tempering_C must have exactly the keys B01, B02, B03, B04, B05, B06, B07, B08, B09, B10, B11, B12, B13
+extra top-level key                accepted=False ok the result must be one object with the single key "tempering_C"
+wrong top-level key                accepted=False ok the result must be one object with the single key "tempering_C"
+duplicate batch                    accepted=False ok duplicate key in the result
+duplicate top-level key            accepted=False ok duplicate key in the result
+tempering_C as a list              accepted=False ok tempering_C must have exactly the keys B01, B02, B03, B04, B05, B06, B07, B08, B09, B10, B11, B12, B13
+batch keys lower case              accepted=False ok tempering_C must have exactly the keys B01, B02, B03, B04, B05, B06, B07, B08, B09, B10, B11, B12, B13
+temperature NaN                    accepted=False ok the temperature for B07 must be a whole degree C
+temperature Infinity               accepted=False ok the temperature for B07 must be a whole degree C
+temperature -Infinity              accepted=False ok the temperature for B07 must be a whole degree C
+temperature 580.5                  accepted=False ok the temperature for B07 must be a whole degree C
+temperature boolean                accepted=False ok the temperature for B07 is not a number
+temperature string                 accepted=False ok the temperature for B07 is not a number
+temperature null                   accepted=False ok the temperature for B07 is not a number
+temperature array                  accepted=False ok the temperature for B07 is not a number
+temperature object                 accepted=False ok the temperature for B07 is not a number
+temperature -5                     accepted=False ok the temperature for B07 must be from 0 to 1000 C
+temperature 1001                   accepted=False ok the temperature for B07 must be from 0 to 1000 C
+temperature 1e400                  accepted=False ok the temperature for B07 must be a whole degree C
+result is a symlink                accepted=False ok the result is not a regular file
+no result file                     accepted=False ok no result file at <tmp>/absent.json
+B07 at 600 C (well formed, too soft) accepted=False ok 12 of 13 right
+B13 at 535 C (below G52's 540 C minimum) accepted=False ok 12 of 13 right
+every batch at 546 C               accepted=False ok 7 of 13 right
+
+30 of 30 cases handled as expected; none crashed the grader.

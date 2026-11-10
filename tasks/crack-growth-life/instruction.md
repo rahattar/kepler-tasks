@@ -1,0 +1,7 @@
+Sixteen fatigue cracks, C01 to C16, were found in the March 2026 inspection at the toes of the fillet welds that join attachments to the chord flanges of the booms and towers of two grab ship unloaders. They stay in service until they can be repaired, and each one needs a re-inspection interval in months of operation. A crack's interval must be no more than half of its remaining life, the operating time it takes to grow from its inspected depth to its critical depth, and no less than 40 percent of it.
+
+The records are under `/app/data`: the component register, the flange plate material certificates, the 2026 inspection results, the strain-gauge survey's rainflow counts, the maintenance log, a crack growth handbook, the assessment procedure in `/app/data/docs/procedure.md`, and the records of two earlier cracks on the unloaders in `/app/data/examples/`. The materials laboratory tests the flange plate material as described in `/app/data/docs/laboratory.md`: `fcgr paris <R>` uses one test slot and `fcgr threshold <R>` uses three, both run from `/app`, with 5 slots in total for the whole assessment.
+
+Put the intervals in `/app/output/intervals.json`, using the structure `{"intervals_months": {"C01": <months>, ..., "C16": <months>}}` with a numeric value for every crack, each appearing once. All 16 intervals must meet the requirement above.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

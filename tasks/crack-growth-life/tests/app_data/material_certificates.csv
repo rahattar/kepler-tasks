@@ -1,0 +1,5 @@
+heat,grade,yield_strength_MPa,fracture_toughness_Kmat_MPa_sqrt_m
+H1,S355J2,372,125
+H2,S355J2,395,110
+H3,S460NL,478,150
+H4,S460NL,501,140

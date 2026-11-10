@@ -1,0 +1,250 @@
+{
+ "cedar-flats-2026h1": {
+  "T01": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T02": {
+   "aep_ratio": 1.0021,
+   "warranty_claim": "no"
+  },
+  "T03": {
+   "aep_ratio": 0.9506,
+   "warranty_claim": "yes"
+  },
+  "T04": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T05": {
+   "aep_ratio": 0.9551,
+   "warranty_claim": "yes"
+  },
+  "T06": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T07": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T08": {
+   "aep_ratio": 0.9549,
+   "warranty_claim": "yes"
+  }
+ },
+ "hollins-ridge-2026h1": {
+  "T01": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T02": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T03": {
+   "aep_ratio": 0.9957,
+   "warranty_claim": "no"
+  },
+  "T04": {
+   "aep_ratio": 0.9506,
+   "warranty_claim": "yes"
+  },
+  "T05": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T06": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T07": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T08": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T09": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T10": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T11": {
+   "aep_ratio": 0.9571,
+   "warranty_claim": "yes"
+  },
+  "T12": {
+   "aep_ratio": 0.9957,
+   "warranty_claim": "no"
+  }
+ },
+ "north-branch-2025h2": {
+  "T01": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T02": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T03": {
+   "aep_ratio": 0.9528,
+   "warranty_claim": "yes"
+  },
+  "T04": {
+   "aep_ratio": 1.0021,
+   "warranty_claim": "no"
+  },
+  "T05": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T06": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T07": {
+   "aep_ratio": 0.9957,
+   "warranty_claim": "no"
+  },
+  "T08": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T09": {
+   "aep_ratio": 0.9506,
+   "warranty_claim": "yes"
+  },
+  "T10": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  }
+ },
+ "pike-hollow-2026h1": {
+  "T01": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T02": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T03": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T04": {
+   "aep_ratio": 0.9506,
+   "warranty_claim": "yes"
+  },
+  "T05": {
+   "aep_ratio": 1.0021,
+   "warranty_claim": "no"
+  },
+  "T06": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T07": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T08": {
+   "aep_ratio": 0.9959,
+   "warranty_claim": "no"
+  },
+  "T09": {
+   "aep_ratio": 0.9572,
+   "warranty_claim": "yes"
+  },
+  "T10": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  }
+ },
+ "ridgeback-2026h2": {
+  "T01": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T02": {
+   "aep_ratio": 0.9506,
+   "warranty_claim": "yes"
+  },
+  "T03": {
+   "aep_ratio": 0.9957,
+   "warranty_claim": "no"
+  },
+  "T04": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T05": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T06": {
+   "aep_ratio": 0.9549,
+   "warranty_claim": "yes"
+  },
+  "T07": {
+   "aep_ratio": 0.9979,
+   "warranty_claim": "no"
+  },
+  "T08": {
+   "aep_ratio": 0.9957,
+   "warranty_claim": "no"
+  },
+  "T09": {
+   "aep_ratio": 0.9511,
+   "warranty_claim": "yes"
+  },
+  "T10": {
+   "aep_ratio": 1.002,
+   "warranty_claim": "no"
+  }
+ },
+ "tallow-creek-2026h1": {
+  "T01": {
+   "aep_ratio": 0.9978,
+   "warranty_claim": "no"
+  },
+  "T02": {
+   "aep_ratio": 0.9469,
+   "warranty_claim": "yes"
+  },
+  "T03": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T04": {
+   "aep_ratio": 1.0022,
+   "warranty_claim": "no"
+  },
+  "T05": {
+   "aep_ratio": 0.9978,
+   "warranty_claim": "no"
+  },
+  "T06": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  },
+  "T07": {
+   "aep_ratio": 0.9956,
+   "warranty_claim": "no"
+  },
+  "T08": {
+   "aep_ratio": 0.9513,
+   "warranty_claim": "yes"
+  },
+  "T09": {
+   "aep_ratio": 1.0,
+   "warranty_claim": "no"
+  }
+ }
+}

@@ -1,0 +1,13 @@
+joint,part,shaft_diameter_mm,shaft_bore_mm,hub_outside_diameter_mm,hub_length_mm,hub_material,speed_rpm
+J01,pump coupling hub,55,0,85,70,C45+N,2970
+J02,fan hub,90,0,140,110,AlSi10Mg-T6,1480
+J03,worm wheel,110,0,175,90,CuSn12-C,60
+J04,gear hub,150,0,270,160,42CrMo4+QT,300
+J05,brake drum hub,75,0,120,90,EN-GJS-600-3,980
+J06,compressor impeller,65,0,150,75,42CrMo4+QT,5900
+J07,crane wheel,120,0,190,130,EN-GJS-400-15,25
+J08,flywheel,180,0,400,200,EN-GJS-400-15,740
+J09,rolling-mill coupling,220,0,400,240,42CrMo4+QT,150
+J10,conveyor pulley hub,100,0,150,100,S355J2,120
+J11,gear on hollow shaft,130,70,200,120,C45+N,600
+J12,timing pulley,45,0,70,50,S355J2,1480

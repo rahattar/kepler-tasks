@@ -1,0 +1,15 @@
+Verifier robustness: each malformed result must count as wrong (not a crash), and nothing may outlive a run.
+
+well-formed result (judged on its values)  wrong: values off                                            0.0 s, processes left 0
+NaN value                                  wrong: leak_m3_min is not a finite number                    0.0 s, processes left 0
+infinite value                             wrong: specific_power_kw_per_m3_min is not a finite number   0.0 s, processes left 0
+boolean value                              wrong: leak_m3_min is not a number                           0.0 s, processes left 0
+string value                               wrong: leak_m3_min is not a number                           0.0 s, processes left 0
+array value                                wrong: leak_m3_min is not a number                           0.0 s, processes left 0
+duplicate key                              wrong: ValueError('duplicate key in the result')             0.0 s, processes left 0
+missing key                                wrong: not a result: keys must be exactly ['avg_demand_m3_mi 0.0 s, processes left 0
+extra key                                  wrong: not a result: keys must be exactly ['avg_demand_m3_mi 0.0 s, processes left 0
+empty array instead of an object           wrong: ValueError('the result is not a JSON object')         0.0 s, processes left 0
+symlink as the result                      wrong: ValueError('the result is not a regular file')        0.0 s, processes left 0
+no result written                          wrong: FileNotFoundError(2, 'No such file or directory')     0.0 s, processes left 0
+background process left running            wrong: values off                                            0.0 s, processes left 0

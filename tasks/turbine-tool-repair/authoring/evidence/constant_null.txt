@@ -1,0 +1,4 @@
+Hidden truths: output 41.02-42.95 MW, heat rate 10688-11047 kJ/kWh
+A program that always writes contractor's 2025-04-09 values (42.37 MW, 10811 kJ/kWh): 7 of 8 sets fail
+A program that always writes median of the hidden truths (42.12 MW, 10871 kJ/kWh): 7 of 8 sets fail
+The plant's program as shipped: 8 of 8 sets fail

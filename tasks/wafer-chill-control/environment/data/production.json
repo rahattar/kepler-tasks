@@ -1,0 +1,41 @@
+{
+  "description": "Production requirements and the wafer population the controller must handle, in machine-readable form.",
+  "stations": [
+    "A",
+    "B"
+  ],
+  "control_period_s": 0.1,
+  "pressure_command_min_torr": 3.0,
+  "pressure_command_max_torr": 60.0,
+  "chamber_pressure_at_landing_torr": 3.0,
+  "release_mass_mean_max_C": 50.0,
+  "zone_difference_max_K": 25.0,
+  "cycle_max_s": 30.0,
+  "center_sag_range_um": [
+    -50.0,
+    50.0
+  ],
+  "incoming_temperature_range_C": [
+    235.0,
+    265.0
+  ],
+  "backside_films": [
+    "bare",
+    "oxide",
+    "nitride"
+  ],
+  "sensors": {
+    "center_pyrometer_annulus_mm": [
+      0.0,
+      10.0
+    ],
+    "edge_pyrometer_annulus_mm": [
+      135.0,
+      145.0
+    ],
+    "plate_rtd": true,
+    "chamber_manometer": true
+  },
+  "hidden_wafers_per_station": 12,
+  "cycle_allowance_fraction": 0.1
+}

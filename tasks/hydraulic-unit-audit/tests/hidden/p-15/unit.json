@@ -1,0 +1,68 @@
+{
+ "press": "P-15",
+ "pump": {
+  "type": "fixed-displacement axial piston",
+  "displacement_cm3_per_rev": 32,
+  "efficiency_table": [
+   {
+    "pressure_bar": 20,
+    "volumetric": 0.975,
+    "hydromechanical": 0.9
+   },
+   {
+    "pressure_bar": 50,
+    "volumetric": 0.965,
+    "hydromechanical": 0.915
+   },
+   {
+    "pressure_bar": 100,
+    "volumetric": 0.95,
+    "hydromechanical": 0.925
+   },
+   {
+    "pressure_bar": 150,
+    "volumetric": 0.935,
+    "hydromechanical": 0.925
+   },
+   {
+    "pressure_bar": 200,
+    "volumetric": 0.92,
+    "hydromechanical": 0.92
+   },
+   {
+    "pressure_bar": 250,
+    "volumetric": 0.905,
+    "hydromechanical": 0.91
+   },
+   {
+    "pressure_bar": 300,
+    "volumetric": 0.89,
+    "hydromechanical": 0.9
+   }
+  ],
+  "table_note": "at rated motor speed; efficiencies vary little with speed in the motor's slip range"
+ },
+ "motor": {
+  "type": "induction, 4-pole, 50 Hz",
+  "rated_power_kw": 22.0,
+  "synchronous_speed_rpm": 1500.0,
+  "rated_speed_rpm": 1468.0,
+  "efficiency": 0.92,
+  "unloaded_input_power_kw": 1.0
+ },
+ "accumulator": {
+  "type": "bladder, nitrogen",
+  "volume_l": 25,
+  "precharge_bar": 95,
+  "precharge_note": "precharge pressure at the last check, gas at ambient temperature"
+ },
+ "unloading_valve": "pump unloads to tank when the system pressure reaches its upper setting and reloads at its lower setting",
+ "logger": {
+  "sample_rate_hz": 20.0,
+  "channels": [
+   "system pressure (accumulator line)",
+   "pump outlet pressure",
+   "motor input power"
+  ]
+ }
+}

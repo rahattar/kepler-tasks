@@ -1,0 +1,135 @@
+{
+ "bushing-od": {
+  "job": {
+   "Rw": 0.75,
+   "burn_limit_C": 410,
+   "coolant": "emulsion",
+   "coolant_C": 27,
+   "diameter_mm": 381,
+   "interval_mm3_mm": 1600,
+   "power_model": [
+    6.0,
+    0.012,
+    42.0
+   ],
+   "wheel": "A80K5V",
+   "width_mm": 20,
+   "work_speed_mm_s": 200.0
+  },
+  "max_depth_um": 10.7018
+ },
+ "cam-flank": {
+  "job": {
+   "Rw": 0.22,
+   "burn_limit_C": 360,
+   "coolant": "oil",
+   "coolant_C": 28,
+   "diameter_mm": 398,
+   "interval_mm3_mm": 2304.0,
+   "power_model": [
+    5.5,
+    0.003,
+    44.0
+   ],
+   "wheel": "B126V",
+   "width_mm": 12,
+   "work_speed_mm_s": 333.3333
+  },
+  "max_depth_um": 41.6705
+ },
+ "die-insert": {
+  "job": {
+   "Rw": 0.78,
+   "burn_limit_C": 780,
+   "coolant": "emulsion",
+   "coolant_C": 26,
+   "diameter_mm": 392,
+   "interval_mm3_mm": 675.0,
+   "power_model": [
+    7.5,
+    0.016,
+    36.0
+   ],
+   "wheel": "A60J6V",
+   "width_mm": 14,
+   "work_speed_mm_s": 150.0
+  },
+  "max_depth_um": 30.8895
+ },
+ "gauge-block": {
+  "job": {
+   "Rw": 0.75,
+   "burn_limit_C": 350,
+   "coolant": "emulsion",
+   "coolant_C": 44,
+   "diameter_mm": 365,
+   "interval_mm3_mm": 800,
+   "power_model": [
+    6.0,
+    0.012,
+    42.0
+   ],
+   "wheel": "A80K5V",
+   "width_mm": 10,
+   "work_speed_mm_s": 116.6667
+  },
+  "max_depth_um": 10.0059
+ },
+ "punch-land": {
+  "job": {
+   "Rw": 0.78,
+   "burn_limit_C": 800,
+   "coolant": "emulsion",
+   "coolant_C": 26,
+   "diameter_mm": 388,
+   "interval_mm3_mm": 600.0,
+   "power_model": [
+    7.5,
+    0.016,
+    36.0
+   ],
+   "wheel": "A60J6V",
+   "width_mm": 10,
+   "work_speed_mm_s": 133.3333
+  },
+  "max_depth_um": 34.7864
+ },
+ "race-face": {
+  "job": {
+   "Rw": 0.62,
+   "burn_limit_C": 370,
+   "coolant": "oil",
+   "coolant_C": 24,
+   "diameter_mm": 371,
+   "interval_mm3_mm": 1200,
+   "power_model": [
+    3.6,
+    0.008,
+    31.0
+   ],
+   "wheel": "A80K5V",
+   "width_mm": 22,
+   "work_speed_mm_s": 166.6667
+  },
+  "max_depth_um": 22.6244
+ },
+ "shaft-seat": {
+  "job": {
+   "Rw": 0.75,
+   "burn_limit_C": 440,
+   "coolant": "emulsion",
+   "coolant_C": 46,
+   "diameter_mm": 377,
+   "interval_mm3_mm": 1000,
+   "power_model": [
+    6.0,
+    0.012,
+    42.0
+   ],
+   "wheel": "A80K5V",
+   "width_mm": 22,
+   "work_speed_mm_s": 233.3333
+  },
+  "max_depth_um": 11.0504
+ }
+}

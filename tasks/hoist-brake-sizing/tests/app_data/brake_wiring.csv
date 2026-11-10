@@ -1,0 +1,13 @@
+hoist,brake_coil_supply,brake_switching
+H01,"400 V AC via bridge rectifier, 180 V DC coil",DC side (coil circuit switched)
+H02,"400 V AC via bridge rectifier, 180 V DC coil",AC side (rectifier input switched)
+H03,"400 V AC via bridge rectifier, 180 V DC coil",DC side (coil circuit switched)
+H04,"400 V AC via bridge rectifier, 180 V DC coil",DC side (coil circuit switched)
+H05,"400 V AC via bridge rectifier, 180 V DC coil",AC side (rectifier input switched)
+H06,"400 V AC via bridge rectifier, 180 V DC coil",DC side (coil circuit switched)
+H07,"400 V AC via bridge rectifier, 180 V DC coil",AC side (rectifier input switched)
+H08,"400 V AC via bridge rectifier, 180 V DC coil",AC side (rectifier input switched)
+H09,"400 V AC via bridge rectifier, 180 V DC coil",DC side (coil circuit switched)
+H10,"400 V AC via bridge rectifier, 180 V DC coil",DC side (coil circuit switched)
+H11,"400 V AC via bridge rectifier, 180 V DC coil",DC side (coil circuit switched)
+H12,"400 V AC via bridge rectifier, 180 V DC coil",DC side (coil circuit switched)

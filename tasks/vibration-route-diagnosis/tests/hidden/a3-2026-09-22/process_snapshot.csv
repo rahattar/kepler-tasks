@@ -1,0 +1,6 @@
+machine,flow_m3_h,bep_flow_m3_h,npsh_available_m,npsh_required_m
+PA-301,64,160,3.5,6.7
+PA-303,220,250,20.7,3.6
+VPA-305,625,640,19.7,2.7
+PA-306,163,160,21.9,4.4
+VPA-308,161,160,11.8,3.1

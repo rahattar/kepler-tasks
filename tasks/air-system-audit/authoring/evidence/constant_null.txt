@@ -1,0 +1,2 @@
+the example's results                    8 of 8 wrong
+fractions of the installed capacity      8 of 8 wrong

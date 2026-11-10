@@ -1,0 +1,3 @@
+2017-06-05 07:40  East zone TABS valve actuator not responding; valve found closed. Part ordered.
+2017-06-09 17:10  East zone valve actuator replaced; valve strokes normally.
+2017-06-17 00:00  TABS changed to night-only operation (valves open 20:00-07:00) to cut on-peak demand.

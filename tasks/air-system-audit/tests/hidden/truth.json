@@ -1,0 +1,50 @@
+{
+ "s-301": {
+  "avg_demand_m3_min": 28.0673,
+  "peak_demand_m3_min": 66.5275,
+  "leak_m3_min": 11.013,
+  "specific_power_kw_per_m3_min": 6.9415
+ },
+ "s-302": {
+  "avg_demand_m3_min": 13.7931,
+  "peak_demand_m3_min": 34.0393,
+  "leak_m3_min": 5.9805,
+  "specific_power_kw_per_m3_min": 7.4254
+ },
+ "s-303": {
+  "avg_demand_m3_min": 25.7907,
+  "peak_demand_m3_min": 59.1281,
+  "leak_m3_min": 9.0697,
+  "specific_power_kw_per_m3_min": 6.3015
+ },
+ "s-304": {
+  "avg_demand_m3_min": 26.1229,
+  "peak_demand_m3_min": 61.3644,
+  "leak_m3_min": 10.0443,
+  "specific_power_kw_per_m3_min": 6.7813
+ },
+ "s-305": {
+  "avg_demand_m3_min": 18.4858,
+  "peak_demand_m3_min": 41.6406,
+  "leak_m3_min": 6.9805,
+  "specific_power_kw_per_m3_min": 6.4915
+ },
+ "s-306": {
+  "avg_demand_m3_min": 22.154,
+  "peak_demand_m3_min": 51.9782,
+  "leak_m3_min": 8.4569,
+  "specific_power_kw_per_m3_min": 7.118
+ },
+ "s-307": {
+  "avg_demand_m3_min": 17.4879,
+  "peak_demand_m3_min": 41.0181,
+  "leak_m3_min": 6.5149,
+  "specific_power_kw_per_m3_min": 6.469
+ },
+ "s-308": {
+  "avg_demand_m3_min": 28.8287,
+  "peak_demand_m3_min": 66.6751,
+  "leak_m3_min": 11.8873,
+  "specific_power_kw_per_m3_min": 6.8189
+ }
+}

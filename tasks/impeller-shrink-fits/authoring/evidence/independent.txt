@@ -1,0 +1,11 @@
+shipped seed 5437: tests [('FV520B', 400, 11.72), ('Ti-6Al-4V', 290, 8.92), ('26NiCrMoV14-5', 200, 12.25)]
+S1 115.037 mm 285 C  ok   retention +0.182 stress +0.009 clearance +0.355
+S2 120.065 mm 240 C  ok   retention +0.100 stress +0.062 clearance +0.055
+S3 125.146 mm 210 C  ok   retention +0.136 stress +0.014 clearance +0.335
+S4 125.102 mm 228 C  ok   retention +0.184 stress +0.006 clearance +0.335
+S5 120.068 mm 285 C  ok   retention +0.084 stress +0.036 clearance +0.032
+S6 114.888 mm 375 C  ok   retention +0.044 stress +0.064 clearance +0.046
+BD 110.065 mm 220 C  ok   retention +0.170 stress +1.279 clearance +0.028
+TC 95.079 mm 190 C  ok   retention +0.184 stress +2.134 clearance +0.041
+right 8 of 8; smallest margin retention +0.0438 stress +0.0055 clearance +0.0282
+seeds 5301-5320: 8 of 8 on 20 of 20 (right counts [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8])

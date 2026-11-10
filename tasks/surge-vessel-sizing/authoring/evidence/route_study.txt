@@ -1,0 +1,11 @@
+Routes as complete programs through tests/grade.py (run as nobody); six hidden mains; accepted when at most 1 is wrong.
+
+route                                                                            wrong  mains wrong (ratio of the design to the smallest vessel; < 1 is unsafe)
+drawing profile kept                                                                 4  cobb-ridge 0.830, fern-gully 2.204, lark-hollow 1.968, orchard-rise 0.889  rejected
+chamber point only                                                                   4  cobb-ridge 0.979, fern-gully 1.586, lark-hollow 1.629, orchard-rise 0.973  rejected
+crown tapping assumed                                                                2  cobb-ridge 0.838, fern-gully 0.831  rejected
+drawing corrected at every chamber, crown tapping assumed                            3  cobb-ridge 0.838, fern-gully 0.831, mill-brook 0.947  rejected
+design roughness                                                                     3  fern-gully 1.191, orchard-rise 1.201, saddle-hill 0.926  rejected
+roughness from the pump station over every running period                            2  cobb-ridge 0.496, saddle-hill 0.385  rejected
+middle reservoir level only                                                          6  cobb-ridge 0.856, fern-gully 0.861, lark-hollow 0.837, mill-brook 0.865, orchard-rise 0.848, saddle-hill 0.901  rejected
+all of the above but the chamber variants (drawings, design roughness, middle level)     6  cobb-ridge 0.674, fern-gully 1.805, lark-hollow 1.489, mill-brook 0.854, orchard-rise 0.800, saddle-hill 0.769  rejected

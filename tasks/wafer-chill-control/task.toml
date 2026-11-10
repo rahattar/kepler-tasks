@@ -1,0 +1,75 @@
+schema_version = "1.4"
+
+artifacts = ["/app/controller.py"]
+
+[task]
+name = "afterquery/wafer-chill-control"
+description = "Write the real-time controller for a vacuum wafer chill station: cool every wafer as fast as an unmeasured zone-uniformity limit allows when each wafer's sag is unknown."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "closed-loop-control",
+    "state-estimation",
+    "system-identification",
+    "rarefied-gas-conduction",
+    "wafer-thermal-management",
+    "semiconductor-equipment",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC, a silicon wafer manufacturer, and this task is adjacent to semiconductor equipment work. I also author evaluation tasks for other AI benchmark programs."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "rarefied gas heat transfer and constrained feedback control"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "closed-loop-control",
+    "state-estimation",
+    "system-identification",
+    "rarefied-gas-conduction",
+    "wafer-thermal-management",
+    "semiconductor-equipment",
+]
+expert_time_estimate_hours = 14
+relevant_experience = """I am a control scientist at MEMC working on 300 mm silicon wafer manufacturing equipment, with a PhD in mechanical engineering and a background in model-based control, system identification and process modeling. My work has included production equipment from crystal growth through wafer handling, along with analysis of wafer-level measurements and equipment behavior. That experience includes building physics-based models from limited tool data, separating geometry and process effects, and turning those models into operating decisions that can be checked against measurements. I have not treated this benchmark as a copy of a proprietary tool; the released data and parameters are synthetic."""
+difficulty_explanation = """In a fab this is the work of the equipment control engineer who puts real-time control on a cooldown or chill station: return every wafer below a handling temperature as fast as the tool allows without letting its centre and edge drift apart, when no two wafers arrive alike and the quantities that matter are not measured. It is the kind of model-based control and estimation I do on 300 mm production equipment.
+
+The data are synthetic and come from a disclosed seeded generator. The agent gets inspection records for two stations, wafer properties and eighteen instrumented test-wafer runs, and must deliver a controller that runs every 0.1 s on production sensors alone: a centre and an edge pyrometer spot, the plate RTD and the chamber manometer. It is graded on what those sensors do not measure: the difference between the inner- and outer-zone area means, at or below 25 K at every instant, and the mass mean at release. Every hidden wafer sags by an unknown amount between -50 and +50 um, and at a fixed 15 Torr that sag alone moves the peak zone difference from 17 K to 31 K.
+
+Three things have to be built, each on top of the last. The plant has to be identified from the logs: helium conduction that depends on pressure through a temperature jump at each surface, a plate that warms by up to 4 K under load, and a chamber pressure that covers a third of a commanded step per control period. None of these is stated, and each matters: the reference's own model re-identified without the pressure lag breaks the zone limit on all 24 hidden wafers, and with the plate held at setpoint it releases all 24 above 50 C. The sag has to be inferred online from two noisy spots, because the spots themselves misread the zone difference by about 1 K on a dished wafer and 8 K on a sagging one at the moment it peaks, so no fixed spot setpoint is both safe and fast. And the zone limit has to be held predictively through the actuator lag on all 24 wafers.
+
+The 10 percent allowance is what makes each piece necessary. On the shipped hidden set, the reference's model without sag estimation, planned for the whole sag range, needs 1.25 times the perfect-knowledge cycle; the best constant pressure for each wafer, with its sag known and release at the exact instant, needs 1.16; and model-free feedback on the spot difference, with setpoint, gains and release threshold tuned on the hidden wafers themselves, needs 1.86. Assuming every wafer flat is fast but breaks a limit on 23 of 24. Identification, online estimation and constrained prediction together clear the gate: the reference at 1.03, and a deliberately conservative version of it at 1.08."""
+solution_explanation = """The reference identifies the plant from the eighteen logs with a model of its own and never reads the sealed plant, the truth file or the verifier. The model divides the wafer into 30 equal-area annuli where the verifier uses 80 of equal width, and carries the Kennard temperature-jump form for the helium gap with one lumped jump coefficient per station and film, radiation, lateral conduction, a lumped plate with a chiller, and a first-order pressure lag. The lag is fitted first, from the manometer column against the command column: 0.250 s. Plate heat capacity, chiller conductance and the six jump coefficients are then fitted together by least squares over every logged channel of all eighteen runs, recovering 2401 J/K and 620 W/K against sealed values of 2400 and 620.
+
+The controller it writes is one self-contained file holding that model and those parameters. It carries 23 sag hypotheses across the stated range, propagates each with the commands actually issued, weights them every period by the two spot readings, and keeps the plausible ones as the live set. Each period it commands the largest of 32 log-spaced pressures that, held for 1.2 s through the lagged actuator, keeps the predicted zone difference at or below 24.4 K for the live extremes, and it releases when every live hypothesis predicts a mass mean at or below 49.65 C. The live set starts as the whole range, so the first commands are safe for any wafer; within a few tenths of a second the spots narrow it and the controller rides the limit for the wafer actually on the plate.
+
+On the shipped hidden set it passes all 24 wafers at 1.030 times the total perfect-knowledge cycle, with the worst zone difference 24.62 K against 25.0 and the hottest release 49.73 C against 50.0. The pass is not a lucky draw: with every wafer's sensor noise redrawn it passes 7 of 7 times at 1.030 to 1.032, and run end to end on six instances regenerated under new seeds, logs and hidden sets included, it passes 6 of 6 at 1.028 to 1.033. Its margins are sized rather than padded: with the guard and release margin removed it fails 8 of 24 wafers, and with both widened to 2.0 K and 1.0 C it still passes at 1.076, so the gate leaves room for a less finely tuned controller built on the same chain."""
+verification_explanation = """The verifier runs /app/controller.py in closed loop against 24 hidden wafers, 12 per station, through the sealed plant: films balanced, sag and incoming temperature stratified across the stated ranges, sensor noise seeded per wafer. Every 0.1 s the controller receives the four production readings and returns a pressure or a release; the plant integrates the command and checks the zone difference every 0.01 s. A wafer passes when the zone difference never exceeds 25.0 K, the mass mean at release is at or below 50.0 C, it is released before 30 s, and every call is answered within its time limit with a valid command. The reward is 1 only when all 24 pass and the total cycle is within 10 percent of the total perfect-knowledge cycle. One test gates that; the per-wafer breakdown is written to /logs/verifier/metrics.json and never gates.
+
+Ground truth is never produced by running the reference. Each wafer's benchmark is computed at grade time from the sealed plant by a controller that knows the wafer exactly and sees its whole temperature field: each period it holds the largest of 48 commands whose 1.2 s lookahead keeps the zone difference under the cap, and it releases at the first control instant the mass mean reaches the target. Refining it, with twice the commands, twice the lookahead or no guard, changes the total by -0.07 to +0.4 percent, and the least conservative safe lookahead is 2.1 percent slower rather than faster, so the allowance measures what it says. The plant is converged: halving the time step changes nothing to the third decimal, and doubling the ring count moves the peak zone difference by at most 0.02 K and the release temperature by at most 0.002 C, a small fraction of the 0.38 K and 0.27 C margins the reference carries. The generator and its fixed seed ship in authoring/provenance and reproduce every data file and the hidden set byte for byte.
+
+The controller runs in its own process as the unprivileged user nobody, from a scratch directory holding only a copy of the controller and the protocol shim, with limits on CPU time, memory, file size and process count, talking JSON lines over private pipes. The tests directory is mode 700 and the verifier has no network. After each wafer every process the user owns is killed and everything it left in a world-writable directory or as a System V IPC object is removed, so nothing carries from one wafer to the next. test.sh writes 0 before grading and writes the reward from pytest's exit status after. Twenty-nine adversarial controllers ship as a runnable script and all score 0, among them ones that hunt for the truth file, forge replies on the protocol pipe, write the reward file, signal the verifier, fork-bomb, exhaust memory, hang, return NaN or out-of-range commands, release at landing, or run the reference with every release held back 12 percent. A probe controller confirms that the sealed files, the verifier's memory, environment and file descriptors, and the log files are out of its reach, and that nothing it leaves behind survives its wafer."""
+
+[verifier]
+timeout_sec = 3600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 14400.0
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0
+network_mode = "public"

@@ -1,0 +1,18 @@
+Windows: for every hoist and size, the settings that meet every MS-14 requirement under the sealed definition,
+and the best smallest margin, with the requirement that bounds the window on each side.
+Shipped scenario. Margins are fractions of each limit; a window is the run of whole-percent settings with every margin >= 0.
+
+H01 (Maintenance workshop crane, main hoist): S12 86-94 %, best +0.038 (below: hold, above: decel); S14 55-64 %, best +0.056 (below: hold, above: decel); S16 none, best -0.088
+H02 (Pattern shop crane, main hoist): S10 87-100 %, best +0.057 (below: hold, above: -); S12 61-65 %, best +0.038 (below: travel, above: decel); S14 none, best -0.055
+H03 (Melt shop charging crane, auxiliary hoist): S20 65-77 %, best +0.044 (below: temp, above: decel); S22 50-64 %, best +0.127 (below: -, above: decel); S25 50-52 %, best +0.040 (below: -, above: gearbox)
+H04 (Machine hall crane 1, main hoist): S14 90-100 %, best +0.054 (below: travel, above: -); S16 61-67 %, best +0.043 (below: travel, above: decel); S18 none, best -0.054
+H05 (Despatch bay crane, main hoist): S16 63-69 %, best +0.047 (below: travel, above: decel); S18 none, best -0.065; S20 none, best -0.190
+H06 (Tool room jib crane hoist): S08 57-64 %, best +0.044 (below: hold, above: decel); S10 none, best -0.084
+H07 (Casting bay crane, main hoist): S16 80-94 %, best +0.044 (below: hold, above: decel); S18 57-65 %, best +0.047 (below: travel, above: decel); S20 none, best -0.067; S22 none, best -0.168
+H08 (Machine hall crane 2, main hoist): S12 88-100 %, best +0.074 (below: hold, above: -); S14 64-71 %, best +0.052 (below: travel, above: decel); S16 none, best -0.064
+H09 (Assembly hall crane, main hoist): S16 83-91 %, best +0.037 (below: hold, above: decel); S18 53-60 %, best +0.053 (below: hold, above: decel); S20 none, best -0.118
+H10 (Fettling shop crane, main hoist): S16 64-77 %, best +0.049 (below: hold, above: decel); S18 50-52 %, best +0.041 (below: -, above: decel)
+H11 (Core shop crane, main hoist): S12 65-75 %, best +0.056 (below: hold, above: decel); S14 50-53 %, best +0.036 (below: -, above: decel); S16 none, best -0.108
+H12 (Heavy assembly crane, main hoist): S16 87-96 %, best +0.039 (below: hold, above: decel); S18 56-64 %, best +0.055 (below: hold, above: decel); S20 none, best -0.086; S22 none, best -0.186
+
+Sizes with a best margin in the dead zone (-0.05, +0.035): none

@@ -1,0 +1,45 @@
+RECORDED 2026-09-19, ON THE TWELVE-STATION FLEET. What this run checks is structural --
+the compose file, the service names, the network hop, the client and the server, which
+files reach the agent image, and where the budget lives -- and none of that has changed
+since. The fleet, the data files and the sealed physics have, so the station list and
+the graded numbers in section 5 below are the old fleet's. The sixteen-station bundle is
+exercised end to end by harbor's oracle and nop runs, which build the real images.
+
+Container run. docker compose brings up both services; the base image is swapped for a
+locally built one because this sandbox's egress proxy denies Docker Hub. The compose
+file's structure, service names, the network hop, the client and the server are exactly
+what ships.
+
+  1. compose up
+       bench    running
+       default  running
+
+  2. the agent reaches the bench by SERVICE NAME over the compose network
+       commissioning budget: 0 of 8 runs used, 8 remaining
+       stations on this bench: S01 ... S12
+       maximum run length: 30 s
+
+  3. nothing sealed is reachable from the agent container
+       make_fleet.py present : no
+       bench_core.py present : no
+       physics.py present    : no
+       _alpha in /data       : no
+
+  4. the budget is enforced on the server side of the network boundary
+       after 8 runs          : 8 of 8 used, 0 remaining
+       a 9th run             : REFUSED, budget exhausted
+       rm -rf /app/bench_runs then ask again
+                             : REFUSED, budget exhausted
+       budget after that     : 8 of 8 used, 0 remaining
+     Deleting the agent-side run log does not return budget, because the agent side
+     holds no budget state at all.
+
+  5. the reference runs inside the agent container
+       plate capacity 1945 J/K, chiller 551 W/K   (sealed: 2000, 550)
+       wrote /app/recipe.json
+
+     graded: reward 1, dwell 1.067-1.151x against 1.200, worst zone 23.88 K,
+     hottest station 48.942 C. Byte-identical to the host-side reference run.
+
+Untested here, and only this: that python:3.11-slim pulls and that the pinned pip
+installs resolve. Harbor exercises both on the Mac in seconds.

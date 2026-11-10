@@ -1,0 +1,2 @@
+every machine NONE                                 51 of 60 misdiagnosed
+the example's diagnosis for each machine kind      49 of 60 misdiagnosed

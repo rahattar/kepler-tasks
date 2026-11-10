@@ -1,0 +1,36 @@
+acceptance: wafer within 2 K of the setpoint at 850 C and 1050 C, every zone
+
+  corrections loaded now (2025 calibration; F8 factory values)                   worst 17.16 K (F3Z2)  fails 27  F1Z2 F1Z3 F1Z4 F2Z1 F2Z2 F2Z3 F2Z4 F2Z5
+  reference: F3@1050 F5@1050 F8@1050                                             worst  0.98 K (F3Z1)  fails  0  
+
+shortcuts on the reference plan
+  drift at 600 C used at every temperature (not carried by T/600)                worst  5.91 K (F2Z4)  fails 13  F1Z2 F1Z3 F1Z4 F2Z1 F2Z2 F2Z3 F2Z4 F2Z5
+  drift carried in kelvin, (T+273)/873, against the stated 1.75 at 1050 C        worst  2.15 K (F2Z4)  fails  1  F2Z4
+  offset ratio taken as 850/1050 (offset not zero in the soak)                   worst  3.94 K (F3Z1)  fails  6  F2Z1 F2Z4 F3Z1 F3Z2 F3Z4 F8Z5
+  offset ratio from T^4 without the zero at 600 C                                worst  1.37 K (F3Z1)  fails  0  
+  liner change not applied to F2 and F7                                          worst  8.58 K (F2Z5)  fails  7  F2Z1 F2Z2 F2Z3 F2Z4 F2Z5 F7Z4 F7Z5
+  F3's liner change carried over unchanged to F2 and F7 (liners shield differently) worst  4.38 K (F7Z1)  fails  4  F2Z1 F7Z1 F7Z2 F7Z5
+  partial boats read as full boats in the process trends (F2, F7 run without fill dummies) worst  4.31 K (F2Z5)  fails  7  F2Z1 F2Z2 F2Z4 F2Z5 F7Z1 F7Z2 F7Z5
+  partial boats kept, boat load as a regressor (passes)                          worst  0.98 K (F3Z1)  fails  0  
+  F6 drift from its 2026-09-15 hold as read (growth since not carried)           worst  3.96 K (F6Z3)  fails  4  F6Z1 F6Z2 F6Z3 F6Z4
+  F6 'hold' rows not read: F6 drift from the bay median                          worst  6.77 K (F6Z3)  fails  5  F6Z1 F6Z2 F6Z3 F6Z4 F6Z5
+  F6 'hold' rows not read: F6 drift from F3                                      worst  6.53 K (F6Z2)  fails  5  F6Z1 F6Z2 F6Z3 F6Z4 F6Z5
+  F6 growth at 850 C added as if it were drift at 600 C (passes)                 worst  1.60 K (F6Z2)  fails  0  
+  F3 split with the four-week mean of its 850 C trend (passes: F3 grows slowly)  worst  0.98 K (F3Z1)  fails  0  
+
+plans that spend the steps differently (most forgiving fallback where several are defensible)
+  F3@1050 F5@1050 F6@1050 (F8 factory values)                                    worst  3.39 K (F8Z5)  fails  3  F8Z1 F8Z3 F8Z5
+  F3@1050 F5@1050 F6@1050 (F8 from the 2025 T-200 offsets)                       worst  4.85 K (F8Z1)  fails  5  F8Z1 F8Z2 F8Z3 F8Z4 F8Z5
+  F3@1050 F6@600 F8@1050 (F5 at its 2025 offset)                                 worst  3.76 K (F5Z5)  fails  5  F5Z1 F5Z2 F5Z3 F5Z4 F5Z5
+  F3@1050 F6@600 F8@1050 (F5 from the 2025 T-200 offsets)                        worst  3.97 K (F5Z5)  fails  5  F5Z1 F5Z2 F5Z3 F5Z4 F5Z5
+  F2@1050 F3@1050 F8@1050 (second liner measured; F5 at its 2025 offset)         worst  3.76 K (F5Z5)  fails  5  F5Z1 F5Z2 F5Z3 F5Z4 F5Z5
+  F2@1050 F3@1050 F8@1050 (second liner measured; F5 from the 2025 T-200 offsets) worst  3.97 K (F5Z5)  fails  5  F5Z1 F5Z2 F5Z3 F5Z4 F5Z5
+  F7@1050 F3@1050 F5@1050 (second liner measured; F8 factory values)             worst  3.39 K (F8Z5)  fails  3  F8Z1 F8Z3 F8Z5
+  F2@1050 F7@1050 F3@1050 (every liner measured; F5 2025, F8 factory values)     worst  3.76 K (F5Z5)  fails  8  F5Z1 F5Z2 F5Z3 F5Z4 F5Z5 F8Z1 F8Z3 F8Z5
+  F3@600+1050 F5@1050 (F8 factory values)                                        worst  3.39 K (F8Z5)  fails  3  F8Z1 F8Z3 F8Z5
+  F3@600+1050 F8@1050 (F5 at its 2025 offset)                                    worst  3.76 K (F5Z5)  fails  5  F5Z1 F5Z2 F5Z3 F5Z4 F5Z5
+  F3@850+1050 F5@1050 (F8 factory values)                                        worst  3.39 K (F8Z5)  fails  3  F8Z1 F8Z3 F8Z5
+  F3@850 F5@1050 F8@1050 (850 C repeats the trend: no split; F3 drift from the bay median) worst 16.84 K (F3Z2)  fails 12  F2Z1 F2Z2 F2Z3 F2Z4 F2Z5 F3Z1 F3Z2 F3Z3
+  F3@850 F5@1050 F8@1050 (F3 drift from F6)                                      worst 11.96 K (F3Z1)  fails 12  F2Z1 F2Z2 F2Z3 F2Z4 F2Z5 F3Z1 F3Z2 F3Z3
+  F2@1050 F5@1050 F8@1050 (F3 not run, drift from the bay median)                worst 13.74 K (F3Z2)  fails  5  F3Z1 F3Z2 F3Z3 F3Z4 F3Z5
+  F2@1050 F5@1050 F8@1050 (F3 not run, drift from F6)                            worst  8.23 K (F3Z1)  fails  4  F3Z1 F3Z2 F3Z3 F3Z4

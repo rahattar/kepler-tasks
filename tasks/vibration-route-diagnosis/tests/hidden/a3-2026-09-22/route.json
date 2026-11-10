@@ -1,0 +1,546 @@
+{
+ "route": "A3",
+ "date": "2026-09-22",
+ "captures": [
+  {
+   "machine": "PA-301",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "pa-301_mot.npz"
+  },
+  {
+   "machine": "PA-301",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "pa-301_mot.npz"
+  },
+  {
+   "machine": "PA-301",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 4e-06,
+   "file": "pa-301_mot.npz"
+  },
+  {
+   "machine": "PA-301",
+   "point": "PMP",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2.8e-05,
+   "file": "pa-301_pmp.npz"
+  },
+  {
+   "machine": "PA-301",
+   "point": "PMP",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 5e-06,
+   "file": "pa-301_pmp.npz"
+  },
+  {
+   "machine": "PA-301",
+   "point": "PMP",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 9.4e-05,
+   "file": "pa-301_pmp.npz"
+  },
+  {
+   "machine": "CTA-302",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 4e-06,
+   "file": "cta-302_mot.npz"
+  },
+  {
+   "machine": "CTA-302",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "cta-302_mot.npz"
+  },
+  {
+   "machine": "CTA-302",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 3.2e-05,
+   "file": "cta-302_mot.npz"
+  },
+  {
+   "machine": "CTA-302",
+   "point": "GBX",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 8e-06,
+   "file": "cta-302_gbx.npz"
+  },
+  {
+   "machine": "CTA-302",
+   "point": "GBX",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 5e-06,
+   "file": "cta-302_gbx.npz"
+  },
+  {
+   "machine": "CTA-302",
+   "point": "GBX",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 7e-06,
+   "file": "cta-302_gbx.npz"
+  },
+  {
+   "machine": "PA-303",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 4e-06,
+   "file": "pa-303_mot.npz"
+  },
+  {
+   "machine": "PA-303",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "pa-303_mot.npz"
+  },
+  {
+   "machine": "PA-303",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 5e-06,
+   "file": "pa-303_mot.npz"
+  },
+  {
+   "machine": "PA-303",
+   "point": "PMP",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.2e-05,
+   "file": "pa-303_pmp.npz"
+  },
+  {
+   "machine": "PA-303",
+   "point": "PMP",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 4e-06,
+   "file": "pa-303_pmp.npz"
+  },
+  {
+   "machine": "PA-303",
+   "point": "PMP",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 6.1e-05,
+   "file": "pa-303_pmp.npz"
+  },
+  {
+   "machine": "FA-304",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 9e-06,
+   "file": "fa-304_mot.npz"
+  },
+  {
+   "machine": "FA-304",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "fa-304_mot.npz"
+  },
+  {
+   "machine": "FA-304",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 1.1e-05,
+   "file": "fa-304_mot.npz"
+  },
+  {
+   "machine": "FA-304",
+   "point": "FAN",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 7e-06,
+   "file": "fa-304_fan.npz"
+  },
+  {
+   "machine": "FA-304",
+   "point": "FAN",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "fa-304_fan.npz"
+  },
+  {
+   "machine": "FA-304",
+   "point": "FAN",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 8e-06,
+   "file": "fa-304_fan.npz"
+  },
+  {
+   "machine": "VPA-305",
+   "point": "MOT",
+   "capture": "low_x",
+   "direction": "radial x",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1e-05,
+   "file": "vpa-305_mot.npz"
+  },
+  {
+   "machine": "VPA-305",
+   "point": "MOT",
+   "capture": "low_y",
+   "direction": "radial y",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.1e-05,
+   "file": "vpa-305_mot.npz"
+  },
+  {
+   "machine": "VPA-305",
+   "point": "MOT",
+   "capture": "high_x",
+   "direction": "radial x",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 1e-05,
+   "file": "vpa-305_mot.npz"
+  },
+  {
+   "machine": "PA-306",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.7e-05,
+   "file": "pa-306_mot.npz"
+  },
+  {
+   "machine": "PA-306",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 5e-06,
+   "file": "pa-306_mot.npz"
+  },
+  {
+   "machine": "PA-306",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 1.9e-05,
+   "file": "pa-306_mot.npz"
+  },
+  {
+   "machine": "PA-306",
+   "point": "PMP",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 1.5e-05,
+   "file": "pa-306_pmp.npz"
+  },
+  {
+   "machine": "PA-306",
+   "point": "PMP",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 6e-06,
+   "file": "pa-306_pmp.npz"
+  },
+  {
+   "machine": "PA-306",
+   "point": "PMP",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 1.7e-05,
+   "file": "pa-306_pmp.npz"
+  },
+  {
+   "machine": "FA-307",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 5e-06,
+   "file": "fa-307_mot.npz"
+  },
+  {
+   "machine": "FA-307",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "fa-307_mot.npz"
+  },
+  {
+   "machine": "FA-307",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 5e-06,
+   "file": "fa-307_mot.npz"
+  },
+  {
+   "machine": "FA-307",
+   "point": "FAN",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 6e-06,
+   "file": "fa-307_fan.npz"
+  },
+  {
+   "machine": "FA-307",
+   "point": "FAN",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "fa-307_fan.npz"
+  },
+  {
+   "machine": "FA-307",
+   "point": "FAN",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 6e-06,
+   "file": "fa-307_fan.npz"
+  },
+  {
+   "machine": "VPA-308",
+   "point": "MOT",
+   "capture": "low_x",
+   "direction": "radial x",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 9e-06,
+   "file": "vpa-308_mot.npz"
+  },
+  {
+   "machine": "VPA-308",
+   "point": "MOT",
+   "capture": "low_y",
+   "direction": "radial y",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 5e-06,
+   "file": "vpa-308_mot.npz"
+  },
+  {
+   "machine": "VPA-308",
+   "point": "MOT",
+   "capture": "high_x",
+   "direction": "radial x",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 1e-05,
+   "file": "vpa-308_mot.npz"
+  },
+  {
+   "machine": "FA-309",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "fa-309_mot.npz"
+  },
+  {
+   "machine": "FA-309",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "fa-309_mot.npz"
+  },
+  {
+   "machine": "FA-309",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 4e-06,
+   "file": "fa-309_mot.npz"
+  },
+  {
+   "machine": "FA-309",
+   "point": "FAN",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 5e-06,
+   "file": "fa-309_fan.npz"
+  },
+  {
+   "machine": "FA-309",
+   "point": "FAN",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "fa-309_fan.npz"
+  },
+  {
+   "machine": "FA-309",
+   "point": "FAN",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 3.3e-05,
+   "file": "fa-309_fan.npz"
+  },
+  {
+   "machine": "FA-310",
+   "point": "MOT",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 4e-06,
+   "file": "fa-310_mot.npz"
+  },
+  {
+   "machine": "FA-310",
+   "point": "MOT",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 2e-06,
+   "file": "fa-310_mot.npz"
+  },
+  {
+   "machine": "FA-310",
+   "point": "MOT",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 5e-06,
+   "file": "fa-310_mot.npz"
+  },
+  {
+   "machine": "FA-310",
+   "point": "FAN",
+   "capture": "low_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 7e-06,
+   "file": "fa-310_fan.npz"
+  },
+  {
+   "machine": "FA-310",
+   "point": "FAN",
+   "capture": "low_a",
+   "direction": "axial",
+   "sample_rate_hz": 2560.0,
+   "samples": 40960,
+   "g_per_count": 3e-06,
+   "file": "fa-310_fan.npz"
+  },
+  {
+   "machine": "FA-310",
+   "point": "FAN",
+   "capture": "high_r",
+   "direction": "radial horizontal",
+   "sample_rate_hz": 25600.0,
+   "samples": 25600,
+   "g_per_count": 3.7e-05,
+   "file": "fa-310_fan.npz"
+  }
+ ]
+}

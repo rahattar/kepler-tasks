@@ -1,0 +1,7 @@
+Compressor C-201 is being rebuilt after overhaul, and the replacement rotor parts still need their final bores and fitting temperatures. The six impellers, S1 to S6, along with the balance drum (BD) and thrust collar (TC), all have undersized bores that will be finish-honed before assembly. For each part, choose the final bore diameter in mm to three decimals and the oven temperature in whole degrees C so that it satisfies plant standard RS-3 in `/app/data/docs/standard.md` on the rotor as it is now.
+
+The available records are `/app/data/parts_register.csv`, `/app/data/material_certificates.csv`, `/app/data/rotor_inspection.csv`, `/app/data/thermal_survey.csv`, `/app/data/materials.csv`, `/app/data/maintenance_log.csv`, `/app/data/docs/inspection_report.md`, and `/app/data/docs/oem_rotor_data.md`. Laboratory information is in `/app/data/docs/laboratory.md`. From `/app`, use `cte <material> <T>` for laboratory work; the booking is 3 tests. Reports are written under `/app/lab_reports`.
+
+Write the completed bore sheet to `/app/output/bore_sheet.csv` with the header `part,bore_mm,oven_C`. Include one row for each of S1 to S6, BD and TC. Bore values must be given in millimetres with no more than three decimal places, and each oven value must be a whole number. Every part must meet all the requirements of RS-3.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

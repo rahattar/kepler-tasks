@@ -1,0 +1,12 @@
+Hidden presses wrong (of 8); the bound is 1. Largest errors: oil, hydraulic and electrical energy in %,
+peak flow in %, efficiency absolute.
+
+precharge from the fit always (never the record's figure)              0  oil 0.06 hyd 0.89 el 0.01 peak 1.49 eff 0.01
+precharge from the 10th percentile of the window ratios (not the 5th)  0  oil 0.06 hyd 0.89 el 0.01 peak 1.83 eff 0.01
+precharge from 0.5 s windows (not 1.0 s)                               0  oil 0.06 hyd 0.89 el 0.01 peak 2.64 eff 0.01
+pressure scale from the mean ratio (not the median)                    0  oil 0.06 hyd 0.89 el 0.01 peak 1.83 eff 0.01
+pressure scale applied whenever it differs from 1 by more than 2 %     0  oil 0.06 hyd 0.89 el 0.01 peak 1.83 eff 0.01
+loaded threshold 15 bar (not 20)                                       0  oil 0.06 hyd 0.89 el 0.01 peak 1.83 eff 0.01
+gauge pressures used in the gas law (atmospheric pressure left out)    0  oil 0.06 hyd 1.48 el 0.01 peak 1.82 eff 0.01
+
+Largest count over all variants: 0

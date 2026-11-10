@@ -1,0 +1,11 @@
+best single constant 0.8452 satisfies 3 of 10
+E1 from its neighbours' geometric mean: -94%
+E2 from its neighbours' geometric mean: +1883%
+E3 from its neighbours' geometric mean: -89%
+E4 from its neighbours' geometric mean: +3%
+E5 from its neighbours' geometric mean: +311%
+E6 from its neighbours' geometric mean: -68%
+E7 from its neighbours' geometric mean: +175%
+E8 from its neighbours' geometric mean: -90%
+E9 from its neighbours' geometric mean: +2099%
+E10 from its neighbours' geometric mean: -94%

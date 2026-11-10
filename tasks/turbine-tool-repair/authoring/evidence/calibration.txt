@@ -1,0 +1,11 @@
+truth.json against the specifications: 8 sets, largest difference 0.0e+00
+  h1  42.64 MW  10763 kJ/kWh
+  h2  41.28 MW  10992 kJ/kWh
+  h3  41.87 MW  10871 kJ/kWh
+  h4  41.55 MW  10930 kJ/kWh
+  h5  42.12 MW  10842 kJ/kWh
+  h6  42.95 MW  10688 kJ/kWh
+  h7  41.02 MW  11047 kJ/kWh
+  h8  42.48 MW  10790 kJ/kWh
+OEM tables against the definition: 34 points, largest difference 5.0e-05 (4-decimal rounding)
+product of the output factors at reference 1.000000, of the heat rate factors 1.000000

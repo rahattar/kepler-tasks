@@ -1,0 +1,21 @@
+drift seeds, reference campaign: worst deviation as a fraction of the tolerance (>1 fails)
+seed 0 load_total 0.11(RTU-2)  load_sensible 0.15(RTU-2) 
+seed 1 load_total 0.08(RTU-2)  load_sensible 0.10(RTU-2) 
+seed 2 load_total 0.27(RTU-2)  load_sensible 0.37(RTU-2) 
+seed 3 load_total 0.03(RTU-2)  load_sensible 0.04(RTU-2) 
+seed 4 load_total 0.02(RTU-2)  load_sensible 0.03(RTU-2) 
+seed 5 load_total 0.26(RTU-2)  load_sensible 0.35(RTU-2) 
+seed 6 load_total 0.13(RTU-2)  load_sensible 0.18(RTU-2) 
+seed 7 load_total 0.27(RTU-2)  load_sensible 0.37(RTU-2) 
+seed 8 load_total 0.12(RTU-2)  load_sensible 0.16(RTU-2) 
+
+campaign variants on the shipped instance (pass/fail, worst field)
+reference                                  PASS  
+no verification (record + records only)    FAIL  outdoor_air_l_s 8.4x(RTU-3), block_total_kw 7.9x(RTU-3), block_sensible_kw 7.3x(RTU-3) verdict ['RTU-7']
+skip the lab rooms                         FAIL  block_sensible_kw 5.4x(RTU-6), block_total_kw 3.9x(RTU-6)
+skip 112 (14 m2 office class)              FAIL  block_sensible_kw 1.6x(RTU-7), block_total_kw 1.6x(RTU-7), outdoor_air_l_s 1.1x(RTU-7)
+skip 220 (16 m2 office class)              FAIL  outdoor_air_l_s 6.3x(RTU-3), block_total_kw 5.9x(RTU-3), block_sensible_kw 5.5x(RTU-3)
+skip 223 (mid office class)                FAIL  block_sensible_kw 3.0x(RTU-7), block_total_kw 2.5x(RTU-7), outdoor_air_l_s 2.1x(RTU-3)
+skip 144 (conference class)                FAIL  outdoor_air_l_s 5.8x(RTU-7), block_latent_kw 3.7x(RTU-7), block_total_kw 3.5x(RTU-7)
+skip 110 (open office class)               FAIL  block_total_kw 1.8x(RTU-1), block_sensible_kw 1.7x(RTU-1), outdoor_air_l_s 1.5x(RTU-1)
+largest rooms (110, 160, 223, 144; no 112, 220, 161) FAIL  outdoor_air_l_s 6.3x(RTU-3), block_total_kw 5.9x(RTU-3), block_sensible_kw 5.5x(RTU-3)

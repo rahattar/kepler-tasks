@@ -1,0 +1,23 @@
+programmes x proxies scored: 4050; passing: 4
+  pass  worst 0.068  proxy min     S5 strain-survey + S6 coast-down + S8 coast-down
+  pass  worst 0.068  proxy min     S5 strain-survey + S6 coast-down + S10 coast-down
+  pass  worst 0.070  proxy median  S5 strain-survey + S6 coast-down + S8 coast-down
+  pass  worst 0.070  proxy median  S5 strain-survey + S6 coast-down + S10 coast-down
+smallest worst-screen miss among failing programmes: 0.337 (S4 coast-down + S8 coast-down, proxy max, outside: S4 S6)
+best failing programmes (fewest screens outside, then smallest worst miss):
+  fail  worst 0.765  proxy median  S5 coast-down + S6 coast-down + S8 coast-down  outside: S5
+  fail  worst 0.765  proxy median  S5 coast-down + S6 coast-down + S10 coast-down  outside: S5
+  fail  worst 0.766  proxy min     S5 coast-down + S6 coast-down + S8 coast-down  outside: S5
+  fail  worst 0.766  proxy min     S5 coast-down + S6 coast-down + S10 coast-down  outside: S5
+  fail  worst 0.850  proxy median  S6 coast-down + S8 coast-down + S9 coast-down  outside: S5
+  fail  worst 0.850  proxy median  S6 coast-down + S9 coast-down + S10 coast-down  outside: S5
+  fail  worst 0.850  proxy median  S3 coast-down + S6 coast-down + S8 coast-down  outside: S5
+  fail  worst 0.850  proxy median  S3 coast-down + S6 coast-down + S10 coast-down  outside: S5
+  fail  worst 0.851  proxy median  S6 coast-down + S8 coast-down  outside: S5
+  fail  worst 0.851  proxy median  S6 coast-down + S10 coast-down  outside: S5
+  decoy S3 instead of S6         worst 0.89 (S6) outside: S6
+  decoy S4 instead of S6         worst 0.89 (S6) outside: S6
+  both large drives, no S6       worst 0.90 (S6) outside: S6
+  S5 coast-down instead of S6    worst 0.89 (S6) outside: S6
+  no large-drive test            worst 0.59 (S8) outside: S10 S8
+  no survey                      worst 0.77 (S5) outside: S5

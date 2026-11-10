@@ -1,0 +1,12 @@
+Correct methods as complete programs through tests/grade.py (run as nobody), six hidden fans; a fan is right when both critical speeds are within 2 percent of the truth.
+
+columns: the larger signed relative deviation of the two critical speeds for 1 baghouse-fan, 2 coal-mill-fan, 3 cooler-vent-fan, 4 dryer-exhaust-fan, 5 kiln-id-fan, 6 raw-mill-fan
+
+solution/fan.py (reference)                              wrong 0  +0.0001  -0.0003  -0.0002  +0.0000  -0.0002  +0.0001
+independent.py (shares no code with the reference)       wrong 0  +0.0001  -0.0003  -0.0002  +0.0000  -0.0002  -0.0000
+reference, shaft elements of 10 mm (not 20)              wrong 0  +0.0001  -0.0003  -0.0002  +0.0000  -0.0002  +0.0001
+reference, shaft elements of 50 mm (not 20)              wrong 0  +0.0001  -0.0003  -0.0002  +0.0000  -0.0002  +0.0001
+reference, the shaft's own polar inertia left out        wrong 0  -0.0001  -0.0005  -0.0002  +0.0001  -0.0003  -0.0002
+reference, test frequencies rounded to 0.1 Hz            wrong 0  -0.0020  -0.0012  -0.0010  +0.0016  -0.0012  -0.0012
+
+every correct method: largest deviation from the truth 0.0020 (tolerance 0.02)
