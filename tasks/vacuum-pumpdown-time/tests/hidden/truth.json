@@ -1,0 +1,128 @@
+{
+ "braze-furnace": {
+  "chamber": {
+   "V_l": 1020,
+   "leak": 2e-05,
+   "line_cm": [
+    4.0,
+    600.0
+   ],
+   "p_x": 0.05,
+   "rough": "RV-65",
+   "turbo": "TMP-700",
+   "wall": [
+    0.006,
+    0.9
+   ]
+  },
+  "pumpdown_min": 44.6976
+ },
+ "lens-coater": {
+  "chamber": {
+   "V_l": 1900,
+   "leak": 4e-06,
+   "line_cm": [
+    6.3,
+    450.0
+   ],
+   "p_x": 0.05,
+   "rough": "DS-250",
+   "turbo": "TMP-1100",
+   "wall": [
+    0.005,
+    1.0
+   ]
+  },
+  "pumpdown_min": 186.2873
+ },
+ "optics-coater": {
+  "chamber": {
+   "V_l": 2150,
+   "leak": 5e-06,
+   "line_cm": [
+    6.3,
+    500.0
+   ],
+   "p_x": 0.05,
+   "rough": "DS-250",
+   "turbo": "TMP-1600",
+   "wall": [
+    0.006,
+    1.0
+   ]
+  },
+  "pumpdown_min": 174.265
+ },
+ "space-sim": {
+  "chamber": {
+   "V_l": 6892.7,
+   "leak": 8e-06,
+   "line_cm": [
+    10.0,
+    500.0
+   ],
+   "p_x": 0.05,
+   "rough": "DS-400",
+   "turbo": "TMP-700",
+   "wall": [
+    0.006,
+    0.95
+   ]
+  },
+  "pumpdown_min": 96.8833
+ },
+ "sputter-bay": {
+  "chamber": {
+   "V_l": 4100,
+   "leak": 4e-06,
+   "line_cm": [
+    6.3,
+    950.0
+   ],
+   "p_x": 0.2,
+   "rough": "DS-400",
+   "turbo": "TMP-1600",
+   "wall": [
+    0.0087,
+    1.0
+   ]
+  },
+  "pumpdown_min": 8.1774
+ },
+ "thermal-vac": {
+  "chamber": {
+   "V_l": 5200,
+   "leak": 6e-06,
+   "line_cm": [
+    10.0,
+    600.0
+   ],
+   "p_x": 0.05,
+   "rough": "DS-400",
+   "turbo": "TMP-1100",
+   "wall": [
+    0.011,
+    1.0
+   ]
+  },
+  "pumpdown_min": 198.7538
+ },
+ "tool-coater": {
+  "chamber": {
+   "V_l": 2008.5,
+   "leak": 3e-06,
+   "line_cm": [
+    6.3,
+    900.0
+   ],
+   "p_x": 0.01,
+   "rough": "DS-160",
+   "turbo": "TMP-1100",
+   "wall": [
+    0.0050999999999999995,
+    1.0
+   ]
+  },
+  "pumpdown_min": 22.1295
+ }
+}

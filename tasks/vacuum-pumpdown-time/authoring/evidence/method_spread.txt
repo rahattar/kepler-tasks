@@ -1,0 +1,11 @@
+Correct methods as complete programs through tests/grade.py (run as nobody), seven hidden chambers; a chamber is right when its job's pump-down time is within 4 percent of the truth.
+
+columns: the signed deviation from the truth (percent) for 1 braze-furnace, 2 lens-coater, 3 optics-coater, 4 space-sim, 5 sputter-bay, 6 thermal-vac, 7 tool-coater
+
+solution/pumpdown.py (reference)                                                 wrong 0   +0.02   +0.01   +0.03   -0.03   -0.14   -0.03   -0.00
+independent.py (shares no code with the reference)                               wrong 0   +0.14   -0.02   +0.08   +0.14   +0.09   +0.03   +0.28
+reference, the high-vacuum gas load taken as S_eff p (quasi-static)              wrong 0   +0.13   +0.04   +0.04   +0.12   -0.13   +0.02   +0.02
+reference, every second high-vacuum sample of each record only                   wrong 0   +0.04   +0.02   +0.06   -0.03   -0.14   -0.05   +0.01
+reference, the records' high-vacuum samples from 20 minutes after the crossover  wrong 0   +0.10   +0.04   +0.03   -0.03   -0.14   -0.02   +0.01
+
+every correct method: largest deviation from the truth 0.28 percent (tolerance 4 percent)

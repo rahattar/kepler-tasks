@@ -1,0 +1,241 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/pumpdown.py"]
+
+[task]
+name = "afterquery/vacuum-pumpdown-time"
+description = "Write a program that finds the pump-down time of a vacuum chamber's job, with the chamber's outgassing and leak identified from its past pump-down records, its equipment log and its gauge certificates, and that stays right on chambers it has never seen."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "vacuum-technology",
+    "pump-down",
+    "outgassing",
+    "conductance",
+    "system-identification",
+    "engineering-software",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only published vacuum technology (pump-down of a lumped volume, Knudsen's conductance formula, pump speed curves, outgassing laws and gauge gas corrections) on synthetic chambers and records. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "vacuum engineering and gas dynamics"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "vacuum-technology",
+    "pump-down",
+    "outgassing",
+    "conductance",
+    "system-identification",
+    "engineering-software",
+]
+expert_time_estimate_hours = 8
+relevant_experience = """I am a control scientist and thermal engineer with a PhD in mechanical engineering. Vacuum and gas-handling systems of crystal growth and thermal processing equipment, identifying their models from operating records, and writing the engineering software that turns those records into process times are part of my work on industrial equipment and of my teaching. The chambers and records are synthetic."""
+difficulty_explanation = """In practice this is the work of a vacuum process engineer who schedules jobs across a fleet of chambers with one
+program. The program has to be right on chambers nobody has looked at. Its research analogue is the identification
+of vacuum systems from operating data: the pump-down of a lumped volume through conductances in the transition
+regime, water-vapor outgassing laws, gauge gas corrections, and separating a leak from outgassing.
+
+The chambers and records are synthetic, written by `authoring/provenance` (`vac.py`, `jobs.py`, `docs_vac.py`,
+`build.py`) from a sealed definition. They are realistic in their numbers:
+- Chambers of 900 to 6500 L.
+- Dry screw and rotary vane roughing pumps of 18 to 111 L/s, through roughing lines of 40 to 100 mm bore and 3 to
+  9.5 m.
+- Turbo pumps of 640 to 1480 L/s, crossover pressures of 0.01 to 0.2 mbar.
+- Wall gas loads of 4 to 24 x 10^-3 mbar L/s at 1 h, decaying as t^-0.6 to t^-1.
+- Air leaks of 3 x 10^-6 to 1.2 x 10^-3 mbar L/s.
+- Loads of stainless steel, aluminum (bare and anodized) and PEEK.
+- Process pressures of 4 x 10^-6 to 10^-4 mbar.
+- Four to seven past pump-down records per chamber, of 3 to 4 h, with 1 to 1.2 percent gauge noise.
+- True pump-down times of 8.2 to 199 min (`authoring/evidence/reference.txt`). Five chambers are limited by
+  outgassing and two (sputter-bay, tool-coater) by roughing.
+
+The example chamber, `chamber-ex`, has sound records and no reported answer, since MS-VP defines the time:
+- the chamber sheet's pumps, gauges and crossover pressure in every record;
+- empty air-vent records;
+- no change in the equipment log.
+
+The seven hidden chambers carry the faults that shop records carry. Each looks like ordinary data, and the documents
+say only what was done, never its effect:
+- **Turbo exchanged.** The equipment log records that the turbo pump went for service and an exchange unit was
+  fitted. Only the records' headers name the exchange unit, a different model (space-sim, thermal-vac).
+- **Gauge replaced.** A cold cathode gauge was replaced without a log entry. The records name the gauge, and its
+  certificate has another calibration factor (optics-coater, thermal-vac).
+- **Gauge recalibrated.** A cold cathode gauge was recalibrated to another factor after most of the records were
+  taken. Each certificate is dated (braze-furnace, space-sim).
+- **Misfiled record.** The chamber's folder holds a record of another chamber, which its header names (lens-coater,
+  space-sim).
+- **Crossover changed.** The controller's crossover pressure differs from the chamber sheet's, as every record's
+  header reports (sputter-bay, tool-coater).
+- **Load lock merged.** A load lock was merged into the chamber with no volume given. The chamber's volume shows only
+  in the roughing of the records since (sputter-bay, tool-coater).
+- **Records with a load.** Some records were taken with a previous job's fixtures in the chamber (braze-furnace,
+  lens-coater).
+- **Door seal replaced.** The records before it carry a large air leak (lens-coater, thermal-vac).
+- **Internals rebuilt.** The internals were rebuilt and the records before it no longer apply (braze-furnace,
+  optics-coater).
+- **Nitrogen vents.** Some records followed a dry nitrogen vent (lens-coater, optics-coater).
+- **Spool piece.** A spool piece was fitted after the last record. It adds volume and outgassing (space-sim,
+  tool-coater).
+- **Roughing line rerouted.** The roughing line was rerouted to a longer, narrower one (sputter-bay, tool-coater).
+
+Each check left out or done the obvious way gets chambers wrong, against an allowance of one wrong chamber
+(`authoring/evidence/route_study.txt`). Each figure is the signed deviation from the truth:
+- The chamber sheet's pumps, not the records': 2 wrong, space-sim -23.1 and thermal-vac -17.9 percent.
+- The chamber sheet's gauges for every record: 2 wrong, optics-coater +13.8 and thermal-vac -14.9 percent.
+- Each gauge's latest calibration for every record: 2 wrong, braze-furnace -16.6 and space-sim -11.6 percent.
+- Every record in the folder, the other chamber's too: 2 wrong, lens-coater +17.5 and space-sim +7.9 percent.
+- The chamber sheet's crossover pressure: 2 wrong, sputter-bay +55.6 and tool-coater -50.1 percent.
+- The chamber sheet's volume after the load lock merge: 2 wrong, sputter-bay -21.0 and tool-coater -17.5 percent.
+- Every record taken as empty: 2 wrong, braze-furnace +16.3 and lens-coater +40.6 percent.
+- One air leak over all records, through a door seal replacement: 2 wrong, lens-coater +17.8 and thermal-vac
+  +15.8 percent.
+- The spool piece left out: 2 wrong, space-sim -11.3 and tool-coater -9.2 percent.
+- The records from before the internals were rebuilt, and the volume they had: 4 wrong, -8.8 to +37.7 percent.
+- The chamber sheet's roughing line: 2 wrong, sputter-bay -13.9 and tool-coater -46.9 percent.
+- The nitrogen-vent records fitted with the air-vent ones: 2 wrong, lens-coater -30.8 and optics-coater -26.5
+  percent.
+- The cold cathode reading taken as the pressure, with no water vapor correction: 5 wrong, -11.3 to -6.6 percent.
+- The roughing pump without the roughing line: 2 wrong, sputter-bay -17.6 and tool-coater -53.6 percent.
+- The roughing line's molecular conductance only: 3 wrong, +217 to +2217 percent.
+- Each pump at its nominal speed, not its curve: 2 wrong, sputter-bay -9.4 and tool-coater -5.9 percent.
+- The job's load left out: 5 wrong, -56.5 to -8.7 percent.
+- The records at face value (the sheet's pumps, gauges, crossover and volume, the latest calibrations, empty records,
+  one leak, every record): 7 wrong.
+
+Every route misses at least two chambers, and every hidden chamber is missed by at least two routes. On the example,
+every record route gives the reference's 66.28 min. Only the water vapor correction (61.67 min) and the job's load
+(40.96 min) differ there, and with no reported answer the example does not expose them
+(`authoring/evidence/route_example.txt`)."""
+solution_explanation = """`solution/pumpdown.py` is the reference program; `solution/solve.sh` installs it as `/app/output/pumpdown.py` and
+runs it on the example. For one chamber it does the following:
+- **The chamber on the job's date.** The chamber sheet, changed by the equipment log: a rerouted roughing line, spool
+  pieces (bore volume and stainless steel area), rebuilt internals, a merged load lock, door seals. The roughing pump,
+  the turbo pump and the crossover pressure are those the latest record's header reports.
+- **Volume.** The chamber volume from the roughing of each record since the last change of the internals or the load
+  lock: the time from 300 to 3 mbar (Pirani, with its calibration factor) divided by the integral of dp / (S_eff p)
+  over that range, with the record's roughing pump and line. Spool pieces fitted after the records add their bore
+  volume.
+- **Wall gas load and leak.** The fit uses the chamber's own air-vent records since the internals were last rebuilt
+  (a record whose header names another chamber is left out). Each record is taken with the pumps and gauges its
+  header names, and its load's outgassing is taken out. Its cold cathode pressure is the reading times the gauge's
+  calibration factor in force on the record's date, times 1.12 (water vapor). From 10 minutes after the
+  crossover, the gas load S_eff p + V dp/dt is fitted by least squares on its logarithm to
+  Q_L + Q_w1 t^-alpha_w, with one leak per door seal.
+- **Pump-down.** The program integrates V dp/dt = -S_eff p + Q(t) from 1013 mbar by LSODA. It roughs to the
+  crossover and then pumps with the turbo, to the process pressure. The gas load is the leak since the last door
+  seal, the walls, the spool pieces and the job's load.
+
+Run through `tests/grade.py` as the verifier runs a submission, its times are within 0.14 percent of the truth on all
+seven hidden chambers. On the example it gives 66.28 min (`authoring/evidence/reference.txt`)."""
+verification_explanation = """`tests/grade.py` runs the submitted `/app/output/pumpdown.py` on each of the seven hidden chambers (`tests/hidden`;
+the agent's image does not contain them). The verifier image has the agent's `/app/data` at the same path, read-only
+(`tests/app_data`, written by the same `build.py`), so a program that reads the vacuum data from it at run time
+behaves as it did for the agent.
+
+How each chamber is run:
+- The program alone and the package are copied to a scratch directory owned by root, where the package is read-only.
+- The program runs as the unprivileged user nobody, with only PATH and HOME set, as
+  `python3 -I pumpdown.py JOB_DIR OUT_JSON`, within 600 s, in its own process group.
+- When the run ends or times out, its process group and every process of nobody are killed before the output is read.
+  The seven runs are sequential, so the worst case (4200 s) fits the 4800 s verifier timeout.
+- The instruction states these run conditions, including the 10 minutes and that `pumpdown.py` must be
+  self-contained.
+
+The output must be a regular file, not a symlink, of at most 65536 bytes. It must hold one JSON object with exactly the
+key `pumpdown_min`, once, a finite positive number (not a string or a boolean; NaN and Infinity are rejected). The
+program must exit with status 0. A chamber whose output breaks any of this is wrong. The instruction states every one
+of these rules.
+
+A chamber is right when its value is within 4 percent of its job's pump-down time. The instruction states the
+4 percent as a requirement. The truth (`tests/hidden/truth.json`, root-only in `/tests`) is computed by
+`authoring/provenance/jobs.py` and `vac.py` on the sealed chamber as it is on the job's date:
+- its true volume, pumps, roughing line and crossover pressure;
+- its true wall gas load and air leak;
+- the spool pieces' and the job load's outgassing from the shop's table;
+- MS-VP's model, integrated to the process pressure.
+
+The truth is a computation on the sealed chamber, not on its records.
+
+The single pytest test passes when at most 1 of the 7 chambers is wrong; the allowance of one chamber is not in the
+instruction. `tests/test.sh` does the following:
+- Locks `/logs/verifier` to root before grading and again before the reward.
+- Writes reward 0 first, and 1 only when pytest exits 0 and the ctrf report holds exactly one test, passed, with none
+  failed, skipped, pending or other.
+- Writes the per-chamber results to `/logs/verifier/metrics.json`, where they do not affect the reward.
+
+Every calibration number below is measured by the verifier itself. Each method, route and method-free answer is a
+complete JSON-writing program, run through `tests/grade.py` exactly as a submission. `authoring/evidence/common.py`
+writes the program file and calls `score()`. It runs as nobody from a scratch copy, as
+`python3 -I pumpdown.py JOB_DIR OUT_JSON`, and grade.py reads and judges the JSON. No evidence script calls a program's
+functions directly.
+
+Why 4 percent and at most 1 wrong chamber:
+- **Correct methods.** All are right on every chamber, within 0.28 percent of the truth
+  (`authoring/evidence/method_spread.txt`):
+  - the reference;
+  - `authoring/evidence/independent.py`, a second program that shares no code with it (within 0.28 percent);
+  - three variants of the reference: the gas load taken as S_eff p (quasi-static), every second high-vacuum sample
+    only, and the samples from 20 minutes after the crossover only.
+
+  The second program fits only the records since the last door seal and rebuild. For each alpha on a grid, it solves
+  the leak and the wall gas load by linear least squares on the gas load itself. It finds the volume from the time
+  between 100 and 1 mbar, and integrates by fixed-step Runge-Kutta.
+- **Defective routes.** The routes above miss by 4.9 percent or more. The closest, tool-coater at -4.9 percent, comes
+  from the records before the internals were rebuilt, which also misses three other chambers by 8.8 to 37.7 percent.
+  Every other single-check miss is 5.9 percent or more.
+- **The tolerance.** 4 percent sits between the correct methods (0.28 percent at most) and the closest defective miss
+  (4.9 percent).
+- **The allowance.** One wrong chamber is allowed so that a sound program with a single marginal chamber is not
+  failed. No route and no method-free answer stays within it.
+
+Method-free answers (`authoring/evidence/constant_null.txt`) are all rejected:
+
+| Method-free answer | Chambers wrong | Deviation over the chambers (percent) |
+|---|---|---|
+| the example's pump-down time (66.3 min) for every job | 7 | -66.7 to +710.5 |
+| 100 min for every job | 6 | -49.7 to +1122.9 |
+| the time the chamber's latest record reached the process pressure | 6 | -50.3 to +17.5 |
+
+Every hidden job's time is at least 32 percent from the example's, so the example's answer carries over to none of
+them.
+
+Malformed output and misbehaving programs (`authoring/evidence/verifier_checks.txt`) write the reference's value for
+each chamber and then corrupt it. They are run through `grade.py` as the verifier runs them. Each of the following has
+every chamber counted wrong, and none crashes the verifier:
+- an output that is a symlink;
+- a missing, extra, renamed or repeated key, or a list instead of an object;
+- a NaN, infinite, string, boolean, negative or zero value;
+- an empty file, bytes that are not UTF-8, or a correct object padded past 65536 bytes;
+- a non-zero exit status, or a run past the time limit.
+
+A background process left running is killed when its run ends, and no process of nobody survives any case.
+
+The agent works as a separate user that can only write to `/app/output`; `/app/data` is read-only. The verifier runs
+separately without network."""
+
+[verifier]
+timeout_sec = 4800.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 28800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

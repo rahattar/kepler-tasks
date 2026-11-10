@@ -1,0 +1,21 @@
+Routes as complete programs through tests/grade.py (run as nobody); seven hidden chambers; accepted when at most 1 is wrong.
+
+route                                                                                                      wrong  chambers wrong (signed deviation from the truth, percent)
+the chamber sheet's pumps, not the pumps the records' controller reports                                       2  space-sim -23.1, thermal-vac -17.9  rejected
+the chamber sheet's gauges for every record, not the gauges each record names                                  2  optics-coater +13.8, thermal-vac -14.9  rejected
+each gauge's latest calibration for every record, not the one in force on the record's date                    2  braze-furnace -16.6, space-sim -11.6  rejected
+every record in the chamber's folder, another chamber's record too                                             2  lens-coater +17.5, space-sim +7.9  rejected
+the chamber sheet's crossover pressure, not the controller's                                                   2  sputter-bay +55.6, tool-coater -50.1  rejected
+the chamber sheet's volume after a load lock merge, not the volume of the records' roughing                    2  sputter-bay -21.0, tool-coater -17.5  rejected
+every record taken as empty, its load's outgassing not taken out                                               2  braze-furnace +16.3, lens-coater +40.6  rejected
+one air leak over all records, through a door seal replacement                                                 2  lens-coater +17.8, thermal-vac +15.8  rejected
+the spool piece left out (its volume and its outgassing)                                                       2  space-sim -11.3, tool-coater -9.2  rejected
+the records from before the internals were rebuilt, and the sheet's volume                                     4  braze-furnace +37.7, optics-coater +23.8, sputter-bay -8.8, tool-coater -4.9  rejected
+the chamber sheet's roughing line, not the rerouted one                                                        2  sputter-bay -13.9, tool-coater -46.9  rejected
+the records after a nitrogen vent fitted with the air-vent records                                             2  lens-coater -30.8, optics-coater -26.5  rejected
+the cold cathode reading taken as the pressure, no water vapor correction                                      5  braze-furnace -11.3, lens-coater -8.6, optics-coater -6.6, space-sim -9.0, thermal-vac -9.0  rejected
+the roughing pump's speed without the roughing line                                                            2  sputter-bay -17.6, tool-coater -53.6  rejected
+the roughing line's molecular conductance only                                                                 3  braze-furnace +217.3, sputter-bay +2216.9, tool-coater +469.5  rejected
+each pump at its nominal speed, not its speed curve                                                            2  sputter-bay -9.4, tool-coater -5.9  rejected
+the job's load left out                                                                                        5  braze-furnace -17.7, lens-coater -56.5, optics-coater -41.5, space-sim -8.7, thermal-vac -22.0  rejected
+the records at face value: the sheet's pumps, gauges, crossover and volume, latest calibrations, empty records, one leak, all records     7  braze-furnace +23.4, lens-coater +11.2, optics-coater -6.1, space-sim -32.8, sputter-bay +22.2, thermal-vac -18.7, tool-coater -60.4  rejected

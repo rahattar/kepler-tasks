@@ -1,0 +1,7 @@
+Method-free answers as complete programs through tests/grade.py (run as nobody); seven hidden chambers; accepted when at most 1 is wrong.
+
+columns: the signed deviation from the truth in percent (* wrong) for 1 braze-furnace, 2 lens-coater, 3 optics-coater, 4 space-sim, 5 sputter-bay, 6 thermal-vac, 7 tool-coater
+
+the example's pump-down time (66.3 min) for every job                    wrong 7  +48.3*  -64.4*  -62.0*  -31.6*  +710.5*  -66.7*  +199.5*  rejected
+100 min for every job                                                    wrong 6  +123.7*  -46.3*  -42.6*  +3.2  +1122.9*  -49.7*  +351.9*  rejected
+the time the chamber's latest record reached the process pressure        wrong 6  +17.5*  -37.7*  -30.3*  -11.7*  +3.9  -43.4*  -50.3*  rejected

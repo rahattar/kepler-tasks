@@ -1,0 +1,15 @@
+Reference program solution/pumpdown.py through tests/grade.py (run as nobody); a chamber is right when its job's pump-down time is within 4 percent of the truth.
+
+Example chamber-ex: 66.28 min
+
+chamber            time min   true min    ratio    turbo  crossover       leak  right
+braze-furnace         44.71      44.70   1.0002  TMP-700       0.05    2.0e-05   True
+lens-coater          186.31     186.29   1.0001 TMP-1100       0.05    4.0e-06   True
+optics-coater        174.31     174.26   1.0003 TMP-1600       0.05    5.0e-06   True
+space-sim             96.86      96.88   0.9997  TMP-700       0.05    8.0e-06   True
+sputter-bay            8.17       8.18   0.9986 TMP-1600        0.2    4.0e-06   True
+thermal-vac          198.70     198.75   0.9997 TMP-1100       0.05    6.0e-06   True
+tool-coater           22.13      22.13   1.0000 TMP-1100       0.01    3.0e-06   True
+
+chambers 7; wrong 0 (accepted); largest deviation from the truth 0.14 percent
+true pump-down times of the hidden jobs: braze-furnace 44.7; lens-coater 186.3; optics-coater 174.3; space-sim 96.9; sputter-bay 8.2; thermal-vac 198.8; tool-coater 22.1 min

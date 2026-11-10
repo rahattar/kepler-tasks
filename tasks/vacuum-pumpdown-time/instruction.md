@@ -1,0 +1,7 @@
+The shop plans the pump-down of its vacuum chambers from its standard MS-VP, one chamber's job at a time from the chamber's package. Write `/app/output/pumpdown.py` so that `python3 pumpdown.py JOB_DIR OUT_JSON` writes `OUT_JSON` with `pumpdown_min`, the pump-down time of the job in minutes. `/app/data/docs/ms_vp_pumpdown.md` is the standard, `/app/data/docs/vacuum_data.md` the shop's vacuum data and `/app/data/docs/package_format.md` describes a package. One chamber's package is in `/app/data/examples/chamber-ex/`.
+
+The program must also handle the packages of seven other chambers of the shop, in the same format. The value must be within 4 percent of the job's true pump-down time. `OUT_JSON` must be a regular file no larger than 65536 bytes holding one JSON object with only that key, exactly once, and its value a finite positive number, and the program must exit with status 0.
+
+The seven packages run one after another, each through `python3 -I pumpdown.py JOB_DIR OUT_JSON` in a scratch directory containing a copy of `pumpdown.py` alone, so the program must not read or import any other file from `/app/output`. Each run has 10 minutes, under an unprivileged user without network access, with the package read-only. `/app/data` remains readable at the same path. Python 3, numpy, scipy and pandas are available.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

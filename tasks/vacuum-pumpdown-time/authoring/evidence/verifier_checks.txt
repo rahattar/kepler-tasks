@@ -1,0 +1,38 @@
+tests/grade.py on corrupted copies of the reference's values, run as nobody; seven hidden chambers, accepted when at most 1 is wrong.
+
+reference values, unchanged                                              wrong 0  accepted; nobody's processes left: 0
+output is a symlink to a correct file                                    wrong 7  rejected; nobody's processes left: 0
+    ValueError('the output is not a regular file')
+the key missing (an empty object)                                        wrong 7  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly pumpdown_min')
+an extra key                                                             wrong 7  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly pumpdown_min')
+a key twice                                                              wrong 7  rejected; nobody's processes left: 0
+    ValueError('a key appears twice')
+the key in other words (pumpdown_s)                                      wrong 7  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly pumpdown_min')
+the value NaN                                                            wrong 7  rejected; nobody's processes left: 0
+    ValueError('NaN is not a finite number')
+the value Infinity                                                       wrong 7  rejected; nobody's processes left: 0
+    ValueError('Infinity is not a finite number')
+the value as a string                                                    wrong 7  rejected; nobody's processes left: 0
+    ValueError('pumpdown_min is not a finite positive number')
+the value true                                                           wrong 7  rejected; nobody's processes left: 0
+    ValueError('pumpdown_min is not a finite positive number')
+the value negative                                                       wrong 7  rejected; nobody's processes left: 0
+    ValueError('pumpdown_min is not a finite positive number')
+the value zero                                                           wrong 7  rejected; nobody's processes left: 0
+    ValueError('pumpdown_min is not a finite positive number')
+a list, not an object                                                    wrong 7  rejected; nobody's processes left: 0
+    ValueError('the keys are not exactly pumpdown_min')
+empty file                                                               wrong 7  rejected; nobody's processes left: 0
+    JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+bytes that are not UTF-8                                                 wrong 7  rejected; nobody's processes left: 0
+    UnicodeDecodeError('utf-8', b'{"pumpdown_min": 174.31}\xff\xfe', 24, 25, 'invalid start byte')
+correct object padded to 70 kB                                           wrong 7  rejected; nobody's processes left: 0
+    ValueError('the output is larger than 65536 bytes')
+correct output, exit status 1                                            wrong 7  rejected; nobody's processes left: 0
+    exit status 1:
+correct output, a background process left running                        wrong 0  accepted; nobody's processes left: 0
+correct output, then runs past the time limit (limit set to 20 s here)   wrong 7  rejected; nobody's processes left: 0
+    time limit of 20 s exceeded
