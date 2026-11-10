@@ -1,0 +1,54 @@
+What a wrong attribution does to the gas load
+=============================================
+
+chamber  true cause       attributed to    gas load  deviation  effect
+-------  ---------------  ---------------  --------  ---------  ------------------------
+VC01     wall-outgassing  air-leak         -         -          not reachable: TypeError
+VC01     wall-outgassing  virtual-leak     -         -          not reachable: TypeError
+VC01     wall-outgassing  permeation       -         -          not reachable: TypeError
+VC02     wall-outgassing  air-leak         -         -          not reachable: TypeError
+VC02     wall-outgassing  virtual-leak     -         -          not reachable: TypeError
+VC02     wall-outgassing  permeation       -         -          not reachable: TypeError
+VC03     air-leak         wall-outgassing  -         -          not reachable: TypeError
+VC03     air-leak         virtual-leak     -         -          not reachable: TypeError
+VC03     air-leak         permeation       -         -          not reachable: TypeError
+VC04     air-leak         wall-outgassing  -         -          not reachable: TypeError
+VC04     air-leak         virtual-leak     -         -          not reachable: TypeError
+VC04     air-leak         permeation       -         -          not reachable: TypeError
+VC05     permeation       wall-outgassing  -         -          not reachable: TypeError
+VC05     permeation       air-leak         -         -          not reachable: TypeError
+VC05     permeation       virtual-leak     -         -          not reachable: TypeError
+VC06     permeation       wall-outgassing  -         -          not reachable: TypeError
+VC06     permeation       air-leak         -         -          not reachable: TypeError
+VC06     permeation       virtual-leak     -         -          not reachable: TypeError
+VC07     virtual-leak     wall-outgassing  -         -          not reachable: TypeError
+VC07     virtual-leak     air-leak         -         -          not reachable: TypeError
+VC07     virtual-leak     permeation       -         -          not reachable: TypeError
+VC08     virtual-leak     wall-outgassing  -         -          not reachable: TypeError
+VC08     virtual-leak     air-leak         -         -          not reachable: TypeError
+VC08     virtual-leak     permeation       -         -          not reachable: TypeError
+VC09     pump-speed       wall-outgassing  -         -          not reachable: TypeError
+VC09     pump-speed       air-leak         -         -          not reachable: TypeError
+VC09     pump-speed       virtual-leak     -         -          not reachable: TypeError
+VC09     pump-speed       permeation       -         -          not reachable: TypeError
+VC10     pump-speed       wall-outgassing  -         -          not reachable: TypeError
+VC10     pump-speed       air-leak         -         -          not reachable: TypeError
+VC10     pump-speed       virtual-leak     -         -          not reachable: TypeError
+VC10     pump-speed       permeation       -         -          not reachable: TypeError
+
+The cause is a single name and is graded on its own, so none of these sheets is accepted: each is
+wrong on the cause of the chamber it reattributes, whatever its quantity does.
+
+On every chamber a wrong attribution also puts the gas load outside the band.
+
+the reference's own answers, for comparison:
+  VC01 wall-outgassing  q 4.1861e-04  s   910.4
+  VC02 wall-outgassing  q 2.1414e-03  s   621.3
+  VC03 air-leak         q 2.8966e-04  s   254.4
+  VC04 air-leak         q 6.0306e-04  s   470.8
+  VC05 permeation       q 2.3000e-04  s   385.7
+  VC06 permeation       q 1.6608e-04  s   944.3
+  VC07 virtual-leak     q 1.9977e-04  s   408.5
+  VC08 virtual-leak     q 2.1096e-04  s   570.6
+  VC09 pump-speed       q 8.4958e-05  s   226.8
+  VC10 pump-speed       q 1.2261e-04  s   124.0

@@ -1,0 +1,34 @@
+Method-free answers, each scored through the task's grader
+==========================================================
+
+answer                                                      right  verdict   chambers it happens to get right
+----------------------------------------------------------  -----  --------  --------------------------------
+the example's result for every chamber                      0/10   rejected  -
+air-leak for every chamber                                  0/10   rejected  -
+virtual-leak for every chamber                              0/10   rejected  -
+wall-outgassing for every chamber                           0/10   rejected  -
+permeation for every chamber                                0/10   rejected  -
+pump-speed for every chamber                                0/10   rejected  -
+the latest reading times the latest speed test              0/10   rejected  -
+the specified base pressure times the latest speed test     0/10   rejected  -
+the register's rated speed and the specified base pressure  0/10   rejected  -
+
+Free passes, chamber by chamber
+===============================
+
+chamber  answers it is free to  which
+-------  ---------------------  -----
+VC01     0                      none
+VC02     0                      none
+VC03     0                      none
+VC04     0                      none
+VC05     0                      none
+VC06     0                      none
+VC07     0                      none
+VC08     0                      none
+VC09     0                      none
+VC10     0                      none
+
+gate: at least 10 of 10 chambers right
+
+every method-free answer rejected; the most any gets right is 0 of 10

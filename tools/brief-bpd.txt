@@ -1,0 +1,19 @@
+Your working environment: the directory /home/claude/bpprobe/PROBE/app stands for /app. Read /app/... as /home/claude/bpprobe/PROBE/app/... and write your output to /home/claude/bpprobe/PROBE/app/output/diagnosis.csv. Put any scratch files under /home/claude/bpprobe/PROBE/app/work. The contractor's order command is /home/claude/bpprobe/PROBE/app/vacwork-run (run it as ./vacwork-run from that directory); wherever the task text says `vacwork`, use `./vacwork-run`. Its reports are written to /home/claude/bpprobe/PROBE/app/vacwork/, which is what the task text calls /app/vacwork/.
+
+Do not read or list anything under /home/claude/bpprobe/PROBE/rig, any other directory under /home/claude/bpprobe, /home/claude/kepler-tasks, or any other directory outside /home/claude/bpprobe/PROBE/app. Do not read the source of the order program. Do not consult any project documents, notes or repositories. Use only the documents and records under /app/data and the order command. No internet.
+
+Task:
+
+The shop audits the vacuum chambers that are not reaching their specified base pressure, under its standard MS-BP. Ten chambers, VC01 to VC10, are on this quarter's list. For each one, work out the mechanism that limits its base pressure and the two quantities MS-BP's audit reports, at the reference condition of MS-BP clause 2: 16 h from the start of roughing after an air vent, the chamber wall at 20 C, and nothing in the chamber.
+
+`/app/data/docs/ms_bp_audit.md` is the standard, `/app/data/docs/vacuum_data.md` the shop's vacuum data and `/app/data/docs/records_format.md` describes the records. The records are `/app/data/chamber_register.csv`, `/app/data/base_pressure_log.csv`, `/app/data/speed_tests.csv`, `/app/data/turbo_controller.csv`, `/app/data/maintenance_log.csv`, `/app/data/shop_climate.csv` and `/app/data/gauge_certificates.md`. `/app/data/docs/audit_note.md` is the vacuum engineer's note on this quarter's list, and `/app/data/example/` holds one chamber's records together with the audit result MS-BP gives for it.
+
+One order can be placed with the contractor who does the shop's vacuum work, of up to 4 tests across the whole fleet, through the `vacwork` command: `vacwork status` reports the order and `vacwork submit < plan.json` places it. The order can be placed only once, no result is known until the whole order has been placed, and it cannot be changed or extended afterwards. `/app/data/docs/vacwork.md` describes the order and the tests it can buy. The reports are written to `/app/vacwork/`.
+
+Write the audit to `/app/output/diagnosis.csv` with the header `chamber,cause,q_total_mbarl_s,s_eff_l_s` and one row for each of VC01 to VC10. `cause` is one of `air-leak`, `virtual-leak`, `wall-outgassing`, `permeation` or `pump-speed`, spelled as MS-BP spells it. `q_total_mbarl_s` is the chamber's total gas load at the reference condition in mbar L/s, and must be within 4.0 percent of its true value. `s_eff_l_s` is the chamber's actual effective pumping speed there in L/s, and must be within 3.0 percent of its true value. `/app/output/diagnosis.csv` must be a regular file of at most 100000 bytes of ASCII text holding that header and one row per chamber, with no chamber repeated, missing or unknown.
+
+Python 3, numpy, scipy and pandas are available. `/app/data` is read-only.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
+
+When done, reply with a short report: which tests you ordered and why, how you reached each chamber's cause and its two quantities, and how many of the ten chambers you predict are right in all three fields.

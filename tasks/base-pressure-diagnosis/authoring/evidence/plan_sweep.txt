@@ -1,0 +1,19 @@
+The reference method under different audit orders
+=================================================
+
+order                            tests  right  verdict   chambers wrong
+-------------------------------  -----  -----  --------  --------------
+no order at all                  0      9/10   rejected  VC08
+the thin logs only               2      10/10  accepted  -
+the reference order              4      10/10  accepted  -
+rise for the thin logs           4      9/10   rejected  VC08
+helium for the thin logs         4      9/10   rejected  VC08
+the changed turbos only          2      9/10   rejected  VC08
+four chambers that need nothing  4      9/10   rejected  VC08
+everything on one chamber        4      9/10   rejected  VC08
+
+budget: 4 tests across 10 chambers, placed once
+gate: at least 10 of 10 chambers right
+
+An order that buys VC06 and VC08 nothing leaves the reference without the composition it needs on
+them; an order that spends every test on chambers whose records already settle them wastes the lot.

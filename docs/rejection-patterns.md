@@ -22,8 +22,19 @@
 - shrink-fit-hubs (Nov 9): too similar to flange-torque-spec. The overlap was joints J01-Jnn, friction measured
   on a budgeted rig, a maintenance log and one number per joint in JSON. Reworked as impeller-shrink-fits:
   a different subject, a CSV deliverable with two quantities per part, and a dilatometer lab.
+- vacuum-pumpdown-time (Nov 9): too similar to weld-preheat-temperature, which was still in review. The overlap
+  was the whole skeleton, not the subject: one program at `/app/output/<x>.py` run as
+  `python3 -I <x>.py JOB_DIR OUT_JSON` writing one JSON scalar; seven hidden packages; a band with one package
+  forgiven; the same package anatomy and `MS-xx` standard framing; the same provenance filenames; and about twelve
+  document-fault layers of the same kinds. Paragraphs 3 and 4 of the two instructions were word-for-word identical
+  once the nouns were swapped. Reworked as base-pressure-diagnosis: same vacuum subject, but a one-shot CSV with a
+  categorical and two coupled quantities per unit, every unit required, and a blind measurement order.
 - Rule: each new task must differ from the whole catalogue (docs/catalogue.md) in subject AND in deliverable
   shape and verification.
+- Rule: two tasks in flight at once must differ from **each other**, not just from the catalogue. Build the second
+  one against the first's instruction text, not only against the catalogue's one-line descriptions.
+- Rule: before building, write the two instructions' middle paragraphs side by side with the subject nouns
+  normalised. If they read the same, the shape is the same, whatever the physics is.
 
 ## Validation failures, Nov 9 (impeller-shrink-fits 20261109b)
 **Blocking:**

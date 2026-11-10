@@ -1,0 +1,11 @@
+#!/bin/bash
+# Runs this quarter's audit test order as the contractor user: "status", or "submit" with the plan on standard
+# input. Passes no environment from the caller.
+set -u
+case "${1:-}" in
+    status|submit) ;;
+    *) echo '{"error": "usage: vacwork status | vacwork submit < plan.json"}'; exit 2 ;;
+esac
+cd /opt/vacwork || exit 1
+exec env -i PATH=/usr/local/bin:/usr/bin:/bin OMP_NUM_THREADS=1 python3 -I /opt/vacwork/vacwork.py "$1" \
+    /app/vacwork /var/lib/vacwork/state.json

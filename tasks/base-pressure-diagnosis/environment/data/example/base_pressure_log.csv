@@ -1,0 +1,6 @@
+date,chamber,pumpdown,vent_gas,pumpdown_h,wall_temp_c,gauge,reading_mbar,load,note
+2026-08-04,VC00,P1,air,16.0,25.5,CC-7000,2.91e-07,,
+2026-08-25,VC00,P2,air,12.0,24.2,CC-7000,3.45e-07,,
+2026-09-15,VC00,P3,air,20.0,22.0,CC-7000,2.16e-07,,
+2026-10-06,VC00,P4,air,16.0,19.1,CC-7000,2.23e-07,,
+2026-10-20,VC00,P5,air,24.0,17.0,CC-7000,1.55e-07,,

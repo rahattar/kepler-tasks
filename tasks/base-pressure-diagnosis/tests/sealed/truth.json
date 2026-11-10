@@ -1,0 +1,72 @@
+{
+ "VC01": {
+  "cause": "wall-outgassing",
+  "p_base_mbar": 4.567629504504504e-07,
+  "q_total_mbarl_s": 0.00041815,
+  "s_eff_l_s": 915.4639175257732,
+  "s_rated_l_s": 915.4639175257732
+ },
+ "VC02": {
+  "cause": "wall-outgassing",
+  "p_base_mbar": 3.4346173672342204e-06,
+  "q_total_mbarl_s": 0.002126567687912069,
+  "s_eff_l_s": 619.1570881226054,
+  "s_rated_l_s": 619.1570881226054
+ },
+ "VC03": {
+  "cause": "air-leak",
+  "p_base_mbar": 1.1379324776785716e-06,
+  "q_total_mbarl_s": 0.00028856250000000003,
+  "s_eff_l_s": 253.58490566037736,
+  "s_rated_l_s": 253.58490566037736
+ },
+ "VC04": {
+  "cause": "air-leak",
+  "p_base_mbar": 1.2814601833976835e-06,
+  "q_total_mbarl_s": 0.0006089875,
+  "s_eff_l_s": 475.22935779816515,
+  "s_rated_l_s": 475.22935779816515
+ },
+ "VC05": {
+  "cause": "permeation",
+  "p_base_mbar": 5.9816991376557e-07,
+  "q_total_mbarl_s": 0.00022979999999999997,
+  "s_eff_l_s": 384.1717791411043,
+  "s_rated_l_s": 384.1717791411043
+ },
+ "VC06": {
+  "cause": "permeation",
+  "p_base_mbar": 1.7557757276507276e-07,
+  "q_total_mbarl_s": 0.00016559375,
+  "s_eff_l_s": 943.1372549019608,
+  "s_rated_l_s": 943.1372549019608
+ },
+ "VC07": {
+  "cause": "virtual-leak",
+  "p_base_mbar": 4.866980259308939e-07,
+  "q_total_mbarl_s": 0.00019691690244560308,
+  "s_eff_l_s": 404.5977011494253,
+  "s_rated_l_s": 404.5977011494253
+ },
+ "VC08": {
+  "cause": "virtual-leak",
+  "p_base_mbar": 3.724272145690871e-07,
+  "q_total_mbarl_s": 0.00021168698386545947,
+  "s_eff_l_s": 568.3982683982684,
+  "s_rated_l_s": 568.3982683982684
+ },
+ "VC09": {
+  "cause": "pump-speed",
+  "p_base_mbar": 3.752194444444445e-07,
+  "q_total_mbarl_s": 8.39e-05,
+  "s_eff_l_s": 223.6024844720497,
+  "s_rated_l_s": 390.2439024390244
+ },
+ "VC10": {
+  "cause": "pump-speed",
+  "p_base_mbar": 9.791534391534392e-07,
+  "q_total_mbarl_s": 0.00012175,
+  "s_eff_l_s": 124.34210526315788,
+  "s_rated_l_s": 237.73584905660377
+ }
+}

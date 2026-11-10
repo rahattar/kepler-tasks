@@ -1,7 +1,11 @@
 # Design note: vacuum-pumpdown-time (latest task, Nov 9 2026)
 
-**Status:** zip vacuum-pumpdown-time-20261109.zip (md5 e655368cbde01d7c7d4b144b0377471f) is on the Mac. The
-instruction is a draft awaiting Alex's approval, including its relevant_experience line.
+**Status: withdrawn Nov 9 2026.** Failed validation as too similar to weld-preheat-temperature, which was still
+in review: the two shared the deliverable shape, the verification and the package anatomy, differing only in their
+physics. Replaced by base-pressure-diagnosis (see `design-note-base-pressure.md`), which keeps the vacuum subject
+but changes the deliverable, the verification and the mechanic. Not to be resubmitted while
+weld-preheat-temperature stands. The zip vacuum-pumpdown-time-20261109.zip
+(md5 e655368cbde01d7c7d4b144b0377471f) is on the Mac.
 
 **Task:** a program `/app/output/pumpdown.py JOB_DIR OUT_JSON` writes `pumpdown_min`, the pump-down time of a vacuum
 chamber's job. Right within 4 %; a pass allows at most 1 of 7 hidden chambers wrong.
