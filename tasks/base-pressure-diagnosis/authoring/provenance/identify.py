@@ -79,6 +79,17 @@ def observations(ch):
                          perm={m: P.q_perm(m, c["seal_cm"], T) for m in MATERIALS},
                          trapped=bool(tf and date >= tf),
                          q=P.q_total(c, h, vent, T)))
+    # a speed test's no-flow pressure is a base-pressure reading too: the empty chamber after an air vent, at the
+    # test's own pumping time and wall temperature
+    for sp in ch["speed"]:
+        date, h, tc = sp[:3]
+        if date < since:
+            continue
+        c = F.config(ch, date)
+        T = tc + 273.15
+        rows.append(dict(date=date, t=h, T=T, vent="air", W=P.q_wall_nominal(c["surfaces"], h, "air", T),
+                         perm={m: P.q_perm(m, c["seal_cm"], T) for m in MATERIALS},
+                         trapped=bool(tf and date >= tf), q=P.q_total(c, h, "air", T)))
     return rows
 
 

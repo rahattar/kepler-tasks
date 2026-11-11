@@ -369,6 +369,26 @@ def entry_points(cid, cfg, data, certs, fix):
     return pts
 
 
+def speed_test_points(cid, cfg, data, certs):
+    """Each shop speed test's no-flow pressure, as a base-pressure reading: the empty chamber at the end of a
+    pumpdown after an air vent, at the test's own pumping time and wall temperature, read on the test's gauge. The
+    test's own reported speed goes with it, since the two were measured together."""
+    pts = []
+    for r in data["speed"]:
+        if r["chamber"] != cid or r["date"] > AUDIT:
+            continue
+        if cfg["internals_from"] and r["date"] < cfg["internals_from"]:
+            continue
+        serial = r["gauge"]
+        if serial not in certs:
+            continue
+        pts.append(dict(date=r["date"], pd="speed test", vent="air", t_h=float(r["pumping_time_h"]),
+                        t_k=float(r["wall_temp_c"]) + 273.15,
+                        p_n2=float(r["p_without_flow_mbar"]) * cert_factor(certs, serial, r["date"]),
+                        load="", serial=serial, reference=False, s_test=float(r["s_eff_l_s"])))
+    return pts
+
+
 def _day_number(date):
     import datetime
     y, m, d = map(int, date.split("-"))
@@ -379,7 +399,8 @@ def correct_drift(pts, cid, data):
     """Where a chamber carries both gauge types, the cold cathode is checked against the reference instrument on
     every pumpdown both were read on. A cold cathode that fouls reads progressively low, so the ratio is fitted as
     a straight line in days and carried forward to the pumpdowns the reference instrument did not see, whose
-    cold cathode readings are corrected by it. Where the two agree, nothing is changed."""
+    cold cathode readings are corrected by it; a reading from before the first pairing (a speed test's, say) is
+    taken at the first pairing's ratio. Where the two agree, nothing is changed."""
     rows = [r for r in data["log"] if r["chamber"] == cid]
     if not {"CC", "IG"} <= {r["gauge"][:2] for r in rows}:
         return pts
@@ -405,7 +426,9 @@ def correct_drift(pts, cid, data):
         if p["reference"]:
             out.append(p)
             continue
-        ratio = a + b * _day_number(p["date"])
+        # the line is carried forward, never back: before the first pumpdown both gauges were read on there is no
+        # evidence of drift, so a reading from then is taken at the ratio of that first pairing
+        ratio = a + b * max(_day_number(p["date"]), obs[0][0])
         if 0.2 < ratio < 5.0:
             out.append(dict(p, p_n2=p["p_n2"] / ratio, drift_corrected=True))
         else:
@@ -432,6 +455,8 @@ def perm_of(cfg, pt):
 
 
 READ_SD = 0.006                     # the shop's gauge readings repeat to 0.6 per cent (records_format.md)
+SPEED_OB_SD = 0.009                 # a speed test's no-flow pressure times its own speed: the pressure's 0.5 per
+                                    # cent and the speed's, which shares that pressure, together
 TEST_SD = {"rga": 0.010, "rate-of-rise": 0.005, "speed-test": 0.005}
 HELIUM_SD = 0.03                    # a helium test's leak, relative
 TAU_MAX = 48.0                      # MS-BP clause 3.3: no trapped volume of the shop takes longer to empty
@@ -456,7 +481,7 @@ def fit_budget(cfg, obs, structure, s_now, helium=None):
 
     W_i is the outgassing table's nominal wall load for the entry's surfaces, fixtures, vent and temperature, and
     Q_perm,i the seal's permeation at its temperature. Every coefficient is non-negative; tau is searched on a grid
-    and the rest is linear. Each observation is weighted by its own repeatability, relative to its size. A gauge
+    and settled between its neighbours, and the rest is linear. Each observation is weighted by its own repeatability, relative to its size. A gauge
     reading needs clause 5's correction for composition, which depends on the split, so the correction is iterated
     to a fixed point. A helium test, where there is one, measures Q_L and enters as one more observation of it.
 
@@ -501,6 +526,28 @@ def fit_budget(cfg, obs, structure, s_now, helium=None):
             # as well as every other, and the grid's minimum is a draw of the noise. Clause 3.3's bound is taken
             # instead, a statement of what is not known rather than an estimate
             best = profile[-1]
+        elif best[2] is not None:
+            # the grid finds the valley; the time constant is then settled inside it, between the grid points on
+            # either side, since a few per cent in tau is a few per cent in the trapped load at the reference
+            i = [t for _r, _x, t in profile].index(best[2])
+            lo, hi = profile[max(i - 1, 0)][2], profile[min(i + 1, len(profile) - 1)][2]
+
+            def solve_at(tau):
+                cols = [W, np.ones(n), TR * np.exp(-H / tau)]
+                A = np.column_stack(cols) * w[:, None]
+                b = (q - PM) * w
+                if helium is not None:
+                    sd_l = max(HELIUM_SD * helium, 2e-9)
+                    row = np.zeros(A.shape[1])
+                    row[1] = 1.0 / sd_l
+                    A = np.vstack([A, row])
+                    b = np.append(b, helium / sd_l)
+                return nnls(A, b)
+
+            lt, _ = _golden(lambda lt: solve_at(math.exp(lt))[1], math.log(lo), math.log(hi))
+            x_r, rn_r = solve_at(math.exp(lt))
+            if rn_r <= best[0]:
+                best = (rn_r, x_r, math.exp(lt))
         rn, x, tau = best
         new = np.ones(n)
         for i in range(n):
@@ -855,6 +902,13 @@ def front_end(cid, data, certs, fix, vac):
             continue                                  # a period with no speed test describes nothing usable
         obs.append(dict(kind="entry", date=p["date"], t_h=p["t_h"], t_k=p["t_k"], vent=p["vent"],
                         load=p["load"], value=p["p_n2"], gauge=True, speed=speed, sd=READ_SD,
+                        serial=p["serial"]))
+    # a speed test is a base-pressure reading as well as a speed: its no-flow pressure, read at its own pumping
+    # time, is often the only reading a chamber has at any but its usual pumping time
+    for p in correct_drift(speed_test_points(cid, cfg, data, certs), cid, data):
+        f = k.get(p["serial"], 1.0) if k else 1.0
+        obs.append(dict(kind="speed-test", date=p["date"], t_h=p["t_h"], t_k=p["t_k"], vent="air", load="",
+                        value=p["p_n2"] * f, gauge=True, speed=p["s_test"] / f, sd=SPEED_OB_SD,
                         serial=p["serial"]))
     if order_ob is not None:
         obs.append(order_ob)

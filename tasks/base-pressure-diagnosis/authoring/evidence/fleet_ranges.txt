@@ -1,4 +1,4 @@
-inputs: d29bb0aacb0ad76a
+inputs: 5419e32b0c56d138
 Ranges of the shipped fleet, computed from the sealed definition and the built records
 ======================================================================================
 
@@ -15,7 +15,7 @@ tau_h: 14 and 24
 q_total: 6.4 x 10^-5 to 8.3 x 10^-4
 p_base: 2.2 x 10^-7 to 1.7 x 10^-6
 pumpdowns: Four to seven
-pumpdown_h: 12 to 44
+pumpdown_h: 12 to 24
 climate: 27 C in July to 13 C in October
 log_period: 2026-07-02 to 2026-10-30
 read_noise_pct: 0.6

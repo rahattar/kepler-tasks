@@ -1,272 +1,272 @@
-inputs: 41879881691e15b1
+inputs: 80f8394611d0d685
 Both audits under every order the budget allows
 ===============================================
 
 order                      reference        independent
 -------------------------  ---------------  --------------------
-no order                   rejected (VC08)  rejected (VC08)
-VC01 rga at 16 h           rejected (VC08)  rejected (VC08)
-VC01 rga at 20 h           rejected (VC08)  rejected (VC08)
-VC01 rga at 24 h           rejected (VC08)  rejected (VC08)
-VC01 rga at 30 h           rejected (VC08)  rejected (VC08)
-VC01 rga at 36 h           rejected (VC08)  rejected (VC08)
-VC01 rga at 42 h           rejected (VC08)  rejected (VC08)
-VC01 rga at 48 h           rejected (VC08)  rejected (VC08)
-VC01 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC01 rate-of-rise at 20 h  rejected (VC08)  rejected (VC08)
-VC01 rate-of-rise at 24 h  rejected (VC08)  rejected (VC08)
-VC01 rate-of-rise at 30 h  rejected (VC08)  rejected (VC08)
-VC01 rate-of-rise at 36 h  rejected (VC08)  rejected (VC08)
-VC01 rate-of-rise at 42 h  rejected (VC08)  rejected (VC08)
-VC01 rate-of-rise at 48 h  rejected (VC08)  rejected (VC08)
-VC01 speed-test at 16 h    rejected (VC08)  rejected (VC08)
-VC01 speed-test at 20 h    rejected (VC08)  rejected (VC08)
-VC01 speed-test at 24 h    rejected (VC08)  rejected (VC08)
-VC01 speed-test at 30 h    rejected (VC08)  rejected (VC08)
-VC01 speed-test at 36 h    rejected (VC08)  rejected (VC08)
-VC01 speed-test at 42 h    rejected (VC08)  rejected (VC08)
-VC01 speed-test at 48 h    rejected (VC08)  rejected (VC08)
-VC01 helium                rejected (VC08)  rejected (VC08)
-VC02 rga at 16 h           rejected (VC08)  rejected (VC08)
-VC02 rga at 20 h           rejected (VC08)  rejected (VC08)
-VC02 rga at 24 h           rejected (VC08)  rejected (VC08)
-VC02 rga at 30 h           rejected (VC08)  rejected (VC08)
-VC02 rga at 36 h           rejected (VC08)  rejected (VC08)
-VC02 rga at 42 h           rejected (VC08)  rejected (VC08)
-VC02 rga at 48 h           rejected (VC08)  rejected (VC08)
-VC02 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC02 rate-of-rise at 20 h  rejected (VC08)  rejected (VC08)
-VC02 rate-of-rise at 24 h  rejected (VC08)  rejected (VC08)
-VC02 rate-of-rise at 30 h  rejected (VC08)  rejected (VC08)
-VC02 rate-of-rise at 36 h  rejected (VC08)  rejected (VC08)
-VC02 rate-of-rise at 42 h  rejected (VC08)  rejected (VC08)
-VC02 rate-of-rise at 48 h  rejected (VC08)  rejected (VC08)
-VC02 speed-test at 16 h    rejected (VC08)  rejected (VC08)
-VC02 speed-test at 20 h    rejected (VC08)  rejected (VC08)
-VC02 speed-test at 24 h    rejected (VC08)  rejected (VC08)
-VC02 speed-test at 30 h    rejected (VC08)  rejected (VC08)
-VC02 speed-test at 36 h    rejected (VC08)  rejected (VC08)
-VC02 speed-test at 42 h    rejected (VC08)  rejected (VC08)
-VC02 speed-test at 48 h    rejected (VC08)  rejected (VC08)
-VC02 helium                rejected (VC08)  rejected (VC08)
-VC03 rga at 16 h           rejected (VC08)  rejected (VC08)
-VC03 rga at 20 h           rejected (VC08)  rejected (VC08)
-VC03 rga at 24 h           rejected (VC08)  rejected (VC08)
-VC03 rga at 30 h           rejected (VC08)  rejected (VC08)
-VC03 rga at 36 h           rejected (VC08)  rejected (VC08)
-VC03 rga at 42 h           rejected (VC08)  rejected (VC08)
-VC03 rga at 48 h           rejected (VC08)  rejected (VC08)
-VC03 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC03 rate-of-rise at 20 h  rejected (VC08)  rejected (VC08)
-VC03 rate-of-rise at 24 h  rejected (VC08)  rejected (VC08)
-VC03 rate-of-rise at 30 h  rejected (VC08)  rejected (VC08)
-VC03 rate-of-rise at 36 h  rejected (VC08)  rejected (VC08)
-VC03 rate-of-rise at 42 h  rejected (VC08)  rejected (VC08)
-VC03 rate-of-rise at 48 h  rejected (VC08)  rejected (VC08)
-VC03 speed-test at 16 h    rejected (VC08)  rejected (VC08)
-VC03 speed-test at 20 h    rejected (VC08)  rejected (VC08)
-VC03 speed-test at 24 h    rejected (VC08)  rejected (VC08)
-VC03 speed-test at 30 h    rejected (VC08)  rejected (VC08)
-VC03 speed-test at 36 h    rejected (VC08)  rejected (VC08)
-VC03 speed-test at 42 h    rejected (VC08)  rejected (VC08)
-VC03 speed-test at 48 h    rejected (VC08)  rejected (VC08)
-VC03 helium                rejected (VC08)  rejected (VC08)
-VC04 rga at 16 h           rejected (VC08)  rejected (VC08)
-VC04 rga at 20 h           rejected (VC08)  rejected (VC08)
-VC04 rga at 24 h           rejected (VC08)  rejected (VC08)
-VC04 rga at 30 h           rejected (VC08)  rejected (VC08)
-VC04 rga at 36 h           rejected (VC08)  rejected (VC08)
-VC04 rga at 42 h           rejected (VC08)  rejected (VC08)
-VC04 rga at 48 h           rejected (VC08)  rejected (VC08)
-VC04 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC04 rate-of-rise at 20 h  rejected (VC08)  rejected (VC08)
-VC04 rate-of-rise at 24 h  rejected (VC08)  rejected (VC08)
-VC04 rate-of-rise at 30 h  rejected (VC08)  rejected (VC08)
-VC04 rate-of-rise at 36 h  rejected (VC08)  rejected (VC08)
-VC04 rate-of-rise at 42 h  rejected (VC08)  rejected (VC08)
-VC04 rate-of-rise at 48 h  rejected (VC08)  rejected (VC08)
-VC04 speed-test at 16 h    rejected (VC08)  rejected (VC08)
-VC04 speed-test at 20 h    rejected (VC08)  rejected (VC08)
-VC04 speed-test at 24 h    rejected (VC08)  rejected (VC08)
-VC04 speed-test at 30 h    rejected (VC08)  rejected (VC08)
-VC04 speed-test at 36 h    rejected (VC08)  rejected (VC08)
-VC04 speed-test at 42 h    rejected (VC08)  rejected (VC08)
-VC04 speed-test at 48 h    rejected (VC08)  rejected (VC08)
-VC04 helium                rejected (VC08)  rejected (VC08)
-VC05 rga at 16 h           rejected (VC08)  rejected (VC08)
-VC05 rga at 20 h           rejected (VC08)  rejected (VC08)
-VC05 rga at 24 h           rejected (VC08)  rejected (VC08)
-VC05 rga at 30 h           rejected (VC08)  rejected (VC08)
-VC05 rga at 36 h           rejected (VC08)  rejected (VC08)
-VC05 rga at 42 h           rejected (VC08)  rejected (VC08)
-VC05 rga at 48 h           rejected (VC08)  rejected (VC08)
-VC05 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC05 rate-of-rise at 20 h  rejected (VC08)  rejected (VC05 VC08)
-VC05 rate-of-rise at 24 h  rejected (VC08)  rejected (VC05 VC08)
-VC05 rate-of-rise at 30 h  rejected (VC08)  rejected (VC08)
-VC05 rate-of-rise at 36 h  rejected (VC08)  rejected (VC08)
-VC05 rate-of-rise at 42 h  rejected (VC08)  rejected (VC08)
-VC05 rate-of-rise at 48 h  rejected (VC08)  rejected (VC05 VC08)
-VC05 speed-test at 16 h    rejected (VC08)  rejected (VC08)
-VC05 speed-test at 20 h    rejected (VC08)  rejected (VC08)
-VC05 speed-test at 24 h    rejected (VC08)  rejected (VC08)
-VC05 speed-test at 30 h    rejected (VC08)  rejected (VC08)
-VC05 speed-test at 36 h    rejected (VC08)  rejected (VC08)
-VC05 speed-test at 42 h    rejected (VC08)  rejected (VC08)
-VC05 speed-test at 48 h    rejected (VC08)  rejected (VC08)
-VC05 helium                rejected (VC08)  rejected (VC08)
-VC06 rga at 16 h           rejected (VC08)  rejected (VC08)
-VC06 rga at 20 h           rejected (VC08)  rejected (VC08)
-VC06 rga at 24 h           rejected (VC08)  rejected (VC08)
-VC06 rga at 30 h           rejected (VC08)  rejected (VC08)
-VC06 rga at 36 h           rejected (VC08)  rejected (VC08)
-VC06 rga at 42 h           rejected (VC08)  rejected (VC08)
-VC06 rga at 48 h           rejected (VC08)  rejected (VC08)
-VC06 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC06 rate-of-rise at 20 h  rejected (VC08)  rejected (VC08)
-VC06 rate-of-rise at 24 h  rejected (VC08)  rejected (VC08)
-VC06 rate-of-rise at 30 h  rejected (VC08)  rejected (VC08)
-VC06 rate-of-rise at 36 h  rejected (VC08)  rejected (VC08)
-VC06 rate-of-rise at 42 h  rejected (VC08)  rejected (VC08)
-VC06 rate-of-rise at 48 h  rejected (VC08)  rejected (VC08)
-VC06 speed-test at 16 h    rejected (VC08)  rejected (VC08)
-VC06 speed-test at 20 h    rejected (VC08)  rejected (VC08)
-VC06 speed-test at 24 h    rejected (VC08)  rejected (VC08)
-VC06 speed-test at 30 h    rejected (VC08)  rejected (VC08)
-VC06 speed-test at 36 h    rejected (VC08)  rejected (VC08)
-VC06 speed-test at 42 h    rejected (VC08)  rejected (VC08)
-VC06 speed-test at 48 h    rejected (VC08)  rejected (VC08)
-VC06 helium                rejected (VC08)  rejected (VC08)
-VC07 rga at 16 h           rejected (VC08)  rejected (VC08)
-VC07 rga at 20 h           rejected (VC08)  rejected (VC08)
-VC07 rga at 24 h           rejected (VC08)  rejected (VC08)
-VC07 rga at 30 h           rejected (VC08)  rejected (VC08)
-VC07 rga at 36 h           rejected (VC08)  rejected (VC08)
-VC07 rga at 42 h           rejected (VC08)  rejected (VC08)
-VC07 rga at 48 h           rejected (VC08)  rejected (VC08)
-VC07 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC07 rate-of-rise at 20 h  rejected (VC08)  rejected (VC08)
-VC07 rate-of-rise at 24 h  rejected (VC08)  rejected (VC08)
-VC07 rate-of-rise at 30 h  rejected (VC08)  rejected (VC08)
-VC07 rate-of-rise at 36 h  rejected (VC08)  rejected (VC08)
-VC07 rate-of-rise at 42 h  rejected (VC08)  rejected (VC08)
-VC07 rate-of-rise at 48 h  rejected (VC08)  rejected (VC08)
-VC07 speed-test at 16 h    rejected (VC08)  rejected (VC08)
-VC07 speed-test at 20 h    rejected (VC08)  rejected (VC08)
-VC07 speed-test at 24 h    rejected (VC08)  rejected (VC08)
-VC07 speed-test at 30 h    rejected (VC08)  rejected (VC08)
-VC07 speed-test at 36 h    rejected (VC08)  rejected (VC08)
-VC07 speed-test at 42 h    rejected (VC08)  rejected (VC08)
-VC07 speed-test at 48 h    rejected (VC08)  rejected (VC08)
-VC07 helium                rejected (VC08)  rejected (VC08)
-VC08 rga at 16 h           rejected (VC08)  rejected (VC08)
-VC08 rga at 20 h           accepted         accepted
-VC08 rga at 24 h           accepted         accepted
-VC08 rga at 30 h           accepted         accepted
-VC08 rga at 36 h           accepted         accepted
-VC08 rga at 42 h           accepted         accepted
-VC08 rga at 48 h           accepted         accepted
-VC08 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC08 rate-of-rise at 20 h  accepted         accepted
-VC08 rate-of-rise at 24 h  accepted         accepted
-VC08 rate-of-rise at 30 h  accepted         accepted
-VC08 rate-of-rise at 36 h  accepted         accepted
-VC08 rate-of-rise at 42 h  accepted         accepted
-VC08 rate-of-rise at 48 h  accepted         accepted
-VC08 speed-test at 16 h    rejected (VC08)  rejected (VC08)
-VC08 speed-test at 20 h    accepted         accepted
-VC08 speed-test at 24 h    accepted         accepted
-VC08 speed-test at 30 h    accepted         accepted
-VC08 speed-test at 36 h    accepted         accepted
-VC08 speed-test at 42 h    accepted         accepted
-VC08 speed-test at 48 h    accepted         accepted
-VC08 helium                rejected (VC08)  rejected (VC08)
-VC09 rga at 16 h           rejected (VC08)  rejected (VC08)
-VC09 rga at 20 h           rejected (VC08)  rejected (VC08)
-VC09 rga at 24 h           rejected (VC08)  rejected (VC08)
-VC09 rga at 30 h           rejected (VC08)  rejected (VC08)
-VC09 rga at 36 h           rejected (VC08)  rejected (VC08)
-VC09 rga at 42 h           rejected (VC08)  rejected (VC08)
-VC09 rga at 48 h           rejected (VC08)  rejected (VC08)
-VC09 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC09 rate-of-rise at 20 h  rejected (VC08)  rejected (VC08)
-VC09 rate-of-rise at 24 h  rejected (VC08)  rejected (VC08)
-VC09 rate-of-rise at 30 h  rejected (VC08)  rejected (VC08)
-VC09 rate-of-rise at 36 h  rejected (VC08)  rejected (VC08)
-VC09 rate-of-rise at 42 h  rejected (VC08)  rejected (VC08)
-VC09 rate-of-rise at 48 h  rejected (VC08)  rejected (VC08)
-VC09 speed-test at 16 h    rejected (VC08)  rejected (VC08)
-VC09 speed-test at 20 h    rejected (VC08)  rejected (VC08)
-VC09 speed-test at 24 h    rejected (VC08)  rejected (VC08)
-VC09 speed-test at 30 h    rejected (VC08)  rejected (VC08)
-VC09 speed-test at 36 h    rejected (VC08)  rejected (VC08)
-VC09 speed-test at 42 h    rejected (VC08)  rejected (VC08)
-VC09 speed-test at 48 h    rejected (VC08)  rejected (VC08)
-VC09 helium                rejected (VC08)  rejected (VC08)
-VC10 rga at 16 h           rejected (VC08)  rejected (VC08)
-VC10 rga at 20 h           rejected (VC08)  rejected (VC08)
-VC10 rga at 24 h           rejected (VC08)  rejected (VC08)
-VC10 rga at 30 h           rejected (VC08)  rejected (VC08)
-VC10 rga at 36 h           rejected (VC08)  rejected (VC08)
-VC10 rga at 42 h           rejected (VC08)  rejected (VC08)
-VC10 rga at 48 h           rejected (VC08)  rejected (VC08)
-VC10 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC10 rate-of-rise at 20 h  rejected (VC08)  rejected (VC08)
-VC10 rate-of-rise at 24 h  rejected (VC08)  rejected (VC08)
-VC10 rate-of-rise at 30 h  rejected (VC08)  rejected (VC08)
-VC10 rate-of-rise at 36 h  rejected (VC08)  rejected (VC08)
-VC10 rate-of-rise at 42 h  rejected (VC08)  rejected (VC08)
-VC10 rate-of-rise at 48 h  rejected (VC08)  rejected (VC08)
-VC10 speed-test at 16 h    rejected (VC08)  rejected (VC08)
-VC10 speed-test at 20 h    rejected (VC08)  rejected (VC08)
-VC10 speed-test at 24 h    rejected (VC08)  rejected (VC08)
-VC10 speed-test at 30 h    rejected (VC08)  rejected (VC08)
-VC10 speed-test at 36 h    rejected (VC08)  rejected (VC08)
-VC10 speed-test at 42 h    rejected (VC08)  rejected (VC08)
-VC10 speed-test at 48 h    rejected (VC08)  rejected (VC08)
-VC10 helium                rejected (VC08)  rejected (VC08)
+no order                   rejected (VC07)  rejected (VC07)
+VC01 rga at 16 h           rejected (VC07)  rejected (VC07)
+VC01 rga at 20 h           rejected (VC07)  rejected (VC07)
+VC01 rga at 24 h           rejected (VC07)  rejected (VC07)
+VC01 rga at 30 h           rejected (VC07)  rejected (VC07)
+VC01 rga at 36 h           rejected (VC07)  rejected (VC07)
+VC01 rga at 42 h           rejected (VC07)  rejected (VC07)
+VC01 rga at 48 h           rejected (VC07)  rejected (VC07)
+VC01 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
+VC01 rate-of-rise at 20 h  rejected (VC07)  rejected (VC07)
+VC01 rate-of-rise at 24 h  rejected (VC07)  rejected (VC07)
+VC01 rate-of-rise at 30 h  rejected (VC07)  rejected (VC07)
+VC01 rate-of-rise at 36 h  rejected (VC07)  rejected (VC07)
+VC01 rate-of-rise at 42 h  rejected (VC07)  rejected (VC07)
+VC01 rate-of-rise at 48 h  rejected (VC07)  rejected (VC07)
+VC01 speed-test at 16 h    rejected (VC07)  rejected (VC07)
+VC01 speed-test at 20 h    rejected (VC07)  rejected (VC07)
+VC01 speed-test at 24 h    rejected (VC07)  rejected (VC07)
+VC01 speed-test at 30 h    rejected (VC07)  rejected (VC07)
+VC01 speed-test at 36 h    rejected (VC07)  rejected (VC07)
+VC01 speed-test at 42 h    rejected (VC07)  rejected (VC07)
+VC01 speed-test at 48 h    rejected (VC07)  rejected (VC07)
+VC01 helium                rejected (VC07)  rejected (VC07)
+VC02 rga at 16 h           rejected (VC07)  rejected (VC07)
+VC02 rga at 20 h           rejected (VC07)  rejected (VC07)
+VC02 rga at 24 h           rejected (VC07)  rejected (VC07)
+VC02 rga at 30 h           rejected (VC07)  rejected (VC07)
+VC02 rga at 36 h           rejected (VC07)  rejected (VC07)
+VC02 rga at 42 h           rejected (VC07)  rejected (VC07)
+VC02 rga at 48 h           rejected (VC07)  rejected (VC07)
+VC02 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
+VC02 rate-of-rise at 20 h  rejected (VC07)  rejected (VC07)
+VC02 rate-of-rise at 24 h  rejected (VC07)  rejected (VC07)
+VC02 rate-of-rise at 30 h  rejected (VC07)  rejected (VC07)
+VC02 rate-of-rise at 36 h  rejected (VC07)  rejected (VC07)
+VC02 rate-of-rise at 42 h  rejected (VC07)  rejected (VC07)
+VC02 rate-of-rise at 48 h  rejected (VC07)  rejected (VC07)
+VC02 speed-test at 16 h    rejected (VC07)  rejected (VC07)
+VC02 speed-test at 20 h    rejected (VC07)  rejected (VC07)
+VC02 speed-test at 24 h    rejected (VC07)  rejected (VC07)
+VC02 speed-test at 30 h    rejected (VC07)  rejected (VC07)
+VC02 speed-test at 36 h    rejected (VC07)  rejected (VC07)
+VC02 speed-test at 42 h    rejected (VC07)  rejected (VC07)
+VC02 speed-test at 48 h    rejected (VC07)  rejected (VC07)
+VC02 helium                rejected (VC07)  rejected (VC07)
+VC03 rga at 16 h           rejected (VC07)  rejected (VC07)
+VC03 rga at 20 h           rejected (VC07)  rejected (VC07)
+VC03 rga at 24 h           rejected (VC07)  rejected (VC07)
+VC03 rga at 30 h           rejected (VC07)  rejected (VC07)
+VC03 rga at 36 h           rejected (VC07)  rejected (VC07)
+VC03 rga at 42 h           rejected (VC07)  rejected (VC07)
+VC03 rga at 48 h           rejected (VC07)  rejected (VC07)
+VC03 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
+VC03 rate-of-rise at 20 h  rejected (VC07)  rejected (VC07)
+VC03 rate-of-rise at 24 h  rejected (VC07)  rejected (VC07)
+VC03 rate-of-rise at 30 h  rejected (VC07)  rejected (VC07)
+VC03 rate-of-rise at 36 h  rejected (VC07)  rejected (VC07)
+VC03 rate-of-rise at 42 h  rejected (VC07)  rejected (VC07)
+VC03 rate-of-rise at 48 h  rejected (VC07)  rejected (VC07)
+VC03 speed-test at 16 h    rejected (VC07)  rejected (VC07)
+VC03 speed-test at 20 h    rejected (VC07)  rejected (VC07)
+VC03 speed-test at 24 h    rejected (VC07)  rejected (VC07)
+VC03 speed-test at 30 h    rejected (VC07)  rejected (VC07)
+VC03 speed-test at 36 h    rejected (VC07)  rejected (VC07)
+VC03 speed-test at 42 h    rejected (VC07)  rejected (VC07)
+VC03 speed-test at 48 h    rejected (VC07)  rejected (VC07)
+VC03 helium                rejected (VC07)  rejected (VC07)
+VC04 rga at 16 h           rejected (VC07)  rejected (VC07)
+VC04 rga at 20 h           rejected (VC07)  rejected (VC07)
+VC04 rga at 24 h           rejected (VC07)  rejected (VC07)
+VC04 rga at 30 h           rejected (VC07)  rejected (VC07)
+VC04 rga at 36 h           rejected (VC07)  rejected (VC07)
+VC04 rga at 42 h           rejected (VC07)  rejected (VC07)
+VC04 rga at 48 h           rejected (VC07)  rejected (VC07)
+VC04 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
+VC04 rate-of-rise at 20 h  rejected (VC07)  rejected (VC07)
+VC04 rate-of-rise at 24 h  rejected (VC07)  rejected (VC07)
+VC04 rate-of-rise at 30 h  rejected (VC07)  rejected (VC07)
+VC04 rate-of-rise at 36 h  rejected (VC07)  rejected (VC07)
+VC04 rate-of-rise at 42 h  rejected (VC07)  rejected (VC07)
+VC04 rate-of-rise at 48 h  rejected (VC07)  rejected (VC07)
+VC04 speed-test at 16 h    rejected (VC07)  rejected (VC07)
+VC04 speed-test at 20 h    rejected (VC07)  rejected (VC07)
+VC04 speed-test at 24 h    rejected (VC07)  rejected (VC07)
+VC04 speed-test at 30 h    rejected (VC07)  rejected (VC07)
+VC04 speed-test at 36 h    rejected (VC07)  rejected (VC07)
+VC04 speed-test at 42 h    rejected (VC07)  rejected (VC07)
+VC04 speed-test at 48 h    rejected (VC07)  rejected (VC07)
+VC04 helium                rejected (VC07)  rejected (VC07)
+VC05 rga at 16 h           rejected (VC07)  rejected (VC07)
+VC05 rga at 20 h           rejected (VC07)  rejected (VC07)
+VC05 rga at 24 h           rejected (VC07)  rejected (VC07)
+VC05 rga at 30 h           rejected (VC07)  rejected (VC07)
+VC05 rga at 36 h           rejected (VC07)  rejected (VC07)
+VC05 rga at 42 h           rejected (VC07)  rejected (VC07)
+VC05 rga at 48 h           rejected (VC07)  rejected (VC07)
+VC05 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
+VC05 rate-of-rise at 20 h  rejected (VC07)  rejected (VC07)
+VC05 rate-of-rise at 24 h  rejected (VC07)  rejected (VC05 VC07)
+VC05 rate-of-rise at 30 h  rejected (VC07)  rejected (VC07)
+VC05 rate-of-rise at 36 h  rejected (VC07)  rejected (VC07)
+VC05 rate-of-rise at 42 h  rejected (VC07)  rejected (VC07)
+VC05 rate-of-rise at 48 h  rejected (VC07)  rejected (VC05 VC07)
+VC05 speed-test at 16 h    rejected (VC07)  rejected (VC07)
+VC05 speed-test at 20 h    rejected (VC07)  rejected (VC05 VC07)
+VC05 speed-test at 24 h    rejected (VC07)  rejected (VC07)
+VC05 speed-test at 30 h    rejected (VC07)  rejected (VC07)
+VC05 speed-test at 36 h    rejected (VC07)  rejected (VC07)
+VC05 speed-test at 42 h    rejected (VC07)  rejected (VC07)
+VC05 speed-test at 48 h    rejected (VC07)  rejected (VC07)
+VC05 helium                rejected (VC07)  rejected (VC07)
+VC06 rga at 16 h           rejected (VC07)  rejected (VC07)
+VC06 rga at 20 h           rejected (VC07)  rejected (VC07)
+VC06 rga at 24 h           rejected (VC07)  rejected (VC07)
+VC06 rga at 30 h           rejected (VC07)  rejected (VC07)
+VC06 rga at 36 h           rejected (VC07)  rejected (VC07)
+VC06 rga at 42 h           rejected (VC07)  rejected (VC07)
+VC06 rga at 48 h           rejected (VC07)  rejected (VC07)
+VC06 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
+VC06 rate-of-rise at 20 h  rejected (VC07)  rejected (VC07)
+VC06 rate-of-rise at 24 h  rejected (VC07)  rejected (VC07)
+VC06 rate-of-rise at 30 h  rejected (VC07)  rejected (VC07)
+VC06 rate-of-rise at 36 h  rejected (VC07)  rejected (VC07)
+VC06 rate-of-rise at 42 h  rejected (VC07)  rejected (VC07)
+VC06 rate-of-rise at 48 h  rejected (VC07)  rejected (VC07)
+VC06 speed-test at 16 h    rejected (VC07)  rejected (VC07)
+VC06 speed-test at 20 h    rejected (VC07)  rejected (VC07)
+VC06 speed-test at 24 h    rejected (VC07)  rejected (VC07)
+VC06 speed-test at 30 h    rejected (VC07)  rejected (VC07)
+VC06 speed-test at 36 h    rejected (VC07)  rejected (VC07)
+VC06 speed-test at 42 h    rejected (VC07)  rejected (VC07)
+VC06 speed-test at 48 h    rejected (VC07)  rejected (VC07)
+VC06 helium                rejected (VC07)  rejected (VC07)
+VC07 rga at 16 h           rejected (VC07)  rejected (VC07)
+VC07 rga at 20 h           accepted         accepted
+VC07 rga at 24 h           accepted         accepted
+VC07 rga at 30 h           accepted         accepted
+VC07 rga at 36 h           accepted         accepted
+VC07 rga at 42 h           accepted         accepted
+VC07 rga at 48 h           accepted         accepted
+VC07 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
+VC07 rate-of-rise at 20 h  accepted         accepted
+VC07 rate-of-rise at 24 h  accepted         accepted
+VC07 rate-of-rise at 30 h  accepted         accepted
+VC07 rate-of-rise at 36 h  accepted         accepted
+VC07 rate-of-rise at 42 h  accepted         accepted
+VC07 rate-of-rise at 48 h  accepted         accepted
+VC07 speed-test at 16 h    rejected (VC07)  rejected (VC07)
+VC07 speed-test at 20 h    accepted         accepted
+VC07 speed-test at 24 h    accepted         accepted
+VC07 speed-test at 30 h    accepted         accepted
+VC07 speed-test at 36 h    accepted         accepted
+VC07 speed-test at 42 h    accepted         accepted
+VC07 speed-test at 48 h    accepted         accepted
+VC07 helium                rejected (VC07)  rejected (VC07)
+VC08 rga at 16 h           rejected (VC07)  rejected (VC07)
+VC08 rga at 20 h           rejected (VC07)  rejected (VC07)
+VC08 rga at 24 h           rejected (VC07)  rejected (VC07)
+VC08 rga at 30 h           rejected (VC07)  rejected (VC07)
+VC08 rga at 36 h           rejected (VC07)  rejected (VC07)
+VC08 rga at 42 h           rejected (VC07)  rejected (VC07)
+VC08 rga at 48 h           rejected (VC07)  rejected (VC07)
+VC08 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
+VC08 rate-of-rise at 20 h  rejected (VC07)  rejected (VC07)
+VC08 rate-of-rise at 24 h  rejected (VC07)  rejected (VC07)
+VC08 rate-of-rise at 30 h  rejected (VC07)  rejected (VC07)
+VC08 rate-of-rise at 36 h  rejected (VC07)  rejected (VC07)
+VC08 rate-of-rise at 42 h  rejected (VC07)  rejected (VC07)
+VC08 rate-of-rise at 48 h  rejected (VC07)  rejected (VC07)
+VC08 speed-test at 16 h    rejected (VC07)  rejected (VC07)
+VC08 speed-test at 20 h    rejected (VC07)  rejected (VC07)
+VC08 speed-test at 24 h    rejected (VC07)  rejected (VC07)
+VC08 speed-test at 30 h    rejected (VC07)  rejected (VC07)
+VC08 speed-test at 36 h    rejected (VC07)  rejected (VC07)
+VC08 speed-test at 42 h    rejected (VC07)  rejected (VC07)
+VC08 speed-test at 48 h    rejected (VC07)  rejected (VC07)
+VC08 helium                rejected (VC07)  rejected (VC07)
+VC09 rga at 16 h           rejected (VC07)  rejected (VC07)
+VC09 rga at 20 h           rejected (VC07)  rejected (VC07)
+VC09 rga at 24 h           rejected (VC07)  rejected (VC07)
+VC09 rga at 30 h           rejected (VC07)  rejected (VC07)
+VC09 rga at 36 h           rejected (VC07)  rejected (VC07)
+VC09 rga at 42 h           rejected (VC07)  rejected (VC07)
+VC09 rga at 48 h           rejected (VC07)  rejected (VC07)
+VC09 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
+VC09 rate-of-rise at 20 h  rejected (VC07)  rejected (VC07)
+VC09 rate-of-rise at 24 h  rejected (VC07)  rejected (VC07)
+VC09 rate-of-rise at 30 h  rejected (VC07)  rejected (VC07)
+VC09 rate-of-rise at 36 h  rejected (VC07)  rejected (VC07)
+VC09 rate-of-rise at 42 h  rejected (VC07)  rejected (VC07)
+VC09 rate-of-rise at 48 h  rejected (VC07)  rejected (VC07)
+VC09 speed-test at 16 h    rejected (VC07)  rejected (VC07)
+VC09 speed-test at 20 h    rejected (VC07)  rejected (VC07)
+VC09 speed-test at 24 h    rejected (VC07)  rejected (VC07)
+VC09 speed-test at 30 h    rejected (VC07)  rejected (VC07)
+VC09 speed-test at 36 h    rejected (VC07)  rejected (VC07)
+VC09 speed-test at 42 h    rejected (VC07)  rejected (VC07)
+VC09 speed-test at 48 h    rejected (VC07)  rejected (VC07)
+VC09 helium                rejected (VC07)  rejected (VC07)
+VC10 rga at 16 h           rejected (VC07)  rejected (VC07)
+VC10 rga at 20 h           rejected (VC07)  rejected (VC07)
+VC10 rga at 24 h           rejected (VC07)  rejected (VC07)
+VC10 rga at 30 h           rejected (VC07)  rejected (VC07)
+VC10 rga at 36 h           rejected (VC07)  rejected (VC07)
+VC10 rga at 42 h           rejected (VC07)  rejected (VC07)
+VC10 rga at 48 h           rejected (VC07)  rejected (VC07)
+VC10 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
+VC10 rate-of-rise at 20 h  rejected (VC07)  rejected (VC07)
+VC10 rate-of-rise at 24 h  rejected (VC07)  rejected (VC07)
+VC10 rate-of-rise at 30 h  rejected (VC07)  rejected (VC07)
+VC10 rate-of-rise at 36 h  rejected (VC07)  rejected (VC07)
+VC10 rate-of-rise at 42 h  rejected (VC07)  rejected (VC07)
+VC10 rate-of-rise at 48 h  rejected (VC07)  rejected (VC07)
+VC10 speed-test at 16 h    rejected (VC07)  rejected (VC07)
+VC10 speed-test at 20 h    rejected (VC07)  rejected (VC07)
+VC10 speed-test at 24 h    rejected (VC07)  rejected (VC07)
+VC10 speed-test at 30 h    rejected (VC07)  rejected (VC07)
+VC10 speed-test at 36 h    rejected (VC07)  rejected (VC07)
+VC10 speed-test at 42 h    rejected (VC07)  rejected (VC07)
+VC10 speed-test at 48 h    rejected (VC07)  rejected (VC07)
+VC10 helium                rejected (VC07)  rejected (VC07)
 
 budget: 1 test across 10 chambers, placed once; pumping times tried: 16 20 24 30 36 42 48 h
 gate: at least 10 of 10 chambers right
 orders tried: 221
 
 ORDERS THAT WORK FOR THE REFERENCE: 18 of 221
-  VC08 rga at 20 h
-  VC08 rga at 24 h
-  VC08 rga at 30 h
-  VC08 rga at 36 h
-  VC08 rga at 42 h
-  VC08 rga at 48 h
-  VC08 rate-of-rise at 20 h
-  VC08 rate-of-rise at 24 h
-  VC08 rate-of-rise at 30 h
-  VC08 rate-of-rise at 36 h
-  VC08 rate-of-rise at 42 h
-  VC08 rate-of-rise at 48 h
-  VC08 speed-test at 20 h
-  VC08 speed-test at 24 h
-  VC08 speed-test at 30 h
-  VC08 speed-test at 36 h
-  VC08 speed-test at 42 h
-  VC08 speed-test at 48 h
+  VC07 rga at 20 h
+  VC07 rga at 24 h
+  VC07 rga at 30 h
+  VC07 rga at 36 h
+  VC07 rga at 42 h
+  VC07 rga at 48 h
+  VC07 rate-of-rise at 20 h
+  VC07 rate-of-rise at 24 h
+  VC07 rate-of-rise at 30 h
+  VC07 rate-of-rise at 36 h
+  VC07 rate-of-rise at 42 h
+  VC07 rate-of-rise at 48 h
+  VC07 speed-test at 20 h
+  VC07 speed-test at 24 h
+  VC07 speed-test at 30 h
+  VC07 speed-test at 36 h
+  VC07 speed-test at 42 h
+  VC07 speed-test at 48 h
 ORDERS THAT WORK FOR THE INDEPENDENT: 18 of 221
-  VC08 rga at 20 h
-  VC08 rga at 24 h
-  VC08 rga at 30 h
-  VC08 rga at 36 h
-  VC08 rga at 42 h
-  VC08 rga at 48 h
-  VC08 rate-of-rise at 20 h
-  VC08 rate-of-rise at 24 h
-  VC08 rate-of-rise at 30 h
-  VC08 rate-of-rise at 36 h
-  VC08 rate-of-rise at 42 h
-  VC08 rate-of-rise at 48 h
-  VC08 speed-test at 20 h
-  VC08 speed-test at 24 h
-  VC08 speed-test at 30 h
-  VC08 speed-test at 36 h
-  VC08 speed-test at 42 h
-  VC08 speed-test at 48 h
+  VC07 rga at 20 h
+  VC07 rga at 24 h
+  VC07 rga at 30 h
+  VC07 rga at 36 h
+  VC07 rga at 42 h
+  VC07 rga at 48 h
+  VC07 rate-of-rise at 20 h
+  VC07 rate-of-rise at 24 h
+  VC07 rate-of-rise at 30 h
+  VC07 rate-of-rise at 36 h
+  VC07 rate-of-rise at 42 h
+  VC07 rate-of-rise at 48 h
+  VC07 speed-test at 20 h
+  VC07 speed-test at 24 h
+  VC07 speed-test at 30 h
+  VC07 speed-test at 36 h
+  VC07 speed-test at 42 h
+  VC07 speed-test at 48 h
 
 the shortcut matches the whole audit on every sampled order; both audits are carried by the same orders

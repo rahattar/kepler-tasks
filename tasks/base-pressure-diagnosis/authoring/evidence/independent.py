@@ -300,6 +300,30 @@ def readings(cid, data, st, swaps):
     return out
 
 
+def test_readings(cid, data, st):
+    """Each shop speed test's no-flow pressure as one more reading: the empty chamber after an air vent, at the
+    test's pumping time and wall temperature, with the speed that test measured. A cold cathode that has drifted is
+    corrected as in readings(); before the first pumpdown both gauges were read on, it is taken as it was then."""
+    pairs = {}
+    for r in [x for x in data["log"] if x["chamber"] == cid]:
+        pairs.setdefault((r["date"], r["pumpdown"]), {})[r["gauge"][:2]] = float(r["reading_mbar"])
+    both = [(_ord(d), v["CC"] / v["IG"]) for (d, _p), v in sorted(pairs.items()) if "CC" in v and "IG" in v]
+    line = np.polyfit([x for x, _ in both], [y for _, y in both], 1) if len(both) >= 2 else None
+    out = []
+    for r in data["spd"]:
+        if r["chamber"] != cid or r["date"] > AUDIT_DATE or (st["relined"] and r["date"] < st["relined"]):
+            continue
+        tag = r["gauge"]
+        if tag not in data["cert"]:
+            continue
+        shown = float(r["p_without_flow_mbar"]) * factor_on(data["cert"], tag, r["date"])
+        if line is not None and tag.startswith("CC"):
+            shown /= float(np.polyval(line, max(_ord(r["date"]), both[0][0])))
+        out.append(dict(date=r["date"], hours=float(r["pumping_time_h"]), t_c=float(r["wall_temp_c"]),
+                        vent="air", load="", shown=shown, tag=tag, s_test=float(r["s_eff_l_s"])))
+    return out
+
+
 def surfaces_of(st, load):
     out = list(st["surfaces"])
     if load and load in KIT:
@@ -522,6 +546,9 @@ def tau_is_measured(cid, data, st, obs, s_now, trapped_from, free_perm, speed_ra
     return max(prof) - min(prof) >= 1.0
 
 
+CHI2_1PC = {1: 6.63, 2: 9.21, 3: 11.34}      # the chi-square a one per cent significance asks, by added parameters
+
+
 def audit_one(cid, data, vac):
     st = state_on(cid, data, AUDIT_DATE)
     altered = turbo_altered(cid, data)
@@ -540,12 +567,17 @@ def audit_one(cid, data, vac):
         if speed is None:
             continue
         obs.append(dict(r, shown=shown, gauge=True, speed=speed, sd=READ_REPEAT))
+    for r in test_readings(cid, data, st):
+        f = k.get(r["tag"], 1.0)
+        obs.append(dict(r, shown=r["shown"] * f, gauge=True, speed=r["s_test"] / f,
+                        sd=math.hypot(SPEED_REPEAT, SPEED_REPEAT * 1.5)))
     obs += ordered
 
     rated = rated_of(st)
     lo_d, hi_d = min(o["date"] for o in obs), max(o["date"] for o in obs)
     worked = sorted({r["date"] for r in data["mnt"] if r["chamber"] == cid and lo_d < r["date"] <= hi_d})
     best = None
+    plain = solve(cid, data, st, obs, s_now, None, False, (0.05 * rated, 1.2 * rated), leak)
     for tf in [None, "0000-00-00"] + worked:
         for free in (False, True):
             chi2, p, n, kpar = solve(cid, data, st, obs, s_now, tf, free, (0.05 * rated, 1.2 * rated), leak)
@@ -553,6 +585,11 @@ def audit_one(cid, data, vac):
                 continue                    # a budget that passes through every observation is untested
             if (tf is not None or free) and n < kpar + 2:
                 continue                    # an added mechanism has to leave two degrees of freedom to be tested
+            # and it has to earn its place: the improvement over the plain budget must be significant at one per
+            # cent for the parameters it adds (chi-square, two for a trapped volume, one for a seal's scale)
+            added = (2 if tf is not None else 0) + (1 if free else 0)
+            if added and plain[2] > plain[3] and plain[0] - chi2 < CHI2_1PC[added]:
+                continue
             bic = chi2 + kpar * math.log(n)
             if best is None or bic < best[0]:
                 best = (bic, p, tf, free)

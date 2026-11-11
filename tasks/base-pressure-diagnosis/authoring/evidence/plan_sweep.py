@@ -25,7 +25,8 @@ import routes as R                                                      # noqa: 
 
 TIMES = [16.0, 20.0, 24.0, 30.0, 36.0, 42.0, 48.0]
 GAS_TESTS = ["rga", "rate-of-rise", "speed-test"]
-CHECK_WHOLE = [("VC08", "rga", 36.0), ("VC03", "rate-of-rise", 24.0), ("VC09", "speed-test", 16.0),
+CHECK_WHOLE = [("VC07", "rga", 36.0), ("VC08", "rga", 36.0), ("VC03", "rate-of-rise", 24.0),
+               ("VC09", "speed-test", 16.0),
                ("VC05", "helium", None)]
 
 
@@ -91,7 +92,7 @@ def main():
     if set(good["reference"]) != set(good["independent"]):
         fails.append("the two audits are carried by different orders: %s"
                      % sorted(set(good["reference"]) ^ set(good["independent"])))
-    if "VC08 rga at %g h" % C.F.DEFAULT_TEST_H in good["reference"]:
+    if "%s rga at %g h" % (C.REFERENCE_PLAN[0]["chamber"], C.F.DEFAULT_TEST_H) in good["reference"]:
         fails.append("the default pumping time works; the order would not need choosing")
     print("")
     if fails:

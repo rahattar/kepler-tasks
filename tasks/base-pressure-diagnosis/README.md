@@ -48,15 +48,16 @@ The chambers and records are synthetic, written by `authoring/provenance` (`bpph
 - Trapped volumes emptying with time constants of 14 and 24 h.
 - Total gas loads of 6.4 x 10^-5 to 8.3 x 10^-4 mbar L/s, and base pressures of 2.2 x 10^-7 to 1.7 x 10^-6 mbar,
   every one of them above the chamber's specified base pressure.
-- Four to seven recent pumpdowns per chamber, of 12 to 44 h, over 2026-07-02 to 2026-10-30, in a shop whose air runs
+- Four to seven recent pumpdowns per chamber, of 12 to 24 h, over 2026-07-02 to 2026-10-30, in a shop whose air runs
   from 27 C in July to 13 C in October, with gauge readings repeatable to 0.6 per cent.
 
 The reference condition is the same for every chamber: 36 h from the start of roughing after an air vent, the
-chamber wall at 20 C, nothing in the chamber. That is longer than every pumpdown in the records but one (VC07's 44
-h), so no entry can be read across to it: every chamber's gas load is the sum of mechanisms that extrapolate
-differently in pumping time and temperature, and only a budget identified across the chamber's own entries reaches
-the reference condition. Each chamber's limiting cause is the mechanism with the largest gas load there, except that
-a chamber whose actual speed is below 0.75 of its rated speed is limited by its pump whatever its gas load is doing.
+chamber wall at 20 C, nothing in the chamber. That is longer than every pumpdown in the base-pressure log (the
+longest is 24 h), so no entry can be read across to it: every chamber's gas load is the sum of mechanisms that
+extrapolate differently in pumping time and temperature, and only a budget identified across the chamber's own
+entries reaches the reference condition. Each chamber's limiting cause is the mechanism with the largest gas load
+there, except that a chamber whose actual speed is below 0.75 of its rated speed is limited by its pump whatever its
+gas load is doing.
 
 The example chamber, VC00, has sound records throughout: one gauge, a speed test that still describes its pump, no
 work in the maintenance log over the period of its log, and no load on any pumpdown. It is there to show the format
@@ -65,7 +66,7 @@ convention the audit needs, so a worked answer would add nothing but an end-to-e
 known figure.
 
 The ten chambers carry the faults that shop records carry. Each looks like ordinary data, and the documents say only
-what was done, never its effect. Twelve of the layers are settled by the data alone:
+what was done, never its effect. Thirteen of the layers are settled by the data alone:
 - **A reference condition no entry reaches.** Every chamber carries at least two mechanisms of comparable size, and
   its entries are spread in pumping time, vent gas and wall temperature, so that reading the latest entry across to
   the reference condition by any one mechanism's law misses. The budget has to be identified.
@@ -83,10 +84,17 @@ what was done, never its effect. Twelve of the layers are settled by the data al
 - **A leak against permeation.** Both are constant in pumping time and both admit air, so only the gas load's
   temperature dependence across the log, or the oxygen and argon of a residual gas analysis, separates them (VC04
   against VC06).
-- **A trapped volume against wall gas.** Both decay with pumping time, one exponentially and one as a power law. On
-  one chamber a single long weekend pumpdown in the log separates them (VC07). On the other the trapped volume
-  appeared with recent work, and every pumpdown since is at one pumping time: they give its load there and nothing
-  about how fast it empties, which is what its gas load at the reference condition turns on (VC08).
+- **A speed test that is also a reading.** A shop speed test records the chamber's own base pressure before the flow
+  is admitted, at the pumping time and wall temperature of that pumpdown. On one chamber it is the only reading at a
+  long pumping time: VC08's load went up ninefold when its cryopanel brackets were replaced, every log entry since
+  is at 16 h, and the log alone says nothing about how fast the new source falls. Its October speed test, taken
+  after a 42 h weekend pumpdown, does, so VC08 is the chamber that looks as if it needs the test and does not.
+- **A trapped volume that reads as a leak.** On VC07 a trapped volume behind a fixture plate refitted in July
+  empties with a time constant of a day. Every pumpdown since is at 16 h, so it is a constant there; with the real
+  leak small, the chamber fits an air leak to the noise, the wall gas following the wall temperature and the
+  nitrogen vents and the rest doing neither. Only the July speed test, taken on the eve of the refit, shows that the
+  constant part was not there before it, and nothing at all in the records says how fast it falls, which is what its
+  gas load at the reference condition turns on. This is the chamber the test is needed on, and nothing points to it.
 - **A pump with an ordinary gas load.** Two chambers are limited by speed while their gas loads are unremarkable, so
   an audit that puts every shortfall down to gas names the wrong cause and reaches the wrong figure for both
   quantities (VC09, VC10).
@@ -103,13 +111,14 @@ what was done, never its effect. Twelve of the layers are settled by the data al
   throughput tests contradict its certificate, and its hot-filament gauge, the reference instrument of clause 5,
   disagrees with it by exactly that factor (VC01).
 - **A replacement gauge whose certificate is out, which every simple reading fits.** On one chamber the cold cathode
-  was replaced part way through the log, and the replacement's certificate is out: it reads every pressure high, so
-  the speed test run on it reports the pump, which its controller shows in order, well below rated. Take that test
-  at its word and the gas budget fits to the noise, with the gas load right and the speed wrong. Take the pump at
-  its rated speed and the certificate as issued, and the readings step up at the replacement, which a trapped volume
-  dated to that maintenance entry absorbs just as cleanly, with the gas load and the cause wrong. Only the gauge
-  explains both the step and the low test: a trapped volume cannot change a throughput test, and the vacuum data say
-  a pump in order delivers its rated speed (VC04).
+  was swapped part way through the log for a spare head from stores, and the spare's certificate, issued the year
+  before, is out: it reads every pressure high, so the speed test run on it reports the pump, which its controller
+  shows in order, well below rated, where the old gauge's tests put it at rated. Take that test at its word and the
+  gas budget fits to the noise, with the gas load right and the speed wrong. Take the pump at its rated speed and
+  the certificate as issued, and the readings step up at the replacement, which a trapped volume dated to that
+  maintenance entry absorbs just as cleanly, with the gas load and the cause wrong. Only the gauge explains both the
+  step and the low test: a trapped volume cannot change a throughput test, and the vacuum data say a pump in order
+  delivers its rated speed (VC04).
 - **A register that names the wrong pump, which no fit can see.** On one chamber the register names a larger pump
   than the one that is fitted. Nothing in the gas budget depends on it; what depends on it is the rated speed, and
   with the register's pump the chamber's sound speed falls below clause 6's gate. The controller reports the rotor
@@ -135,7 +144,7 @@ Nine more are recorded somewhere in the documents and have to be found and appli
   4 to 48 h (`vacwork.md`). At 16 h the one chamber the test is needed on only repeats its log.
 
 Each check left out or done the obvious way gets chambers wrong, and every chamber of the fleet must be right
-(`authoring/evidence/route_study.txt`). Twenty-three routes, each leaving out one check or doing it the obvious way,
+(`authoring/evidence/route_study.txt`). Twenty-four routes, each leaving out one check or doing it the obvious way,
 are each rejected; each chamber is missed by at least three routes; and each chamber is missed by at least one route
 on its cause alone, so no chamber's grading turns on where the tolerance is drawn. Taking the records at face value
 - the register's surfaces, seal and port, the latest speed test, the logged serials, every entry pooled, the table's
@@ -145,9 +154,10 @@ The audit test is load-bearing and measured to be so (`authoring/evidence/plan_s
 orders the budget allows: each gas-load test (rga, rate-of-rise, speed-test) on each chamber at each of the pumping
 times 16, 20, 24, 30, 36, 42, 48 h, a helium test on each chamber, and placing no order at all, 221 orders in all.
 Eighteen of them carry the reference to a pass, and the independent audit is carried by exactly the same ones: a
-gas-load test on VC08 (rate-of-rise, rga, speed-test) at a pumping time from 20 to 48 h. At the contractor's default
-16 h the test only repeats what the log already says, a helium test measures a leak that was never in doubt, and a
-test on any other chamber is spent where the records already answer.
+gas-load test on VC07 (rate-of-rise, rga, speed-test) at a pumping time from 20 to 48 h. A test on VC08, the chamber
+whose log points at itself, is spent where its own speed test already answers; at the contractor's default 16 h a
+test on VC07 only repeats what its log already says; and a helium test measures a leak, not how fast a trapped
+volume empties.
 
 ## Reference solution
 
@@ -170,8 +180,10 @@ it does the following.
   date; where neither exists it is found with the gas budget.
 - **The observations.** Every kept base-pressure entry is an observation of the gas load at the speed in force on
   its date, whichever pump or port it was taken with: the gas load does not depend on the pump. Entries are kept
-  from the last change of internals on. An ordered analysis or rate-of-rise is one more observation at its own
-  pumping time and wall temperature, and a helium test is an observation of the leak.
+  from the last change of internals on. Each shop speed test is one more: its no-flow pressure is the empty
+  chamber's base pressure at the test's own pumping time and wall temperature, taken with the speed that test
+  measured. An ordered analysis or rate-of-rise is one more observation at its own pumping time and wall
+  temperature, and a helium test is an observation of the leak.
 - **The gas budget.** Fitted as MS-BP clause 3 gives it, Q_i = C_w W_i + Q_L + Q_v0 exp(-t_i / tau) + Q_perm,i, the
   trapped term only on and after the date it appeared, with W_i the table's nominal wall load for the entry's
   surfaces, fixtures, vent gas and wall temperature and Q_perm,i the seal's permeation at its temperature. Every
@@ -189,12 +201,12 @@ it does the following.
   with the surfaces and seal the chamber has on the audit date. The cause is the pump where the actual speed is
   below 0.75 of the rated speed of the chamber as it is now, and otherwise the mechanism with the largest load.
 
-The order it places is the whole budget of one test: VC08 rga at 36 h. Of the 221 orders the budget allows, eighteen
-carry the reference to a pass, all a gas-load test on VC08 at a pumping time from 20 to 48 h
+The order it places is the whole budget of one test: VC07 rga at 36 h. Of the 221 orders the budget allows, eighteen
+carry the reference to a pass, all a gas-load test on VC07 at a pumping time from 20 to 48 h
 (`authoring/evidence/plan_sweep.txt`).
 
 Run through `tests/grade_audit.py` as the verifier reads a submission, the reference gets every chamber right, with
-its gas loads within 1.54 per cent of the truth and its speeds within 1.43 per cent
+its gas loads within 1.39 per cent of the truth and its speeds within 1.52 per cent
 (`authoring/evidence/reference_run.txt`).
 
 ## Verification
@@ -221,27 +233,27 @@ Why these tolerances, and why every chamber:
 - **Correct methods.** Each tolerance is twice the widest deviation any sound method reaches on any chamber, rounded
   up to the half per cent, and preflight recomputes that rule from the record. Eighteen sound methods are accepted,
   each a complete sheet scored through this grader (`authoring/evidence/method_spread.txt`): the reference on the
-  order it places and on five other sound orders, gas-load tests on VC08 at other pumping times;
+  order it places and on five other sound orders, gas-load tests on VC07 at other pumping times;
   `authoring/evidence/independent.py`, a second audit written from the documents alone that shares no code with the
   reference, on each of the same orders - it solves the whole budget jointly by nonlinear least squares in the
   logarithm of the gas load, selects structures by BIC rather than AIC, with any added mechanism required to leave
-  two degrees of freedom, finds a seal the register gets wrong as a free permeation scale that is adopted only where
-  it is well determined and lands on a material of the table, and dates a turbo's change by a changepoint test; and
-  six variations of the reference - dropping the oldest entry, averaging the period's speed tests, asking twice or
-  half the evidence before setting the register's seal aside, weighting the ordered test as a gauge reading, and a
-  finer grid of time constants. Both audits are also right on VC08 on each of the twenty laboratory seeds of the
-  ordered test's scatter, and on records rebuilt from each of twenty other draws of the shop's instrument noise
-  (`authoring/evidence/seed_screen.txt`). Over every sound method and chamber the widest deviation is 1.99 per cent
-  on the gas load and 1.70 per cent on the speed, so the tolerances stand at 2.01 and 2.06 times the spread of sound
-  work.
-- **Defective routes.** Twenty-three routes, each the reference with one check left out or done the obvious way, are
-  all rejected (`authoring/evidence/route_study.txt`). Six of them are rejected by a single chamber - register_seal,
-  trust_register_seal, rated_speed, undated_certificates, register_pump, ignore_load - and the study fails unless
-  each of those misses its chamber by at least 2.00 times the tolerance or on the cause outright, so no route is
-  rejected on a knife edge. Routes that miss several chambers may graze a band on one of them: the nearest miss on a
-  quantity anywhere in the study is 4.49 per cent, 1.12 times the gas-load tolerance. That costs nothing, because
-  every chamber is missed by at least three routes, and by at least one on its cause alone. On every laboratory seed
-  of the ordered test VC08 is still missed by at least 4 routes.
+  two degrees of freedom and to improve the fit significantly at one per cent, finds a seal the register gets wrong
+  as a free permeation scale that is adopted only where it is well determined and lands on a material of the table,
+  and dates a turbo's change by a changepoint test; and six variations of the reference - dropping the oldest entry,
+  averaging the period's speed tests, asking twice or half the evidence before setting the register's seal aside,
+  weighting the ordered test as a gauge reading, and a finer grid of time constants. Both audits are also right on
+  VC07 on each of the twenty laboratory seeds of the ordered test's scatter, and on records rebuilt from each of
+  twenty other draws of the shop's instrument noise (`authoring/evidence/seed_screen.txt`). Over every sound method
+  and chamber the widest deviation is 2.18 per cent on the gas load and 1.70 per cent on the speed, so the
+  tolerances stand at 1.84 and 2.06 times the spread of sound work.
+- **Defective routes.** Twenty-four routes, each the reference with one check left out or done the obvious way, are
+  all rejected (`authoring/evidence/route_study.txt`). Four of them are rejected by a single chamber -
+  register_seal, trust_register_seal, undated_certificates, register_pump - and the study fails unless each of those
+  misses its chamber by at least 2.00 times the tolerance or on the cause outright, so no route is rejected on a
+  knife edge. Routes that miss several chambers may graze a band on one of them: the nearest miss on a quantity
+  anywhere in the study is 4.00 per cent, 1.00 times the gas-load tolerance. That costs nothing, because every
+  chamber is missed by at least three routes, and by at least one on its cause alone. On every laboratory seed of
+  the ordered test VC07 is still missed by at least 6 routes.
 - **Every chamber.** The allowance of one wrong chamber that earlier tasks carried is not used here, and the reason
   is measured (`authoring/evidence/plan_sweep.txt`): with an allowance of one, the audit test is not load-bearing at
   all, because the reference passes with no test ordered. Requiring every chamber makes the one chamber whose own
@@ -258,7 +270,7 @@ No chamber has a free pass.
 `authoring/evidence/hedge_study.txt` records what a wrong attribution does to the quantities. It runs the reference
 with its reading forced to each cause but the chamber's own - 10 chambers times 4 alternatives, forty cases - and
 scores each sheet, naming that cause, through this grader. A wrong cause fails the chamber by definition; what the
-study measures is whether the gas load survives the wrong reading. In 18 of the 40 cases it does and in 20 it does
+study measures is whether the gas load survives the wrong reading. In 20 of the 40 cases it does and in 18 it does
 not; in the other two the records leave too few observations to fit the forced reading at all. Not one sheet is
 accepted. Where the total survives a wrong attribution the chamber is decided by the cause, which is graded on its
 own.

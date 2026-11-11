@@ -99,7 +99,7 @@ Cold cathode gauge, installed on chamber VC04.
 
 | issued | factor |
 |---|---|
-| 2026-09-08 | 1.00 |
+| 2025-04-02 | 1.00 |
 
 ## IG-7201
 

@@ -7,7 +7,7 @@ before the winter shutdown is planned.
 A few things worth knowing before you start on the records.
 
 **Pumpdown lengths vary.** Chambers are pumped overnight and the length depends on what time the crew vented them,
-so the base-pressure log holds pumpdowns of anything from twelve to forty-four hours. The shop's own jobs do not
+so the base-pressure log holds pumpdowns of anything from twelve to twenty-four hours. The shop's own jobs do not
 care, but the audit does: MS-BP refers everything to one condition.
 
 **The shop is not temperature controlled.** The south bay runs several degrees warmer than the north bay in summer

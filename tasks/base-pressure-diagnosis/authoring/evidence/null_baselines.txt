@@ -1,4 +1,4 @@
-inputs: 4f0ba0110706d66e
+inputs: f677117e59ae8edf
 Method-free answers, each scored through the task's grader
 ==========================================================
 

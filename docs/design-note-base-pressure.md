@@ -507,3 +507,44 @@ unchanged); 18 of 221 orders work for both audits; seed screen 20 of 20; preflig
 Final records, xhigh 1 of 3 (V2 solved; V1 and V3 took the new gauge's low test, both naming the replacement gauge
 as the possible culprit and choosing against it). With the prototype round: xhigh 1 of 6 on this layer, every
 miss on VC04's speed; low 1 of 3.
+
+---
+
+# EASINESS PROBE FAILED (1 of 3 low-effort solves, allowed 0): A NEW CORE (11 November, evening)
+
+The official easiness probe solved 1 of 3 at low effort (bar: 0 of 3), in 6 minutes median. Its feedback asks for
+a harder core problem, not more of the same. Diagnosis: all 15 probes seen up to then, official and local, spent
+the one test on VC08, because VC08's log points at itself (ninefold jump after the bracket work, every entry since
+at 16 h). The core inference - which chamber the records cannot settle - was free.
+
+Agreed with Alex: make the obvious chamber settle from its own records, and move the unsettled one where nothing
+announces it.
+
+- **Speed tests became readings.** `speed_tests.csv` gains `pumping_time_h` and `wall_temp_c`; records_format.md
+  says a test is run on the empty chamber at the end of a pumpdown after an air vent, and that the no-flow pressure
+  is the chamber's own base pressure. Both audits take each test's no-flow pressure times its own speed as one
+  more gas-load observation. The reference's drift line is no longer carried backwards past the first pairing
+  (a 2025 speed test on VC09 had been "corrected" by a factor of 1.8).
+- **VC08 (the decoy)** keeps its jump, but its October speed test was taken after a 42 h pumpdown, and that reading
+  pins its time constant. `tune.py` measures VC08 settled from records alone (P = 1.00).
+- **VC07 (the target).** All its pumpdowns are now at 16 h (the 44 h entry is gone), so its trapped volume reads as
+  a constant; only the July speed test, the eve of the refit, shows the constant part is new, and nothing says how
+  fast it falls. `tune.py`: records alone P = 0.03; a test at 24-48 h settles it.
+- **VC10** load-bearing again after its 2025 speed test was moved to 12 h (at 16 h and 7.4 C it sat at rho near 1).
+- The reference now settles tau between its grid points (golden section); the grid's step had put VC07 2.45% out
+  under an RGA at 24 h. The independent audit requires an added mechanism to be significant at 1% over the plain
+  budget, after the seed screen caught it taking a spurious trapped volume on VC10 on two draws.
+- New route `speeds_only` (speed tests read for their speeds alone) misses VC08. `rated_speed` now leaves the
+  speed tests aside, since with their readings the fit happened to land VC04 right through a misfit (chi2 77).
+
+Probes on the new core: every one, 3 low and 3 xhigh, ordered VC07 (from the speed test readings and the 07-20
+note), and every one then missed VC04's speed (low 0 of 3, xhigh 0 of 3). The decoy did not fool anyone; VC04 is
+what stops them, and at 9 of 9 xhigh misses across three rounds it risks 0 of 8 officially. Their stated reasons
+were the replacement's "fresh certificate" and the old gauge "failing", both artefacts of my wording, not of the
+evidence. Changed: the replacement is a spare head from stores with a 2025 certificate, and the maintenance note
+says only that it was swapped.
+
+Probes after the neutral wording (spare head with a 2025 certificate, plain maintenance note): low 2 of 3, xhigh
+3 of 3. VC04 is a switch on wording: with the "fresh certificate" and "would not strike" cues every probe failed
+it, without them nearly every probe passes it. The decoy fooled no one (12 of 12 ordered VC07). Not shipped;
+waiting on a decision about the core.

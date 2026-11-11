@@ -87,7 +87,8 @@ def log_rows(ids):
 
 
 def speed_rows(ids):
-    rows = [["date", "chamber", "flow_mbarl_s", "p_with_flow_mbar", "p_without_flow_mbar", "gauge", "s_eff_l_s"]]
+    rows = [["date", "chamber", "pumping_time_h", "wall_temp_c", "flow_mbarl_s", "p_with_flow_mbar",
+             "p_without_flow_mbar", "gauge", "s_eff_l_s"]]
     out = []
     for cid in ids:
         ch = F.BY[cid]
@@ -106,7 +107,8 @@ def speed_rows(ids):
             p_wo = base_ind / real * float(math.exp(g.normal(0, SPEED_NOISE)))
             p_w = (base_ind + rise_ind) / real * float(math.exp(g.normal(0, SPEED_NOISE)))
             reported = flow / ((p_w - p_wo) * cert)
-            out.append([date, cid, "%.4g" % flow, sig(p_w, 4), sig(p_wo, 4), serial, "%.1f" % reported])
+            out.append([date, cid, "%.1f" % hours, "%.1f" % temp_c, "%.4g" % flow, sig(p_w, 4), sig(p_wo, 4), serial,
+                        "%.1f" % reported])
     out.sort(key=lambda r: (r[0], r[1]))
     return rows + out
 

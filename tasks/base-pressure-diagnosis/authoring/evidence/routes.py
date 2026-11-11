@@ -17,7 +17,9 @@ Routes, one per layer:
     trust_register_seal  never set the register's seal material aside, whatever the records show
     trust_certificate    take every gauge certificate as right, even where the speed it yields is not the rated
                          speed of a pump in order
-    rated_speed          take a pump in order at its rated speed now, and every certificate as issued
+    rated_speed          take a pump in order at its rated speed now and leave the speed tests aside, every
+                         certificate as issued
+    speeds_only          read the speed tests for their speeds alone, not their no-flow pressures as readings
     undated_certificates apply a gauge's latest certificate factor to every reading, whatever its date
     register_pump        take the pump the register names, whatever the controller's own figures report
     latest_speed_test    take the latest speed test whatever the controller rows show since
@@ -56,7 +58,7 @@ sys.path.insert(0, os.path.join(TASK, "solution"))
 import diagnose as D                                                    # noqa: E402
 
 ROUTES = ["register_surfaces", "register_port", "register_seal", "trust_register_seal", "trust_certificate",
-          "rated_speed", "undated_certificates", "register_pump", "latest_speed_test", "commissioning_speed",
+          "rated_speed", "speeds_only", "undated_certificates", "register_pump", "latest_speed_test", "commissioning_speed",
           "no_gas_correction", "all_entries", "void_before_change", "uncorrected_cathode", "logged_serials",
           "ignore_vent_gas", "ignore_load", "ignore_temperature", "table_outgassing", "no_time_reference",
           "leak_only", "skip_pump_gate", "face_value"]
@@ -249,7 +251,11 @@ def _patches(name):
     if name == "trust_certificate":
         return [("certificate_error", lambda cid, cfg, data: {})]
     if name == "rated_speed":
-        return [("certificate_error", lambda cid, cfg, data: {}), ("front_end", _rated_speed(D.front_end))]
+        return [("certificate_error", lambda cid, cfg, data: {}),
+                ("speed_test_points", lambda cid, cfg, data, certs: []),
+                ("front_end", _rated_speed(D.front_end))]
+    if name == "speeds_only":
+        return [("speed_test_points", lambda cid, cfg, data, certs: [])]
     if name == "undated_certificates":
         return [("cert_factor", _undated(D.cert_factor))]
     if name == "register_pump":

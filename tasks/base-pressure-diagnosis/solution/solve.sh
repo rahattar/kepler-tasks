@@ -3,13 +3,14 @@
 set -eu
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# The order buys the one thing the records cannot supply. VC08's trapped volume appeared when its cryopanel
-# brackets were replaced, and both pumpdowns since are at 16 h: they give its trapped load at 16 h and nothing about
-# how fast it empties, which is what its gas load at the 36 h reference condition turns on. One measurement of the
-# gas load at a longer pumping time settles it; at the contractor's default 16 h it would only repeat the log. The
-# other nine chambers are identified from their own records.
+# The order buys the one thing the records cannot supply. VC07's constant-looking load fits an air leak, but the
+# July speed test, taken just before its fixture plate was refitted, shows the load was not there before the refit,
+# and every pumpdown since is at 16 h: a trapped volume and a leak read alike there, and nothing says how fast a
+# trapped volume would empty, which is what its gas load at the 36 h reference condition turns on. One measurement
+# at a longer pumping time settles it. VC08, whose jump after its bracket work looks like the chamber to test, is
+# settled by its own October speed test, taken after a 42 h pumpdown. The other chambers need no test.
 cat > /tmp/plan.json <<'PLAN'
-{"tests": [{"chamber": "VC08", "test": "rga", "pumping_time_h": 36}]}
+{"tests": [{"chamber": "VC07", "test": "rga", "pumping_time_h": 36}]}
 PLAN
 vacwork submit < /tmp/plan.json
 

@@ -99,7 +99,7 @@ def place_order(plan, tag="order", lab_seed=None):
     return out
 
 
-REFERENCE_PLAN = [dict(chamber="VC08", test="rga", pumping_time_h=36.0)]   # as solution/solve.sh places it
+REFERENCE_PLAN = [dict(chamber="VC07", test="rga", pumping_time_h=36.0)]   # as solution/solve.sh places it
 
 
 def reference_answers(plan=None, tag="reference"):
