@@ -128,3 +128,21 @@ on. Two lessons:
   misreading from a modelling error. It is also what caught my own bug;
 - any clause that names a derived quantity ("the flow", "the load", "the temperature") has to say *which* one, at
   which point in the machine. A quantity that a solver can reasonably read two ways is a defect, not a layer.
+
+## The measurement-allocation lever is already taken (Nov 10)
+I designed and verified a sixth-of-a-bank identifiability task - six air-cooler bays, five unknown fouling
+resistances, four survey points, where the plant's own mixed return temperature and common pressure drop can carry
+one unmeasured bay and no more, so any wasted point leaves two that nothing recovers. The numbers came out well: a
+good plan recovered the fouling to 2.9-6.3 per cent and the flows to 0.82-1.29 per cent against bands of 10 and 3,
+and every wasted point put a flow four to five times outside its band.
+
+Then cooler-fouling-assessment landed, which is the same task: cooler fouling, a fouling resistance per unit in
+fouling.csv, and a slot allocation where two of the hundred and twenty ways to spend three slots pass. Backed mine
+out unbuilt.
+
+The lesson for choosing the next one: **"a measurement budget that a bad plan cannot recover from" is now covered**,
+and covered better than I had it. Of the three things listed above as untried, that leaves two, and they are both
+about inference from data already in hand rather than about what to go and measure:
+- a fault visible only in the raw data (a drifting instrument, swapped tags, an offset estimated from repeats);
+- a quantity to be identified where the natural estimator is biased, so care alone does not get it right.
+To which the twelve probe reports add a third: an answer the solver cannot confirm from its own inputs.
