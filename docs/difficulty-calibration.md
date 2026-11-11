@@ -368,6 +368,10 @@ redesign. A controlled comparison separated the two:
 | bore-form round 6 (branch bore-form-round6) | current model | 3 of 3 solved, 3 to 8 minutes |
 | bore-form round 6 | earlier model, forced with the Agent tool's `model` argument | 0 of 2, each 7 of 14 |
 
+The second probe on 20261111d also solved it, so that row is 2 of 2. At xhigh the current model solved round 6
+3 of 3, in about 40 minutes each, by the same route as its low-effort runs. Effort bought nothing on this
+task: the low-effort runs were already complete.
+
 So "0 of 3 with a seven-feature gap" was a statement about the weaker model. On the stronger one the same bundle
 is solved at low effort in minutes. The official screen had already said as much: it solved round 2 once in
 three, in three minutes, when the local probes of the day read 0 of 3.
