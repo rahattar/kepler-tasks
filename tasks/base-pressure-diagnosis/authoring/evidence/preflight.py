@@ -245,10 +245,16 @@ def check_instruction():
 
     # Nothing the agent can discover in one command belongs in the instruction: it is not part of the contract
     # and it dates the moment the image changes.
-    narration = [p for p in ("numpy", "scipy", "pandas", "python 3", "pip install", "is installed",
-                             "are available", "is available") if p in low]
+    # Only the image's own furniture counts. "One test is available across the fleet" is the task contract, so
+    # a bare "is available" must not trip this; what must trip it is a package, an interpreter or an install.
+    runtime = r"(?:numpy|scipy|pandas|matplotlib|sklearn|pytest|python\s*3|pip|interpreter|packages?|libraries|" \
+              r"modules?|pre-?installed|installed)"
+    narration = [m.group(0) for m in re.finditer(
+        r"[^.]*\b%s\b[^.]*(?:is|are)\s+(?:available|installed|provided|present)|"
+        r"(?:is|are)\s+(?:available|installed|provided|present)[^.]*\b%s\b[^.]*|"
+        r"\bpip\s+install\b|\bimport\s+(?:numpy|scipy|pandas)\b" % (runtime, runtime), low)]
     check(not narration, "the instruction narrates no discoverable detail of the image",
-          ", ".join(narration))
+          "; ".join(n.strip()[:60] for n in narration))
 
 
 # ---------------------------------------------------------------------------------------------- task.toml
