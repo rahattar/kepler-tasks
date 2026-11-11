@@ -1,0 +1,9 @@
+component,name,molar_mass_kg_per_kmol
+n2,nitrogen,28.010
+co2,carbon dioxide,44.010
+c1,methane,16.040
+c2,ethane,30.070
+c3,propane,44.100
+ic4,iso-butane,58.120
+nc4,n-butane,58.120
+c5plus,"pentanes and heavier, as n-pentane",72.150

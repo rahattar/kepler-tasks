@@ -1,0 +1,62 @@
+Sheets put through tests/grade_flare.py. Every case is built from the current reference.
+
+ok  the reference sheet                                  -> accepted
+ok  the reference sheet with CRLF line ends              -> accepted
+ok  the reference sheet with blank lines                 -> accepted
+ok  the reference sheet with padded fields               -> accepted
+ok  the reference sheet with the rows reversed           -> accepted
+ok  devices separated by commas                          -> accepted
+ok  devices separated by spaces                          -> accepted
+ok  devices in the other order                           -> accepted
+ok  no file at all                                       -> rejected: there is no study at relief.csv
+ok  a symbolic link to a good sheet                      -> rejected: the study is a symbolic link
+ok  a directory in place of the file                     -> rejected: the study is not a regular file
+ok  an empty file                                        -> rejected: the study is empty
+ok  the header alone                                     -> rejected: no line for cooling_water_failure, fire_zone_a, fire_zone_b, fire_zone_c, instrument_air_failure, power_failure
+ok  no header                                            -> rejected: the first line must name exactly contingency, devices, load_kg_per_h, header_inlet_barg
+ok  a misspelt header                                    -> rejected: the first line must name exactly contingency, devices, load_kg_per_h, header_inlet_barg
+ok  an extra header column                               -> rejected: the first line must name exactly contingency, devices, load_kg_per_h, header_inlet_barg
+ok  a row of the wrong length                            -> rejected: this line carries 3 fields, not 4
+ok  a contingency missing                                -> rejected: no line for fire_zone_c
+ok  a contingency repeated                               -> rejected: power_failure has a second line
+ok  an unknown contingency                               -> rejected: 'flood' is not a contingency of the standard
+ok  a contingency in upper case                          -> rejected: 'POWER_FAILURE' is not a contingency of the standard
+ok  non-ASCII text                                       -> rejected: the study is not ASCII text
+ok  a sheet larger than the cap                          -> rejected: the study is larger than 100000 bytes
+ok  an unknown device                                    -> rejected: 'PSV-499' is not a list of this unit's relief devices
+ok  a device in lower case                               -> rejected: 'psv-401' is not a list of this unit's relief devices
+ok  a device named twice                                 -> rejected: 'PSV-401;PSV-403;PSV-407;PSV-409;PSV-401' is not a list of this unit's relief devices
+ok  a device list of separators alone                    -> graded 5 of 6
+ok  a load that is not a number                          -> rejected: 'about 50000' is not a load from 0 to 1e+07 kg/h
+ok  an empty load                                        -> rejected: '' is not a load from 0 to 1e+07 kg/h
+ok  a load of NaN                                        -> rejected: 'nan' is not a load from 0 to 1e+07 kg/h
+ok  an infinite load                                     -> rejected: 'inf' is not a load from 0 to 1e+07 kg/h
+ok  a negative load                                      -> rejected: '-50000' is not a load from 0 to 1e+07 kg/h
+ok  a load above the range                               -> rejected: '1e8' is not a load from 0 to 1e+07 kg/h
+ok  a pressure that is not a number                      -> rejected: 'about 1 bar' is not a pressure from 0 to 1000 barg
+ok  an empty pressure                                    -> rejected: '' is not a pressure from 0 to 1000 barg
+ok  a pressure of NaN                                    -> rejected: 'nan' is not a pressure from 0 to 1000 barg
+ok  an infinite pressure                                 -> rejected: 'inf' is not a pressure from 0 to 1000 barg
+ok  a negative pressure                                  -> rejected: '-1.3' is not a pressure from 0 to 1000 barg
+ok  a pressure above the range                           -> rejected: '1e4' is not a pressure from 0 to 1000 barg
+ok  a load in exponent form                              -> accepted
+ok  a load with six decimals                             -> accepted
+ok  a load with twelve decimals                          -> accepted
+ok  a load with a leading plus                           -> accepted
+ok  one device dropped                                   -> graded 5 of 6
+ok  one device added                                     -> graded 5 of 6
+ok  a device list of none                                -> graded 5 of 6
+ok  one load moved by 2 per cent                         -> graded 5 of 6
+ok  one pressure moved by 2 per cent                     -> graded 5 of 6
+ok  every load moved by 2 per cent                       -> graded 0 of 6
+ok  every pressure moved by 2 per cent                   -> graded 1 of 6
+
+The reward protocol in tests/test.sh, with pytest stubbed so each combination can be forced.
+
+ok  pytest passes and the report holds one passing test  -> reward 1
+ok  pytest passes but the report holds two tests         -> reward 0
+ok  pytest fails though the report looks right           -> reward 0
+ok  pytest passes and writes no report at all            -> reward 0
+
+54 cases, 0 UNEXPECTED
+The grader never crashed, and the reward followed the run rather than anything written during it.

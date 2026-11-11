@@ -1,0 +1,13 @@
+test_date,pump,flow_m3h,head_m,speed_rpm,note
+2019-05-14,P-401,0.0,589.8,2975,"works performance test, new pump"
+2019-05-14,P-401,48.0,569.3,2975,"works performance test, new pump"
+2019-05-14,P-401,96.0,504.7,2975,"works performance test, new pump"
+2019-05-14,P-401,120.0,457.0,2975,"works performance test, new pump"
+2022-06-02,P-401,0.0,584.5,2975,routine performance test
+2022-06-02,P-401,48.0,563.0,2975,routine performance test
+2022-06-02,P-401,96.0,502.0,2975,routine performance test
+2022-06-02,P-401,120.0,452.4,2975,routine performance test
+2024-07-19,P-401,0.0,580.5,2975,performance test after the unit modification
+2024-07-19,P-401,48.0,562.1,2975,performance test after the unit modification
+2024-07-19,P-401,96.0,498.3,2975,performance test after the unit modification
+2024-07-19,P-401,120.0,451.6,2975,performance test after the unit modification

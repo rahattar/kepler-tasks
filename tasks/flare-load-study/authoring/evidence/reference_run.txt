@@ -1,0 +1,56 @@
+solution/solve.py on the shipped records (seed {"seed": 7301}).
+
+Quantities it identifies rather than reads:
+
+| quantity | identified | as the records would be read without the work | difference |
+|---|---|---|---|
+| PV-4001 coefficient at full travel | 54.88 | 64.00 (data sheet) | -14.2% |
+| PV-4021 coefficient at full travel | 3.08 | 2.50 (data sheet) | +23.3% |
+| PV-4031 coefficient at full travel | 48.19 | 48.00 (data sheet) | +0.4% |
+| PV-4061 coefficient at full travel | 36.12 | 36.00 (data sheet) | +0.3% |
+| PV-4071 coefficient at full travel | 37.78 | 27.00 (data sheet) | +39.9% |
+| E-403 coefficient-area, kW/K | 26.73 | 22.64 (data sheet duty) | +18.1% |
+| E-406 coefficient-area, kW/K | 42.73 | 36.19 (data sheet duty) | +18.1% |
+| feed flow against FE-4011's indication | x 1.0394 | x 1.0000 (as indicated) | +3.9% |
+| P-401 shutoff head, m | 544.8 | 590.0 (data sheet) | -7.7% |
+| PSV-403 set pressure, barg | 29.5 | 31.0 (register) | -4.8% |
+| PSV-409 set pressure, barg | 9.5 | 11.0 (register) | -13.6% |
+| PSV-407 tie-in, m from the stack base | 206 | 92 (isometrics) | +114 m |
+| T-401 wetted area, m2 | 20.25 | 20.25 (data book elevation) | +0.0% |
+| T-402 wetted area, m2 | 42.26 | 47.29 (data book elevation) | -10.6% |
+| V-401 wetted area, m2 | 14.54 | 14.54 (data book elevation) | +0.0% |
+| V-403 wetted area, m2 | 19.54 | 19.54 (data book elevation) | +0.0% |
+
+Its answer, against the sealed definition:
+
+| contingency | devices | load, kg/h | header inlet, barg | sealed load | sealed inlet |
+|---|---|---|---|---|---|
+| power_failure | PSV-401 PSV-403 PSV-407 PSV-409 | 99085.7 | 1.3240 | 99148.6 (-0.063%) | 1.3262 (-0.169%) |
+| cooling_water_failure | PSV-403 | 54234.2 | 0.4867 | 54237.3 (-0.006%) | 0.4869 (-0.049%) |
+| instrument_air_failure | PSV-401 PSV-407 PSV-409 | 44851.5 | 0.3517 | 44911.3 (-0.133%) | 0.3529 (-0.326%) |
+| fire_zone_a | PSV-401 PSV-402 PSV-409 | 19957.5 | 0.0523 | 19957.5 (+0.000%) | 0.0523 (-0.055%) |
+| fire_zone_b | PSV-403 PSV-404 | 517.5 | 0.0000 | 517.5 (+0.000%) | 0.0000 (+0.000%) |
+| fire_zone_c | PSV-406 PSV-407 PSV-408 | 38847.4 | 0.1279 | 38847.4 (+0.000%) | 0.1280 (-0.072%) |
+
+worst relative load 0.0013 and pressure 0.0033 against a band of 0.0100
+
+What each contingency reaches:
+
+| contingency | air lost | pump runs | safety system holds | device | cause | rate, kg/h |
+|---|---|---|---|---|---|---|
+| power_failure | yes | no | yes | PSV-401 | control_valve_failure | 25859.8 |
+|  |  |  |  | PSV-403 | cooling_failure | 54234.2 |
+|  |  |  |  | PSV-407 | control_valve_failure | 16105.8 |
+|  |  |  |  | PSV-409 | control_valve_failure | 2885.8 |
+| cooling_water_failure | no | yes | yes | PSV-403 | cooling_failure | 54234.2 |
+| instrument_air_failure | yes | yes | yes | PSV-401 | control_valve_failure | 25859.8 |
+|  |  |  |  | PSV-407 | control_valve_failure | 16105.8 |
+|  |  |  |  | PSV-409 | control_valve_failure | 2885.8 |
+| fire_zone_a | no | yes | yes | PSV-401 | fire | 8971.7 |
+|  |  |  |  | PSV-402 | fire | 7089.7 |
+|  |  |  |  | PSV-409 | fire | 3896.1 |
+| fire_zone_b | no | yes | yes | PSV-403 | fire | 283.6 |
+|  |  |  |  | PSV-404 | fire | 233.9 |
+| fire_zone_c | no | yes | yes | PSV-406 | fire | 13917.5 |
+|  |  |  |  | PSV-407 | fire | 15335.7 |
+|  |  |  |  | PSV-408 | fire | 9594.2 |

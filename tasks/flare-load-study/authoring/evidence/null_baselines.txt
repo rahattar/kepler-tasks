@@ -1,0 +1,13 @@
+Answers made without doing the study. Tolerance 0.010 relative.
+
+| Null answer | Right of 6 | Free passes |
+|---|---|---|
+| every device that admits a cause, under every contingency | 0 | none |
+| no device discharges anywhere | 0 | none |
+| only the device with the lowest set pressure | 0 | none |
+| the first zone's fire case, whatever the contingency | 1 | fire_zone_a |
+| the 2019 study's findings copied | 0 | none |
+| the right device sets with the 2019 numbers | 0 | none |
+| the right loads with the header never computed | 1 | fire_zone_b |
+
+best null answer: 1 of 6, against a gate of 6

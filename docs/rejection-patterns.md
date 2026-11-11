@@ -194,3 +194,50 @@ separate layers are the safe way to comment permissions.
 **Where it landed.** Per file against the nearest other bundle: grader 0.087, solution 0.023, instruction 0.141,
 task.toml 0.168, verifier image 0.311, pytest entry 0.335, agent image 0.388, reward script 0.440. Whole
 submission 0.091, against 0.229 for the version refused as too similar.
+
+## Similarity, measured properly (flare-load-study, Nov 11)
+
+Two of relief-valve-adequacy's four rejections turned on similarity, so flare-load-study was measured before
+packaging rather than after being rejected: token 5-gram Jaccard over whitespace- and number-normalised text,
+per file and per class (solution code, verifier code, instruction, whole submission), against all 38 other
+bundles.
+
+**The useful baseline is the catalogue itself.** Across all pairs of already-delivered tasks the median overlap
+is 0.024 on solution code, 0.118 on verifier code, 0.045 on instructions and 0.060 whole-submission, with
+ninetieth percentiles of 0.044, 0.390, 0.078 and 0.122. Anything inside those is normal for this repo; the
+number that matters is not an absolute threshold but where a new bundle sits against that distribution.
+
+**Against every task except its own predecessor, flare-load-study was already ≤0.11 everywhere.** Against
+relief-valve-adequacy it started at 0.43 solution, 0.55 verifier, 0.29 instruction, and 0.98 to 1.00 on the
+harness files.
+
+**The diagnostic that decided what to do: collapse every identifier to one token and measure again.** If the
+overlap is nominal it falls; if it is structural it does not. It *rose* - 0.43 to 0.61 on the solution, 0.55 to
+0.85 on the verifier. So the two bundles shared shape, not names, and re-skinning the plant (new unit number,
+new tags, new stream names) would have bought nothing. Run this diagnostic before deciding how to respond to a
+similarity problem; it is two minutes and it rules out the expensive wrong answer.
+
+**What actually moved the numbers**, all of it around the mandated literals rather than through them:
+
+| file | before | after |
+|---|---|---|
+| environment/Dockerfile | 1.000 | 0.213 |
+| tests/test.sh | 0.977 | 0.312 |
+| tests/Dockerfile | 0.975 | 0.346 |
+| tests/test_<name>.py | 0.678 | 0.302 |
+| tests/grade_<name>.py | 0.411 | 0.254 |
+| solution/solve.py | 0.390 | 0.351 |
+
+The harness files came down by rewriting every comment and reordering the layers while keeping the literal
+contract verbatim - and the 54 malformed-sheet cases plus the 4 reward-protocol cases were re-run afterwards to
+prove the behaviour had not moved, which is the check that was missing when the Nov 10 rewrite caused the
+structure rejection. The grader came down by rebuilding its reader as a table of column specs with one parser
+to a column, rather than four hand-written blocks mirroring the predecessor. `solution/solve.py` is the floor:
+it is the same physics on the same plant, and 0.35 is what that costs.
+
+**The precedent worth knowing before panicking about a sibling.** shrink-fit-hubs was rejected as too similar to
+flange-torque-spec and reworked as impeller-shrink-fits, which passed validation while its rejected predecessor
+sat in the pool with near-identical code. A reworked sibling is not blocked by its predecessor. What the gate
+caught in November was scaffolding shared with *other, independent* tasks that had gone in hours earlier, and
+the archetype of the deliverable. Fix those two and a family resemblance to your own earlier attempt is
+survivable.

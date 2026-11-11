@@ -1,0 +1,34 @@
+Design rules of flare-load-study, from the sealed definition.
+
+pass every contingency puts at least one device on the header                       none
+pass no two contingencies name the same devices                                     none
+pass every device discharges somewhere bar the screened one                         PSV-405
+pass fire, cooling failure and control valve failure all arise                      control_valve_failure, cooling_failure, fire
+pass the governing load is at least 10 times the smallest                           192 times
+pass exactly 1 row sits below the pressure floor                                    fire_zone_b
+pass every other row stands clear of the floor                                      lowest 0.0523 against a floor of 0.0020
+pass the governing contingency passes 1.0 barg at the header inlet                  1.3262 barg
+pass the tip now installed differs from the one the 2019 study worked to            +16.1 per cent against a band of 1.0
+pass the pump's recorded shutoff and its present one fall either side of the screen recorded 582.0 m, needed 577.3 m, now 545.0 m
+pass every identified quantity differs by 2 per cent or matches within 1            none
+
+What each layer is worth, against a tolerance of 1.0 per cent:
+
+| Layer | Worst row change | Where | What changes |
+|---|---|---|---|
+| the column re-set 0.90 m higher since the data book | 6.8% | fire_zone_c | pressure |
+| the tie-in moved after the isometrics were issued | 10.7% | instrument_air_failure | pressure |
+| the two valves reset in situ since the register | 4.1% | cooling_water_failure | pressure |
+| the air compressor moved to the normal supply | the device set | power_failure | devices |
+| the safety system left on the essential supply | the device set | power_failure | devices |
+| the fire-resistant insulation fitted since the study | 3265.4% | fire_zone_b | load |
+| the feed meter's stale configured density | 4.6% | instrument_air_failure | pressure |
+| the control valve coefficients the trend gives | 3.8% | instrument_air_failure | pressure |
+| the reboiler coefficient-area the record gives | 25.5% | cooling_water_failure | pressure |
+| the pump's shutoff head from its data sheet | the device set | instrument_air_failure | devices |
+| the tip measured rather than taken from the 2019 study | 9.0% | fire_zone_c | pressure |
+| the pump measured rather than taken from the record | the device set | instrument_air_failure | devices |
+
+layers worth less than the tolerance: none
+
+12 rules, 0 FAILED

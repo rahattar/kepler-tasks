@@ -1,0 +1,13 @@
+A second study of the same records, written separately. Tolerance 0.010 relative.
+
+| contingency | devices | load, kg/h | header inlet, barg | sealed load | sealed inlet |
+|---|---|---|---|---|---|
+| power_failure | PSV-401 PSV-403 PSV-407 PSV-409 | 99069.3 | 1.3236 | 99148.6 (-0.080%) | 1.3262 (-0.197%) |
+| cooling_water_failure | PSV-403 | 54230.6 | 0.4866 | 54237.3 (-0.012%) | 0.4869 (-0.061%) |
+| instrument_air_failure | PSV-401 PSV-407 PSV-409 | 44838.7 | 0.3515 | 44911.3 (-0.162%) | 0.3529 (-0.378%) |
+| fire_zone_a | PSV-401 PSV-402 PSV-409 | 19957.5 | 0.0523 | 19957.5 (+0.000%) | 0.0523 (-0.055%) |
+| fire_zone_b | PSV-403 PSV-404 | 517.5 | 0.0000 | 517.5 (+0.000%) | 0.0000 (+0.000%) |
+| fire_zone_c | PSV-406 PSV-407 PSV-408 | 38847.4 | 0.1279 | 38847.4 (+0.000%) | 0.1280 (-0.072%) |
+
+6 of 6 contingencies agree; worst load 0.0016 and pressure 0.0038 against a band of 0.0100
+worst agreement over 20 laboratory seeds: 6 of 6

@@ -1,0 +1,40 @@
+Hedges between a defective reading and the sealed answer. Tolerance 0.010 relative.
+
+| Route | Contingencies it changes | Hedge possible on |
+|---|---|---|
+| the register's set pressure, not the setting the valve carries | power_failure, cooling_water_failure, fire_zone_b | power_failure |
+| the air compressor taken on the essential supply | power_failure | none |
+| the safety system taken onto the normal supply with it | power_failure | none |
+| every control valve taken to close on a loss of air | power_failure, instrument_air_failure | none |
+| the pump's rated flow taken as its blocked outlet rate | instrument_air_failure | none |
+| no credit for instrumented protection | power_failure | none |
+| credit taken without testing any condition | power_failure, cooling_water_failure, instrument_air_failure | none |
+| credit taken without the SIL floor | power_failure, instrument_air_failure | none |
+| credit taken without the proof test interval | power_failure, instrument_air_failure | none |
+| the data sheet coefficient for every control valve | power_failure, instrument_air_failure | power_failure |
+| a linear characteristic for every control valve | power_failure, instrument_air_failure | none |
+| the largest logged flow taken as the relieving rate | power_failure, instrument_air_failure | none |
+| the feed meter read as indicated | power_failure, instrument_air_failure | none |
+| the reboiler coefficient-area from the data sheet duty | power_failure, cooling_water_failure | none |
+| the data sheet duty taken as the relieving duty | power_failure, cooling_water_failure | none |
+| the duty divided by the overhead's latent heat | power_failure, cooling_water_failure | none |
+| the pump's data sheet curve | instrument_air_failure | none |
+| the last pump test on record, made before the element was renewed | instrument_air_failure | none |
+| the tip coefficient the 2019 study worked to | power_failure, cooling_water_failure, instrument_air_failure, fire_zone_a, fire_zone_c | none |
+| the booking spent on a test that reaches no row | power_failure, cooling_water_failure, instrument_air_failure, fire_zone_a, fire_zone_c | none |
+| elevation changes since the data book left out | fire_zone_c | none |
+| wetted area not cut at 7.6 m above grade | fire_zone_b, fire_zone_c | none |
+| no drainage or firefighting credit | fire_zone_a, fire_zone_b, fire_zone_c | none |
+| the whole shell taken as wetted | fire_zone_a, fire_zone_b, fire_zone_c | none |
+| no insulation credit anywhere | fire_zone_b | none |
+| insulation credit without a certificate | fire_zone_a | none |
+| 10 per cent accumulation for the fire case | fire_zone_a, fire_zone_b, fire_zone_c | none |
+| the tie-in the isometrics show, the modification missed | power_failure, instrument_air_failure, fire_zone_c | none |
+| the whole load along the whole header, in one length | power_failure, cooling_water_failure, instrument_air_failure, fire_zone_a, fire_zone_c | none |
+| only the discharging tie-ins dividing the header | cooling_water_failure | none |
+| the loss through the tip left out | power_failure, cooling_water_failure, instrument_air_failure, fire_zone_a, fire_zone_c | none |
+| every density taken at atmospheric pressure | power_failure, cooling_water_failure, instrument_air_failure, fire_zone_a, fire_zone_c | fire_zone_a |
+
+contingencies on which any hedge exists at all: fire_zone_a, power_failure
+A hedge needs the same devices named and both numbers within twice the tolerance. Where the device
+set differs, or either number is further out, no single row can satisfy both readings.

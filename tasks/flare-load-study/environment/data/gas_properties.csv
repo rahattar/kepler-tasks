@@ -1,0 +1,6 @@
+stream,pressure_bara,k,z
+feed_gas,10.0,1.260,0.970
+feed_gas,40.0,1.260,0.900
+feed_gas,55.0,1.270,0.870
+feed_gas,70.0,1.280,0.840
+feed_gas,80.0,1.290,0.820

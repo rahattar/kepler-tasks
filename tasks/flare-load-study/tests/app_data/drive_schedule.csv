@@ -1,0 +1,6 @@
+tag,description,serves,cooling_medium,driver,electrical_supply
+E-404,"T-401 overhead condenser, water cooled, two circulating pumps",T-401 overhead condenser,cooling water,motor,normal
+E-407,"T-402 overhead condenser, air cooled, four fans",T-402 overhead condenser,air,motor,normal
+K-901,"instrument air compressor in unit 900, with a receiver at the unit limit",instrument air,none,motor,normal
+P-401,T-402 bottoms product pump,T-402 bottoms product to storage,none,motor,normal
+SIS,safety instrumented system logic and field devices,safety instrumented system,none,none,essential

@@ -186,3 +186,48 @@ had *not* been written down: a stream named inconsistently between two documents
 the assessment, a shop record out of step with the sealed definition. Fixing each removed a failure and made the
 task easier. Expect that trade on every future design: the honest ceiling on difficulty for a records-reduction
 task is set by what fairness obliges you to state.
+
+## flare-load-study, Nov 10-11: twelve more runs, and the ceiling confirmed
+
+The reshape of relief-valve-adequacy was built records-only first, keeping every layer above and adding four
+more: a header walked segment by segment from the tip outwards with each length carrying its own mixture, a
+tie-in moved after the isometrics were issued, a SIL floor that bites on a live cause, and a second valve reset
+in situ. Then three low-effort probe runs **solved all six rows exactly**, and three xhigh runs failed only on
+plain slips. That is the ceiling in the paragraph above, met head on: the new layers were all written down, so
+all three low runs found all four of them.
+
+So the lever list gains the one that worked, and loses an illusion.
+
+**What did not work: more layers.** Four layers were added and the low-effort pass rate did not move. A layer
+that is written down costs a careful reader one paragraph of attention. Adding paragraphs does not add
+difficulty; it adds length.
+
+**What did work: a measurement the records cannot supply.** A booking of two field tests from six, ordered
+before any result is known, with two quantities that appear in no record at all - the loss coefficient of a tip
+replaced by a vendor who supplied no data, and the shutoff head of a pump whose rotating element was renewed
+and not tested. Low effort went from 3 of 3 solved to 1 of 3. Information the agent does not have is the only
+thing yet seen that effort cannot substitute for.
+
+**But not for the reason expected, and this is the part to remember.** Every one of the six runs ordered the
+right two tests, and each said in its own words why the other four were pointless - that E-406's
+coefficient-area only serves a cause the SIS credit sets aside, that no device admits a cause PV-4031 could
+create, that a loss of cooling is total however capable the condenser, that the shop record already gives
+PSV-404's set pressure. The choice was not hard. What the booking actually did was **lengthen the chain**: two
+more quantities that have to be obtained and used correctly, and the low-effort runs spent their care there and
+dropped it elsewhere - one credited an instrumented function it should not have, one missed the feed meter
+correction it would probably have caught otherwise.
+
+Two consequences for the next build:
+
+- **A budget raises difficulty by adding required steps, not by making the choice of measurement hard.** Budget
+  it that way deliberately: size the booking so the orders are work, and do not count on the decoys to
+  discriminate.
+- **To make the choice itself hard, the useless test has to be genuinely tempting** - its quantity must appear
+  to enter the answer until a specific piece of reasoning rules it out, and that reasoning must be one the agent
+  would plausibly skip. All four decoys here were ruled out by reasoning the agent had already done for another
+  part of the study, so they cost nothing to reject. A decoy whose uselessness turns on a layer *not* otherwise
+  needed would be a real test.
+
+**The profile that resulted is the one to aim for anyway**: 1 of 3 at low effort, 3 of 3 at xhigh. The task
+rewards care and correct reasoning rather than luck, and the two xhigh reports read like competent engineering
+work. A task that no run solves is not better calibrated, it is just unsolved.

@@ -1,0 +1,8 @@
+number,date,description,documents_revised
+MOD-2021-14,2021-08-16,PSV-404 uprated from a G to an H orifice after the review of the T-401 overhead system; inlet pipework unchanged,relief valve register rev 3
+MOD-2024-07,2024-06-28,"unit capacity increase to a nominal 360 t/d: new feed heater, larger feed pump impeller, T-402 re-set 0.90 m higher on an extended skirt to clear the new reboiler pipework","process flow diagrams, P and I diagrams, isometrics, foundation drawings, vessel elevations sheet 4"
+MOD-2025-02,2025-03-11,V-403 and T-401 insulation replaced with a fire-resistant system to specification S-1140,"insulation schedule, vessel data book insulation table"
+MOD-2024-11,2024-09-05,"unit 400 switchboard rebuilt: the K-901 instrument air compressor transferred from the essential supply to the normal supply, the safety instrumented system left on the essential supply","single line diagrams, drive schedule"
+MOD-2026-05,2026-06-30,low pressure flare header taken out of service and its devices tied into the main header,"flare system note issue 3, relief valve register"
+MOD-2025-09,2025-07-16,flare stack tip replaced with a unit of the same bore from another vendor; no performance data supplied with it,flare system note issue 3
+MOD-2026-09,2026-09-24,"PSV-407 tail pipe re-routed onto the new V-405 relief lateral, moving its tie-in on the main header from 92 m to 206 m from the stack base; header itself unaltered","isometric 400-ISO-0414 marked up, not yet re-issued"
