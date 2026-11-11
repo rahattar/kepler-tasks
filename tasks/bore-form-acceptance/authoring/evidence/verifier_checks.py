@@ -77,14 +77,62 @@ def main():
                                 "  CRASHED" if crashed else ""))
     print("\ncases that were not rejected or that crashed: %d of %d" % (bad, len(cases)))
 
-    print("\na correct sheet, written untidily (these must pass)")
-    for name, text in (("CRLF line ends", ok.replace("\n", "\r\n")),
-                       ("blank lines between rows", "\n".join([HEADER] + sum([[r, ""] for r in rows], []))),
-                       ("spaces around the fields", "\n".join([HEADER] + [" " + r.replace(",", " , ") for r in rows])),
-                       ("the rows in another order", "\n".join([HEADER] + rows[::-1]) + "\n"),
-                       ("a trailing comment line removed, final newline absent", "\n".join([HEADER] + rows))):
+    # The instruction's formatting contract, clause by clause. Each of these sheets carries the right form error
+    # and the right sentence for all 14 features, so the only thing wrong with it is the thing named: if the
+    # verifier took any of them, a sheet outside the format the instruction states would pass.
+    def recast(i, fn):
+        """the correct sheet with field i of every row rewritten"""
+        out = []
+        for r in rows:
+            c = r.split(",")
+            c[i] = fn(c[i])
+            out.append(",".join(c))
+        return "\n".join([HEADER] + out) + "\n"
+
+    first = rows[0].split(",")
+    one = lambda c: ok.replace(rows[0], ",".join(c), 1)
+    contract = [
+        ('"exact header": spaces after the commas', ok.replace(HEADER, HEADER.replace(",", ", "), 1)),
+        ('"exact header": a space before it', " " + ok),
+        ('"exact header": a space after it', ok.replace(HEADER, HEADER + " ", 1)),
+        ('"exact header": in capitals', ok.replace(HEADER, HEADER.upper(), 1)),
+        ('"exact header": quoted', ok.replace(HEADER, ",".join('"%s"' % h for h in HEADER.split(",")), 1)),
+        ('"exact header": a blank line above it', "\n" + ok),
+        ('"two decimal places": every figure to one', recast(1, lambda v: "%.1f" % float(v))),
+        ('"two decimal places": every figure a whole number', recast(1, lambda v: "%d" % round(float(v)))),
+        ('"two decimal places": every figure to three', recast(1, lambda v: v + "0")),
+        ('"two decimal places": one figure to one', one([first[0], first[1][:-1], first[2]])),
+        ('"two decimal places": one figure in exponent form', one([first[0], "%.2E" % float(first[1]), first[2]])),
+        ('"two decimal places": one figure with a plus sign', one([first[0], "+" + first[1], first[2]])),
+        ('"two decimal places": one figure with a unit', one([first[0], first[1] + " um", first[2]])),
+        ('"two decimal places": a space before one figure', one([first[0], " " + first[1], first[2]])),
+        ('"one of" the four words: a space after one', one([first[0], first[1], first[2] + " "])),
+        ('"one row for each": a space before one feature', one([" " + first[0], first[1], first[2]])),
+    ]
+    print("\ncorrect answers in a format the instruction does not allow: every one must be rejected\n")
+    slipped = 0
+    for name, text in contract:
         rc, tail = run(text)
-        print("  %-48s %s" % (name, "accepted" if "accepted" in tail else "REJECTED: " + tail[:60]))
+        rejected = "rejected" in tail
+        slipped += not rejected
+        print("  %-52s %s" % (name, "rejected" if rejected else "NOT REJECTED"))
+    print("\nsheets outside the stated format that the verifier took: %d of %d" % (slipped, len(contract)))
+    assert not slipped and not bad
+
+    print("\na correct sheet, varied only in ways the instruction does not constrain (these must pass)")
+    refused = 0
+    for name, text in (("the sheet exactly as the reference writes it", ok),
+                       ("CRLF line ends, which Python's csv module writes", ok.replace("\n", "\r\n")),
+                       ("no terminator on the last line", "\n".join([HEADER] + rows)),
+                       ("the rows in another order", "\n".join([HEADER] + rows[::-1]) + "\n"),
+                       ("empty lines between the rows", "\n".join([HEADER] + sum([[r, ""] for r in rows], []))),
+                       ("the fields of each row quoted, as CSV allows",
+                        "\n".join([HEADER] + [",".join('"%s"' % c for c in r.split(",")) for r in rows]) + "\n")):
+        rc, tail = run(text)
+        took = "accepted" in tail
+        refused += not took
+        print("  %-52s %s" % (name, "accepted" if took else "REJECTED: " + tail[:60]))
+    assert not refused
 
 
 if __name__ == "__main__":

@@ -132,6 +132,76 @@ def main():
         check(phrase in notes, "the instrument notes lost %r" % phrase)
     room = open("environment/data/docs/metrology_room.md").read()
     check("4 scans" in room and "does not refill" in room, "the metrology room note lost its booking")
+    bore = " ".join(open("environment/data/docs/boring_practice.md").read().split())
+    for phrase in ("property of the setup", "carry the same undulations per revolution", "angular position",
+                   "The diameter", "The taper", "no longer carries that setup's lobing"):
+        check(phrase in bore, "the boring practice note lost %r" % phrase)
+    check("boring_practice.md" in ins, "the instruction must name the boring practice note")
+    for name in sorted(os.listdir("authoring/provenance/docs")):
+        check(os.path.exists(os.path.join("environment/data/docs", name)),
+              "a written document is not shipped to the agent: %s" % name)
+
+    # ---- the instruction's formatting contract is the verifier's, clause for clause. A correct sheet passes;
+    # the same answers to one decimal, as whole numbers, or under a header that is not character for character
+    # the one asked for, do not. (Bounced Nov 11: the reader trimmed the header and took any number of decimals
+    # up to two, so sheets outside the stated format could pass.)
+    for clause in ("exact header `feature,form_um,verdict`", "to two decimal places",
+                   "one row for each of the 14 features",
+                   "one of `accept`, `reject_size`, `reject_form`, or `reject_both`"):
+        check(clause in ins, "the instruction lost a clause the verifier enforces: %r" % clause)
+    import importlib.util as _il2
+    import tempfile as _tf
+    _gs = _il2.spec_from_file_location("grade_form_preflight", "tests/grade_form.py")
+    _g = _il2.module_from_spec(_gs)
+    _gs.loader.exec_module(_g)
+    _right = [(f, _g.S.truth(f)["form"], _g.S.truth(f)["verdict"]) for f in _g.IDS]
+
+    def _took(fmt="%.2f", head="feature,form_um,verdict", tail="", nl="\n"):
+        with _tf.TemporaryDirectory() as d:
+            path = os.path.join(d, "form.csv")
+            with open(path, "w", newline="") as fh:
+                fh.write(nl.join([head] + ["%s,%s,%s%s" % (f, fmt % v, w, tail) for f, v, w in _right]) + nl)
+            return bool(_g.score(path).get("accepted"))
+
+    check(_took(), "the verifier refuses a correct sheet in the stated format")
+    check(_took(nl="\r\n"), "the verifier refuses a correct sheet with CRLF line ends")
+    check(not _took(fmt="%.1f"), "the verifier takes form_um to one decimal place")
+    check(not _took(fmt="%.0f"), "the verifier takes form_um as whole numbers")
+    check(not _took(fmt="%.3f"), "the verifier takes form_um to three decimal places")
+    check(not _took(fmt="%.2e"), "the verifier takes form_um in exponent form")
+    check(not _took(head="feature, form_um, verdict"), "the verifier takes a header with spaces in it")
+    check(not _took(head=" feature,form_um,verdict"), "the verifier takes a header with a leading space")
+    check(not _took(head="FEATURE,FORM_UM,VERDICT"), "the verifier takes a header in capitals")
+    check(not _took(tail=" "), "the verifier takes a sentence with a trailing space")
+    reader = open("tests/grade_form.py").read().split("def read_sheet", 1)[1].split("\ndef ", 1)[0]
+    check(".strip()" not in reader and "Decimal" not in reader,
+          "read_sheet trims or coerces a field again; the contract is literal")
+
+    # ---- no graded feature may be winnable without the work. A sheet that names one form figure and one
+    # sentence for all 14 features is right about a feature when the figure is within the band of that
+    # feature's form error and the sentence is that feature's. One such hit is unavoidable; two would mean a
+    # pair of features sharing a sentence lie within twice the band of each other, and neither of them would be
+    # discriminating. null_baselines.py sweeps the constants; this keeps the spacing that makes the sweep come
+    # out at one.
+    import importlib.util as _il
+    _s = _il.spec_from_file_location("isim_preflight", "tests/sealed/isim.py")
+    _m = _il.module_from_spec(_s)
+    _s.loader.exec_module(_m)
+    band = float(re.search(r"^TOL = ([\d.]+)", open("tests/grade_form.py").read(), re.M).group(1))
+    tru = {f: _m.truth(f) for f in _m.ORDER}
+    byv = {}
+    for f in _m.ORDER:
+        byv.setdefault(tru[f]["verdict"], []).append(f)
+    for v, fs in sorted(byv.items()):
+        for i, a in enumerate(fs):
+            for b in fs[i + 1:]:
+                gap = abs(tru[a]["form"] - tru[b]["form"])
+                check(gap > 2.0 * band,
+                      "%s and %s are both %s and only %.2f um apart, inside twice the band of %.2f"
+                      % (a, b, v, gap, band))
+    for f in _m.ORDER:
+        check(abs(tru[f]["form_margin"]) > 2.0 * band,
+              "%s sits %.2f um from its form tolerance, inside twice the band" % (f, tru[f]["form_margin"]))
     for p in visible:
         txt = open(p, encoding="ascii", errors="ignore").read().lower()
         check("error motion rides" not in txt and " 23 upr" not in txt and "29 upr" not in txt,
@@ -146,9 +216,25 @@ def main():
     check(t["verifier"]["environment_mode"] == "separate", "the verifier must run in its own container")
     check(t["verifier.environment"]["network_mode"] if "verifier.environment" in t
           else t["verifier"]["environment"]["network_mode"] == "no-network", "the verifier must have no network")
+    # The intake's structure check wants the full metadata block in task.toml: every key below, category fixed
+    # at "Science", subcategory non-empty, and the three explanations present. A review once called five of
+    # these "not recognised metadata" as an advisory, they were taken out on the strength of it, and the bundle
+    # bounced at intake. The structure check is the authority; an advisory note is not. Do not remove keys.
+    REQUIRED = ("author_name", "author_email", "author_organization", "author_profile", "research_advisor",
+                "referred_by", "conflicts_of_interest", "domain", "field", "subfield", "category", "subcategory",
+                "tags", "expert_time_estimate_hours", "relevant_experience", "difficulty_explanation",
+                "solution_explanation", "verification_explanation")
+    for k in REQUIRED:
+        check(k in t["metadata"], "task.toml [metadata] is missing %s" % k)
+    check(t["metadata"].get("category") == "Science", "[metadata] category must be Science on this dataset")
+    check(bool(str(t["metadata"].get("subcategory", "")).strip()), "[metadata] subcategory is missing or empty")
     readme = open("README.md").read()
     for k in ("difficulty_explanation", "solution_explanation", "verification_explanation"):
-        check(t["metadata"][k].strip() in readme, "README is missing task.toml's %s" % k)
+        v = str(t["metadata"].get(k, "")).strip()
+        check(len(v) > 400, "task.toml's %s is missing or too thin" % k)
+        check(v in readme, "README and task.toml disagree on %s" % k)
+    for head in ("## Difficulty", "## Reference solution", "## Verification"):
+        check(head in readme, "the README lost its %s section" % head)
 
     print("%d checks" % PASSED[0])
     if FAILS:

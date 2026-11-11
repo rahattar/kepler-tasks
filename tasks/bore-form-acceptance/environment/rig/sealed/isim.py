@@ -43,56 +43,81 @@ SEED_SCAN = 4409        # drives the scatter of a scan, nothing else
 # different setups on different machines belongs to the measuring machine, not to the parts. Nothing in the
 # records says so; only the records of several parts together show it. The metrology room's tester is certified
 # and its error motion is below the noise.
-SPINDLE = {23: (4.62, 0.95), 29: (3.87, 2.35)}       # order -> (amplitude um, phase rad in machine coordinates)
+# The error motion of the shop's form tester, order -> (amplitude um, phase rad in the machine's own reference).
+# Its spindle bearings were re-greased and the preload reset on the evening of REGREASE (the maintenance log dates
+# it), which left the machine with a different error motion. Records taken before that date carry the first,
+# records after it the second. One estimate pooled over all of them belongs to neither.
+SPINDLE_BEFORE = {23: (4.62, 0.95), 29: (3.87, 2.35)}
+SPINDLE_AFTER = {23: (3.10, 2.40), 29: (2.45, 0.60)}
+REGREASE = "2026-09-30"
+# Two features came off the boring bar with an ovality of their own: a thin wall clamped once takes a form the
+# setup's lobing does not explain, and the part keeps it after release. That ovality is what decides those two
+# features, and it decides them on a local size, not on the mating size. A plug gauge goes through an oval bore on
+# its minor axis, so the bore's mating size clears the lower limit comfortably, while a pair of opposite points
+# across the major axis is over the upper limit; an oval journal is the other way about, inside the ring gauge on
+# its major axis and under the lower limit across its minor. That is Taylor's principle with both halves doing
+# work, and it is why one size figure, however carefully it is found, cannot sentence a part.
+
+# How large the setup's lobing came out on each part. The parts of one setup were clamped once and finished
+# together, so within a setup it is the same.
+AMP = {f: 1.00 for f in ("CB-21", "RJ-41", "CB-24", "CB-25", "CB-22", "RJ-44", "GB-31", "GB-32", "CB-23",
+                         "RJ-46", "RJ-42", "RJ-43", "CB-26", "RJ-45")}
 
 # Harmonic content a boring setup leaves: order -> (amplitude um, phase rad). The sparse setups (S2, S4, S6, S8)
 # are above the 50 UPR band's Nyquist limit for CMM_PTS points.
+# Which orders are even and which odd is not decoration. A two-point size adds the radii of opposite points, so
+# every odd order cancels in it: an odd-lobed feature has a nearly constant two-point size however far out of
+# round it is, and only its mating size can catch it. The two oval features are the other way about, and only a
+# two-point size catches them. That is both halves of Taylor's principle earning their place, and it is why S6
+# and S8 carry their amplitude at odd orders while the ovality of CB-26 and RJ-46 sits at order 2.
 SETUP = {
-    "S1": {2: (4.64, 0.35), 3: (6.19, 1.10), 6: (1.44, 2.40), 17: (0.88, 0.90)},
-    "S2": {2: (2.09, 0.80), 7: (4.59, 0.95), 9: (4.09, 2.20), 11: (2.89, 0.40), 13: (2.39, 1.70)},
-    "S3": {2: (6.13, 0.00), 3: (2.21, 0.60), 5: (3.42, 0.25), 9: (1.11, 1.30)},
-    "S4": {3: (1.80, 1.45), 7: (3.91, 0.20), 9: (5.21, 1.05), 13: (3.11, 2.60), 15: (2.21, 0.75)},
-    "S5": {2: (3.13, 1.20), 4: (4.56, 0.45), 7: (1.52, 2.05), 19: (0.85, 0.30)},
-    "S6": {2: (1.70, 0.55), 8: (5.41, 1.60), 11: (3.61, 0.85), 14: (2.81, 2.30), 19: (1.50, 1.15)},
-    "S7": {2: (7.22, 0.90), 3: (4.31, 2.15), 6: (3.33, 0.70), 11: (1.67, 1.80)},
-    "S8": {2: (2.61, 0.10), 9: (4.41, 1.35), 12: (3.31, 2.45), 16: (2.11, 0.60)},
+    "S1": {2: (4.98, 0.35), 3: (6.63, 1.10), 6: (1.54, 2.40), 17: (0.95, 0.90)},
+    "S2": {2: (1.44, 0.80), 7: (3.16, 0.95), 9: (2.81, 2.20), 11: (1.98, 0.40), 13: (1.65, 1.70)},
+    "S3": {2: (4.24, 0.00), 3: (1.53, 0.60), 5: (2.37, 0.25), 9: (0.77, 1.30)},
+    "S4": {3: (1.90, 1.45), 7: (4.14, 0.20), 9: (5.51, 1.05), 13: (3.29, 2.60), 15: (2.34, 0.75)},
+    "S5": {2: (3.94, 1.20), 4: (5.75, 0.45), 7: (1.91, 2.05), 19: (1.08, 0.30)},
+    "S6": {2: (2.07, 0.55), 9: (6.59, 1.60), 11: (4.40, 0.85), 13: (3.43, 2.30), 19: (1.83, 1.15)},
+    "S7": {2: (7.71, 0.90), 3: (4.61, 2.15), 6: (3.56, 0.70), 11: (1.78, 1.80)},
+    "S8": {2: (1.39, 0.10), 9: (6.56, 1.35), 12: (4.91, 2.45), 15: (3.14, 0.60)},
 }
 
 # id -> kind, nominal mm, size limits as deviations from nominal in um, tolerance kind and value in um, setup,
 # where the record comes from, mean radius deviation per section in um, the part's own harmonics, taper
 FEATURES = {
-    "CB-21": dict(kind="bore", nom=320.0, lim=(0, 57), tol=("cylindricity", 25.0), setup="S1", src="tester",
-                  mean=(12.9, 15.9, 13.9), own={5: (1.1, 0.4), 17: (0.6, 1.9)}, tilt=(2.0, -1.0)),
-    "CB-22": dict(kind="bore", nom=320.0, lim=(0, 57), tol=("cylindricity", 30.0), setup="S3", src="tester",
-                  mean=(3.0, 8.0, 13.0), own={7: (0.9, 1.6), 19: (0.5, 0.3)}, tilt=(3.5, 1.5)),
-    "CB-23": dict(kind="bore", nom=250.0, lim=(0, 52), tol=("roundness", 14.0), setup="S5", src="tester",
-                  mean=(13.6, 15.1, 14.1), own={6: (1.0, 2.2), 18: (0.7, 0.8)}, tilt=(0.5, 0.0)),
-    "CB-24": dict(kind="bore", nom=250.0, lim=(0, 52), tol=("roundness", 16.0), setup="S2", src="cmm",
-                  mean=(16.0, 17.0, 15.5), own={5: (0.4, 1.1), 17: (0.3, 0.5)}, tilt=(0.5, 0.5)),
-    "CB-25": dict(kind="bore", nom=250.0, lim=(0, 52), tol=("roundness", 16.0), setup="S2", src="cmm",
-                  mean=(6.5, 8.0, 5.5), own={5: (0.3, 2.6), 17: (0.4, 1.8)}, tilt=(-0.5, 0.5)),
-    "CB-26": dict(kind="bore", nom=400.0, lim=(0, 63), tol=("cylindricity", 30.0), setup="S7", src="tester",
-                  mean=(12.5, 18.5, 15.5), own={4: (1.2, 0.9), 16: (0.6, 2.4)}, tilt=(4.0, -2.5)),
-    "GB-31": dict(kind="bore", nom=180.0, lim=(0, 46), tol=("roundness", 14.0), setup="S4", src="tester",
-                  mean=(5.8, 6.8, 6.3), own={4: (0.4, 0.7), 19: (0.3, 2.1)}, tilt=(0.0, 0.5)),
-    "GB-32": dict(kind="bore", nom=180.0, lim=(0, 46), tol=("roundness", 22.0), setup="S4", src="tester",
-                  mean=(16.8, 17.3, 15.8), own={4: (0.3, 1.9), 19: (0.4, 0.6)}, tilt=(0.5, -0.5)),
-    "RJ-41": dict(kind="journal", nom=300.0, lim=(-52, 0), tol=("cylindricity", 27.0), setup="S1", src="tester",
-                  mean=(-5.2, -10.2, -6.2), own={5: (1.0, 1.3), 15: (0.6, 0.4)}, tilt=(2.5, 1.0)),
-    "RJ-42": dict(kind="journal", nom=300.0, lim=(-52, 0), tol=("roundness", 15.0), setup="S6", src="cmm",
-                  mean=(-13.9, -14.9, -13.4), own={5: (0.4, 0.2), 18: (0.3, 1.4)}, tilt=(0.5, 0.0)),
-    "RJ-43": dict(kind="journal", nom=300.0, lim=(-52, 0), tol=("roundness", 15.0), setup="S6", src="cmm",
-                  mean=(-6.9, -8.4, -6.4), own={5: (0.3, 1.7), 18: (0.4, 2.3)}, tilt=(-0.5, 0.5)),
-    "RJ-44": dict(kind="journal", nom=220.0, lim=(-46, 0), tol=("roundness", 20.0), setup="S3", src="tester",
-                  mean=(-11.7, -12.7, -12.2), own={6: (0.9, 0.5), 17: (0.5, 1.2)}, tilt=(0.5, -0.5)),
-    "RJ-45": dict(kind="journal", nom=220.0, lim=(-46, 0), tol=("roundness", 20.0), setup="S8", src="cmm",
-                  mean=(-4.4, -5.4, -3.4), own={4: (0.4, 2.0), 17: (0.3, 0.9)}, tilt=(0.0, 0.5)),
-    "RJ-46": dict(kind="journal", nom=180.0, lim=(-40, 0), tol=("roundness", 12.0), setup="S5", src="tester",
-                  mean=(-4.0, -5.5, -4.5), own={7: (1.1, 1.8), 16: (0.6, 0.1)}, tilt=(0.5, 0.0)),
+    "CB-21": dict(kind="bore", nom=320.0, lim=(0, 57), tol=("cylindricity", 27.5), setup="S1", src="tester",
+                  mean=(13.0, 16.0, 14.0), own={23: (0.55, 1.42), 5: (1.1, 0.4), 17: (0.6, 1.9)}, tilt=(2.0, -1.0)),
+    "CB-22": dict(kind="bore", nom=320.0, lim=(0, 57), tol=("cylindricity", 20.0), setup="S3", src="tester",
+                  mean=(0.6, 2.7, 4.8), own={29: (0.48, 0.21), 7: (0.9, 1.6), 19: (0.5, 0.3)}, tilt=(3.5, 1.5)),
+    "CB-23": dict(kind="bore", nom=250.0, lim=(0, 52), tol=("roundness", 15.0), setup="S5", src="tester",
+                  mean=(13.1, 14.6, 13.6), own={23: (0.61, 2.70), 6: (1.0, 2.2), 18: (0.7, 0.8)}, tilt=(0.5, 0.0)),
+    "CB-24": dict(kind="bore", nom=250.0, lim=(0, 52), tol=("roundness", 11.5), setup="S2", src="cmm",
+                  mean=(12.8, 13.8, 12.3), own={5: (0.4, 1.1), 17: (0.3, 0.5)}, tilt=(0.5, 0.5)),
+    "CB-25": dict(kind="bore", nom=250.0, lim=(0, 52), tol=("roundness", 11.5), setup="S2", src="cmm",
+                  mean=(3.3, 4.8, 2.3), own={5: (0.3, 2.6), 17: (0.4, 1.8)}, tilt=(-0.5, 0.5)),
+    "CB-26": dict(kind="bore", nom=400.0, lim=(0, 63), tol=("cylindricity", 33.0), setup="S7", src="tester",
+                  mean=(17.4, 23.4, 20.4), own={2: (9.5, 0.90), 29: (0.52, 1.05), 4: (1.2, 0.9), 16: (0.6, 2.4)},
+                  tilt=(4.0, -2.5)),
+    "GB-31": dict(kind="bore", nom=180.0, lim=(0, 46), tol=("roundness", 17.0), setup="S4", src="tester",
+                  mean=(6.2, 7.2, 6.7), own={23: (0.44, 0.33), 4: (0.4, 0.7), 19: (0.3, 2.1)}, tilt=(0.0, 0.5)),
+    "GB-32": dict(kind="bore", nom=180.0, lim=(0, 46), tol=("roundness", 24.0), setup="S4", src="tester",
+                  mean=(17.4, 17.9, 16.4), own={29: (0.57, 2.21), 4: (0.3, 1.9), 19: (0.4, 0.6)}, tilt=(0.5, -0.5)),
+    "RJ-41": dict(kind="journal", nom=300.0, lim=(-52, 0), tol=("cylindricity", 30.0), setup="S1", src="tester",
+                  mean=(-5.9, -9.4, -6.6), own={29: (0.50, 1.77), 5: (1.0, 1.3), 15: (0.6, 0.4)}, tilt=(2.5, 1.0)),
+    "RJ-42": dict(kind="journal", nom=300.0, lim=(-52, 0), tol=("roundness", 22.5), setup="S6", src="cmm",
+                  mean=(-20.7, -21.7, -20.2), own={5: (0.4, 0.2), 18: (0.3, 1.4)}, tilt=(0.5, 0.0)),
+    "RJ-43": dict(kind="journal", nom=300.0, lim=(-52, 0), tol=("roundness", 22.5), setup="S6", src="cmm",
+                  mean=(-10.3, -11.8, -9.8), own={5: (0.3, 1.7), 18: (0.4, 2.3)}, tilt=(-0.5, 0.5)),
+    "RJ-44": dict(kind="journal", nom=220.0, lim=(-46, 0), tol=("roundness", 17.5), setup="S3", src="tester",
+                  mean=(-9.4, -10.4, -9.9), own={23: (0.46, 0.64), 6: (0.9, 0.5), 17: (0.5, 1.2)}, tilt=(0.5, -0.5)),
+    "RJ-45": dict(kind="journal", nom=220.0, lim=(-46, 0), tol=("roundness", 18.5), setup="S8", src="cmm",
+                  mean=(-13.8, -14.8, -12.8), own={4: (0.4, 2.0), 17: (0.3, 0.9)}, tilt=(0.0, 0.5)),
+    "RJ-46": dict(kind="journal", nom=180.0, lim=(-40, 0), tol=("roundness", 26.5), setup="S5", src="tester",
+                  mean=(-12.9, -14.4, -13.4), own={2: (6.69, 1.20), 29: (0.59, 1.19), 7: (1.1, 1.8), 16: (0.6, 0.1)},
+                  tilt=(0.5, 0.0)),
 }
 # feed waviness, order -> amplitude um: above the 50 UPR assessment band, so it belongs to no form error, but it
 # is in every record and swamps the form of a profile assessed unfiltered
-WAVY = {f: {110 + 7 * i: a for i, a in enumerate((1.9, 1.4, 1.1))} for i, f in enumerate(FEATURES)}
+WAVY = {f: {110 + 7 * i: a for i, a in enumerate((0.75, 0.55, 0.40))} for i, f in enumerate(FEATURES)}
 LENGTH = {"CB-21": 640.0, "CB-22": 640.0, "CB-23": 480.0, "CB-24": 480.0, "CB-25": 480.0, "CB-26": 820.0,
           "GB-31": 150.0, "GB-32": 120.0, "RJ-41": 600.0, "RJ-42": 450.0, "RJ-43": 450.0, "RJ-44": 520.0,
           "RJ-45": 450.0, "RJ-46": 300.0}           # the feature's own length, mm: the sections sit along it
@@ -100,7 +125,14 @@ ORDER = list(FEATURES)
 SPARSE = tuple(f for f, d in FEATURES.items() if d["src"] == "cmm")
 # CB-22 as the shop measured it, before the re-hone of 2026-10-03: the score it was honed to clear, and the
 # material the hone had not yet taken out. The truth, and a scan, are of the bore as it stands now.
-PRE_HONE = {"CB-22": dict(mean=(-3.0, 2.0, 7.0), extra={4: (3.6, 2.05), 6: (2.4, 0.80), 10: (1.7, 1.55)})}
+# A hone follows the bore it is in. It takes out size and it changes the lobing, but it does not correct taper,
+# so the pre-hone surface carries the same taper as the present one, DROP micrometres smaller in diameter.
+PRE_HONE = {"CB-22": dict(drop=4.5, extra={4: (3.6, 2.05), 6: (2.4, 0.80), 10: (1.7, 1.55)})}
+
+
+def pre_hone_mean(f):
+    """The section means of the surface as it was before the hone: today's taper, shifted down by the stock."""
+    return tuple(m - PRE_HONE[f]["drop"] / 2.0 for m in FEATURES[f]["mean"])
 # the room temperature of each shop record, and of the metrology room
 T_SHOP = {"CB-21": 23.4, "CB-22": 23.4, "CB-23": 22.1, "CB-24": 24.2, "CB-25": 24.2, "CB-26": 21.3,
           "GB-31": 24.6, "GB-32": 24.6, "RJ-41": 23.4, "RJ-42": 22.8, "RJ-43": 22.8, "RJ-44": 22.1,
@@ -110,6 +142,26 @@ T_ROOM = 20.4
 REHONED = ("CB-22",)
 
 
+# Where the jaws or the steady bore against the part, and how deep the mark is (um) and how wide (rad). The mark
+# is what opens the gap between a mating size and a mean diameter: a plug gauge is stopped by the mark while the
+# mean radius barely notices it, so a bore whose mean diameter sits mid-tolerance can still be under its lower
+# limit on the gauge. It does not make a least-squares zone differ from a minimum-zone one. With orders 0 and 1
+# dropped the least-squares centre is already the origin, and under a translation of the centre a single narrow
+# feature moves the zone's high and low points together, so the origin is the minimax centre too.
+MARK = {"CB-21": (3.4, 0.30, 1.15), "CB-22": (4.1, 0.26, 2.40), "CB-23": (2.9, 0.33, 0.55),
+        "CB-24": (3.8, 0.28, 1.90), "CB-25": (3.8, 0.28, 1.90), "CB-26": (4.6, 0.24, 0.20),
+        "GB-31": (3.1, 0.31, 2.75), "GB-32": (3.1, 0.31, 2.75), "RJ-41": (3.6, 0.29, 1.60),
+        "RJ-42": (3.3, 0.30, 0.85), "RJ-43": (3.3, 0.30, 0.85), "RJ-44": (2.7, 0.34, 2.10),
+        "RJ-45": (3.9, 0.27, 0.40), "RJ-46": (3.0, 0.32, 1.35)}
+
+
+def local_mark(f, th, psi=0.0):
+    """The mark the clamping left, in part coordinates: a dimple, narrow against the lobing."""
+    depth, width, where = MARK[f]
+    d = np.angle(np.exp(1j * (th - psi - where)))
+    return -depth * np.exp(-(d / width) ** 2)
+
+
 def mount_phase(f, rng):
     """Where the part happened to sit on the instrument. Form and size do not depend on it; the separation of the
     machine's error motion from the part's lobing does."""
@@ -117,7 +169,14 @@ def mount_phase(f, rng):
 
 
 def harmonics(f):
-    h = dict(SETUP[FEATURES[f]["setup"]])
+    """The setup's lobing, plus the part's own content. Two parts finished in one setup without unclamping carry
+    the same lobing, which is what lets a scan of one of them carry the form error and the mating deviation of the
+    other; each still takes its own size from its own record. AMP is a per-part scale on the lobing, left at 1.00
+    for every part: a round of authoring tried making it differ from part to part, and the transfer then became
+    asymmetric (a twin 3 per cent low in amplitude cost 3 um, one 15 per cent high cost far more), which penalises
+    the booking for a choice the records give no way to make. The hook is kept, the values are not used."""
+    a = AMP.get(f, 1.0)
+    h = {n: (amp * a, ph) for n, (amp, ph) in SETUP[FEATURES[f]["setup"]].items()}
     h.update(FEATURES[f]["own"])
     return h
 
@@ -130,7 +189,7 @@ def surface(f, j, th):
         out = out + a * np.cos(n * th - ph)
     tx, ty = d["tilt"]
     z = SECTIONS[j] - 0.5
-    return out + 2.0 * z * (tx * np.cos(th) + ty * np.sin(th))
+    return out + 2.0 * z * (tx * np.cos(th) + ty * np.sin(th)) + local_mark(f, th)
 
 
 
@@ -142,7 +201,7 @@ def measured(f, j, pts, rng, T=None, ecc=None, pre=False, spindle=False, psi=0.0
     mean = d["mean"]
     h = harmonics(f)
     if pre and f in PRE_HONE:
-        mean = PRE_HONE[f]["mean"]
+        mean = pre_hone_mean(f)
         h = dict(h)
         h.update(PRE_HONE[f]["extra"])
     out = np.full(len(th), mean[j])
@@ -151,10 +210,11 @@ def measured(f, j, pts, rng, T=None, ecc=None, pre=False, spindle=False, psi=0.0
     tx, ty = d["tilt"]
     z = SECTIONS[j] - 0.5
     out = out + 2.0 * z * (tx * np.cos(th) + ty * np.sin(th))
+    out = out + local_mark(f, th, psi)           # the mark the clamping left, carried round with the part
     for n, a in WAVY[f].items():                 # feed marks, far above the assessment band
         out = out + a * np.cos(n * (th - psi) - 0.37 * n)
     if spindle:                                  # the measuring machine's error motion, in its own reference
-        for n, (a, ph) in SPINDLE.items():
+        for n, (a, ph) in (SPINDLE_AFTER if spindle == "after" else SPINDLE_BEFORE).items():
             out = out + a * np.cos(n * th - ph)
     e = ecc if ecc is not None else rng.uniform(15.0, 60.0)
     pe = rng.uniform(0, 2 * np.pi)

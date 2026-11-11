@@ -24,11 +24,12 @@ def main():
 
     print("\nthe reference booking, assessed wrongly")
     show("the form tester's own error motion charged to the parts", C.sentence(plan=P, spindle="keep"))
-    show("the whole average of the tester's records taken off each part", C.sentence(plan=P, spindle="mean"))
-    show("least-squares zone instead of the minimum zone", C.sentence(plan=P, how="ls"))
+    show("one error motion pooled over the tester's whole campaign", C.sentence(plan=P, spindle="pooled"))
+    show("the whole average of each campaign's records taken off each part", C.sentence(plan=P, spindle="mean"))
     show("the Gaussian 50 UPR taper left off (feed waviness kept in)", C.sentence(plan=P, filt="order1"))
     show("the deviations taken as measured (eccentricity kept in too)", C.sentence(plan=P, filt="none"))
     show("mean diameter in place of the mating cylinder", C.sentence(plan=P, size="mean"))
+    show("the mating size alone, no two-point local size", C.sentence(plan=P, local=False))
     show("no temperature correction to 20 C", C.sentence(plan=P, tcorr=False))
     show("roundness computed where the drawing calls cylindricity", C.sentence(plan=P, kindover="roundness"))
 
@@ -46,10 +47,9 @@ def main():
     show("only the re-honed bore scanned, three scans left unused", C.sentence(plan=["CB-22"]))
 
     print("\nsound choices, for the record (these pass)")
-    show("the worst section's own mating circle instead of one cylinder", C.sentence(plan=P, mat="sec"))
     print("\nwhich features each defective route loses (count of the routes above that lose it)")
     tally = {f: 0 for f in C.ORDER}
-    for kw in (dict(plan=P, spindle="keep"), dict(plan=P, spindle="mean"),
+    for kw in (dict(plan=P, spindle="keep"), dict(plan=P, spindle="pooled"), dict(plan=P, spindle="mean"),
                dict(plan=P, how="ls"), dict(plan=P, filt="order1"), dict(plan=P, filt="none"),
                dict(plan=P, size="mean"), dict(plan=P, tcorr=False), dict(plan=P, kindover="roundness"),
                dict(plan=[]), dict(plan=P, transfer=False),

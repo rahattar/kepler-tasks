@@ -93,36 +93,47 @@ def minimax(cols, dev, what):
     return float(r.x[-1])
 
 
-def spindle_error(index, reg):
+def spindle_error(index, log):
     """What every record of the shop's form tester carries at the same phase. A record's angle is the spindle's
     angle and a part is clamped wherever it comes to rest, so a component that repeats in amplitude AND phase
     across parts bored in different setups on different machines belongs to the measuring machine. It is in no
     document. Averaging the tester's records leaves it and averages the parts' own lobing down; the orders kept
     are those whose mean stands three standard errors clear of the scatter between parts, so that nothing of any
-    one part's lobing is taken off the others."""
-    per = []
+    one part's lobing is taken off the others.
+
+    The machine does not have one error motion over the whole campaign: the maintenance log has its spindle
+    bearings re-greased and the preload reset part way through, so its records fall into two states and are
+    estimated separately. Pooled across the maintenance the two states cancel into a mean belonging to neither,
+    and the scatter they add is wide enough that no order looks significant at all, so a pooled estimate quietly
+    finds nothing to remove."""
+    day = next((r["date"] for r in log if "form tester" in r["machine"] and "spindle" in r["operation"]), None)
+    groups = {}
     for f, r in index.items():
         if int(r["points_per_rev"]) < MIN_PTS or "form tester" not in r["instrument"]:
             continue
         secs = sections(os.path.join(DATA, r["file"].split("data/", 1)[1]))
         _, profs, _ = shape(secs, float(r["room_c"]))
-        per.append(np.mean(np.array(profs), axis=0))
-    A = np.array(per)
-    n = A.shape[1]
-    th = np.arange(n) / n * 2.0 * np.pi
-    F = np.fft.rfft(A, axis=1) / n
-    out = np.zeros(n)
-    kept = []
-    for k in range(2, min(F.shape[1], 120)):
-        m = F[:, k].mean()
-        sr = F[:, k].real.std(ddof=1) / np.sqrt(len(per))
-        si = F[:, k].imag.std(ddof=1) / np.sqrt(len(per))
-        if abs(m.real) > 3.0 * sr and abs(m.imag) > 3.0 * si:
-            out += 2.0 * (m.real * np.cos(k * th) - m.imag * np.sin(k * th))
-            kept.append(k)
-    print("# the form tester's own error motion, from %d of its records: orders %s, %.2f um peak to valley"
-          % (len(per), ",".join(str(k) for k in kept), out.max() - out.min()))
-    return out
+        key = "after" if (day and r["measured_on"] > day) else "before"
+        groups.setdefault(key, []).append(np.mean(np.array(profs), axis=0))
+    out = {}
+    for key, per in groups.items():
+        A = np.array(per)
+        n = A.shape[1]
+        th = np.arange(n) / n * 2.0 * np.pi
+        F = np.fft.rfft(A, axis=1) / n
+        e = np.zeros(n)
+        kept = []
+        for k in range(2, min(F.shape[1], 120)):
+            m = F[:, k].mean()
+            sr = F[:, k].real.std(ddof=1) / np.sqrt(len(per))
+            si = F[:, k].imag.std(ddof=1) / np.sqrt(len(per))
+            if abs(m.real) > 3.0 * sr and abs(m.imag) > 3.0 * si:
+                e += 2.0 * (m.real * np.cos(k * th) - m.imag * np.sin(k * th))
+                kept.append(k)
+        out[key] = e
+        print("# the form tester %s %s: error motion from %d records, orders %s, %.2f um peak to valley"
+              % (key, day, len(per), ",".join(str(k) for k in kept), e.max() - e.min()))
+    return out, day
 
 
 def shape(secs, T):
@@ -161,7 +172,7 @@ def main():
         groups.setdefault(setup_of.get(f, f), []).append(f)
     plan = [g[0] for g in groups.values()]
     assert len(plan) <= budget, (plan, budget)
-    spin = spindle_error(index, reg)
+    spin, regrease = spindle_error(index, log)
     print("# needs a scan: %s" % " ".join(need))
     print("# scans ordered (one per boring setup): %s" % " ".join(plan))
     for f in plan:
@@ -187,7 +198,8 @@ def main():
         if src is None:
             _, profs, ths = shape(own, T)
             if shop_tester:                      # the machine's error motion is not this feature's form
-                profs = [p - spin for p in profs]
+                key = "after" if (regrease and index[f]["measured_on"] > regrease) else "before"
+                profs = [p - spin[key] for p in profs]
         else:
             _, profs, ths = shape(scanned[src], ROOM)
         nom = float(reg[f]["nominal_mm"])

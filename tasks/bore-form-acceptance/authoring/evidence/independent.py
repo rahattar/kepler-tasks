@@ -6,8 +6,11 @@ the end.
 
     python3 independent.py > independent.txt
 """
+import csv
 import os
+import subprocess
 import sys
+import tempfile
 
 import numpy as np
 import pandas as pd
@@ -103,24 +106,41 @@ def main():
     # when its phase is the same in every record (the parts are clamped at unrelated angles, so their own lobing
     # scatters in phase). The mean resultant length of the phases is 1 for a machine order and about 1/sqrt(N) for
     # a part order. The amplitude is then the median across the records, which ignores an odd part.
-    stack = np.array([np.mean([prof(t, r) for t, r in recs[f]], axis=0) for f in tester])
-    n = stack.shape[1]
-    th0 = np.arange(n) / n * 2.0 * np.pi
-    F = np.fft.rfft(stack, axis=1) / n
-    e = np.zeros(n)
-    kept = []
-    for k in range(2, 120):
-        col = F[:, k]
-        if np.median(2 * np.abs(col)) < 0.5:
-            continue
-        unit = col / np.abs(col)
-        if abs(unit.mean()) > 0.8:
-            ph = np.angle(unit.mean())
-            amp = float(np.median(np.abs(col)))
-            e += 2.0 * amp * np.cos(k * th0 + ph)
-            kept.append(k)
-    print("# machine error motion by phase agreement: orders %s, %.2f um peak to valley"
-          % (kept, float(np.ptp(e))))
+    # The test runs on each side of the day the log has the tester's spindle re-greased: a bearing that has been
+    # re-greased and re-preloaded does not run as it ran before, so the records before and after that day are two
+    # machines, and one estimate over all of them describes neither. Pooled, the phases disagree and the test
+    # keeps nothing at all, which is the symptom of having mixed two states rather than of a clean machine.
+    service = [r["date"] for _, r in log.iterrows() if r["setup"] == "-"
+               and "greas" in (str(r["operation"]) + str(r["note"])).lower()]
+    cut = max(service) if service else None
+    sides = {}
+    for f in tester:
+        sides.setdefault("after" if cut and idx.loc[f, "measured_on"] > cut else "before", []).append(f)
+    err = {}
+    for side in sorted(sides):
+        stack = np.array([np.mean([prof(t, r) for t, r in recs[f]], axis=0) for f in sides[side]])
+        n = stack.shape[1]
+        th0 = np.arange(n) / n * 2.0 * np.pi
+        F = np.fft.rfft(stack, axis=1) / n
+        e = np.zeros(n)
+        kept = []
+        for k in range(2, 120):
+            col = F[:, k]
+            if np.median(2 * np.abs(col)) < 0.5:
+                continue
+            unit = col / np.abs(col)
+            a = np.abs(col)
+            # the machine writes the same amplitude as well as the same phase into every record it touches, so an
+            # order is the machine's only if both agree; phase alone lets a part order through when the side of
+            # the service date being tested holds only a few records
+            if abs(unit.mean()) > 0.9 and float(a.max() / a.min()) < 1.5:
+                ph = np.angle(unit.mean())
+                amp = float(np.median(np.abs(col)))
+                e += 2.0 * amp * np.cos(k * th0 + ph)
+                kept.append(k)
+        err[side] = e
+        print("# machine error motion by phase agreement, %s %s: orders %s, %.2f um peak to valley"
+              % (side, cut, kept, float(np.ptp(e))))
 
     scans = {}
     for k, f in enumerate(PLAN, 1):
@@ -132,15 +152,16 @@ def main():
 
     out, wrong = {}, []
     for f in feats:
-        src, T, sub = f, float(idx.loc[f, "measured_on"] and idx.loc[f, "room_c"]), f in tester
+        src, T = f, float(idx.loc[f, "measured_on"] and idx.loc[f, "room_c"])
+        sub = ("after" if cut and idx.loc[f, "measured_on"] > cut else "before") if f in tester else None
         secs = recs[f]
         if f in scans:
-            secs, T, sub = scans[f], SEALED.T_ROOM, False
+            secs, T, sub = scans[f], SEALED.T_ROOM, None
         elif f in need:
             sib = [g for g in PLAN if setup.get(g) == setup.get(f) and g != f]
             if sib:
-                secs, T, sub = scans[sib[0]], SEALED.T_ROOM, False
-        ps = [prof(t, r) - (e if sub else 0.0) for t, r in secs]
+                secs, T, sub = scans[sib[0]], SEALED.T_ROOM, None
+        ps = [prof(t, r) - (err[sub] if sub else 0.0) for t, r in secs]
         ths = [t for t, _ in secs]
         own = recs[f] if f not in scans else scans[f]
         means = [float(r.mean()) / (1 + 11.7e-6 * (float(idx.loc[f, "room_c"]) - 20.0)) if f not in scans
@@ -165,17 +186,24 @@ def main():
         form_ok = form <= float(draw.loc[f, "form_tolerance_um"])
         v = {(True, True): "accept", (False, True): "reject_size",
              (True, False): "reject_form", (False, False): "reject_both"}[(size_ok, form_ok)]
-        t = SEALED.truth(f)
-        ok = abs(form - t["form"]) <= 1.2 and v == t["verdict"]
-        out[f] = (form, v, form - t["form"], ok)
-        if not ok:
-            wrong.append(f)
+        out[f] = (form, v)
     print("# scans ordered: %s" % " ".join(PLAN))
-    for f in feats:
-        form, v, de, ok = out[f]
-        print("  %-7s %s form %6.2f (%+.2f) %-12s" % (f, "ok " if ok else "BAD", form, de, v))
-    print("\nworst error on a form error %.2f um; features sentenced wrong: %d"
-          % (max(abs(out[f][2]) for f in feats), len(wrong)))
+
+    # The sheet goes to the verifier, as a sheet, and the verifier decides: this script holds no opinion about
+    # what counts as right. tests/grade_form.py is run as its own process, so it reads its own sealed copy.
+    d = tempfile.mkdtemp()
+    sheet = os.path.join(d, "form.csv")
+    with open(sheet, "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["feature", "form_um", "verdict"])
+        for f in feats:
+            w.writerow([f, "%.2f" % out[f][0], out[f][1]])
+    grader = os.path.join(HERE, "..", "..", "tests", "grade_form.py")
+    r = subprocess.run([sys.executable, "-B", grader, sheet], capture_output=True, text=True)
+    print(r.stdout.rstrip())
+    if r.returncode or "rejected" in r.stdout.splitlines()[-1]:
+        print("# the verifier did not accept this sheet")
+    return out
 
 
 if __name__ == "__main__":

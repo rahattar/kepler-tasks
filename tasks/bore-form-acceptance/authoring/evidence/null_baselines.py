@@ -22,11 +22,40 @@ def shop_report():
 
 
 def tally(name, ans):
-    n = sum(1 for f in C.ORDER if abs(ans[f][0] - C.TRUTH[f]["form"]) <= C.TOL_FORM
-            and ans[f][1] == C.TRUTH[f]["verdict"])
-    right_v = sum(1 for f in C.ORDER if ans[f][1] == C.TRUTH[f]["verdict"])
-    right_f = sum(1 for f in C.ORDER if abs(ans[f][0] - C.TRUTH[f]["form"]) <= C.TOL_FORM)
-    print("  %-62s right %2d of %d (form %2d, sentence %2d)" % (name, n, len(C.ORDER), right_f, right_v))
+    """Scored by the verifier's own module, on a written sheet, like every other study here."""
+    r = C.score(ans)
+    feats = r["features"]
+    right_f = sum(1 for f in C.ORDER if feats[f]["form_ok"])
+    right_v = sum(1 for f in C.ORDER if feats[f]["verdict_ok"])
+    print("  %-62s right %2d of %d (form %2d, sentence %2d)%s" % (
+        name, r["npass"], len(C.ORDER), right_f, right_v, "  ACCEPTED" if r["accepted"] else ""))
+    return r["npass"]
+
+
+def sweep():
+    """Every sheet that names one form figure and one sentence for all 14 features. The form figure is swept in
+    0.05 um steps from 0 to 60, which is a fiftieth of the band, and each sheet is scored by the verifier. What
+    matters is not that such a sheet fails - the gate is all 14 - but how many features it can pick up for
+    free, because a feature a method-free sheet can earn is a feature that is not discriminating. The form
+    errors of the features sharing any one sentence are spaced more than twice the band apart, so the most any
+    constant sheet can reach is one; preflight.py keeps that spacing true."""
+    best, where = 0, []
+    for v in ("accept", "reject_size", "reject_form", "reject_both"):
+        for i in range(0, 1201):
+            form = i * 0.05
+            r = C.score({f: (form, v) for f in C.ORDER})
+            if r["npass"] > best:
+                best, where = r["npass"], [(form, v, [f for f in C.ORDER if r["features"][f]["ok"]])]
+            elif r["npass"] == best and best:
+                where.append((form, v, [f for f in C.ORDER if r["features"][f]["ok"]]))
+    pairs = [w for w in where if len(w[2]) > 1]
+    print("\n  swept %d constant sheets through the verifier: the best of them picks up %d of %d features"
+          % (4 * 1201, best, len(C.ORDER)))
+    print("  one feature is the floor and cannot be helped: a sheet that happens to name a feature's own form\n"
+          "  figure and its own sentence is right about that feature by luck, and every feature has such a\n"
+          "  sheet. What matters is that no sheet reaches two: %s"
+          % ("none does" if not pairs else "%d do, at %s" % (len(pairs), pairs[:3])))
+    return best
 
 
 def main():
@@ -46,6 +75,8 @@ def main():
     tally("the inspection report's roundness, sentenced on form alone",
           {f: (rep[f][1], "accept" if rep[f][1] <= float(C.DRAW[f]["form_tolerance_um"]) else "reject_form")
            for f in C.ORDER})
+    best = sweep()
+    assert best <= 1, "a constant sheet reaches %d features" % best
     print("\nno constant sentence and no transcription of the report passes; the gate is all %d." % len(C.ORDER))
 
 

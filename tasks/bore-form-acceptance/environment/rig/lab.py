@@ -3,7 +3,7 @@
 
     lab.py formscan <feature>
 
-scans the feature on the room's RT-1 form tester: three sections, isim.TESTER_PTS points a revolution, absolute
+scans the feature on the room's RT-3 form tester (RT-1 is the shop's machine, and is not this one): three sections, isim.TESTER_PTS points a revolution, absolute
 radius in mm, at the room's own temperature. The points are written to REPORTS as one file; each scan leaves one
 record in STATE, created exclusively (O_EXCL, O_NOFOLLOW). The booking is isim.BUDGET scans and does not refill,
 a scan is charged before it is made, and a feature already scanned is refused. The room refuses to run if its
@@ -76,7 +76,7 @@ def main(argv):
     rfd = os.open(os.path.join(REPORTS, name), os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o644)
     with os.fdopen(rfd, "w") as f:
         f.write("\n".join(rows) + "\n")
-    print("# scan %d: %s, RT-1 form tester, 1 mm ball, %d points a revolution, %d sections, room %.1f C"
+    print("# scan %d: %s, RT-3 form tester, 1 mm ball, %d points a revolution, %d sections, room %.1f C"
           % (idx, feature, S.TESTER_PTS, len(S.SECTIONS), S.T_ROOM))
     print("# %d points written to %s" % (len(rows) - 1, os.path.join(REPORTS, name)))
     print("# booking used %d of %d scans" % (idx, S.BUDGET))

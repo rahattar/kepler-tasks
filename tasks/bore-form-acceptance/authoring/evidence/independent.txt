@@ -1,18 +1,18 @@
-# machine error motion by phase agreement: orders [23, 29], 14.10 um peak to valley
+# machine error motion by phase agreement, after 2026-09-30: orders [23, 29], 9.24 um peak to valley
+# machine error motion by phase agreement, before 2026-09-30: orders [23, 29], 14.09 um peak to valley
 # scans ordered: RJ-44 CB-25 RJ-43 RJ-45
-  CB-21   ok  form  21.68 (+0.08) accept      
-  CB-22   ok  form  27.68 (+0.62) reject_size 
-  CB-23   ok  form  15.04 (+0.06) reject_form 
-  CB-24   ok  form  21.48 (-0.02) reject_form 
-  CB-25   ok  form  21.48 (+0.02) reject_both 
-  CB-26   ok  form  27.39 (+0.12) accept      
-  GB-31   ok  form  19.94 (+0.63) reject_both 
-  GB-32   ok  form  19.27 (+0.09) accept      
-  RJ-41   ok  form  24.52 (+0.08) reject_size 
-  RJ-42   ok  form  21.90 (+0.12) reject_form 
-  RJ-43   ok  form  21.90 (+0.04) reject_both 
-  RJ-44   ok  form  18.43 (+0.10) accept      
-  RJ-45   ok  form  17.39 (+0.10) reject_size 
-  RJ-46   ok  form  14.86 (+0.11) reject_both 
-
-worst error on a form error 0.63 um; features sentenced wrong: 0
+CB-21  ok  form  23.95 (true  23.99, -0.04) accept       (true accept      )
+CB-22  ok  form  17.39 (true  16.49, +0.90) reject_size  (true reject_size )
+CB-23  ok  form  18.34 (true  18.50, -0.16) reject_form  (true reject_form )
+CB-24  ok  form  14.96 (true  15.00, -0.04) reject_form  (true reject_form )
+CB-25  ok  form  14.96 (true  14.96, -0.01) reject_both  (true reject_both )
+CB-26  ok  form  29.44 (true  29.50, -0.07) reject_size  (true reject_size )
+GB-31  ok  form  20.44 (true  20.52, -0.07) reject_both  (true reject_both )
+GB-32  ok  form  21.62 (true  20.76, +0.86) accept       (true accept      )
+RJ-41  ok  form  26.74 (true  26.57, +0.17) reject_size  (true reject_size )
+RJ-42  ok  form  26.13 (true  26.01, +0.12) reject_form  (true reject_form )
+RJ-43  ok  form  26.13 (true  26.12, +0.01) reject_both  (true reject_both )
+RJ-44  ok  form  14.01 (true  13.99, +0.02) accept       (true accept      )
+RJ-45  ok  form  22.05 (true  22.00, +0.05) reject_form  (true reject_form )
+RJ-46  ok  form  23.21 (true  23.11, +0.10) reject_size  (true reject_size )
+14 of 14 right (gate 14): accepted

@@ -241,3 +241,69 @@ sat in the pool with near-identical code. A reworked sibling is not blocked by i
 caught in November was scaffolding shared with *other, independent* tasks that had gone in hours earlier, and
 the archetype of the deliverable. Fix those two and a family resemblance to your own earlier attempt is
 survivable.
+
+## Validation failure, Nov 11 (bore-form-acceptance 20261110d): four blocking criteria
+
+The four, and what each one actually asks for. These are now checks in every task's preflight, not habits.
+
+1. **"Graded instances discriminate".** It is not enough that the gate is all-or-nothing. *Each* graded item
+   has to require the work. A sheet naming one form figure and one sentence for all 14 features picked up two
+   of them, because two features sharing a sentence had form errors 0.26 um apart and the band is 1.2. The
+   invariant: within a verdict, no two features' answers may lie within twice the band of each other, and the
+   null study must sweep the constants rather than test a couple of zero-valued ones. Note the floor - one hit
+   is unavoidable, since some constant always happens to name some feature's own answer - so the thing to prove
+   is that no sheet reaches two.
+2. **"Typos".** A conflicting identifier for a critical object counts, wherever it sits - the offender was a
+   docstring in the sealed rig calling the metrology room's tester by the shop tester's name. Grep every
+   identifier across the whole bundle, authoring and sealed files included, not just the agent-visible ones.
+3. **"Verification explanation quality".** Two separate faults. First, studies that grade with their own
+   comparison are proxy evidence: the studies must write a complete submission and hand it to the verifier's
+   own module, and at least one study must run the whole pytest verifier in a clean subprocess. Second, every
+   committed evidence .txt must be regenerated whenever the data changes - a stale number in a committed file
+   reads as a false claim, and two of ours did.
+4. **"Well specified".** A premise the answer depends on and the solver cannot infer must be stated in an
+   agent-visible document, even when it feels like background the author has held in mind all along. Ours was
+   that two features bored in one setup carry the same lobing, which is what lets one feature's scan serve its
+   twin; without it four scans cannot cover six deficient records, and an expert can reasonably refuse the
+   transfer. It is now a process note, PE-114, with the three things that do *not* transfer spelled out. The
+   tell was in an earlier probe: a careful run tested the premise by correlating same-setup profiles, got
+   nothing, and called it a distractor. When a probe rejects a load-bearing premise, the premise is missing
+   from the documents, not from the solver.
+
+Advisory in the same review: `task.name` prefix, and `[metadata]` said to carry fields that are not benchmark
+metadata (category, subcategory and the three explanations).
+
+## Structure check failure, Nov 11 (bore-form-acceptance 20261111): the advisory was acted on, wrongly
+
+The five fields were removed from task.toml on the strength of that advisory, and preflight's own check was
+rewritten to agree. Intake then bounced the bundle on seven errors: `metadata-missing` for each of the five,
+`subcategory-missing`, and `fixed-category` (category must be "Science"). The structure check requires the
+full block; the quality reviewer's advisory was simply wrong about the schema, or about a different one.
+
+What went wrong in process, not just in content: a non-blocking remark was allowed to override the playbook
+and the evidence of every passing task in the repo, and a failing check was edited instead of heeded. The
+rules now: blocking checks outrank advisories; the schema is compared with a task that has passed intake
+before every zip; and preflight carries the intake's rules as checks, so this cannot leave the machine again.
+The `task.name` prefix is not open after all: the relief-valve-adequacy entry above had already settled that
+`<prefix>/<task>` with the present prefix is the required form, and that the advisory prints it redacted.
+
+## Validation failure, Nov 11 (bore-form-acceptance 20261111b): test-instruction alignment
+
+"The instruction requires form_um to two decimal places and an exact header, whereas read_sheet accepts zero or
+one decimal and strips header-field whitespace before comparison. Thus some sheets outside the stated format
+can pass." A forgiving reader is a misalignment, not a kindness: every formatting clause the instruction states
+must be enforced as stated. The old reader also took a quoted header, blank lines above the header, exponent
+form, a plus sign and a sentence with a space after it. The reader is now literal on each stated clause and
+silent on everything unstated; see the playbook section of the same name.
+
+The same review repeated the advisory that category, subcategory and the three explanations are unrecognised.
+They stay: intake's structure check requires them (see the entry above). Expect that advisory on every review.
+
+## Open after Nov 11: bore-form-acceptance's harness against the similarity gate
+
+Measured the way the relief-valve entry does (difflib ratio, whitespace-normalised, nearest other bundle):
+environment/Dockerfile 0.916, tests/Dockerfile 0.993, tests/test.sh 0.998, tests/test_form.py 0.868,
+tests/grade_form.py 0.610, all against impeller-shrink-fits; solution 0.169; instruction 0.470. Every harness
+file is above the 0.4 rewrite line. The bundle has nonetheless been through five submissions without a
+similarity rejection, so the harness has been left alone rather than rewritten on inference. Put to the other
+account's chat; act on its answer before the next submission.

@@ -26,9 +26,31 @@ malformed sheets: every one must be rejected as a whole, and none may crash the 
 
 cases that were not rejected or that crashed: 0 of 23
 
-a correct sheet, written untidily (these must pass)
-  CRLF line ends                                   accepted
-  blank lines between rows                         accepted
-  spaces around the fields                         accepted
-  the rows in another order                        accepted
-  a trailing comment line removed, final newline absent accepted
+correct answers in a format the instruction does not allow: every one must be rejected
+
+  "exact header": spaces after the commas              rejected
+  "exact header": a space before it                    rejected
+  "exact header": a space after it                     rejected
+  "exact header": in capitals                          rejected
+  "exact header": quoted                               rejected
+  "exact header": a blank line above it                rejected
+  "two decimal places": every figure to one            rejected
+  "two decimal places": every figure a whole number    rejected
+  "two decimal places": every figure to three          rejected
+  "two decimal places": one figure to one              rejected
+  "two decimal places": one figure in exponent form    rejected
+  "two decimal places": one figure with a plus sign    rejected
+  "two decimal places": one figure with a unit         rejected
+  "two decimal places": a space before one figure      rejected
+  "one of" the four words: a space after one           rejected
+  "one row for each": a space before one feature       rejected
+
+sheets outside the stated format that the verifier took: 0 of 16
+
+a correct sheet, varied only in ways the instruction does not constrain (these must pass)
+  the sheet exactly as the reference writes it         accepted
+  CRLF line ends, which Python's csv module writes     accepted
+  no terminator on the last line                       accepted
+  the rows in another order                            accepted
+  empty lines between the rows                         accepted
+  the fields of each row quoted, as CSV allows         accepted

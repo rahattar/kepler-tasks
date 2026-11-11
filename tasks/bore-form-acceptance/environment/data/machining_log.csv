@@ -7,5 +7,6 @@ date,setup,machine,fixture,operation,features_in_this_setup,note
 2026-09-24,S6,CG-3 cylindrical grinder,between centres,"finish grind, 0.02 mm infeed",RJ-42 RJ-43,"clamped once, every feature of this setup finished before unclamping"
 2026-09-25,S7,HBM-2 horizontal borer,F-2 cradle,"finish bore, CBN insert, 0.10 mm/rev",CB-26,single part in the setup
 2026-09-28,S8,CG-3 cylindrical grinder,between centres,"finish grind, 0.02 mm infeed",RJ-45,single part in the setup
+2026-09-30,-,RT-1 form tester,-,"spindle bearings re-greased, preload reset",-,"planned maintenance, carried out in the evening after the day's inspection work"
 2026-10-03,-,HON-1 honing machine,-,re-hone to clear a score,CB-22,"score found on strip, bore honed through; the inspection measurement of 2026-09-30 predates this"
 2026-10-04,-,-,-,metrology room booking opened,-,"press overhaul: dense form scans on request, booking of 4"

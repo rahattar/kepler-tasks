@@ -2,20 +2,20 @@ scans ordered: CB-22 CB-24 RJ-42 RJ-45   (booking 4)
 band on the form error 1.2 um; the gate is all 14 features
 
 feature characteristic    form    true   error | sentence     true         room to the nearest limit
-CB-21   cylindricity    21.68   21.59   +0.08 | accept       accept         3.4 um (form)
-CB-22   cylindricity    27.10   27.07   +0.03 | reject_size  reject_size    2.9 um (form)
-CB-23   roundness       15.02   14.98   +0.03 | reject_form  reject_form    1.0 um (form)
-CB-24   roundness       21.62   21.50   +0.11 | reject_form  reject_form    5.5 um (form)
-CB-25   roundness       21.62   21.46   +0.16 | reject_both  reject_both    5.5 um (form)
-CB-26   cylindricity    27.39   27.28   +0.12 | accept       accept         2.7 um (form)
-GB-31   roundness       19.32   19.30   +0.02 | reject_both  reject_both    5.3 um (form)
-GB-32   roundness       19.27   19.18   +0.09 | accept       accept         2.8 um (form)
-RJ-41   cylindricity    24.52   24.44   +0.08 | reject_size  reject_size    2.6 um (form)
-RJ-42   roundness       21.81   21.79   +0.02 | reject_form  reject_form    4.2 um (local)
-RJ-43   roundness       21.81   21.86   -0.05 | reject_both  reject_both    6.9 um (form)
-RJ-44   roundness       18.44   18.32   +0.11 | accept       accept         1.7 um (form)
-RJ-45   roundness       17.39   17.29   +0.10 | reject_size  reject_size    2.7 um (form)
-RJ-46   roundness       14.86   14.75   +0.11 | reject_both  reject_both    2.8 um (form)
+CB-21   cylindricity    23.86   23.99   -0.14 | accept       accept         3.5 um (form)
+CB-22   cylindricity    16.53   16.49   +0.04 | reject_size  reject_size    3.5 um (form)
+CB-23   roundness       18.35   18.50   -0.16 | reject_form  reject_form    3.5 um (form)
+CB-24   roundness       15.07   15.00   +0.07 | reject_form  reject_form    3.5 um (form)
+CB-25   roundness       15.07   14.97   +0.11 | reject_both  reject_both    3.5 um (form)
+CB-26   cylindricity    29.55   29.50   +0.04 | reject_size  reject_size    3.5 um (form)
+GB-31   roundness       20.45   20.51   -0.06 | reject_both  reject_both    3.5 um (form)
+GB-32   roundness       20.96   20.76   +0.20 | accept       accept         3.2 um (form)
+RJ-41   cylindricity    26.74   26.57   +0.17 | reject_size  reject_size    3.4 um (form)
+RJ-42   roundness       26.05   26.01   +0.04 | reject_form  reject_form    3.5 um (form)
+RJ-43   roundness       26.05   26.12   -0.07 | reject_both  reject_both    3.6 um (form)
+RJ-44   roundness       14.09   13.99   +0.10 | accept       accept         3.5 um (form)
+RJ-45   roundness       22.05   22.00   +0.05 | reject_form  reject_form    3.5 um (form)
+RJ-46   roundness       23.22   23.11   +0.11 | reject_size  reject_size    3.4 um (form)
 
-worst error on a form error 0.16 um at CB-25, against the band of 1.2
+worst error on a form error 0.20 um at GB-32, against the band of 1.2
 features sentenced wrong: 0

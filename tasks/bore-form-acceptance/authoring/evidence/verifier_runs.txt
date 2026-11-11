@@ -1,0 +1,39 @@
+sheets run through tests/test_form.py under pytest, one subprocess each:
+
+  ok   reward 1 (expected 1)  the reference solution's sentencing
+  ok   reward 1 (expected 1)  the independent solution's sentencing
+  ok   reward 0 (expected 0)  the tester's error motion charged to the parts
+  ok   reward 0 (expected 0)  one error motion pooled over the whole campaign
+  ok   reward 0 (expected 0)  each campaign's whole average taken off its parts
+  ok   reward 0 (expected 0)  the Gaussian band left off
+  ok   reward 0 (expected 0)  nothing removed from the profile at all
+  ok   reward 0 (expected 0)  the mean diameter in place of the mating cylinder
+  ok   reward 0 (expected 0)  the mating size alone, no two-point local size
+  ok   reward 0 (expected 0)  no temperature correction
+  ok   reward 0 (expected 0)  roundness where the drawing calls cylindricity
+  ok   reward 0 (expected 0)  no transfer from the scan to the twin
+  ok   reward 0 (expected 0)  no scans ordered at all
+  ok   reward 0 (expected 0)  every feature accept, form 20.00
+  ok   reward 0 (expected 0)  every feature reject_both, form 26.00
+
+and sheets the verifier has to refuse rather than grade:
+
+  ok   reward 0 (expected 0)  a sheet with a feature missing
+  ok   reward 0 (expected 0)  a sheet with a feature twice
+  ok   reward 0 (expected 0)  a sheet with an unknown sentence
+  ok   reward 0 (expected 0)  a sheet with a form figure that is not a number
+  ok   reward 0 (expected 0)  a sheet with no header
+  ok   reward 0 (expected 0)  an empty sheet
+
+and the reference's answers, where only the format differs:
+
+  ok   reward 1 (expected 1)  as asked for, LF line ends
+  ok   reward 1 (expected 1)  as asked for, CRLF line ends
+  ok   reward 0 (expected 0)  form_um to one decimal place
+  ok   reward 0 (expected 0)  form_um as whole numbers
+  ok   reward 0 (expected 0)  form_um to three decimal places
+  ok   reward 0 (expected 0)  the header with spaces after its commas
+  ok   reward 0 (expected 0)  the header in capitals
+  ok   reward 0 (expected 0)  a space after every sentence
+
+every sheet was decided as it should be

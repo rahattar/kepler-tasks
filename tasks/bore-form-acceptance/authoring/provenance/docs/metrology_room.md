@@ -1,6 +1,7 @@
 # Metrology room: dense form scans for the press overhaul
 
-The metrology room is temperature controlled at 20.4 C and holds an RT-1 form tester with a 1 mm ball stylus.
+The metrology room is temperature controlled at 20.4 C and holds its own form tester, RT-3, with a 1 mm
+ball stylus. It is not the shop's machine and it is inside its certification.
 While the overhaul parts are still in the works it will scan a feature on request:
 
     formscan <feature>

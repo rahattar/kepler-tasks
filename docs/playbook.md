@@ -27,12 +27,21 @@ Sciences). Follow this exactly unless Alex says otherwise.
   - agent timeout 28800 s; verifier timeout 600 s; the verifier in a separate environment with no network;
   - the agent runs as user `agent`;
   - domain engineering-sciences, field mechanical-engineering;
-  - the name prefix has so far been `afterquery/` (a reviewer flagged this as advisory; ask Alex for the required
-    prefix);
+  - the name is `<prefix>/<task-name>` with the prefix every task here already uses, and that is the required
+    form (settled by the relief-valve-adequacy structure rejection, Nov 10). Quality reviews print the prefix
+    redacted as "the benchmark/..." and flag it as an advisory on every pass; it is not a request to change it.
+    The prefix may appear nowhere else in a bundle - `tools/shipcheck.py` checks that on the zip;
+  - `[metadata]` carries the full block, and the intake's structure check rejects the bundle without it:
+    author_name, author_email, author_organization, author_profile, research_advisor, referred_by,
+    conflicts_of_interest, domain, field, subfield, category (must be "Science"), subcategory (non-empty), tags,
+    expert_time_estimate_hours, relevant_experience, difficulty_explanation, solution_explanation,
+    verification_explanation. A quality review may describe some of these as unrecognised in an advisory note.
+    Leave them where they are: the structure check is blocking and the advisory is not (bore-form, Nov 11);
   - difficulty_explanation says the data is synthetic and realistic, names the practitioner and the research
     analogue, and contains no agent-performance numbers.
-- **README.md:** carries `## Difficulty`, `## Reference solution` and `## Verification`, each with the same text
-  as the task.toml explanation fields.
+- **README.md:** carries `## Difficulty`, `## Reference solution` and `## Verification`, each containing the
+  task.toml explanation field word for word. Edit the README, then copy the section into task.toml; preflight
+  fails when the two disagree.
 - **Verifier pins:** numpy 2.1.3, scipy 1.14.1, pandas 2.2.3, pytest 8.4.1, pytest-json-ctrf 0.3.5. test.sh writes
   0 to the reward file first, then 1 only if pytest exits 0 and the ctrf report shows exactly 1 test, 1 passed.
 - **Literals the structure validator looks for.** It reads the files as text, so these have to appear verbatim
@@ -71,6 +80,47 @@ Sciences). Follow this exactly unless Alex says otherwise.
   change.
 
 `tasks/impeller-shrink-fits/` is the most recent complete example to copy from.
+
+## Before any zip goes to Alex
+- `python3 tools/shipcheck.py <new.zip> <previous.zip>` clean. It checks the zip itself, not the working tree.
+- preflight clean, on the tree the zip is made from.
+- The task.toml compared key for key, section by section and type for type, with a task that has passed
+  intake. Never change the schema to satisfy an advisory comment; if an advisory and a rule in this playbook
+  disagree, keep the rule and put the question to Alex.
+- Every intake rule that has bounced a bundle is a preflight check: the metadata block, category "Science",
+  non-empty subcategory, the three explanations, the 28800 s agent timeout, the instruction's closing sentence.
+- The reference run end to end from the unzipped bundle, through the pytest verifier.
+- When a check in preflight has to be rewritten to let a change through, stop: that is the check doing its job.
+
+## The verifier's reader is the instruction's formatting contract, literally
+- For every formatting clause in instruction.md ("exact header", "two decimal places", "one of ..."), the
+  reader enforces that clause as written: no trimming, no coercion, no accepting fewer decimals. A sheet with
+  correct answers in a format the instruction does not state must fail (bore-form, Nov 11: the reader trimmed
+  the header and took zero or one decimal).
+- And nothing more: what the instruction leaves open stays open - row order, LF or CRLF (Python's csv module
+  writes CRLF), a final terminator, empty lines, CSV quoting of a row's fields.
+- verifier_checks carries the proof both ways: correct answers in each disallowed format, all refused; the
+  correct sheet in each unconstrained variation, all accepted. preflight runs a few of each.
+- After editing README.md, run `python3 tools/sync_explanations.py tasks/<task>`.
+
+## Discrimination
+- Every graded item must require the work, not just the sheet as a whole. Within each possible answer to the
+  categorical part, no two items' numeric answers may lie within twice the grading band of each other.
+- The null study sweeps constant sheets across the whole plausible range of the numeric answer crossed with
+  every categorical answer, scored by the verifier. One item hit is the floor; two means an item is free.
+
+## Evidence must go through the verifier
+- Studies write a complete submission file and score it with the verifier's own grading module, never with a
+  comparison of their own. One study runs the whole pytest verifier in a subprocess on complete sheets,
+  including the reference, the second solution, every defective route and the best null sheets.
+- Regenerate every committed evidence .txt after any change to the data. A stale figure in a committed file is
+  read as a false claim.
+
+## Premises the solver cannot infer
+- If the answer depends on a fact that is not standard knowledge of the field and not derivable from the
+  shipped records, it goes in an agent-visible document. Author's background knowledge is not specification.
+- Probe reports are the detector: when a probe tests a load-bearing premise and concludes it does not hold, the
+  documents are missing it.
 
 ## Calibration targets
 - Easiness: 3 low-effort runs, at most 1 solved.

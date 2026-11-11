@@ -1,31 +1,31 @@
 band on a reported form error 1.2 um; the sentence must match exactly; the gate is all 14 features
 
 the booking the records call for: CB-22 CB-24 RJ-42 RJ-45
-  reference                                                      worst dform   0.16 (CB-25) wrong  0  
-  reference, the other twin of each pair scanned                 worst dform   0.12 (RJ-42) wrong  0  
+  reference                                                      worst dform   0.20 (GB-32) wrong  0  
+  reference, the other twin of each pair scanned                 worst dform   0.20 (GB-32) wrong  0  
 
 the reference booking, assessed wrongly
-  the form tester's own error motion charged to the parts        worst dform  11.57 (CB-23) wrong  8  CB-21 CB-23 CB-26 GB-31 GB-32 RJ-41 RJ-44 RJ-46
-  the whole average of the tester's records taken off each part  worst dform   5.30 (RJ-44) wrong  4  CB-21 RJ-41 RJ-44 RJ-46
-  least-squares zone instead of the minimum zone                 worst dform   5.05 (RJ-44) wrong 14  CB-21 CB-22 CB-23 CB-24 CB-25 CB-26 GB-31 GB-32 RJ-41 RJ-42 RJ-43 RJ-44 RJ-45 RJ-46
-  the Gaussian 50 UPR taper left off (feed waviness kept in)     worst dform   7.22 (RJ-41) wrong 14  CB-21 CB-22 CB-23 CB-24 CB-25 CB-26 GB-31 GB-32 RJ-41 RJ-42 RJ-43 RJ-44 RJ-45 RJ-46
-  the deviations taken as measured (eccentricity kept in too)    worst dform  52.56 (RJ-41) wrong 14  CB-21 CB-22 CB-23 CB-24 CB-25 CB-26 GB-31 GB-32 RJ-41 RJ-42 RJ-43 RJ-44 RJ-45 RJ-46
-  mean diameter in place of the mating cylinder                  worst dform   0.16 (CB-25) wrong  7  CB-22 CB-25 GB-31 RJ-41 RJ-43 RJ-45 RJ-46
-  no temperature correction to 20 C                              worst dform   0.16 (CB-25) wrong  4  CB-25 CB-26 GB-31 RJ-44
-  roundness computed where the drawing calls cylindricity        worst dform   9.37 (CB-22) wrong  4  CB-21 CB-22 CB-26 RJ-41
+  the form tester's own error motion charged to the parts        worst dform  12.10 (CB-23) wrong  7  CB-21 CB-23 CB-26 GB-31 RJ-41 RJ-44 RJ-46
+  one error motion pooled over the tester's whole campaign       worst dform  12.10 (CB-23) wrong  7  CB-21 CB-23 CB-26 GB-31 RJ-41 RJ-44 RJ-46
+  the whole average of each campaign's records taken off each part worst dform   5.28 (RJ-41) wrong  7  CB-21 CB-26 GB-31 GB-32 RJ-41 RJ-44 RJ-46
+  the Gaussian 50 UPR taper left off (feed waviness kept in)     worst dform   2.88 (GB-32) wrong 14  CB-21 CB-22 CB-23 CB-24 CB-25 CB-26 GB-31 GB-32 RJ-41 RJ-42 RJ-43 RJ-44 RJ-45 RJ-46
+  the deviations taken as measured (eccentricity kept in too)    worst dform  47.51 (RJ-41) wrong 14  CB-21 CB-22 CB-23 CB-24 CB-25 CB-26 GB-31 GB-32 RJ-41 RJ-42 RJ-43 RJ-44 RJ-45 RJ-46
+  mean diameter in place of the mating cylinder                  worst dform   0.20 (GB-32) wrong  5  CB-22 CB-25 GB-31 RJ-41 RJ-43
+  the mating size alone, no two-point local size                 worst dform   0.20 (GB-32) wrong  2  CB-26 RJ-46
+  no temperature correction to 20 C                              worst dform   0.20 (GB-32) wrong  3  CB-25 GB-31 GB-32
+  roundness computed where the drawing calls cylindricity        worst dform   4.50 (CB-26) wrong  4  CB-21 CB-22 CB-26 RJ-41
 
 the booking spent otherwise
-  no scans at all: every record taken as it stands               worst dform   9.13 (CB-24) wrong  6  CB-22 CB-24 CB-25 RJ-42 RJ-43 RJ-45
-  scans ordered but the setup not used to carry a twin           worst dform   8.26 (CB-25) wrong  2  CB-25 RJ-43
-  one scan for each sparse feature (the re-honed bore left out)  worst dform   4.37 (CB-22) wrong  2  CB-22 RJ-45
-  the re-honed bore scanned, a sparse pair left on its own records worst dform   3.36 (RJ-45) wrong  1  RJ-45
-  the booking spent on four features whose records are sound     worst dform   9.13 (CB-24) wrong  6  CB-22 CB-24 CB-25 RJ-42 RJ-43 RJ-45
-  the first four features of the register scanned                worst dform   5.20 (RJ-43) wrong  3  RJ-42 RJ-43 RJ-45
-  only the re-honed bore scanned, three scans left unused        worst dform   9.13 (CB-24) wrong  5  CB-24 CB-25 RJ-42 RJ-43 RJ-45
+  no scans at all: every record taken as it stands               worst dform  10.39 (RJ-42) wrong  6  CB-22 CB-24 CB-25 RJ-42 RJ-43 RJ-45
+  scans ordered but the setup not used to carry a twin           worst dform   8.55 (RJ-43) wrong  2  CB-25 RJ-43
+  one scan for each sparse feature (the re-honed bore left out)  worst dform   8.88 (RJ-45) wrong  2  CB-22 RJ-45
+  the re-honed bore scanned, a sparse pair left on its own records worst dform   8.88 (RJ-45) wrong  1  RJ-45
+  the booking spent on four features whose records are sound     worst dform  10.39 (RJ-42) wrong  6  CB-22 CB-24 CB-25 RJ-42 RJ-43 RJ-45
+  the first four features of the register scanned                worst dform  10.39 (RJ-42) wrong  3  RJ-42 RJ-43 RJ-45
+  only the re-honed bore scanned, three scans left unused        worst dform  10.39 (RJ-42) wrong  5  CB-24 CB-25 RJ-42 RJ-43 RJ-45
 
 sound choices, for the record (these pass)
-  the worst section's own mating circle instead of one cylinder  worst dform   0.16 (CB-25) wrong  0  
 
 which features each defective route loses (count of the routes above that lose it)
-  CB-21 6  CB-22 8  CB-23 4  CB-24 6  CB-25 9  CB-26 6  GB-31 6  GB-32 4  RJ-41 7  RJ-42 7  RJ-43 9  RJ-44 6  RJ-45 10  RJ-46 6
+  CB-21 6  CB-22 7  CB-23 4  CB-24 5  CB-25 8  CB-26 6  GB-31 7  GB-32 4  RJ-41 7  RJ-42 6  RJ-43 8  RJ-44 5  RJ-45 8  RJ-46 5
   fewest: 4

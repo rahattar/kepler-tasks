@@ -8,8 +8,10 @@ A feature's sentence depends only on which record its shape comes from, which re
 route; those are memoised, so a study can cross every way of spending the booking without recomputing the fits.
 """
 import csv
+import importlib.util
 import os
 import sys
+import tempfile
 
 import numpy as np
 
@@ -19,7 +21,22 @@ sys.path.insert(0, os.path.join(HERE, "..", "provenance"))
 import isim as S  # noqa: E402
 
 DATA = os.path.join(HERE, "..", "..", "environment", "data")
-TOL_FORM = 1.2          # um, the band the verifier allows on a reported form error
+
+# Grading goes through the verifier's own module, on a written sheet, so what a study measures is what the
+# verifier would decide: the same CSV reader, the same two-decimal figures, the same comparison, the same gate.
+# tests/sealed/isim.py is byte-identical to the copy imported above (preflight.py checks that), and truth() is a
+# pure function of the feature, so it is memoised here; without that a study of a thousand bookings would spend
+# its life re-solving the same fourteen minimum-zone problems. verifier_runs.py goes further and runs the whole
+# pytest verifier in a clean subprocess on complete sheets.
+_spec = importlib.util.spec_from_file_location(
+    "grade_form_evidence", os.path.join(HERE, "..", "..", "tests", "grade_form.py"))
+GRADER = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(GRADER)
+_truth_memo = {}
+_truth_real = GRADER.S.truth
+GRADER.S.truth = lambda k: _truth_memo[k] if k in _truth_memo else _truth_memo.setdefault(k, _truth_real(k))
+
+TOL_FORM = GRADER.TOL   # um, the band the verifier allows on a reported form error
 ALPHA = 11.7
 MIN_PTS = 101           # fewer points a revolution than this cannot resolve the 2 to 50 UPR band
 
@@ -96,6 +113,32 @@ def section_data(secs, T, tcorr=True, filt="band"):
 _spin = {}
 
 
+def regrease_date():
+    """The day the maintenance log says the form tester's spindle was re-greased and its preload reset."""
+    for r in LOG:
+        if "form tester" in r["machine"] and "spindle" in r["operation"]:
+            return r["date"]
+    return None
+
+
+def tester_groups():
+    """The tester's records, split by whether they were taken before or after that maintenance. Its error motion
+    is not the same on the two sides of it, so one estimate pooled over all of them belongs to neither."""
+    day = regrease_date()
+    groups = {}
+    for g in ORDER:
+        if g in SPARSE:
+            continue
+        key = "after" if (day and INDEX[g]["measured_on"] > day) else "before"
+        groups.setdefault(key, []).append(g)
+    return groups
+
+
+def group_of(f):
+    day = regrease_date()
+    return "after" if (day and INDEX[f]["measured_on"] > day) else "before"
+
+
 def spindle_estimate(filt="band", how="significant"):
     """The component every record of the shop's form tester carries at the same phase. A part's lobing sits at
     whatever phase it was clamped at, so averaging the tester's records leaves the machine's error motion and
@@ -104,29 +147,38 @@ def spindle_estimate(filt="band", how="significant"):
     how="significant" keeps only the orders whose mean stands clear of the scatter between parts (3 standard
     errors), which is the orders the machine actually contributes; how="mean" subtracts the whole average, and so
     takes a share of every part's own lobing off every other part."""
-    if (filt, how) in _spin:
-        return _spin[(filt, how)]
+    return spindle_of(None, filt, how)
+
+
+def spindle_of(group, filt="band", how="significant"):
+    """The error motion of the tester in one of its states. group=None pools every record, which is what a solver
+    gets who does not notice the maintenance."""
+    key = (group, filt, how)
+    if key in _spin:
+        return _spin[key]
+    members = tester_groups()[group] if group else [g for g in ORDER if g not in SPARSE]
     per = []
-    for g in ORDER:
-        if g in SPARSE:
-            continue
+    for g in members:
         secs, T = shop_record(g)
         _, p, _ = section_data(secs, T, filt=filt)
         per.append(np.mean(np.array(p), axis=0))       # one mounting per record, so its sections share a phase
     A = np.array(per)
     th = np.arange(A.shape[1]) / A.shape[1] * 2.0 * np.pi
     if how == "mean":
-        _spin[(filt, how)] = A.mean(axis=0)
-        return _spin[(filt, how)]
+        _spin[key] = A.mean(axis=0)
+        return _spin[key]
     F = np.fft.rfft(A, axis=1) / A.shape[1]
     out = np.zeros(A.shape[1])
     for k in range(2, min(F.shape[1], 120)):
         m = F[:, k].mean()
-        se = (F[:, k].real.std(ddof=1) + 1j * F[:, k].imag.std(ddof=1)) / np.sqrt(len(per))
+        se = (F[:, k].real.std(ddof=1) + 1j * F[:, k].imag.std(ddof=1)) / np.sqrt(max(len(per), 2))
         if abs(m.real) > 3.0 * se.real and abs(m.imag) > 3.0 * se.imag:
             out += 2.0 * (m.real * np.cos(k * th) - m.imag * np.sin(k * th))
-    _spin[(filt, how)] = out
-    return _spin[(filt, how)]
+    _spin[key] = out
+    return _spin[key]
+
+
+DETAIL = {}
 
 
 def assess(f, shape_src, size_src, route):
@@ -147,8 +199,10 @@ def assess(f, shape_src, size_src, route):
     _, profs, ths = section_data(ssecs, sT, tcorr=tcorr, filt=filt)
     zsecs, zT = _source(size_src)
     means, mprofs, mths = section_data(zsecs, zT, tcorr=tcorr, filt=filt)
-    if spin in ("remove", "mean"):   # only the shop tester's records carry it; a scan is from the certified room
-        e = spindle_estimate(filt, "mean" if spin == "mean" else "significant")
+    if spin in ("remove", "mean", "pooled"):   # only the tester's records carry it; a scan is from the room
+        how = "mean" if spin == "mean" else "significant"
+        grp = None if spin == "pooled" else group_of(shape_src[0] if shape_src[1] is None else f)
+        e = spindle_of(grp, filt, how)
         if shape_src[1] is None and shape_src[0] not in SPARSE:
             profs = [p - e for p in profs]
         if size_src[1] is None and size_src[0] not in SPARSE:
@@ -175,13 +229,16 @@ def assess(f, shape_src, size_src, route):
     locs = np.concatenate([2.0 * (means[j] - nom / 2.0) * 1000.0 + S.local_sizes(mths[j], mprofs[j])
                            for j in range(len(mprofs))])
     lo, hi = float(DRAW[f]["size_lower_um"]), float(DRAW[f]["size_upper_um"])
+    two_point = route.get("local", True)      # False: the mating size alone, Taylor's second requirement skipped
     if is_bore:
-        size_ok = mating >= lo and float(locs.max()) <= hi
+        size_ok = mating >= lo and (float(locs.max()) <= hi or not two_point)
     else:
-        size_ok = mating <= hi and float(locs.min()) >= lo
+        size_ok = mating <= hi and (float(locs.min()) >= lo or not two_point)
     form_ok = form <= float(DRAW[f]["form_tolerance_um"])
     v = {(True, True): "accept", (False, True): "reject_size",
          (True, False): "reject_form", (False, False): "reject_both"}[(size_ok, form_ok)]
+    DETAIL[key] = dict(form=float(form), mating=float(mating), tol=float(DRAW[f]["form_tolerance_um"]),
+                       lo=lo, hi=hi, locmax=float(locs.max()), locmin=float(locs.min()), bore=is_bore)
     _cache[key] = (float(form), v)
     return _cache[key]
 
@@ -206,18 +263,36 @@ def sentence(plan=(), transfer=True, **route):
 TRUTH = {f: S.truth(f) for f in ORDER}
 
 
+def sheet_of(ans, path):
+    """Write a sentencing sheet the way the task asks for it: the header, then 14 rows to two decimals."""
+    with open(path, "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["feature", "form_um", "verdict"])
+        for f in ORDER:
+            w.writerow([f, "%.2f" % ans[f][0], ans[f][1]])
+    return path
+
+
+def score(ans):
+    """The verifier's own result for a sheet of answers, read back from a written sheet."""
+    with tempfile.TemporaryDirectory() as d:
+        return GRADER.score(sheet_of(ans, os.path.join(d, "form.csv")))
+
+
 def grade(ans):
-    """worst form error, where, the features sentenced wrong, and the per-feature detail."""
+    """worst form error, where, the features sentenced wrong, and the per-feature detail, from the verifier."""
+    r = score(ans)
+    if "error" in r:
+        raise AssertionError("the verifier would not read the sheet: %s" % r["error"])
     worst, where, wrong, det = 0.0, "", [], {}
     for f in ORDER:
-        form, v = ans[f]
-        e = abs(form - TRUTH[f]["form"])
-        ok = e <= TOL_FORM and v == TRUTH[f]["verdict"]
-        det[f] = (form - TRUTH[f]["form"], v, ok)
-        if e > worst:
-            worst, where = e, f
-        if not ok:
+        v = r["features"][f]
+        det[f] = (v["form_error_um"], v["verdict"], v["ok"])
+        if abs(v["form_error_um"]) > worst:
+            worst, where = abs(v["form_error_um"]), f
+        if not v["ok"]:
             wrong.append(f)
+    assert r["accepted"] == (not wrong), r
     return worst, where, wrong, det
 
 

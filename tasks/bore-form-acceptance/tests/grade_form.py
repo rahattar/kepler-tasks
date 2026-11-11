@@ -15,6 +15,7 @@ import csv
 import decimal
 import io
 import os
+import re
 import stat
 import sys
 
@@ -33,6 +34,8 @@ class Reject(Exception):
     pass
 
 
+TWO_DECIMALS = re.compile(r"[0-9]+\.[0-9]{2}")
+
 def read_sheet(path):
     try:
         st = os.lstat(path)
@@ -49,14 +52,29 @@ def read_sheet(path):
         text = raw.decode("ascii")
     except UnicodeDecodeError:
         raise Reject("the sheet is not ASCII text")
+    # The instruction's contract, enforced as written and no further:
+    #   "the exact header feature,form_um,verdict"   - the first line, character for character
+    #   "one row for each of the 14 features"        - 14 rows, each feature once, and no other line
+    #   "form_um ... to two decimal places"          - digits, a point, exactly two digits; nothing else
+    #   "verdict must be one of ..."                 - one of the four words, exactly
+    # No field is trimmed or coerced: a field with a space in it is not the field the instruction asks for.
+    # What the instruction does not constrain is left alone: the order of the rows, whether lines end in LF or
+    # CRLF (Python's csv module writes CRLF by default), whether the last line has a terminator, empty lines
+    # after the header, and CSV quoting of a row's fields - a quoted 12.34 is still 12.34 to two decimal places.
+    # The header gets none of that latitude, because "exact" is the instruction's own word for it.
+    lines = text.split("\n")
+    if lines and lines[-1] == "":
+        lines.pop()                                   # the terminator of the last line, if it has one
+    lines = [ln[:-1] if ln.endswith("\r") else ln for ln in lines]
+    if not lines or lines[0] != ",".join(HEADER):
+        raise Reject("the first line must be exactly: %s" % ",".join(HEADER))
+    body = [ln for ln in lines[1:] if ln != ""]
     try:
-        rows = [[c.strip() for c in r] for r in csv.reader(io.StringIO(text)) if any(c.strip() for c in r)]
+        rows = list(csv.reader(io.StringIO("\n".join(body) + "\n"), strict=True)) if body else []
     except csv.Error as ex:
         raise Reject("the sheet is not valid CSV: %s" % ex)
-    if not rows or rows[0] != HEADER:
-        raise Reject("the first line must be exactly: %s" % ",".join(HEADER))
     out = {}
-    for r in rows[1:]:
+    for r in rows:
         if len(r) != 3:
             raise Reject("every row must have three fields: %r" % r)
         fid, form, verdict = r
@@ -64,19 +82,12 @@ def read_sheet(path):
             raise Reject("unknown feature %r" % fid)
         if fid in out:
             raise Reject("feature %s appears twice" % fid)
-        try:
-            v = decimal.Decimal(form)
-        except decimal.InvalidOperation:
-            raise Reject("%s form_um is not a number: %r" % (fid, form))
-        if not v.is_finite():
-            raise Reject("%s form_um must be finite" % fid)
-        if v.as_tuple().exponent < -2:
-            raise Reject("%s form_um has more than two decimals" % fid)
-        if not decimal.Decimal(0) <= v <= decimal.Decimal(500):
-            raise Reject("%s form_um must be from 0 to 500" % fid)
+        if not TWO_DECIMALS.fullmatch(form):
+            raise Reject("%s form_um must be a number written to two decimal places, as in 12.34: %r"
+                         % (fid, form))
         if verdict not in VERDICTS:
             raise Reject("%s verdict must be one of %s" % (fid, ", ".join(VERDICTS)))
-        out[fid] = (float(v), verdict)
+        out[fid] = (float(form), verdict)
     if set(out) != set(IDS):
         raise Reject("the sheet must have one row for each of %s" % ", ".join(IDS))
     return out

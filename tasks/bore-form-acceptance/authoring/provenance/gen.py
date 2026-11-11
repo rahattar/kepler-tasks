@@ -69,7 +69,8 @@ def records(out):
         psi = S.mount_phase(f, rng)
         rows = ["section_mm,angle_deg,radius_mm"]
         for j, frac in enumerate(S.SECTIONS):
-            th, r = S.measured(f, j, pts, rng, T=S.T_SHOP[f], pre=True, spindle=tester, psi=psi)
+            state = (("after" if MEAS_DATE[d["setup"]] > S.REGREASE else "before") if tester else False)
+            th, r = S.measured(f, j, pts, rng, T=S.T_SHOP[f], pre=True, spindle=state, psi=psi)
             zmm = round(frac * LENGTH[f], 1)
             for a, rr in zip(th, r):
                 rows.append("%.1f,%.3f,%.5f" % (zmm, np.degrees(a), rr))
@@ -105,6 +106,8 @@ def machining(out):
         note = "clamped once, every feature of this setup finished before unclamping" if len(fs) > 1 \
             else "single part in the setup"
         rows.append([date, s, machine, fixture, op, " ".join(fs), note])
+    rows.append(["2026-09-30", "-", "RT-1 form tester", "-", "spindle bearings re-greased, preload reset", "-",
+                 "planned maintenance, carried out in the evening after the day's inspection work"])
     rows.append(["2026-10-03", "-", "HON-1 honing machine", "-", "re-hone to clear a score", "CB-22",
                  "score found on strip, bore honed through; the inspection measurement of %s predates this"
                  % MEAS_DATE[S.FEATURES["CB-22"]["setup"]]])
@@ -136,7 +139,8 @@ def shop_figures():
         psi = S.mount_phase(f, rng)
         zs, means, ls = [], [], []
         for j, frac in enumerate(S.SECTIONS):
-            th, r = S.measured(f, j, pts, rng, T=S.T_SHOP[f], pre=True, spindle=tester, psi=psi)
+            state = (("after" if MEAS_DATE[d["setup"]] > S.REGREASE else "before") if tester else False)
+            th, r = S.measured(f, j, pts, rng, T=S.T_SHOP[f], pre=True, spindle=state, psi=psi)
             dev = (r - r.mean()) * 1000.0
             p = S.assess_profile(th, dev)
             means.append(r.mean() * 2.0)
