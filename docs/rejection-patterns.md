@@ -51,3 +51,29 @@
 - task.name should use the benchmark's required prefix rather than "afterquery/"; ask Alex for the exact
   string.
 - category/subcategory and the three explanation fields may belong only in README.md, not task.toml.
+
+## Bundle structure failures, Nov 10 (base-pressure-diagnosis 20261110)
+**Blocking, all three in task.toml:**
+- `verifier-not-separate` — `[verifier] environment_mode` unset, so harbor defaulted the verifier into the
+  shared container.
+- `network-mode-missing` — `[environment] network_mode` unset, so the agent's egress was undeclared.
+- `verifier-network-missing` — `[verifier.environment] network_mode` unset, so the verifier's offline
+  grading was undeclared.
+
+Cause: `task.toml` generation moved into `authoring/provenance/meta.py`, and the generator was written from
+scratch rather than from the predecessor's file. The three sections were dropped and replaced with a single
+invented key, `[verifier] network = false`, which harbor does not read. It survived preflight because
+preflight's own check was written from the same mistaken assumption and matched that key with a regex over
+the file's text. Both the generator and its check were wrong in the same way, so they agreed.
+
+- Rule: when moving a generated file into a generator, diff the generated output against the file it replaces
+  before trusting it. `meta.py --write` then `git diff task.toml` would have shown four lines replacing twenty.
+- Rule: check structural config by **parsing** it, never by regex over the text. A regex confirms a string is
+  present; it cannot tell you the key is one the consumer reads. Preflight now loads `task.toml` with
+  `tomllib` and asserts each key by path, including that no bare `[verifier] network` key exists.
+- Rule: a preflight check and the thing it checks must not come from the same assumption. Where a sibling task
+  already carries the pattern, copy the sibling's check too.
+- Rule: carrying a known-good block forward beats rewriting it. The three sections were correct in
+  vacuum-pumpdown-time and in all 34 other tasks; only the rewritten one was wrong.
+- Rule: before packaging, run the submitter's own structural checks against the **unpacked archive**, not the
+  working tree.

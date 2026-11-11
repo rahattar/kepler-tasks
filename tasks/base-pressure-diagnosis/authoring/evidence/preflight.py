@@ -14,6 +14,7 @@ import importlib.util
 import os
 import re
 import sys
+import tomllib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TASK = os.path.dirname(os.path.dirname(HERE))
@@ -231,11 +232,35 @@ def check_task_toml():
     check(field("field") == '"mechanical-engineering"', "task.toml field is mechanical-engineering",
           str(field("field")))
     check('"/app/output/diagnosis.csv"' in text, "task.toml declares the artifact")
-    check(re.search(r'agent[\s\S]{0,400}?timeout\s*=\s*28800', text) or "28800" in text,
-          "task.toml gives the agent 28800 s")
-    check("600" in text, "task.toml gives the verifier 600 s")
-    check(re.search(r'user\s*=\s*"agent"', text), "task.toml runs the agent as user agent")
-    check(re.search(r'network\s*=\s*false', text), "task.toml leaves the verifier without network")
+
+    # Parsed rather than matched: harbor reads the file as TOML, and the keys below decide which
+    # container the verifier runs in and whether either side has egress. A regex over the text once
+    # let `network = false` pass here, which harbor does not read at all.
+    try:
+        t = tomllib.loads(text)
+    except Exception as exc:
+        bad("task.toml parses as TOML", str(exc))
+        t = None
+    if t is not None:
+        check(t.get("agent", {}).get("timeout_sec") == 28800.0, "task.toml gives the agent 28800 s",
+              repr(t.get("agent", {}).get("timeout_sec")))
+        check(t.get("agent", {}).get("user") == "agent", "task.toml runs the agent as user agent",
+              repr(t.get("agent", {}).get("user")))
+        check(t.get("verifier", {}).get("timeout_sec") == 600.0, "task.toml gives the verifier 600 s",
+              repr(t.get("verifier", {}).get("timeout_sec")))
+        check(t.get("verifier", {}).get("environment_mode") == "separate",
+              "task.toml runs the verifier in its own container",
+              repr(t.get("verifier", {}).get("environment_mode")))
+        check(t.get("verifier", {}).get("environment", {}).get("network_mode") == "no-network",
+              "task.toml leaves the verifier without network",
+              repr(t.get("verifier", {}).get("environment", {}).get("network_mode")))
+        check(t.get("environment", {}).get("network_mode") == "public",
+              "task.toml gives the agent the open internet",
+              repr(t.get("environment", {}).get("network_mode")))
+        for key in ("build_timeout_sec", "cpus", "memory_mb", "storage_mb", "gpus"):
+            check(key in t.get("environment", {}), "task.toml declares environment.%s" % key)
+        check("network" not in t.get("verifier", {}),
+              "task.toml carries no bare verifier network key, which harbor ignores")
 
     diff = re.search(r'difficulty_explanation\s*=\s*"""([\s\S]*?)"""', text)
     check(diff is not None, "task.toml carries a difficulty explanation")

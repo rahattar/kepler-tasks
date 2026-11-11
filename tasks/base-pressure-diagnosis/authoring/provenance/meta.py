@@ -297,14 +297,6 @@ keywords = [
     "system-identification",
 ]
 
-[agent]
-timeout_sec = 28800
-user = "agent"
-
-[verifier]
-timeout_sec = 600
-network = false
-
 [metadata]
 author_name = "Alireza Bafandeh"
 author_email = "rahattar@gmail.com"
@@ -331,6 +323,25 @@ relevant_experience = """I am a control scientist and thermal engineer with a Ph
 difficulty_explanation = """%s"""
 solution_explanation = """%s"""
 verification_explanation = """%s"""
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 28800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"
 ''' % (DIFFICULTY, SOLUTION, VERIFICATION)
 
 

@@ -15,14 +15,6 @@ keywords = [
     "system-identification",
 ]
 
-[agent]
-timeout_sec = 28800
-user = "agent"
-
-[verifier]
-timeout_sec = 600
-network = false
-
 [metadata]
 author_name = "Alireza Bafandeh"
 author_email = "rahattar@gmail.com"
@@ -271,3 +263,22 @@ The audit test order and the sealed definition belong to a separate contractor u
 order through one sudo rule that allows nothing but its status and submit commands. The order is charged to the
 contractor's state file before any report is written, and a state that cannot be read counts as already placed, so
 no test can be had twice."""
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 28800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"
