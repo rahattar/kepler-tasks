@@ -29,7 +29,7 @@ What each layer is worth, against a tolerance of 1.0 per cent:
 | the safety system left on the essential supply | the device set | power_failure | devices |
 | the fire-resistant insulation fitted since the study | 3271.0% | fire_zone_b | load |
 | the feed meter's stale configured density | 4.3% | instrument_air_failure | pressure |
-| the control valve coefficients the trend gives | 2.7% | instrument_air_failure | pressure |
+| the control valve coefficients the trend gives | 29.4% | instrument_air_failure | pressure |
 | the reboiler coefficient-area the record gives | 25.7% | cooling_water_failure | pressure |
 | the pump's shutoff head from its data sheet | the device set | instrument_air_failure | devices |
 | the tip measured rather than taken from the 2019 study | 9.1% | fire_zone_c | pressure |

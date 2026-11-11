@@ -25,7 +25,16 @@ import isim as S  # noqa: E402
 DAY0 = dt.date(2026, 9, 25)
 NDAYS = 42
 TREND0 = dt.datetime(2026, 10, 20, 2, 0)
-TREND_N = 48            # four readings a day for twelve days
+TREND_N = 48            # readings on each valve, in two blocks where the valve has been re-trimmed
+
+# The work the maintenance log records on each item, which splits that item's record into a block that describes
+# the equipment as it was and a block that describes it as it now stands. The early block is generated from the
+# data sheet coefficient, the late block from the coefficient the valve now has, so a record read whole gives
+# neither.
+RETRIM = {"PV-4001": dt.date(2026, 5, 7), "PV-4071": dt.date(2026, 6, 15), "PV-4021": dt.date(2026, 7, 2)}
+LATE0 = dt.datetime(2026, 10, 28, 2, 0)   # the late block, after the most recent gas analysis
+TRAP_RENEWED = dt.date(2026, 10, 6)       # E-403's steam trap, renewed part way through the record
+FOULED = 0.85                             # what a flooded reboiler was making of its coefficient-area
 
 # the unit's streams at the throughput it runs, kg/h, all metered by coriolis meters but the feed
 STREAMS = dict(feed=15250.0, fuel=800.0, c2=2900.0, c3=4270.0, c4=3650.0, bottoms=3630.0,
@@ -148,8 +157,18 @@ def operating_record(rng):
             w_shown.append(w)
             dts = S.sat("steam", p_rd + S.ATM, "t") - t_bot[i]
             implied.append(w * S.sat("steam", p_rd + S.ATM, "latent") / 3600.0 / dts)
-        scale = ua / (sum(implied) / n)
-        steam[reb] = (p_shown, [w * scale for w in w_shown], t_bot)
+        # before its steam trap was renewed E-403 was flooding and making less of its surface, so the record
+        # splits where the log says the work was done: the later block is the exchanger as it now stands.
+        split = 0
+        if reb == "E-403":
+            split = next((i for i in range(n) if DAY0 + dt.timedelta(days=i) >= TRAP_RENEWED), 0)
+        for lo, hi, target in ((0, split, ua * FOULED), (split, n, ua)):
+            if hi <= lo:
+                continue
+            mean_here = sum(implied[lo:hi]) / (hi - lo)
+            for i in range(lo, hi):
+                w_shown[i] *= target / mean_here
+        steam[reb] = (p_shown, w_shown, t_bot)
 
     rows = []
     for i in range(n):
@@ -178,9 +197,10 @@ def operating_record(rng):
     return header, rows, gs
 
 
-def travel_for(tag, w_true, p_up, p_dn, t_up):
-    """The travel at which the valve as it is passes w_true at those conditions."""
+def travel_for(tag, w_true, p_up, p_dn, t_up, coef=None):
+    """The travel at which a valve of coefficient `coef` passes w_true at those conditions."""
     c = S.CV[tag]
+    coef = c["actual"] if coef is None else coef
     st = c["stream"]
     if st == "feed_gas":
         mw, k, z = S.feed_mw(), S.gas(st, p_up, "k"), S.gas(st, p_up, "z")
@@ -191,37 +211,52 @@ def travel_for(tag, w_true, p_up, p_dn, t_up):
     unit = S.valve_flow(1.0, c["xt"], c["fp"], k, p_up, p_dn, S.gas_density(p_up, t_K, mw, z))
     if unit <= 0.0:
         return None
-    return 1.0 + math.log((w_true / unit) / (c["actual"] / 1.156)) / math.log(c["r"])
+    return 1.0 + math.log((w_true / unit) / (coef / 1.156)) / math.log(c["r"])
 
 
 def control_valve_trend(rng, gs):
-    """Four readings a day for twelve days on each of the unit's five pressure control valves. The feed and fuel
-    gas valves follow the unit's throughput on the day; the bypass and propane vapour valves have their own.
+    """Readings on each of the unit's five pressure control valves.
+
+    Three of them had plug and seat rings replaced in 2026, and the maintenance log says when. For those the
+    trend runs in two blocks: one before that work, which the valve's data sheet coefficient generated, and one
+    in the last days of the record, which the coefficient it now has generated. A trend read whole fits
+    something between the two and describes no valve that has ever existed. The other two were never re-trimmed
+    and run in one block.
     """
     plan = {"PV-4001": ("feed", True), "PV-4021": ("fuel", True), "PV-4031": ("t401_bypass", False),
             "PV-4061": ("t402_bypass", False), "PV-4071": ("c3_vapour", False)}
-    day0 = (TREND0.date() - DAY0).days
     rows = []
     for tag, (stream, tied) in plan.items():
         c = S.CV[tag]
-        g = 1.0
-        for i in range(TREND_N):
-            if tied:
-                g = gs[min(day0 + i // 4, len(gs) - 1)]
-            else:
-                g = float(np.clip(1.0 + 0.7 * (g - 1.0) + rng.normal(0.0, 0.030), 0.86, 1.14))
-            ts = TREND0 + dt.timedelta(hours=6 * i)
-            p_up = c["p_up"] * rng.normal(1.0, 0.002)
-            p_dn = c["p_dn"] * rng.normal(1.0, 0.002)
-            t_up = c["t_up"] + float(rng.normal(0.0, 0.5))
-            w_true = STREAMS[stream] * g
-            h = travel_for(tag, w_true, p_up, p_dn, t_up)
-            if h is None or not 0.12 <= h <= 0.96:
-                continue
-            w_shown = S.indicated(c["meter"], w_true) * rng.normal(1.0, 0.005)
-            rows.append([tag, ts.strftime("%Y-%m-%d %H:%M"),
-                         round(100.0 * h + float(rng.normal(0.0, 0.30)), 2),
-                         round(p_up, 3), round(p_dn, 3), round(t_up, 1), round(w_shown, 1)])
+        blocks = []
+        if tag in RETRIM:
+            early_end = dt.datetime.combine(RETRIM[tag] - dt.timedelta(days=3), dt.time(2, 0))
+            # the early block only has to show what the valve was; the late block has to be long enough to
+            # fit the valve that is there now as closely as a trend of its own would
+            blocks.append((early_end - dt.timedelta(hours=6 * (TREND_N // 2 - 1)), TREND_N // 2, c["sheet"]))
+            blocks.append((LATE0, TREND_N, c["actual"]))
+        else:
+            blocks.append((LATE0, TREND_N, c["actual"]))
+        for start, count, coef in blocks:
+            g = 1.0
+            for i in range(count):
+                if tied and start == LATE0:
+                    g = gs[min((start.date() - DAY0).days + i // 4, len(gs) - 1)]
+                else:
+                    g = float(np.clip(1.0 + 0.7 * (g - 1.0) + rng.normal(0.0, 0.030), 0.86, 1.14))
+                ts = start + dt.timedelta(hours=6 * i)
+                p_up = c["p_up"] * rng.normal(1.0, 0.002)
+                p_dn = c["p_dn"] * rng.normal(1.0, 0.002)
+                t_up = c["t_up"] + float(rng.normal(0.0, 0.5))
+                w_true = STREAMS[stream] * g
+                h = travel_for(tag, w_true, p_up, p_dn, t_up, coef)
+                if h is None or not 0.12 <= h <= 0.96:
+                    continue
+                w_shown = S.indicated(c["meter"], w_true) * rng.normal(1.0, 0.005)
+                rows.append([tag, ts.strftime("%Y-%m-%d %H:%M"),
+                             round(100.0 * h + float(rng.normal(0.0, 0.30)), 2),
+                             round(p_up, 3), round(p_dn, 3), round(t_up, 1), round(w_shown, 1)])
+    rows.sort(key=lambda r: (r[0], r[1]))
     header = ["tag", "timestamp", "travel_pct", "upstream_bara", "downstream_bara",
               "upstream_temp_C", "flow_kgh"]
     return header, rows

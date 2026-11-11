@@ -12,6 +12,11 @@ header's inlet.
 The study is made on the plant as it now stands, not as it was designed. The set pressure of a device is the one
 it now carries. The flows, pressures, temperatures and duties are those the unit now runs at.
 
+Where a quantity is established from a record of the plant running, only the part of that record which describes
+the item in its present condition may be used. The maintenance log says what has been done to each item and
+when; a reading taken before the last work on an item does not describe the item that is there now, and a record
+read across such work describes nothing that has ever been in service.
+
 ## 2 Contingencies to be studied
 
 - `power_failure`: the loss of the normal electrical supply across the unit.
@@ -137,8 +142,8 @@ where the liquid the column holds is the one the vessel data book names for it, 
 - Tb is the saturation temperature of that liquid at the relieving pressure;
 - L is the latent heat of that same liquid at the relieving pressure, the mass the reboiler makes being its duty
   over the latent heat of what it is boiling;
-- UA shall be established from the unit's operating record at the throughput the unit runs, as the mean over the
-  record of the value each day's duty and temperature difference give.
+- UA shall be established from the record of the exchanger in its present condition, at the throughput the unit
+  runs, as the mean over that record of the value each day's duty and temperature difference give.
 
 What then leaves the top of the column and enters the header is the relieving fluid the register names, so it is
 that fluid's molar mass, ratio of specific heats, compressibility and temperature at the relieving pressure that

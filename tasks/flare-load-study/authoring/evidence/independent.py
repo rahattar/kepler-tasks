@@ -208,9 +208,23 @@ class Records(object):
         return where
 
     # -- the quantities the records only imply -----------------------------
+    def worked_on(self, item):
+        """The day of the last work the maintenance log records on the item, or None."""
+        days = self.maintenance_log[self.maintenance_log["item"] == item]["date"]
+        return days.max() if len(days) else None
+
+    def in_service(self, frame, item, column):
+        """Only the rows of a record taken after the last work on the item (section 1)."""
+        cut = self.worked_on(item)
+        if cut is None:
+            return frame
+        kept = frame[frame[column].str.slice(0, 10) >= cut]
+        return kept if len(kept) else frame
+
     def coefficient(self, tag):
         """Rated Cv by least squares through the origin: minimise sum (w - Cv x)^2 over the trend."""
-        rows = self.control_valve_trend[self.control_valve_trend["tag"] == tag]
+        rows = self.in_service(self.control_valve_trend[self.control_valve_trend["tag"] == tag],
+                               tag, "timestamp")
         spec = self.cv.loc[tag]
         xt, fp, r = float(spec["xt"]), float(spec["fp"]), float(spec["rangeability"])
         correction = self.meter_factor() if spec["flow_measurement"] == "FE-4011" else 1.0
@@ -233,13 +247,15 @@ class Records(object):
         """UA by least squares of the record's duty against its temperature difference, through the origin."""
         name, prefix = BOILS[device]
         number = name.split("-")[1]
-        pressure = self.record["e%s_steam_barg" % number] + ATM
+        days = self.in_service(self.operating_record, name, "date").index
+        record = self.record.loc[days]
+        pressure = record["e%s_steam_barg" % number] + ATM
         latent = np.interp(pressure, self.sat["steam"]["pressure_bara"].values,
                            self.sat["steam"]["latent_heat_kj_per_kg"].values)
-        duty = self.record["e%s_steam_kgh" % number].values * latent / 3600.0
+        duty = record["e%s_steam_kgh" % number].values * latent / 3600.0
         steam_t = np.interp(pressure, self.sat["steam"]["pressure_bara"].values,
                             self.sat["steam"]["saturation_temp_C"].values)
-        gap = steam_t - self.record["%s_bottoms_C" % prefix].values
+        gap = steam_t - record["%s_bottoms_C" % prefix].values
         keep = gap > 0.0
         return float((duty[keep] * gap[keep]).sum() / (gap[keep] ** 2).sum())
 

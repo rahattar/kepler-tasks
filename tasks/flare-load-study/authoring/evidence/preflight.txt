@@ -1,0 +1,94 @@
+pass the bundle holds exactly the seven required entries                                      extra: none; missing: none
+pass no bytecode caches anywhere in the bundle                                                none
+pass no all-uppercase file or folder names                                                    none
+pass every file is ASCII                                                                      none
+pass nothing encoded or obfuscated anywhere                                                   none
+pass no path from outside the bundle in any file                                              none
+pass no symbolic links in the bundle                                                          none
+pass the agent's records use no authoring vocabulary                                          none
+pass instruction.md has no heading                                                            
+pass instruction.md uses no grading words                                                     none
+pass instruction.md ends with the required paragraph                                          'You have 28800 seconds to complete this task. Do not cheat b'
+pass instruction.md names every input file by absolute path                                   none
+pass every path instruction.md names is a file that exists                                    none
+pass instruction.md names the output path and header                                          
+pass instruction.md does not print the accuracy band                                          
+pass task.toml sets timeout_sec                                                               
+pass task.toml sets user                                                                      
+pass task.toml gives the verifier 600 s in a separate environment with no network             
+pass task.toml declares the domain and field                                                  
+pass task.toml declares both artifacts                                                        
+pass task.toml name is one prefix followed by this task's own name                            <prefix>/flare-load-study
+pass the name's prefix appears nowhere but that one line                                      none
+pass task.toml carries difficulty_explanation                                                 
+pass task.toml carries solution_explanation                                                   
+pass task.toml carries verification_explanation                                               
+pass the difficulty explanation says the data is synthetic and realistic                      
+pass the difficulty explanation names who does the work                                       
+pass the difficulty explanation names the research analogue                                   
+pass the difficulty explanation carries no agent-performance numbers                          
+pass README.md carries ## Difficulty                                                          
+pass README.md ## Difficulty matches task.toml                                                
+pass README.md carries ## Reference solution                                                  
+pass README.md ## Reference solution matches task.toml                                        
+pass README.md carries ## Verification                                                        
+pass README.md ## Verification matches task.toml                                              
+pass the verifier pins numpy 2.1.3                                                            
+pass the verifier pins scipy 1.14.1                                                           
+pass the verifier pins pandas 2.2.3                                                           
+pass the verifier pins pytest 8.4.1                                                           
+pass the verifier pins pytest-json-ctrf 0.3.5                                                 
+pass the verifier image installs its stack                                                    
+pass the verifier image creates the artifact's parent directory                               
+pass test.sh writes the reward to the one path the harness reads                              
+pass test.sh writes a zero reward before it grades anything                                   
+pass test.sh requires the report to hold exactly one passing test                             
+pass test.sh writes a reward of one only on a clean run and a counted report                  
+pass test.sh re-locks the log directory after grading and before the reward is written        
+pass test.sh clears the old reward after grading and before writing the new one               
+pass test.sh names the report it reads, and reads only that one                               
+pass test.sh takes no path for the reward from outside                                        
+pass the sealed definition is byte-identical in provenance and tests                          36e597626fc76dcb
+pass the seed is byte-identical in provenance and tests                                       
+pass the sealed definition is byte-identical in the crew's copy too                           36e597626fc76dcb
+pass the sealed definition is nowhere in the agent's environment but the crew's own directory none
+pass the crew's seed carries a seed of its own for the tests                                  {'seed': 7301, 'test_seed': 91301}
+pass the standard sets the re-rating limit the design rules use                               
+pass the flare note lists the bores the sizing searches                                       
+pass the image gives the crew a user of its own, with no shell                                
+pass the image closes the crew's sealed definition and records to everyone else               
+pass the agent may run one program as the crew, with no environment carried across            
+pass the only way in is the fieldtest wrapper                                                 
+pass the crew writes where the agent can read and the agent cannot write                      
+pass the crew charges the booking before it runs a test                                       
+pass the crew refuses a test it has already run                                               
+pass the crew will not start if its directories are not as installed                          
+pass the crew's records cannot be a link                                                      
+pass instruction.md states the booking the crew's document gives                              
+pass instruction.md names where the crew reports                                              
+pass tests/app_data is the agent's data exactly                                               none
+pass the generator reproduces the shipped records from the seed                               none
+pass the grader takes the reference solution                                                  7 of 7
+pass the reference sits well inside the band                                                  worst 0.0021 against 0.0100
+pass the design rules hold (tune.py)                                                          18 rules, 0 FAILED
+pass authoring/evidence/route_study.txt is present                                            
+pass authoring/evidence/method_spread.txt is present                                          
+pass authoring/evidence/independent.txt is present                                            
+pass authoring/evidence/null_baselines.txt is present                                         
+pass authoring/evidence/hedge_study.txt is present                                            
+pass authoring/evidence/verifier_checks.txt is present                                        
+pass authoring/evidence/reference_run.txt is present                                          
+pass authoring/evidence/seed_screen.txt is present                                            
+pass authoring/evidence/booking_study.txt is present                                          
+pass verifier_checks.txt reports no unexpected case                                           
+pass every defective route fails on the shipped records                                       
+pass every part is failed by at least three routes                                            
+pass the coupling cannot be skipped                                                           
+pass the bonnet column cannot be ignored                                                      
+pass every sound method gets all seven                                                        
+pass only the two tests that reach a row are worth ordering                                   
+pass only one way of spending the booking gets every row                                      
+pass the second study agrees on the shipped records                                           
+pass the second study agrees on every laboratory seed                                         
+
+92 checks, 0 failed: the bundle is clean

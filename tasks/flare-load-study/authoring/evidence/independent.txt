@@ -2,15 +2,15 @@ A second study of the same records, written separately. Tolerance 0.010 relative
 
 | contingency | devices | load, kg/h | header inlet, barg | sealed load | sealed inlet |
 |---|---|---|---|---|---|
-| power_failure | PSV-401 PSV-403 PSV-407 PSV-409 | 95461.0 | 1.2253 | 95521.9 (-0.064%) | 1.2274 (-0.164%) |
-| cooling_water_failure | PSV-403 | 54665.1 | 0.4930 | 54672.3 (-0.013%) | 0.4933 (-0.062%) |
-| instrument_air_failure | PSV-401 PSV-407 PSV-409 | 43632.2 | 0.3315 | 43697.7 (-0.150%) | 0.3327 (-0.356%) |
+| power_failure | PSV-401 PSV-403 PSV-407 PSV-409 | 95477.3 | 1.2257 | 95521.9 (-0.047%) | 1.2274 (-0.133%) |
+| cooling_water_failure | PSV-403 | 54666.5 | 0.4931 | 54672.3 (-0.011%) | 0.4933 (-0.058%) |
+| instrument_air_failure | PSV-401 PSV-407 PSV-409 | 43649.8 | 0.3318 | 43697.7 (-0.110%) | 0.3327 (-0.273%) |
 | fire_zone_a | PSV-401 PSV-402 PSV-409 | 19967.0 | 0.0524 | 19967.0 (-0.000%) | 0.0524 (-0.055%) |
 | fire_zone_b | PSV-403 PSV-404 | 517.5 | 0.0000 | 517.5 (-0.000%) | 0.0000 (+0.000%) |
 | fire_zone_c | PSV-406 PSV-407 PSV-408 | 38913.6 | 0.1283 | 38913.7 (-0.000%) | 0.1283 (-0.072%) |
 
-re-rating: tip 406.4 mm, PSV-409 binding at 4.439%
-7 of 7 parts agree; worst load 0.0015 and pressure 0.0036 against a band of 0.0100
+re-rating: tip 406.4 mm, PSV-409 binding at 4.441%
+7 of 7 parts agree; worst load 0.0011 and pressure 0.0027 against a band of 0.0100
 worst agreement over 20 laboratory seeds: 7 of 7
 
 where they differ: 

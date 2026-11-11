@@ -4,11 +4,11 @@ Quantities it identifies rather than reads:
 
 | quantity | identified | as the records would be read without the work | difference |
 |---|---|---|---|
-| PV-4001 coefficient at full travel | 54.88 | 64.00 (data sheet) | -14.2% |
-| PV-4021 coefficient at full travel | 3.08 | 2.50 (data sheet) | +23.3% |
-| PV-4031 coefficient at full travel | 48.19 | 48.00 (data sheet) | +0.4% |
-| PV-4061 coefficient at full travel | 36.12 | 36.00 (data sheet) | +0.3% |
-| PV-4071 coefficient at full travel | 37.78 | 27.00 (data sheet) | +39.9% |
+| PV-4001 coefficient at full travel | 54.92 | 64.00 (data sheet) | -14.2% |
+| PV-4021 coefficient at full travel | 3.09 | 3.60 (data sheet) | -14.1% |
+| PV-4031 coefficient at full travel | 48.16 | 48.00 (data sheet) | +0.3% |
+| PV-4061 coefficient at full travel | 35.98 | 36.00 (data sheet) | -0.0% |
+| PV-4071 coefficient at full travel | 37.76 | 44.00 (data sheet) | -14.2% |
 | E-403 coefficient-area, kW/K | 26.73 | 22.64 (data sheet duty) | +18.1% |
 | E-406 coefficient-area, kW/K | 42.73 | 36.19 (data sheet duty) | +18.1% |
 | feed flow against FE-4011's indication | x 1.0394 | x 1.0000 (as indicated) | +3.9% |
@@ -25,26 +25,26 @@ Its answer, against the sealed definition:
 
 | contingency | devices | load, kg/h | header inlet, barg | sealed load | sealed inlet |
 |---|---|---|---|---|---|
-| power_failure | PSV-401 PSV-403 PSV-407 PSV-409 | 95475.1 | 1.2256 | 95521.9 (-0.049%) | 1.2274 (-0.140%) |
-| cooling_water_failure | PSV-403 | 54668.8 | 0.4931 | 54672.3 (-0.006%) | 0.4933 (-0.050%) |
-| instrument_air_failure | PSV-401 PSV-407 PSV-409 | 43644.0 | 0.3317 | 43697.7 (-0.123%) | 0.3327 (-0.306%) |
+| power_failure | PSV-401 PSV-403 PSV-407 PSV-409 | 95489.1 | 1.2260 | 95521.9 (-0.034%) | 1.2274 (-0.112%) |
+| cooling_water_failure | PSV-403 | 54668.6 | 0.4931 | 54672.3 (-0.007%) | 0.4933 (-0.051%) |
+| instrument_air_failure | PSV-401 PSV-407 PSV-409 | 43660.9 | 0.3320 | 43697.7 (-0.084%) | 0.3327 (-0.226%) |
 | fire_zone_a | PSV-401 PSV-402 PSV-409 | 19967.0 | 0.0524 | 19967.0 (-0.000%) | 0.0524 (-0.055%) |
 | fire_zone_b | PSV-403 PSV-404 | 517.5 | 0.0000 | 517.5 (-0.000%) | 0.0000 (+0.000%) |
 | fire_zone_c | PSV-406 PSV-407 PSV-408 | 38913.6 | 0.1283 | 38913.7 (-0.000%) | 0.1283 (-0.072%) |
 
-worst relative load 0.0012 and pressure 0.0031 against a band of 0.0100
+worst relative load 0.0008 and pressure 0.0023 against a band of 0.0100
 
 The re-rating section 9 asks for:
 
 | tip bore | device left binding | its share of set pressure | sealed |
 |---|---|---|---|
-| 406.4 mm | PSV-409 under power_failure | 4.440% | 406.4 mm, PSV-409, 4.448% |
+| 406.4 mm | PSV-409 under power_failure | 4.442% | 406.4 mm, PSV-409, 4.448% |
 
 | tip bore | worst share any conventional device is left with | meets the 5 per cent limit |
 |---|---|---|
-| 254.0 mm | 16.02% on PSV-409 | no |
-| 304.8 mm | 9.08% on PSV-409 | no |
-| 355.6 mm | 5.95% on PSV-409 | no |
+| 254.0 mm | 16.03% on PSV-409 | no |
+| 304.8 mm | 9.09% on PSV-409 | no |
+| 355.6 mm | 5.96% on PSV-409 | no |
 | 406.4 mm | 4.44% on PSV-409 | yes |
 | 457.2 mm | 3.65% on PSV-409 | yes |
 
@@ -52,14 +52,14 @@ What each contingency reaches, and what the devices stand against:
 
 | contingency | sweeps | device | bonnet | cause | rate, kg/h | stands against, barg |
 |---|---|---|---|---|---|---|
-| power_failure | 8 | PSV-401 | conventional | control_valve_failure | 21142.9 | 1.1889 |
-|  |  | PSV-403 | conventional | cooling_failure | 55340.5 | 1.2256 |
-|  |  | PSV-407 | bellows | control_valve_failure | 16105.8 | 0.0000 |
-|  |  | PSV-409 | conventional | control_valve_failure | 2885.8 | 0.8630 |
-| cooling_water_failure | 5 | PSV-403 | conventional | cooling_failure | 54668.8 | 0.4931 |
-| instrument_air_failure | 6 | PSV-401 | conventional | control_valve_failure | 24652.3 | 0.3317 |
-|  |  | PSV-407 | bellows | control_valve_failure | 16105.8 | 0.0000 |
-|  |  | PSV-409 | conventional | control_valve_failure | 2885.8 | 0.2266 |
+| power_failure | 8 | PSV-401 | conventional | control_valve_failure | 21155.3 | 1.1892 |
+|  |  | PSV-403 | conventional | cooling_failure | 55340.6 | 1.2260 |
+|  |  | PSV-407 | bellows | control_valve_failure | 16099.1 | 0.0000 |
+|  |  | PSV-409 | conventional | control_valve_failure | 2894.1 | 0.8634 |
+| cooling_water_failure | 5 | PSV-403 | conventional | cooling_failure | 54668.6 | 0.4931 |
+| instrument_air_failure | 6 | PSV-401 | conventional | control_valve_failure | 24667.7 | 0.3320 |
+|  |  | PSV-407 | bellows | control_valve_failure | 16099.1 | 0.0000 |
+|  |  | PSV-409 | conventional | control_valve_failure | 2894.1 | 0.2268 |
 | fire_zone_a | 3 | PSV-401 | conventional | fire | 8978.4 | 0.0520 |
 |  |  | PSV-402 | bellows | fire | 7089.7 | 0.0000 |
 |  |  | PSV-409 | conventional | fire | 3898.9 | 0.0347 |

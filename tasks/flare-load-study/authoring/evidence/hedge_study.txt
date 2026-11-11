@@ -11,10 +11,13 @@ Hedges between a defective reading and the sealed answer. Tolerance 0.010 relati
 | credit taken without testing any condition | power_failure, cooling_water_failure, instrument_air_failure | none |
 | credit taken without the SIL floor | power_failure, instrument_air_failure | none |
 | credit taken without the proof test interval | power_failure, instrument_air_failure | none |
-| the data sheet coefficient for every control valve | power_failure, instrument_air_failure | power_failure |
+| the data sheet coefficient for every control valve | power_failure, instrument_air_failure | none |
 | a linear characteristic for every control valve | power_failure, instrument_air_failure | none |
 | the largest logged flow taken as the relieving rate | power_failure, instrument_air_failure | none |
 | the feed meter read as indicated | power_failure, instrument_air_failure | power_failure |
+| the whole valve trend fitted, across the work on the trim | power_failure, instrument_air_failure | none |
+| the whole operating record averaged, across the work on the exchanger | power_failure, cooling_water_failure | none |
+| both records read whole | cooling_water_failure, instrument_air_failure | none |
 | the reboiler coefficient-area from the data sheet duty | power_failure, cooling_water_failure | none |
 | the data sheet duty taken as the relieving duty | power_failure, cooling_water_failure | none |
 | the duty divided by the overhead's latent heat | power_failure, cooling_water_failure | none |

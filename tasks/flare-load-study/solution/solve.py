@@ -240,6 +240,22 @@ class Study(object):
             return _num(max(hist, key=lambda r: r["work_date"])["as_left_set_barg"])
         return _num(self.reg[vid]["set_pressure_barg"])
 
+    def last_work(self, item):
+        """The day of the last work the maintenance log records on the item, or None if it records none.
+
+        Section 1: only the part of a record that describes the item in its present condition may be used, and
+        this is the day that divides the two.
+        """
+        days = [r["date"] for r in self.d["maintenance_log"] if r["item"] == item]
+        return max(days) if days else None
+
+    def since_work(self, item, rows, column):
+        """Only those rows of a record that were taken after the last work on the item."""
+        cut = self.last_work(item)
+        if cut is None:
+            return rows
+        return [r for r in rows if r[column][:10] >= cut] or rows
+
     def bellows(self, vid):
         """Whether the device has a balanced bonnet, which isolates it from whatever stands at its outlet."""
         return "bellows" in self.reg[vid]["bonnet"].lower()
@@ -340,9 +356,9 @@ class Study(object):
         r, xt, fp = _num(c["rangeability"]), _num(c["xt"]), _num(c["fp"])
         stream = CVSTREAM[tag]
         vals = []
-        for row in self.d["control_valve_trend"]:
-            if row["tag"] != tag:
-                continue
+        # only the readings taken since the valve's trim was last worked on describe the valve in service
+        for row in self.since_work(tag, [r for r in self.d["control_valve_trend"] if r["tag"] == tag],
+                                   "timestamp"):
             p_up, p_dn = _num(row["upstream_bara"]), _num(row["downstream_bara"])
             w = _num(row["flow_kgh"])
             if c["flow_measurement"] == "FE-4011":
@@ -360,7 +376,8 @@ class Study(object):
         name, prefix = REBOILER[vid]
         n = name.split("-")[1]
         vals = []
-        for r in self.d["operating_record"]:
+        # and only the days since the exchanger was last worked on describe the exchanger in service
+        for r in self.since_work(name, self.d["operating_record"], "date"):
             p = _num(r["e%s_steam_barg" % n]) + ATM
             q = _num(r["e%s_steam_kgh" % n]) * self.sat("steam", p, "latent") / 3600.0
             dt = self.sat("steam", p, "t") - _num(r["%s_bottoms_C" % prefix])

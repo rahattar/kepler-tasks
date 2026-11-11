@@ -210,6 +210,12 @@ def main():
             body = readme[i + len(head):]
             nxt = body.find("\n## ")
             body = body[:nxt] if nxt >= 0 else body
+            # the README carries two trailing pieces that task.toml does not, and tools/sync_explanations.py
+            # cuts them at exactly these marks; the comparison has to cut them the same way
+            for mark in ("\n\n`solution/solve.sh` starts", "\nEvidence (`authoring/evidence/`)"):
+                cut = body.find(mark)
+                if cut >= 0:
+                    body = body[:cut]
             check("README.md %s matches task.toml" % head,
                   " ".join(body.split()) == " ".join(expl[field].split()))
 
@@ -398,7 +404,9 @@ def main():
         if not ok:
             nfail += 1
         print("%s %-*s %s" % ("pass" if ok else "FAIL", width, name, detail))
-    print("\n%d checks, %d failed" % (len(results), nfail))
+    # tools/shipcheck.py reads this last line and wants the word clean on it
+    print("\n%d checks, %d failed: the bundle is %s"
+          % (len(results), nfail, "clean" if not nfail else "NOT ready to ship"))
     return 0 if nfail == 0 else 1
 
 

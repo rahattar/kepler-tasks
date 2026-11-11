@@ -22,6 +22,9 @@ Defective readings, every one of which must fail:
     ua        "design"   the reboiler coefficient-area from the data sheet duty
               "duty"     the data sheet duty taken as the relieving duty itself
     latent    "overhead" the reboiler duty divided by the overhead vapour's latent heat
+    pool      "trend"    the whole control valve trend fitted, across the work on the trim
+              "record"   the whole operating record averaged, across the work on the exchanger
+              "both"     both records read whole
     couple    "none"     the rates taken at no built-up back pressure, the system never brought together
               "once"      one sweep only, stopped before anything has settled
               "inlet"     every conventional device taken to stand against the pressure at the blinded end
@@ -176,6 +179,13 @@ class Agent(solve.Study):
         return bores, limit
 
     # -- what the crew measured ---------------------------------------------
+    def since_work(self, item, rows, column):
+        mode = self.sw.get("pool")
+        if mode == "both" or (mode == "trend" and column == "timestamp") \
+                or (mode == "record" and column == "date"):
+            return rows                       # the record read whole, across the work the log records
+        return solve.Study.since_work(self, item, rows, column)
+
     def tip_k(self):
         if self.sw.get("tip") == "old":
             flat = " ".join(self.d["flare_load_study_2019"].split())
@@ -261,9 +271,8 @@ class Agent(solve.Study):
         stream = solve.CVSTREAM[tag]
         num = den = 0.0
         vals = []
-        for row in self.d["control_valve_trend"]:
-            if row["tag"] != tag:
-                continue
+        for row in self.since_work(tag, [r for r in self.d["control_valve_trend"] if r["tag"] == tag],
+                                   "timestamp"):
             h = solve._num(row["travel_pct"]) / 100.0
             if how == "high" and h < 0.60:
                 continue
@@ -294,7 +303,7 @@ class Agent(solve.Study):
             wcol = "e%s_steam_kgh" % name.split("-")[1]
             pcol = "e%s_steam_barg" % name.split("-")[1]
             qs, dts = [], []
-            for r in self.d["operating_record"]:
+            for r in self.since_work(name, self.d["operating_record"], "date"):
                 p = solve._num(r[pcol]) + solve.ATM
                 qs.append(solve._num(r[wcol]) * self.sat("steam", p, "latent") / 3600.0)
                 dts.append(self.sat("steam", p, "t") - solve._num(r["%s_bottoms_C" % prefix]))

@@ -116,13 +116,13 @@ METER_BIAS = "FE-4011"  # the one meter whose indication moves with the density 
 CV = {
     "PV-4001": dict(sheet=64.0, actual=55.0, r=50.0, xt=0.70, fp=1.00, stream="feed_gas",
                     p_up=73.0, p_dn=59.0, t_up=38.0, travel=0.72, meter="FE-4011"),
-    "PV-4021": dict(sheet=2.50, actual=3.08, r=50.0, xt=0.66, fp=1.00, stream="feed_gas",
+    "PV-4021": dict(sheet=3.60, actual=3.08, r=50.0, xt=0.66, fp=1.00, stream="feed_gas",
                     p_up=59.0, p_dn=9.0, t_up=38.0, travel=0.69, meter="FE-4021"),
     "PV-4031": dict(sheet=48.0, actual=48.0, r=50.0, xt=0.68, fp=1.00, stream="c2_overhead",
                     p_up=29.4, p_dn=28.2, t_up=1.0, travel=0.55, meter="FE-4031"),
     "PV-4061": dict(sheet=36.0, actual=36.0, r=50.0, xt=0.72, fp=1.00, stream="c4_product",
                     p_up=11.4, p_dn=10.2, t_up=80.0, travel=0.62, meter="FE-4061"),
-    "PV-4071": dict(sheet=27.0, actual=37.8, r=50.0, xt=0.70, fp=1.00, stream="c3_product",
+    "PV-4071": dict(sheet=44.0, actual=37.8, r=50.0, xt=0.70, fp=1.00, stream="c3_product",
                     p_up=27.0, p_dn=17.0, t_up=70.0, travel=0.64, meter="FE-4071"),
 }
 

@@ -1,7 +1,7 @@
 tag,service,characteristic,rangeability,data_sheet_cv_rated,xt,fp,flow_measurement,position_on_air_failure
 PV-4001,feed gas from the pipeline into V-401,equal percentage,50,64.0,0.70,1.00,FE-4011,open
-PV-4021,fuel gas let-down from V-401 into V-402,equal percentage,50,2.5,0.66,1.00,FE-4021,open
+PV-4021,fuel gas let-down from V-401 into V-402,equal percentage,50,3.6,0.66,1.00,FE-4021,open
 PV-4031,"T-401 pressure, condenser bypass",equal percentage,50,48.0,0.68,1.00,FE-4031,closed
 PV-4061,"T-402 pressure, condenser bypass",equal percentage,50,36.0,0.72,1.00,FE-4061,closed
-PV-4071,propane vapour from T-403 into V-405,equal percentage,50,27.0,0.70,1.00,FE-4071,open
+PV-4071,propane vapour from T-403 into V-405,equal percentage,50,44.0,0.70,1.00,FE-4071,open
 FV-4051,P-401 discharge flow to storage,linear,30,110.0,0.64,1.00,FE-4051,closed

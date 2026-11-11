@@ -256,3 +256,40 @@ How to screen from now on:
   has no difficulty of its own and the pass count is noise. Record the failure reason beside the count.
 - **Distrust a result that needs the probes to be weaker than the screen.** Where a task passes calibration only
   because two runs blundered, it has not passed.
+
+## Three iterations on flare-load-study, and the only lever that ever separated a run (Nov 11)
+
+After the screen rejected it, three rounds of design went in, each measured with three low-effort probes.
+
+| What was added | Low probes that solved it | What the failures failed on |
+|---|---|---|
+| Segmented header, relocated tie-in, SIL floor | 3 of 3 | nothing - all three got everything |
+| Coupled system (a conventional device opens at set plus what stands at its own tie-in) and a tip re-rating duty with an outer search | 1 of 3 | the feed meter |
+| Two silent two-state traps: valve trends split by the retrim the log records, reboiler record split by the steam trap renewal | 1 of 3 | the feed meter |
+
+Every run implemented the coupled sweep correctly. Every run found both two-state traps, cut both records at the
+right day, and said so. Every run got the re-rating bore and the binding device right. Across nine probe runs the
+only thing that ever separated one from another was the **feed meter's stale configured density** - and the two
+runs that failed in each later round failed on exactly that.
+
+**The distinction that matters is not hard against easy, it is stated against unstated.** Every layer these runs
+found is a *principle written in the standard*: section 1 says only the part of a record describing the item's
+present condition may be used, section 4.1 says a conventional device's opening pressure includes what stands at
+its outlet, section 9 sets the re-rating duty. Write the principle down, however subtle its consequences, and a
+capable run applies it. The meter is different: nothing in the standard mentions it. The instrument schedule
+records a fixed relative density, the dated analyses record the gas, and the solver has to know unprompted that
+mass through an orifice goes as the square root of density and that one of those two numbers has moved. That is
+the only kind of layer that has ever failed a run at any effort.
+
+So the arithmetic for calibration is:
+
+- one unstated correction at about a one-in-three failure rate gives a two-in-three chance a run solves the
+  task, which is 3-of-3 or 2-of-3 at screening, which is a reject;
+- four independent ones at the same rate give (2/3)^4 = 20 per cent per run, so 0 of 3 most of the time.
+
+**Design rule: count the unstated corrections, not the layers.** A task needs three or four facts that sit in a
+record with no rule pointing at them, each needing textbook instrument or equipment physics to notice, each
+worth more than the band on a graded value, and each independent of the others so the failures do not correlate.
+Layers that the standard states are what make a task *fair* and what make it long; they are not what makes it
+hard. This is a sharper statement of the Nov 10 lesson about carrying a fact from one record into another: what
+mattered there was not the carrying, it was that no rule asked for it.
