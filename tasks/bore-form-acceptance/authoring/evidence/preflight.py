@@ -47,6 +47,8 @@ def main():
     for dp, dirs, files in os.walk("."):
         for name in files:
             p = os.path.join(dp, name)
+            if p == "./.source_zip":
+                continue    # the repository's marker of the last zip built; the zip itself leaves it out
             if name.startswith(".") or name.endswith((".pyc", ".orig", ".rej")) or "__pycache__" in p:
                 junk.append(p)
                 continue
@@ -173,6 +175,16 @@ def main():
     check(not _took(head=" feature,form_um,verdict"), "the verifier takes a header with a leading space")
     check(not _took(head="FEATURE,FORM_UM,VERDICT"), "the verifier takes a header in capitals")
     check(not _took(tail=" "), "the verifier takes a sentence with a trailing space")
+    # the clause says two decimal places and nothing about a leading digit, so .50 is read, as 0.50
+    with _tf.TemporaryDirectory() as d:
+        path = os.path.join(d, "form.csv")
+        with open(path, "w", newline="") as fh:
+            fh.write("\n".join(["feature,form_um,verdict"] + [
+                "%s,%s,%s" % (f, ".50" if i == 0 else "%.2f" % v, w) for i, (f, v, w) in enumerate(_right)]) + "\n")
+        try:
+            check(_g.read_sheet(path)[_g.IDS[0]][0] == 0.5, "the reader misreads .50")
+        except Exception as ex:
+            check(False, "the reader refuses .50, which is written to two decimal places: %s" % ex)
     reader = open("tests/grade_form.py").read().split("def read_sheet", 1)[1].split("\ndef ", 1)[0]
     check(".strip()" not in reader and "Decimal" not in reader,
           "read_sheet trims or coerces a field again; the contract is literal")

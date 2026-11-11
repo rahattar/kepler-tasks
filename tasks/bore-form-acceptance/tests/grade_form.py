@@ -34,7 +34,9 @@ class Reject(Exception):
     pass
 
 
-TWO_DECIMALS = re.compile(r"[0-9]+\.[0-9]{2}")
+# Two decimal places: a point followed by exactly two digits. The whole part may be any digits or none, since
+# .50 is a number written to two decimal places and the instruction asks for nothing more than that.
+TWO_DECIMALS = re.compile(r"[0-9]*\.[0-9]{2}")
 
 def read_sheet(path):
     try:
@@ -55,7 +57,7 @@ def read_sheet(path):
     # The instruction's contract, enforced as written and no further:
     #   "the exact header feature,form_um,verdict"   - the first line, character for character
     #   "one row for each of the 14 features"        - 14 rows, each feature once, and no other line
-    #   "form_um ... to two decimal places"          - digits, a point, exactly two digits; nothing else
+    #   "form_um ... to two decimal places"          - a point and exactly two digits after it; nothing else
     #   "verdict must be one of ..."                 - one of the four words, exactly
     # No field is trimmed or coerced: a field with a space in it is not the field the instruction asks for.
     # What the instruction does not constrain is left alone: the order of the rows, whether lines end in LF or
