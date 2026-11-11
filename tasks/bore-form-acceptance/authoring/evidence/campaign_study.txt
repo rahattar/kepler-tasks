@@ -1,0 +1,19 @@
+ways to spend the booking of 4 over 14 features: 1001
+allocations that get all 14 features right: 8
+  CB-22 CB-24 RJ-42 RJ-45
+  CB-22 CB-24 RJ-43 RJ-45
+  CB-22 CB-25 RJ-42 RJ-45
+  CB-22 CB-25 RJ-43 RJ-45
+  CB-24 RJ-42 RJ-44 RJ-45
+  CB-24 RJ-43 RJ-44 RJ-45
+  CB-25 RJ-42 RJ-44 RJ-45
+  CB-25 RJ-43 RJ-44 RJ-45
+the best any other allocation does: 1 feature(s) wrong (CB-21 CB-22 CB-24 RJ-42)
+
+what the records cannot carry: CB-22 CB-24 CB-25 RJ-42 RJ-43 RJ-45
+of those, grouped by the boring setup they were finished in:
+  S3   CB-22
+  S2   CB-24 CB-25
+  S6   RJ-42 RJ-43
+  S8   RJ-45
+so 4 groups for a booking of 4: one scan per group covers them, one scan per feature does not.

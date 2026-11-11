@@ -1,0 +1,34 @@
+malformed sheets: every one must be rejected as a whole, and none may crash the grader
+
+  absent                                 rejected
+  a symlink to a correct sheet           rejected
+  empty                                  rejected
+  header only                            rejected
+  header misspelt                        rejected
+  a fourth column added                  rejected
+  a feature missing                      rejected
+  a feature repeated                     rejected
+  an unknown feature                     rejected
+  a feature in lower case                rejected
+  a row of two fields                    rejected
+  a form error of three decimals         rejected
+  a form error that is text              rejected
+  a form error that is NaN               rejected
+  a form error that is infinite          rejected
+  a form error that is negative          rejected
+  a form error out of range              rejected
+  a form error left empty                rejected
+  a sentence not in the four words       rejected
+  a sentence in upper case               rejected
+  a sentence left empty                  rejected
+  non-ASCII text                         rejected
+  a very large file                      rejected
+
+cases that were not rejected or that crashed: 0 of 23
+
+a correct sheet, written untidily (these must pass)
+  CRLF line ends                                   accepted
+  blank lines between rows                         accepted
+  spaces around the fields                         accepted
+  the rows in another order                        accepted
+  a trailing comment line removed, final newline absent accepted

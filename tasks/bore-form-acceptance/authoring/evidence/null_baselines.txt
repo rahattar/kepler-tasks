@@ -1,0 +1,13 @@
+the sentence is one of four words, so a constant sentence gets whatever share of the bank happens to
+carry it; the true bank is accept 4, reject_size 3, reject_form 3, reject_both 4
+
+  every feature accept, form 0                                   right  0 of 14 (form  0, sentence  4)
+  every feature reject_size, form 0                              right  0 of 14 (form  0, sentence  3)
+  every feature reject_form, form 0                              right  0 of 14 (form  0, sentence  3)
+  every feature reject_both, form 0                              right  0 of 14 (form  0, sentence  4)
+  every feature accept, form taken as the drawing tolerance      right  0 of 14 (form  1, sentence  4)
+  the inspection report's roundness, every feature accept        right  0 of 14 (form  1, sentence  4)
+  the inspection report's roundness, sentenced on it and the report's mean diameter right  1 of 14 (form  1, sentence  2)
+  the inspection report's roundness, sentenced on form alone     right  1 of 14 (form  1, sentence  2)
+
+no constant sentence and no transcription of the report passes; the gate is all 14.

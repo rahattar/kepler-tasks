@@ -1,0 +1,11 @@
+date,setup,machine,fixture,operation,features_in_this_setup,note
+2026-09-14,S1,HBM-2 horizontal borer,F-2 cradle,"finish bore, CBN insert, 0.08 mm/rev",CB-21 RJ-41,"clamped once, every feature of this setup finished before unclamping"
+2026-09-16,S2,HBM-2 horizontal borer,F-2 cradle,"finish bore, CBN insert, 0.08 mm/rev",CB-24 CB-25,"clamped once, every feature of this setup finished before unclamping"
+2026-09-18,S3,VTL-1 vertical lathe,"4-jaw, soft jaws","finish turn, 0.10 mm/rev",CB-22 RJ-44,"clamped once, every feature of this setup finished before unclamping"
+2026-09-21,S4,HBM-1 horizontal borer,F-5 vee block,"finish bore, 0.06 mm/rev",GB-31 GB-32,"clamped once, every feature of this setup finished before unclamping"
+2026-09-22,S5,VTL-1 vertical lathe,"4-jaw, soft jaws","finish turn, 0.10 mm/rev",CB-23 RJ-46,"clamped once, every feature of this setup finished before unclamping"
+2026-09-24,S6,CG-3 cylindrical grinder,between centres,"finish grind, 0.02 mm infeed",RJ-42 RJ-43,"clamped once, every feature of this setup finished before unclamping"
+2026-09-25,S7,HBM-2 horizontal borer,F-2 cradle,"finish bore, CBN insert, 0.10 mm/rev",CB-26,single part in the setup
+2026-09-28,S8,CG-3 cylindrical grinder,between centres,"finish grind, 0.02 mm infeed",RJ-45,single part in the setup
+2026-10-03,-,HON-1 honing machine,-,re-hone to clear a score,CB-22,"score found on strip, bore honed through; the inspection measurement of 2026-09-30 predates this"
+2026-10-04,-,-,-,metrology room booking opened,-,"press overhaul: dense form scans on request, booking of 4"

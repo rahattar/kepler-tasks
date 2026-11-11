@@ -1,0 +1,18 @@
+# machine error motion by phase agreement: orders [23, 29], 14.10 um peak to valley
+# scans ordered: RJ-44 CB-25 RJ-43 RJ-45
+  CB-21   ok  form  21.68 (+0.08) accept      
+  CB-22   ok  form  27.68 (+0.62) reject_size 
+  CB-23   ok  form  15.04 (+0.06) reject_form 
+  CB-24   ok  form  21.48 (-0.02) reject_form 
+  CB-25   ok  form  21.48 (+0.02) reject_both 
+  CB-26   ok  form  27.39 (+0.12) accept      
+  GB-31   ok  form  19.94 (+0.63) reject_both 
+  GB-32   ok  form  19.27 (+0.09) accept      
+  RJ-41   ok  form  24.52 (+0.08) reject_size 
+  RJ-42   ok  form  21.90 (+0.12) reject_form 
+  RJ-43   ok  form  21.90 (+0.04) reject_both 
+  RJ-44   ok  form  18.43 (+0.10) accept      
+  RJ-45   ok  form  17.39 (+0.10) reject_size 
+  RJ-46   ok  form  14.86 (+0.11) reject_both 
+
+worst error on a form error 0.63 um; features sentenced wrong: 0

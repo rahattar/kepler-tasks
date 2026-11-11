@@ -1,0 +1,14 @@
+sound methods: 192 runs (every covering booking x every order x the mating gauge taken over the feature
+or section by section)
+worst error on a form error: 0.16 um at CB-25, against the band of 1.2 um
+runs that sentence any feature wrong: 0
+
+the five widest:
+  0.16 um at CB-25 wrong 0 | scans RJ-45,CB-24,RJ-43,CB-22 | mating sec
+  0.16 um at CB-25 wrong 0 | scans RJ-45,CB-24,RJ-43,CB-22 | mating cyl
+  0.16 um at CB-25 wrong 0 | scans RJ-45,CB-24,RJ-42,CB-22 | mating sec
+  0.16 um at CB-25 wrong 0 | scans RJ-45,CB-24,RJ-42,CB-22 | mating cyl
+  0.16 um at CB-25 wrong 0 | scans RJ-45,CB-24,CB-22,RJ-43 | mating sec
+
+by feature, the largest error any sound run gives it:
+  CB-21 0.08  CB-22 0.03  CB-23 0.03  CB-24 0.11  CB-25 0.16  CB-26 0.12  GB-31 0.02  GB-32 0.09  RJ-41 0.08  RJ-42 0.12  RJ-43 0.05  RJ-44 0.11  RJ-45 0.10  RJ-46 0.11

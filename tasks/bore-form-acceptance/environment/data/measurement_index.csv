@@ -1,0 +1,15 @@
+feature,instrument,points_per_rev,sections,measured_on,room_c,file
+CB-21,form tester RT-1,1800,3,2026-09-29,23.4,data/measurements/cb21.csv
+CB-22,form tester RT-1,1800,3,2026-09-30,23.4,data/measurements/cb22.csv
+CB-23,form tester RT-1,1800,3,2026-09-30,22.1,data/measurements/cb23.csv
+CB-24,"coordinate machine CMM-4, bore/journal program",12,3,2026-09-29,24.2,data/measurements/cb24.csv
+CB-25,"coordinate machine CMM-4, bore/journal program",12,3,2026-09-29,24.2,data/measurements/cb25.csv
+CB-26,form tester RT-1,1800,3,2026-10-01,21.3,data/measurements/cb26.csv
+GB-31,form tester RT-1,1800,3,2026-10-01,24.6,data/measurements/gb31.csv
+GB-32,form tester RT-1,1800,3,2026-10-01,24.6,data/measurements/gb32.csv
+RJ-41,form tester RT-1,1800,3,2026-09-29,23.4,data/measurements/rj41.csv
+RJ-42,"coordinate machine CMM-4, bore/journal program",12,3,2026-10-02,22.8,data/measurements/rj42.csv
+RJ-43,"coordinate machine CMM-4, bore/journal program",12,3,2026-10-02,22.8,data/measurements/rj43.csv
+RJ-44,form tester RT-1,1800,3,2026-09-30,22.1,data/measurements/rj44.csv
+RJ-45,"coordinate machine CMM-4, bore/journal program",12,3,2026-10-02,24.6,data/measurements/rj45.csv
+RJ-46,form tester RT-1,1800,3,2026-09-30,21.3,data/measurements/rj46.csv

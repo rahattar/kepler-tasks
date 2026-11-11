@@ -1,0 +1,15 @@
+feature,component,kind,nominal_mm,feature_length_mm,material
+CB-21,"main ram cylinder, rod end",bore,320.0,640.0,42CrMo4
+CB-22,"main ram cylinder, cap end",bore,320.0,640.0,42CrMo4
+CB-23,pull-back cylinder 1,bore,250.0,480.0,42CrMo4
+CB-24,pull-back cylinder 2,bore,250.0,480.0,42CrMo4
+CB-25,pull-back cylinder 3,bore,250.0,480.0,42CrMo4
+CB-26,"press cylinder, upper",bore,400.0,820.0,42CrMo4
+GB-31,main ram gland,bore,180.0,150.0,42CrMo4
+GB-32,pull-back gland,bore,180.0,120.0,42CrMo4
+RJ-41,"main ram, rod journal",journal,300.0,600.0,42CrMo4
+RJ-42,pull-back ram 1,journal,300.0,450.0,42CrMo4
+RJ-43,pull-back ram 2,journal,300.0,450.0,42CrMo4
+RJ-44,"press ram, upper journal",journal,220.0,520.0,42CrMo4
+RJ-45,pull-back ram 3,journal,220.0,450.0,42CrMo4
+RJ-46,tie rod journal,journal,180.0,300.0,42CrMo4
