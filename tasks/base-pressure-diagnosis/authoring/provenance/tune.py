@@ -7,7 +7,9 @@ Checks, all of which must pass before the fleet is shipped:
 - every chamber's base pressure above its specified base pressure (each is a chamber under audit);
 - the quantities spread over at least a decade, so no constant answer can pass;
 - no two chambers within NEAR of each other in both quantities;
-- the example chamber plainly dominated by one mechanism and sound in every record.
+- the example chamber plainly dominated by one mechanism and sound in every record;
+- every chamber load-bearing and identifiable (identify.py), with exactly NEEDS_TEST needing the audit test,
+  and the test at the contractor's default pumping time not enough.
 """
 import os
 import sys
@@ -20,6 +22,9 @@ DOM_RATIO = 1.60                    # the largest gas load over the next largest
 PUMP_CLEAR_LO = 0.62                # a degraded pump must sit at or below this fraction of rated
 PUMP_CLEAR_HI = 0.95                # a sound pump at or above it
 NEAR = 0.08
+NEEDS_TEST = ("VC08",)              # the one chamber the audit test must be spent on
+TEST_TIMES = (16.0, 20.0, 24.0, 30.0, 36.0, 42.0, 48.0)
+DEFAULT_TEST_H = 16.0               # the contractor's standing pumping time, used when a plan names none
 
 fails = []
 
@@ -110,6 +115,32 @@ def main():
         check(abs(temp - climate(F.AUDIT)) <= 3.0,
               "%s audit test at %.1f C is %.1f C off the shop climate on the audit date"
               % (cid, temp, temp - climate(F.AUDIT)))
+
+    # The two rules the review of 11 November showed the fleet must be designed to: the gas budget is
+    # load-bearing on every chamber, and identifiable on every chamber. Exactly NEEDS_TEST needs the one audit
+    # test to be identified, and must not be identifiable without it, so the budget is spent where it counts.
+    import identify as I
+    print("\nload-bearing and identifiable (identify.py)")
+    for cid in F.CHAMBER_IDS:
+        ch = F.BY[cid]
+        lb, nearest, surv = I.load_bearing(ch)
+        p_rec, sd, _p99 = I.identifiability(ch)
+        line = "  %s  nearest single-entry route %6.1f%%   records alone P=%.2f (sd %.1f%%)" % (
+            cid, 100 * nearest, p_rec, 100 * sd)
+        check(lb, "%s is not load-bearing: %d single-entry route(s) within %.0fx the tolerance, nearest %.1f%%"
+              % (cid, len(surv), I.SHORTCUT_X, 100 * nearest))
+        if cid in NEEDS_TEST:
+            check(p_rec < 0.5, "%s is meant to need the audit test but its records alone give P=%.2f"
+                  % (cid, p_rec))
+            ok_times = [t for t in TEST_TIMES if I.identifiability(ch, t, draws=200)[0] >= I.IDENT_P]
+            line += "   with a test at %s h" % (" ".join("%.0f" % t for t in ok_times) or "no time")
+            check(ok_times, "%s cannot be identified with one test at any of %s h" % (cid, TEST_TIMES))
+            check(DEFAULT_TEST_H not in ok_times,
+                  "%s is identified by a test at the contractor's default %.0f h; the time must matter"
+                  % (cid, DEFAULT_TEST_H))
+        else:
+            check(p_rec >= I.IDENT_P, "%s is not identifiable from its records: P=%.2f" % (cid, p_rec))
+        print(line)
 
     te = F.truth(F.EX)
     check(te["margins"]["ratio"] >= 3.0, "the example's dominance is only %.2f x" % te["margins"]["ratio"])
