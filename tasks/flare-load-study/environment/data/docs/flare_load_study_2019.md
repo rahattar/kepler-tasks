@@ -28,7 +28,7 @@ Document 400-SA-0012, revision 2, issued 14 March 2019. Prepared for the origina
 | `instrument_air_failure` | PSV-401 PSV-405 PSV-407 PSV-409 | 75015 | 0.69 |
 | `fire_zone_a` | PSV-401 PSV-402 PSV-409 | 20080 | 0.05 |
 | `fire_zone_b` | PSV-403 PSV-404 | 18128 | 0.05 |
-| `fire_zone_c` | PSV-406 PSV-407 PSV-408 | 40191 | 0.11 |
+| `fire_zone_c` | PSV-406 PSV-407 PSV-408 | 41238 | 0.12 |
 
 ## Notes
 

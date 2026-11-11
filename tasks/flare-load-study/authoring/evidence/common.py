@@ -22,6 +22,8 @@ Defective readings, every one of which must fail:
     ua        "design"   the reboiler coefficient-area from the data sheet duty
               "duty"     the data sheet duty taken as the relieving duty itself
     latent    "overhead" the reboiler duty divided by the overhead vapour's latent heat
+    duty      "latent"   the steam taken to give up its latent heat only, with the condensate's sub-cooling left out
+    indication "shown"   the level transmitter's indication read as the level in the vessel
     pool      "trend"    the whole control valve trend fitted, across the work on the trim
               "record"   the whole operating record averaged, across the work on the exchanger
               "both"     both records read whole
@@ -98,6 +100,17 @@ class Agent(solve.Study):
     def __init__(self, d, reports=None, **sw):
         solve.Study.__init__(self, d, reports)
         self.sw = sw
+
+    # -- what the records are taken to say ----------------------------------
+    def steam_drop(self, name, p_bara):
+        if self.sw.get("duty") == "latent":
+            return self.sat("steam", p_bara, "latent")      # the latent heat alone, as section 4.4 names it
+        return solve.Study.steam_drop(self, name, p_bara)
+
+    def level(self, item):
+        if self.sw.get("indication") == "shown":
+            return solve._num(self.d["vessel"][item]["highest normal level"])   # the indication read as the level
+        return solve.Study.level(self, item)
 
     # -- the bonnet, and how the system is brought out ----------------------
     def bellows(self, vid):
@@ -305,7 +318,7 @@ class Agent(solve.Study):
             qs, dts = [], []
             for r in self.since_work(name, self.d["operating_record"], "date"):
                 p = solve._num(r[pcol]) + solve.ATM
-                qs.append(solve._num(r[wcol]) * self.sat("steam", p, "latent") / 3600.0)
+                qs.append(solve._num(r[wcol]) * self.steam_drop(name, p) / 3600.0)
                 dts.append(self.sat("steam", p, "t") - solve._num(r["%s_bottoms_C" % prefix]))
             return (sum(qs) / len(qs)) / (sum(dts) / len(dts))
         if self.sw.get("ua") in ("design", "duty"):
@@ -331,12 +344,14 @@ class Agent(solve.Study):
         if self.sw.get("level") == "full":
             v = dict(self.d["vessel"][item])
             v["highest normal level"] = v["diameter"] if v["shape"] == "horizontal" else v["T-T length"]
-            saved = self.d["vessel"][item]
+            saved, shown = self.d["vessel"][item], self.sw.get("indication")
             self.d["vessel"][item] = v
+            self.sw["indication"] = "shown"   # the level is being set outright, not read off a transmitter
             try:
                 return solve.Study.wetted_area(self, item)
             finally:
                 self.d["vessel"][item] = saved
+                self.sw["indication"] = shown
         return solve.Study.wetted_area(self, item)
 
     def f_factor(self, item, t_relief):

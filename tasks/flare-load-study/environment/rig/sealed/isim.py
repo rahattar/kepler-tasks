@@ -133,6 +133,19 @@ REB = {
     "E-406": dict(tower="T-402", steam_barg=13.0, design_kw=4200.0, bot_normal_C=79.0),
 }
 
+# What the condensate leaves each reboiler at. E-403 sub-cools its condensate hard, so a good part of the heat
+# it gives up is sensible and not latent; E-406 leaves its condensate nearly saturated. Nothing in the standard
+# says to allow for it: the exchanger data records the outlet temperature and the specific heat, and the steam
+# table gives the saturation temperature, so the duty a measured steam flow carries follows from the records.
+COND_OUT = {"E-403": 128.0, "E-406": 191.0}
+CP_COND = 4.30          # kJ/kg K, the condensate's specific heat as the exchanger data gives it
+
+
+def steam_enthalpy_drop(name, p_bara):
+    """What a kilogram of steam gives up in the reboiler: its latent heat plus the sub-cooling of the
+    condensate from saturation to the temperature it leaves at."""
+    return sat("steam", p_bara, "latent") + CP_COND * (sat("steam", p_bara, "t") - COND_OUT[name])
+
 # P-401, bottoms product pump
 PUMP = dict(sheet_shutoff_m=590.0, now_shutoff_m=545.0, rated_m3h=96.0, rated_head_m=505.0,
             suction_barg=9.5, temp_C=95.0)
@@ -169,25 +182,32 @@ CONTROL_TAG = {
 # vessels, for the fire case
 VESSEL = {
     "V-401": dict(shape="vertical", d=2.4, tt=7.0, bottom_m=1.50, level_m=1.10, heads=2,
-                  insul=dict(k=0.062, t=0.060, fire_rated=False), stream="sep_liquid"),
+                  insul=dict(k=0.062, t=0.060, fire_rated=False), stream="sep_liquid", sg=0.504, lt="LT-4015"),
     "V-402": dict(shape="horizontal", d=1.6, tt=4.2, bottom_m=1.00, level_m=0.70, heads=2,
-                  insul=None, stream="c3_product"),
+                  insul=None, stream="c3_product", sg=0.480, lt="LT-4025"),
     "V-403": dict(shape="horizontal", d=2.0, tt=5.5, bottom_m=6.60, level_m=0.85, heads=2,
-                  insul=dict(k=0.055, t=0.075, fire_rated=True), stream="c2_overhead"),
+                  insul=dict(k=0.055, t=0.075, fire_rated=True), stream="c2_overhead", sg=0.389, lt="LT-4035"),
     "V-404": dict(shape="horizontal", d=2.2, tt=6.5, bottom_m=2.00, level_m=0.95, heads=2,
-                  insul=None, stream="c4_product"),
+                  insul=None, stream="c4_product", sg=0.496, lt="LT-4045"),
     "V-405": dict(shape="horizontal", d=2.4, tt=10.0, bottom_m=1.20, level_m=1.45, heads=2,
-                  insul=None, stream="c3_product"),
+                  insul=None, stream="c3_product", sg=0.447, lt="LT-4075"),
     "T-401": dict(shape="column", d=1.8, tt=24.0, bottom_m=1.80, level_m=2.60, heads=2,
-                  insul=dict(k=0.055, t=0.075, fire_rated=True), stream="c3_product",
+                  insul=dict(k=0.055, t=0.075, fire_rated=True), stream="c3_product", sg=0.387, lt="LT-4036",
                   trays=dict(first_m=5.60, spacing=0.60, n=28, liquid_band=0.090)),
     "T-402": dict(shape="column", d=3.2, tt=21.0, bottom_m=3.60, level_m=3.60, heads=2,
-                  insul=None, stream="c4_product",
+                  insul=None, stream="c4_product", sg=0.497, lt="LT-4066",
                   trays=dict(first_m=8.30, spacing=0.65, n=24, liquid_band=0.105)),
     "E-402": dict(shape="horizontal", d=0.9, tt=6.0, bottom_m=1.00, level_m=0.90, heads=2,
-                  insul=None, stream="bottoms_product"),
+                  insul=None, stream="bottoms_product", sg=0.622),
 }
 T402_RAISED = 0.90   # the 2024 modification re-set T-402 this much higher on an extended skirt
+
+# The levels the vessel data book publishes are what the level transmitters indicate. A differential-pressure
+# transmitter measures head, so what it reports as a level is the head it sees divided by the density it was
+# ranged for: the level in the vessel is the indication times the ranged specific gravity over the liquid's own.
+# Every transmitter here is ranged for the liquid it reads except LT-4075, which was ranged for propane at
+# ambient temperature and never re-ranged for the drum, which runs warm.
+RANGED_SG = {"LT-4075": 0.500}
 
 # the one shell-and-tube exchanger whose shell has its own relief
 EXCH = {
@@ -378,6 +398,15 @@ def _chord_fraction(d, level):
     return math.acos((r - h) / r) / math.pi
 
 
+def level(item):
+    """The liquid level in the vessel, from what its level transmitter indicates."""
+    v = VESSEL[item]
+    ranged = RANGED_SG.get(v.get("lt"))
+    if ranged is None:
+        return v["level_m"]
+    return v["level_m"] * ranged / v["sg"]
+
+
 def wetted_area(item, raised=None):
     v = VESSEL[item]
     if raised is None:
@@ -386,17 +415,17 @@ def wetted_area(item, raised=None):
     head = 1.084 * d * d
     bottom = v["bottom_m"] + raised
     if v["shape"] == "vertical":
-        h = max(0.0, min(bottom + v["level_m"], cut) - bottom)
+        h = max(0.0, min(bottom + level(item), cut) - bottom)
         return math.pi * d * h + (head if bottom < cut else 0.0)
     if v["shape"] == "horizontal":
-        lv = min(v["level_m"], max(0.0, cut - bottom))
+        lv = min(level(item), max(0.0, cut - bottom))
         if lv <= 0.0:
             return 0.0
         frac = _chord_fraction(d, lv)
         return math.pi * d * v["tt"] * frac + v["heads"] * head * frac
     # a column: the shell wetted by the bottoms liquid, plus a band at each tray below the cut
     a = 0.0
-    top = min(bottom + v["level_m"], cut)
+    top = min(bottom + level(item), cut)
     if top > bottom:
         a += math.pi * d * (top - bottom) + head
     t = v["trays"]

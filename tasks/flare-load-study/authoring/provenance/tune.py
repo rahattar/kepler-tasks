@@ -108,6 +108,20 @@ def revert_pump_record(m):
     m.PUMP["now_shutoff_m"] = RECORDED_SHUTOFF   # the last test on record, before the element was renewed
 
 
+def revert_subcooling(m):
+    """The reboiler coefficient-area an agent recovers from the record taking the steam's latent heat as the
+    whole duty: the published steam flow carries the sub-cooling too, so the duty comes out low in that ratio."""
+    for name, r in m.REB.items():
+        p = r["steam_barg"] + m.ATM
+        latent = m.sat("steam", p, "latent")
+        r["design_kw"] *= latent / m.steam_enthalpy_drop(name, p)
+
+
+def revert_indication(m):
+    """The wetted area an agent recovers reading the stale transmitter's indication as the level."""
+    m.RANGED_SG = {}
+
+
 LAYERS = [
     ("the column re-set 0.90 m higher since the data book", revert_elevation),
     ("the tie-in moved after the isometrics were issued", revert_tie_in),
@@ -122,6 +136,8 @@ LAYERS = [
     ("the tip measured rather than taken from the 2019 study", revert_tip),
     ("the pump measured rather than taken from the record", revert_pump_record),
     ("the system brought together rather than taken in sequence", revert_coupling),
+    ("the condensate's sub-cooling counted in the reboiler duty", revert_subcooling),
+    ("the stale level transmitter's indication corrected", revert_indication),
 ]
 
 

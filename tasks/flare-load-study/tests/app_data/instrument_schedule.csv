@@ -1,4 +1,4 @@
-tag,service,type,range,flow_computer_density,last_calibration,stated_uncertainty_pct
+tag,service,type,range,configured_density,last_calibration,stated_uncertainty_pct
 FE-4011,unit feed gas,orifice plate with flow computer,0 to 25000 kg/h,fixed relative density 0.780 entered at commissioning,2026-02-17,1.0
 FE-4021,fuel gas to V-402,coriolis,0 to 3000 kg/h,measured,2026-02-17,0.5
 FE-4033,T-401 reflux,coriolis,0 to 8000 kg/h,measured,2026-01-29,0.5
@@ -21,3 +21,10 @@ PT-4071,"V-405 pressure, control",pressure transmitter,0 to 25 barg,,2026-02-02,
 TI-4014,V-401 gas temperature,resistance thermometer,0 to 120 C,,2026-04-20,0.5
 TI-4034,T-401 bottoms temperature,resistance thermometer,0 to 200 C,,2026-01-29,0.5
 TI-4064,T-402 bottoms temperature,resistance thermometer,0 to 250 C,,2026-03-04,0.5
+LT-4015,V-401 level,differential pressure,0 to 2.00 m,,2026-04-20,1.0
+LT-4025,V-402 level,differential pressure,0 to 1.20 m,,2026-02-17,1.0
+LT-4035,V-403 level,differential pressure,0 to 1.60 m,,2026-01-29,1.0
+LT-4045,V-404 level,differential pressure,0 to 1.80 m,,2026-03-04,1.0
+LT-4075,V-405 level,differential pressure,0 to 2.00 m,ranged for specific gravity 0.500 at commissioning,2026-02-02,1.0
+LT-4036,T-401 level,differential pressure,0 to 3.50 m,,2026-01-29,1.0
+LT-4066,T-402 level,differential pressure,0 to 4.50 m,,2026-03-04,1.0

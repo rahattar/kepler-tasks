@@ -227,3 +227,44 @@ sit higher: environment/Dockerfile 0.804, solution/solve.sh 0.560, tests/test.sh
 0.471. Left alone on the evidence recorded in answers-bore-form-2026-11-11.md, where bore-form cleared
 similarity five times with test_form.py at 0.855 and solve.sh at 0.749 against a task known to be live. The
 substantive files are the ones that carry originality, and they are all far below.
+
+## Round 4: the condensate and the level transmitter
+
+Round 4 answered the screening rejection's demand for a harder core problem by adding two more corrections of
+the shape round 3's analysis prescribed: a fact published in a record, with no rule pointing at it, needing
+textbook equipment physics to notice.
+
+**E-403's condensate leaves sub-cooled.** The exchanger data now publishes a condensate outlet temperature and
+the condensate's specific heat beside the surface and the design duty. The duty a day of the record carries is
+therefore the steam flow times the latent heat *plus* the sub-cooling from saturation to that outlet, and the
+standard asks only for "each day's duty". Taken as latent heat alone the coefficient-area comes out 13.1 per
+cent low (23.22 kW/K against 26.73), which is 21.7 per cent on the cooling-failure pressure and 3 of the 7
+parts. The sealed definition derives the published steam flows from the full enthalpy drop, so the record is
+consistent with itself and with the design duty scaled to the throughput; nothing in it looks odd.
+
+**V-405's level transmitter is mis-ranged.** The vessel data book now states that its levels are what the level
+transmitters indicate and publishes each item's liquid specific gravity; the instrument schedule carries a row
+for each transmitter and records, for LT-4075 alone, that it was ranged for a specific gravity of 0.500 at
+commissioning. The drum holds propane at 0.447. A differential-pressure transmitter reports the head it sees
+divided by the density it was ranged for, so the level is 1.450 x 0.500 / 0.447 = 1.622 m. That is 53.99 m2 of
+wetted area against 49.81, 6.9 per cent on PSV-407's fire rate, 2.7 per cent on fire zone C's load and 5.7 per
+cent on its pressure. Both numbers are already in the published tables — propane at ambient is 0.500 in the
+liquid properties, the drum's liquid is 0.447 in the data book — so no new data was needed, only the column
+that says which is which. The other six transmitters are ranged for the liquid they read and their cells are
+blank, exactly as the ten coriolis meters read "measured" beside FE-4011's fixed density.
+
+Both are fair against the standard, which was the check that mattered. Section 4.4 asks for the duty and never
+says how the steam delivers it. The fire section asks for the area in contact with liquid "at its highest normal
+operating level" - the level itself, not the figure the data book prints - and the data book says its figure is
+an indication. Neither correction is contradicted anywhere.
+
+**What the probes then showed.** Three low-effort probes on a working rig scored 7 of 7, 4 of 7 and 4 of 7, and
+all three found both new corrections and named them. The solve rate was 1 of 3, as it had been in rounds 2 and
+3. The single step that separated the runs was the one that has separated every round: FE-4011's stale
+configured density. The two failing runs reported that the pre-overhaul trend rows reproduced the data sheet and
+that this confirmed their uncorrected reading; read uncorrected those rows give 61.70 against a sheet of 64.00,
+and read corrected they give 64.13. The check was available, cheap and decisive, and the run that actually ran
+it was the run that solved the task.
+
+The finding is recorded in docs/difficulty-calibration.md: what defeats these runs is not an obscure fact but a
+wrong answer that looks already validated.

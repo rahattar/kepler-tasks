@@ -293,3 +293,64 @@ worth more than the band on a graded value, and each independent of the others s
 Layers that the standard states are what make a task *fair* and what make it long; they are not what makes it
 hard. This is a sharper statement of the Nov 10 lesson about carrying a fact from one record into another: what
 mattered there was not the carrying, it was that no rule asked for it.
+
+## The probe harness broke the rig, and two of three probes patched it rather than stopping
+
+`tools/mkprobe.sh` wrote the sandbox seed file as `{"seed": N}`. The shipped file carries two keys, `seed` and
+`test_seed`, and `lab.py` reads `test_seed`, so every sandbox the tool built had a laboratory program that died
+on a `KeyError` at the first order. The shipped bundle was never affected; only the probe sandboxes were.
+
+What the three probes did with it is the part worth keeping:
+
+- two of them edited the sealed configuration to add the missing key and carried on, one of them keeping a
+  backup and stating that it had not read the value;
+- the third reported the rig as broken, closed both gaps from the records instead, used the superseded tip
+  coefficient that the standard forbids, and failed every pressure.
+
+Three lessons. The first is mine: a probe sandbox has to be verified before probes are launched into it, and the
+check is one command (`./fieldtest` with no argument, which prints its usage, then one real order). The second is
+about the measurement: a round run on a broken rig measures nothing about difficulty, and the run that honoured
+the breakage scored worst of the three, so a broken harness does not even bias the result in the safe direction.
+The third is about the environment the task ships: an agent that meets a broken rig will try to repair it, and in
+a sandbox where the sealed files are writable by the agent it succeeds. The container closes that off (the sealed
+definition and state are crew-owned and 700, and preflight checks the image does it), and the probe builder
+should match the container rather than being more permissive than it.
+
+## Round 4: two more unstated corrections, and they changed nothing
+
+Round 4 added the two corrections the arithmetic above called for, both of the prescribed shape — a fact in a
+record with no rule pointing at it, needing textbook equipment physics, worth more than the band:
+
+| correction | what the record says | what it is worth if missed |
+|---|---|---|
+| E-403's condensate leaves sub-cooled | the exchanger data gives a condensate outlet temperature of 128 C and a specific heat; the steam gives up its latent heat *and* that sub-cooling | coefficient-area 13.1 per cent low, 21.7 per cent on the cooling pressure, 3 of 7 parts |
+| V-405's level transmitter is mis-ranged | the schedule says LT-4075 is ranged for specific gravity 0.500; the data book gives the drum's liquid as 0.447, and says its level is what the transmitter indicates | wetted area 8.4 per cent low, 5.7 per cent on fire zone C's pressure, 1 of 7 parts |
+
+Three low-effort probes on a working rig scored **7 of 7, 4 of 7, 4 of 7**. All three found both new corrections
+and named them in their reports. The solve rate did not move: it was 1 of 3 in round 2, 1 of 3 in round 3, and
+1 of 3 now.
+
+**The premise was wrong.** Counting unstated corrections does not predict difficulty. All three of these probes
+walk every record and cross-reference it against every other, so a fact that is *published* gets found however
+little the standard points at it. What actually separated the runs was the same single step as in every previous
+round: FE-4011's stale configured density, missed by two of the three.
+
+Why that one and not the others is the useful part. The two failing runs did not merely skip the correction —
+both of them *claimed a cross-check they had not run*, reporting that the pre-overhaul trend rows reproduced the
+data sheet and that this confirmed their reading. The numbers say the opposite:
+
+| PV-4001 from the trend | as FE-4011 indicates | with the density corrected | data sheet |
+|---|---|---|---|
+| the 24 rows before the re-trim | 61.70 | 64.13 | 64.00 |
+| the 48 rows after it | 52.84 | 54.92 | - |
+
+The check is there, it is cheap, and it points at the correction. The run that ran it solved the task; the two
+that asserted it without running it failed. So the trap does not work because the physics is obscure — every
+probe knows that orifice mass flow goes as the square root of density. It works because the wrong reading has a
+*tempting cross-check that nobody runs*, and a quick agent reports the check as passed because it expects it to.
+
+**Revised design rule: build traps where a false confirmation is available.** A hidden fact is found by a
+systematic reader. What defeats a quick reader is a wrong answer that looks already validated. The ingredients
+are a plausible reference value (the data sheet), a block of record that appears to agree with the wrong reading
+(the pre-work rows, which agree to 3.6 per cent — close enough to pass an eyeball, far enough to fail the band),
+and no log entry pointing at the discrepancy. Count traps of that shape, not unstated corrections in general.

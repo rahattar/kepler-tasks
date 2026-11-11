@@ -3,19 +3,23 @@
 Issue 2, March 2019. Dimensions in metres. Elevations are of the bottom tangent line above grade. The highest
 normal operating liquid level is given above the bottom tangent line. All heads are 2:1 ellipsoidal.
 
-| item | service | shape | diameter | T-T length | bottom tangent | highest normal level | liquid held | insulation |
-|---|---|---|---|---|---|---|---|---|
-| V-401 | inlet separator | vertical | 2.40 | 7.00 | 1.50 | 1.10 | sep_liquid | mineral wool, metal jacket, 60 mm |
-| V-402 | fuel gas knock-out drum | horizontal | 1.60 | 4.20 | 1.00 | 0.70 | c3_product | none |
-| V-403 | T-401 reflux drum | horizontal | 2.00 | 5.50 | 6.60 | 0.85 | c2_overhead | fire-resistant, 75 mm |
-| V-404 | T-402 overhead receiver | horizontal | 2.20 | 6.50 | 2.00 | 0.95 | c4_product | none |
-| V-405 | propane product drum | horizontal | 2.40 | 10.00 | 1.20 | 1.45 | c3_product | none |
-| T-401 | deethaniser | column | 1.80 | 24.00 | 1.80 | 2.60 | c3_product | fire-resistant, 75 mm |
-| T-402 | debutaniser | column | 3.20 | 21.00 | 3.60 | 3.60 | c4_product | none |
-| E-402 | feed/bottoms exchanger shell | horizontal | 0.90 | 6.00 | 1.00 | 0.90 | bottoms_product | none |
+| item | service | shape | diameter | T-T length | bottom tangent | highest normal level | liquid held | specific gravity | insulation |
+|---|---|---|---|---|---|---|---|---|---|
+| V-401 | inlet separator | vertical | 2.40 | 7.00 | 1.50 | 1.10 | sep_liquid | 0.504 | mineral wool, metal jacket, 60 mm |
+| V-402 | fuel gas knock-out drum | horizontal | 1.60 | 4.20 | 1.00 | 0.70 | c3_product | 0.480 | none |
+| V-403 | T-401 reflux drum | horizontal | 2.00 | 5.50 | 6.60 | 0.85 | c2_overhead | 0.389 | fire-resistant, 75 mm |
+| V-404 | T-402 overhead receiver | horizontal | 2.20 | 6.50 | 2.00 | 0.95 | c4_product | 0.496 | none |
+| V-405 | propane product drum | horizontal | 2.40 | 10.00 | 1.20 | 1.45 | c3_product | 0.447 | none |
+| T-401 | deethaniser | column | 1.80 | 24.00 | 1.80 | 2.60 | c3_product | 0.387 | fire-resistant, 75 mm |
+| T-402 | debutaniser | column | 3.20 | 21.00 | 3.60 | 3.60 | c4_product | 0.497 | none |
+| E-402 | feed/bottoms exchanger shell | horizontal | 0.90 | 6.00 | 1.00 | 0.90 | bottoms_product | 0.622 | none |
 
 The liquid held is the stream in the fluid properties table whose properties apply to the item's
-liquid inventory. For a column it is the liquid in the bottom of the column. The relieving fluid of each item is in the relief valve register.
+liquid inventory. For a column it is the liquid in the bottom of the column. The specific gravity is
+that of the liquid held at the item's normal operating condition. The highest normal level is as the
+item's level transmitter indicates it, at the setting the level control system holds; the transmitters
+are in the instrument schedule. E-402 has no level transmitter and its figure is the design datum. The
+relieving fluid of each item is in the relief valve register.
 
 ## Insulation
 

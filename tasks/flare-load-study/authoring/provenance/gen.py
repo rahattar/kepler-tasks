@@ -152,11 +152,11 @@ def operating_record(rng):
             p_true = steam_p_at(ts_day)
             q = ua * (ts_day - t_bot[i])
             p_rd = round(p_true - S.ATM + float(rng.normal(0.0, 0.12)), 2)
-            w = q * 3600.0 / S.sat("steam", p_true, "latent") * float(rng.normal(1.0, 0.008))
+            w = q * 3600.0 / S.steam_enthalpy_drop(reb, p_true) * float(rng.normal(1.0, 0.008))
             p_shown.append(p_rd)
             w_shown.append(w)
             dts = S.sat("steam", p_rd + S.ATM, "t") - t_bot[i]
-            implied.append(w * S.sat("steam", p_rd + S.ATM, "latent") / 3600.0 / dts)
+            implied.append(w * S.steam_enthalpy_drop(reb, p_rd + S.ATM) / 3600.0 / dts)
         # before its steam trap was renewed E-403 was flooding and making less of its surface, so the record
         # splits where the log says the work was done: the later block is the exchanger as it now stands.
         split = 0
@@ -424,8 +424,20 @@ def main(out, seed=None):
         ["TI-4034", "T-401 bottoms temperature", "resistance thermometer", "0 to 200 C", "", "2026-01-29", "0.5"],
         ["TI-4064", "T-402 bottoms temperature", "resistance thermometer", "0 to 250 C", "", "2026-03-04", "0.5"],
     ]
+    # the level transmitters the vessel data book reads its levels from. Each is a differential-pressure
+    # transmitter ranged over the vessel's measuring span; the span is published, and so is the specific
+    # gravity each was ranged for where it was entered by hand rather than taken from the service.
+    for item, span, cal, unc in (("V-401", 2.00, "2026-04-20", "1.0"), ("V-402", 1.20, "2026-02-17", "1.0"),
+                                 ("V-403", 1.60, "2026-01-29", "1.0"), ("V-404", 1.80, "2026-03-04", "1.0"),
+                                 ("V-405", 2.00, "2026-02-02", "1.0"), ("T-401", 3.50, "2026-01-29", "1.0"),
+                                 ("T-402", 4.50, "2026-03-04", "1.0")):
+        tag = S.VESSEL[item]["lt"]
+        ranged = S.RANGED_SG.get(tag)
+        inst.append([tag, "%s level" % item, "differential pressure", "0 to %.2f m" % span,
+                     "ranged for specific gravity %.3f at commissioning" % ranged if ranged else "",
+                     cal, unc])
     wcsv(os.path.join(out, "instrument_schedule.csv"),
-         ["tag", "service", "type", "range", "flow_computer_density", "last_calibration",
+         ["tag", "service", "type", "range", "configured_density", "last_calibration",
           "stated_uncertainty_pct"], inst)
 
     # ---- the safety instrumented system
@@ -452,16 +464,18 @@ def main(out, seed=None):
     wcsv(os.path.join(out, "exchanger_data.csv"),
          ["item", "service", "shell_side", "shell_inlet_temp_C", "tube_side", "tube_inlet_temp_C",
           "shell_design_barg", "tube_design_barg", "tubes", "tube_od_mm", "tube_wall_mm", "tube_bore_mm",
-          "surface_m2", "design_duty_kw", "design_basis"],
+          "surface_m2", "design_duty_kw", "condensate_outlet_temp_C", "condensate_cp_kj_per_kg_k",
+          "design_basis"],
          [["E-402", "feed/bottoms exchanger", "bottoms product", "%.0f" % S.PUMP["temp_C"],
            "feed liquid", "%.0f" % e["hi_temp_C"],
            "%.0f" % e["shell_mawp"], "%.0f" % e["hi_barg"], e["tubes"], "19.05", "1.67",
-           "%.2f" % e["tube_id_mm"], "212", "1980", "unit feed 310 t/d"],
+           "%.2f" % e["tube_id_mm"], "212", "1980", "", "", "unit feed 310 t/d"],
           ["E-403", "T-401 reboiler", "T-401 bottoms", "78", "13 barg steam", "195", "31", "15",
            "284", "25.40", "2.11", "21.18", "268", "%.0f" % S.REB["E-403"]["design_kw"],
-           "unit feed 310 t/d"],
+           "%.0f" % S.COND_OUT["E-403"], "%.2f" % S.CP_COND, "unit feed 310 t/d"],
           ["E-406", "T-402 reboiler", "T-402 bottoms", "79", "13 barg steam", "195", "18", "15",
            "396", "25.40", "2.00", "21.40", "402", "%.0f" % S.REB["E-406"]["design_kw"],
+           "%.0f" % S.COND_OUT["E-406"], "%.2f" % S.CP_COND,
            "unit feed 310 t/d"]])
 
     # ---- fluid properties

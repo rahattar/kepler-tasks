@@ -48,9 +48,9 @@ pass test.sh re-locks the log directory after grading and before the reward is w
 pass test.sh clears the old reward after grading and before writing the new one               
 pass test.sh names the report it reads, and reads only that one                               
 pass test.sh takes no path for the reward from outside                                        
-pass the sealed definition is byte-identical in provenance and tests                          36e597626fc76dcb
+pass the sealed definition is byte-identical in provenance and tests                          81f5fcc6abd1e30c
 pass the seed is byte-identical in provenance and tests                                       
-pass the sealed definition is byte-identical in the crew's copy too                           36e597626fc76dcb
+pass the sealed definition is byte-identical in the crew's copy too                           81f5fcc6abd1e30c
 pass the sealed definition is nowhere in the agent's environment but the crew's own directory none
 pass the crew's seed carries a seed of its own for the tests                                  {'seed': 7301, 'test_seed': 91301}
 pass the standard sets the re-rating limit the design rules use                               

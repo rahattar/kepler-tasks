@@ -22,7 +22,7 @@ What each layer is worth, against a tolerance of 1.0 per cent:
 
 | Layer | Worst row change | Where | What changes |
 |---|---|---|---|
-| the column re-set 0.90 m higher since the data book | 6.9% | fire_zone_c | pressure |
+| the column re-set 0.90 m higher since the data book | 6.6% | fire_zone_c | pressure |
 | the tie-in moved after the isometrics were issued | 10.4% | instrument_air_failure | pressure |
 | the two valves reset in situ since the register | 4.3% | cooling_water_failure | pressure |
 | the air compressor moved to the normal supply | the device set | power_failure | devices |
@@ -32,9 +32,11 @@ What each layer is worth, against a tolerance of 1.0 per cent:
 | the control valve coefficients the trend gives | 29.4% | instrument_air_failure | pressure |
 | the reboiler coefficient-area the record gives | 25.7% | cooling_water_failure | pressure |
 | the pump's shutoff head from its data sheet | the device set | instrument_air_failure | devices |
-| the tip measured rather than taken from the 2019 study | 9.1% | fire_zone_c | pressure |
+| the tip measured rather than taken from the 2019 study | 9.0% | fire_zone_c | pressure |
 | the pump measured rather than taken from the record | the device set | instrument_air_failure | devices |
 | the system brought together rather than taken in sequence | 8.1% | power_failure | pressure |
+| the condensate's sub-cooling counted in the reboiler duty | 21.7% | cooling_water_failure | pressure |
+| the stale level transmitter's indication corrected | 5.7% | fire_zone_c | pressure |
 
 layers worth less than the tolerance: none
 

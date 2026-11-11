@@ -16,21 +16,22 @@ Quantities it identifies rather than reads:
 | PSV-403 set pressure, barg | 29.5 | 31.0 (register) | -4.8% |
 | PSV-409 set pressure, barg | 9.5 | 11.0 (register) | -13.6% |
 | PSV-407 tie-in, m from the stack base | 206 | 92 (isometrics) | +114 m |
-| T-401 wetted area, m2 | 20.25 | 20.25 (data book elevation) | +0.0% |
-| T-402 wetted area, m2 | 42.26 | 47.29 (data book elevation) | -10.6% |
-| V-401 wetted area, m2 | 14.54 | 14.54 (data book elevation) | +0.0% |
-| V-403 wetted area, m2 | 19.54 | 19.54 (data book elevation) | +0.0% |
+| T-401 wetted area, m2 | 20.25 | 20.25 (data book elevation and indication) | +0.0% |
+| T-402 wetted area, m2 | 42.26 | 47.29 (data book elevation and indication) | -10.6% |
+| V-401 wetted area, m2 | 14.54 | 14.54 (data book elevation and indication) | +0.0% |
+| V-403 wetted area, m2 | 19.54 | 19.54 (data book elevation and indication) | +0.0% |
+| V-405 wetted area, m2 | 53.99 | 49.81 (data book elevation and indication) | +8.4% |
 
 Its answer, against the sealed definition:
 
 | contingency | devices | load, kg/h | header inlet, barg | sealed load | sealed inlet |
 |---|---|---|---|---|---|
-| power_failure | PSV-401 PSV-403 PSV-407 PSV-409 | 95489.1 | 1.2260 | 95521.9 (-0.034%) | 1.2274 (-0.112%) |
-| cooling_water_failure | PSV-403 | 54668.6 | 0.4931 | 54672.3 (-0.007%) | 0.4933 (-0.051%) |
+| power_failure | PSV-401 PSV-403 PSV-407 PSV-409 | 95489.5 | 1.2260 | 95521.9 (-0.034%) | 1.2274 (-0.112%) |
+| cooling_water_failure | PSV-403 | 54669.0 | 0.4931 | 54672.3 (-0.006%) | 0.4933 (-0.050%) |
 | instrument_air_failure | PSV-401 PSV-407 PSV-409 | 43660.9 | 0.3320 | 43697.7 (-0.084%) | 0.3327 (-0.226%) |
 | fire_zone_a | PSV-401 PSV-402 PSV-409 | 19967.0 | 0.0524 | 19967.0 (-0.000%) | 0.0524 (-0.055%) |
 | fire_zone_b | PSV-403 PSV-404 | 517.5 | 0.0000 | 517.5 (-0.000%) | 0.0000 (+0.000%) |
-| fire_zone_c | PSV-406 PSV-407 PSV-408 | 38913.6 | 0.1283 | 38913.7 (-0.000%) | 0.1283 (-0.072%) |
+| fire_zone_c | PSV-406 PSV-407 PSV-408 | 39964.8 | 0.1360 | 39964.9 (-0.000%) | 0.1361 (-0.071%) |
 
 worst relative load 0.0008 and pressure 0.0023 against a band of 0.0100
 
@@ -53,10 +54,10 @@ What each contingency reaches, and what the devices stand against:
 | contingency | sweeps | device | bonnet | cause | rate, kg/h | stands against, barg |
 |---|---|---|---|---|---|---|
 | power_failure | 8 | PSV-401 | conventional | control_valve_failure | 21155.3 | 1.1892 |
-|  |  | PSV-403 | conventional | cooling_failure | 55340.6 | 1.2260 |
+|  |  | PSV-403 | conventional | cooling_failure | 55341.1 | 1.2260 |
 |  |  | PSV-407 | bellows | control_valve_failure | 16099.1 | 0.0000 |
 |  |  | PSV-409 | conventional | control_valve_failure | 2894.1 | 0.8634 |
-| cooling_water_failure | 5 | PSV-403 | conventional | cooling_failure | 54668.6 | 0.4931 |
+| cooling_water_failure | 5 | PSV-403 | conventional | cooling_failure | 54669.0 | 0.4931 |
 | instrument_air_failure | 6 | PSV-401 | conventional | control_valve_failure | 24667.7 | 0.3320 |
 |  |  | PSV-407 | bellows | control_valve_failure | 16099.1 | 0.0000 |
 |  |  | PSV-409 | conventional | control_valve_failure | 2894.1 | 0.2268 |
@@ -65,6 +66,6 @@ What each contingency reaches, and what the devices stand against:
 |  |  | PSV-409 | conventional | fire | 3898.9 | 0.0347 |
 | fire_zone_b | 2 | PSV-403 | conventional | fire | 283.6 | 0.0000 |
 |  |  | PSV-404 | conventional | fire | 233.9 | 0.0000 |
-| fire_zone_c | 4 | PSV-406 | conventional | fire | 13958.7 | 0.1237 |
-|  |  | PSV-407 | bellows | fire | 15335.7 | 0.0000 |
-|  |  | PSV-408 | conventional | fire | 9619.2 | 0.1034 |
+| fire_zone_c | 4 | PSV-406 | conventional | fire | 13961.1 | 0.1308 |
+|  |  | PSV-407 | bellows | fire | 16383.2 | 0.0000 |
+|  |  | PSV-408 | conventional | fire | 9620.6 | 0.1091 |

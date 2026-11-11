@@ -158,7 +158,7 @@ class Records(object):
     def meter_factor(self):
         """FE-4011's computer holds a fixed relative density, so its reading moves as the square root of the
         ratio of the true density to the one it holds."""
-        row = self.instrument_schedule.set_index("tag").loc["FE-4011", "flow_computer_density"]
+        row = self.instrument_schedule.set_index("tag").loc["FE-4011", "configured_density"]
         held = re.search(r"([\d.]+)", str(row))
         if not held:
             return 1.0
@@ -252,9 +252,14 @@ class Records(object):
         pressure = record["e%s_steam_barg" % number] + ATM
         latent = np.interp(pressure, self.sat["steam"]["pressure_bara"].values,
                            self.sat["steam"]["latent_heat_kj_per_kg"].values)
-        duty = record["e%s_steam_kgh" % number].values * latent / 3600.0
         steam_t = np.interp(pressure, self.sat["steam"]["pressure_bara"].values,
                             self.sat["steam"]["saturation_temp_C"].values)
+        # the steam gives up its latent heat and then the condensate cools to the temperature it leaves at
+        leaves = self.exch.loc[name, "condensate_outlet_temp_C"]
+        spare = self.exch.loc[name, "condensate_cp_kj_per_kg_k"]
+        given = latent + (0.0 if pd.isna(leaves) or pd.isna(spare)
+                          else float(spare) * (steam_t - float(leaves)))
+        duty = record["e%s_steam_kgh" % number].values * given / 3600.0
         gap = steam_t - record["%s_bottoms_C" % prefix].values
         keep = gap > 0.0
         return float((duty[keep] * gap[keep]).sum() / (gap[keep] ** 2).sum())
@@ -307,18 +312,35 @@ class Records(object):
         x = min((p_up - p_dn) / p_up, critical)
         return 3.16 * kv * fp * (1.0 - x / (3.0 * critical)) * math.sqrt(x * p_up * 100.0 * rho_up)
 
+    def depth(self, item):
+        """The data book publishes what the level transmitter indicates. A differential-pressure transmitter
+        divides the head it sees by the density it was ranged for, so where that density is not the liquid's
+        the indication is not the level."""
+        shown = float(self.vessel.loc[item, "highest normal level"])
+        rows = self.instrument_schedule
+        hit = rows[rows["service"] == "%s level" % item]
+        if hit.empty:
+            return shown
+        said = hit.iloc[0]["configured_density"]
+        if not isinstance(said, str):
+            return shown
+        found = re.search(r"specific gravity ([\d.]+)", said)
+        if not found:
+            return shown
+        return shown * float(found.group(1)) / float(self.vessel.loc[item, "specific gravity"])
+
     def wetted(self, item):
         """Shell and heads up to the 7.6 m cut, with a band for each tray at or below it."""
         shape = self.vessel.loc[item, "shape"]
         bore = float(self.vessel.loc[item, "diameter"])
         foot = float(self.vessel.loc[item, "bottom tangent"]) + self.moved(item)
-        depth = float(self.vessel.loc[item, "highest normal level"])
+        depth = self.depth(item)
         head = 1.084 * bore * bore
         if shape == "vertical":
             wet = max(0.0, min(foot + depth, CUT) - foot)
             return math.pi * bore * wet + (head if foot < CUT else 0.0)
         if shape == "horizontal":
-            wet = min(depth, max(0.0, CUT - foot))
+            wet = min(depth, max(0.0, CUT - foot), bore)
             if wet <= 0.0:
                 return 0.0
             share = math.acos((bore / 2.0 - wet) / (bore / 2.0)) / math.pi

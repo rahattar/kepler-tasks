@@ -53,10 +53,11 @@ def main():
         if abs(now - sheet) > 1.0e-9:
             print("| %s tie-in, m from the stack base | %.0f | %.0f (isometrics) | %+.0f m |"
                   % (r["device"], now, sheet, now - sheet))
-    for item in ("T-401", "T-402", "V-401", "V-403"):
-        print("| %s wetted area, m2 | %.2f | %.2f (data book elevation) | %+.1f%% |"
-              % (item, m.wetted_area(item), common.Agent(d, reports, raised="ignore").wetted_area(item),
-                 100.0 * (m.wetted_area(item) / common.Agent(d, reports, raised="ignore").wetted_area(item) - 1.0)))
+    for item in ("T-401", "T-402", "V-401", "V-403", "V-405"):
+        naive = common.Agent(d, reports, raised="ignore", indication="shown")
+        print("| %s wetted area, m2 | %.2f | %.2f (data book elevation and indication) | %+.1f%% |"
+              % (item, m.wetted_area(item), naive.wetted_area(item),
+                 100.0 * (m.wetted_area(item) / naive.wetted_area(item) - 1.0)))
 
     print("\nIts answer, against the sealed definition:\n")
     print("| contingency | devices | load, kg/h | header inlet, barg | sealed load | sealed inlet |")

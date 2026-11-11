@@ -228,7 +228,7 @@ class Study(object):
         """FE-4011's flow computer holds a fixed relative density, so its indication moves with the square root
         of the density ratio."""
         row = next(r for r in self.d["instrument_schedule"] if r["tag"] == "FE-4011")
-        m = re.search(r"([\d.]+)", row["flow_computer_density"])
+        m = re.search(r"([\d.]+)", row["configured_density"])
         return math.sqrt((self.feed_mw() / MW_AIR) / float(m.group(1))) if m else 1.0
 
     # -- the device as it stands -------------------------------------------
@@ -379,11 +379,22 @@ class Study(object):
         # and only the days since the exchanger was last worked on describe the exchanger in service
         for r in self.since_work(name, self.d["operating_record"], "date"):
             p = _num(r["e%s_steam_barg" % n]) + ATM
-            q = _num(r["e%s_steam_kgh" % n]) * self.sat("steam", p, "latent") / 3600.0
+            q = _num(r["e%s_steam_kgh" % n]) * self.steam_drop(name, p) / 3600.0
             dt = self.sat("steam", p, "t") - _num(r["%s_bottoms_C" % prefix])
             if dt > 0:
                 vals.append(q / dt)
         return sum(vals) / len(vals)
+
+    def steam_drop(self, name, p_bara):
+        """What a kilogram of steam gives up in the exchanger: its latent heat, and then the sub-cooling of
+        the condensate from saturation down to the temperature the exchanger data says it leaves at."""
+        e = self.exch[name]
+        out = e.get("condensate_outlet_temp_C") or ""
+        cp = e.get("condensate_cp_kj_per_kg_k") or ""
+        drop = self.sat("steam", p_bara, "latent")
+        if out.strip() and cp.strip():
+            drop += _num(cp) * (self.sat("steam", p_bara, "t") - _num(out))
+        return drop
 
     def steam_supply_barg(self, vid):
         return _mm(self.exch[REBOILER[vid][0]]["tube_side"])
@@ -418,17 +429,32 @@ class Study(object):
                 total += float(m.group(1))
         return total
 
+    def level(self, item):
+        """The level in the vessel. The data book gives what the level transmitter indicates, and a
+        differential-pressure transmitter reports the head it sees divided by the density it was ranged for,
+        so an indication stands for the true level only while the two densities agree."""
+        v = self.d["vessel"][item]
+        indicated = _num(v["highest normal level"])
+        row = next((r for r in self.d["instrument_schedule"]
+                    if r["service"] == "%s level" % item), None)
+        if row is None:
+            return indicated
+        m = re.search(r"specific gravity ([\d.]+)", row["configured_density"] or "")
+        if not m:
+            return indicated
+        return indicated * float(m.group(1)) / _num(v["specific gravity"])
+
     def wetted_area(self, item):
         v = self.d["vessel"][item]
         d = _num(v["diameter"])
         bottom = _num(v["bottom tangent"]) + self.raised(item)
-        level = _num(v["highest normal level"])
+        level = self.level(item)
         head = 1.084 * d * d
         if v["shape"] == "vertical":
             h = max(0.0, min(bottom + level, FIRE_H) - bottom)
             return math.pi * d * h + (head if bottom < FIRE_H else 0.0)
         if v["shape"] == "horizontal":
-            lv = min(level, max(0.0, FIRE_H - bottom))
+            lv = min(level, max(0.0, FIRE_H - bottom), d)
             if lv <= 0.0:
                 return 0.0
             frac = math.acos((d / 2.0 - lv) / (d / 2.0)) / math.pi
