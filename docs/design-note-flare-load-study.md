@@ -1,6 +1,6 @@
 # Design note: flare-load-study
 
-Built 10-11 November 2026, delivered as `flare-load-study-20261111b.zip`. It began as the reshape of
+Built 10-11 November 2026, delivered as `flare-load-study-20261111b.zip`, now `flare-load-study-20261111d.zip`. It began as the reshape of
 relief-valve-adequacy after that task's fourth rejection, and ended as a different kind of task: the first in
 the catalogue keyed on the contingency rather than on the equipment, and the first of mine whose difficulty
 comes from deciding what to measure rather than from reading records carefully.
