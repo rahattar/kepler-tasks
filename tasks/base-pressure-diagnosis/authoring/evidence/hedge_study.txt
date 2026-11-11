@@ -1,58 +1,76 @@
-What a wrong attribution does to the gas load
-=============================================
+Every chamber under every cause but its own, each a whole sheet through the grader
+==================================================================================
 
-chamber  true cause       attributed to    gas load   deviation  effect
--------  ---------------  ---------------  ---------  ---------  ------------------------------
-VC01     wall-outgassing  air-leak         4.146e-04  -0.85%     quantity still inside the band
-VC01     wall-outgassing  virtual-leak     4.146e-04  -0.85%     quantity still inside the band
-VC01     wall-outgassing  permeation       5.142e-04  +22.96%    quantity outside the band too
-VC02     wall-outgassing  air-leak         2.141e-03  +0.70%     quantity still inside the band
-VC02     wall-outgassing  virtual-leak     2.141e-03  +0.70%     quantity still inside the band
-VC02     wall-outgassing  permeation       1.797e-03  -15.51%    quantity outside the band too
-VC03     air-leak         wall-outgassing  3.382e-04  +17.20%    quantity outside the band too
-VC03     air-leak         virtual-leak     2.897e-04  +0.38%     quantity still inside the band
-VC03     air-leak         permeation       3.924e-04  +35.99%    quantity outside the band too
-VC04     air-leak         wall-outgassing  6.125e-04  +0.57%     quantity still inside the band
-VC04     air-leak         virtual-leak     6.031e-04  -0.97%     quantity still inside the band
-VC04     air-leak         permeation       7.031e-04  +15.45%    quantity outside the band too
-VC05     permeation       wall-outgassing  2.344e-04  +1.98%     quantity still inside the band
-VC05     permeation       air-leak         2.300e-04  +0.09%     quantity still inside the band
-VC05     permeation       virtual-leak     2.300e-04  +0.09%     quantity still inside the band
-VC06     permeation       wall-outgassing  1.810e-04  +9.31%     quantity outside the band too
-VC06     permeation       air-leak         1.680e-04  +1.43%     quantity still inside the band
-VC06     permeation       virtual-leak     1.680e-04  +1.43%     quantity still inside the band
-VC07     virtual-leak     wall-outgassing  3.349e-04  +70.06%    quantity outside the band too
-VC07     virtual-leak     air-leak         2.264e-04  +14.97%    quantity outside the band too
-VC07     virtual-leak     permeation       2.400e-04  +21.86%    quantity outside the band too
-VC08     virtual-leak     wall-outgassing  2.609e-04  +23.25%    quantity outside the band too
-VC08     virtual-leak     air-leak         2.050e-04  -3.17%     quantity still inside the band
-VC08     virtual-leak     permeation       2.752e-04  +30.02%    quantity outside the band too
-VC09     pump-speed       wall-outgassing  8.532e-05  +1.69%     quantity still inside the band
-VC09     pump-speed       air-leak         8.300e-05  -1.07%     quantity still inside the band
-VC09     pump-speed       virtual-leak     8.300e-05  -1.07%     quantity still inside the band
-VC09     pump-speed       permeation       6.575e-05  -21.63%    quantity outside the band too
-VC10     pump-speed       wall-outgassing  1.209e-04  -0.70%     quantity still inside the band
-VC10     pump-speed       air-leak         1.229e-04  +0.94%     quantity still inside the band
-VC10     pump-speed       virtual-leak     1.229e-04  +0.94%     quantity still inside the band
-VC10     pump-speed       permeation       1.831e-04  +50.42%    quantity outside the band too
+chamber  true cause       attributed to    gas load   deviation  quantity in band  right  verdict
+-------  ---------------  ---------------  ---------  ---------  ----------------  -----  --------
+VC01     wall-outgassing  air-leak         4.146e-04  -0.85%     yes               9/10   rejected
+VC01     wall-outgassing  virtual-leak     4.146e-04  -0.85%     yes               9/10   rejected
+VC01     wall-outgassing  permeation       5.142e-04  +22.96%    no                9/10   rejected
+VC01     wall-outgassing  pump-speed       4.146e-04  -0.85%     yes               9/10   rejected
+VC02     wall-outgassing  air-leak         2.141e-03  +0.70%     yes               9/10   rejected
+VC02     wall-outgassing  virtual-leak     2.141e-03  +0.70%     yes               9/10   rejected
+VC02     wall-outgassing  permeation       1.797e-03  -15.52%    no                9/10   rejected
+VC02     wall-outgassing  pump-speed       2.141e-03  +0.70%     yes               9/10   rejected
+VC03     air-leak         wall-outgassing  3.382e-04  +17.20%    no                9/10   rejected
+VC03     air-leak         virtual-leak     2.897e-04  +0.38%     yes               9/10   rejected
+VC03     air-leak         permeation       3.924e-04  +35.99%    no                9/10   rejected
+VC03     air-leak         pump-speed       2.897e-04  +0.38%     yes               9/10   rejected
+VC04     air-leak         wall-outgassing  6.125e-04  +0.57%     yes               9/10   rejected
+VC04     air-leak         virtual-leak     6.031e-04  -0.97%     yes               9/10   rejected
+VC04     air-leak         permeation       7.031e-04  +15.45%    no                9/10   rejected
+VC04     air-leak         pump-speed       6.031e-04  -0.97%     yes               9/10   rejected
+VC05     permeation       wall-outgassing  2.344e-04  +1.98%     yes               9/10   rejected
+VC05     permeation       air-leak         2.300e-04  +0.09%     yes               9/10   rejected
+VC05     permeation       virtual-leak     2.300e-04  +0.09%     yes               9/10   rejected
+VC05     permeation       pump-speed       2.300e-04  +0.09%     yes               9/10   rejected
+VC06     permeation       wall-outgassing  1.810e-04  +9.31%     no                9/10   rejected
+VC06     permeation       air-leak         1.680e-04  +1.43%     yes               9/10   rejected
+VC06     permeation       virtual-leak     1.680e-04  +1.43%     yes               9/10   rejected
+VC06     permeation       pump-speed       1.680e-04  +1.43%     yes               9/10   rejected
+VC07     virtual-leak     wall-outgassing  3.349e-04  +70.06%    no                9/10   rejected
+VC07     virtual-leak     air-leak         2.264e-04  +14.97%    no                9/10   rejected
+VC07     virtual-leak     permeation       2.400e-04  +21.86%    no                9/10   rejected
+VC07     virtual-leak     pump-speed       1.998e-04  +1.45%     yes               9/10   rejected
+VC08     virtual-leak     wall-outgassing  2.609e-04  +23.25%    no                9/10   rejected
+VC08     virtual-leak     air-leak         2.050e-04  -3.17%     yes               9/10   rejected
+VC08     virtual-leak     permeation       2.752e-04  +30.02%    no                9/10   rejected
+VC08     virtual-leak     pump-speed       2.110e-04  -0.34%     yes               9/10   rejected
+VC09     pump-speed       wall-outgassing  8.532e-05  +1.69%     yes               9/10   rejected
+VC09     pump-speed       air-leak         8.300e-05  -1.07%     yes               9/10   rejected
+VC09     pump-speed       virtual-leak     8.300e-05  -1.07%     yes               9/10   rejected
+VC09     pump-speed       permeation       6.575e-05  -21.63%    no                9/10   rejected
+VC10     pump-speed       wall-outgassing  1.209e-04  -0.70%     yes               9/10   rejected
+VC10     pump-speed       air-leak         1.229e-04  +0.94%     yes               9/10   rejected
+VC10     pump-speed       virtual-leak     1.229e-04  +0.94%     yes               9/10   rejected
+VC10     pump-speed       permeation       1.831e-04  +50.41%    no                9/10   rejected
 
-The cause is a single name and is graded on its own, so none of these sheets is accepted: each is
-wrong on the cause of the chamber it reattributes, whatever its quantity does.
+cases: 40 (each of 10 chambers against each of the other 4 causes)
+none of the 40 hedged sheets is accepted: the cause is graded on its own, so a sheet that names
+the wrong mechanism fails that chamber whatever its quantity does.
 
-Chambers whose gas load survives a wrong attribution (the cause alone decides them):
+Cases whose gas load stays in the band under the wrong cause (27 of 40) - the cause alone decides
+them:
   VC01 under air-leak
   VC01 under virtual-leak
+  VC01 under pump-speed
   VC02 under air-leak
   VC02 under virtual-leak
+  VC02 under pump-speed
   VC03 under virtual-leak
+  VC03 under pump-speed
   VC04 under wall-outgassing
   VC04 under virtual-leak
+  VC04 under pump-speed
   VC05 under wall-outgassing
   VC05 under air-leak
   VC05 under virtual-leak
+  VC05 under pump-speed
   VC06 under air-leak
   VC06 under virtual-leak
+  VC06 under pump-speed
+  VC07 under pump-speed
   VC08 under air-leak
+  VC08 under pump-speed
   VC09 under wall-outgassing
   VC09 under air-leak
   VC09 under virtual-leak

@@ -1,42 +1,47 @@
 Malformed sheets and edge cases, each scored by the grader the verifier calls
 =============================================================================
 
-case                                                outcome   expected  right  grader's reason
---------------------------------------------------  --------  --------  -----  ----------------------------------------------  
-the reference sheet as it stands                    accepted  accepted  10/10  -
-blank lines and surrounding spaces                  accepted  accepted  10/10  -
-no trailing newline                                 accepted  accepted  10/10  -
-the rows out of order                               accepted  accepted  10/10  -
-one chamber inside the gas-load band (90% of it)    accepted  accepted  10/10  -
-one chamber outside the gas-load band (110% of it)  rejected  rejected  9/10   -
-one chamber outside the speed band                  rejected  rejected  9/10   -
-one chamber with the wrong cause                    rejected  rejected  9/10   -
-no header                                           rejected  rejected  0/10   the first line must be exactly: chamber,cause,
-a renamed column                                    rejected  rejected  0/10   the first line must be exactly: chamber,cause,
-the columns in another order                        rejected  rejected  0/10   the first line must be exactly: chamber,cause,
-an extra column                                     rejected  rejected  0/10   the first line must be exactly: chamber,cause,
-a row missing                                       rejected  rejected  0/10   the sheet must have one row for each of VC01,
-a row repeated                                      rejected  rejected  0/10   chamber VC10 appears twice
-an unknown chamber                                  rejected  rejected  0/10   unknown chamber 'VC99'
-a cause not in the list                             rejected  rejected  0/10   VC01: cause 'leak' is not one of air-leak, vir
-a cause in the wrong case                           rejected  rejected  0/10   VC01: cause 'WALL-OUTGASSING' is not one of ai
-a gas load that is not a number                     rejected  rejected  0/10   VC01 q_total_mbarl_s is not a number: 'none'
-a gas load of NaN                                   rejected  rejected  0/10   VC01 q_total_mbarl_s must be finite
-a gas load of infinity                              rejected  rejected  0/10   VC01 q_total_mbarl_s must be finite
-a negative gas load                                 rejected  rejected  0/10   VC01 q_total_mbarl_s must be from 1e-10 to 1e-
-a gas load of zero                                  rejected  rejected  0/10   VC01 q_total_mbarl_s must be from 1e-10 to 1e-
-a gas load far above the range                      rejected  rejected  0/10   VC01 q_total_mbarl_s must be from 1e-10 to 1e-
-a speed of zero                                     rejected  rejected  0/10   VC01 s_eff_l_s must be from 1 to 1e+05
-a speed far above the range                         rejected  rejected  0/10   VC01 s_eff_l_s must be from 1 to 1e+05
-a speed that is a boolean                           rejected  rejected  0/10   VC01 s_eff_l_s is not a number: 'True'
-an empty file                                       rejected  rejected  0/10   the first line must be exactly: chamber,cause,
-only the header                                     rejected  rejected  0/10   the sheet must have one row for each of VC01,
-padded past the size limit                          rejected  rejected  0/10   the audit sheet is too large
-bytes that are not ASCII                            rejected  rejected  0/10   the audit sheet is not ASCII text
-a sheet that is a symlink                           rejected  rejected  0/10   the audit sheet is not a regular file
-a sheet that is a directory                         rejected  rejected  0/10   the audit sheet is not a regular file
-no sheet at all                                     rejected  rejected  0/10   no audit sheet at /tmp/bpd-verifier-_k0ski8c/d
+case                                                 outcome   expected  right  grader's reason
+---------------------------------------------------  --------  --------  -----  ----------------------------------------------  
+the reference sheet as it stands                     accepted  accepted  10/10  -
+blank lines and surrounding spaces                   accepted  accepted  10/10  -
+no trailing newline                                  accepted  accepted  10/10  -
+the rows out of order                                accepted  accepted  10/10  -
+one chamber +3.6% on the gas-load band (inside it)   accepted  accepted  10/10  -
+one chamber -3.6% on the gas-load band (inside it)   accepted  accepted  10/10  -
+one chamber +4.4% on the gas-load band (outside it)  rejected  rejected  9/10   -
+one chamber -4.4% on the gas-load band (outside it)  rejected  rejected  9/10   -
+one chamber +2.7% on the speed band (inside it)      accepted  accepted  10/10  -
+one chamber -2.7% on the speed band (inside it)      accepted  accepted  10/10  -
+one chamber +3.3% on the speed band (outside it)     rejected  rejected  9/10   -
+one chamber -3.3% on the speed band (outside it)     rejected  rejected  9/10   -
+one chamber with the wrong cause                     rejected  rejected  9/10   -
+no header                                            rejected  rejected  0/10   the first line must be exactly: chamber,cause,
+a renamed column                                     rejected  rejected  0/10   the first line must be exactly: chamber,cause,
+the columns in another order                         rejected  rejected  0/10   the first line must be exactly: chamber,cause,
+an extra column                                      rejected  rejected  0/10   the first line must be exactly: chamber,cause,
+a row missing                                        rejected  rejected  0/10   the sheet must have one row for each of VC01,
+a row repeated                                       rejected  rejected  0/10   chamber VC10 appears twice
+an unknown chamber                                   rejected  rejected  0/10   unknown chamber 'VC99'
+a cause not in the list                              rejected  rejected  0/10   VC01: cause 'leak' is not one of air-leak, vir
+a cause in the wrong case                            rejected  rejected  0/10   VC01: cause 'WALL-OUTGASSING' is not one of ai
+a gas load that is not a number                      rejected  rejected  0/10   VC01 q_total_mbarl_s is not a number: 'none'
+a gas load of NaN                                    rejected  rejected  0/10   VC01 q_total_mbarl_s must be finite
+a gas load of infinity                               rejected  rejected  0/10   VC01 q_total_mbarl_s must be finite
+a negative gas load                                  rejected  rejected  0/10   VC01 q_total_mbarl_s must be from 1e-10 to 1e-
+a gas load of zero                                   rejected  rejected  0/10   VC01 q_total_mbarl_s must be from 1e-10 to 1e-
+a gas load far above the range                       rejected  rejected  0/10   VC01 q_total_mbarl_s must be from 1e-10 to 1e-
+a speed of zero                                      rejected  rejected  0/10   VC01 s_eff_l_s must be from 1 to 1e+05
+a speed far above the range                          rejected  rejected  0/10   VC01 s_eff_l_s must be from 1 to 1e+05
+a speed that is a boolean                            rejected  rejected  0/10   VC01 s_eff_l_s is not a number: 'True'
+an empty file                                        rejected  rejected  0/10   the first line must be exactly: chamber,cause,
+only the header                                      rejected  rejected  0/10   the sheet must have one row for each of VC01,
+padded past the size limit                           rejected  rejected  0/10   the audit sheet is too large
+bytes that are not ASCII                             rejected  rejected  0/10   the audit sheet is not ASCII text
+a sheet that is a symlink                            rejected  rejected  0/10   the audit sheet is not a regular file
+a sheet that is a directory                          rejected  rejected  0/10   the audit sheet is not a regular file
+no sheet at all                                      rejected  rejected  0/10   no audit sheet at /tmp/bpd-verifier-3x5odywk/d
 
 tolerances: gas load 4.0%, speed 3.0%; gate 10 of 10 chambers; size limit 100000 bytes
 
-all 33 cases behaved as the rules say; the grader raised nothing it could not name
+all 38 cases behaved as the rules say; the grader raised nothing it could not name

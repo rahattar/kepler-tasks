@@ -163,3 +163,40 @@ is the correct value, so there was never a string to get from Alex.
   blocking failure on Nov 9.
 - The bundle no longer names internal infrastructure, points at repo files outside it, or narrates its own review
   history in comments. A bundle should read as a self-contained piece of work.
+
+## Verification explanation quality, Nov 10 (base-pressure-diagnosis, fourth submission)
+One blocking, and it is the same defect as the last two rounds reaching material I had not checked. The pattern
+across all three: I fixed the sentences that were flagged instead of verifying every claim the explanations make,
+so each review simply read further and found the next unverified one.
+
+**What was wrong.** Two *descriptions* of studies, not numbers:
+- "a chamber nudged just inside and just outside each band" - `verifier_checks.py` tried only the outside of the
+  speed band, so one band had one edge measured and the other asserted.
+- "every chamber and every cause other than its own" for the hedge study - it omitted pump-speed as an
+  alternative for the eight non-pump chambers (32 cases, not 40), and it computed deviations itself rather than
+  scoring the sheets through the grader, so it was not evidence about the grader at all.
+
+And three fleet ranges in the difficulty list, all typed by hand: the wall coefficient's lower end (0.6, actually
+0.75), the longest pumpdown (24 h, actually 26 h on VC06) and the shop climate (25 C in July to 14 C in November,
+actually 27 C in July to 13 C in October - the log ends on 30 October, so November was never in it). The reviewer
+found two; recomputing the whole list found the third.
+
+**What the template task does and I did not.** `tasks/impeller-shrink-fits/README.md` opens its calibration
+section with "Every number below is copied from the named file in authoring/evidence", and then gives tables
+lifted from those files. It does not describe its studies in prose. I wrote flowing prose *about* studies, which
+is how a claim with no file behind it gets written in the first place.
+
+### Rules
+- **Do not describe a study. Reproduce what it printed.** If a sentence characterises a study's coverage
+  ("every", "each", "both", "all"), either the study prints that coverage and the sentence is generated from the
+  line it prints, or the sentence does not go in.
+- **A study must score through the grader.** A study that computes its own verdict is evidence about the study.
+  `hedge_study.py` now builds a whole sheet per case and calls `common.score`, like every other study.
+- **Test both edges of a band, on both sides of the truth.** Four cases per band, not one.
+- **Every quantitative claim about the fleet is computed.** New `authoring/evidence/fleet_ranges.py` prints
+  every range the difficulty list quotes, `meta.py` writes the list from it, and preflight re-runs the script
+  and fails on any drift between it, the stored record and the README.
+- **A perturbation test for every new check.** Both new checks appeared to pass when I broke the thing they
+  check, because `bad()` crashed on a non-string reason and preflight died before printing anything. A check
+  that has never been seen to fail is not known to work: break the input, watch it fail, then restore.
+- **`bad()` coerces its reason to a string.** A reporting bug must never be able to hide a real failure.

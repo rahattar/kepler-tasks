@@ -95,32 +95,60 @@ def main():
 
     rows = []
     both = []
+    accepted = []
+    # Every chamber against every one of the five causes but its own, so the table covers the whole space and
+    # the README can say so. pump-speed is included: it is not a reattribution of the gas load - clause 6 awards
+    # it on the speed ratio - so the quantities stay the reference's and only the cause changes, which is the
+    # purest form of the hedge and worth having in the record rather than assumed.
     for cid in C.IDS:
         true_cause = tr[cid]["cause"]
         q_true = tr[cid]["q_total"]
-        for cause in ("wall-outgassing", "air-leak", "virtual-leak", "permeation"):
+        for cause in ("wall-outgassing", "air-leak", "virtual-leak", "permeation", "pump-speed"):
             if cause == true_cause:
                 continue
-            # No blanket except here. Every reattribution is arithmetic on the same records, so it is always
-            # computable; an exception means this script is broken, not that the hedge is unavailable. A blanket
-            # except once turned a TypeError into a row reading "not reachable", and the whole study reported
-            # 32 of 32 cases that way while the explanation quoted conclusions from it.
-            q_alt, s_alt = reattributed(cid, data, certs, fix, vac, cause)
-            dev = (q_alt - q_true) / q_true
-            inside = abs(dev) <= C.G.Q_TOL
+            if cause == "pump-speed":
+                q_alt, s_alt = ref[cid][1], ref[cid][2]
+            else:
+                # No blanket except here. Every reattribution is arithmetic on the same records, so it is always
+                # computable; an exception means this script is broken, not that the hedge is unavailable.
+                q_alt, s_alt = reattributed(cid, data, certs, fix, vac, cause)
+
+            # Scored through the task's own grader, on a complete sheet, exactly as the verifier reads one. The
+            # deviation below is the grader's, not this script's arithmetic: a study that computes its own
+            # verdict is not evidence about the grader.
+            sheet = {c: ref[c] for c in C.IDS}
+            sheet[cid] = (cause, q_alt, s_alt)
+            r = C.score(sheet)
+            v = r["chambers"][cid]
+            dev = v["q_dev"]
+            inside = v["ok_q"]
             if inside:
                 both.append((cid, cause))
+            if r["accepted"]:
+                accepted.append((cid, cause))
             rows.append([cid, true_cause, cause, "%.3e" % q_alt, "%+.2f%%" % (100 * dev),
-                         "quantity still inside the band" if inside else "quantity outside the band too"])
+                         "yes" if inside else "no", "%d/%d" % (r["npass"], len(C.IDS)),
+                         "accepted" if r["accepted"] else "rejected"])
 
-    print(C.report("What a wrong attribution does to the gas load", rows,
-                   ["chamber", "true cause", "attributed to", "gas load", "deviation", "effect"]))
+    print(C.report("Every chamber under every cause but its own, each a whole sheet through the grader", rows,
+                   ["chamber", "true cause", "attributed to", "gas load", "deviation", "quantity in band",
+                    "right", "verdict"]))
 
-    print("The cause is a single name and is graded on its own, so none of these sheets is accepted: each is")
-    print("wrong on the cause of the chamber it reattributes, whatever its quantity does.")
+    print("cases: %d (each of %d chambers against each of the other %d causes)"
+          % (len(rows), len(C.IDS), 4))
+    if accepted:
+        print("%d PROBLEM(S): these hedged sheets were accepted" % len(accepted))
+        for cid, cause in accepted:
+            print("  %s named %s and still passed" % (cid, cause))
+    else:
+        print("none of the %d hedged sheets is accepted: the cause is graded on its own, so a sheet that names"
+              % len(rows))
+        print("the wrong mechanism fails that chamber whatever its quantity does.")
     print("")
     if both:
-        print("Chambers whose gas load survives a wrong attribution (the cause alone decides them):")
+        print("Cases whose gas load stays in the band under the wrong cause (%d of %d) - the cause alone decides"
+              % (len(both), len(rows)))
+        print("them:")
         for cid, cause in both:
             print("  %s under %s" % (cid, cause))
     else:

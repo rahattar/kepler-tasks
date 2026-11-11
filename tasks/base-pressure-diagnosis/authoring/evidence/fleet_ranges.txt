@@ -1,0 +1,22 @@
+Ranges of the shipped fleet, computed from the sealed definition and the built records
+======================================================================================
+
+volume_l: 900 to 5200
+turbo_l_s: 360 to 1480
+port_l_s: 420 to 2600
+s_eff_l_s: 124 to 943
+seal_cm: 120 to 900
+seal_materials: fluoroelastomer, nitrile and perfluoroelastomer
+surface_m2: 2.6 to 11
+wall_factor: 0.75 to 2.6
+leak: 7 x 10^-6 to 3.6 x 10^-4
+tau_h: 6 and 9
+q_total: 8.4 x 10^-5 to 2.1 x 10^-3
+p_base: 1.8 x 10^-7 to 3.4 x 10^-6
+pumpdowns: Two to six
+pumpdown_h: 12 to 26
+climate: 27 C in July to 13 C in October
+log_period: 2026-07-02 to 2026-10-30
+read_noise_pct: 0.6
+
+every figure the difficulty explanation quotes about the fleet is above

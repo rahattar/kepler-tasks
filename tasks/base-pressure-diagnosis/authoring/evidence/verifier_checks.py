@@ -49,19 +49,21 @@ def build(answers):
     cases.append(case_accepted("the rows out of order",
                                "\n".join([base[0]] + list(reversed(base[1:]))) + "\n"))
 
-    # one chamber nudged just inside and just outside the band
+    # One chamber nudged just inside and just outside each band, on both sides of the truth. Both bands get the
+    # same four cases: a band tested on one side only is a band whose other edge is not known to be where the
+    # instruction says it is.
     tr = C.truth()
-    for frac, inside in ((0.9, True), (1.1, False)):
-        cid = C.IDS[0]
-        alt = dict(answers)
-        alt[cid] = (answers[cid][0], tr[cid]["q_total"] * (1 + frac * C.G.Q_TOL), answers[cid][2])
-        cases.append((("one chamber %s the gas-load band (%.0f%% of it)"
-                       % ("inside" if inside else "outside", 100 * frac)),
-                      "\n".join(sheet_lines(alt)) + "\n", inside))
-    cid = C.IDS[1]
-    alt = dict(answers)
-    alt[cid] = (answers[cid][0], answers[cid][1], tr[cid]["s_eff"] * (1 + 1.1 * C.G.S_TOL))
-    cases.append(case_rejected("one chamber outside the speed band", "\n".join(sheet_lines(alt)) + "\n"))
+    for field, tol, key, idx in (("gas-load", C.G.Q_TOL, "q_total", 0), ("speed", C.G.S_TOL, "s_eff", 1)):
+        for frac, inside in ((0.9, True), (1.1, False)):
+            for sign in (+1, -1):
+                cid = C.IDS[idx]
+                alt = dict(answers)
+                value = tr[cid][key] * (1 + sign * frac * tol)
+                alt[cid] = ((answers[cid][0], value, answers[cid][2]) if key == "q_total"
+                            else (answers[cid][0], answers[cid][1], value))
+                cases.append((("one chamber %+.1f%% on the %s band (%s it)"
+                               % (100 * sign * frac * tol, field, "inside" if inside else "outside")),
+                              "\n".join(sheet_lines(alt)) + "\n", inside))
     alt = dict(answers)
     other = [c for c in ("air-leak", "permeation") if c != answers[C.IDS[2]][0]][0]
     alt[C.IDS[2]] = (other, answers[C.IDS[2]][1], answers[C.IDS[2]][2])

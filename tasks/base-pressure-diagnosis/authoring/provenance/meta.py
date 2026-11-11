@@ -11,10 +11,25 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TASK = os.path.dirname(os.path.dirname(HERE))
 EVIDENCE = os.path.join(TASK, "authoring", "evidence")
 
-WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine",
-         10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen", 14: "fourteen", 15: "fifteen", 16: "sixteen",
-         17: "seventeen", 18: "eighteen", 19: "nineteen", 20: "twenty", 32: "thirty-two", 33: "thirty-three",
-         40: "forty", 41: "forty-one"}
+_ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven",
+         "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+_TENS = {2: "twenty", 3: "thirty", 4: "forty", 5: "fifty", 6: "sixty", 7: "seventy", 8: "eighty", 9: "ninety"}
+
+
+class _Words(dict):
+    """n -> the English word for n. A function, not a table: a table of the numbers that happened to come up
+    once raised KeyError when a study's case count changed, which is the table's own fault and not the study's."""
+
+    def __missing__(self, n):
+        if not isinstance(n, int) or not 0 <= n < 100:
+            raise KeyError(n)
+        if n < 20:
+            return _ONES[n]
+        tens, ones = divmod(n, 10)
+        return _TENS[tens] + ("-" + _ONES[ones] if ones else "")
+
+
+WORDS = _Words()
 
 
 def _ev(name):
@@ -79,10 +94,28 @@ def facts():
     f["ref_q"], f["ref_s"] = _grab(t, r"worst deviation: gas load ([\d.]+)%, speed ([\d.]+)%", "reference run")
     (f["ref_order"],) = _grab(t, r"order placed: (.+)", "reference order")
 
+    t = _ev("fleet_ranges.txt")
+    for key in ("volume_l", "turbo_l_s", "port_l_s", "s_eff_l_s", "seal_cm", "seal_materials", "surface_m2",
+                "wall_factor", "leak", "tau_h", "q_total", "p_base", "pumpdowns", "pumpdown_h", "climate",
+                "log_period", "read_noise_pct"):
+        (v,) = _grab(t, r"(?m)^%s: (.+)$" % key, "fleet range %s" % key)
+        f[key] = v.strip()
+
+    t = _ev("verifier_checks.txt")
+    (n,) = _grab(t, r"all (\d+) cases behaved as the rules say", "verifier case count")
+    f["cases"], f["cases_word"] = int(n), WORDS[int(n)]
+    f["band_cases"] = len(re.findall(r"on the (?:gas-load|speed) band", t))
+
     t = _ev("hedge_study.txt")
-    f["hedge_inside"] = len(re.findall(r"quantity still inside the band", t))
-    f["hedge_outside"] = len(re.findall(r"quantity outside the band too", t))
-    f["hedge_total"] = f["hedge_inside"] + f["hedge_outside"]
+    (n, nch, nc) = _grab(t, r"cases: (\d+) \(each of (\d+) chambers against each of the other (\d+) causes\)",
+                         "hedge case count")
+    f["hedge_total"], f["hedge_total_word"] = int(n), WORDS[int(n)]
+    f["hedge_chambers"], f["hedge_alternatives"] = int(nch), int(nc)
+    (f["hedge_inside"],) = _grab(t, r"stays in the band under the wrong cause \((\d+) of \d+\)", "hedge inside")
+    f["hedge_inside"] = int(f["hedge_inside"])
+    f["hedge_outside"] = f["hedge_total"] - f["hedge_inside"]
+    if "PROBLEM" in t:
+        raise SystemExit("meta.py: hedge_study.txt reports a hedged sheet was accepted")
     for word in ("TypeError", "Traceback", "not reachable"):
         if word in t:
             raise SystemExit("meta.py: hedge_study.txt still reports %r; fix the study before quoting it" % word)
@@ -107,7 +140,63 @@ def fill(s):
     left = re.search(r"\{[A-Za-z_]+\}", s)
     if left:
         raise SystemExit("meta.py: no measured fact for %s" % left.group(0))
-    return s
+    return rewrap(s)
+
+
+WIDTH = 116
+
+
+def _fold(words, first_indent, rest_indent):
+    lines, line = [], ""
+    for w in words:
+        cand = (line + " " + w).strip()
+        limit = WIDTH - len(first_indent if not lines else rest_indent)
+        if line and len(cand) > limit:
+            lines.append(line)
+            line = w
+        else:
+            line = cand
+    if line:
+        lines.append(line)
+    return [(first_indent if i == 0 else rest_indent) + ln for i, ln in enumerate(lines)]
+
+
+def rewrap(s):
+    """Reflow the generated prose to WIDTH columns.
+
+    A substituted figure is a different length from the placeholder it replaced, so text wrapped by hand before
+    substitution is not wrapped after it: lines run long and words are orphaned. Blocks that are not prose are
+    left alone - headings, tables, and anything indented four spaces or more, which is code."""
+    out = []
+    for block in s.split("\n\n"):
+        lines = block.split("\n")
+        if not block.strip() or lines[0].startswith(("#", "|", "    ")):
+            out.append(block)
+            continue
+        items, cur = [], None
+        for ln in lines:
+            if ln.startswith("- "):
+                if cur:
+                    items.append(cur)
+                cur = ["- ", ln[2:].strip()]
+            elif cur is not None and ln.startswith("  "):
+                cur.append(ln.strip())
+            else:
+                if cur:
+                    items.append(cur)
+                    cur = None
+                if items and items[-1][0] == "":
+                    items[-1].append(ln.strip())
+                else:
+                    items.append(["", ln.strip()])
+        if cur:
+            items.append(cur)
+        rendered = []
+        for it in items:
+            kind, words = it[0], " ".join(it[1:]).split()
+            rendered.extend(_fold(words, kind, "  " if kind else ""))
+        out.append("\n".join(rendered))
+    return "\n\n".join(out)
 
 DIFFICULTY = """In practice this is the work of a vacuum process engineer auditing a shop's chambers: naming what
 limits each one's base pressure and quantifying it, so that the shutdown can be planned around the chambers worth
@@ -120,19 +209,20 @@ sources.
 
 The chambers and records are synthetic, written by `authoring/provenance` (`bpphys.py`, `fleet.py`, `docs_bp.py`,
 `build.py`) from a sealed definition. They are realistic in their numbers:
-- Chambers of 900 to 5200 L, on turbomolecular pumps of 360 to 1480 L/s through ports of 420 to 2600 L/s.
-- Effective pumping speeds of 124 to 943 L/s.
-- Elastomer seals of 120 to 900 cm, in nitrile, fluoroelastomer and perfluoroelastomer.
+- Chambers of {volume_l} L, on turbomolecular pumps of {turbo_l_s} L/s through ports of {port_l_s} L/s.
+- Effective pumping speeds of {s_eff_l_s} L/s.
+- Elastomer seals of {seal_cm} cm, in {seal_materials}.
 - Turbo controllers reporting rotor frequency, drive power and bearing temperature weekly, against the maker's
   figures for a pump of that model in order.
-- Internal surfaces of 2.6 to 11 m2, electropolished, machined or bead blasted, with anodised aluminium shields.
-- Wall gas load coefficients of 0.6 to 2.6 times the outgassing table's nominal figure.
-- Real air leaks of 7 x 10^-6 to 3.6 x 10^-4 mbar L/s, and trapped volumes emptying with time constants of 6 and
-  9 h.
-- Total gas loads of 8.4 x 10^-5 to 2.1 x 10^-3 mbar L/s, and base pressures of 1.8 x 10^-7 to 3.4 x 10^-6 mbar,
-  every one of them above the chamber's specified base pressure.
-- Two to six recent pumpdowns per chamber, of 12 to 24 h, in a shop whose air runs from 25 C in July to 14 C in
-  November, with gauge readings repeatable to 0.6 per cent.
+- Internal surfaces of {surface_m2} m2, electropolished, machined or bead blasted, with anodised aluminium
+  shields.
+- Wall gas load coefficients of {wall_factor} times the outgassing table's nominal figure.
+- Real air leaks of {leak} mbar L/s.
+- Trapped volumes emptying with time constants of {tau_h} h.
+- Total gas loads of {q_total} mbar L/s, and base pressures of {p_base} mbar, every one of them above the
+  chamber's specified base pressure.
+- {pumpdowns} recent pumpdowns per chamber, of {pumpdown_h} h, over {log_period}, in a shop whose air runs from
+  {climate}, with gauge readings repeatable to {read_noise_pct} per cent.
 
 The reference condition is the same for every chamber: 16 h from the start of roughing after an air vent, the
 chamber wall at 20 C, nothing in the chamber. Each chamber's limiting cause is the mechanism with the largest gas
@@ -318,20 +408,24 @@ the five causes given to all ten; the latest reading times the latest speed test
 the latest speed test; and the register's rated speed with the gas load it and the specification imply. No chamber
 has a free pass.
 
-`authoring/evidence/hedge_study.txt` records what a wrong attribution does, over every chamber and every cause
-other than its own: {hedge_total} cases, of which {hedge_inside} leave the gas load inside the band and
-{hedge_outside} put it outside. The total gas load is the total whatever it is attributed to, so on most chambers
-a sheet that names the wrong mechanism still has its quantity right; those chambers are decided by the cause,
-which is graded on its own and cannot be hedged.
+`authoring/evidence/hedge_study.txt` records what a wrong attribution does. It covers every chamber against
+every cause but its own - {hedge_chambers} chambers times {hedge_alternatives} alternatives, {hedge_total_word}
+cases - and each case is a complete sheet scored through this grader, so the verdicts below are the grader's and
+not the study's own arithmetic. {Hedge_inside} of the {hedge_total} leave the gas load inside its band and
+{hedge_outside} put it outside, and not one of the {hedge_total} is accepted. The total gas load is the total
+whatever it is attributed to, so on most chambers a sheet that names the wrong mechanism still has its quantity
+right; every one of those chambers is then decided by the cause, which is graded on its own and cannot be
+hedged.
 
 Malformed sheets and edge cases are all built from the current reference at run time, never hard-coded, and scored
 by the same grader the verifier calls (`authoring/evidence/verifier_checks.txt`). {cases_word} cases all behave as
 the rules say: a sheet that is a symlink, a directory or absent; no header, a renamed column, the columns
 reordered, an extra column; a row missing or repeated; an unknown chamber; a cause outside the list or in the
 wrong case; a gas load that is not a number, NaN, infinite, negative, zero or far out of range; a speed of zero,
-far out of range, or a boolean; an empty file; bytes that are not ASCII; a sheet padded past the size limit; and a
-chamber nudged just inside and just outside each band. Preflight fails if any case in that record did not behave as
-the rules say.
+far out of range, or a boolean; an empty file; bytes that are not ASCII; and a sheet padded past the size limit.
+{band_cases} of those cases are the bands themselves: each band is tried just inside and just outside, above and
+below the truth, so both edges of both bands are measured rather than assumed. Preflight fails if any case in
+that record did not behave as the rules say.
 
 The single pytest test decides the reward. `tests/test.sh` writes 0 to the reward file before grading starts, locks
 `/logs/verifier` to root before grading and again before the reward, and writes 1 only when pytest exits 0 and the

@@ -37,6 +37,10 @@ def ok(name):
 
 
 def bad(name, why):
+    # why is coerced: a reporting bug must never be able to hide a real failure. It once did - a list passed
+    # here crashed the printer, so preflight died at the first failure instead of listing it.
+    if not isinstance(why, str):
+        why = ", ".join(str(x) for x in why) if isinstance(why, (list, tuple, set)) else str(why)
     checks.append((False, name, why))
 
 
@@ -346,7 +350,8 @@ def check_readme_matches_toml():
     # The documents are generated from the evidence, so regenerating them must be a no-op. This is the check
     # that catches a study re-run without a rewrite - the staleness this bundle was rejected for.
     code, out = run_py(os.path.join(TASK, "authoring", "provenance", "meta.py"), ["--check"])
-    check(code == 0, "README.md and task.toml are current with the evidence", out.strip().splitlines()[-1:])
+    check(code == 0, "README.md and task.toml are current with the evidence",
+          (out.strip().splitlines() or [""])[-1])
 
 
 def check_self_contained():
@@ -397,6 +402,60 @@ def check_evidence_is_sound():
                      "not reachable", "UNEXPECTED"):
             check(word not in body, "%s reports no %s" % (n, word))
         check(body.strip() != "", "%s is not empty" % n)
+
+
+def check_claims_about_studies():
+    """The explanations describe what each study covers. Those descriptions are claims too.
+
+    Three rounds of review found the numbers wrong and then found the descriptions wrong: a band said to be
+    tried on both sides that was tried on one, and a study said to cover every alternative cause that covered
+    three of four and scored its own arithmetic rather than the grader's. Numbers are checked by generating them
+    from the evidence; the shape of a study has to be checked here."""
+    # the fleet ranges must still be what the sealed definition says: cheap to recompute, so recompute it
+    code, out = run_py(os.path.join(TASK, "authoring", "evidence", "fleet_ranges.py"), [])
+    if not check(code == 0, "fleet_ranges.py runs", out.strip()[-200:]):
+        return
+    stored = read(os.path.join("authoring", "evidence", "fleet_ranges.txt"))
+    fresh = {}
+    for line in out.splitlines():
+        if ": " in line and not line.startswith(" "):
+            k, v = line.split(": ", 1)
+            fresh[k.strip()] = v.strip()
+    drift = [k for k, v in fresh.items() if ("%s: %s" % (k, v)) not in stored]
+    check(not drift, "fleet_ranges.txt is what the fleet says now", ", ".join(drift))
+    # and every one of those figures has to appear in the README, which is what quotes them
+    readme = read("README.md")
+    absent = [k for k, v in fresh.items() if k not in ("log_period",) and v not in readme]
+    check(not absent, "the README quotes each fleet range as computed", ", ".join(absent))
+
+    # both bands, both edges, both sides
+    vc = read(os.path.join("authoring", "evidence", "verifier_checks.txt"))
+    for field in ("gas-load", "speed"):
+        for edge in ("inside", "outside"):
+            n = len(re.findall(r"on the %s band \(%s it\)" % (re.escape(field), edge), vc))
+            check(n == 2, "the %s band is tried %s on both sides of the truth" % (field, edge), "found %d" % n)
+    for line in vc.splitlines():
+        m = re.search(r"on the (?:gas-load|speed) band \((inside|outside) it\)\s+(\w+)\s+(\w+)", line)
+        if m:
+            want = "accepted" if m.group(1) == "inside" else "rejected"
+            check(m.group(2) == want and m.group(3) == want,
+                  "band case %r behaved as the rules say" % line.split("  ")[0].strip(), line.strip()[:70])
+
+    # every chamber against every cause but its own, scored as whole sheets
+    hs = read(os.path.join("authoring", "evidence", "hedge_study.txt"))
+    sys.path.insert(0, os.path.join(TASK, "tests", "sealed"))
+    import fleet as F
+    n_ids = len(F.CHAMBER_IDS)
+    m = re.search(r"cases: (\d+) \(each of (\d+) chambers against each of the other (\d+) causes\)", hs)
+    if check(m is not None, "hedge_study.txt states its coverage"):
+        total, chambers, alts = (int(x) for x in m.groups())
+        check(chambers == n_ids, "the hedge study covers every chamber", "%d of %d" % (chambers, n_ids))
+        check(alts == 4, "the hedge study covers every cause but the chamber's own", "%d alternatives" % alts)
+        check(total == n_ids * 4, "the hedge study runs every chamber-cause pair", "%d cases" % total)
+        rows = len(re.findall(r"^VC\d\d\s+\S+\s+\S+\s+\d", hs, re.M))
+        check(rows == total, "the hedge study's table holds every case it claims", "%d rows" % rows)
+    check("through the grader" in hs, "the hedge study scores its sheets through the grader")
+    check("PROBLEM" not in hs, "no hedged sheet is accepted")
 
 
 def check_no_unused_runtime_files():
@@ -638,6 +697,7 @@ def main():
     check_readme_matches_toml()
     check_self_contained()
     check_evidence_is_sound()
+    check_claims_about_studies()
     check_no_unused_runtime_files()
     check_verifier()
     check_truth_is_sealed()
