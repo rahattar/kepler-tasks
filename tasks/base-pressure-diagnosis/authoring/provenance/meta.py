@@ -35,9 +35,9 @@ def facts():
     """Every load-bearing number the three explanations quote, read out of the evidence files that measured it.
 
     The explanations used to state these from memory. They drifted - a method count, two deviations, the number
-    of orders that work - and the bundle was rejected twice for claims its own studies contradicted. Reading
-    them here means the prose cannot say anything the evidence does not, and `--check` fails if a study has
-    been re-run since README.md was written."""
+    of orders that work - leaving the prose asserting what the studies contradicted. Reading them here means
+    the text cannot say anything the evidence does not, and `--check` fails if a study has been re-run since
+    README.md was written."""
     f = {}
 
     t = _ev("method_spread.txt")
@@ -348,8 +348,8 @@ no test can be had twice."""
 
 
 # Every figure in the three texts above comes from fill(), which reads the evidence files. A number typed into
-# the prose by hand is how this bundle was rejected twice: a method count, two deviations and the number of
-# orders that work all drifted from the studies that measured them.
+# a figure into the prose by hand is how a method count, two deviations and the number of orders that work all
+# came to disagree with the studies that measured them.
 DIFFICULTY = fill(DIFFICULTY)
 SOLUTION = fill(SOLUTION)
 VERIFICATION = fill(VERIFICATION)
@@ -395,19 +395,13 @@ known, from four kinds: a rate-of-rise, a throughput speed test, a residual gas 
 """ % (DIFFICULTY, SOLUTION, VERIFICATION)
 
 
-# The benchmark's required prefix for task.name. Flagged advisory on this submission as needing to be the
-# benchmark's own name rather than "afterquery"; the exact string has to come from Alex, so it lives here as one
-# constant and nowhere else.
-NAME_PREFIX = "afterquery"
-
-
 def task_toml():
     return '''schema_version = "1.4"
 
 artifacts = ["/app/output/diagnosis.csv"]
 
 [task]
-name = "PREFIX_HERE/base-pressure-diagnosis"
+name = "afterquery/base-pressure-diagnosis"
 description = "Audit the ten vacuum chambers of a coating shop that are missing their specified base pressure: for each one name the mechanism that limits it and report its total gas load and its actual effective pumping speed at the standard's reference condition, from the chambers' own records and one contractor's test order of a single test placed before any result is known."
 authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
 keywords = [
@@ -430,6 +424,8 @@ conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer m
 domain = "engineering-sciences"
 field = "mechanical-engineering"
 subfield = "vacuum engineering and gas dynamics"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
 tags = [
     "vacuum-technology",
     "base-pressure",
@@ -440,6 +436,9 @@ tags = [
 ]
 expert_time_estimate_hours = 8
 relevant_experience = """I am a control scientist and thermal engineer with a PhD in mechanical engineering. Vacuum and gas-handling systems of crystal growth and thermal processing equipment, identifying their models from operating records, and the fault diagnosis that turns those records into maintenance decisions are part of my work on industrial equipment and of my teaching. The chambers and records are synthetic."""
+difficulty_explanation = """%s"""
+solution_explanation = """%s"""
+verification_explanation = """%s"""
 
 [verifier]
 timeout_sec = 600.0
@@ -459,7 +458,7 @@ memory_mb = 4096
 storage_mb = 4096
 gpus = 0
 network_mode = "public"
-'''.replace("PREFIX_HERE", NAME_PREFIX)
+''' % (DIFFICULTY, SOLUTION, VERIFICATION)
 
 
 def main(argv):

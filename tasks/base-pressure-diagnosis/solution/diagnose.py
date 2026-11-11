@@ -751,8 +751,8 @@ def front_end(cid, data, certs, fix, vac):
     before it attributes the gas load to a mechanism.
 
     This is a function rather than the first half of `audit_chamber` because the authoring studies need exactly
-    the audit's own front end. When a study kept its own copy, the copy drifted and the study reported the drift
-    as a finding (see docs/rejection-patterns.md, Nov 10)."""
+    the audit's own front end. A study that keeps its own copy measures the copy: when the copy falls behind, the
+    study reports its own drift as a finding."""
     cfg = with_controller_pump(cid, chamber_config(cid, data), data)
     changed = pump_changed_on(cid, data)
     # the certificate is checked first, because every pressure and every reported speed of this chamber has to be

@@ -129,3 +129,37 @@ works" when a helium test on VC08 also passes.
   The decision was made in `fleet.py`; nothing pointed at the six places that described it.
 - **Update the fact sheet in the same change as the thing it describes.** The instruction's two failures were
   faithfully copied from a fact sheet that was correct a week earlier.
+
+## Bundle structure failures, Nov 10 (base-pressure-diagnosis, third submission)
+Eight errors, from two causes.
+
+**Seven were self-inflicted.** The previous submission's *advisory* notes said `category`, `subcategory` and the
+three explanations were "unsupported benchmark fields" and that the explanations "belong in README sections". I
+removed them. The blocking structure check requires all five: every task ships the full metadata block. I had
+deleted part of a block that all 34 other tasks in the repo carry, on the strength of a note that was not
+blocking, and the fields came straight back.
+
+**One was a leak.** `afterquery` appeared at `meta.py:399` and `:401` - a bare `NAME_PREFIX = "afterquery"`
+constant and a comment about it - which I had introduced the round before while trying to make the prefix easy to
+change in response to another advisory. The term is allowed only as the task's own name, `afterquery/<task>`.
+The advisory that prompted the constant was itself resolved by this error: `afterquery/base-pressure-diagnosis`
+is the correct value, so there was never a string to get from Alex.
+
+### Rules
+- **An advisory is a suggestion; a structure check is the contract.** Never remove a field, a section or a file
+  because an advisory calls it unsupported. Advisories are written per task and can be wrong about the dataset.
+  If an advisory contradicts what every other task in the repo does, the other tasks win, and the advisory goes
+  in this file as an open question instead of into the bundle.
+- **This is the second time a rewrite of a known-good block caused a blocking failure.** The Nov 10 first
+  submission lost three `task.toml` sections by regenerating them from scratch; this one lost five fields by
+  acting on an advisory. The block is known-good: leave it alone, and diff `task.toml` against a sibling task's
+  before submitting.
+- **Do not refactor in response to an advisory.** Making the prefix a named constant to be helpful created the
+  codename leak. The smallest change that answers an advisory is usually no change plus a note.
+- Preflight now checks, derived from `task.toml` rather than from a list written inside the bundle: the full
+  metadata block is present, `category` is `Science`, `subcategory` is non-empty, each README section matches its
+  metadata field, and the task-name prefix appears nowhere except as the full task name. Deriving the term from
+  the one field permitted to hold it avoids keeping a list of programme names in the bundle, which was itself a
+  blocking failure on Nov 9.
+- The bundle no longer names internal infrastructure, points at repo files outside it, or narrates its own review
+  history in comments. A bundle should read as a self-contained piece of work.

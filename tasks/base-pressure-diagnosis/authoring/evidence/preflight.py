@@ -271,9 +271,9 @@ def check_task_toml():
           str(field("field")))
     check('"/app/output/diagnosis.csv"' in text, "task.toml declares the artifact")
 
-    # Parsed rather than matched: harbor reads the file as TOML, and the keys below decide which
-    # container the verifier runs in and whether either side has egress. A regex over the text once
-    # let `network = false` pass here, which harbor does not read at all.
+    # Parsed rather than matched: the file is read as TOML, and the keys below decide which container the
+    # verifier runs in and whether either side has egress. A regex over the text once let a `network = false`
+    # key pass here, which is not a key anything reads.
     try:
         t = tomllib.loads(text)
     except Exception as exc:
@@ -298,7 +298,7 @@ def check_task_toml():
         for key in ("build_timeout_sec", "cpus", "memory_mb", "storage_mb", "gpus"):
             check(key in t.get("environment", {}), "task.toml declares environment.%s" % key)
         check("network" not in t.get("verifier", {}),
-              "task.toml carries no bare verifier network key, which harbor ignores")
+              "task.toml carries no bare verifier network key, which nothing reads")
 
     # The difficulty explanation lives in README.md, not task.toml: the benchmark does not read it from there.
     readme = read("README.md")
@@ -322,17 +322,65 @@ def check_readme_matches_toml():
     for head in ("## Difficulty", "## Reference solution", "## Verification"):
         check(head in readme, "README.md carries %s" % head)
 
-    # The three explanations live in README.md alone; the benchmark does not read them from task.toml.
+    # Every task on this dataset ships the full metadata block, the three explanations included, and README.md
+    # carries the same three texts. These fields are required: do not drop one because some note calls it
+    # unsupported. A suggestion is a suggestion; a structure check is the contract.
     t = tomllib.loads(read("task.toml"))
-    for fieldname in ("difficulty_explanation", "solution_explanation", "verification_explanation",
-                      "category", "subcategory"):
-        check(fieldname not in t.get("metadata", {}),
-              "task.toml metadata does not carry the unsupported field %s" % fieldname)
+    md = t.get("metadata", {})
+    for fieldname in ("category", "subcategory", "difficulty_explanation", "solution_explanation",
+                      "verification_explanation"):
+        check(fieldname in md, "task.toml metadata carries %s" % fieldname)
+    check(md.get("category") == "Science", "task.toml metadata category is Science", repr(md.get("category")))
+    check(bool(str(md.get("subcategory", "")).strip()), "task.toml metadata subcategory is not empty")
+
+    for head, fieldname in (("## Difficulty", "difficulty_explanation"),
+                            ("## Reference solution", "solution_explanation"),
+                            ("## Verification", "verification_explanation")):
+        body = re.search(r"^%s\s*\n([\s\S]*?)(?=^## |\Z)" % re.escape(head), readme, re.M)
+        if not body or fieldname not in md:
+            bad("README.md %s matches task.toml %s" % (head, fieldname), "one of them is missing")
+            continue
+        check(" ".join(body.group(1).split()) == " ".join(str(md[fieldname]).split()),
+              "README.md %s matches task.toml %s" % (head, fieldname), "the two texts differ")
 
     # The documents are generated from the evidence, so regenerating them must be a no-op. This is the check
     # that catches a study re-run without a rewrite - the staleness this bundle was rejected for.
     code, out = run_py(os.path.join(TASK, "authoring", "provenance", "meta.py"), ["--check"])
     check(code == 0, "README.md and task.toml are current with the evidence", out.strip().splitlines()[-1:])
+
+
+def check_self_contained():
+    """The bundle may not name the programme it was written for, anywhere but as this task's own name.
+
+    The term is read out of task.toml rather than written here. A list of such names kept inside the bundle is
+    itself the thing that may not be here, so taking the term from the one field permitted to hold it needs no
+    list at all.
+
+    `name = "<prefix>/<task>"` is the allowed form. Any other appearance of the prefix - a bare constant, a
+    comment, a note about where the task came from - is a leak."""
+    name = tomllib.loads(read("task.toml")).get("task", {}).get("name", "")
+    if "/" not in name:
+        bad("task.toml task.name is of the form <prefix>/<task>", repr(name))
+        return
+    prefix = name.split("/")[0]
+    ok("task.toml task.name is of the form <prefix>/<task>")
+    leaks = []
+    for root, dirs, files in os.walk(TASK):
+        dirs[:] = [d for d in dirs if d != "__pycache__"]
+        for n in sorted(files):
+            path = os.path.join(root, n)
+            try:
+                body = open(path, errors="replace").read()
+            except OSError:
+                continue
+            if prefix not in body:
+                continue
+            # strip every occurrence of the full, permitted name and see if the prefix still shows
+            if prefix in body.replace(name, ""):
+                for i, line in enumerate(body.splitlines(), 1):
+                    if prefix in line.replace(name, ""):
+                        leaks.append("%s:%d" % (os.path.relpath(path, TASK), i))
+    check(not leaks, "the bundle names the programme only as this task's own name", ", ".join(leaks[:6]))
 
 
 def check_evidence_is_sound():
@@ -588,6 +636,7 @@ def main():
     check_instruction()
     check_task_toml()
     check_readme_matches_toml()
+    check_self_contained()
     check_evidence_is_sound()
     check_no_unused_runtime_files()
     check_verifier()
