@@ -335,7 +335,7 @@ result. There was not time to repeat the pumpdowns.
 def vacwork_doc():
     return """# The audit test order
 
-The audit has a budget of **%(budget)d tests across the whole fleet**, ordered once, with the contractor who does
+The audit has a budget of **%(budget)s across the whole fleet**, ordered once, with the contractor who does
 the shop's vacuum work.
 
     vacwork status
@@ -346,12 +346,11 @@ the shop's vacuum work.
 cannot be changed, extended or replaced afterwards, and the results of no test are known until the whole order has
 been placed.
 
-The plan names a chamber and a test for each of its entries:
+The plan names a chamber and a test for each of its entries, and may hold no more entries than the budget:
 
-    {"tests": [{"chamber": "VC03", "test": "rga"},
-               {"chamber": "VC07", "test": "rate-of-rise"}]}
+    {"tests": [{"chamber": "VC03", "test": "rga"}]}
 
-Between 1 and %(budget)d entries, no entry repeated. The reports are written to `/app/vacwork/`.
+Between 1 and %(n)d entries, no entry repeated. The reports are written to `/app/vacwork/`.
 
 ## The tests
 
@@ -372,7 +371,7 @@ pressure of each species it resolves, with the pumping time and wall temperature
 
 **`helium`** - a helium leak test with the chamber under vacuum: the suspect seals and welds are hooded in turn and
 the leak detector's signal is logged against time. The record holds the signal against time for each hooded region.
-""" % dict(budget=F.BUDGET)
+""" % dict(budget="%d test%s" % (F.BUDGET, "" if F.BUDGET == 1 else "s"), n=F.BUDGET)
 
 
 def gauge_certificates():

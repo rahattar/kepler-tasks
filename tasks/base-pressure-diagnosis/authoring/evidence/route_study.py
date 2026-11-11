@@ -101,6 +101,9 @@ def main():
     nearest = min([abs(v) for v in nearest_misses] or [0.0])
     print("nearest defective miss on a quantity: %.2f%% (%.2fx the gas-load tolerance)"
           % (100 * nearest, nearest / C.G.Q_TOL if C.G.Q_TOL else 0))
+    single = [name for name, n, _v, _w in [(r[0], r[1], r[2], r[3]) for r in rows] if n == 1]
+    print("routes rejected by one chamber alone: %d (%s), each required to miss it by at least %.2fx the"
+          " tolerance or on the cause" % (len(single), " ".join(single) or "-", BIG_MISS))
     print("")
     if fails:
         print("%d PROBLEM(S)" % len(fails))

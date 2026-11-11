@@ -12,7 +12,10 @@ side of the change; the one whose gauge certificate is out, from the speed its o
 one whose constant gas load could be a leak or permeation, from how it follows the shop temperature - so a test
 spent anywhere else is the test taken from where it was needed.
 
-That is what makes the order load-bearing: there are forty ways to spend it and two of them work.
+That is what makes the order load-bearing. The table below is the measurement, not an illustration: it covers
+every order the budget allows - each of the four tests on each of the ten chambers - and placing no order at all,
+and it counts how many of them carry the reference to a pass. Do not restate that count here; read it off
+plan_sweep.txt, which is also where README.md gets it.
 
 This script places each order through the real `vacwork` program and scores the reference's sheet, so the worth of
 an order is measured and not assumed.
@@ -28,22 +31,20 @@ import common as C                                                      # noqa: 
 
 T = lambda c, k: dict(chamber=c, test=k)                                # noqa: E731
 
-PLANS = [
-    ("no order at all", []),
-    ("an analysis on VC08", C.REFERENCE_PLAN),
-    ("a rate-of-rise on VC08", [T("VC08", "rate-of-rise")]),
-    ("a helium test on VC08", [T("VC08", "helium")]),
-    ("a speed test on VC08", [T("VC08", "speed-test")]),
-    ("an analysis on VC06", [T("VC06", "rga")]),
-    ("an analysis on VC01", [T("VC01", "rga")]),
-    ("a rate-of-rise on VC01", [T("VC01", "rate-of-rise")]),
-    ("a helium test on VC04", [T("VC04", "helium")]),
-    ("a speed test on VC09", [T("VC09", "speed-test")]),
-]
+# Exhaustive, not a selection. The budget is one test, so the whole space of orders is every test on every
+# chamber, plus placing no order: 4 x 10 + 1. An earlier version of this script listed ten orders by hand while
+# the prose claimed a result over all forty, which is a claim the study never made.
+WORDS = {"rga": "an analysis", "rate-of-rise": "a rate-of-rise", "helium": "a helium test",
+         "speed-test": "a speed test"}
+PLANS = ([("no order at all", [])]
+         + [("%s on %s" % (WORDS[k], c), [T(c, k)]) for c in C.IDS for k in sorted(WORDS)])
 
 
 def main():
+    assert len(PLANS) == len(C.IDS) * len(WORDS) + 1, "the sweep must cover every order"
+    assert C.F.BUDGET == 1, "this sweep enumerates single-test orders; the budget is %d" % C.F.BUDGET
     rows = []
+    good = []
     for name, plan in PLANS:
         tag = "sweep-" + name.replace(" ", "-")
         if plan:
@@ -56,13 +57,23 @@ def main():
         wrong = [cid for cid in C.IDS if not r["chambers"][cid]["ok"]]
         rows.append([name, len(plan), "%d/%d" % (r["npass"], len(C.IDS)),
                      "accepted" if r["accepted"] else "rejected", " ".join(wrong) or "-"])
+        if r["accepted"]:
+            good.append((name, plan))
     print(C.report("The reference method under different audit orders", rows,
                    ["order", "tests", "right", "verdict", "chambers wrong"]))
     print("budget: %d tests across %d chambers, placed once" % (C.F.BUDGET, len(C.IDS)))
     print("gate: at least %d of %d chambers right" % (C.G.GATE, len(C.IDS)))
+    print("orders tried: %d (every test on every chamber, and no order)" % len(PLANS))
     print("")
-    print("An order that buys VC06 and VC08 nothing leaves the reference without the composition it needs on")
-    print("them; an order that spends every test on chambers whose records already settle them wastes the lot.")
+    # Counted from the sweep rather than stated, so the number in the README cannot drift from the number here.
+    print("ORDERS THAT WORK: %d of %d" % (len(good), len(PLANS)))
+    for name, plan in good:
+        print("  %s" % name)
+    chambers = sorted({t["chamber"] for _n, p in good for t in p})
+    print("chambers they are spent on: %s" % (" ".join(chambers) or "-"))
+    print("")
+    print("Every other order leaves the reference a chamber short. The chambers each failing order gets wrong")
+    print("are in the table above, so what the test is worth is read off the sweep and not asserted.")
     C.cleanup()
     return 0
 

@@ -746,7 +746,13 @@ def certificate_error(cid, cfg, data):
     return k, (sorted(serials)[0] if len(serials) == 1 else None)
 
 
-def audit_chamber(cid, data, certs, fix, vac):
+def front_end(cid, data, certs, fix, vac):
+    """The chamber as it stands, the records that still describe it and the speed: everything the audit settles
+    before it attributes the gas load to a mechanism.
+
+    This is a function rather than the first half of `audit_chamber` because the authoring studies need exactly
+    the audit's own front end. When a study kept its own copy, the copy drifted and the study reported the drift
+    as a finding (see docs/rejection-patterns.md, Nov 10)."""
     cfg = with_controller_pump(cid, chamber_config(cid, data), data)
     changed = pump_changed_on(cid, data)
     # the certificate is checked first, because every pressure and every reported speed of this chamber has to be
@@ -770,6 +776,11 @@ def audit_chamber(cid, data, certs, fix, vac):
         # carries the reference instrument of clause 5 has readings that were never affected
         pts = [dict(q, p_n2=q["p_n2"] * k) if (k_serial is None or q["serial"] == k_serial) else q
                for q in pts]
+    return cfg, pts, s_eff
+
+
+def audit_chamber(cid, data, certs, fix, vac):
+    cfg, pts, s_eff = front_end(cid, data, certs, fix, vac)
 
     rga = rga_says(cid, vac)
     nd = len(durations(pts))

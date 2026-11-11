@@ -4,18 +4,55 @@ The reference method under different audit orders
 order                   tests  right  verdict   chambers wrong
 ----------------------  -----  -----  --------  --------------
 no order at all         0      9/10   rejected  VC08
-an analysis on VC08     1      10/10  accepted  -
-a rate-of-rise on VC08  1      9/10   rejected  VC08
-a helium test on VC08   1      10/10  accepted  -
-a speed test on VC08    1      9/10   rejected  VC08
-an analysis on VC06     1      9/10   rejected  VC08
-an analysis on VC01     1      9/10   rejected  VC08
+a helium test on VC01   1      9/10   rejected  VC08
 a rate-of-rise on VC01  1      9/10   rejected  VC08
+an analysis on VC01     1      9/10   rejected  VC08
+a speed test on VC01    1      8/10   rejected  VC01 VC08
+a helium test on VC02   1      9/10   rejected  VC08
+a rate-of-rise on VC02  1      9/10   rejected  VC08
+an analysis on VC02     1      9/10   rejected  VC08
+a speed test on VC02    1      9/10   rejected  VC08
+a helium test on VC03   1      9/10   rejected  VC08
+a rate-of-rise on VC03  1      9/10   rejected  VC08
+an analysis on VC03     1      9/10   rejected  VC08
+a speed test on VC03    1      9/10   rejected  VC08
 a helium test on VC04   1      9/10   rejected  VC08
+a rate-of-rise on VC04  1      9/10   rejected  VC08
+an analysis on VC04     1      9/10   rejected  VC08
+a speed test on VC04    1      9/10   rejected  VC08
+a helium test on VC05   1      9/10   rejected  VC08
+a rate-of-rise on VC05  1      9/10   rejected  VC08
+an analysis on VC05     1      9/10   rejected  VC08
+a speed test on VC05    1      9/10   rejected  VC08
+a helium test on VC06   1      9/10   rejected  VC08
+a rate-of-rise on VC06  1      9/10   rejected  VC08
+an analysis on VC06     1      9/10   rejected  VC08
+a speed test on VC06    1      9/10   rejected  VC08
+a helium test on VC07   1      9/10   rejected  VC08
+a rate-of-rise on VC07  1      9/10   rejected  VC08
+an analysis on VC07     1      9/10   rejected  VC08
+a speed test on VC07    1      9/10   rejected  VC08
+a helium test on VC08   1      10/10  accepted  -
+a rate-of-rise on VC08  1      9/10   rejected  VC08
+an analysis on VC08     1      10/10  accepted  -
+a speed test on VC08    1      9/10   rejected  VC08
+a helium test on VC09   1      9/10   rejected  VC08
+a rate-of-rise on VC09  1      9/10   rejected  VC08
+an analysis on VC09     1      9/10   rejected  VC08
 a speed test on VC09    1      9/10   rejected  VC08
+a helium test on VC10   1      9/10   rejected  VC08
+a rate-of-rise on VC10  1      9/10   rejected  VC08
+an analysis on VC10     1      9/10   rejected  VC08
+a speed test on VC10    1      9/10   rejected  VC08
 
 budget: 1 tests across 10 chambers, placed once
 gate: at least 10 of 10 chambers right
+orders tried: 41 (every test on every chamber, and no order)
 
-An order that buys VC06 and VC08 nothing leaves the reference without the composition it needs on
-them; an order that spends every test on chambers whose records already settle them wastes the lot.
+ORDERS THAT WORK: 2 of 41
+  a helium test on VC08
+  an analysis on VC08
+chambers they are spent on: VC08
+
+Every other order leaves the reference a chamber short. The chambers each failing order gets wrong
+are in the table above, so what the test is worth is read off the sweep and not asserted.

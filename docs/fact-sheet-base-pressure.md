@@ -29,12 +29,17 @@ wall at 20 C, nothing in the chamber.** It is MS-BP clause 2.
 - `/app/data/maintenance_log.csv`
 - `/app/data/shop_climate.csv`
 - `/app/data/gauge_certificates.md`
-- `/app/data/example/` - one chamber's records with the audit result MS-BP gives for it
+- `/app/data/example/` - the records of one chamber of the same shop (VC00), audited in an earlier quarter and
+  sound throughout, in the same format and units as the fleet's. **No audited result is given for it** (P), and
+  the instruction must say so: `about_this_chamber.md` and `records_format.md` both say outright that no result
+  is given, so an instruction that promises one contradicts the documents the agent reads. This was a blocking
+  failure on the Nov 10 submission.
 
 ## The command and the booking (P: the budget figure 1 and the word vacwork appear)
 
 - `vacwork status` reports the order; `vacwork submit < plan.json` places it.
-- Up to **1 test** across the whole fleet.
+- **One test** across the whole fleet - the budget is 1 (P: the figure 1 or the words "one test" appear).
+  `vacwork.md` shows a one-entry plan, so do not imply more than one can be ordered.
 - Placed **once**: no result is known until the order has been placed, and it cannot be changed, extended or
   replaced afterwards.
 - Reports are written to `/app/vacwork/`.
@@ -56,8 +61,11 @@ wall at 20 C, nothing in the chamber.** It is MS-BP clause 2.
 
 ## Also worth saying
 
-- Python 3, numpy, scipy and pandas are available.
-- `/app/data` is read-only.
+- `/app/data` is read-only; write only under `/app/output`.
+
+Do **not** list the installed packages, the Python version or anything else the agent can discover with one
+command (P). It is not part of the contract, it goes stale the moment the image changes, and it was a blocking
+failure on the Nov 10 submission. The rule: if `python3 -c 'import numpy'` answers the question, leave it out.
 
 ## What the instruction must not say (P: all checked)
 
@@ -76,3 +84,29 @@ wall at 20 C, nothing in the chamber.** It is MS-BP clause 2.
 ## My draft
 
 `instruction.md` in the bundle is a draft that passes preflight. Replace it and re-run preflight.
+
+## How to check the rewrite
+
+From the bundle root:
+
+    python3 -I authoring/evidence/preflight.py        # every (P) item, and 290-odd other things
+
+Preflight now also checks the two failures above directly: that the instruction does not claim the example
+carries an audited result, that it says outright that no result is given, and that it narrates no discoverable
+detail of the image. It will not let the Nov 10 wording back in.
+
+## The rule behind all of it
+
+The instruction is a contract, and every sentence in it is a promise that something else in the bundle keeps.
+Before writing a sentence, ask which file keeps it:
+
+| Sentence says | File that must agree |
+|---|---|
+| what the example folder holds | `environment/data/example/about_this_chamber.md`, `docs/records_format.md` |
+| the budget, the command, the plan format | `environment/data/docs/vacwork.md`, `environment/rig/vacwork.py` |
+| the header, the five cause names | `tests/grade_audit.py` (`HEADER`, `CAUSES`) |
+| the two tolerances, the size limit | `tests/grade_audit.py` (`Q_TOL`, `S_TOL`, `MAX_BYTES`) |
+| the reference condition | `tests/sealed/fleet.py` (`REF_H`), MS-BP clause 2 |
+| the time limit | `task.toml` (`[agent] timeout_sec`) |
+
+If no file keeps it, the sentence is either narration (cut it) or a promise the bundle breaks (fix one of them).

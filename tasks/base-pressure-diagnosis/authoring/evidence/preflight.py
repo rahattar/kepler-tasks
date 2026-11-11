@@ -14,6 +14,7 @@ import importlib.util
 import os
 import re
 import sys
+import subprocess
 import tomllib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -50,6 +51,13 @@ def check(cond, name, why=""):
 def read(rel):
     with open(os.path.join(TASK, rel)) as f:
         return f.read()
+
+
+def run_py(path, args):
+    """Run a bundle script in a child process and return (exit code, combined output)."""
+    p = subprocess.run([sys.executable, "-I", path] + list(args), cwd=os.path.dirname(path),
+                       capture_output=True, text=True)
+    return p.returncode, (p.stdout or "") + (p.stderr or "")
 
 
 def load(path, name):
@@ -215,8 +223,32 @@ def check_instruction():
     leaked = [h for h in hints if re.search(r"\b%s\b" % re.escape(h.strip()), low)]
     check(not leaked, "the instruction hints at no trap or mechanism", ", ".join(leaked))
 
-    check(str(F.BUDGET) in text, "the instruction states the test budget", str(F.BUDGET))
+    words = {1: "one", 2: "two", 3: "three", 4: "four"}
+    check(str(F.BUDGET) in text or re.search(r"\b%s test\b" % words.get(F.BUDGET, "x"), low),
+          "the instruction states the test budget", str(F.BUDGET))
     check("vacwork" in low, "the instruction names the command that places the order")
+
+    # The instruction must agree with the documents the agent will read. It once said /app/data/example/ held
+    # the chamber's audit result while about_this_chamber.md and records_format.md both said no result is given,
+    # which is a contradiction the agent cannot resolve.
+    example_docs = (read("environment/data/example/about_this_chamber.md")
+                    + read("environment/data/docs/records_format.md")).lower()
+    says_none = "no audited result is given" in example_docs
+    check(says_none, "the example's own documents say whether a result is given")
+    if says_none:
+        claims = re.search(r"example/[^.]*\b(audit result|audited result|result MS-BP gives)", text, re.I)
+        check(claims is None,
+              "the instruction does not claim the example carries an audited result",
+              claims.group(0) if claims else "")
+        check("no audited result is given" in low,
+              "the instruction says outright that the example has no audited result")
+
+    # Nothing the agent can discover in one command belongs in the instruction: it is not part of the contract
+    # and it dates the moment the image changes.
+    narration = [p for p in ("numpy", "scipy", "pandas", "python 3", "pip install", "is installed",
+                             "are available", "is available") if p in low]
+    check(not narration, "the instruction narrates no discoverable detail of the image",
+          ", ".join(narration))
 
 
 # ---------------------------------------------------------------------------------------------- task.toml
@@ -262,8 +294,10 @@ def check_task_toml():
         check("network" not in t.get("verifier", {}),
               "task.toml carries no bare verifier network key, which harbor ignores")
 
-    diff = re.search(r'difficulty_explanation\s*=\s*"""([\s\S]*?)"""', text)
-    check(diff is not None, "task.toml carries a difficulty explanation")
+    # The difficulty explanation lives in README.md, not task.toml: the benchmark does not read it from there.
+    readme = read("README.md")
+    diff = re.search(r"^## Difficulty\s*\n([\s\S]*?)(?=^## )", readme, re.M)
+    check(diff is not None, "README.md carries a difficulty explanation")
     if diff:
         body = diff.group(1)
         check("synthetic" in body, "the difficulty explanation says the data is synthetic")
@@ -279,21 +313,74 @@ def check_task_toml():
 
 def check_readme_matches_toml():
     readme = read("README.md")
-    toml = read("task.toml")
-    for head, fieldname in (("## Difficulty", "difficulty_explanation"),
-                            ("## Reference solution", "solution_explanation"),
-                            ("## Verification", "verification_explanation")):
+    for head in ("## Difficulty", "## Reference solution", "## Verification"):
         check(head in readme, "README.md carries %s" % head)
-        m = re.search(r'%s\s*=\s*"""([\s\S]*?)"""' % fieldname, toml)
-        if not m or head not in readme:
-            bad("README.md %s matches task.toml %s" % (head, fieldname), "one of them is missing")
+
+    # The three explanations live in README.md alone; the benchmark does not read them from task.toml.
+    t = tomllib.loads(read("task.toml"))
+    for fieldname in ("difficulty_explanation", "solution_explanation", "verification_explanation",
+                      "category", "subcategory"):
+        check(fieldname not in t.get("metadata", {}),
+              "task.toml metadata does not carry the unsupported field %s" % fieldname)
+
+    # The documents are generated from the evidence, so regenerating them must be a no-op. This is the check
+    # that catches a study re-run without a rewrite - the staleness this bundle was rejected for.
+    code, out = run_py(os.path.join(TASK, "authoring", "provenance", "meta.py"), ["--check"])
+    check(code == 0, "README.md and task.toml are current with the evidence", out.strip().splitlines()[-1:])
+
+
+def check_evidence_is_sound():
+    """No study may quote an exception as a finding.
+
+    hedge_study.txt once reported 32 of 32 cases as "not reachable: TypeError", because a blanket except turned
+    its own bug into a row of the table, and the verification explanation drew conclusions from it."""
+    ev = os.path.join(TASK, "authoring", "evidence")
+    for n in sorted(os.listdir(ev)):
+        if not n.endswith(".txt"):
             continue
-        start = readme.index(head) + len(head)
-        rest = readme[start:]
-        nxt = re.search(r"^## ", rest, re.M)
-        body = (rest[:nxt.start()] if nxt else rest).strip()
-        check(" ".join(body.split()) == " ".join(m.group(1).split()),
-              "README.md %s matches task.toml %s" % (head, fieldname), "the two texts differ")
+        body = read(os.path.join("authoring", "evidence", n))
+        for word in ("Traceback", "TypeError", "ValueError", "KeyError", "IndexError", "AttributeError",
+                     "not reachable", "UNEXPECTED"):
+            check(word not in body, "%s reports no %s" % (n, word))
+        check(body.strip() != "", "%s is not empty" % n)
+
+
+def check_no_unused_runtime_files():
+    """Every file shipped in a container is read by something.
+
+    Three generation records - two seed.json and a truth.json - rode along in the sealed directories, read by
+    nothing, and the bundle was rejected for carrying them."""
+    # the names that are structural: the container reads them by convention, not by being mentioned
+    structural = {"Dockerfile", "requirements.txt", "test.sh", "solve.sh", "run.sh", "entrypoint.sh",
+                  "conftest.py", "pytest.ini", "vacwork-cmd"}
+    # everything in the bundle that could name a file
+    corpus = []
+    for root, dirs, files in os.walk(TASK):
+        dirs[:] = [d for d in dirs if d != "__pycache__"]
+        for n in files:
+            if n.endswith((".py", ".md", ".sh", ".toml", ".txt", ".json", ".cmd")) or n in structural:
+                try:
+                    corpus.append(open(os.path.join(root, n), errors="replace").read())
+                except OSError:
+                    pass
+    corpus = "\n".join(corpus)
+    for tree in ("environment", "tests"):
+        for root, dirs, files in os.walk(os.path.join(TASK, tree)):
+            dirs[:] = [d for d in dirs if d != "__pycache__"]
+            for n in sorted(files):
+                rel = os.path.relpath(os.path.join(root, n), TASK)
+                if n in structural or n.endswith(".csv"):
+                    continue           # csv records are named in records_format.md and the instruction
+                # the file's own text does not count as a mention of it
+                others = corpus.replace(open(os.path.join(root, n), errors="replace").read(), "")
+                check(n in others, "something reads %s" % rel,
+                      "nothing in the bundle names it; generation records belong in authoring/provenance")
+    for tree in ("environment", "tests"):
+        for root, _dirs, files in os.walk(os.path.join(TASK, tree)):
+            for n in files:
+                if n in ("truth.json", "seed.json"):
+                    bad("no generation record ships in %s" % tree, os.path.join(root, n))
+    ok("no generation record ships in a container")
 
 
 # ---------------------------------------------------------------------------------------------- verifier
@@ -495,6 +582,8 @@ def main():
     check_instruction()
     check_task_toml()
     check_readme_matches_toml()
+    check_evidence_is_sound()
+    check_no_unused_runtime_files()
     check_verifier()
     check_truth_is_sealed()
     check_constants_do_not_drift()

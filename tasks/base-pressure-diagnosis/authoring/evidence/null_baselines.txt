@@ -3,7 +3,7 @@ Method-free answers, each scored through the task's grader
 
 answer                                                      right  verdict   chambers it happens to get right
 ----------------------------------------------------------  -----  --------  --------------------------------
-the example's result for every chamber                      0/10   rejected  -
+one real chamber's result for all ten                       0/10   rejected  -
 air-leak for every chamber                                  0/10   rejected  -
 virtual-leak for every chamber                              0/10   rejected  -
 wall-outgassing for every chamber                           0/10   rejected  -

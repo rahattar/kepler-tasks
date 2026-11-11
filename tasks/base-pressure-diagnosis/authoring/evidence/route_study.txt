@@ -115,5 +115,6 @@ VC10     9                    4                       pump-speed
 gate: at least 10 of 10 chambers right; a route is rejected when more than 0 are wrong
 tolerances: gas load 4.0%, speed 3.0%
 nearest defective miss on a quantity: 4.41% (1.10x the gas-load tolerance)
+routes rejected by one chamber alone: 2 (trust_certificate register_pump), each required to miss it by at least 2.00x the tolerance or on the cause
 
 all 19 routes rejected; every chamber defeats at least 3 routes

@@ -33,17 +33,11 @@ CAUSES = list(D.gas_correction.__globals__["SPECIES"]) + ["permeation"]
 
 def reattributed(cid, data, certs, fix, vac, cause):
     """The gas load a solver reaches on this chamber if it puts the whole non-computable part of the gas budget
-    down to `cause`, with everything else done as the reference does it."""
-    cfg = D.chamber_config(cid, data)
-    changed = D.pump_changed_on(cid, data)
-    s_eff = D.ordered_speed(cid, cfg, vac)
-    if s_eff is None:
-        s_eff = D.surviving_speed(cid, cfg, data, changed)
-    if s_eff is None and changed:
-        s_eff = D.baseline_speed(cid, cfg, data, certs, fix, changed)
-    pts = D.correct_drift(D.entry_points(cid, cfg, data, certs, fix), cid, data)
-    if changed:
-        pts = [p for p in pts if p["date"] >= changed] or pts
+    down to `cause`, with everything else done as the reference does it.
+
+    The front end is the reference's own `front_end`, not a copy of it: everything up to the attribution has to
+    be exactly what the audit does, or the deviations below measure the copy's drift instead of the hedge."""
+    cfg, pts, s_eff = D.front_end(cid, data, certs, fix, vac)
 
     n = len(pts)
     W = [D.nominal_wall(cfg, p) for p in pts]
@@ -107,11 +101,11 @@ def main():
         for cause in ("wall-outgassing", "air-leak", "virtual-leak", "permeation"):
             if cause == true_cause:
                 continue
-            try:
-                q_alt, s_alt = reattributed(cid, data, certs, fix, vac, cause)
-            except Exception as ex:                       # a reading that cannot be made is no hedge
-                rows.append([cid, true_cause, cause, "-", "-", "not reachable: %s" % type(ex).__name__])
-                continue
+            # No blanket except here. Every reattribution is arithmetic on the same records, so it is always
+            # computable; an exception means this script is broken, not that the hedge is unavailable. A blanket
+            # except once turned a TypeError into a row reading "not reachable", and the whole study reported
+            # 32 of 32 cases that way while the explanation quoted conclusions from it.
+            q_alt, s_alt = reattributed(cid, data, certs, fix, vac, cause)
             dev = (q_alt - q_true) / q_true
             inside = abs(dev) <= C.G.Q_TOL
             if inside:

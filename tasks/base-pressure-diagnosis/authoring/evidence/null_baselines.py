@@ -30,7 +30,12 @@ CAUSES = ("air-leak", "virtual-leak", "wall-outgassing", "permeation", "pump-spe
 
 
 def example_result():
-    """The audit result the worked example carries, which an agent can read straight out of the documents."""
+    """The example chamber's own audited truth, copied onto all ten.
+
+    The documents do not publish it - about_this_chamber.md says outright that no audited result is given - so
+    this is not an answer an agent could read off. It is here as the strongest form of the constant answer: if
+    even the true result of a real chamber of the same shop, applied to the whole fleet, gets nothing right,
+    then no single answer does."""
     ex = C.F.truth(C.F.EX)
     return ex["cause"], ex["q_total"], ex["s_eff"]
 
@@ -65,7 +70,7 @@ def main():
     ex_cause, ex_q, ex_s = example_result()
     answers = {}
 
-    answers["the example's result for every chamber"] = {cid: (ex_cause, ex_q, ex_s) for cid in C.IDS}
+    answers["one real chamber's result for all ten"] = {cid: (ex_cause, ex_q, ex_s) for cid in C.IDS}
     for cause in CAUSES:
         answers["%s for every chamber" % cause] = {cid: (cause, ex_q, ex_s) for cid in C.IDS}
     answers["the latest reading times the latest speed test"] = {

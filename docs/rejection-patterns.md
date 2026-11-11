@@ -77,3 +77,55 @@ the file's text. Both the generator and its check were wrong in the same way, so
   vacuum-pumpdown-time and in all 34 other tasks; only the rewritten one was wrong.
 - Rule: before packaging, run the submitter's own structural checks against the **unpacked archive**, not the
   working tree.
+
+## Task quality failures, Nov 10 (base-pressure-diagnosis 20261110, second submission)
+Five blocking, two advisory. Every one was prose asserting something the code did not do, except the
+extraneous files, which were the reverse: files shipped that no prose claimed and nothing read.
+
+**instruction clarity.** The instruction said `/app/data/example/` held the chamber's audit result while
+`about_this_chamber.md` and `records_format.md` both said no result is given. It also narrated the installed
+packages. Both came straight from `docs/fact-sheet-base-pressure.md`, which still told Alex to write them: the
+fact sheet had not been updated when the example stopped publishing a result.
+
+**no extraneous files / task authoring dir.** `environment/rig/sealed/seed.json`, `tests/sealed/seed.json` and
+`tests/sealed/truth.json` rode along from the predecessor task, read by nothing. The seed is a constant in
+`build.py` and the truth is recomputed by the grader, so all three were records of a generation step, not
+inputs.
+
+**solution explanation quality.** It described an order of four tests on four chambers. The budget had been cut
+to one test and `solve.sh` orders one analysis on VC08. The text was written when the budget was four and never
+revisited.
+
+**verification explanation quality.** It claimed eight accepted methods at 2.39% and 1.43%; the study had six
+at 2.64% and 1.16%. It also drew conclusions from `hedge_study.txt`, in which **all 32 cases reported
+TypeError** - a blanket `except Exception` caught the study's own bug and printed it as "not reachable", so a
+broken study looked like a finding.
+
+**README (advisory).** The same stale figures, plus "a residual gas analysis on VC08 is the only order that
+works" when a helium test on VC08 also passes.
+
+**task.toml schema (advisory).** `task.name` still carries the `afterquery/` prefix, and `[metadata]` carried
+`category`, `subcategory` and the three explanations, which the benchmark does not read.
+
+### Rules
+- **Never type a measured number into prose.** `authoring/provenance/meta.py` now parses the evidence files for
+  every figure the explanations quote and refuses to emit text with a placeholder it could not fill.
+  `meta.py --check` regenerates and diffs, so re-running a study without rewriting README.md fails preflight.
+  A number that is typed is a number that will drift; this is the second rejection caused by one.
+- **No blanket `except` in a study.** A study's exception is a bug in the study. Let it crash. If a case really
+  can be unreachable, that has to be a deliberate, named outcome, and preflight now fails on any evidence file
+  containing Traceback, TypeError, ValueError, KeyError, IndexError, AttributeError, "not reachable" or
+  UNEXPECTED.
+- **A study must not keep its own copy of the reference's pipeline.** `hedge_study.py` had a stale copy of the
+  audit's front end; the reference now exposes `diagnose.front_end()` and the study calls it. A copy of a
+  pipeline measures the copy.
+- **Sweep the whole space, or do not quote a fraction of it.** `plan_sweep.py` listed ten hand-picked orders
+  while the prose claimed a result over all forty. It now enumerates every order the budget allows and counts
+  the ones that pass.
+- **Every file in a container is read by something.** Preflight now walks `environment/` and `tests/` and fails
+  on any file nothing in the bundle names, and on any `seed.json` or `truth.json` in either tree.
+- **When a design decision changes, grep the prose for it.** Cutting the budget from four tests to one left
+  stale claims in the solution explanation, the README, the task description and `vacwork.md`'s example plan.
+  The decision was made in `fleet.py`; nothing pointed at the six places that described it.
+- **Update the fact sheet in the same change as the thing it describes.** The instruction's two failures were
+  faithfully copied from a fact sheet that was correct a week earlier.

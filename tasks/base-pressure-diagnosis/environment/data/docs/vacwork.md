@@ -1,6 +1,6 @@
 # The audit test order
 
-The audit has a budget of **1 tests across the whole fleet**, ordered once, with the contractor who does
+The audit has a budget of **1 test across the whole fleet**, ordered once, with the contractor who does
 the shop's vacuum work.
 
     vacwork status
@@ -11,10 +11,9 @@ the shop's vacuum work.
 cannot be changed, extended or replaced afterwards, and the results of no test are known until the whole order has
 been placed.
 
-The plan names a chamber and a test for each of its entries:
+The plan names a chamber and a test for each of its entries, and may hold no more entries than the budget:
 
-    {"tests": [{"chamber": "VC03", "test": "rga"},
-               {"chamber": "VC07", "test": "rate-of-rise"}]}
+    {"tests": [{"chamber": "VC03", "test": "rga"}]}
 
 Between 1 and 1 entries, no entry repeated. The reports are written to `/app/vacwork/`.
 

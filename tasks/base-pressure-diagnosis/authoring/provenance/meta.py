@@ -4,10 +4,110 @@
     python3 -I meta.py --write  write ../../README.md and ../../task.toml
 """
 import os
+import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 TASK = os.path.dirname(os.path.dirname(HERE))
+EVIDENCE = os.path.join(TASK, "authoring", "evidence")
+
+WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine",
+         10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen", 14: "fourteen", 15: "fifteen", 16: "sixteen",
+         17: "seventeen", 18: "eighteen", 19: "nineteen", 20: "twenty", 32: "thirty-two", 33: "thirty-three",
+         40: "forty", 41: "forty-one"}
+
+
+def _ev(name):
+    with open(os.path.join(EVIDENCE, name)) as f:
+        return f.read()
+
+
+def _grab(text, pattern, name):
+    """One capture group per figure, or a loud failure. A figure that cannot be read is never defaulted: the
+    whole point is that no number in an explanation is typed by hand."""
+    m = re.search(pattern, text)
+    if m is None:
+        raise SystemExit("meta.py: %s not found in the evidence; re-run the study that writes it" % name)
+    return m.groups()
+
+
+def facts():
+    """Every load-bearing number the three explanations quote, read out of the evidence files that measured it.
+
+    The explanations used to state these from memory. They drifted - a method count, two deviations, the number
+    of orders that work - and the bundle was rejected twice for claims its own studies contradicted. Reading
+    them here means the prose cannot say anything the evidence does not, and `--check` fails if a study has
+    been re-run since README.md was written."""
+    f = {}
+
+    t = _ev("method_spread.txt")
+    f["spread_q"], f["spread_s"] = _grab(
+        t, r"widest deviation over every sound method and chamber: gas load ([\d.]+)%, speed ([\d.]+)%", "spread")
+    f["margin_q"], f["margin_s"] = _grab(t, r"margin ([\d.]+)x and ([\d.]+)x", "margins")
+    (n,) = _grab(t, r"all (\d+) sound methods accepted", "method count")
+    f["methods"], f["methods_word"] = int(n), WORDS[int(n)]
+
+    t = _ev("plan_sweep.txt")
+    (good, tried) = _grab(t, r"ORDERS THAT WORK: (\d+) of (\d+)", "orders that work")
+    f["orders_good"], f["orders_good_word"] = int(good), WORDS[int(good)]
+    f["orders_tried"], f["orders_tried_word"] = int(tried), WORDS[int(tried)]
+    f["order_names"] = re.findall(r"^  (a[n]? .+ on VC\d\d)$", t, re.M)
+    (f["order_chambers"],) = _grab(t, r"chambers they are spent on: (.+)", "order chambers")
+
+    t = _ev("route_study.txt")
+    (n, c) = _grab(t, r"all (\d+) routes rejected; every chamber defeats at least (\d+) routes", "route count")
+    f["routes"], f["routes_word"] = int(n), WORDS[int(n)]
+    f["routes_per_chamber"], f["routes_per_chamber_word"] = int(c), WORDS[int(c)]
+    f["nearest_miss"], f["nearest_miss_x"] = _grab(
+        t, r"nearest defective miss on a quantity: ([\d.]+)% \(([\d.]+)x", "nearest defective miss")
+    (n, names, big) = _grab(
+        t, r"routes rejected by one chamber alone: (\d+) \((.+?)\), each required to miss it by at least"
+           r" ([\d.]+)x", "single-chamber routes")
+    f["single_routes"], f["single_routes_word"] = int(n), WORDS[int(n)]
+    f["single_route_names"] = ", ".join(names.split())
+    f["big_miss_x"] = big
+
+    t = _ev("null_baselines.txt")
+    (n,) = _grab(t, r"the most any gets right is (\d+) of 10", "null baseline best")
+    f["null_best"] = int(n)
+
+    t = _ev("verifier_checks.txt")
+    (n,) = _grab(t, r"all (\d+) cases behaved as the rules say", "verifier case count")
+    f["cases"], f["cases_word"] = int(n), WORDS[int(n)]
+
+    t = _ev("reference_run.txt")
+    f["ref_q"], f["ref_s"] = _grab(t, r"worst deviation: gas load ([\d.]+)%, speed ([\d.]+)%", "reference run")
+    (f["ref_order"],) = _grab(t, r"order placed: (.+)", "reference order")
+
+    t = _ev("hedge_study.txt")
+    f["hedge_inside"] = len(re.findall(r"quantity still inside the band", t))
+    f["hedge_outside"] = len(re.findall(r"quantity outside the band too", t))
+    f["hedge_total"] = f["hedge_inside"] + f["hedge_outside"]
+    for word in ("TypeError", "Traceback", "not reachable"):
+        if word in t:
+            raise SystemExit("meta.py: hedge_study.txt still reports %r; fix the study before quoting it" % word)
+
+    return f
+
+
+F = facts()
+F["order_list"] = " and ".join(F["order_names"]) if F["order_names"] else "none"
+
+
+def fill(s):
+    """Substitute every {name} from the measured facts, and refuse to emit text with one left over.
+
+    Deliberately not %-formatting: these texts are prose with per cent signs in them, and a formatting
+    character that has to be escaped is a formatting character that will one day be missed."""
+    for k, v in F.items():
+        v = str(v)
+        s = s.replace("{%s}" % k, v)
+        # {Name} for the same figure at the start of a sentence
+        s = s.replace("{%s%s}" % (k[:1].upper(), k[1:]), v[:1].upper() + v[1:])
+    left = re.search(r"\{[A-Za-z_]+\}", s)
+    if left:
+        raise SystemExit("meta.py: no measured fact for %s" % left.group(0))
+    return s
 
 DIFFICULTY = """In practice this is the work of a vacuum process engineer auditing a shop's chambers: naming what
 limits each one's base pressure and quantifying it, so that the shutdown can be planned around the chambers worth
@@ -102,18 +202,20 @@ Eight more are recorded somewhere in the documents and have to be found and appl
   of them can be compared.
 
 Each check left out or done the obvious way gets chambers wrong, and every chamber of the fleet must be right
-(`authoring/evidence/route_study.txt`). Seventeen routes, one per layer, are each rejected; each misses at least
-two chambers; each chamber is missed by at least three routes; and each chamber is missed by at least one route on
-its cause alone, so no chamber's grading turns on where the tolerance is drawn. Taking the records at face value -
-the register's surfaces, seal and port, the latest speed test, the logged serials, every entry pooled, the table's
-gas load and no gauge correction - gets all ten wrong.
+(`authoring/evidence/route_study.txt`). {Routes_word} routes, each leaving out one check or doing it the obvious
+way, are each rejected; each chamber is missed by at least {routes_per_chamber_word} routes; and each chamber is
+missed by at least one route on its cause alone, so no chamber's grading turns on where the tolerance is drawn.
+Taking the records at face value - the register's surfaces, seal and port, the latest speed test, the logged
+serials, every entry pooled, the table's gas load and no gauge correction - gets all ten wrong.
 
-The audit test is load-bearing and measured to be so (`authoring/evidence/plan_sweep.txt`). There are forty ways
-to spend it - four kinds of test on ten chambers - and one of them is right: a residual gas analysis on VC08,
-whose log holds a single pumping time, so that nothing in its records separates a trapped volume from wall gas.
-A rate-of-rise there gives the whole gas load but not what the gas is; a helium test finds a real leak but not a
-trapped volume; and a test spent on any other chamber is spent where the records already answer. Every one of the
-other nine orders in that record is rejected, as is placing no order at all."""
+The audit test is load-bearing and measured to be so (`authoring/evidence/plan_sweep.txt`), over the whole space
+of orders the budget allows: each of the four kinds of test on each of the ten chambers, and placing no order at
+all, which is {orders_tried_word} in all. {Orders_good_word} of them carry the reference to a pass, and both are
+spent on {order_chambers}, whose log holds a single pumping time so that nothing in its records separates a
+trapped volume from wall gas: {order_list}. An analysis gives the composition outright; a helium test measures
+the real leak and so leaves what remains to be the trapped volume. A rate-of-rise there gives the whole gas load
+but not what the gas is, a throughput test gives a speed that was never in doubt, and a test spent on any other
+chamber is spent where the records already answer."""
 
 SOLUTION = """`solution/diagnose.py` is the reference audit and `solution/solve.sh` places the order and runs it.
 For each chamber it does the following.
@@ -157,11 +259,13 @@ For each chamber it does the following.
   load, with the surfaces and seal the chamber has on the audit date. The cause is the pump where the actual speed
   is below 0.75 of the rated speed of the chamber as it is now, and otherwise the mechanism with the largest load.
 
-The order it places is a residual gas analysis on each of the two chambers whose own records cannot settle their
-cause, and a speed test on each of the two whose turbo has changed since its last speed test.
+The order it places is the whole budget of one test: a residual gas analysis on VC08, the one chamber whose own
+records cannot settle its cause. Of the {orders_tried_word} orders that budget allows - every one of the four
+tests on each of the ten chambers, and placing no order at all - {orders_good_word} carry the reference to a
+pass, and both are spent on {order_chambers}: {order_list} (`authoring/evidence/plan_sweep.txt`).
 
 Run through `tests/grade_audit.py` as the verifier reads a submission, the reference gets every chamber right, with
-its gas loads within 1.4 per cent of the truth and its speeds within 1.5 per cent
+its gas loads within {ref_q} per cent of the truth and its speeds within {ref_s} per cent
 (`authoring/evidence/reference_run.txt`)."""
 
 VERIFICATION = """`tests/grade_audit.py` reads the submitted `/app/output/diagnosis.csv` and compares it with the
@@ -183,22 +287,24 @@ per cent of the truth and the speed within 3.0 per cent. The sheet is accepted w
 is right. The instruction states the two tolerances; it does not say how many chambers must be right.
 
 Why these tolerances, and why every chamber:
-- **Correct methods.** Eight of them are accepted, each a complete sheet scored through this grader
-  (`authoring/evidence/method_spread.txt`): the reference on the order it places and on three other sound orders,
-  including one that buys no test for the chambers whose turbo has changed and works their speed out from their own
-  records instead; `authoring/evidence/independent.py`, a second audit written from the documents alone that shares
-  no code with the reference, solving the whole budget by a nonlinear least squares in the logarithm of the gas
-  load with the gauge correction inside the residual and unmixing all six species of an analysis by non-negative
-  least squares; and three variations of the reference. Over every one of them and every chamber the widest
-  deviation is 2.39 per cent on the gas load and 1.43 per cent on the speed, so the tolerances stand at 1.7 and
-  2.1 times the spread of sound work.
-- **Defective routes.** Nineteen routes, each the reference with one check left out or done the obvious way, are
-  all rejected (`authoring/evidence/route_study.txt`). All but two miss at least two chambers, and each of those
-  two misses its one chamber decisively: trusting a gauge certificate that the chamber's own throughput tests
-  contradict puts its speed 13 per cent out, four and a half times the tolerance, and taking the pump the register
-  names rather than the one the controller reports gets the cause itself wrong. No route is rejected by a chamber
-  that merely grazes a band. Every chamber is missed by at least three routes, and by at least one route on its cause alone; a cause
-  is right or wrong whatever the tolerances are, so no chamber's grading rests on the band.
+- **Correct methods.** {Methods_word} of them are accepted, each a complete sheet scored through this grader
+  (`authoring/evidence/method_spread.txt`): the reference on the order it places and on the other order that
+  works, a helium test in place of the analysis; `authoring/evidence/independent.py`, a second audit written from
+  the documents alone that shares no code with the reference, solving the whole budget by a nonlinear least
+  squares in the logarithm of the gas load with the gauge correction inside the residual and unmixing all six
+  species of an analysis by non-negative least squares; and three variations of the reference - dropping the
+  oldest entry, taking the constant part as a median rather than a fit, and using the second speed test rather
+  than the latest. Over every one of them and every chamber the widest deviation is {spread_q} per cent on the
+  gas load and {spread_s} per cent on the speed, so the tolerances stand at {margin_q} and {margin_s} times the
+  spread of sound work.
+- **Defective routes.** {Routes_word} routes, each the reference with one check left out or done the obvious way,
+  are all rejected (`authoring/evidence/route_study.txt`). {Single_routes_word} of them are rejected by a single
+  chamber - {single_route_names} - and the study fails unless each of those misses its chamber by at least
+  {big_miss_x} times the tolerance or on the cause outright, so no route is rejected on a knife edge. Routes that
+  miss several chambers may well graze a band on one of them: the nearest miss on a quantity anywhere in the
+  study is {nearest_miss} per cent, {nearest_miss_x} times the gas-load tolerance. That costs nothing, because
+  every chamber is missed by at least {routes_per_chamber_word} routes, and by at least one on its cause alone -
+  and a cause is right or wrong whatever the tolerances are.
 - **Every chamber.** The allowance of one wrong chamber that earlier tasks carried is not used here, and the
   reason is measured (`authoring/evidence/plan_sweep.txt`): with an allowance of one, the audit test is not
   load-bearing at all, because the reference passes with no test ordered. Requiring every chamber makes the one
@@ -206,17 +312,20 @@ Why these tolerances, and why every chamber:
   knife edge: every sound method gets all ten right, with the margins above.
 
 Method-free answers are all rejected and none of them gets a single chamber right
-(`authoring/evidence/null_baselines.txt`): the worked example's audited result copied onto every chamber; each of
+(`authoring/evidence/null_baselines.txt`): the true result of one real chamber of the same shop copied onto all
+ten; each of
 the five causes given to all ten; the latest reading times the latest speed test; the specified base pressure times
 the latest speed test; and the register's rated speed with the gas load it and the specification imply. No chamber
 has a free pass.
 
-`authoring/evidence/hedge_study.txt` records what a wrong attribution does. The total gas load is the total
-whatever it is attributed to, so on most chambers a sheet that names the wrong mechanism still has its gas load
-inside the band; those chambers are decided by the cause, which is graded on its own and cannot be hedged.
+`authoring/evidence/hedge_study.txt` records what a wrong attribution does, over every chamber and every cause
+other than its own: {hedge_total} cases, of which {hedge_inside} leave the gas load inside the band and
+{hedge_outside} put it outside. The total gas load is the total whatever it is attributed to, so on most chambers
+a sheet that names the wrong mechanism still has its quantity right; those chambers are decided by the cause,
+which is graded on its own and cannot be hedged.
 
 Malformed sheets and edge cases are all built from the current reference at run time, never hard-coded, and scored
-by the same grader the verifier calls (`authoring/evidence/verifier_checks.txt`). Thirty-three cases all behave as
+by the same grader the verifier calls (`authoring/evidence/verifier_checks.txt`). {cases_word} cases all behave as
 the rules say: a sheet that is a symlink, a directory or absent; no header, a renamed column, the columns
 reordered, an extra column; a row missing or repeated; an unknown chamber; a cause outside the list or in the
 wrong case; a gas load that is not a number, NaN, infinite, negative, zero or far out of range; a speed of zero,
@@ -237,6 +346,13 @@ order through one sudo rule that allows nothing but its status and submit comman
 contractor's state file before any report is written, and a state that cannot be read counts as already placed, so
 no test can be had twice."""
 
+
+# Every figure in the three texts above comes from fill(), which reads the evidence files. A number typed into
+# the prose by hand is how this bundle was rejected twice: a method count, two deviations and the number of
+# orders that work all drifted from the studies that measured them.
+DIFFICULTY = fill(DIFFICULTY)
+SOLUTION = fill(SOLUTION)
+VERIFICATION = fill(VERIFICATION)
 
 def readme():
     return """# base-pressure-diagnosis
@@ -279,14 +395,20 @@ known, from four kinds: a rate-of-rise, a throughput speed test, a residual gas 
 """ % (DIFFICULTY, SOLUTION, VERIFICATION)
 
 
+# The benchmark's required prefix for task.name. Flagged advisory on this submission as needing to be the
+# benchmark's own name rather than "afterquery"; the exact string has to come from Alex, so it lives here as one
+# constant and nowhere else.
+NAME_PREFIX = "afterquery"
+
+
 def task_toml():
     return '''schema_version = "1.4"
 
 artifacts = ["/app/output/diagnosis.csv"]
 
 [task]
-name = "afterquery/base-pressure-diagnosis"
-description = "Audit the ten vacuum chambers of a coating shop that are missing their specified base pressure: for each one name the mechanism that limits it and report its total gas load and its actual effective pumping speed at the standard's reference condition, from the chambers' own records and one contractor's test order of four tests placed before any result is known."
+name = "PREFIX_HERE/base-pressure-diagnosis"
+description = "Audit the ten vacuum chambers of a coating shop that are missing their specified base pressure: for each one name the mechanism that limits it and report its total gas load and its actual effective pumping speed at the standard's reference condition, from the chambers' own records and one contractor's test order of a single test placed before any result is known."
 authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
 keywords = [
     "vacuum-technology",
@@ -308,8 +430,6 @@ conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer m
 domain = "engineering-sciences"
 field = "mechanical-engineering"
 subfield = "vacuum engineering and gas dynamics"
-category = "Science"
-subcategory = "Mechanical & Aerospace Engineering"
 tags = [
     "vacuum-technology",
     "base-pressure",
@@ -320,9 +440,6 @@ tags = [
 ]
 expert_time_estimate_hours = 8
 relevant_experience = """I am a control scientist and thermal engineer with a PhD in mechanical engineering. Vacuum and gas-handling systems of crystal growth and thermal processing equipment, identifying their models from operating records, and the fault diagnosis that turns those records into maintenance decisions are part of my work on industrial equipment and of my teaching. The chambers and records are synthetic."""
-difficulty_explanation = """%s"""
-solution_explanation = """%s"""
-verification_explanation = """%s"""
 
 [verifier]
 timeout_sec = 600.0
@@ -342,7 +459,7 @@ memory_mb = 4096
 storage_mb = 4096
 gpus = 0
 network_mode = "public"
-''' % (DIFFICULTY, SOLUTION, VERIFICATION)
+'''.replace("PREFIX_HERE", NAME_PREFIX)
 
 
 def main(argv):
@@ -352,6 +469,21 @@ def main(argv):
         with open(os.path.join(TASK, "task.toml"), "w") as f:
             f.write(task_toml())
         print("wrote README.md and task.toml")
+        return 0
+    if "--check" in argv:
+        # Regenerate in memory and compare. Because the texts are built from the evidence files, this fails
+        # whenever a study has been re-run and README.md has not been rewritten: exactly the staleness that got
+        # this bundle rejected. Preflight calls it.
+        stale = []
+        for name, want in (("README.md", readme()), ("task.toml", task_toml())):
+            path = os.path.join(TASK, name)
+            got = open(path).read() if os.path.exists(path) else ""
+            if got != want:
+                stale.append(name)
+        if stale:
+            print("STALE: %s do not match the evidence; run meta.py --write" % ", ".join(stale))
+            return 1
+        print("README.md and task.toml are current with the evidence")
         return 0
     print(DIFFICULTY)
     print()
