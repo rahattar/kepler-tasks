@@ -231,3 +231,28 @@ Two consequences for the next build:
 **The profile that resulted is the one to aim for anyway**: 1 of 3 at low effort, 3 of 3 at xhigh. The task
 rewards care and correct reasoning rather than luck, and the two xhigh reports read like competent engineering
 work. A task that no run solves is not better calibrated, it is just unsolved.
+
+## The proxy was wrong (Nov 11)
+
+flare-load-study went to screening with local probes reading 1 of 3 at low effort. The screen solved it **3 of 3,
+median about two minutes**, and rejected it: more than zero solves is below the bar.
+
+So the local harness is not a calibration instrument, and the gap is not small. Two differences stand out:
+
+- **Time.** The probe runs took 270 to 390 seconds; the screening runs took 123 to 141. The screen's attempts
+  were roughly twice as fast and still correct, which means the probes were not merely unlucky - they were
+  working harder on an easier problem than the screen found it to be.
+- **What a failure meant.** The two probe failures were a wrongly credited instrumented function and a skipped
+  meter correction, both one-line slips. None of the screening runs made either. Treating two slips as evidence
+  of difficulty was the error: a slip rate is not a difficulty measure, and three runs cannot distinguish them.
+
+How to screen from now on:
+
+- **Any low-effort solve is a failure.** The bar is zero solves, so the decision rule is not "1 of 3" but "0 of
+  3", and with three runs even that is weak evidence of clearing it.
+- **Read the clock, not just the verdict.** A run that solves in two minutes has found a short path. If a probe
+  solves quickly, the task is far below the bar whatever the pass count says.
+- **Ask what the failures were.** If the failing runs failed on slips rather than on the task's core, the task
+  has no difficulty of its own and the pass count is noise. Record the failure reason beside the count.
+- **Distrust a result that needs the probes to be weaker than the screen.** Where a task passes calibration only
+  because two runs blundered, it has not passed.

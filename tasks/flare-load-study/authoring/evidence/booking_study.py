@@ -41,13 +41,15 @@ def worked(sealed, d, ordered):
 def main():
     sealed, tru = common.truth()
     d = solve.load(common.DATA)
-    budget, total = sealed.BUDGET, len(tru)
+    budget, total = sealed.BUDGET, len(tru) + 1
 
     combos = {}
     for combo in itertools.combinations(sealed.TESTS, budget):
-        n, notes = common.compare(worked(sealed, d, combo), sealed, tru)
+        rows, sizing = worked(sealed, d, combo)
+        n, notes = common.compare(rows, sealed, tru, sizing)
         combos[combo] = (n, common.worst(notes))
-    n_none, notes_none = common.compare(worked(sealed, d, ()), sealed, tru)
+    rows, sizing = worked(sealed, d, ())
+    n_none, notes_none = common.compare(rows, sealed, tru, sizing)
 
     print("The crew's six tests against a booking of %d, ordered before any result is known. Tolerance %.3f\n"
           "relative. A test is worth ordering only where no booking without it does as well.\n"

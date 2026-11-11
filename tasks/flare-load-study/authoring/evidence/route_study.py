@@ -49,6 +49,11 @@ ROUTES = [
     ("the whole load along the whole header, in one length", dict(header="whole")),
     ("only the discharging tie-ins dividing the header", dict(header="flow")),
     ("the loss through the tip left out", dict(tip="skip")),
+    ("the system never brought together, rates at no back pressure", dict(couple="none")),
+    ("every device taken as conventional", dict(bonnet="all")),
+    ("every device taken as balanced", dict(bonnet="none")),
+    ("the tip sized without re-converging each candidate", dict(size="static")),
+    ("the tip sized on the pressure at the blinded end", dict(size="inlet")),
     ("every density taken at atmospheric pressure", dict(rho="atm")),
 ]
 
@@ -72,10 +77,14 @@ def main():
     d = solve.load(common.DATA)
 
     per_row = {c: 0 for c in tru}
+    per_row["re-rating"] = 0
     results = []
     for name, sw in ROUTES + [(STUDY_2019, None)]:
-        rows = study_sheet(d) if sw is None else common.run(d, reports, **sw)
-        n, notes = common.compare(rows, sealed, tru)
+        if sw is None:
+            rows, sizing = study_sheet(d), None
+        else:
+            rows, sizing = common.run(d, reports, **sw)
+        n, notes = common.compare(rows, sealed, tru, sizing)
         for c in notes:
             if notes[c]:
                 per_row[c] += 1
@@ -94,24 +103,27 @@ def main():
                 gen.main(out, seed)
                 ds = solve.load(out)
                 for name, sw in ROUTES + [(STUDY_2019, None)]:
-                    rows = study_sheet(ds) if sw is None else common.run(ds, reports, **sw)
-                    k, _ = common.compare(rows, sealed, tru)
-                    counts[name] = counts.get(name, 0) + (1 if k == len(tru) else 0)
+                    if sw is None:
+                        rows, sizing = study_sheet(ds), None
+                    else:
+                        rows, sizing = common.run(ds, reports, **sw)
+                    k, _ = common.compare(rows, sealed, tru, sizing)
+                    counts[name] = counts.get(name, 0) + (1 if k == len(tru) + 1 else 0)
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
 
     print("Defective routes, graded against the sealed definition. Tolerance %.3f relative.\n" % sealed.TOL)
-    print("| Route | Right of 6 | Worst contingency | Seeds with 6 |")
+    print("| Route | Right of 7 | Worst part | Seeds with 7 |")
     print("|---|---|---|---|")
     for name, n, notes in results:
         seeds = "%d of %d" % (counts.get(name, 0), len(SEEDS)) if want_seeds else "-"
         print("| %s | %d | %s | %s |" % (name, n, common.worst(notes) or "-", seeds))
-    print("\nRoutes failing each contingency:")
+    print("\nRoutes failing each part:")
     for c in sorted(per_row):
         print("  %-24s %d" % (c, per_row[c]))
     thin = [c for c in per_row if per_row[c] < 3]
-    full = [name for name, n, _ in results if n == len(tru)]
-    print("\ncontingencies failed by fewer than 3 routes: %s" % (", ".join(sorted(thin)) if thin else "none"))
+    full = [name for name, n, _ in results if n == len(tru) + 1]
+    print("\nparts failed by fewer than 3 routes: %s" % (", ".join(sorted(thin)) if thin else "none"))
     print("routes that pass on the shipped records: %s" % (", ".join(full) if full else "none"))
     return 0
 

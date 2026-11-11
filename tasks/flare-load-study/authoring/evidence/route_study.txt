@@ -1,8 +1,8 @@
 Defective routes, graded against the sealed definition. Tolerance 0.010 relative.
 
-| Route | Right of 6 | Worst contingency | Seeds with 6 |
+| Route | Right of 7 | Worst part | Seeds with 7 |
 |---|---|---|---|
-| the register's set pressure, not the setting the valve carries | 3 | cooling_water_failure load +2.5% | 0 of 20 |
+| the register's set pressure, not the setting the valve carries | 3 | cooling_water_failure load +2.6% | 0 of 20 |
 | the air compressor taken on the essential supply | 5 | power_failure devices PSV-403; wanted PSV-401 PSV-403 PSV-407 PSV-409 | 0 of 20 |
 | the safety system taken onto the normal supply with it | 5 | power_failure devices PSV-401 PSV-403 PSV-406 PSV-407 PSV-409; wanted PSV-401 PSV-403 PSV-407 PSV-409 | 0 of 20 |
 | every control valve taken to close on a loss of air | 4 | instrument_air_failure devices none; wanted PSV-401 PSV-407 PSV-409 | 0 of 20 |
@@ -11,38 +11,44 @@ Defective routes, graded against the sealed definition. Tolerance 0.010 relative
 | credit taken without testing any condition | 3 | cooling_water_failure devices none; wanted PSV-403 | 0 of 20 |
 | credit taken without the SIL floor | 4 | instrument_air_failure devices PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 | 0 of 20 |
 | credit taken without the proof test interval | 4 | instrument_air_failure devices PSV-401 PSV-407; wanted PSV-401 PSV-407 PSV-409 | 0 of 20 |
-| the data sheet coefficient for every control valve | 4 | instrument_air_failure load -2.0% | 0 of 20 |
-| a linear characteristic for every control valve | 4 | instrument_air_failure load -56.6% | 0 of 20 |
-| the largest logged flow taken as the relieving rate | 4 | instrument_air_failure load -51.8% | 0 of 20 |
-| the feed meter read as indicated | 4 | instrument_air_failure load -2.3% | 0 of 20 |
-| the reboiler coefficient-area from the data sheet duty | 4 | cooling_water_failure load -15.3% | 0 of 20 |
-| the data sheet duty taken as the relieving duty | 4 | cooling_water_failure load -15.3% | 0 of 20 |
-| the duty divided by the overhead's latent heat | 4 | cooling_water_failure load -18.5% | 0 of 20 |
-| the pump's data sheet curve | 5 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 | 0 of 20 |
-| the last pump test on record, made before the element was renewed | 5 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 | 0 of 20 |
-| the tip coefficient the 2019 study worked to | 1 | cooling_water_failure pressure -4.9% | 0 of 20 |
-| the booking spent on a test that reaches no row | 1 | cooling_water_failure pressure -4.9% | 0 of 20 |
-| elevation changes since the data book left out | 5 | fire_zone_c load +3.5% | 0 of 20 |
-| wetted area not cut at 7.6 m above grade | 4 | fire_zone_b load +25.9% | 0 of 20 |
-| no drainage or firefighting credit | 3 | fire_zone_a load +64.1% | 0 of 20 |
-| the whole shell taken as wetted | 3 | fire_zone_a load +100.7% | 0 of 20 |
-| no insulation credit anywhere | 5 | fire_zone_b load +3265.4% | 0 of 20 |
-| insulation credit without a certificate | 5 | fire_zone_a load -43.2% | 0 of 20 |
-| 10 per cent accumulation for the fire case | 3 | fire_zone_a load -4.8% | 0 of 20 |
-| the tie-in the isometrics show, the modification missed | 3 | fire_zone_c pressure -8.8% | 0 of 20 |
-| the whole load along the whole header, in one length | 1 | cooling_water_failure pressure +11.8% | 0 of 20 |
-| only the discharging tie-ins dividing the header | 5 | cooling_water_failure pressure +5.2% | 0 of 20 |
-| the loss through the tip left out | 1 | cooling_water_failure pressure -34.4% | 0 of 20 |
-| every density taken at atmospheric pressure | 1 | cooling_water_failure pressure +18.1% | 0 of 20 |
-| the 2019 study's findings taken as the answer | 0 | cooling_water_failure load -13.2% | 0 of 20 |
+| the data sheet coefficient for every control valve | 5 | instrument_air_failure load -2.6% | 0 of 20 |
+| a linear characteristic for every control valve | 4 | instrument_air_failure load -55.7% | 0 of 20 |
+| the largest logged flow taken as the relieving rate | 4 | instrument_air_failure load -50.4% | 0 of 20 |
+| the feed meter read as indicated | 4 | instrument_air_failure load -2.1% | 0 of 20 |
+| the reboiler coefficient-area from the data sheet duty | 4 | cooling_water_failure load -15.5% | 0 of 20 |
+| the data sheet duty taken as the relieving duty | 4 | cooling_water_failure load -15.5% | 0 of 20 |
+| the duty divided by the overhead's latent heat | 4 | cooling_water_failure load -19.1% | 0 of 20 |
+| the pump's data sheet curve | 6 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 | 0 of 20 |
+| the last pump test on record, made before the element was renewed | 6 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 | 0 of 20 |
+| the tip coefficient the 2019 study worked to | 1 | cooling_water_failure pressure -5.0% | 0 of 20 |
+| the booking spent on a test that reaches no row | 1 | cooling_water_failure pressure -5.0% | 0 of 20 |
+| elevation changes since the data book left out | 6 | fire_zone_c load +3.5% | 0 of 20 |
+| wetted area not cut at 7.6 m above grade | 5 | fire_zone_b load +25.9% | 0 of 20 |
+| no drainage or firefighting credit | 4 | fire_zone_a load +64.2% | 0 of 20 |
+| the whole shell taken as wetted | 4 | fire_zone_a load +101.1% | 0 of 20 |
+| no insulation credit anywhere | 6 | fire_zone_b load +3271.0% | 0 of 20 |
+| insulation credit without a certificate | 6 | fire_zone_a load -43.2% | 0 of 20 |
+| 10 per cent accumulation for the fire case | 0 | cooling_water_failure pressure -1.3% | 0 of 20 |
+| the tie-in the isometrics show, the modification missed | 4 | fire_zone_c pressure -8.8% | 0 of 20 |
+| the whole load along the whole header, in one length | 1 | cooling_water_failure pressure +12.0% | 0 of 20 |
+| only the discharging tie-ins dividing the header | 6 | cooling_water_failure pressure +5.3% | 0 of 20 |
+| the loss through the tip left out | 1 | cooling_water_failure pressure -34.7% | 0 of 20 |
+| the system never brought together, rates at no back pressure | 3 | cooling_water_failure pressure -1.3% | 0 of 20 |
+| every device taken as conventional | 4 | instrument_air_failure load -1.1% | 0 of 20 |
+| every device taken as balanced | 3 | cooling_water_failure pressure -1.3% | 0 of 20 |
+| the tip sized without re-converging each candidate | 6 | re-rating tip 355.6 mm, wanted 406.4 | 0 of 20 |
+| the tip sized on the pressure at the blinded end | 6 | re-rating no bore met the limit | 0 of 20 |
+| every density taken at atmospheric pressure | 1 | cooling_water_failure pressure +18.7% | 0 of 20 |
+| the 2019 study's findings taken as the answer | 0 | cooling_water_failure load -13.9% | 0 of 20 |
 
-Routes failing each contingency:
-  cooling_water_failure    12
+Routes failing each part:
+  cooling_water_failure    15
   fire_zone_a              10
   fire_zone_b              7
   fire_zone_c              12
-  instrument_air_failure   18
-  power_failure            22
+  instrument_air_failure   22
+  power_failure            26
+  re-rating                26
 
-contingencies failed by fewer than 3 routes: none
+parts failed by fewer than 3 routes: none
 routes that pass on the shipped records: none

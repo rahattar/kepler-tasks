@@ -1,28 +1,28 @@
 Seeds screened on three conditions. Band 0.010 relative; the third condition wants the worst
 sound method within 0.005.
 
-| seed | sound methods right | worst sound departure | defective routes that pass | acceptable |
+| seed | sound methods right of 8 | worst sound departure | defective routes that pass | acceptable |
 |---|---|---|---|---|
-| 7301 | 8 of 8 | 0.0038 | 0 | yes |
-| 7302 | 8 of 8 | 0.0019 | 0 | yes |
+| 7301 | 8 of 8 | 0.0036 | 0 | yes |
+| 7302 | 8 of 8 | 0.0017 | 0 | yes |
 | 7303 | 8 of 8 | 0.0007 | 0 | yes |
-| 7304 | 8 of 8 | 0.0022 | 0 | yes |
-| 7305 | 8 of 8 | 0.0013 | 0 | yes |
-| 7306 | 8 of 8 | 0.0022 | 0 | yes |
-| 7307 | 8 of 8 | 0.0013 | 0 | yes |
-| 7308 | 8 of 8 | 0.0050 | 0 | yes |
-| 7309 | 8 of 8 | 0.0036 | 0 | yes |
-| 7310 | 8 of 8 | 0.0022 | 0 | yes |
+| 7304 | 8 of 8 | 0.0020 | 0 | yes |
+| 7305 | 8 of 8 | 0.0012 | 0 | yes |
+| 7306 | 8 of 8 | 0.0021 | 0 | yes |
+| 7307 | 8 of 8 | 0.0012 | 0 | yes |
+| 7308 | 8 of 8 | 0.0046 | 0 | yes |
+| 7309 | 8 of 8 | 0.0034 | 0 | yes |
+| 7310 | 8 of 8 | 0.0021 | 0 | yes |
 | 7311 | 8 of 8 | 0.0011 | 0 | yes |
-| 7312 | 8 of 8 | 0.0021 | 0 | yes |
+| 7312 | 8 of 8 | 0.0019 | 0 | yes |
 | 7313 | 8 of 8 | 0.0013 | 0 | yes |
-| 7314 | 8 of 8 | 0.0036 | 0 | yes |
+| 7314 | 8 of 8 | 0.0033 | 0 | yes |
 | 7315 | 8 of 8 | 0.0007 | 0 | yes |
 | 7316 | 8 of 8 | 0.0007 | 0 | yes |
-| 7317 | 8 of 8 | 0.0016 | 0 | yes |
+| 7317 | 8 of 8 | 0.0014 | 0 | yes |
 | 7318 | 8 of 8 | 0.0007 | 0 | yes |
 | 7319 | 8 of 8 | 0.0007 | 0 | yes |
-| 7320 | 8 of 8 | 0.0023 | 0 | yes |
+| 7320 | 8 of 8 | 0.0022 | 0 | yes |
 
 first acceptable seed: 7301
 shipped seed: 7301

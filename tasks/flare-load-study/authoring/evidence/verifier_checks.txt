@@ -8,7 +8,7 @@ ok  the reference sheet with the rows reversed           -> accepted
 ok  devices separated by commas                          -> accepted
 ok  devices separated by spaces                          -> accepted
 ok  devices in the other order                           -> accepted
-ok  no file at all                                       -> rejected: there is no study at relief.csv
+ok  no file at all                                       -> rejected: there is no study at flare_load.csv
 ok  a symbolic link to a good sheet                      -> rejected: the study is a symbolic link
 ok  a directory in place of the file                     -> rejected: the study is not a regular file
 ok  an empty file                                        -> rejected: the study is empty
@@ -26,7 +26,7 @@ ok  a sheet larger than the cap                          -> rejected: the study 
 ok  an unknown device                                    -> rejected: 'PSV-499' is not a relief device of this unit
 ok  a device in lower case                               -> rejected: 'psv-401' is not a relief device of this unit
 ok  a device named twice                                 -> rejected: 'PSV-401;PSV-403;PSV-407;PSV-409;PSV-401' names a device twice
-ok  a device list of separators alone                    -> graded 5 of 6
+ok  a device list of separators alone                    -> graded 6 of 7
 ok  a load that is not a number                          -> rejected: 'about 50000' is not a number
 ok  an empty load                                        -> rejected: '' is not a number
 ok  a load of NaN                                        -> rejected: 'nan' is not a load in kg/h from 0 to 1e+07
@@ -43,13 +43,22 @@ ok  a load in exponent form                              -> accepted
 ok  a load with six decimals                             -> accepted
 ok  a load with twelve decimals                          -> accepted
 ok  a load with a leading plus                           -> accepted
-ok  one device dropped                                   -> graded 5 of 6
-ok  one device added                                     -> graded 5 of 6
-ok  a device list of none                                -> graded 5 of 6
-ok  one load moved by 2 per cent                         -> graded 5 of 6
-ok  one pressure moved by 2 per cent                     -> graded 5 of 6
-ok  every load moved by 2 per cent                       -> graded 0 of 6
-ok  every pressure moved by 2 per cent                   -> graded 1 of 6
+ok  one device dropped                                   -> graded 6 of 7
+ok  one device added                                     -> graded 6 of 7
+ok  a device list of none                                -> graded 6 of 7
+ok  one load moved by 2 per cent                         -> graded 6 of 7
+ok  one pressure moved by 2 per cent                     -> graded 6 of 7
+ok  every load moved by 2 per cent                       -> graded 1 of 7
+ok  every pressure moved by 2 per cent                   -> graded 2 of 7
+ok  no re-rating sheet at all                            -> rejected: there is no study at tip_sizing.csv
+ok  a re-rating header that is misspelt                  -> rejected: the first line must name exactly tip_bore_mm, binding_device, back_pressure_pct
+ok  a re-rating with two rows                            -> rejected: the re-rating must carry exactly one row, not 2
+ok  a re-rating naming a device that is not one          -> rejected: 'PSV-499' is not a relief device of this unit
+ok  a re-rating whose bore is not a number               -> rejected: 'sixteen inch' is not a number
+ok  a re-rating with a negative share                    -> rejected: '-4.440' is not a percentage from 0 to 100
+ok  a re-rating one bore too small                       -> graded 6 of 7
+ok  a re-rating naming the wrong binding device          -> graded 6 of 7
+ok  a re-rating whose share is 2 per cent out            -> graded 6 of 7
 
 The reward protocol in tests/test.sh, with pytest stubbed so each combination can be forced.
 
@@ -58,5 +67,5 @@ ok  pytest passes but the report holds two tests         -> reward 0
 ok  pytest fails though the report looks right           -> reward 0
 ok  pytest passes and writes no report at all            -> reward 0
 
-54 cases, 0 UNEXPECTED
+63 cases, 0 UNEXPECTED
 The grader never crashed, and the reward followed the run rather than anything written during it.

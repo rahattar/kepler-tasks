@@ -278,18 +278,20 @@ def main(out, seed=None):
     for vid in S.IDS:
         it = S.ITEMS[vid]
         rows.append([vid, it["item"], it["fluid"], "%.0f" % it["mawp"], "%.1f" % it["set_reg"],
-                     S.FIRE_ZONE.get(it["item"], ""), "main flare header", " ".join(it["cases"])])
+                     S.FIRE_ZONE.get(it["item"], ""),
+                     "balanced bellows" if S.BELLOWS[vid] else "conventional",
+                     "main flare header", " ".join(it["cases"])])
     wcsv(os.path.join(out, "relief_valve_register.csv"),
          ["valve", "protected_item", "relieving_fluid", "mawp_barg", "set_pressure_barg",
-          "fire_zone", "discharges_to", "causes_admitted"], rows)
+          "fire_zone", "bonnet", "discharges_to", "causes_admitted"], rows)
 
     # ---- the shop record of every overhaul
     hist_notes = [
         ["PSV-401", "2023-05-11", "overhaul and test", "popped at 62.4 barg before stripping"],
-        ["PSV-401", "2026-04-22", "overhaul and test", "nozzle and disc lapped, bellows renewed"],
+        ["PSV-401", "2026-04-22", "overhaul and test", "nozzle and disc lapped, spring reset"],
         ["PSV-402", "2024-09-30", "overhaul and test", "routine"],
         ["PSV-403", "2023-11-07", "overhaul and test", "routine"],
-        ["PSV-403", "2026-05-19", "overhaul and test", "bellows renewed"],
+        ["PSV-403", "2026-05-19", "overhaul and test", "guide and spindle renewed"],
         ["PSV-404", "2021-08-16", "overhaul and test", "nozzle and disc lapped"],
         ["PSV-404", "2025-10-02", "overhaul and test", "routine"],
         ["PSV-405", "2024-03-25", "overhaul and test", "routine"],
@@ -521,9 +523,9 @@ def main(out, seed=None):
         ["2026-03-04", "unit 400", "instrument calibration round, T-402 section"],
         ["2026-03-09", "PSV-409", "set pressure reset in situ to instruction 400-EI-0318"],
         ["2026-04-20", "unit 400", "instrument calibration round, separator section"],
-        ["2026-04-22", "PSV-401", "overhaul; bellows renewed"],
+        ["2026-04-22", "PSV-401", "overhaul; nozzle and disc lapped"],
         ["2026-05-07", "PV-4001", "plug and seat ring replaced; valve stroked and the loop checked"],
-        ["2026-05-19", "PSV-403", "overhaul; bellows renewed"],
+        ["2026-05-19", "PSV-403", "overhaul; guide and spindle renewed"],
         ["2026-05-26", "SIF-4031", "proof test"],
         ["2026-06-08", "SIF-4011", "proof test"],
         ["2026-06-15", "PV-4071", "plug and seat ring replaced; valve stroked and the loop checked"],

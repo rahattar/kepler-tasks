@@ -72,18 +72,33 @@ def main():
     print("\nworst relative load %.4f and pressure %.4f against a band of %.4f"
           % (worst_load, worst_back, sealed.TOL))
 
-    print("\nWhat each contingency reaches:\n")
-    print("| contingency | air lost | pump runs | safety system holds | device | cause | rate, kg/h |")
+    bore, who, share, where = m.sizing()
+    want = sealed.sizing()
+    print("\nThe re-rating section 9 asks for:\n")
+    print("| tip bore | device left binding | its share of set pressure | sealed |")
+    print("|---|---|---|---|")
+    print("| %.1f mm | %s under %s | %.3f%% | %.1f mm, %s, %.3f%% |"
+          % (bore, who, where, 100.0 * share, want["bore_mm"], want["device"], 100.0 * want["share"]))
+    print()
+    print("| tip bore | worst share any conventional device is left with | meets the 5 per cent limit |")
+    print("|---|---|---|")
+    for candidate in sorted(sealed.TIP_BORES):
+        worst, device, _c = m.worst_felt(candidate)
+        print("| %.1f mm | %.2f%% on %s | %s |"
+              % (candidate, 100.0 * worst, device, "yes" if worst <= sealed.BACK_LIMIT else "no"))
+
+    print("\nWhat each contingency reaches, and what the devices stand against:\n")
+    print("| contingency | sweeps | device | bonnet | cause | rate, kg/h | stands against, barg |")
     print("|---|---|---|---|---|---|---|")
     for c in m.contingencies:
-        parts = m.discharging(c)
+        parts, inlet, at = m.converge(c)
+        sweeps = sealed.truth()[c]["sweeps"]
         first = True
         for vid in sorted(parts):
-            print("| %s | %s | %s | %s | %s | %s | %.1f |" % (
-                c if first else "", ("yes" if m.air_lost(c) else "no") if first else "",
-                ("yes" if m.pump_runs(c) else "no") if first else "",
-                ("yes" if m.sis_holds(c) else "no") if first else "",
-                vid, m.cause_of(vid, c), parts[vid][0]))
+            print("| %s | %s | %s | %s | %s | %.1f | %.4f |" % (
+                c if first else "", sweeps if first else "", vid,
+                "bellows" if m.bellows(vid) else "conventional",
+                m.cause_of(vid, c), parts[vid][0], 0.0 if m.bellows(vid) else at[vid]))
             first = False
     return 0
 

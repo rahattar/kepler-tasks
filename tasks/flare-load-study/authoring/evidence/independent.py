@@ -35,6 +35,8 @@ DARCY = 0.018
 KFIT = {"90 degree elbow": 0.30, "tee, flow through the run": 0.20}
 ACCUM = {"fire": 1.21}
 FLOOR = 1.10
+SETTLE = 1.0e-4
+SWEEP_CAP = 500
 SIL_FLOOR, PROOF_CEILING = 2, 18
 
 # the plant's shape, as the unit description and the drive schedule describe it
@@ -81,6 +83,7 @@ class Records(object):
     def __init__(self, data, reports=None):
         self.data = data
         self.reports = {} if reports is None else reports
+        self.standing = {}        # the built-up pressure each device is against, while the system is swept
         for name in ("relief_valve_register", "valve_history", "control_valve_data", "control_valve_trend",
                      "operating_record", "instrument_schedule", "sis_register", "exchanger_data",
                      "fluid_properties", "gas_properties", "liquid_properties", "gas_analysis",
@@ -176,8 +179,14 @@ class Records(object):
             return float(work.sort_values("work_date").iloc[-1]["as_left_set_barg"])
         return float(self.reg.loc[device, "set_pressure_barg"])
 
+    def balanced(self, device):
+        """A balanced bonnet isolates the disc from the header; a conventional one does not."""
+        return "bellows" in str(self.reg.loc[device, "bonnet"]).lower()
+
     def relieving(self, device, cause):
-        return self.setting(device) * ACCUM.get(cause, FLOOR) + ATM
+        """Section 4.1: what stands at a conventional device's outlet is added to its set pressure."""
+        standing = 0.0 if self.balanced(device) else self.standing.get(device, 0.0)
+        return (self.setting(device) + standing) * ACCUM.get(cause, FLOOR) + ATM
 
     def moved(self, item):
         """How far an item has been re-set since the data book, from the modification register."""
@@ -467,12 +476,13 @@ def mixture(part):
             float((part["load"] * part["temp"]).sum() / total))
 
 
-def inlet_pressure(R, part):
-    """March out from the tip, one length of header at a time."""
+def inlet_pressure(R, part, tip_mm=None):
+    """March out from the tip, one length at a time: (blinded end, pressure reached at each tie-in)."""
+    reached = {}
     if not len(part):
-        return 0.0
+        return 0.0, {}
     total, molar, k, z, temp = mixture(part)
-    tip_bore = float(re.search(r"([\d.]+)", R.tip["bore"]).group(1)) / 1000.0
+    tip_bore = (float(re.search(r"([\d.]+)", R.tip["bore"]).group(1)) if tip_mm is None else tip_mm) / 1000.0
     density = R.rho(ATM, temp, molar, z)
     speed = total / 3600.0 / (density * math.pi / 4.0 * tip_bore ** 2)
     p = ATM + R.tip_coefficient() * density * speed ** 2 / 2.0 / 1.0e5
@@ -493,26 +503,71 @@ def inlet_pressure(R, part):
         resistance = DARCY * (high - low) / bore \
             + sum(KFIT[f] for f, x in R.fittings if low < x <= high)
         p += resistance * density * speed ** 2 / 2.0 / 1.0e5
-    return p - ATM
+        for device in part["device"]:
+            if abs(where[device] - high) < 1.0e-9:
+                reached[device] = p - ATM
+    return p - ATM, {d: reached.get(d, p - ATM) for d in part["device"]}
+
+
+def settle(R, contingency, tip_mm=None):
+    """Sweep the contingency to settlement: (table of what discharges, blinded end, each tie-in).
+
+    Section 4.1 ties the relieving pressure of a conventional device to the header, and section 6 ties the
+    header to the rates, so the two are swept together from no built-up pressure until nothing moves.
+    """
+    R.standing = {}
+    part, inlet, reached = None, 0.0, {}
+    for _ in range(SWEEP_CAP):
+        whole = table(R)
+        part = whole[(whole["contingency"] == contingency) & whole["discharges"]]
+        inlet, reached = inlet_pressure(R, part, tip_mm)
+        moved = max([abs(reached.get(d, 0.0) - R.standing.get(d, 0.0))
+                     for d in set(reached) | set(R.standing)] or [0.0])
+        R.standing = dict(reached)
+        if moved <= SETTLE:
+            break
+    R.standing = {}
+    return part, inlet, reached
+
+
+def re_rating(R):
+    """Section 9: the smallest bore the vendor supplies that leaves no conventional device over the limit."""
+    flat = " ".join(R.doc["flare_system"].split())
+    bores = sorted(float(x) for x in
+                   re.search(r"Tip bores the vendor supplies ([\d.,and ]+?) mm", flat)
+                   .group(1).replace("and", " ").replace(",", " ").split())
+    limit = float(re.search(r"more than ([\d.]+) per cent of",
+                            " ".join(R.doc["standard"].split())).group(1)) / 100.0
+    for bore in bores:
+        worst, who, where = 0.0, "", ""
+        for contingency in R.contingencies:
+            part, inlet, reached = settle(R, contingency, bore)
+            for device, standing in reached.items():
+                if R.balanced(device):
+                    continue
+                share = standing / R.setting(device)
+                if share > worst:
+                    worst, who, where = share, device, contingency
+        if worst <= limit:
+            return bore, who, worst, where
+    return None, "", 0.0, ""
 
 
 def study(data, reports):
     R = Records(data, reports)
-    whole = table(R)
     rows = []
     for contingency in R.contingencies:
-        part = whole[(whole["contingency"] == contingency) & whole["discharges"]]
-        rows.append((contingency, tuple(sorted(part["device"])), float(part["load"].sum()),
-                     inlet_pressure(R, part)))
-    return rows
+        part, inlet, reached = settle(R, contingency)
+        rows.append((contingency, tuple(sorted(part["device"])), float(part["load"].sum()), inlet))
+    return rows, re_rating(R)
 
 
 def main():
     want_seeds = "--seeds" in sys.argv
     sealed, tru = common.truth()
     reports = common.crew_reports(sealed)
-    rows = study(common.DATA, reports)
-    n, notes = common.compare(rows, sealed, tru)
+    rows, sizing = study(common.DATA, reports)
+    n, notes = common.compare(rows, sealed, tru, sizing)
 
     print("A second study of the same records, written separately. Tolerance %.3f relative.\n" % sealed.TOL)
     print("| contingency | devices | load, kg/h | header inlet, barg | sealed load | sealed inlet |")
@@ -526,8 +581,9 @@ def main():
         print("| %s | %s | %.1f | %.4f | %.1f (%+.3f%%) | %.4f (%+.3f%%) |"
               % (contingency, " ".join(devices) or "none", total, back,
                  t["load"], 100.0 * rl, t["back"], 100.0 * rb))
-    print("\n%d of %d contingencies agree; worst load %.4f and pressure %.4f against a band of %.4f"
-          % (n, len(tru), worst_load, worst_back, sealed.TOL))
+    print("\nre-rating: tip %s mm, %s binding at %.3f%%" % (sizing[0], sizing[1], 100.0 * sizing[2]))
+    print("%d of %d parts agree; worst load %.4f and pressure %.4f against a band of %.4f"
+          % (n, len(tru) + 1, worst_load, worst_back, sealed.TOL))
 
     if want_seeds:
         tmp = tempfile.mkdtemp(prefix="fl_ind_")
@@ -535,15 +591,16 @@ def main():
         sys.path.insert(0, os.path.join(common.ROOT, "authoring", "provenance"))
         import gen
         try:
-            worst = 6
+            worst = 7
             for seed in SEEDS:
                 out = os.path.join(tmp, "data")
                 shutil.rmtree(out, ignore_errors=True)
                 os.makedirs(os.path.join(out, "docs"), exist_ok=True)
                 gen.main(out, seed)
-                k, _ = common.compare(study(out, reports), sealed, tru)
+                rows_s, sizing_s = study(out, reports)
+                k, _ = common.compare(rows_s, sealed, tru, sizing_s)
                 worst = min(worst, k)
-            print("worst agreement over %d laboratory seeds: %d of 6" % (len(SEEDS), worst))
+            print("worst agreement over %d laboratory seeds: %d of 7" % (len(SEEDS), worst))
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
 

@@ -3,35 +3,35 @@ relative. A test is worth ordering only where no booking without it does as well
 
 | Test | What it reaches | Best booking with it | Best booking without it | Worth ordering |
 |---|---|---|---|---|
-| `tip-backpressure` | the coefficient of the tip as installed, which enters every pressure | 6 of 6 | 1 of 6 | yes |
-| `pump-shutoff` | P-401's shutoff head, which decides whether its blocked discharge is credible | 6 of 6 | 5 of 6 | yes |
-| `reboiler-E406` | E-406's coefficient-area, used only for a cause SIF-4061 sets aside | 5 of 6 | 6 of 6 | no |
-| `valve-PV4031` | PV-4031's coefficient, when no device admits a cause it could create | 5 of 6 | 6 of 6 | no |
-| `condenser-E404` | E-404's duty, when a loss of cooling is total however capable the condenser | 5 of 6 | 6 of 6 | no |
-| `popcheck-PSV404` | PSV-404's set pressure, which the shop record already gives | 5 of 6 | 6 of 6 | no |
+| `tip-backpressure` | the coefficient of the tip as installed, which enters every pressure | 7 of 7 | 1 of 7 | yes |
+| `pump-shutoff` | P-401's shutoff head, which decides whether its blocked discharge is credible | 7 of 7 | 6 of 7 | yes |
+| `reboiler-E406` | E-406's coefficient-area, used only for a cause SIF-4061 sets aside | 6 of 7 | 7 of 7 | no |
+| `valve-PV4031` | PV-4031's coefficient, when no device admits a cause it could create | 6 of 7 | 7 of 7 | no |
+| `condenser-E404` | E-404's duty, when a loss of cooling is total however capable the condenser | 6 of 7 | 7 of 7 | no |
+| `popcheck-PSV404` | PSV-404's set pressure, which the shop record already gives | 6 of 7 | 7 of 7 | no |
 
 Every way the booking could be spent:
 
-| Tests ordered | Rows right of 6 | Worst contingency |
+| Tests ordered | Rows right of 7 | Worst contingency |
 |---|---|---|
-| `tip-backpressure`, `pump-shutoff` | 6 | - |
-| `tip-backpressure`, `condenser-E404` | 5 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
-| `tip-backpressure`, `popcheck-PSV404` | 5 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
-| `tip-backpressure`, `reboiler-E406` | 5 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
-| `tip-backpressure`, `valve-PV4031` | 5 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
-| `condenser-E404`, `popcheck-PSV404` | 1 | cooling_water_failure pressure -4.9% |
-| `pump-shutoff`, `condenser-E404` | 1 | cooling_water_failure pressure -4.9% |
-| `pump-shutoff`, `popcheck-PSV404` | 1 | cooling_water_failure pressure -4.9% |
-| `pump-shutoff`, `reboiler-E406` | 1 | cooling_water_failure pressure -4.9% |
-| `pump-shutoff`, `valve-PV4031` | 1 | cooling_water_failure pressure -4.9% |
-| `reboiler-E406`, `condenser-E404` | 1 | cooling_water_failure pressure -4.9% |
-| `reboiler-E406`, `popcheck-PSV404` | 1 | cooling_water_failure pressure -4.9% |
-| `reboiler-E406`, `valve-PV4031` | 1 | cooling_water_failure pressure -4.9% |
-| `valve-PV4031`, `condenser-E404` | 1 | cooling_water_failure pressure -4.9% |
-| `valve-PV4031`, `popcheck-PSV404` | 1 | cooling_water_failure pressure -4.9% |
-| nothing ordered | 1 | cooling_water_failure pressure -4.9% |
+| `tip-backpressure`, `pump-shutoff` | 7 | - |
+| `tip-backpressure`, `condenser-E404` | 6 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
+| `tip-backpressure`, `popcheck-PSV404` | 6 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
+| `tip-backpressure`, `reboiler-E406` | 6 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
+| `tip-backpressure`, `valve-PV4031` | 6 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
+| `condenser-E404`, `popcheck-PSV404` | 1 | cooling_water_failure pressure -5.0% |
+| `pump-shutoff`, `condenser-E404` | 1 | cooling_water_failure pressure -5.0% |
+| `pump-shutoff`, `popcheck-PSV404` | 1 | cooling_water_failure pressure -5.0% |
+| `pump-shutoff`, `reboiler-E406` | 1 | cooling_water_failure pressure -5.0% |
+| `pump-shutoff`, `valve-PV4031` | 1 | cooling_water_failure pressure -5.0% |
+| `reboiler-E406`, `condenser-E404` | 1 | cooling_water_failure pressure -5.0% |
+| `reboiler-E406`, `popcheck-PSV404` | 1 | cooling_water_failure pressure -5.0% |
+| `reboiler-E406`, `valve-PV4031` | 1 | cooling_water_failure pressure -5.0% |
+| `valve-PV4031`, `condenser-E404` | 1 | cooling_water_failure pressure -5.0% |
+| `valve-PV4031`, `popcheck-PSV404` | 1 | cooling_water_failure pressure -5.0% |
+| nothing ordered | 1 | cooling_water_failure pressure -5.0% |
 
 tests worth ordering: `tip-backpressure`, `pump-shutoff`
-bookings that get all 6: tip-backpressure, pump-shutoff
-best any other booking does: 5 of 6
-nothing ordered: 1 of 6
+bookings that get all 7: tip-backpressure, pump-shutoff
+best any other booking does: 6 of 7
+nothing ordered: 1 of 7

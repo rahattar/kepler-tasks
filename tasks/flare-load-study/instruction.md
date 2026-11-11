@@ -6,6 +6,12 @@ The records are `/app/data/relief_valve_register.csv`, `/app/data/valve_history.
 
 The unit's test crew is on site for one shift and will run field tests for you. What it will run, and how to order a test, are in `/app/data/docs/field_testing.md`. The booking is two tests. A test is charged to the booking when it is ordered, whatever its result, and the crew will not run the same test twice, so both orders have to rest on what the records already tell you rather than on the result of an earlier test. The crew writes each report to `/app/field_reports`.
 
-Write the study to `/app/output/flare_load.csv` with the header `contingency,devices,load_kg_per_h,header_inlet_barg`. Include one row for each contingency RP-7 names. Give the devices as their tags separated by semicolons, the load in kg/h and the header inlet pressure in barg, each to at least three significant figures. Commit to one set of devices and one figure for each contingency.
+RP-7 also asks for the stack tip to be re-rated where the tip as installed leaves a device standing against too much built-up back pressure. Carry out that duty as well, on the bores the flare system note says the vendor supplies.
+
+Write the study to `/app/output/flare_load.csv` with the header `contingency,devices,load_kg_per_h,header_inlet_barg`. Include one row for each contingency RP-7 names. Give the devices as their tags separated by semicolons, the load in kg/h and the header inlet pressure in barg, each to at least three significant figures. Report the load study for the tip as installed.
+
+Write the re-rating to `/app/output/tip_sizing.csv` with the header `tip_bore_mm,binding_device,back_pressure_pct` and one row: the bore the duty calls for in mm, the tag of the conventional device left standing against the largest share of its own set pressure at that bore, and that share as a percentage of set pressure to at least three significant figures.
+
+Commit to one set of devices and one figure for each contingency, and to one bore.
 
 You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

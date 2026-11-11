@@ -41,12 +41,19 @@ The chain from a contingency to a cause is to be followed through the unit's own
 
 ### 4.1 Relieving pressure
 
-    P1 = Pset * (1 + a) + 1.013      bar absolute
+    P1 = (Pset + Pb) * (1 + a) + 1.013      bar absolute
 
-with Pset the set pressure in bar gauge and the accumulation a
+with Pset the set pressure in bar gauge, Pb the pressure standing at the device's own outlet in bar gauge, and
+the accumulation a
 
 - a = 0.21 for `fire`;
 - a = 0.10 for every other cause.
+
+A conventional spring-loaded device is referenced to atmosphere, so whatever pressure stands at its outlet is
+added to the pressure at which it opens: for such a device Pb is the pressure in the header at its own tie-in,
+built up by the very flow the contingency is putting into the header. A device with a balanced bellows is
+isolated from its outlet and opens at its set pressure whatever the header is doing: for those Pb is zero. The
+relief valve register says which devices carry a bellows.
 
 Fluid properties are taken at the relieving pressure, and at the saturation temperature there where the
 relieving fluid is a saturated vapour. Where the relieving fluid does not condense, the relieving temperature is
@@ -178,12 +185,22 @@ losses
 
 each fitting counted in the length its position falls in.
 
-The pressure is worked out from the tip outwards, so that nothing has to be iterated:
+For a given set of rates the pressures are worked out from the tip outwards:
 
 1. the tip, carrying the whole load, with the mixture's density at atmospheric pressure and the tip's own loss
    coefficient and bore, gives the pressure at the stack base;
 2. then each length of header in turn, from the stack base outwards, with the density of what that length
-   carries taken at the pressure already reached at its downstream end.
+   carries taken at the pressure already reached at its downstream end. The pressure reached at a tie-in is the
+   pressure the devices tying in there stand against at their outlets.
+
+The rates are not known before those pressures, because section 4.1 lifts the relieving pressure of every
+conventional device by the pressure at its own tie-in, and a higher relieving pressure passes less. The load,
+the relieving pressures and the header pressures are therefore one system and are to be brought out together:
+begin with no built-up pressure anywhere, work out the rates and then the pressures, take those pressures back
+into section 4.1, and repeat until no pressure at any tie-in moves by more than 0.0001 bar between one pass and
+the next. Passing less as the back pressure rises, the sweeps close on one answer from below.
+
+Which devices discharge is settled on the same converged pressures, section 7 included.
 
 The pressure at the header's inlet is the pressure reached at the blinded end, reported in bar gauge. A flare
 header carries no isolation valve.
@@ -203,12 +220,24 @@ A cause may be set aside where a safety instrumented function prevents it and al
 
 - the function is rated SIL 2 or better in the safety instrumented system register;
 - it is proof tested at intervals of not more than 18 months;
-- its initiating element is not the measurement used by the control function whose failure causes the cause;
+- its initiating element is not a measurement that any control function on the protected item uses;
 - the system that carries the function still has the supply the drive schedule shows it on.
 
 Where any of these does not hold, the cause stands.
 
-## 9 The record of the study
+## 9 The re-rating of the stack tip
+
+A conventional device is not to be left standing against a built-up back pressure of more than 5 per cent of
+its own set pressure under any contingency. Where the tip as installed leaves one above that, the tip is to be
+re-rated: the duty is the smallest bore the vendor supplies at which no conventional device is left above the
+limit under any contingency, the loss coefficient of the tip being unchanged by its bore. The bores available
+are in the flare system note.
+
+Report that bore, the conventional device left with the largest share of its set pressure at it, and that share
+as a percentage of set pressure. The load study itself is reported for the tip as installed, not for the
+re-rated one.
+
+## 10 The record of the study
 
 For each contingency: the relief devices that discharge, the total load in kg/h, and the pressure at the header's
 inlet in bar gauge.

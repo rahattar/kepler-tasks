@@ -166,7 +166,8 @@ def main():
           and 'network_mode = "no-network"' in toml)
     check("task.toml declares the domain and field",
           'domain = "engineering-sciences"' in toml and 'field = "mechanical-engineering"' in toml)
-    check("task.toml declares the artifact", '/app/output/flare_load.csv' in toml)
+    check("task.toml declares both artifacts", '/app/output/flare_load.csv' in toml
+          and '/app/output/tip_sizing.csv' in toml)
     m = re.search(r'(?m)^name = "([^"]+)"', toml)
     parts = m.group(1).split("/") if m else []
     check("task.toml name is one prefix followed by this task's own name",
@@ -271,6 +272,10 @@ def main():
     env_docker = text(os.path.join(ROOT, "environment", "Dockerfile"))
     lab = text(os.path.join(rig, "lab.py"))
     import isim as S_
+    check("the standard sets the re-rating limit the design rules use",
+          ("%.0f per cent" % (100.0 * S_.BACK_LIMIT)) in text(os.path.join(ROOT, "environment", "data", "docs", "standard.md")))
+    check("the flare note lists the bores the sizing searches",
+          all(("%.1f" % b) in text(os.path.join(ROOT, "environment", "data", "docs", "flare_system.md")) for b in S_.TIP_BORES))
     check("the image gives the crew a user of its own, with no shell",
           "useradd" in env_docker and "crew" in env_docker and "nologin" in env_docker)
     check("the image closes the crew's sealed definition and records to everyone else",
@@ -332,9 +337,15 @@ def main():
             f.write("contingency,devices,load_kg_per_h,header_inlet_barg\n")
             for name, devices, total, back in m.sheet():
                 f.write("%s,%s,%.1f,%.4f\n" % (name, ";".join(devices), total, back))
-        r = grade_flare.assess(ref)
+        bore, who, share, _w = m.sizing()
+        size_ref = os.path.join(tmp, "tip_sizing.csv")
+        with open(size_ref, "w") as f:
+            f.write("tip_bore_mm,binding_device,back_pressure_pct\n%.1f,%s,%.3f\n"
+                    % (bore, who, 100.0 * share))
+        r = grade_flare.assess(ref, size_ref)
         check("the grader takes the reference solution", r.taken, "%d of %d" % (r.standing, r.total))
-        worst = max(max(abs(v["margins"]["load"]), abs(v["margins"]["back"])) for v in r.rows.values())
+        worst = max([max(abs(v["margins"]["load"]), abs(v["margins"]["back"])) for v in r.rows.values()]
+                    + [abs(r.sizing["margins"]["share"])])
         check("the reference sits well inside the band", worst <= 0.5 * S.TOL,
               "worst %.4f against %.4f" % (worst, S.TOL))
     finally:
@@ -357,26 +368,28 @@ def main():
         t = text(rs)
         check("every defective route fails on the shipped records",
               "routes that pass on the shipped records: none" in t)
-        check("every contingency is failed by at least three routes",
-              "contingencies failed by fewer than 3 routes: none" in t)
+        check("every part is failed by at least three routes",
+              "parts failed by fewer than 3 routes: none" in t)
+        check("the coupling cannot be skipped",
+              "the system never brought together, rates at no back pressure" in t)
+        check("the bonnet column cannot be ignored", "every device taken as conventional" in t)
     ms = os.path.join(EV, "method_spread.txt")
     if os.path.exists(ms):
-        check("every sound method gets all six", "methods that miss a contingency: none" in text(ms))
+        check("every sound method gets all seven", "methods that miss a contingency: none" in text(ms))
     bs = os.path.join(EV, "booking_study.txt")
     if os.path.exists(bs):
         t = text(bs)
         check("only the two tests that reach a row are worth ordering",
               "tests worth ordering: `tip-backpressure`, `pump-shutoff`" in t)
         check("only one way of spending the booking gets every row",
-              "bookings that get all 6: tip-backpressure, pump-shutoff" in t
-              and "best any other booking does: 5 of 6" in t)
+              "bookings that get all 7: tip-backpressure, pump-shutoff" in t
+              and "nothing ordered: 1 of 7" in t)
     ind = os.path.join(EV, "independent.txt")
     if os.path.exists(ind):
         t = text(ind)
-        check("the second study agrees on the shipped records",
-              "6 of 6 contingencies agree" in t)
+        check("the second study agrees on the shipped records", "7 of 7 parts agree" in t)
         check("the second study agrees on every laboratory seed",
-              "worst agreement over 20 laboratory seeds: 6 of 6" in t)
+              "worst agreement over 20 laboratory seeds: 7 of 7" in t)
 
     # ---- report
     width = max(len(n) for n, _, _ in results)

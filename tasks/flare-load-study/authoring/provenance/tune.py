@@ -24,6 +24,7 @@ LAYER_MARGIN = 1.0       # a layer must move some row by at least this many tole
 IDENTIFY_MARGIN = 0.02   # an identified quantity differs from its data sheet by this much
 MATCH_MARGIN = 0.01      # or else matches it within this much
 FLOORED = 1              # exactly this many rows sit below the pressure floor
+MARGIN = 0.08            # the re-rating must clear, and the bore below it miss, the limit by this much
 FLARE_TIP_NOW = None     # filled from the sealed model below
 RECORDED_SHUTOFF = 582.0  # the last performance test on record, made before the rotating element was renewed
 
@@ -93,6 +94,12 @@ def revert_pump(m):
     m.PUMP["now_shutoff_m"] = m.PUMP["sheet_shutoff_m"]
 
 
+def revert_coupling(m):
+    """The study taken in sequence: rates at no built-up pressure, the header worked out once afterwards."""
+    m.BELLOWS.update({v: True for v in m.IDS})      # a balanced device feels nothing, which is what a
+                                                    # sequential reading amounts to for every device
+
+
 def revert_tip(m):
     m.FLARE["tip_k"] = m.TIP_K_OLD          # the tip the 2019 study worked to, since replaced
 
@@ -114,6 +121,7 @@ LAYERS = [
     ("the pump's shutoff head from its data sheet", revert_pump),
     ("the tip measured rather than taken from the 2019 study", revert_tip),
     ("the pump measured rather than taken from the record", revert_pump_record),
+    ("the system brought together rather than taken in sequence", revert_coupling),
 ]
 
 
@@ -176,7 +184,60 @@ def rules():
                 recorded > need > S.PUMP["now_shutoff_m"],
                 "recorded %.1f m, needed %.1f m, now %.1f m" % (recorded, need, S.PUMP["now_shutoff_m"])))
 
-    # 9 each identified quantity is either clearly different from its data sheet or clearly the same
+    # 9 the sweeps have to close, and close quickly, or the answer is not well defined
+    worst_sweeps, worst_ratio = 0, 0.0
+    for c in S.CONTINGENCIES:
+        parts, inlet, at, sweeps = S.converge(c)
+        worst_sweeps = max(worst_sweeps, sweeps)
+        S.BACK_FELT.clear()
+        steps = []
+        for _ in range(6):
+            p = S.relieving_set(c)
+            inl, a = S.header_profile(p)
+            steps.append(inl)
+            S.BACK_FELT.clear()
+            S.BACK_FELT.update(a)
+        S.BACK_FELT.clear()
+        gaps = [abs(steps[i + 1] - steps[i]) for i in range(len(steps) - 1)]
+        ratios = [gaps[i + 1] / gaps[i] for i in range(len(gaps) - 1) if gaps[i] > 1.0e-9]
+        worst_ratio = max([worst_ratio] + ratios)
+    out.append(("the sweeps close on one answer", worst_ratio < 0.5,
+                "worst step ratio %.3f" % worst_ratio))
+    out.append(("the sweeps close quickly", worst_sweeps <= 20, "worst %d sweeps" % worst_sweeps))
+
+    # 10 taking the study in sequence has to cost more than the band on more than one part
+    seq = fresh()
+    revert_coupling(seq)
+    seq._TRUTH = None
+    got, base = seq.truth(), S.truth()
+    missed = []
+    for c in S.CONTINGENCIES:
+        if got[c]["valves"] != base[c]["valves"]:
+            missed.append(c)
+            continue
+        for key in ("load", "back"):
+            if key == "back" and base[c]["back"] < S.BACK_FLOOR:
+                continue
+            if base[c][key] and abs(got[c][key] / base[c][key] - 1.0) > S.TOL:
+                missed.append(c)
+                break
+    out.append(("a sequential reading misses at least two contingencies", len(missed) >= 2,
+                ", ".join(missed) or "none"))
+
+    # 11 the re-rating is decided with room either side of the limit
+    want = S.sizing()
+    smaller = [b for b in sorted(S.TIP_BORES) if b < want["bore_mm"]]
+    rejected = S.worst_felt(smaller[-1])[0] if smaller else None
+    out.append(("the chosen bore clears the limit with room",
+                want["share"] <= S.BACK_LIMIT * (1.0 - MARGIN),
+                "%.2f%% against a limit of %.2f%%" % (100.0 * want["share"], 100.0 * S.BACK_LIMIT)))
+    out.append(("the next bore down misses the limit with room",
+                rejected is not None and rejected >= S.BACK_LIMIT * (1.0 + MARGIN),
+                "%.1f mm leaves %.2f%%" % (smaller[-1], 100.0 * rejected) if smaller else "no smaller bore"))
+    out.append(("the device left binding carries no bellows", not S.BELLOWS.get(want["device"]),
+                "%s under %s" % (want["device"], want["contingency"])))
+
+    # 12 each identified quantity is either clearly different from its data sheet or clearly the same
     pairs = []
     for tag, c in sorted(S.CV.items()):
         pairs.append(("%s coefficient" % tag, c["actual"], c["sheet"]))

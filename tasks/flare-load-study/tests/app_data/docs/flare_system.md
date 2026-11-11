@@ -27,6 +27,10 @@ isolation valve of any kind, as the standard requires. Distances along it are me
 | tee, flow through the run | 251 |
 | 90 degree elbow | 302 |
 
+## Tip bores the vendor supplies
+
+254.0, 304.8, 355.6, 406.4 and 457.2 mm, all to the same design and so to the same loss coefficient.
+
 ## Tie-ins
 
 Where each device ties into the header is held in the as-built isometrics, issue 4 of July 2026, which list

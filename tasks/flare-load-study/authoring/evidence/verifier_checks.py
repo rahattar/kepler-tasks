@@ -26,6 +26,17 @@ import solve  # noqa: E402
 HEADER = list(grade_flare.COLUMNS)
 
 
+def reference_sizing():
+    """The reference's own re-rating, as a one-row sheet."""
+    os.environ["DATA_DIR"] = os.path.join(ROOT, "environment", "data")
+    sys.path.insert(0, os.path.join(ROOT, "authoring", "evidence"))
+    import common
+    sealed, _ = common.truth()
+    m = solve.Study(solve.load(os.environ["DATA_DIR"]), common.crew_reports(sealed))
+    bore, who, share, _where = m.sizing()
+    return "tip_bore_mm,binding_device,back_pressure_pct\n%.1f,%s,%.3f\n" % (bore, who, 100.0 * share)
+
+
 def reference_rows():
     """The reference's own answer, as rows."""
     os.environ["DATA_DIR"] = os.path.join(ROOT, "environment", "data")
@@ -54,11 +65,13 @@ CASES = 0
 def main():
     global CASES
     rows = reference_rows()
-    tmp = tempfile.mkdtemp(prefix="rv_vc_")
-    path = os.path.join(tmp, "relief.csv")
+    tmp = tempfile.mkdtemp(prefix="fl_vc_")
+    path = os.path.join(tmp, "flare_load.csv")
+    sizing_path = os.path.join(tmp, "tip_sizing.csv")
+    good_sizing = reference_sizing()
     bad = 0
 
-    def check(label, text, expect, write=None):
+    def check(label, text, expect, write=None, sizing=None):
         nonlocal bad
         global CASES
         CASES += 1
@@ -76,8 +89,12 @@ def main():
         else:
             with open(path, "w", newline="") as f:
                 f.write(text)
-        r = grade_flare.assess(path)
-        got = "rejected" if r.fault is not None else ("accepted" if r.taken else "graded %d of 6" % r.standing)
+        with open(sizing_path, "w", newline="") as f:
+            f.write(good_sizing if sizing is None else sizing)
+        if sizing == "absent":
+            os.remove(sizing_path)
+        r = grade_flare.assess(path, sizing_path)
+        got = "rejected" if r.fault is not None else ("accepted" if r.taken else "graded %d of 7" % r.standing)
         tag = "ok " if got.split()[0] == expect.split()[0] else "UNEXPECTED"
         if tag != "ok ":
             bad += 1
@@ -128,9 +145,11 @@ def main():
                        ("a pressure of NaN", "nan"), ("an infinite pressure", "inf"),
                        ("a negative pressure", "-1.3"), ("a pressure above the range", "1e4")):
         check(label, render([rows[0][:3] + [val]] + rows[1:]), "rejected")
-    for label, val in (("a load in exponent form", "9.90857e4"), ("a load with six decimals", "99085.700000"),
-                       ("a load with twelve decimals", "99085.712345678901"),
-                       ("a load with a leading plus", "+99085.7")):
+    load0 = float(rows[0][2])
+    for label, val in (("a load in exponent form", "%.6e" % load0),
+                       ("a load with six decimals", "%.6f" % load0),
+                       ("a load with twelve decimals", "%.12f" % load0),
+                       ("a load with a leading plus", "+%.1f" % load0)):
         check(label, render([rows[0][:2] + [val] + rows[0][3:]] + rows[1:]), "accepted")
     check("one device dropped", render([[rows[0][0], ";".join(rows[0][1].split(";")[1:])] + rows[0][2:]]
                                        + rows[1:]), "graded 5")
@@ -145,6 +164,27 @@ def main():
           render([r[:2] + ["%.1f" % (float(r[2]) * 1.02)] + r[3:] for r in rows]), "graded 0")
     check("every pressure moved by 2 per cent",
           render([r[:3] + ["%.4f" % (float(r[3]) * 1.02)] for r in rows]), "graded 1")
+
+    # ---- the re-rating sheet
+    for label, text, expect in (
+            ("no re-rating sheet at all", "absent", "rejected"),
+            ("a re-rating header that is misspelt",
+             "tip_bore,binding_device,back_pressure_pct\n406.4,PSV-409,4.440\n", "rejected"),
+            ("a re-rating with two rows",
+             good_sizing + "406.4,PSV-409,4.440\n", "rejected"),
+            ("a re-rating naming a device that is not one",
+             "tip_bore_mm,binding_device,back_pressure_pct\n406.4,PSV-499,4.440\n", "rejected"),
+            ("a re-rating whose bore is not a number",
+             "tip_bore_mm,binding_device,back_pressure_pct\nsixteen inch,PSV-409,4.440\n", "rejected"),
+            ("a re-rating with a negative share",
+             "tip_bore_mm,binding_device,back_pressure_pct\n406.4,PSV-409,-4.440\n", "rejected"),
+            ("a re-rating one bore too small",
+             "tip_bore_mm,binding_device,back_pressure_pct\n355.6,PSV-409,5.960\n", "graded 6"),
+            ("a re-rating naming the wrong binding device",
+             "tip_bore_mm,binding_device,back_pressure_pct\n406.4,PSV-407,4.440\n", "graded 6"),
+            ("a re-rating whose share is 2 per cent out",
+             "tip_bore_mm,binding_device,back_pressure_pct\n406.4,PSV-409,4.529\n", "graded 6")):
+        check(label, render(rows), expect, sizing=text)
 
     shutil.rmtree(tmp, ignore_errors=True)
 

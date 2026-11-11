@@ -18,6 +18,9 @@ import sys
 DATA = os.environ.get("DATA_DIR", "/app/data")
 REPORTS = os.environ.get("REPORT_DIR", "/app/field_reports")
 OUT = os.environ.get("OUT_FILE", "/app/output/flare_load.csv")
+SIZING_OUT = os.environ.get("SIZING_FILE", "/app/output/tip_sizing.csv")
+SETTLE = 1.0e-4            # bar: the sweeps stop when no tie-in pressure moves by more than this
+SWEEP_CAP = 500
 
 # ----------------------------------------------------------------------------- constants from RP-7
 ATM = 1.013
@@ -41,10 +44,6 @@ PUMP_DISCHARGE_VALVE = "FV-4051"
 CVSTREAM = {"PV-4001": "feed_gas", "PV-4021": "feed_gas", "PV-4031": "c2_overhead",
             "PV-4061": "c4_product", "PV-4071": "c3_product"}
 GASTEMP = {"PSV-401": "v401_temp_C", "PSV-409": "v402_temp_C"}
-CONTROL_TAG = {("PSV-401", "control_valve_failure"): ("PT-4012",),
-               ("PSV-403", "cooling_failure"): ("PT-4031",),
-               ("PSV-406", "cooling_failure"): ("PT-4061",),
-               ("PSV-409", "control_valve_failure"): ("PT-4021",)}
 PREVENTS = {"V-401 control valve failure": ("PSV-401", "control_valve_failure"),
             "T-401 loss of overhead cooling": ("PSV-403", "cooling_failure"),
             "T-402 loss of overhead cooling": ("PSV-406", "cooling_failure"),
@@ -189,6 +188,7 @@ class Study(object):
 
     def __init__(self, d, reports=None):
         self.reports = {} if reports is None else reports
+        self.back = {}                 # what each device stands against while the system is being converged
         self.d = d
         self._cache = {}
         self.reg = {r["valve"]: r for r in d["relief_valve_register"]}
@@ -240,9 +240,17 @@ class Study(object):
             return _num(max(hist, key=lambda r: r["work_date"])["as_left_set_barg"])
         return _num(self.reg[vid]["set_pressure_barg"])
 
+    def bellows(self, vid):
+        """Whether the device has a balanced bonnet, which isolates it from whatever stands at its outlet."""
+        return "bellows" in self.reg[vid]["bonnet"].lower()
+
+    def felt(self, vid):
+        """The built-up pressure the device stands against, zero where a bellows balances it out."""
+        return 0.0 if self.bellows(vid) else self.back.get(vid, 0.0)
+
     def relieving(self, vid, cause):
         over = OVER_FIRE if cause == "fire" else OVER_OTHER
-        return self.set_pressure(vid) * (1.0 + over) + ATM
+        return (self.set_pressure(vid) + self.felt(vid)) * (1.0 + over) + ATM
 
     # -- what the contingency reaches --------------------------------------
     def supply_of(self, tag):
@@ -296,6 +304,20 @@ class Study(object):
         return None
 
     # -- credit -------------------------------------------------------------
+    def controls(self, item, tag):
+        """Whether a control function on this item works from that measurement.
+
+        The instrument schedule says what each transmitter is for: a service naming the item and the word
+        control is a control measurement on it, and a protective function initiated from one of those shares an
+        instrument with control on the very item it protects.
+        """
+        for r in self.d["instrument_schedule"]:
+            if r["tag"] != tag:
+                continue
+            service = r["service"].lower()
+            return item.lower() in service and "control" in service
+        return False
+
     def credited(self, vid, cause, contingency):
         for r in self.d["sis_register"]:
             if PREVENTS.get(r["contingency_prevented"]) != (vid, cause):
@@ -304,7 +326,7 @@ class Study(object):
                 return False
             if _num(r["proof_test_interval_months"]) > PROOF_MAX:
                 return False
-            if r["initiating_element"] in CONTROL_TAG.get((vid, cause), ()):
+            if self.controls(self.reg[vid]["protected_item"], r["initiating_element"]):
                 return False
             return self.sis_holds(contingency)
         return False
@@ -540,6 +562,59 @@ class Study(object):
                 x = float(m.group(1))
         return x
 
+    def header_profile(self, parts, tip_mm=None):
+        """(pressure at the blinded end, {device: the pressure reached at its own tie-in}), bar gauge."""
+        at = {}
+        if not parts:
+            return 0.0, {}
+        total, mw, k, z, t_K = self.mixed(parts)
+        d_tip = (_mm(self.d["tip"]["bore"]) if tip_mm is None else tip_mm) / 1000.0
+        rho = self.density(ATM, t_K, mw, z)
+        v = total / 3600.0 / (rho * math.pi / 4.0 * d_tip * d_tip)
+        p = ATM + self.tip_k() * rho * v * v / 2.0 / 1.0e5
+        d = _mm(self.d["header"]["bore"]) / 1000.0
+        a = math.pi / 4.0 * d * d
+        tie = {r["device"]: self.tie_in(r["device"]) for r in self.d["flare_tie_ins"]}
+        end = _mm(self.d["header"]["developed length, blinded end to the stack base"])
+        cuts = sorted(set([0.0, end] + list(tie.values())))
+        for lo, hi in zip(cuts, cuts[1:]):
+            carried = {vid: part for vid, part in parts.items() if tie[vid] >= hi - 1.0e-9}
+            if carried:
+                w, mw, k, z, t_K = self.mixed(carried)
+                rho = self.density(p, t_K, mw, z)
+                v = w / 3600.0 / (rho * a)
+                kt = F_DARCY * (hi - lo) / d \
+                    + sum(K_FIT[f] for f, x in self.d["fitting"] if lo < x <= hi)
+                p += kt * rho * v * v / 2.0 / 1.0e5
+            for vid in parts:
+                if abs(tie[vid] - hi) < 1.0e-9:
+                    at[vid] = p - ATM
+        return p - ATM, {vid: at.get(vid, p - ATM) for vid in parts}
+
+    def converge(self, contingency, tip_mm=None):
+        """The contingency brought out as one system: rates, relieving pressures and header together.
+
+        Section 4.1 lifts a conventional device's relieving pressure by the pressure at its own tie-in, and
+        that pressure is built up by the flow those devices are putting into the header, so neither can be had
+        before the other. Section 6 says to start with no built-up pressure and sweep until nothing moves by
+        more than SETTLE; passing less as the back pressure rises, the sweeps close on one answer from below.
+        """
+        keep = dict(self.back)
+        try:
+            self.back = {}
+            parts, inlet, at = {}, 0.0, {}
+            for _ in range(SWEEP_CAP):
+                parts = self.discharging(contingency)
+                inlet, at = self.header_profile(parts, tip_mm)
+                moved = max([abs(at.get(v, 0.0) - self.back.get(v, 0.0))
+                             for v in set(at) | set(self.back)] or [0.0])
+                self.back = at
+                if moved <= SETTLE:
+                    break
+            return parts, inlet, at
+        finally:
+            self.back = keep
+
     def header_pressure(self, parts):
         """The pressure at the blinded end, walking out from the tip one length of header at a time.
 
@@ -573,10 +648,41 @@ class Study(object):
     def sheet(self):
         out = []
         for contingency in self.contingencies:
-            parts = self.discharging(contingency)
+            parts, inlet, at = self.converge(contingency)
             load = sum(v[0] for v in parts.values())
-            out.append((contingency, tuple(sorted(parts)), load, self.header_pressure(parts)))
+            out.append((contingency, tuple(sorted(parts)), load, inlet))
         return out
+
+    def worst_felt(self, tip_mm=None):
+        """The largest share of its own set pressure any conventional device is left standing against."""
+        worst, who, where = 0.0, "", ""
+        for contingency in self.contingencies:
+            parts, inlet, at = self.converge(contingency, tip_mm)
+            for vid, felt in at.items():
+                if self.bellows(vid):
+                    continue
+                share = felt / self.set_pressure(vid)
+                if share > worst:
+                    worst, who, where = share, vid, contingency
+        return worst, who, where
+
+    def sizing(self):
+        """Section 9: the smallest tip the vendor supplies that leaves no conventional device over the limit.
+
+        The bore changes the tip's loss, which changes every back pressure, which changes the relieving
+        pressures and so the rates, so each candidate has to be brought out as its own converged system.
+        """
+        flat = " ".join(self.d["flare_system"].split())
+        bores = sorted(float(x) for x in
+                       re.search(r"Tip bores the vendor supplies ([\d.,and ]+?) mm", flat).group(1)
+                       .replace("and", " ").replace(",", " ").split())
+        limit = _num(re.search(r"more than ([\d.]+) per cent of", " ".join(self.d["standard"].split()))
+                     .group(1)) / 100.0
+        for bore in bores:
+            share, who, where = self.worst_felt(bore)
+            if share <= limit:
+                return bore, who, share, where
+        return None, "", 0.0, ""
 
 
 # The two tests that reach a graded value. The tip's coefficient enters every pressure, and P-401's present
@@ -592,14 +698,20 @@ def main():
     reports = order(NEEDED)
     study = Study(load(), reports)
     rows = study.sheet()
+    bore, who, share, where = study.sizing()
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", newline="") as f:
         w = csv.writer(f, lineterminator="\n")
         w.writerow(["contingency", "devices", "load_kg_per_h", "header_inlet_barg"])
         for name, devices, total, back in rows:
             w.writerow([name, ";".join(devices), "%.1f" % total, "%.4f" % back])
+    with open(SIZING_OUT, "w", newline="") as f:
+        w = csv.writer(f, lineterminator="\n")
+        w.writerow(["tip_bore_mm", "binding_device", "back_pressure_pct"])
+        w.writerow(["%.1f" % bore, who, "%.3f" % (100.0 * share)])
     for name, devices, total, back in rows:
         print("%-24s %-34s %11.1f kg/h %8.4f barg" % (name, " ".join(devices) or "none", total, back))
+    print("re-rating: tip %.1f mm, %s binding at %.3f%% of set under %s" % (bore, who, 100.0 * share, where))
     return 0
 
 

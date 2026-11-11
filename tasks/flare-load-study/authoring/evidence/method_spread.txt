@@ -1,23 +1,25 @@
 Sound variations, graded against the sealed definition. Tolerance 0.010 relative.
 
-| Method | Right of 6 | Worst load | Worst pressure | Worst seed |
+| Method | Right of 7 | Worst load | Worst pressure | Worst seed |
 |---|---|---|---|---|
-| the reference | 6 | 0.133% | 0.326% | 6 of 6 |
-| the trend fitted by least squares | 6 | 0.162% | 0.378% | 6 of 6 |
-| only trend points above 60 per cent travel | 6 | 0.133% | 0.326% | 6 of 6 |
-| the reboiler from the record's mean duty over its mean difference | 6 | 0.133% | 0.326% | 6 of 6 |
-| the pump curve by least squares on all four points | 6 | 0.133% | 0.326% | 6 of 6 |
-| least squares throughout | 6 | 0.162% | 0.378% | 6 of 6 |
-| high travel points and the mean ratio | 6 | 0.133% | 0.326% | 6 of 6 |
-| least squares and the mean ratio together | 6 | 0.162% | 0.378% | 6 of 6 |
+| the reference | 7 | 0.123% | 0.306% | 7 of 7 |
+| the trend fitted by least squares | 7 | 0.150% | 0.356% | 7 of 7 |
+| only trend points above 60 per cent travel | 7 | 0.123% | 0.306% | 7 of 7 |
+| the reboiler from the record's mean duty over its mean difference | 7 | 0.123% | 0.306% | 7 of 7 |
+| the pump curve by least squares on all four points | 7 | 0.123% | 0.306% | 7 of 7 |
+| least squares throughout | 7 | 0.150% | 0.356% | 7 of 7 |
+| high travel points and the mean ratio | 7 | 0.123% | 0.306% | 7 of 7 |
+| least squares and the mean ratio together | 7 | 0.150% | 0.356% | 7 of 7 |
 
-widest load spread 0.162% and pressure spread 0.378% against a band of 1.0%
+widest load spread 0.150% and pressure spread 0.356% against a band of 1.0%
 
 Readings the standard does not sanction, which the tolerance nevertheless absorbs:
 
-| Reading | Right of 6 | Worst load | Worst pressure |
+| Reading | Right of 7 | Worst load | Worst pressure |
 |---|---|---|---|
-| every length of header taken with the whole mixture's properties | 6 | 0.133% | 0.502% |
-| the whole mixture's properties and least squares throughout | 6 | 0.162% | 0.555% |
+| every length of header taken with the whole mixture's properties | 7 | 0.119% | 0.439% |
+| the sweeps stopped after one correction rather than at settlement | 7 | 0.435% | 0.933% |
+| every conventional device taken against the blinded end, not its own tie-in | 7 | 0.208% | 0.451% |
+| the whole mixture's properties and least squares throughout | 7 | 0.146% | 0.489% |
 
 methods that miss a contingency: none

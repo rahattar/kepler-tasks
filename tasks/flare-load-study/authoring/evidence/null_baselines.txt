@@ -10,4 +10,4 @@ Answers made without doing the study. Tolerance 0.010 relative.
 | the right device sets with the 2019 numbers | 0 | none |
 | the right loads with the header never computed | 1 | fire_zone_b |
 
-best null answer: 1 of 6, against a gate of 6
+best null answer: 1 of 6 contingencies, against a gate of all six and the re-rating

@@ -22,6 +22,13 @@ Defective readings, every one of which must fail:
     ua        "design"   the reboiler coefficient-area from the data sheet duty
               "duty"     the data sheet duty taken as the relieving duty itself
     latent    "overhead" the reboiler duty divided by the overhead vapour's latent heat
+    couple    "none"     the rates taken at no built-up back pressure, the system never brought together
+              "once"      one sweep only, stopped before anything has settled
+              "inlet"     every conventional device taken to stand against the pressure at the blinded end
+    bonnet    "all"       every device taken as conventional
+              "none"      every device taken as balanced
+    size      "static"   the tip sized without bringing each candidate out as its own system
+              "inlet"    the tip sized on the pressure at the blinded end rather than per device
     pump      "sheet"    the pump's data sheet curve
               "record"   the last performance test on record, made before the rotating element was renewed
     tip       "old"      the loss coefficient of the tip this one replaced, as the 2019 study gives it
@@ -89,6 +96,85 @@ class Agent(solve.Study):
         solve.Study.__init__(self, d, reports)
         self.sw = sw
 
+    # -- the bonnet, and how the system is brought out ----------------------
+    def bellows(self, vid):
+        mode = self.sw.get("bonnet")
+        if mode == "all":
+            return False
+        if mode == "none":
+            return True
+        return solve.Study.bellows(self, vid)
+
+    def converge(self, contingency, tip_mm=None):
+        mode = self.sw.get("couple")
+        if mode == "none":
+            keep, self.back = dict(self.back), {}
+            try:
+                parts = self.discharging(contingency)
+                inlet, at = self.header_profile(parts, tip_mm)
+                return parts, inlet, at
+            finally:
+                self.back = keep
+        if mode == "once":
+            keep, self.back = dict(self.back), {}
+            try:
+                parts = self.discharging(contingency)
+                inlet, at = self.header_profile(parts, tip_mm)
+                self.back = at
+                parts = self.discharging(contingency)
+                inlet, at = self.header_profile(parts, tip_mm)
+                return parts, inlet, at
+            finally:
+                self.back = keep
+        if mode == "inlet":
+            keep = dict(self.back)
+            try:
+                self.back = {}
+                parts, inlet, at = {}, 0.0, {}
+                for _ in range(solve.SWEEP_CAP):
+                    parts = self.discharging(contingency)
+                    inlet, at = self.header_profile(parts, tip_mm)
+                    flat = {vid: inlet for vid in at}      # the blinded end for everyone, not each tie-in
+                    moved = max([abs(flat.get(v, 0.0) - self.back.get(v, 0.0))
+                                 for v in set(flat) | set(self.back)] or [0.0])
+                    self.back = flat
+                    if moved <= solve.SETTLE:
+                        break
+                return parts, inlet, at
+            finally:
+                self.back = keep
+        return solve.Study.converge(self, contingency, tip_mm)
+
+    def sizing(self):
+        mode = self.sw.get("size")
+        if mode == "static":
+            # the shares scaled off the tip as installed, rather than re-converged at each candidate bore
+            bores, limit = self._bores_and_limit()
+            share0, who, where = self.worst_felt()
+            here = solve._mm(self.d["tip"]["bore"])
+            for bore in bores:
+                if share0 * (here / bore) ** 4 <= limit:
+                    return bore, who, share0 * (here / bore) ** 4, where
+            return None, "", 0.0, ""
+        if mode == "inlet":
+            bores, limit = self._bores_and_limit()
+            for bore in bores:
+                worst = max(self.converge(c, bore)[1] / 10.0 for c in self.contingencies)
+                if worst <= limit:
+                    who, where = "PSV-409", "power_failure"
+                    return bore, who, worst, where
+            return None, "", 0.0, ""
+        return solve.Study.sizing(self)
+
+    def _bores_and_limit(self):
+        flat = " ".join(self.d["flare_system"].split())
+        bores = sorted(float(x) for x in
+                       re.search(r"Tip bores the vendor supplies ([\d.,and ]+?) mm", flat).group(1)
+                       .replace("and", " ").replace(",", " ").split())
+        limit = solve._num(re.search(r"more than ([\d.]+) per cent of",
+                                     " ".join(self.d["standard"].split())).group(1)) / 100.0
+        return bores, limit
+
     # -- what the crew measured ---------------------------------------------
     def tip_k(self):
         if self.sw.get("tip") == "old":
@@ -138,11 +224,11 @@ class Agent(solve.Study):
                 return True
             if mode == "sil":
                 return solve._num(r["proof_test_interval_months"]) <= solve.PROOF_MAX \
-                    and r["initiating_element"] not in solve.CONTROL_TAG.get((vid, cause), ()) \
+                    and not self.controls(self.reg[vid]["protected_item"], r["initiating_element"]) \
                     and self.sis_holds(contingency)
             if mode == "proof":
                 return solve._num(r["sil"].split()[-1]) >= solve.SIL_MIN \
-                    and r["initiating_element"] not in solve.CONTROL_TAG.get((vid, cause), ()) \
+                    and not self.controls(self.reg[vid]["protected_item"], r["initiating_element"]) \
                     and self.sis_holds(contingency)
             break
         return solve.Study.credited(self, vid, cause, contingency)
@@ -329,12 +415,14 @@ class Agent(solve.Study):
             return solve._num(row["tie_in_m_from_stack_base"])
         return solve.Study.tie_in(self, device)
 
-    def header_pressure(self, parts):
+    def header_profile(self, parts, tip_mm=None):
+        """The march, with every reading of section 6 the study tries, returning the inlet and each tie-in."""
         mode = self.sw.get("header")
+        at = {}
         if not parts:
-            return 0.0
+            return 0.0, {}
         total, mw_all, k_all, z_all, t_all = self.mixed(parts)
-        d_tip = solve._mm(self.d["tip"]["bore"]) / 1000.0
+        d_tip = (solve._mm(self.d["tip"]["bore"]) if tip_mm is None else tip_mm) / 1000.0
         rho = self.density(solve.ATM, t_all, mw_all, z_all)
         v = total / 3600.0 / (rho * math.pi / 4.0 * d_tip * d_tip)
         p = solve.ATM
@@ -343,32 +431,54 @@ class Agent(solve.Study):
         d = solve._mm(self.d["header"]["bore"]) / 1000.0
         a = math.pi / 4.0 * d * d
         end = solve._mm(self.d["header"]["developed length, blinded end to the stack base"])
+        tie = {r["device"]: self.tie_in(r["device"]) for r in self.d["flare_tie_ins"]}
         if mode == "whole":
             rho = self.density(solve.ATM if self.sw.get("rho") == "atm" else p, t_all, mw_all, z_all)
             v = total / 3600.0 / (rho * a)
             kt = solve.F_DARCY * end / d + sum(solve.K_FIT[f] for f, _ in self.d["fitting"])
-            return p + kt * rho * v * v / 2.0 / 1.0e5 - solve.ATM
-        tie = {r["device"]: self.tie_in(r["device"]) for r in self.d["flare_tie_ins"]}
+            p += kt * rho * v * v / 2.0 / 1.0e5
+            return p - solve.ATM, {vid: p - solve.ATM for vid in parts}
         pts = [tie[vid] for vid in parts] if mode == "flow" else list(tie.values())
         cuts = sorted(set([0.0, end] + pts))
         for lo, hi in zip(cuts, cuts[1:]):
             carried = {vid: part for vid, part in parts.items() if tie[vid] >= hi - 1.0e-9}
-            if not carried:
-                continue
-            w, mw, k, z, t_K = self.mixed(carried)
-            if self.sw.get("mixprops") == "total":
-                mw, z, t_K = mw_all, z_all, t_all
-            rho = self.density(solve.ATM if self.sw.get("rho") == "atm" else p, t_K, mw, z)
-            v = w / 3600.0 / (rho * a)
-            kt = solve.F_DARCY * (hi - lo) / d \
-                + sum(solve.K_FIT[f] for f, x in self.d["fitting"] if lo < x <= hi)
-            p += kt * rho * v * v / 2.0 / 1.0e5
-        return p - solve.ATM
+            if carried:
+                w, mw, k, z, t_K = self.mixed(carried)
+                if self.sw.get("mixprops") == "total":
+                    mw, z, t_K = mw_all, z_all, t_all
+                rho = self.density(solve.ATM if self.sw.get("rho") == "atm" else p, t_K, mw, z)
+                v = w / 3600.0 / (rho * a)
+                kt = solve.F_DARCY * (hi - lo) / d \
+                    + sum(solve.K_FIT[f] for f, x in self.d["fitting"] if lo < x <= hi)
+                p += kt * rho * v * v / 2.0 / 1.0e5
+            for vid in parts:
+                if abs(tie[vid] - hi) < 1.0e-9:
+                    at[vid] = p - solve.ATM
+        return p - solve.ATM, {vid: at.get(vid, p - solve.ATM) for vid in parts}
+
+    def header_pressure(self, parts):
+        return self.header_profile(parts)[0]
 
 
-def compare(rows, sealed, tru):
-    """Rows as the study gives them against the sealed answer. Returns (n_right, per-contingency notes)."""
+def compare(rows, sealed, tru, sizing=None):
+    """The study and the re-rating against the sealed answer: (n_right, notes), over seven parts."""
     notes, n = {}, 0
+    if sizing is not None:
+        bore, who, share, _where = sizing
+        why = []
+        if bore is None:
+            why.append("no bore met the limit")
+        else:
+            ok, how = sealed.sizing_ok(bore, who, share)
+            if not how["bore"]:
+                why.append("tip %.1f mm, wanted %.1f" % (bore, sealed.sizing()["bore_mm"]))
+            if not how["device"]:
+                why.append("binding %s, wanted %s" % (who, sealed.sizing()["device"]))
+            if how["bore"] and how["device"] and not ok:
+                why.append("share %+.1f%%" % (100.0 * how["share"]))
+        notes["re-rating"] = why
+        if not why:
+            n += 1
     for contingency, devices, total, back in rows:
         ok, how = sealed.row_ok(contingency, devices, total, back)
         why = []
@@ -395,4 +505,6 @@ def worst(notes):
 
 
 def run(d, reports=None, **sw):
-    return Agent(d, reports, **sw).sheet()
+    """The study and the re-rating as this agent gives them."""
+    a = Agent(d, reports, **sw)
+    return a.sheet(), a.sizing()

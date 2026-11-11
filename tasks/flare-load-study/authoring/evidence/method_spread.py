@@ -29,6 +29,8 @@ METHODS = [
 # readings the standard does not sanction but the tolerance absorbs: reported so the margin is visible
 TOLERATED = [
     ("every length of header taken with the whole mixture's properties", dict(mixprops="total")),
+    ("the sweeps stopped after one correction rather than at settlement", dict(couple="once")),
+    ("every conventional device taken against the blinded end, not its own tie-in", dict(couple="inlet")),
     ("the whole mixture's properties and least squares throughout",
      dict(mixprops="total", fit="ls", uaw="ratio")),
 ]
@@ -54,8 +56,8 @@ def main():
 
     results = []
     for name, sw in METHODS:
-        rows = common.run(d, reports, **sw)
-        n, notes = common.compare(rows, sealed, tru)
+        rows, sizing = common.run(d, reports, **sw)
+        n, notes = common.compare(rows, sealed, tru, sizing)
         results.append((name, n, spread(rows, tru), common.worst(notes)))
 
     seed_worst = {}
@@ -71,34 +73,35 @@ def main():
                 gen.main(out, seed)
                 ds = solve.load(out)
                 for name, sw in METHODS:
-                    k, _ = common.compare(common.run(ds, reports, **sw), sealed, tru)
-                    seed_worst[name] = min(seed_worst.get(name, 6), k)
+                    rows, sizing = common.run(ds, reports, **sw)
+                    k, _ = common.compare(rows, sealed, tru, sizing)
+                    seed_worst[name] = min(seed_worst.get(name, 7), k)
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
 
     print("Sound variations, graded against the sealed definition. Tolerance %.3f relative.\n" % sealed.TOL)
-    print("| Method | Right of 6 | Worst load | Worst pressure | Worst seed |")
+    print("| Method | Right of 7 | Worst load | Worst pressure | Worst seed |")
     print("|---|---|---|---|---|")
     for name, n, (wl, wb), bad in results:
-        worst = "%d of 6" % seed_worst[name] if want_seeds else "-"
+        worst = "%d of 7" % seed_worst[name] if want_seeds else "-"
         print("| %s | %d%s | %.3f%% | %.3f%% | %s |"
-              % (name, n, "" if n == 6 else " (%s)" % bad, 100.0 * wl, 100.0 * wb, worst))
+              % (name, n, "" if n == 7 else " (%s)" % bad, 100.0 * wl, 100.0 * wb, worst))
     wl = max(r[2][0] for r in results)
     wb = max(r[2][1] for r in results)
     print("\nwidest load spread %.3f%% and pressure spread %.3f%% against a band of %.1f%%"
           % (100.0 * wl, 100.0 * wb, 100.0 * sealed.TOL))
     print()
     print("Readings the standard does not sanction, which the tolerance nevertheless absorbs:\n")
-    print("| Reading | Right of 6 | Worst load | Worst pressure |")
+    print("| Reading | Right of 7 | Worst load | Worst pressure |")
     print("|---|---|---|---|")
     for name, sw in TOLERATED:
-        rows = common.run(d, reports, **sw)
-        n, _ = common.compare(rows, sealed, tru)
+        rows, sizing = common.run(d, reports, **sw)
+        n, _ = common.compare(rows, sealed, tru, sizing)
         tl, tb = spread(rows, tru)
         print("| %s | %d | %.3f%% | %.3f%% |" % (name, n, 100.0 * tl, 100.0 * tb))
     print()
     print("methods that miss a contingency: %s"
-          % (", ".join(n for n, k, _, _ in results if k != 6) or "none"))
+          % (", ".join(n for n, k, _, _ in results if k != 7) or "none"))
     return 0
 
 

@@ -41,7 +41,7 @@ def main():
     chosen = None
     print("Seeds screened on three conditions. Band %.3f relative; the third condition wants the worst\n"
           "sound method within %.3f.\n" % (tol, HALF * tol))
-    print("| seed | sound methods right | worst sound departure | defective routes that pass | acceptable |")
+    print("| seed | sound methods right of 8 | worst sound departure | defective routes that pass | acceptable |")
     print("|---|---|---|---|---|")
     try:
         for seed in range(first, first + count):
@@ -52,15 +52,16 @@ def main():
             d = solve.load(out)
             nsound, worst = 0, 0.0
             for name, sw in method_spread.METHODS:
-                rows = common.run(d, reports, **sw)
-                k, _ = common.compare(rows, sealed, tru)
-                nsound += 1 if k == len(tru) else 0
+                rows, sizing = common.run(d, reports, **sw)
+                k, _ = common.compare(rows, sealed, tru, sizing)
+                nsound += 1 if k == len(tru) + 1 else 0
                 wl, wb = method_spread.spread(rows, tru)
                 worst = max(worst, wl, wb)
             passers = []
             for name, sw in route_study.ROUTES:
-                k, _ = common.compare(common.run(d, reports, **sw), sealed, tru)
-                if k == len(tru):
+                rows, sizing = common.run(d, reports, **sw)
+                k, _ = common.compare(rows, sealed, tru, sizing)
+                if k == len(tru) + 1:
                     passers.append(name)
             ok = (nsound == len(method_spread.METHODS) and not passers and worst <= HALF * tol)
             if ok and chosen is None:

@@ -65,18 +65,19 @@ def zones_only(d, tru, reports):
 
 def sets_only(d, tru, reports):
     """The device sets worked out properly, the two numbers left at the 2019 study's."""
-    a = common.Agent(d, reports)
     old = {r[0]: r for r in route_study.study_sheet(d)}
-    rows = []
-    for c, devices, total, back in common.run(d, reports):
+    worked, _sizing = common.run(d, reports)
+    out = []
+    for c, devices, total, back in worked:
         was = old.get(c)
-        rows.append((c, devices, was[2] if was else 0.0, was[3] if was else 0.0))
-    return rows
+        out.append((c, devices, was[2] if was else 0.0, was[3] if was else 0.0))
+    return out
 
 
 def no_header(d, tru, reports):
     """The loads worked out properly and the header never computed."""
-    return [(c, devices, total, 0.0) for c, devices, total, _ in common.run(d, reports)]
+    rows, _sizing = common.run(d, reports)
+    return [(c, devices, total, 0.0) for c, devices, total, _ in rows]
 
 
 NULLS = [
@@ -103,7 +104,7 @@ def main():
         free = [c for c in sorted(notes) if not notes[c]]
         worst = max(worst, n)
         print("| %s | %d | %s |" % (name, n, ", ".join(free) or "none"))
-    print("\nbest null answer: %d of 6, against a gate of 6" % worst)
+    print("\nbest null answer: %d of 6 contingencies, against a gate of all six and the re-rating" % worst)
     return 0
 
 

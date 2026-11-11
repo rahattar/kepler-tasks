@@ -27,7 +27,8 @@ def main():
     any_hedge = []
     for name, sw in route_study.ROUTES:
         changed, hedges = [], []
-        for c, devices, total, back in common.run(d, reports, **sw):
+        rows, _sizing = common.run(d, reports, **sw)
+        for c, devices, total, back in rows:
             t = tru[c]
             ok, how = sealed.row_ok(c, devices, total, back)
             if ok:

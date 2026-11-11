@@ -25,32 +25,46 @@ Its answer, against the sealed definition:
 
 | contingency | devices | load, kg/h | header inlet, barg | sealed load | sealed inlet |
 |---|---|---|---|---|---|
-| power_failure | PSV-401 PSV-403 PSV-407 PSV-409 | 99085.7 | 1.3240 | 99148.6 (-0.063%) | 1.3262 (-0.169%) |
-| cooling_water_failure | PSV-403 | 54234.2 | 0.4867 | 54237.3 (-0.006%) | 0.4869 (-0.049%) |
-| instrument_air_failure | PSV-401 PSV-407 PSV-409 | 44851.5 | 0.3517 | 44911.3 (-0.133%) | 0.3529 (-0.326%) |
-| fire_zone_a | PSV-401 PSV-402 PSV-409 | 19957.5 | 0.0523 | 19957.5 (+0.000%) | 0.0523 (-0.055%) |
-| fire_zone_b | PSV-403 PSV-404 | 517.5 | 0.0000 | 517.5 (+0.000%) | 0.0000 (+0.000%) |
-| fire_zone_c | PSV-406 PSV-407 PSV-408 | 38847.4 | 0.1279 | 38847.4 (+0.000%) | 0.1280 (-0.072%) |
+| power_failure | PSV-401 PSV-403 PSV-407 PSV-409 | 95475.1 | 1.2256 | 95521.9 (-0.049%) | 1.2274 (-0.140%) |
+| cooling_water_failure | PSV-403 | 54668.8 | 0.4931 | 54672.3 (-0.006%) | 0.4933 (-0.050%) |
+| instrument_air_failure | PSV-401 PSV-407 PSV-409 | 43644.0 | 0.3317 | 43697.7 (-0.123%) | 0.3327 (-0.306%) |
+| fire_zone_a | PSV-401 PSV-402 PSV-409 | 19967.0 | 0.0524 | 19967.0 (-0.000%) | 0.0524 (-0.055%) |
+| fire_zone_b | PSV-403 PSV-404 | 517.5 | 0.0000 | 517.5 (-0.000%) | 0.0000 (+0.000%) |
+| fire_zone_c | PSV-406 PSV-407 PSV-408 | 38913.6 | 0.1283 | 38913.7 (-0.000%) | 0.1283 (-0.072%) |
 
-worst relative load 0.0013 and pressure 0.0033 against a band of 0.0100
+worst relative load 0.0012 and pressure 0.0031 against a band of 0.0100
 
-What each contingency reaches:
+The re-rating section 9 asks for:
 
-| contingency | air lost | pump runs | safety system holds | device | cause | rate, kg/h |
+| tip bore | device left binding | its share of set pressure | sealed |
+|---|---|---|---|
+| 406.4 mm | PSV-409 under power_failure | 4.440% | 406.4 mm, PSV-409, 4.448% |
+
+| tip bore | worst share any conventional device is left with | meets the 5 per cent limit |
+|---|---|---|
+| 254.0 mm | 16.02% on PSV-409 | no |
+| 304.8 mm | 9.08% on PSV-409 | no |
+| 355.6 mm | 5.95% on PSV-409 | no |
+| 406.4 mm | 4.44% on PSV-409 | yes |
+| 457.2 mm | 3.65% on PSV-409 | yes |
+
+What each contingency reaches, and what the devices stand against:
+
+| contingency | sweeps | device | bonnet | cause | rate, kg/h | stands against, barg |
 |---|---|---|---|---|---|---|
-| power_failure | yes | no | yes | PSV-401 | control_valve_failure | 25859.8 |
-|  |  |  |  | PSV-403 | cooling_failure | 54234.2 |
-|  |  |  |  | PSV-407 | control_valve_failure | 16105.8 |
-|  |  |  |  | PSV-409 | control_valve_failure | 2885.8 |
-| cooling_water_failure | no | yes | yes | PSV-403 | cooling_failure | 54234.2 |
-| instrument_air_failure | yes | yes | yes | PSV-401 | control_valve_failure | 25859.8 |
-|  |  |  |  | PSV-407 | control_valve_failure | 16105.8 |
-|  |  |  |  | PSV-409 | control_valve_failure | 2885.8 |
-| fire_zone_a | no | yes | yes | PSV-401 | fire | 8971.7 |
-|  |  |  |  | PSV-402 | fire | 7089.7 |
-|  |  |  |  | PSV-409 | fire | 3896.1 |
-| fire_zone_b | no | yes | yes | PSV-403 | fire | 283.6 |
-|  |  |  |  | PSV-404 | fire | 233.9 |
-| fire_zone_c | no | yes | yes | PSV-406 | fire | 13917.5 |
-|  |  |  |  | PSV-407 | fire | 15335.7 |
-|  |  |  |  | PSV-408 | fire | 9594.2 |
+| power_failure | 8 | PSV-401 | conventional | control_valve_failure | 21142.9 | 1.1889 |
+|  |  | PSV-403 | conventional | cooling_failure | 55340.5 | 1.2256 |
+|  |  | PSV-407 | bellows | control_valve_failure | 16105.8 | 0.0000 |
+|  |  | PSV-409 | conventional | control_valve_failure | 2885.8 | 0.8630 |
+| cooling_water_failure | 5 | PSV-403 | conventional | cooling_failure | 54668.8 | 0.4931 |
+| instrument_air_failure | 6 | PSV-401 | conventional | control_valve_failure | 24652.3 | 0.3317 |
+|  |  | PSV-407 | bellows | control_valve_failure | 16105.8 | 0.0000 |
+|  |  | PSV-409 | conventional | control_valve_failure | 2885.8 | 0.2266 |
+| fire_zone_a | 3 | PSV-401 | conventional | fire | 8978.4 | 0.0520 |
+|  |  | PSV-402 | bellows | fire | 7089.7 | 0.0000 |
+|  |  | PSV-409 | conventional | fire | 3898.9 | 0.0347 |
+| fire_zone_b | 2 | PSV-403 | conventional | fire | 283.6 | 0.0000 |
+|  |  | PSV-404 | conventional | fire | 233.9 | 0.0000 |
+| fire_zone_c | 4 | PSV-406 | conventional | fire | 13958.7 | 0.1237 |
+|  |  | PSV-407 | bellows | fire | 15335.7 | 0.0000 |
+|  |  | PSV-408 | conventional | fire | 9619.2 | 0.1034 |

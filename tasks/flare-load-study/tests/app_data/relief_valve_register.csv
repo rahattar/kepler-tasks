@@ -1,10 +1,10 @@
-valve,protected_item,relieving_fluid,mawp_barg,set_pressure_barg,fire_zone,discharges_to,causes_admitted
-PSV-401,V-401,feed_gas,62,62.0,A,main flare header,control_valve_failure fire
-PSV-402,E-402,bottoms_product,20,20.0,A,main flare header,fire
-PSV-403,T-401,c2_overhead,31,31.0,B,main flare header,cooling_failure fire
-PSV-404,V-403,c2_overhead,29,29.0,B,main flare header,fire
-PSV-405,P-401,bottoms_product,42,42.0,,main flare header,blocked_outlet
-PSV-406,T-402,c4_product,16,16.0,C,main flare header,cooling_failure fire
-PSV-407,V-405,c3_product,19,19.0,C,main flare header,fire control_valve_failure
-PSV-408,V-404,c4_product,18,18.0,C,main flare header,fire
-PSV-409,V-402,feed_gas,11,11.0,A,main flare header,control_valve_failure fire
+valve,protected_item,relieving_fluid,mawp_barg,set_pressure_barg,fire_zone,bonnet,discharges_to,causes_admitted
+PSV-401,V-401,feed_gas,62,62.0,A,conventional,main flare header,control_valve_failure fire
+PSV-402,E-402,bottoms_product,20,20.0,A,balanced bellows,main flare header,fire
+PSV-403,T-401,c2_overhead,31,31.0,B,conventional,main flare header,cooling_failure fire
+PSV-404,V-403,c2_overhead,29,29.0,B,conventional,main flare header,fire
+PSV-405,P-401,bottoms_product,42,42.0,,balanced bellows,main flare header,blocked_outlet
+PSV-406,T-402,c4_product,16,16.0,C,conventional,main flare header,cooling_failure fire
+PSV-407,V-405,c3_product,19,19.0,C,balanced bellows,main flare header,fire control_valve_failure
+PSV-408,V-404,c4_product,18,18.0,C,conventional,main flare header,fire
+PSV-409,V-402,feed_gas,11,11.0,A,conventional,main flare header,control_valve_failure fire

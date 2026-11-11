@@ -32,6 +32,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "sea
 import isim as sealed  # noqa: E402
 
 COLUMNS = ("contingency", "devices", "load_kg_per_h", "header_inlet_barg")
+SIZING_COLUMNS = ("tip_bore_mm", "binding_device", "back_pressure_pct")
 SIZE_CAP = 100_000
 LOAD_CEILING = 1.0e7
 PRESSURE_CEILING = 1.0e3
@@ -40,7 +41,7 @@ SEPARATORS = re.compile(r"[;,\s]+")
 
 Row = collections.namedtuple("Row", "contingency devices load back")
 Fault = collections.namedtuple("Fault", "line column reason")
-Report = collections.namedtuple("Report", "taken standing total fault rows")
+Report = collections.namedtuple("Report", "taken standing total fault rows sizing")
 
 
 class Rejected(Exception):
@@ -116,7 +117,7 @@ def ascii_text(path):
         raise Rejected(0, "", "the study is not ASCII text")
 
 
-def body_lines(text):
+def body_lines(text, columns=COLUMNS):
     """Every line that carries something, the column names checked off the first of them."""
     try:
         lines = [[cell.strip() for cell in row] for row in csv.reader(io.StringIO(text))
@@ -125,8 +126,8 @@ def body_lines(text):
         raise Rejected(0, "", "the study is not valid CSV: %s" % exc)
     if not lines:
         raise Rejected(0, "", "the study is empty")
-    if tuple(lines[0]) != COLUMNS:
-        raise Rejected(1, "", "the first line must name exactly %s" % ", ".join(COLUMNS))
+    if tuple(lines[0]) != columns:
+        raise Rejected(1, "", "the first line must name exactly %s" % ", ".join(columns))
     return lines[1:]
 
 
@@ -150,16 +151,35 @@ def read_sheet(path):
     return rows
 
 
+def read_sizing(path):
+    """The one row of the re-rating: the bore, the device left binding, and its share of set pressure."""
+    lines = body_lines(ascii_text(path), SIZING_COLUMNS)
+    if len(lines) != 1:
+        raise Rejected(0, "", "the re-rating must carry exactly one row, not %d" % len(lines))
+    cells = lines[0]
+    if len(cells) != len(SIZING_COLUMNS):
+        raise Rejected(2, "", "the row carries %d fields, not %d" % (len(cells), len(SIZING_COLUMNS)))
+    bore = bounded_number("tip_bore_mm", 5000.0, "bore in mm")(cells[0], set())
+    device = cells[1].strip()
+    if device not in sealed.IDS:
+        raise Rejected(2, "binding_device", "%r is not a relief device of this unit" % device)
+    share = bounded_number("back_pressure_pct", 100.0, "percentage")(cells[2], set())
+    return bore, device, share
+
+
 # --------------------------------------------------------------------------- judging
-def assess(path):
-    """Read the study and judge it. Never raises, whatever the file holds."""
-    total = len(sealed.CONTINGENCIES)
+def assess(path, sizing_path=None):
+    """Read the study and the re-rating and judge them. Never raises, whatever the files hold."""
+    total = len(sealed.CONTINGENCIES) + 1          # the six contingencies, and the re-rating
+    if sizing_path is None:
+        sizing_path = os.path.join(os.path.dirname(path) or ".", "tip_sizing.csv")
     try:
         rows = read_sheet(path)
+        bore, device, share = read_sizing(sizing_path)
     except Rejected as bad:
-        return Report(False, 0, total, bad.fault, {})
+        return Report(False, 0, total, bad.fault, {}, {})
     except Exception as exc:                        # nothing a submission contains may escape
-        return Report(False, 0, total, Fault(0, "", "the study could not be read: %r" % exc), {})
+        return Report(False, 0, total, Fault(0, "", "the study could not be read: %r" % exc), {}, {})
     judged = {}
     for row in rows:
         stands, margins = sealed.row_ok(row.contingency, row.devices, row.load, row.back)
@@ -167,8 +187,12 @@ def assess(path):
             "devices": list(row.devices), "load_kg_per_h": row.load, "header_inlet_barg": row.back,
             "stands": bool(stands),
             "margins": {name: round(float(value), 6) for name, value in margins.items()}}
-    standing = sum(1 for shown in judged.values() if shown["stands"])
-    return Report(standing == total, standing, total, None, judged)
+    stands, margins = sealed.sizing_ok(bore, device, share / 100.0)
+    rerating = {"tip_bore_mm": bore, "binding_device": device, "back_pressure_pct": share,
+                "stands": bool(stands),
+                "margins": {name: round(float(value), 6) for name, value in margins.items()}}
+    standing = sum(1 for shown in judged.values() if shown["stands"]) + (1 if stands else 0)
+    return Report(standing == total, standing, total, None, judged, rerating)
 
 
 def explain(report):
@@ -185,10 +209,17 @@ def explain(report):
             name, "ok" if shown["stands"] else "no", " ".join(shown["devices"]) or "none",
             shown["load_kg_per_h"], shown["header_inlet_barg"],
             "ok" if margins["valves"] else "no", margins["load"], margins["back"]))
-    out.append("%d of %d contingencies stand: the study is %s"
+    if report.sizing:
+        z = report.sizing
+        out.append("%-24s %-3s tip %.1f mm, %s at %.3f%% | bore %s device %s share %+.4f"
+                   % ("re-rating", "ok" if z["stands"] else "no", z["tip_bore_mm"], z["binding_device"],
+                      z["back_pressure_pct"], "ok" if z["margins"]["bore"] else "no",
+                      "ok" if z["margins"]["device"] else "no", z["margins"]["share"]))
+    out.append("%d of %d parts of the record stand: the study is %s"
                % (report.standing, report.total, "taken" if report.taken else "not taken"))
     return "\n".join(out)
 
 
 if __name__ == "__main__":
-    print(explain(assess(sys.argv[1] if len(sys.argv) > 1 else "/app/output/flare_load.csv")))
+    print(explain(assess(sys.argv[1] if len(sys.argv) > 1 else "/app/output/flare_load.csv",
+                         sys.argv[2] if len(sys.argv) > 2 else None)))

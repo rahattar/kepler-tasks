@@ -156,11 +156,14 @@ SIF = {
 }
 # the measurement each regulatory control uses: a contingency caused by that control failing is not independent
 # of a function that initiates on the same element
+# the measurement each item's own control function works from. A protective function initiated from one of
+# these shares an instrument with control on the item it protects, and earns no credit for it.
 CONTROL_TAG = {
-    ("PSV-401", "control_valve_failure"): ("PT-4012",),
-    ("PSV-403", "cooling_failure"): ("PT-4031",),
-    ("PSV-406", "cooling_failure"): ("PT-4061",),
-    ("PSV-409", "control_valve_failure"): ("PT-4021",),
+    "V-401": ("PT-4012",),
+    "V-402": ("PT-4021",),
+    "T-401": ("PT-4031",),
+    "T-402": ("PT-4061",),
+    "V-405": ("PT-4071",),
 }
 
 # vessels, for the fire case
@@ -311,9 +314,38 @@ def c_factor(k):
     return 0.03948 * math.sqrt(k * (2.0 / (k + 1.0)) ** ((k + 1.0) / (k - 1.0)))
 
 
-def relieving(set_barg, case):
-    """Relieving pressure, bar absolute."""
-    return set_barg * (1.0 + (OVER_FIRE if case == "fire" else OVER_OTHER)) + ATM
+# What each device feels at its outlet while the study is being converged, bar gauge, and whether it is
+# balanced against it. A conventional device's opening pressure rises with what stands at its outlet, so the
+# rates, the relieving pressures and the header pressures have to come out together.
+BACK_FELT = {}
+
+# Which devices carry a balanced bellows. A bellows isolates the disc from whatever stands at the outlet, so a
+# balanced device opens at its set pressure whatever the header is doing; a conventional one does not.
+BELLOWS = {"PSV-401": False, "PSV-402": True, "PSV-403": False, "PSV-404": False, "PSV-405": True,
+           "PSV-406": False, "PSV-407": True, "PSV-408": False, "PSV-409": False}
+
+CONVERGE = 1.0e-6      # bar: the sweeps stop when no pressure at a tie-in moves by more than this
+MAX_SWEEPS = 200
+
+# The tip bores the vendor supplies, and the limit the re-rating has to meet: no conventional device may be
+# left with a built-up back pressure above this fraction of its own set pressure under any contingency.
+TIP_BORES = (254.0, 304.8, 355.6, 406.4, 457.2)
+BACK_LIMIT = 0.05
+
+
+def felt(vid):
+    """The built-up pressure the device feels at its outlet, zero where a bellows balances it out."""
+    return 0.0 if BELLOWS.get(vid) else BACK_FELT.get(vid, 0.0)
+
+
+def relieving(set_barg, case, back=0.0):
+    """Relieving pressure, bar absolute.
+
+    A conventional spring valve is referenced to atmosphere, so whatever pressure stands at its outlet is
+    added to the pressure at which it opens; a balanced valve is not. `back` is that pressure, in bar gauge,
+    and is zero for a balanced device.
+    """
+    return (set_barg + back) * (1.0 + (OVER_FIRE if case == "fire" else OVER_OTHER)) + ATM
 
 
 def valve_flow(kv_coef, xt, fp, k, p_up_bara, p_dn_bara, rho_up):
@@ -392,7 +424,7 @@ def rate_blocked(vid):
 def rate_pump(vid, shutoff_m):
     """The flow a centrifugal pump delivers at the relieving pressure, L/min; None if it cannot reach it."""
     it = ITEMS[vid]
-    p1 = relieving(it["set_now"], "blocked_outlet")
+    p1 = relieving(it["set_now"], "blocked_outlet", felt(vid))
     rho = liq("bottoms_product", PUMP["temp_C"], "rho")
     h_req = (p1 - (PUMP["suction_barg"] + ATM)) * 1.0e5 / (rho * 9.81)
     if h_req >= shutoff_m:
@@ -404,7 +436,7 @@ def rate_cv_failure(vid, cv_rated):
     """The flow through a fully open control valve into the item at its relieving pressure."""
     it = ITEMS[vid]
     c = CV[it["cv"]]
-    p1 = relieving(it["set_now"], "control_valve_failure")
+    p1 = relieving(it["set_now"], "control_valve_failure", felt(vid))
     p_up = it["source_barg"] + ATM
     st = c["stream"]
     if st == "feed_gas":
@@ -427,7 +459,7 @@ def rate_cooling(vid, ua):
     """Total loss of overhead cooling: the vapour the reboiler makes at the relieving temperature."""
     it = ITEMS[vid]
     r = REB[it["reb"]]
-    p1 = relieving(it["set_now"], "cooling_failure")
+    p1 = relieving(it["set_now"], "cooling_failure", felt(vid))
     q = ua * max(0.0, sat("steam", r["steam_barg"] + ATM, "t") - sat(it["bot_stream"], p1, "t"))
     # the mass the reboiler makes is its duty over the latent heat of the liquid it is boiling, which is the
     # liquid the column holds, not of the vapour that leaves the top
@@ -439,7 +471,7 @@ def rate_fire(vid, raised=None):
     it = ITEMS[vid]
     v = VESSEL[it["item"]]
     stream = v["stream"]
-    p1 = relieving(it["set_now"], "fire")
+    p1 = relieving(it["set_now"], "fire", felt(vid))
     ins = v.get("insul")
     f = f_insulated(ins, sat(stream, p1, "t")) if (ins and ins["fire_rated"]) else 1.0
     a_w = wetted_area(it["item"], raised)
@@ -455,7 +487,7 @@ def credited(vid, case):
             continue
         if s["sil"] < SIL_MIN or s["proof"] > PROOF_MAX:
             return False
-        return s["initiator"] not in CONTROL_TAG.get((vid, case), ())
+        return s["initiator"] not in CONTROL_TAG.get(ITEMS[vid]["item"], ())
     return False
 
 
@@ -543,7 +575,7 @@ def relieving_rate(vid, cause):
 def relieving_stream(vid, cause):
     """(molar mass, k, Z, temperature K) of what the valve puts into the header under that cause."""
     it = ITEMS[vid]
-    p1 = relieving(it["set_now"], cause)
+    p1 = relieving(it["set_now"], cause, felt(vid))
     if cause == "fire":
         stream = VESSEL[it["item"]]["stream"]
         return (sat(stream, p1, "mw"), sat(stream, p1, "k"), sat(stream, p1, "z"),
@@ -595,6 +627,68 @@ def mixed_stream(parts):
     return total / moles, k_mix / total, z_mix / total, t_mix / total
 
 
+def header_profile(parts, tip_mm=None):
+    """(pressure at the blinded end, {device: the pressure at its own tie-in}), both bar gauge.
+
+    Walked from the tip outwards exactly as header_pressure does; this one keeps the pressure reached at each
+    tie-in, which is what the devices tying in there feel at their outlets.
+    """
+    at = {}
+    total = sum(w for w, _ in parts.values())
+    if total <= 0.0:
+        return 0.0, {v: 0.0 for v in parts}
+    d_tip = (FLARE["tip_bore_mm"] if tip_mm is None else tip_mm) / 1000.0
+    a_tip = math.pi / 4.0 * d_tip * d_tip
+    mw, k, z, t_K = mixed_stream(parts)
+    rho = gas_density(ATM, t_K, mw, z)
+    v = total / 3600.0 / (rho * a_tip)
+    p = ATM + FLARE["tip_k"] * rho * v * v / 2.0 / 1.0e5
+    d = FLARE["header_bore_mm"] / 1000.0
+    a = math.pi / 4.0 * d * d
+    cuts = sorted(set([0.0, FLARE["header_length_m"]] + list(TIE_IN.values())))
+    for lo, hi in zip(cuts, cuts[1:]):
+        carried = {v_: wc for v_, wc in parts.items() if TIE_IN[v_] >= hi - 1.0e-9}
+        w = sum(wc[0] for wc in carried.values())
+        if w > 0.0:
+            mw, k, z, t_K = mixed_stream(carried)
+            rho = gas_density(p, t_K, mw, z)
+            vel = w / 3600.0 / (rho * a)
+            kt = F_DARCY * (hi - lo) / d + sum(K_FIT[f] for f, x in FITTINGS if lo < x <= hi)
+            p += kt * rho * vel * vel / 2.0 / 1.0e5
+        for v_ in parts:
+            if abs(TIE_IN[v_] - hi) < 1.0e-9:
+                at[v_] = p - ATM
+    return p - ATM, {v_: at.get(v_, p - ATM) for v_ in parts}
+
+
+def converge(contingency, tip_mm=None, **kw):
+    """The contingency solved as one system: the rates, the relieving pressures and the header together.
+
+    A conventional device's opening pressure rises with the pressure standing at its outlet, and that pressure
+    is raised by the very flow the devices are putting into the header, so the three cannot be worked out in
+    sequence. Sweeping from no built-up pressure converges from below: more flow raises the back pressure, a
+    higher back pressure raises the relieving pressure, and a higher relieving pressure passes less, so the
+    feedback is negative and the fixed point unique.
+    """
+    saved = dict(BACK_FELT)
+    try:
+        BACK_FELT.clear()
+        parts, inlet, at, sweeps = {}, 0.0, {}, 0
+        for sweeps in range(1, MAX_SWEEPS + 1):
+            parts = relieving_set(contingency, **kw)
+            inlet, at = header_profile(parts, tip_mm)
+            moved = max([abs(at.get(v, 0.0) - BACK_FELT.get(v, 0.0)) for v in set(at) | set(BACK_FELT)]
+                        or [0.0])
+            BACK_FELT.clear()
+            BACK_FELT.update(at)
+            if moved <= CONVERGE:
+                break
+        return parts, inlet, at, sweeps
+    finally:
+        BACK_FELT.clear()
+        BACK_FELT.update(saved)
+
+
 def header_pressure(parts):
     """The pressure at the header's blinded end, bar gauge, at the load the contingency puts on it.
 
@@ -634,13 +728,58 @@ def truth():
     if _TRUTH is None:
         t = {}
         for c in CONTINGENCIES:
-            parts = relieving_set(c)
+            parts, inlet, at, sweeps = converge(c)
             t[c] = dict(valves=tuple(sorted(parts)),
                         load=sum(w for w, _ in parts.values()),
-                        back=header_pressure(parts),
+                        back=inlet,
+                        felt={v: round(b, 5) for v, b in at.items()},
+                        sweeps=sweeps,
                         parts={v: (round(w, 1), cause) for v, (w, cause) in parts.items()})
         _TRUTH = t
     return _TRUTH
+
+
+def worst_felt(bore_mm=None):
+    """The worst built-up back pressure any conventional device is left with, as a fraction of its set
+    pressure, over every contingency: (fraction, device, contingency)."""
+    worst, who, where = 0.0, "", ""
+    for c in CONTINGENCIES:
+        parts, inlet, at, sweeps = converge(c, bore_mm)
+        for vid, felt_barg in at.items():
+            if BELLOWS.get(vid):
+                continue
+            share = felt_barg / ITEMS[vid]["set_now"]
+            if share > worst:
+                worst, who, where = share, vid, c
+    return worst, who, where
+
+
+_SIZING = None
+
+
+def sizing():
+    """The smallest tip the vendor supplies that meets the limit, and what is left binding at it."""
+    global _SIZING
+    if _SIZING is None:
+        for bore in sorted(TIP_BORES):
+            share, who, where = worst_felt(bore)
+            if share <= BACK_LIMIT:
+                _SIZING = dict(bore_mm=bore, device=who, share=share, contingency=where)
+                break
+        else:
+            _SIZING = dict(bore_mm=None, device="", share=0.0, contingency="")
+    return _SIZING
+
+
+def sizing_ok(bore_mm, device, share):
+    """Whether a submitted re-rating stands: the bore exactly, the binding device exactly, the share in band."""
+    want = sizing()
+    ok_bore = abs(bore_mm - want["bore_mm"]) < 0.05
+    ok_device = device == want["device"]
+    rel = (share - want["share"]) / want["share"] if want["share"] else 0.0
+    ok_share = abs(rel) <= TOL + 1.0e-12
+    return (ok_bore and ok_device and ok_share,
+            dict(bore=1.0 if ok_bore else 0.0, device=1.0 if ok_device else 0.0, share=rel))
 
 
 def row_ok(contingency, valves, load, back):

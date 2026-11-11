@@ -1,6 +1,6 @@
 # flare-load-study
 
-Work out what each unit-wide contingency now puts on a gas plant's flare header after the unit's capacity was increased: for each contingency the relief devices that discharge, the load they put on the header together and the pressure that load raises at the header's inlet, from the relief valve register, the shop records of every overhaul, the operating record, the control valve trends, the drive schedule, the fire zone and header tie-in schedules, the instrument and safety instrumented system registers, the vessel data book, the superseded flare load study, and a booking of two field tests chosen from six before any result is known.
+Work out what each unit-wide contingency now puts on a gas plant's flare header after the unit's capacity was increased: for each contingency the relief devices that discharge, the load they put on the header together and the pressure that load raises at the header's inlet, from the relief valve register, the shop records of every overhaul, the operating record, the control valve trends, the drive schedule, the fire zone and header tie-in schedules, the instrument and safety instrumented system registers, the vessel data book, the superseded flare load study, a booking of two field tests chosen from six before any result is known, and the re-rating of the stack tip that the standard then calls for. The rates, the relieving pressures and the header pressures are one system: a conventional device opens at its set pressure plus whatever stands at its own tie-in, and that pressure is built up by the very flow the devices are putting into the header, so none of the three can be worked out before the others.
 
 ## Difficulty
 
@@ -10,10 +10,12 @@ The method is the one API 521 and the plant standards built on it set out, here 
 
 - **The unit:** a natural gas liquids recovery train of nine relief devices, PSV-401 to PSV-409, on an inlet separator, a fuel gas knock-out drum, two reflux or receiver drums, a product drum, two fractionating columns, a feed/bottoms exchanger shell and a pump discharge, all nine discharging to one flare header with a 457 mm bore, 380 m of developed length and a 305 mm stack tip.
 - **The contingencies:** loss of the normal electrical supply, loss of cooling water, loss of instrument air, and a pool fire in each of three fire zones. Six rows.
-- **The deliverable:** for each contingency, the devices that discharge, the load in kg/h and the pressure at the header's inlet in barg. Nothing in the records states any of the three.
+- **The deliverable:** for each contingency, the devices that discharge, the load in kg/h and the pressure at the header's inlet in barg; and the re-rating of the stack tip the standard calls for. Nothing in the records states any of them.
 - **The booking:** the unit's test crew is on site for one shift and will run two of the six tests it offers. A test is charged when it is ordered, whatever it returns, and no test is run twice, so both orders have to be placed on what the records already say. Two of the six reach a graded value and four cannot.
 
-The core difficulty is that the chain from a contingency to a relieving device runs through records that have moved on since the documents were written, and that the two numbers in each row depend on the device set being right first:
+**The core of it is that the study does not come out in sequence.** A conventional spring-loaded relief device is referenced to atmosphere, so it opens at its set pressure plus whatever pressure stands at its outlet; a device with a balanced bellows does not, and the register says which is which. What stands at a conventional device's outlet is the pressure in the header at its own tie-in, built up by the very flow every device is putting into the header. So the rates fix the header pressures, the header pressures fix the relieving pressures, and the relieving pressures fix the rates. There is no order in which these can be taken: the contingency has to be brought out as one system, swept from no built-up pressure until nothing moves, and which devices discharge at all is settled on the converged pressures. A study that works the rates first and the header afterwards - the obvious reading, and the one the 2019 study was made on - is wrong by 8 per cent on the governing load and 6 to 8 per cent on two of the pressures, and gets three of the six contingencies wrong. Taking every device as conventional, or every device as balanced, gets two wrong. The feedback is negative, so the sweeps close on one answer from below at about a tenth of the gap each pass; nothing has to be guessed, but nothing can be skipped either.
+
+The rest of the difficulty is that the chain from a contingency to a relieving device runs through records that have moved on since the documents were written, and that the two numbers in each row depend on the device set being right first:
 
 - **Loss of power now carries loss of air with it.** The 2019 study treated them as separate contingencies and said so in a note, because the instrument air compressor stood on the essential supply. A switchboard rebuild moved it to the normal supply; the drive schedule shows where it stands now, and the modification register says when it moved. So loss of power now opens the three control valves that fail open as well as taking the cooling away, and it becomes the governing case by a wide margin. The same modification left the safety instrumented system on the essential supply, which is what lets one instrumented credit survive the power failure.
 - **Which control valves fail open is a record, not an assumption.** Three of six fail open and three fail closed. An assessment that takes them all one way either empties the air failure case or fills it with devices that cannot be reached.
@@ -26,6 +28,8 @@ The core difficulty is that the chain from a contingency to a relieving device r
 - **The superseded study.** The 2019 flare load study on file is correct for the plant as built and states its basis. Taken as the answer now it gets none of the six rows right, and the note it ends on is the thread the whole study pulls.
 - **Two quantities are in no record at all, and the booking is what gets them.** The stack tip was replaced in 2025 by another vendor who supplied no performance data, so the loss coefficient of the tip now installed is written down nowhere; the figure in the 2019 study belongs to the tip it replaced and is 16 per cent away from it, which is enough to fail five of the six rows. P-401's rotating element was renewed in 2026 with a trimmed impeller and not performance tested, so every curve on record describes a pump that could still reach PSV-405's relieving pressure, where the one now installed cannot: an assessment made on the record carries a device that does not discharge. Both have to be measured, and the booking is exactly two tests, so neither order may be spent on the four tests that cannot reach a row. Working out which those are is the study in miniature: E-406's coefficient-area is only ever used for a cause the credit for SIF-4061 sets aside, no device admits a cause PV-4031 could create, a loss of cooling is total however capable E-404 is, and PSV-404's set pressure is already in the shop record.
 
+- **The re-rating.** The standard will not leave a conventional device standing against more than 5 per cent of its own set pressure, and the tip as installed leaves one at 9.1 per cent. The duty is the smallest bore the vendor supplies that brings every conventional device inside the limit under every contingency, which is an outer search with the whole coupled system inside it: each candidate bore changes the tip's loss, which changes every back pressure, which changes the relieving pressures and so the rates. Scaling the shares off the tip as installed instead of re-converging each candidate picks a bore one size too small. The binding device is the one with the lowest set pressure, not the one carrying the most flow, and it has to be named.
+
 Each of these defeats an assumption the general approach makes on first reading:
 - that contingencies named separately in a standard stay separate on a particular plant;
 - that a data sheet describes the equipment installed;
@@ -34,9 +38,10 @@ Each of these defeats an assumption the general approach makes on first reading:
 - that every cause a register admits is a cause that can happen, and that a protective function listed may be credited;
 - that a data book or an isometric issued with the plant still describes it;
 - that a header can be treated as one pipe passing the whole load;
+- that a relieving rate can be worked out before the header it discharges into, and that a device opens at the pressure stamped on it;
 - that every figure the files carry describes the equipment that is there now, and that a measurement is worth making because it can be made.
 
-The gate is all six contingencies, in all three columns.
+The gate is all six contingencies, in all three columns, and the re-rating.
 
 ## Reference solution
 
@@ -50,15 +55,16 @@ solution/solve.py is the reference; solution/solve.sh runs it in the agent's env
 6. **The control valves.** For each logged point of a valve's trend the standard's compressible expression gives the coefficient at that travel; the equal percentage characteristic and the data sheet rangeability refer it to full travel, and the record's mean is used. PV-4001's flow column is FE-4011's, so it takes the feed correction first.
 7. **The reboilers.** For each day of the operating record the steam flow and the latent heat at the steam pressure give the duty, and the duty over the difference between the steam saturation temperature and the bottoms temperature gives the coefficient-area; the mean is used. The relieving rate uses the supply header pressure with the steam valve wide open, the bottoms temperature at the relieving pressure, and the latent heat of the bottoms liquid.
 8. **The rates.** Fire gives the absorbed heat from the wetted area below 7.6 m, the environment factor from a certified fire-resistant system where there is one, and the vapour from the latent heat of the liquid held; a control valve failure gives the flow the valve passes at full travel from its source pressure to the relieving pressure; a loss of cooling gives the vapour the reboiler makes; a blocked discharge gives what the pump delivers at the head the relieving pressure needs, or nothing where it cannot reach it.
-9. **The header.** The load is the sum of the rates, and what arrives is their mixture: molar mass from the total mass over the total moles, the ratio of specific heats, compressibility and temperature mass-weighted. The tip carries the whole load and gives the pressure at the stack base. Then each length of header between two tie-ins is taken in turn, from the stack base outwards, carrying only the devices that tie in beyond it and their mixture, with the density at the pressure already reached at its downstream end. The pressure at the blinded end is the answer. One tie-in is the isometrics' overtaken by a later modification; a length that carries nothing adds nothing.
+9. **The header, and the sweep that closes it.** The load is the sum of the rates, and what arrives is their mixture: molar mass from the total mass over the total moles, the ratio of specific heats, compressibility and temperature mass-weighted. The tip carries the whole load and gives the pressure at the stack base. Then each length of header between two tie-ins is taken in turn, from the stack base outwards, carrying only the devices that tie in beyond it and their mixture, with the density at the pressure already reached at its downstream end; the pressure reached at a tie-in is what the devices there stand against. The pressure at the blinded end is the answer. One tie-in is the isometrics' overtaken by a later modification; a length that carries nothing adds nothing. Because step 1 needs those pressures and they need these rates, the whole contingency is swept from no built-up pressure until no tie-in moves by more than 0.0001 bar, which takes between two and eight passes.
+10. **The re-rating.** For each bore the vendor supplies, from the smallest up, the six contingencies are brought out again as their own systems with that tip, and the largest share of its own set pressure left on any conventional device is compared with the 5 per cent limit. The first bore that meets it is the answer, with the device left binding at it and that share.
 
-**On the shipped records** (authoring/evidence/reference_run.txt) the reference identifies PV-4001 at 54.88 against a data sheet 64.0, PV-4071 at 37.78 against 27.0, PV-4021 at 3.08 against 2.50, and PV-4031 and PV-4061 within half a per cent of their sheets; E-403 at 26.73 kW/K and E-406 at 42.73 kW/K, 18.1 per cent above their data sheet basis; the feed 3.9 per cent above FE-4011's indication; P-401's shutoff head 7.6 per cent below its data sheet, which is what puts the blocked discharge out of reach; PSV-407's tie-in 114 m further out than the isometrics show; and T-402's wetted area 10.6 per cent below what the data book elevation would give. Its answer is power failure 99086 kg/h at 1.3247 barg, cooling water failure 54234 at 0.4869, instrument air failure 44852 at 0.3519, fire zone A 19958 at 0.0523, fire zone B 518 at effectively zero, fire zone C 38847 at 0.1280. All six rows stand, the worst relative departure from the sealed definition being 0.0013 on a load and 0.0027 on a pressure.
+**On the shipped records** (authoring/evidence/reference_run.txt) the sweeps settle in 2 to 8 passes, and the same device relieves at different rates under different contingencies because it stands against a different back pressure in each: PSV-401 passes 21143 kg/h under a loss of power and 24652 kg/h under a loss of air alone. The reference identifies PV-4001 at 54.88 against a data sheet 64.0, PV-4071 at 37.78 against 27.0, PV-4021 at 3.08 against 2.50, and PV-4031 and PV-4061 within half a per cent of their sheets; E-403 at 26.73 kW/K and E-406 at 42.73 kW/K, 18.1 per cent above their data sheet basis; the feed 3.9 per cent above FE-4011's indication; P-401's shutoff head 7.6 per cent below its data sheet, which is what puts the blocked discharge out of reach; PSV-407's tie-in 114 m further out than the isometrics show; and T-402's wetted area 10.6 per cent below what the data book elevation would give. Its answer is power failure 95475 kg/h at 1.2256 barg, cooling water failure 54669 at 0.4931, instrument air failure 43644 at 0.3317, fire zone A 19967 at 0.0524, fire zone B 518 at effectively zero, fire zone C 38914 at 0.1283, and a tip of 406.4 mm with PSV-409 left binding at 4.44 per cent of its set pressure. All seven parts stand, the worst relative departure from the sealed definition being 0.0012 on a load and 0.0031 on a pressure.
 
-**authoring/evidence/independent.py** is a second study, written separately, sharing no code with the reference. It reads the records with pandas, builds one table of every device and contingency pair and groups it, and marches the header with numpy. It takes its own choices where the standard leaves room: the control valve coefficient by a least squares fit through the origin, the reboiler coefficient-area by a least squares fit of duty against temperature difference, and the pump curve by a least squares quadratic. It gets all six rows on the shipped records and on all 20 laboratory seeds, its worst relative departure being 0.0016 on a load and 0.0033 on a pressure.
+**authoring/evidence/independent.py** is a second study, written separately, sharing no code with the reference. It reads the records with pandas, builds one table of every device and contingency pair and groups it, and marches the header with numpy. It takes its own choices where the standard leaves room: the control valve coefficient by a least squares fit through the origin, the reboiler coefficient-area by a least squares fit of duty against temperature difference, and the pump curve by a least squares quadratic. It sweeps each contingency to settlement in its own way and searches the bores for itself. It gets all seven parts on the shipped records and on all 20 laboratory seeds, its worst relative departure being 0.0015 on a load and 0.0036 on a pressure.
 
 ## Verification
 
-The deliverable is one CSV file, /app/output/flare_load.csv, with the devices that discharge, the load in kg/h and the pressure at the header's inlet in barg for each of the six contingencies. The verifier (tests/grade_flare.py, run by tests/test_flare.py under pytest) grades it against the sealed definition in tests/sealed:
+The deliverable is two CSV files. /app/output/flare_load.csv carries the devices that discharge, the load in kg/h and the pressure at the header's inlet in barg for each of the six contingencies; /app/output/tip_sizing.csv carries one row with the re-rated tip bore, the conventional device left binding at it and that device's share of its own set pressure. The verifier (tests/grade_flare.py, run by tests/test_flare.py under pytest) grades both against the sealed definition in tests/sealed:
 
 - the set of devices must be exactly the set that discharges, in any order and separated by semicolons, spaces or commas;
 - the load must be within 1 per cent of it, relative;
@@ -66,13 +72,13 @@ The deliverable is one CSV file, /app/output/flare_load.csv, with the devices th
 
 The agent also has a booking of two field tests from the six the crew offers, ordered through a `fieldtest` wrapper before any result is known. The crew runs as a user of its own, charges the booking before it runs a test, refuses a test it has already run, and writes its reports where the agent can read but not write; the sealed definition it works from sits in a directory the agent cannot open.
 
-The study is accepted only when all six rows stand. One pytest test carries the reward. test.sh writes 0 first, and writes 1 only when pytest exits 0 and the ctrf report shows exactly 1 test, 1 passed.
+For the re-rating the bore must be the right one and the binding device named exactly, with its share within 1 per cent, relative. The study is accepted only when all six rows and the re-rating stand, seven parts in all. One pytest test carries the reward. test.sh writes 0 first, and writes 1 only when pytest exits 0 and the ctrf report shows exactly 1 test, 1 passed.
 
-The truth comes from the sealed definition authoring/provenance/isim.py, never from running the reference, and the agent never sees it: the task is records only, so no copy of it is anywhere in the agent's environment. authoring/provenance/tune.py recomputes the design rules from it and checks them: that every contingency puts at least one device on the header, that no two contingencies name the same devices, that every device discharges somewhere bar the one the pump screen removes, that fire, loss of cooling and control valve failure all arise, that the governing load is at least ten times the smallest (192 times), that exactly one row sits below the pressure floor and every other stands at least ten times clear of it, that the governing contingency passes the 1.0 barg the 2019 study called the end of the margin (1.3262 barg), and that every identified quantity either differs from its data sheet by at least 2 per cent or matches within 1 per cent.
+The truth comes from the sealed definition authoring/provenance/isim.py, never from running the reference, and the agent never sees it: the task is records only, so no copy of it is anywhere in the agent's environment. authoring/provenance/tune.py recomputes the design rules from it and checks them: that every contingency puts at least one device on the header, that no two contingencies name the same devices, that every device discharges somewhere bar the one the pump screen removes, that fire, loss of cooling and control valve failure all arise, that the governing load is at least ten times the smallest (192 times), that exactly one row sits below the pressure floor and every other stands at least ten times clear of it, that the governing contingency passes the 1.0 barg the 2019 study called the end of the margin (1.2274 barg), and that every identified quantity either differs from its data sheet by at least 2 per cent or matches within 1 per cent. Four more cover the coupling and the re-rating: that the sweeps close on one answer (worst step ratio 0.106) and close quickly (8 passes at worst), that a sequential reading misses at least two contingencies (it misses three), that the chosen bore clears the 5 per cent limit with room (4.45 per cent) while the bore below it misses with room (5.96 per cent), and that the device left binding carries no bellows.
 
 authoring/evidence/booking_study.txt grades every way the booking could be spent. Only `tip-backpressure` with `pump-shutoff` gets all six rows; every one of the other fourteen pairs gets at most five, and a study made with no test at all gets one. The four tests that reach no row are shown to reach none by getting the same count with and without them.
 
-tune.py also measures what each layer of the study is worth, by setting the sealed state back to what the records would say if that layer were missed and recomputing the six rows. Against a band of 1 per cent: the column re-set 0.90 m higher 6.8 per cent, the tie-in moved after the isometrics 10.7 per cent, the two valves reset in situ 4.1 per cent, the fire-resistant insulation 3265 per cent, the feed meter's stale density 4.6 per cent, the control valve coefficients 3.8 per cent, the reboiler coefficient-area 25.5 per cent, the tip measured rather than taken from the 2019 study 9.0 per cent, and three layers that change the device set outright: the air compressor's supply, the safety system's supply, and the pump taken from the record rather than measured. No layer is worth less than the tolerance.
+tune.py also measures what each layer of the study is worth, by setting the sealed state back to what the records would say if that layer were missed and recomputing the six rows. Against a band of 1 per cent: the column re-set 0.90 m higher 6.8 per cent, the tie-in moved after the isometrics 10.7 per cent, the two valves reset in situ 4.1 per cent, the fire-resistant insulation 3265 per cent, the feed meter's stale density 4.6 per cent, the control valve coefficients 3.8 per cent, the reboiler coefficient-area 25.5 per cent, the tip measured rather than taken from the 2019 study 9.1 per cent, the system brought together rather than taken in sequence 8.1 per cent, and three layers that change the device set outright: the air compressor's supply, the safety system's supply, and the pump taken from the record rather than measured. No layer is worth less than the tolerance.
 
 Two further rules cover the booking: that the tip now installed differs from the one the 2019 study worked to by more than the tolerance (16.1 per cent), and that the pump's recorded shutoff and its present one fall either side of the head section 7 screens on (582.0 m on record, 577.3 m needed, 545.0 m now), so that an assessment made on the record carries a device that does not discharge.
 
@@ -86,46 +92,51 @@ Correct methods (method_spread.txt, independent.txt). The reference and seven so
 - the pump curve by least squares on all four points of the latest test;
 - and three combinations of these.
 
-Their worst relative departure is 0.0016 on a load and 0.0038 on a pressure, against a band of 0.0100, the pressure figure including the 0.11 per cent by which a five point back pressure test recovers the tip's coefficient. Two readings the standard does not sanction, which the tolerance nevertheless absorbs, are reported in the same file: taking every length of the header with the whole mixture's properties rather than with the mixture that length carries reaches 0.0050 on a pressure.
+Their worst relative departure is 0.0015 on a load and 0.0036 on a pressure, against a band of 0.0100, the pressure figure including the 0.11 per cent by which a five point back pressure test recovers the tip's coefficient. Three readings the standard does not sanction, which the tolerance nevertheless absorbs, are reported in the same file: taking every length with the whole mixture's properties, stopping the sweeps after one correction rather than at settlement, and taking every conventional device against the blinded end rather than its own tie-in. The last two are absorbed because the sweeps contract at about a tenth of the gap each pass and the conventional devices happen to tie in far out, where the header pressure is close to the inlet; neither is the reading the standard gives. 
 
 Defective routes (route_study.txt; the last column counts the laboratory seeds 7301 to 7320 on which the route gets all six). Every one of the 29 fails on the shipped records and on every seed, and so does the 2019 study taken as the answer:
-| Route | Right of 6 | Worst contingency |
+| Route | Right of 7 | Worst part |
 |---|---|---|
-| the register's set pressure, not the setting the valve carries | 3 | cooling_water_failure load +2.5% |
-| the air compressor taken on the essential supply | 5 | power_failure devices PSV-403 |
-| the safety system taken onto the normal supply with it | 5 | power_failure devices PSV-401 PSV-403 PSV-406 PSV-407 PSV-409 |
-| every control valve taken to close on a loss of air | 4 | instrument_air_failure devices none |
-| the pump's rated flow taken as its blocked outlet rate | 5 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409 |
-| no credit for instrumented protection | 5 | power_failure devices PSV-401 PSV-403 PSV-406 PSV-407 PSV-409 |
-| credit taken without testing any condition | 3 | cooling_water_failure devices none |
-| credit taken without the SIL floor | 4 | instrument_air_failure devices PSV-407 PSV-409 |
-| credit taken without the proof test interval | 4 | instrument_air_failure devices PSV-401 PSV-407 |
-| the data sheet coefficient for every control valve | 4 | instrument_air_failure load -2.0% |
-| a linear characteristic for every control valve | 4 | instrument_air_failure load -56.6% |
-| the largest logged flow taken as the relieving rate | 4 | instrument_air_failure load -51.8% |
-| the feed meter read as indicated | 4 | instrument_air_failure load -2.3% |
-| the reboiler coefficient-area from the data sheet duty | 4 | cooling_water_failure load -15.3% |
-| the data sheet duty taken as the relieving duty | 4 | cooling_water_failure load -15.3% |
-| the duty divided by the overhead's latent heat | 4 | cooling_water_failure load -18.5% |
-| the pump's data sheet curve | 5 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409 |
-| the last pump test on record, made before the element was renewed | 5 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409 |
-| the tip coefficient the 2019 study worked to | 1 | cooling_water_failure pressure -4.9% |
-| the booking spent on a test that reaches no row | 1 | cooling_water_failure pressure -4.9% |
-| elevation changes since the data book left out | 5 | fire_zone_c load +3.5% |
-| wetted area not cut at 7.6 m above grade | 4 | fire_zone_b load +25.9% |
-| no drainage or firefighting credit | 3 | fire_zone_a load +64.1% |
-| the whole shell taken as wetted | 3 | fire_zone_a load +100.7% |
-| no insulation credit anywhere | 5 | fire_zone_b load +3265.4% |
-| insulation credit without a certificate | 5 | fire_zone_a load -43.2% |
-| 10 per cent accumulation for the fire case | 3 | fire_zone_a load -4.8% |
-| the tie-in the isometrics show, the modification missed | 3 | fire_zone_c pressure -8.7% |
-| the whole load along the whole header, in one length | 1 | cooling_water_failure pressure +11.8% |
-| only the discharging tie-ins dividing the header | 5 | cooling_water_failure pressure +5.2% |
-| the loss through the tip left out | 1 | cooling_water_failure pressure -34.4% |
-| every density taken at atmospheric pressure | 1 | cooling_water_failure pressure +18.2% |
-| the 2019 study's findings taken as the answer | 0 | cooling_water_failure load -13.2% |
+| the register's set pressure, not the setting the valve carries | 3 | cooling_water_failure load +2.6% |
+| the air compressor taken on the essential supply | 5 | power_failure devices PSV-403; wanted PSV-401 PSV-403 PSV-407 PSV-409 |
+| the safety system taken onto the normal supply with it | 5 | power_failure devices PSV-401 PSV-403 PSV-406 PSV-407 PSV-409; wanted PSV-401 PSV-403 PSV-407 PSV-409 |
+| every control valve taken to close on a loss of air | 4 | instrument_air_failure devices none; wanted PSV-401 PSV-407 PSV-409 |
+| the pump's rated flow taken as its blocked outlet rate | 5 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
+| no credit for instrumented protection | 5 | power_failure devices PSV-401 PSV-403 PSV-406 PSV-407 PSV-409; wanted PSV-401 PSV-403 PSV-407 PSV-409 |
+| credit taken without testing any condition | 3 | cooling_water_failure devices none; wanted PSV-403 |
+| credit taken without the SIL floor | 4 | instrument_air_failure devices PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
+| credit taken without the proof test interval | 4 | instrument_air_failure devices PSV-401 PSV-407; wanted PSV-401 PSV-407 PSV-409 |
+| the data sheet coefficient for every control valve | 5 | instrument_air_failure load -2.6% |
+| a linear characteristic for every control valve | 4 | instrument_air_failure load -55.7% |
+| the largest logged flow taken as the relieving rate | 4 | instrument_air_failure load -50.4% |
+| the feed meter read as indicated | 4 | instrument_air_failure load -2.1% |
+| the reboiler coefficient-area from the data sheet duty | 4 | cooling_water_failure load -15.5% |
+| the data sheet duty taken as the relieving duty | 4 | cooling_water_failure load -15.5% |
+| the duty divided by the overhead's latent heat | 4 | cooling_water_failure load -19.1% |
+| the pump's data sheet curve | 6 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
+| the last pump test on record, made before the element was renewed | 6 | instrument_air_failure devices PSV-401 PSV-405 PSV-407 PSV-409; wanted PSV-401 PSV-407 PSV-409 |
+| the tip coefficient the 2019 study worked to | 1 | cooling_water_failure pressure -5.0% |
+| the booking spent on a test that reaches no row | 1 | cooling_water_failure pressure -5.0% |
+| elevation changes since the data book left out | 6 | fire_zone_c load +3.5% |
+| wetted area not cut at 7.6 m above grade | 5 | fire_zone_b load +25.9% |
+| no drainage or firefighting credit | 4 | fire_zone_a load +64.2% |
+| the whole shell taken as wetted | 4 | fire_zone_a load +101.1% |
+| no insulation credit anywhere | 6 | fire_zone_b load +3271.0% |
+| insulation credit without a certificate | 6 | fire_zone_a load -43.2% |
+| 10 per cent accumulation for the fire case | 0 | cooling_water_failure pressure -1.3% |
+| the tie-in the isometrics show, the modification missed | 4 | fire_zone_c pressure -8.8% |
+| the whole load along the whole header, in one length | 1 | cooling_water_failure pressure +12.0% |
+| only the discharging tie-ins dividing the header | 6 | cooling_water_failure pressure +5.3% |
+| the loss through the tip left out | 1 | cooling_water_failure pressure -34.7% |
+| the system never brought together, rates at no back pressure | 3 | cooling_water_failure pressure -1.3% |
+| every device taken as conventional | 4 | instrument_air_failure load -1.1% |
+| every device taken as balanced | 3 | cooling_water_failure pressure -1.3% |
+| the tip sized without re-converging each candidate | 6 | re-rating tip 355.6 mm, wanted 406.4 |
+| the tip sized on the pressure at the blinded end | 6 | re-rating no bore met the limit |
+| every density taken at atmospheric pressure | 1 | cooling_water_failure pressure +18.7% |
+| the 2019 study's findings taken as the answer | 0 | cooling_water_failure load -13.9% |
 
-Each of the six contingencies is failed by at least seven of the routes: power failure by 22, instrument air failure by 18, cooling water failure and fire zone C by 12 each, fire zone A by 10 and fire zone B by 7.
+Each of the seven parts is failed by at least seven of the routes: power failure and the re-rating by 26 each, instrument air failure by 22, cooling water failure by 15, fire zone C by 12, fire zone A by 10 and fire zone B by 7.
 
 Hedging (hedge_study.txt). A hedge would need a defective reading to name the same devices as the sealed answer and to put both of its numbers within twice the tolerance, so that one row could satisfy both readings. Hedges exist on two rows only, fire zone A and power failure, and never on more than one row of a route that fails elsewhere; the gate is all six.
 
