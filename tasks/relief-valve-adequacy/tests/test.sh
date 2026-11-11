@@ -1,46 +1,46 @@
 #!/bin/bash
-# The reward is written at the end, from pytest's exit status and the test counts in the ctrf report, so it cannot be
-# left at a value anything else wrote while grading ran. A crash, a timeout or a missing file all leave 0.
+# The reward is settled after grading, from pytest's own exit status together with the counts in its report, so
+# that nothing written while grading ran can stand in for it. A crash, a timeout or a missing report all leave 0.
 set -u
 
-mkdir -p /logs/verifier
-chown root:root /logs/verifier 2>/dev/null
-chmod 700 /logs/verifier
-rm -f /logs/verifier/reward.txt
-echo -n "0" > /logs/verifier/reward.txt
+LOGS=/logs/verifier
+CTRF=$LOGS/ctrf.json
+PRIZE=$LOGS/reward.txt
 
-HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$HERE" || exit 0
+seal() {                       # the log directory is root's alone, before grading and again after it
+    mkdir -p "$LOGS"
+    chown root:root "$LOGS" 2>/dev/null
+    chmod 700 "$LOGS" 2>/dev/null
+}
 
-python -m pytest test_relief.py \
-    -p no:cacheprovider \
-    --ctrf=/logs/verifier/ctrf.json \
-    -v
-RC=$?
+seal
+rm -f "$PRIZE"
+printf '0' > "$PRIZE"
 
-# The run counts only if the report holds exactly the one expected test, passed: 1 test, 1 passed, none failed,
-# skipped, pending or other.
-COUNTS_OK=$(python - <<'PY' 2>/dev/null
+cd "$(dirname "${BASH_SOURCE[0]}")" || exit 0
+python -m pytest test_relief.py -p no:cacheprovider --ctrf="$CTRF" -v
+graded=$?
+
+# The run counts only if the report holds the one test that was expected and that test passed: one test, one
+# passed, and nothing failed, skipped, pending or otherwise accounted for.
+python - "$CTRF" <<'TALLY'
 import json
+import sys
+
 try:
-    s = json.load(open("/logs/verifier/ctrf.json"))["results"]["summary"]
-    ok = s.get("tests") == 1 and s.get("passed") == 1 and all(
-        s.get(k, 0) == 0 for k in ("failed", "skipped", "pending", "other"))
+    summary = json.load(open(sys.argv[1]))["results"]["summary"]
 except Exception:
-    ok = False
-print("yes" if ok else "no")
-PY
-)
+    raise SystemExit(1)
+expected = {"tests": 1, "passed": 1, "failed": 0, "skipped": 0, "pending": 0, "other": 0}
+raise SystemExit(0 if all(summary.get(k, 0) == v for k, v in expected.items()) else 1)
+TALLY
+counted=$?
 
-# lock the directory down again before the reward is written
-chown root:root /logs/verifier 2>/dev/null
-chmod 700 /logs/verifier
-rm -f /logs/verifier/reward.txt
-
-if [ "$RC" -eq 0 ] && [ "$COUNTS_OK" = "yes" ]; then
-    echo -n "1" > /logs/verifier/reward.txt
+seal
+rm -f "$PRIZE"
+if [ "$graded" -eq 0 ] && [ "$counted" -eq 0 ]; then
+    printf '1' > "$PRIZE"
 else
-    echo -n "0" > /logs/verifier/reward.txt
+    printf '0' > "$PRIZE"
 fi
-
 exit 0

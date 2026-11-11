@@ -212,16 +212,25 @@ def main():
 
     # ---- the verifier
     vdock = text(os.path.join(ROOT, "tests", "Dockerfile"))
+    reqs = text(os.path.join(ROOT, "tests", "requirements.txt"))
     for pkg, ver in PINS.items():
-        check("the verifier pins %s %s" % (pkg, ver), "%s==%s" % (pkg, ver) in vdock)
-    check("the verifier image has no network use", "pip install" in vdock)
+        check("the verifier pins %s %s" % (pkg, ver), "%s==%s" % (pkg, ver) in reqs)
+    check("the verifier installs exactly what it pins and nothing else",
+          sorted(l.strip() for l in reqs.splitlines() if l.strip())
+          == sorted("%s==%s" % kv for kv in PINS.items()))
+    check("the verifier image installs from the pinned list", "-r /tests/requirements.txt" in vdock)
     sh = text(os.path.join(ROOT, "tests", "test.sh"))
-    check("test.sh writes 0 before grading", re.search(r'echo -n "0" > /logs/verifier/reward.txt', sh) is not None)
-    check("test.sh writes 1 only on a clean pytest run and one passing test",
-          'if [ "$RC" -eq 0 ] && [ "$COUNTS_OK" = "yes" ]' in sh
-          and 's.get("tests") == 1 and s.get("passed") == 1' in sh)
-    check("test.sh locks the log directory before writing the reward",
-          sh.index("chmod 700 /logs/verifier") < sh.index('echo -n "1"'))
+    check("test.sh writes a zero reward before it grades anything",
+          "printf '0'" in sh and "python -m pytest" in sh
+          and sh.index("printf '0'") < sh.index("python -m pytest"))
+    check("test.sh requires the report to hold exactly one passing test",
+          all(k in sh for k in ('"tests": 1', '"passed": 1', '"failed": 0', '"skipped": 0')))
+    check("test.sh writes a reward of one only on a clean run and a counted report",
+          '[ "$graded" -eq 0 ] && [ "$counted" -eq 0 ]' in sh)
+    check("test.sh re-locks the log directory before the reward is written",
+          sh.rindex("seal") < sh.index("printf '1'"))
+    check("test.sh never lets the reward path be chosen from outside",
+          "VERIFIER_LOGS" not in sh and sh.count("LOGS=/logs/verifier") == 1)
 
     # ---- the sealed definition
     a = os.path.join(PROV, "isim.py")
@@ -276,10 +285,9 @@ def main():
             f.write("valve,governing_case,required_area_mm2,verdict\n")
             for vid, case, need, verd in m.sheet():
                 f.write("%s,%s,%.4f,%s\n" % (vid, case, need, verd))
-        r = grade_relief.score(ref)
-        check("the grader accepts the reference solution", r.get("accepted"),
-              "%d of %d" % (r.get("npass", 0), r.get("gate", 0)))
-        worst = max(abs(v["margins"]["area"]) for v in r["valves"].values())
+        r = grade_relief.assess(ref)
+        check("the grader takes the reference solution", r.taken, "%d of %d" % (r.standing, r.total))
+        worst = max(abs(v["margins"]["area"]) for v in r.findings.values())
         check("the reference sits well inside the area band", worst <= 0.5 * S.TOL,
               "worst %.4f against %.4f" % (worst, S.TOL))
     finally:

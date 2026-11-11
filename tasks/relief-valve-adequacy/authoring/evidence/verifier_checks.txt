@@ -5,34 +5,34 @@ ok  the reference sheet with CRLF line ends              -> accepted
 ok  the reference sheet with blank lines                 -> accepted
 ok  the reference sheet with padded fields               -> accepted
 ok  the reference sheet with the rows reversed           -> accepted
-ok  no file at all                                       -> rejected: no assessment at relief.csv
-ok  a symbolic link to a good sheet                      -> rejected: the assessment is not a regular file
+ok  no file at all                                       -> rejected: there is no assessment at relief.csv
+ok  a symbolic link to a good sheet                      -> rejected: the assessment is a symbolic link
 ok  a directory in place of the file                     -> rejected: the assessment is not a regular file
-ok  an empty file                                        -> rejected: the first line must be exactly: valve,governing_case,required_area_mm2,verdict
-ok  the header alone                                     -> rejected: the assessment must have one row for each of PSV-401, PSV-402, PSV-403, PSV-404, PSV-405, PSV-406, PSV-407, PSV-408, PSV-409
-ok  no header                                            -> rejected: the first line must be exactly: valve,governing_case,required_area_mm2,verdict
-ok  a misspelt header                                    -> rejected: the first line must be exactly: valve,governing_case,required_area_mm2,verdict
-ok  an extra header column                               -> rejected: the first line must be exactly: valve,governing_case,required_area_mm2,verdict
-ok  a row of the wrong length                            -> rejected: every row must have four fields: ['PSV-409', 'control_valve_failure', '347.9196']
-ok  a valve missing                                      -> rejected: the assessment must have one row for each of PSV-401, PSV-402, PSV-403, PSV-404, PSV-405, PSV-406, PSV-407, PSV-408, PSV-409
-ok  a valve repeated                                     -> rejected: valve PSV-401 appears twice
-ok  an unknown valve                                     -> rejected: unknown valve 'PSV-410'
-ok  a valve in lower case                                -> rejected: unknown valve 'psv-401'
+ok  an empty file                                        -> rejected: the assessment is empty
+ok  the header alone                                     -> rejected: no row for PSV-401, PSV-402, PSV-403, PSV-404, PSV-405, PSV-406, PSV-407, PSV-408, PSV-409
+ok  no header                                            -> rejected: the first line must name exactly valve, governing_case, required_area_mm2, verdict
+ok  a misspelt header                                    -> rejected: the first line must name exactly valve, governing_case, required_area_mm2, verdict
+ok  an extra header column                               -> rejected: the first line must name exactly valve, governing_case, required_area_mm2, verdict
+ok  a row of the wrong length                            -> rejected: this row carries 3 fields, not 4
+ok  a valve missing                                      -> rejected: no row for PSV-409
+ok  a valve repeated                                     -> rejected: PSV-401 has a second row
+ok  an unknown valve                                     -> rejected: 'PSV-410' is not a valve of unit 400
+ok  a valve in lower case                                -> rejected: 'psv-401' is not a valve of unit 400
 ok  non-ASCII text                                       -> rejected: the assessment is not ASCII text
-ok  an unknown contingency name                          -> rejected: PSV-401 governing_case must be one of fire, blocked_outlet, control_valve_failure, cooling_failure, tube_rupture, thermal_expansion
-ok  a contingency in upper case                          -> rejected: PSV-401 governing_case must be one of fire, blocked_outlet, control_valve_failure, cooling_failure, tube_rupture, thermal_expansion
-ok  an empty contingency                                 -> rejected: PSV-401 governing_case must be one of fire, blocked_outlet, control_valve_failure, cooling_failure, tube_rupture, thermal_expansion
-ok  an unknown verdict                                   -> rejected: PSV-401 verdict must be one of adequate, inadequate
-ok  a verdict in upper case                              -> rejected: PSV-401 verdict must be one of adequate, inadequate
-ok  an empty verdict                                     -> rejected: PSV-401 verdict must be one of adequate, inadequate
-ok  an area that is not a number                         -> rejected: PSV-401 required_area_mm2 is not a number: 'about 500'
-ok  an empty area                                        -> rejected: PSV-401 required_area_mm2 is not a number: ''
-ok  an area of NaN                                       -> rejected: PSV-401 required_area_mm2 must be finite
-ok  an infinite area                                     -> rejected: PSV-401 required_area_mm2 must be finite
-ok  a negative area                                      -> rejected: PSV-401 required_area_mm2 must be from 0.001 to 100000
-ok  an area of zero                                      -> rejected: PSV-401 required_area_mm2 must be from 0.001 to 100000
-ok  an area below the range                              -> rejected: PSV-401 required_area_mm2 must be from 0.001 to 100000
-ok  an area above the range                              -> rejected: PSV-401 required_area_mm2 must be from 0.001 to 100000
+ok  an unknown contingency name                          -> rejected: 'boiling_liquid' names no contingency of the standard
+ok  a contingency in upper case                          -> rejected: 'FIRE' names no contingency of the standard
+ok  an empty contingency                                 -> rejected: '' names no contingency of the standard
+ok  an unknown verdict                                   -> rejected: 'marginal' is neither adequate nor inadequate
+ok  a verdict in upper case                              -> rejected: 'Adequate' is neither adequate nor inadequate
+ok  an empty verdict                                     -> rejected: '' is neither adequate nor inadequate
+ok  an area that is not a number                         -> rejected: 'about 500' is not a finite area between 0.001 and 100000 mm2
+ok  an empty area                                        -> rejected: '' is not a finite area between 0.001 and 100000 mm2
+ok  an area of NaN                                       -> rejected: 'nan' is not a finite area between 0.001 and 100000 mm2
+ok  an infinite area                                     -> rejected: 'inf' is not a finite area between 0.001 and 100000 mm2
+ok  a negative area                                      -> rejected: '-500' is not a finite area between 0.001 and 100000 mm2
+ok  an area of zero                                      -> rejected: '0' is not a finite area between 0.001 and 100000 mm2
+ok  an area below the range                              -> rejected: '0.0005' is not a finite area between 0.001 and 100000 mm2
+ok  an area above the range                              -> rejected: '100001' is not a finite area between 0.001 and 100000 mm2
 ok  an area in exponent form                             -> accepted
 ok  an area with six decimals                            -> accepted
 ok  an area with twelve decimals                         -> accepted
@@ -42,5 +42,12 @@ ok  one verdict changed                                  -> graded 8 of 9
 ok  one area moved by 2 per cent                         -> graded 8 of 9
 ok  every area moved by 2 per cent                       -> graded 0 of 9
 
-41 cases, 0 UNEXPECTED
-The grader never crashed and the reward never depended on anything but the nine rows.
+The reward protocol in tests/test.sh, with pytest stubbed so each combination can be forced.
+
+ok  pytest passes and the report holds one passing test  -> reward 1
+ok  pytest passes but the report holds two tests         -> reward 0
+ok  pytest fails though the report looks right           -> reward 0
+ok  pytest passes and writes no report at all            -> reward 0
+
+45 cases, 0 UNEXPECTED
+The grader never crashed, and the reward followed the run rather than anything written during it.

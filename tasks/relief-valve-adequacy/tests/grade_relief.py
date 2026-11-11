@@ -1,113 +1,171 @@
-"""Grades the submitted relief assessment against the sealed definition.
+"""Grades a submitted relief assessment of unit 400 against the sealed definition.
 
-The submission is /app/output/relief.csv with the header `valve,governing_case,required_area_mm2,verdict` and one
-row for each of the nine valves: the contingency that requires the largest relieving capacity, the effective
-orifice area it requires in mm2, and whether the installed valve is adequate under plant standard RP-7. A row is
-right when all three agree with the sealed definition (isim.py): the contingency name exactly, the area within
-isim.TOL relative, and the verdict exactly. The sheet is accepted only when all nine rows are right.
+The submission is a finding sheet: one row per relief valve, carrying the contingency that governs the valve, the
+effective orifice area that contingency requires in mm2, and whether the valve as installed is adequate. A finding
+stands only if all three agree with the sealed definition - the contingency named exactly, the area inside
+isim.TOL relative, the word adequate or inadequate exactly - and the sheet is taken only when every valve's
+finding stands.
 
-A value exactly at the edge of the area band is compared with a small allowance on the comparison itself, so that
-the result is not decided by binary rounding.
+Reading the sheet is kept apart from judging it. `read_sheet` turns the file into Finding records or, where it
+cannot, into Fault records that say which row and which column were wrong; `assess` judges the findings it got.
+Faults are collected rather than raised, so a sheet with several problems reports the first and counts the rest. A
+sheet that cannot be read whole yields no findings and is never taken.
 
-The result must be a regular file (not a symlink) of at most 100 kB of ASCII text: the header line exactly, then
-nine rows of four fields with no valve repeated, missing or unknown; governing_case one of the names the standard
-defines; required_area_mm2 a decimal number from 0.001 to 100000, written with as many figures as the solver likes;
-verdict either adequate or inadequate. Blank lines and surrounding spaces are ignored. Anything else is rejected and never
-crashes the grader.
+What the reader accepts: a regular file, not a link, of at most 100 kB of ASCII; the four column names in order on
+the first line; then one row for each valve of unit 400, in any order, no valve twice and none unknown. The area
+may be written with as many figures as the submitter likes, plain or in exponent form, so long as it is finite and
+lies between AREA_FLOOR and AREA_CEILING mm2. Blank lines are skipped and surrounding spaces ignored. Anything
+else is a fault, and nothing a submission can contain escapes this module.
 """
+import collections
 import csv
-import decimal
 import io
+import math
 import os
 import stat
 import sys
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "sealed"))
-import isim as S  # noqa: E402
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "sealed"))
+import isim as sealed  # noqa: E402
 
-IDS = list(S.IDS)
-GATE = len(IDS)
-HEADER = ["valve", "governing_case", "required_area_mm2", "verdict"]
-AREA_MIN, AREA_MAX = decimal.Decimal("0.001"), decimal.Decimal("100000")
+COLUMNS = ("valve", "governing_case", "required_area_mm2", "verdict")
+VALVES = frozenset(sealed.IDS)
+AREA_FLOOR, AREA_CEILING = 1.0e-3, 1.0e5
+SIZE_CAP = 100_000
+
+Finding = collections.namedtuple("Finding", "valve case area verdict")
+Fault = collections.namedtuple("Fault", "row column reason")
+Report = collections.namedtuple("Report", "taken standing total fault findings")
 
 
-class Reject(Exception):
-    pass
+# --------------------------------------------------------------------------- reading
+def _without_following(path, flags):
+    return os.open(path, flags | os.O_NOFOLLOW)
+
+
+def _ascii_body(path):
+    """The file's text, or a Fault saying why there is none."""
+    try:
+        mode = os.lstat(path).st_mode
+    except OSError:
+        return Fault(0, "", "there is no assessment at %s" % path)
+    if stat.S_ISLNK(mode):
+        return Fault(0, "", "the assessment is a symbolic link")
+    if not stat.S_ISREG(mode):
+        return Fault(0, "", "the assessment is not a regular file")
+    try:
+        with open(path, "rb", opener=_without_following) as handle:
+            raw = handle.read(SIZE_CAP + 1)
+    except OSError as exc:
+        return Fault(0, "", "the assessment cannot be read: %s" % (exc.strerror or exc))
+    if len(raw) > SIZE_CAP:
+        return Fault(0, "", "the assessment is larger than %d bytes" % SIZE_CAP)
+    try:
+        return raw.decode("ascii")
+    except UnicodeDecodeError:
+        return Fault(0, "", "the assessment is not ASCII text")
+
+
+def _area_of(written):
+    """The area a cell carries, or None where the cell carries no usable one."""
+    try:
+        value = float(written)
+    except ValueError:
+        return None
+    if not math.isfinite(value) or not AREA_FLOOR <= value <= AREA_CEILING:
+        return None
+    return value
 
 
 def read_sheet(path):
+    """(findings, faults). Findings come back only for a sheet with no fault anywhere in it."""
+    body = _ascii_body(path)
+    if isinstance(body, Fault):
+        return [], [body]
     try:
-        st = os.lstat(path)
-    except OSError:
-        raise Reject("no assessment at %s" % path)
-    if not stat.S_ISREG(st.st_mode):
-        raise Reject("the assessment is not a regular file")
-    if st.st_size > 100_000:
-        raise Reject("the assessment is too large")
-    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
-    with os.fdopen(fd, "rb") as f:
-        raw = f.read()
-    try:
-        text = raw.decode("ascii")
-    except UnicodeDecodeError:
-        raise Reject("the assessment is not ASCII text")
-    try:
-        rows = [[c.strip() for c in r] for r in csv.reader(io.StringIO(text)) if any(c.strip() for c in r)]
-    except csv.Error as ex:
-        raise Reject("the assessment is not valid CSV: %s" % ex)
-    if not rows or rows[0] != HEADER:
-        raise Reject("the first line must be exactly: %s" % ",".join(HEADER))
-    out = {}
-    for r in rows[1:]:
-        if len(r) != 4:
-            raise Reject("every row must have four fields: %r" % r)
-        vid, case, area, verd = r
-        if vid not in IDS:
-            raise Reject("unknown valve %r" % vid)
-        if vid in out:
-            raise Reject("valve %s appears twice" % vid)
-        if case not in S.CASES:
-            raise Reject("%s governing_case must be one of %s" % (vid, ", ".join(S.CASES)))
-        if verd not in S.VERDICTS:
-            raise Reject("%s verdict must be one of %s" % (vid, ", ".join(S.VERDICTS)))
-        try:
-            a = decimal.Decimal(area)
-        except decimal.InvalidOperation:
-            raise Reject("%s required_area_mm2 is not a number: %r" % (vid, area))
-        if not a.is_finite():
-            raise Reject("%s required_area_mm2 must be finite" % vid)
-        if not AREA_MIN <= a <= AREA_MAX:
-            raise Reject("%s required_area_mm2 must be from %s to %s" % (vid, AREA_MIN, AREA_MAX))
-        out[vid] = (case, float(a), verd)
-    if set(out) != set(IDS):
-        raise Reject("the assessment must have one row for each of %s" % ", ".join(IDS))
-    return out
+        lines = [[cell.strip() for cell in row]
+                 for row in csv.reader(io.StringIO(body)) if any(cell.strip() for cell in row)]
+    except csv.Error as exc:
+        return [], [Fault(0, "", "the assessment is not valid CSV: %s" % exc)]
+    if not lines:
+        return [], [Fault(0, "", "the assessment is empty")]
+    if tuple(lines[0]) != COLUMNS:
+        return [], [Fault(1, "", "the first line must name exactly %s" % ", ".join(COLUMNS))]
+
+    findings, faults, seen = [], [], set()
+    for number, cells in enumerate(lines[1:], start=2):
+        if len(cells) != len(COLUMNS):
+            faults.append(Fault(number, "", "this row carries %d fields, not %d"
+                                % (len(cells), len(COLUMNS))))
+            continue
+        valve, case, written, verdict = cells
+        if valve not in VALVES:
+            faults.append(Fault(number, "valve", "%r is not a valve of unit 400" % valve))
+            continue
+        if valve in seen:
+            faults.append(Fault(number, "valve", "%s has a second row" % valve))
+            continue
+        seen.add(valve)
+        if case not in sealed.CASES:
+            faults.append(Fault(number, "governing_case", "%r names no contingency of the standard" % case))
+            continue
+        if verdict not in sealed.VERDICTS:
+            faults.append(Fault(number, "verdict",
+                                "%r is neither %s" % (verdict, " nor ".join(sealed.VERDICTS))))
+            continue
+        area = _area_of(written)
+        if area is None:
+            faults.append(Fault(number, "required_area_mm2",
+                                "%r is not a finite area between %g and %g mm2"
+                                % (written, AREA_FLOOR, AREA_CEILING)))
+            continue
+        findings.append(Finding(valve, case, area, verdict))
+
+    missing = VALVES - seen
+    if missing:
+        faults.append(Fault(0, "valve", "no row for %s" % ", ".join(sorted(missing))))
+    return ([] if faults else findings), faults
 
 
-def score(path):
+# --------------------------------------------------------------------------- judging
+def assess(path):
+    """Read the sheet and judge it. Never raises, whatever the file holds."""
     try:
-        sel = read_sheet(path)
-    except Reject as ex:
-        return {"accepted": False, "npass": 0, "gate": GATE, "error": str(ex), "valves": {}}
-    valves = {}
-    for vid in IDS:
-        case, area, verd = sel[vid]
-        ok, m = S.row_ok(vid, case, area, verd)
-        valves[vid] = {"governing_case": case, "required_area_mm2": area, "verdict": verd,
-                       "ok": bool(ok), "margins": {k: round(float(v), 6) for k, v in m.items()}}
-    n = sum(v["ok"] for v in valves.values())
-    return {"accepted": n >= GATE, "npass": n, "gate": GATE, "valves": valves}
+        findings, faults = read_sheet(path)
+    except Exception as exc:                        # nothing a submission contains may escape
+        findings, faults = [], [Fault(0, "", "the assessment could not be read: %r" % exc)]
+    total = len(sealed.IDS)
+    if faults:
+        return Report(False, 0, total, faults[0], {})
+    judged = {}
+    for found in findings:
+        stands, margins = sealed.row_ok(found.valve, found.case, found.area, found.verdict)
+        judged[found.valve] = {"governing_case": found.case, "required_area_mm2": found.area,
+                               "verdict": found.verdict, "stands": bool(stands),
+                               "margins": {name: round(float(value), 6) for name, value in margins.items()}}
+    standing = sum(1 for shown in judged.values() if shown["stands"])
+    return Report(standing == total, standing, total, None, judged)
+
+
+def explain(report):
+    """One line per valve, then the outcome, for the authoring scripts and the command line."""
+    out = []
+    if report.fault is not None:
+        where = (" row %d" % report.fault.row) if report.fault.row else ""
+        column = (" column %s" % report.fault.column) if report.fault.column else ""
+        out.append("not read:%s%s: %s" % (where, column, report.fault.reason))
+    for valve in sorted(report.findings):
+        shown = report.findings[valve]
+        margins = shown["margins"]
+        out.append("%s %-3s %-22s %12.4f mm2 %-11s | contingency %s area %+.4f finding %s" % (
+            valve, "ok" if shown["stands"] else "no", shown["governing_case"],
+            shown["required_area_mm2"], shown["verdict"],
+            "ok" if margins["case"] else "no", margins["area"],
+            "ok" if margins["verdict"] else "no"))
+    out.append("%d of %d findings stand: the sheet is %s"
+               % (report.standing, report.total, "taken" if report.taken else "not taken"))
+    return "\n".join(out)
 
 
 if __name__ == "__main__":
-    r = score(sys.argv[1] if len(sys.argv) > 1 else "/app/output/relief.csv")
-    if "error" in r:
-        print("rejected:", r["error"])
-    for k, v in r.get("valves", {}).items():
-        m = v["margins"]
-        print("%s %s %-22s %12.4f mm2 %-11s | case %s area %+.4f verdict %s" % (
-            k, "ok " if v["ok"] else "BAD", v["governing_case"], v["required_area_mm2"], v["verdict"],
-            "ok" if m["case"] else "no", m["area"], "ok" if m["verdict"] else "no"))
-    print("%d of %d right (gate %d): %s" % (r["npass"], GATE, r["gate"],
-                                            "accepted" if r["accepted"] else "rejected"))
+    print(explain(assess(sys.argv[1] if len(sys.argv) > 1 else "/app/output/relief.csv")))

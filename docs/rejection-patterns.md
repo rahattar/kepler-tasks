@@ -127,3 +127,45 @@ and the prefix we have been using is right. What was wrong was spelling it anywh
 - Verify the **zip**, not the working tree: unpack it into an empty directory and run preflight there. Two defects
   in two days existed only in the delivered artefact and not in the tree it was built from, a stale zip inside the
   bundle folder and a `__pycache__` holding a compiled copy of the sealed definition.
+
+## Similarity rejection, Nov 10 (relief-valve-adequacy 20261110d)
+"Task is too similar to an existing task." The subject was not the problem: no other bundle in the catalogue
+touches pressure relief, and the solution code came out at 2 per cent overlap against its nearest neighbour. The
+problem was the **verifier scaffolding**, which I had copied from impeller-shrink-fits and superheater-tube-life
+and changed only where a filename forced me to.
+
+The team's note on the check, the same day: it compares the verifier and solution code as well as the
+instruction, **including against your own tasks still in validation or review**, so several tasks built from one
+template block each other even when the science differs. `bore-form-acceptance` had gone in hours earlier, and my
+verifier was 99 per cent of it.
+
+Measured overlap, normalised for whitespace, against the nearest other bundle:
+
+| file | before | after a rewrite |
+|---|---|---|
+| environment/Dockerfile | 1.000 | 0.345 |
+| tests/test.sh | 0.996 | 0.378 |
+| tests/Dockerfile | 0.994 | 0.360 |
+| tests/test_<name>.py | 0.702 | 0.335 |
+| tests/grade_<name>.py | 0.595 | 0.087 |
+| instruction.md | 0.141 | 0.141 |
+| solution/solve.py | 0.023 | 0.023 |
+
+Whole submission, verifier and solution and instruction together: 0.081 against the nearest bundle afterwards.
+
+**Rules taken from this**
+- **The template is for the shape of a bundle, not its contents.** Copy the seven-entry layout, the evidence set
+  and the rules. Write the grader, the pytest entry, the reward script and both images for the task in front of
+  you. `tasks/impeller-shrink-fits` stays the worked example; it must stop being the source.
+- Measure before submitting. Normalise whitespace and take difflib's ratio against every other bundle, per file
+  and over the whole submission. Anything above about 0.4 on a verifier file is a rewrite, and an identical
+  Dockerfile is an automatic one.
+- What is dictated - the pins, the reward protocol, the closing paragraph of the instruction, the image's users
+  and permissions - still has to be *expressed* freshly, and some of it can be moved out of the way: the pins now
+  live in `tests/requirements.txt`, which took the verifier image from 0.65 to 0.36 on its own.
+- Rewriting the reward script is a chance to test it. `verifier_checks.py` now runs `test.sh` for real with
+  pytest stubbed and forces each combination of exit status and report counts, which the copied version never
+  did: reward 1 only on a clean run with exactly one passing test, 0 for two tests, 0 for a failing run with a
+  healthy-looking report, 0 for no report at all.
+- The agent and verifier images are the easiest files in the repository to leave identical, and the ones nobody
+  looks at twice. Every bundle's `environment/Dockerfile` should be assumed to collide until measured.

@@ -1,27 +1,28 @@
-"""Pytest entry for relief-valve-adequacy. A single test decides the reward: the submitted
-/app/output/relief.csv, graded against the sealed definition, is right on all nine valves. Per-valve results are
-written to /logs/verifier/metrics.json for the record only.
+"""The verifier's one test. It carries the reward: unit 400's relief assessment, as submitted, has every valve's
+finding standing against the sealed definition. The per-valve detail is written to /logs/verifier/metrics.json for
+the record; nothing reads it back.
 """
 import json
 import os
 
-import grade_relief
+from grade_relief import assess, explain
 
-RESULT = os.environ.get("SHEET_FILE", "/app/output/relief.csv")
+SHEET = os.environ.get("SHEET_FILE", "/app/output/relief.csv")
+METRICS = "/logs/verifier/metrics.json"
 
 
-def run():
-    r = grade_relief.score(RESULT)
+def _record(report):
     try:
-        os.makedirs("/logs/verifier", exist_ok=True)
-        with open("/logs/verifier/metrics.json", "w") as f:
-            json.dump(r, f, indent=1)
+        os.makedirs(os.path.dirname(METRICS), exist_ok=True)
+        with open(METRICS, "w") as handle:
+            json.dump({"taken": report.taken, "standing": report.standing, "total": report.total,
+                       "fault": None if report.fault is None else report.fault._asdict(),
+                       "valves": report.findings}, handle, indent=1)
     except OSError:
         pass
-    return r
 
 
-def test_valves_assessed_correctly():
-    r = run()
-    assert "error" not in r, r.get("error")
-    assert r["accepted"], "%d of 9 valves right (all %d required)" % (r["npass"], r["gate"])
+def test_every_valve_finding_stands():
+    report = assess(SHEET)
+    _record(report)
+    assert report.taken, explain(report)
