@@ -1,15 +1,23 @@
 """A second audit, written from the documents alone and sharing no code with the reference solution.
 
-Where the reference identifies the gas budget by a linear least squares with the gauge correction iterated to a
-fixed point outside it, this one solves the whole thing at once: a nonlinear least squares in the logarithm of the
-gas load, over the wall coefficient, the leak, and a trapped volume with its time constant, with MS-BP clause 5's
-correction evaluated inside the residual at every step. Where the reference reads the wall's share of a thin log
-off the water line of a residual gas analysis, this one unmixes all six species against the three source
-compositions by non-negative least squares. It also finds a changed turbo from the controller's rotor frequency
-rather than its drive power, and averages every surviving speed test rather than taking the latest.
+It is meant to fail where the reference is wrong, so wherever the reference makes a decision this one makes it a
+different way:
 
-It reaches the same answers as the reference, which is what makes the audit well posed rather than a property of
-one program.
+- **The gas budget** is one nonlinear least squares in the logarithm of every parameter at once - the wall
+  coefficient, the leak, a trapped volume and its time constant, and the speed now where no test gives it - with
+  MS-BP clause 5's correction evaluated inside the residual. The reference searches the time constant on a grid,
+  solves the rest linearly and iterates the correction outside.
+- **Which budget** is chosen by the Bayesian information criterion, where the reference uses Akaike's.
+- **The seal** is tested with a free permeation scale, fitted continuously and adopted as another table material
+  only where it is well determined and lies near one. The reference tries each material with a fixed penalty.
+- **A changed turbo** is found by a changepoint in the bearing temperature, judged against the series' own scatter;
+  the reference uses fixed steps in drive power and temperature.
+- **The pump fitted** is the model nearest the median of every controller row before any change, where the
+  reference averages the first four rows and applies an acceptance bound.
+- **A gauge certificate** is called out only when the throughput tests sit above the rated speed by more than three
+  standard errors of their stated repeatability, where the reference uses a fixed slack.
+- **A fouling cold cathode** is corrected by its fitted ratio to the ionization gauge whenever both were read, with
+  no threshold on the size of the trend.
 
     audit_all(data_dir, vacwork_dir) -> {chamber: (cause, q_total, s_eff)}
 """
@@ -170,7 +178,8 @@ def state_on(cid, data, date):
     st = dict(volume=float(head["volume_l"]), pump=head["turbo"], port=float(head["c_port_l_s"]),
               seal=head["seal_material"], seal_cm=float(head["seal_length_cm"]),
               surfaces=[(float(r["surface_area_m2"]), r["surface"]) for r in mine],
-              spec=float(head["p_spec_mbar"]), relined=None, ported=None)
+              spec=float(head["p_spec_mbar"]), relined=None, ported=None, seal_register=head["seal_material"],
+              seal_logged=None)
     fitted = pump_fitted(cid, data)
     if fitted:
         st["pump"] = fitted
@@ -190,37 +199,47 @@ def state_on(cid, data, date):
             st["ported"] = row["date"]
         if "Seal material after the work:" in txt:
             st["seal"] = txt.split("Seal material after the work:", 1)[1].strip().rstrip(".")
+            st["seal_logged"] = st["seal_logged"] or row["date"]
         if "Seal length after the work:" in txt:
             st["seal_cm"] = float(txt.split("Seal length after the work:", 1)[1].strip().split()[0])
     return st
 
 
-def pump_fitted(cid, data):
-    """The pump the controller's figures say is turning, which a register can get wrong. Chosen by the smallest
-    relative distance to each model's rated rotor frequency, drive power and bearing temperature over the
-    chamber's earliest rows."""
-    seq = sorted([r for r in data["ctl"] if r["chamber"] == cid], key=lambda r: r["date"])[:4]
-    if not seq:
-        return None
-    got = (float(np.mean([float(r["rotor_hz"]) for r in seq])),
-           float(np.mean([float(r["drive_power_w"]) for r in seq])),
-           float(np.mean([float(r["bearing_temp_c"]) for r in seq])))
-    scored = sorted((sum(((g - n) / n) ** 2 for g, n in zip(got, nom)), m) for m, nom in CTRL.items())
-    return scored[0][1] if scored[0][0] < 0.02 else None
+READ_REPEAT = 0.006                 # records_format.md: the shop's gauge readings repeat to 0.6 per cent
+SPEED_REPEAT = 0.007                # and a throughput test's speed, from two pressures each repeating to 0.5
+ORDER_REPEAT = {"rga": 0.010, "rate-of-rise": 0.005, "speed-test": 0.005}
+TAU_LONGEST = 48.0                  # MS-BP clause 3.3
+
+
+def _ctrl(cid, data):
+    return sorted([r for r in data["ctl"] if r["chamber"] == cid], key=lambda r: r["date"])
 
 
 def turbo_altered(cid, data):
-    """The first month the controller shows a turbo that is not the one it was: rotor frequency down by more than
-    3 per cent, or bearing temperature up by more than 5 C."""
-    seq = sorted([r for r in data["ctl"] if r["chamber"] == cid], key=lambda r: r["date"])
-    if len(seq) < 2:
+    """The date the controller shows the turbo became another pump: the split of the bearing temperature series
+    with the largest step, accepted where that step is more than ten standard errors of the series' own scatter."""
+    seq = _ctrl(cid, data)
+    t = np.array([float(r["bearing_temp_c"]) for r in seq])
+    best = None
+    for i in range(2, len(t) - 1):
+        a, b = t[:i], t[i:]
+        sd = math.sqrt((np.var(a, ddof=1) * (len(a) - 1) + np.var(b, ddof=1) * (len(b) - 1)) / (len(t) - 2))
+        z = abs(b.mean() - a.mean()) / (max(sd, 1e-9) * math.sqrt(1.0 / len(a) + 1.0 / len(b)))
+        if best is None or z > best[0]:
+            best = (z, seq[i]["date"])
+    return best[1] if best and best[0] > 10.0 else None
+
+
+def pump_fitted(cid, data):
+    """The pump the controller's figures say is turning, which a register can get wrong: the model nearest the
+    median of every row before the turbo changed."""
+    seq = _ctrl(cid, data)
+    if not seq:
         return None
-    hz0 = float(seq[0]["rotor_hz"])
-    tb0 = float(seq[0]["bearing_temp_c"])
-    for r in seq[1:]:
-        if float(r["rotor_hz"]) < 0.97 * hz0 or float(r["bearing_temp_c"]) > tb0 + 5.0:
-            return r["date"]
-    return None
+    alt = turbo_altered(cid, data)
+    seq = [r for r in seq if not alt or r["date"] < alt] or seq
+    got = [float(np.median([float(r[k]) for r in seq])) for k in ("rotor_hz", "drive_power_w", "bearing_temp_c")]
+    return min(CTRL, key=lambda m: sum(((g - n) / n) ** 2 for g, n in zip(got, CTRL[m])))
 
 
 def swapped_tags(data):
@@ -246,26 +265,26 @@ def swapped_tags(data):
     return out
 
 
+def _ord(date):
+    import datetime
+    return datetime.date(*map(int, date.split("-"))).toordinal()
+
+
 def readings(cid, data, st, swaps):
-    """One reading per pumpdown since the chamber was last relined, preferring the hot-filament gauge and
-    correcting a fouling cold cathode by the trend of its ratio to that gauge."""
+    """One reading per pumpdown since the chamber was last relined, preferring the ionization gauge, which
+    audit_note.md makes the reference instrument, and correcting each cold cathode reading by the fitted line of
+    its ratio to that gauge wherever both were ever read."""
     mine = [r for r in data["log"] if r["chamber"] == cid and r["date"] <= AUDIT_DATE]
     if st["relined"]:
         mine = [r for r in mine if r["date"] >= st["relined"]]
     groups = {}
     for r in mine:
         groups.setdefault((r["date"], r["pumpdown"]), []).append(r)
-
     pairs = {}
     for r in [x for x in data["log"] if x["chamber"] == cid]:
         pairs.setdefault((r["date"], r["pumpdown"]), {})[r["gauge"][:2]] = float(r["reading_mbar"])
     both = [(_ord(d), v["CC"] / v["IG"]) for (d, _p), v in sorted(pairs.items()) if "CC" in v and "IG" in v]
-    slope = offset = None
-    if len(both) >= 2 and abs(both[-1][1] - both[0][1]) > 0.02:
-        xs = np.array([x for x, _ in both], float)
-        ys = np.array([y for _, y in both], float)
-        slope, offset = np.polyfit(xs, ys, 1)
-
+    line = np.polyfit([x for x, _ in both], [y for _, y in both], 1) if len(both) >= 2 else None
     out = []
     for (date, pd), group in sorted(groups.items()):
         hot = [r for r in group if r["gauge"].startswith("IG")]
@@ -274,23 +293,11 @@ def readings(cid, data, st, swaps):
         if tag not in data["cert"]:
             continue
         shown = float(pick["reading_mbar"]) * factor_on(data["cert"], tag, date)
-        if not hot and slope is not None:
-            ratio = offset + slope * _ord(date)
-            if 0.2 < ratio < 5.0:
-                shown /= ratio
+        if not hot and line is not None and tag.startswith("CC"):
+            shown /= float(np.polyval(line, _ord(date)))
         out.append(dict(date=date, hours=float(pick["pumpdown_h"]), t_c=float(pick["wall_temp_c"]),
                         vent=pick["vent_gas"], load=pick["load"].strip(), shown=shown, tag=tag))
     return out
-
-
-def _ord(date):
-    import datetime
-    return datetime.date(*map(int, date.split("-"))).toordinal()
-
-
-def seal_on(cid, data, date):
-    st = state_on(cid, data, date)
-    return st["seal"], st["seal_cm"]
 
 
 def surfaces_of(st, load):
@@ -300,112 +307,15 @@ def surfaces_of(st, load):
     return out
 
 
-def solve_budget(cid, data, st, reads, s_eff, with_trap):
-    """Nonlinear least squares in the logarithm of the gas load, with the gauge correction inside the residual."""
-    shapes = [wall_shape(surfaces_of(st, r["load"]), r["hours"], r["vent"], r["t_c"]) for r in reads]
-    perms = [perm_load(*seal_on(cid, data, r["date"]), t_c=r["t_c"]) for r in reads]
-    seals = [seal_on(cid, data, r["date"])[0] for r in reads]
-
-    def residual(theta):
-        c_w = math.exp(theta[0])
-        q_l = math.exp(theta[1])
-        qv0 = math.exp(theta[2]) if with_trap else 0.0
-        tau = math.exp(theta[3]) if with_trap else 1.0
-        res = []
-        for i, r in enumerate(reads):
-            wall = c_w * shapes[i]
-            chan = q_l + (qv0 * math.exp(-r["hours"] / tau) if with_trap else 0.0)
-            _mix, shown_per_true = mixture(wall, perms[i], chan, seals[i])
-            model_true = wall + perms[i] + chan
-            model_shown = model_true * shown_per_true / s_eff
-            res.append(math.log(max(model_shown, 1e-30)) - math.log(max(r["shown"], 1e-30)))
-        return res
-
-    start = [math.log(1.0), math.log(max(1e-6, 1e-5))]
-    lo = [math.log(1e-3), math.log(1e-12)]
-    hi = [math.log(1e3), math.log(1e-1)]
-    if with_trap:
-        start += [math.log(1e-4), math.log(8.0)]
-        lo += [math.log(1e-9), math.log(2.0)]
-        hi += [math.log(1e-1), math.log(48.0)]
-    fit = least_squares(residual, start, bounds=(lo, hi), method="trf", xtol=1e-12, ftol=1e-12)
-    c_w = math.exp(fit.x[0])
-    q_l = math.exp(fit.x[1])
-    qv0 = math.exp(fit.x[2]) if with_trap else 0.0
-    tau = math.exp(fit.x[3]) if with_trap else None
-    return c_w, q_l, qv0, tau, float(np.sum(np.array(fit.fun) ** 2))
-
-
-def unmix(cid, data, vac, s_eff):
-    """Splits the gas load into wall water, permeated air and air through a channel by fitting all six species the
-    analyser resolves against the three source compositions."""
-    path = os.path.join(vac, "rga_%s.csv" % cid.lower()) if vac else None
-    if not path or not os.path.exists(path):
-        return None
-    partial, hours, t_c = {}, REF_HOURS, 20.0
-    for line in open(path):
-        if line.startswith("#"):
-            if "pumping time" in line:
-                hours = float(line.rsplit(":", 1)[1].split()[0])
-            elif "wall temperature" in line:
-                t_c = float(line.rsplit(":", 1)[1].split()[0])
-            continue
-        if line.startswith("species"):
-            continue
-        name, _mz, val = line.strip().split(",")
-        partial[name] = float(val)
-    seal, _cm = seal_on(cid, data, AUDIT_DATE)
-    cols = []
-    for src in (WALL_GAS, perm_species(seal), dict(zip(("n2", "o2", "ar", "co2"), DRY_AIR))):
-        tot = sum(src.values())
-        cols.append([src.get(k, 0.0) / tot for k in ORDER])
-    A = np.array(cols, float).T
-    y = np.array([partial.get(k, 0.0) * s_eff for k in ORDER], float)
-    q, _rn = nnls(A, y)
-    return dict(wall=float(q[0]), perm=float(q[1]), channel=float(q[2]), hours=hours, t_c=t_c)
-
-
-def worked_on_since_sound(cid, data):
-    tests = sorted([r for r in data["spd"] if r["chamber"] == cid], key=lambda r: r["date"])
-    if not tests:
-        return False
-    first = tests[0]
-    spec = float([r for r in data["reg"] if r["chamber"] == cid][0]["p_spec_mbar"])
-    was_sound = float(first["p_without_flow_mbar"]) <= 2.0 * spec
-    since = [r for r in data["mnt"] if r["chamber"] == cid and first["date"] < r["date"] <= AUDIT_DATE]
-    return bool(was_sound and since)
-
-
-def ordered_speed(cid, st, vac):
-    if not vac:
-        return None
-    sp = os.path.join(vac, "speed_test_%s.csv" % cid.lower())
-    if os.path.exists(sp):
-        for line in open(sp):
-            if line.startswith("#") or line.startswith("flow"):
-                continue
-            return float(line.strip().split(",")[3])
-    rr = os.path.join(vac, "rate_of_rise_%s.csv" % cid.lower())
-    if os.path.exists(rr):
-        pts = []
-        for line in open(rr):
-            if line.startswith("#") or line.startswith("seconds"):
-                continue
-            a, b = line.strip().split(",")
-            pts.append((float(a), float(b)))
-        if len(pts) >= 10:
-            # the first ten minutes only: over a whole hour the wall gas load has fallen measurably, and the
-            # slope would be the average over the run rather than the load at the reported pumping time
-            win = [q for q in pts if q[0] <= 600.0] or pts
-            slope, intercept = np.polyfit([x for x, _ in win], [y for _, y in win], 1)
-            return slope * st["volume"] / intercept
-    return None
+def rated_of(st, p=1e-6):
+    pump = speed_curve(st["pump"], p)
+    return pump * st["port"] / (pump + st["port"])
 
 
 def cert_out_by(cid, data, st):
-    """A chamber's throughput tests cannot report a speed above its pump in series with its port. Where they do,
-    the ratio is how far its gauge certificate is out: its pressures are low by it and its reported speeds high by
-    it, which is why the gas load looks right and only the speed does not."""
+    """A chamber's throughput tests cannot report a speed above its pump in series with its port (MS-BP clause 4).
+    Where they sit above it by more than three standard errors of their stated repeatability, the mean ratio is how
+    far the gauge certificate is out."""
     rated = rated_of(st)
     good, tags = [], set()
     for r in data["spd"]:
@@ -416,100 +326,252 @@ def cert_out_by(cid, data, st):
     if not good:
         return 1.0, None
     k = float(np.mean(good))
-    if k <= 1.02:
+    if k - 1.0 <= 3.0 * SPEED_REPEAT / math.sqrt(len(good)):
         return 1.0, None
     return k, (sorted(tags)[0] if len(tags) == 1 else None)
 
 
-def speed_of(cid, data, st, vac, altered):
-    s = ordered_speed(cid, st, vac)
-    if s is not None:
-        return s
-    good = [r for r in sorted(data["spd"], key=lambda r: r["date"]) if r["chamber"] == cid
-            and not (st["ported"] and r["date"] < st["ported"])
-            and not (altered and r["date"] >= altered)]
-    if good and not altered:
-        return float(np.mean([float(r["s_eff_l_s"]) for r in good]))
-    if good and altered:
-        s_old = float(np.mean([float(r["s_eff_l_s"]) for r in good]))
-        reads = readings(cid, data, st, swapped_tags(data))
-        before = [r for r in reads if r["date"] < altered]
-        after = [r for r in reads if r["date"] >= altered]
-        if before and after:
-            c_w, q_l, _qv, _tau, _ss = solve_budget(cid, data, st, before, s_old, False)
-            est = []
-            for r in after:
-                wall = c_w * wall_shape(surfaces_of(st, r["load"]), r["hours"], r["vent"], r["t_c"])
-                pm = perm_load(*seal_on(cid, data, r["date"]), t_c=r["t_c"])
-                _mix, shown_per_true = mixture(wall, pm, q_l, seal_on(cid, data, r["date"])[0])
-                est.append((wall + pm + q_l) * shown_per_true / r["shown"])
-            return float(np.mean(est))
-    return st["port"] * speed_curve(st["pump"], 1e-6) / (st["port"] + speed_curve(st["pump"], 1e-6))
+def _cuts(st, altered):
+    return sorted(d for d in (st["ported"], altered) if d)
 
 
-def rated_of(st, p=1e-6):
-    pump = speed_curve(st["pump"], p)
-    return pump * st["port"] / (pump + st["port"])
+def _period(date, cuts):
+    return sum(1 for c in cuts if date >= c)
+
+
+def shop_speed(cid, data, cuts, period, k):
+    """The mean of the shop's speed tests in a period, read back through the chamber's certificate."""
+    vals = [float(r["s_eff_l_s"]) / k for r in data["spd"]
+            if r["chamber"] == cid and _period(r["date"], cuts) == period]
+    return float(np.mean(vals)) if vals else None
+
+
+def _report_head(path):
+    hours, t_c, factor = REF_HOURS, 20.0, 1.0
+    for line in open(path):
+        if not line.startswith("#"):
+            break
+        if "pumping time" in line:
+            hours = float(line.rsplit(":", 1)[1].split()[0])
+        elif "wall temperature" in line:
+            t_c = float(line.rsplit(":", 1)[1].split()[0])
+        elif "factor" in line:
+            factor = float(line.rsplit("factor", 1)[1].split()[0])
+    return hours, t_c, factor
+
+
+def _table(path, skip):
+    return [l.strip().split(",") for l in open(path) if not l.startswith("#") and not l.startswith(skip)]
+
+
+def order_observations(cid, st, vac):
+    """What an ordered test says about the gas load, and the speed it gives where it gives one. The contractor reads
+    on its own gauge, whose factor the report states; nothing of the chamber's certificate enters."""
+    obs, s_now, leak = [], None, None
+    if not vac:
+        return obs, s_now, leak
+    f = os.path.join(vac, "speed_test_%s.csv" % cid.lower())
+    if os.path.exists(f):
+        hours, t_c, factor = _report_head(f)
+        flow, p_w, p_wo, s = (float(x) for x in _table(f, "flow")[-1])
+        s_now = s
+        obs.append(dict(hours=hours, t_c=t_c, vent="air", load="", shown=p_wo * factor, gauge=True,
+                        speed=s, sd=ORDER_REPEAT["speed-test"], date=AUDIT_DATE))
+    f = os.path.join(vac, "rate_of_rise_%s.csv" % cid.lower())
+    if os.path.exists(f):
+        hours, t_c, _ = _report_head(f)
+        pts = [(float(a), float(b)) for a, b in _table(f, "seconds")]
+        win = [q for q in pts if q[0] <= 600.0] or pts
+        slope, _intercept = np.polyfit([x for x, _ in win], [y for _, y in win], 1)
+        q = slope * st["volume"]
+        # the base pressure is the trace's own reading at valve closure, not the line's intercept: the pressure
+        # climbs a hundredfold over the window, so the intercept is a long extrapolation of a steep line and is
+        # several per cent out on the read noise alone
+        s_now = q / pts[0][1]
+        obs.append(dict(hours=hours, t_c=t_c, vent="air", load="", shown=q, gauge=False, speed=1.0,
+                        sd=ORDER_REPEAT["rate-of-rise"], date=AUDIT_DATE))
+    f = os.path.join(vac, "rga_%s.csv" % cid.lower())
+    if os.path.exists(f):
+        hours, t_c, _ = _report_head(f)
+        total = sum(float(v) for _n, _m, v in _table(f, "species"))
+        obs.append(dict(hours=hours, t_c=t_c, vent="air", load="", shown=total, gauge=False, speed="now",
+                        sd=ORDER_REPEAT["rga"], date=AUDIT_DATE))
+    f = os.path.join(vac, "helium_%s.csv" % cid.lower())
+    if os.path.exists(f):
+        by = {}
+        for region, sec, val in _table(f, "region"):
+            by.setdefault(region, []).append((float(sec), float(val)))
+        step = 0.0
+        for pts in by.values():
+            pts.sort()
+            v = np.array([x for _t, x in pts])
+            tt = np.array([t for t, _x in pts])
+            base, end = v[0], v[tt >= 240.0].mean()
+            # a channel answers in seconds and a seal over minutes: a step reaches most of its end value within
+            # the first thirty seconds, a permeation ramp does not
+            if end > base and v[tt <= 30.0].max() - base > 0.5 * (end - base):
+                step = max(step, end - base)
+        leak = step / 2.69
+    return obs, s_now, leak
+
+
+def _seal_series(st, date, scale):
+    """The seal on a date, and its permeation per unit of the table's figure. Before the log first records a
+    material the register's applies, scaled where the fit is testing it."""
+    seal, cm = st["seal"], st["seal_cm"]
+    before = st["seal_logged"] is None or date < st["seal_logged"]
+    if before:
+        seal = st["seal_register"]
+    return seal, cm, (scale if before else 1.0)
+
+
+def solve(cid, data, st, obs, s_now, trapped_from, free_perm, speed_range, leak=None, fixed_tau=None):
+    """One nonlinear least squares in the logarithm of every parameter. Returns (chi2, parameters, n, k).
+    With fixed_tau the time constant is held, and the rest is fitted around it."""
+    hist = {}
+    for o in obs:
+        hist[o["date"]] = state_on(cid, data, o["date"])
+    shapes = [wall_shape(surfaces_of(st, o["load"]), o["hours"], o["vent"], o["t_c"]) for o in obs]
+    seals = [_seal_series(dict(st, seal=hist[o["date"]]["seal"], seal_cm=hist[o["date"]]["seal_cm"]),
+                          o["date"], 1.0) for o in obs]
+    base_perm = [perm_load(m, cm, o["t_c"]) for (m, cm, _x), o in zip(seals, obs)]
+    in_register = [x != 1.0 or (st["seal_logged"] is None or o["date"] < st["seal_logged"])
+                   for (_m, _c, x), o in zip(seals, obs)]
+    trapped = [trapped_from is not None and o["date"] >= trapped_from for o in obs]
+    names = ["c_w", "leak"] + (["qv0"] if trapped_from else []) + \
+            (["tau"] if trapped_from and fixed_tau is None else []) + (["perm"] if free_perm else []) + \
+            (["s_now"] if s_now is None else [])
+
+    def unpack(th):
+        p = dict(zip(names, [math.exp(x) for x in th]))
+        p.setdefault("qv0", 0.0)
+        p.setdefault("tau", fixed_tau if trapped_from else None)
+        p.setdefault("perm", 1.0)
+        p.setdefault("s_now", s_now)
+        return p
+
+    def residual(th):
+        p = unpack(th)
+        res = []
+        for i, o in enumerate(obs):
+            wall = p["c_w"] * shapes[i]
+            pm = base_perm[i] * (p["perm"] if in_register[i] else 1.0)
+            chan = p["leak"] + (p["qv0"] * math.exp(-o["hours"] / p["tau"]) if trapped[i] else 0.0)
+            true = wall + pm + chan
+            speed = p["s_now"] if o["speed"] == "now" else o["speed"]
+            if o["gauge"]:
+                _mix, shown_per_true = mixture(wall, pm, chan, seals[i][0])
+                model = true * shown_per_true / speed
+            else:
+                model = true / speed
+            res.append((math.log(max(model, 1e-30)) - math.log(max(o["shown"], 1e-30))) / o["sd"])
+        if leak is not None:
+            res.append((p["leak"] - leak) / max(0.03 * leak, 2e-9))
+        return res
+
+    lo = {"c_w": 1e-3, "leak": 1e-11, "qv0": 1e-10, "tau": 1.0, "perm": 1e-2, "s_now": speed_range[0]}
+    # bounds wide enough never to bind inside the range MS-BP allows: a bound that binds makes a flat profile look
+    # informative, which is exactly what tau_is_measured must not be fooled by
+    hi = {"c_w": 1e2, "leak": 1e-1, "qv0": 1e1, "tau": TAU_LONGEST, "perm": 1e2, "s_now": speed_range[1]}
+    best = None
+    for tau0 in ((4.0, 12.0, 30.0) if trapped_from and fixed_tau is None else (None,)):
+        x0 = {"c_w": 1.0, "leak": 1e-5, "qv0": 1e-4, "tau": tau0 or 1.0, "perm": 1.0,
+              "s_now": math.sqrt(speed_range[0] * speed_range[1])}
+        th0 = [math.log(x0[n]) for n in names]
+        fit = least_squares(residual, th0, bounds=([math.log(lo[n]) for n in names],
+                                                   [math.log(hi[n]) for n in names]),
+                            method="trf", xtol=1e-12, ftol=1e-12, max_nfev=4000)
+        chi2 = float(np.sum(np.array(fit.fun) ** 2))
+        if best is None or chi2 < best[0]:
+            best = (chi2, fit)
+    chi2, fit = best
+    p = unpack(fit.x)
+    # the uncertainty of the permeation scale, from the curvature of the fit, decides whether it is believed
+    if free_perm:
+        J = fit.jac
+        try:
+            cov = np.linalg.inv(J.T @ J)
+            p["perm_sd"] = float(math.sqrt(max(cov[names.index("perm"), names.index("perm")], 0.0)))
+        except np.linalg.LinAlgError:
+            p["perm_sd"] = float("inf")
+    n = len(obs) + (1 if leak is not None else 0)
+    k = len(names) + (1 if trapped_from and fixed_tau is not None else 0)
+    return chi2, p, n, k
+
+
+def tau_is_measured(cid, data, st, obs, s_now, trapped_from, free_perm, speed_range, leak):
+    """Whether the records say anything about how fast the trapped volume empties: the fit is profiled over the
+    time constant, everything else refitted at each value, and a profile that varies by less than one unit of chi2
+    across the whole range MS-BP allows means the time constant is not measured at all. An optimiser stopping
+    somewhere in such a valley reports where it happened to stop, which is no answer."""
+    prof = [solve(cid, data, st, obs, s_now, trapped_from, free_perm, speed_range, leak, fixed_tau=t)[0]
+            for t in (2.0, 5.0, 10.0, 20.0, 35.0, TAU_LONGEST)]
+    return max(prof) - min(prof) >= 1.0
 
 
 def audit_one(cid, data, vac):
     st = state_on(cid, data, AUDIT_DATE)
     altered = turbo_altered(cid, data)
     k, k_tag = cert_out_by(cid, data, st)
-    s_eff = speed_of(cid, data, st, vac, altered)
-    if k != 1.0 and ordered_speed(cid, st, vac) is None:
-        s_eff = s_eff / k                             # a shop speed test was read with the same certificate
-    elif k != 1.0 and os.path.exists(os.path.join(vac or "", "speed_test_%s.csv" % cid.lower())):
-        s_eff = s_eff / k
-    reads = readings(cid, data, st, swapped_tags(data))
-    if k != 1.0:
-        reads = [dict(r, shown=r["shown"] * k) if (k_tag is None or r["tag"] == k_tag) else r for r in reads]
-    if altered:
-        reads = [r for r in reads if r["date"] >= altered] or reads
-    spans = sorted({round(r["hours"], 2) for r in reads})
-    seal, seal_cm = seal_on(cid, data, AUDIT_DATE)
-    split = unmix(cid, data, vac, s_eff)
+    cuts = _cuts(st, altered)
+    now = _period(AUDIT_DATE, cuts)
+    ordered, s_now, leak = order_observations(cid, st, vac)
+    if s_now is None:
+        s_now = shop_speed(cid, data, cuts, now, k)
 
-    if len(spans) >= 2:
-        c_w, q_l, qv0, tau, ss_flat = solve_budget(cid, data, st, reads, s_eff, False)
-        trap = solve_budget(cid, data, st, reads, s_eff, True) if len(reads) >= 3 else None
-        take_trap = False
-        if trap:
-            at_ref = trap[2] * math.exp(-REF_HOURS / trap[3])
-            whole = (trap[0] * wall_shape(st["surfaces"], REF_HOURS, "air", 20.0)
-                     + perm_load(seal, seal_cm, 20.0) + trap[1] + at_ref)
-            worth = at_ref / whole if whole > 0 else 0.0
-            if split is not None:
-                airy = split["channel"] + split["perm"] > split["wall"]
-                take_trap = airy and trap[4] < 0.60 * ss_flat and worth > 0.08
-            else:
-                take_trap = trap[4] < 0.25 * ss_flat and worth > 0.08
-        if take_trap:
-            c_w, q_l, qv0, tau = trap[0], trap[1], trap[2], trap[3]
+    obs = []
+    for r in readings(cid, data, st, swapped_tags(data)):
+        shown = r["shown"] * k if (k != 1.0 and (k_tag is None or r["tag"] == k_tag)) else r["shown"]
+        per = _period(r["date"], cuts)
+        speed = "now" if per == now else shop_speed(cid, data, cuts, per, k)
+        if speed is None:
+            continue
+        obs.append(dict(r, shown=shown, gauge=True, speed=speed, sd=READ_REPEAT))
+    obs += ordered
+
+    rated = rated_of(st)
+    lo_d, hi_d = min(o["date"] for o in obs), max(o["date"] for o in obs)
+    worked = sorted({r["date"] for r in data["mnt"] if r["chamber"] == cid and lo_d < r["date"] <= hi_d})
+    best = None
+    for tf in [None, "0000-00-00"] + worked:
+        for free in (False, True):
+            chi2, p, n, kpar = solve(cid, data, st, obs, s_now, tf, free, (0.05 * rated, 1.2 * rated), leak)
+            if n < kpar:
+                continue
+            bic = chi2 + kpar * math.log(n)
+            if best is None or bic < best[0]:
+                best = (bic, p, tf, free)
+    _bic, p, tf, free = best
+    if tf is not None and not tau_is_measured(cid, data, st, obs, s_now, tf, free, (0.05 * rated, 1.2 * rated),
+                                              leak):
+        # Nothing measures it. The conservative reading is MS-BP clause 3.3's longest time constant, which leaves
+        # the most trapped gas at the reference condition; it is a statement of what is not known, not an estimate.
+        _chi2, p, _n, _k = solve(cid, data, st, obs, s_now, tf, free, (0.05 * rated, 1.2 * rated), leak,
+                                 fixed_tau=TAU_LONGEST)
+
+    seal_now = st["seal"] if st["seal_logged"] else st["seal_register"]
+    if free:
+        # adopt another table material only where the fitted scale is well determined and lands near it
+        k_fit = p["perm"] * ELAST[st["seal_register"]][0]
+        near = min(ELAST, key=lambda m: abs(math.log(ELAST[m][0] / k_fit)))
+        if near != st["seal_register"] and p.get("perm_sd", 1.0) < 0.15 \
+                and abs(math.log(ELAST[near][0] / k_fit)) < 3.0 * max(p["perm_sd"], 0.02):
+            if not st["seal_logged"]:
+                seal_now = near
+            chi2, p, n, kpar = solve(cid, data, dict(st, seal_register=near), obs, s_now, tf, False,
+                                     (0.05 * rated, 1.2 * rated), leak)
         else:
-            qv0, tau = 0.0, None
-    elif split is not None:
-        nominal = wall_shape(st["surfaces"], split["hours"], "air", split["t_c"])
-        c_w = split["wall"] / nominal if nominal > 0 else 1.0
-        channel = split["channel"]
-        if worked_on_since_sound(cid, data):
-            tau = 9.0
-            qv0, q_l = channel * math.exp(split["hours"] / tau), 0.0
-        else:
-            qv0, tau, q_l = 0.0, None, channel
-    else:
-        c_w, q_l, qv0, tau, _ss = solve_budget(cid, data, st, reads, s_eff, False)
+            chi2, p, n, kpar = solve(cid, data, st, obs, s_now, tf, False, (0.05 * rated, 1.2 * rated), leak)
 
     parts = {
-        "wall-outgassing": c_w * wall_shape(st["surfaces"], REF_HOURS, "air", 20.0),
-        "permeation": perm_load(seal, seal_cm, 20.0),
-        "air-leak": max(q_l, 0.0),
-        "virtual-leak": qv0 * math.exp(-REF_HOURS / tau) if qv0 and tau else 0.0,
+        "wall-outgassing": p["c_w"] * wall_shape(st["surfaces"], REF_HOURS, "air", 20.0),
+        "permeation": perm_load(seal_now, st["seal_cm"], 20.0),
+        "air-leak": p["leak"],
+        "virtual-leak": p["qv0"] * math.exp(-REF_HOURS / p["tau"]) if p["qv0"] and p["tau"] else 0.0,
     }
     whole = sum(parts.values())
-    rated_pump = speed_curve(st["pump"], whole / max(s_eff, 1.0))
-    rated = rated_pump * st["port"] / (rated_pump + st["port"])
-    cause = "pump-speed" if s_eff < GATE * rated else max(parts, key=lambda k: parts[k])
+    s_eff = p["s_now"]
+    cause = "pump-speed" if s_eff < GATE * rated else max(parts, key=lambda q: parts[q])
     return cause, whole, s_eff
 
 

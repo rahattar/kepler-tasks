@@ -8,7 +8,12 @@ and compares it with the sealed fleet. No evidence script asks the grader anythi
     score(answers)                 -> the grader's result for it
     place_order(plan)              -> runs the real vacwork program on a scratch state and returns its output dir
     DATA                           -> the agent's /app/data as build.py writes it
+    require_baseline(answers)      -> fails the study unless the reference itself is accepted
+
+A study whose baseline is wrong measures nothing: a route "defeated" by a chamber the reference also gets wrong has
+not been defeated by its defect. Every study calls require_baseline before it reports anything.
 """
+import hashlib
 import json
 import os
 import shutil
@@ -63,23 +68,36 @@ def score_text(text):
     return score(None, text=text)
 
 
-def place_order(plan, tag="order"):
+def place_order(plan, tag="order", lab_seed=None):
     """Runs the real vacwork program on its own scratch state, as the agent's one order, and returns the
-    directory holding its reports."""
-    d = os.path.join(_work, "vacwork-" + tag)
+    directory holding its reports. The scratch state is keyed by the plan itself as well as the tag, so two
+    different plans can never share one set of reports. With lab_seed, a copy of the program is run with the
+    laboratory's scatter drawn from that seed: the shipped program has no way to change it."""
+    key = hashlib.sha1(json.dumps([plan, lab_seed], sort_keys=True).encode()).hexdigest()[:12]
+    d = os.path.join(_work, "vacwork-%s-%s" % (tag, key))
+    rig = RIG
+    if lab_seed is not None:
+        rig = os.path.join(_work, "rig-%d" % lab_seed)
+        if not os.path.isdir(rig):
+            shutil.copytree(RIG, rig, ignore=shutil.ignore_patterns("__pycache__"))
+            src = open(os.path.join(rig, "vacwork.py")).read()
+            line = [l for l in src.splitlines() if l.startswith("LAB_SEED = ")]
+            assert len(line) == 1, "vacwork.py must hold exactly one LAB_SEED line"
+            open(os.path.join(rig, "vacwork.py"), "w").write(
+                src.replace(line[0], "LAB_SEED = %d" % lab_seed, 1))
     out = os.path.join(d, "out")
     if os.path.isdir(out):
         return out
     os.makedirs(out)
     state = os.path.join(d, "state.json")
-    p = subprocess.run([sys.executable, "-I", os.path.join(RIG, "vacwork.py"), "submit", out, state],
+    p = subprocess.run([sys.executable, "-I", os.path.join(rig, "vacwork.py"), "submit", out, state],
                        input=json.dumps(dict(tests=plan)), text=True, capture_output=True)
     if p.returncode != 0:
         raise RuntimeError("vacwork refused the plan: %s%s" % (p.stdout, p.stderr))
     return out
 
 
-REFERENCE_PLAN = [dict(chamber="VC08", test="rga")]
+REFERENCE_PLAN = [dict(chamber="VC08", test="rga", pumping_time_h=36.0)]   # as solution/solve.sh places it
 
 
 def reference_answers(plan=None, tag="reference"):
@@ -117,6 +135,18 @@ def reference_answers_without_order():
 
 def truth():
     return {cid: F.truth(F.BY[cid]) for cid in IDS}
+
+
+def require_baseline(answers, what="the reference"):
+    """Stops the study unless the baseline it measures against is itself accepted, chamber by chamber."""
+    r = score(answers)
+    if not r["accepted"]:
+        wrong = [cid for cid in IDS if not r["chambers"].get(cid, {}).get("ok")] or [r.get("error", "?")]
+        print("BASELINE NOT ACCEPTED: %s gets %s wrong; this study measures nothing until it is fixed"
+              % (what, " ".join(wrong)))
+        cleanup()
+        sys.exit(1)
+    return r
 
 
 def report(title, rows, head):

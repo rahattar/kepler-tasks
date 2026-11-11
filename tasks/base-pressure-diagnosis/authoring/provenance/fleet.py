@@ -279,12 +279,14 @@ FLEET = [
     # pumpdowns before it settle the wall gas and the leak, and they still apply: the bracket work changed neither.
     # The two since are both at 16 h, so they give the trapped load at 16 h and nothing about how fast it empties.
     # Its gas load at the reference condition needs one measurement at a longer pumping time: the one chamber the
-    # audit test must be spent on, and spent at a time other than the contractor's default.
+    # audit test must be spent on, and spent at a time other than the contractor's default. Its time constant, 14 h,
+    # lies away from every round figure a solver might assume in place of measuring it (12 h misses by 21 per cent
+    # of the trapped load, 16 h by 20), so that only a measurement gets it.
     Ch("VC08",
        reg_entry(2200, "TMP-1100", 1300, "fluoroelastomer", 200,
                  [(5.2, "stainless steel, electropolished")], 1.2e-7),
        true=dict(wall_factor=1.30, leak=7.0e-6),
-       events=[("2026-10-06", "trapped", (3.7e-4, 32.0)),
+       events=[("2026-10-06", "trapped", (1.57e-3, 14.0)),
                ("2026-10-06", "note", "Cryopanel brackets replaced.")],
        log=[("2026-07-21", "P1", "air", 20.0, 25.0, "CC-7108", None),
             ("2026-08-11", "P2", "air", 12.0, 24.5, "CC-7108", None),
