@@ -354,3 +354,38 @@ systematic reader. What defeats a quick reader is a wrong answer that looks alre
 are a plausible reference value (the data sheet), a block of record that appears to agree with the wrong reading
 (the pre-work rows, which agree to 3.6 per cent — close enough to pass an eyeball, far enough to fail the band),
 and no log entry pointing at the discrepancy. Count traps of that shape, not unstated corrections in general.
+
+## The probe model is part of the instrument: a controlled comparison (bore-form-acceptance, Nov 11)
+
+Local probes run on whatever model the authoring session is on, and that changed part way through a day. The
+same task then read completely differently, and for a while the change was mistaken for the effect of a
+redesign. A controlled comparison separated the two:
+
+| Bundle | Probe model | Low-effort probes |
+|---|---|---|
+| bore-form 20261111 (round 4) | the session's earlier model | 0 of 3, each 7 of 14 |
+| bore-form 20261111d (round 5, same records) | the session's current, stronger model | solved, 5 minutes |
+| bore-form round 6 (branch bore-form-round6) | current model | 3 of 3 solved, 3 to 8 minutes |
+| bore-form round 6 | earlier model, forced with the Agent tool's `model` argument | 0 of 2, each 7 of 14 |
+
+So "0 of 3 with a seven-feature gap" was a statement about the weaker model. On the stronger one the same bundle
+is solved at low effort in minutes. The official screen had already said as much: it solved round 2 once in
+three, in three minutes, when the local probes of the day read 0 of 3.
+
+What the stronger model did at low effort, unprompted and in under five minutes, on a task with none of it
+stated: found the tester's error motion from phase agreement across records, split it at a maintenance date in
+the log, noticed that setup twins disagreed in amplitude at one order, solved the machine's vector from the
+pairs with the clamping angle fitted from the other orders, cross-checked it on three pairs, and reported the
+weakest point of its own estimate. Every one of those is an unstated correction with a signature in the data.
+A signature in the data is enough. This agrees with the rule above and sharpens it: an unstated correction
+that the records betray is found; only one that leaves the records self-consistent, or that has to be bought
+before it can be seen, is not.
+
+Rules taken from this:
+- **Record the model with every probe result**, in the design note and in the README's calibration line. A count
+  without the model is not a measurement.
+- **Calibrate on the strongest model available**, and when the session's model changes, re-run the last
+  round's probes before believing any comparison across the change.
+- **Use the weaker model only as a sanity check** that the layers bind at all. It says nothing about the gate.
+- When a redesign and a model change coincide, run the two-by-two (old and new bundle, old and new model)
+  before drawing any conclusion. It costs four probes and about eight minutes.
