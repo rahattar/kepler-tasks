@@ -545,3 +545,42 @@ in three, so one of them leaves a task at 2 of 3 solved.
 | Least squares and minimum zone "agree to 0.2 um" | They differ by up to 3.86 um; seven roundness features differ by more than the band. |
 | "Impeller was refused against flange-torque-spec" | shrink-fit-hubs was. impeller-shrink-fits cleared similarity and failed difficulty. |
 | The RT-1 parts "come from eight setups on four machines" | Five setups on three machines. Eight setups and four machines is all fourteen features. |
+
+## 9. Checked by the flare session (Nov 11, 18:00)
+
+Checked against this session's records: sections 0.3, 1, 3.7, the flare rows of section 4, 6.1 and the flare
+paragraph of section 7.
+
+**One statement is wrong.** Section 5, property 3: "Compare flare and base-pressure, where each failing run
+failed on a different one-line slip." For flare that holds only for the first booking round (one run credited
+an instrumented function, one missed the meter). In rounds 2, 3 and 4 every failing run failed on the same
+slip, six of six: `docs/difficulty-calibration.md`, "Three iterations on flare-load-study", the table's last
+column reads "the feed meter" for both rounds, and the round-4 table has both failing runs at PV-4001 = 52.84
+against 54.92. So "the same in every run" does not separate the survivors from flare. What does is the width:
+flare's miss was one valve coefficient 3.8 per cent low, 2.2 per cent on a row against a band of 1, three parts
+of seven. Property 3 should rest on "wide", and on the miss being something the run did not buy or could not
+see, not on its being repeated.
+
+**One addition, in support of property 2.** In flare the check a careful solver runs pointed at the right
+answer, not the wrong one: the 24 pre-retrim rows give 61.70 as indicated and 64.13 corrected against a data
+sheet of 64.00. The wrong route did not validate itself; two Opus 5 runs asserted that it had without running
+the check, and the screen's model ran it.
+
+**Confirmed as written.**
+- Section 1, the model dates: this session's last commit with an Opus 5 trailer is 58cf5c1 at 13:53 and its
+  first with Fable 5.2 is 7a3061b at 16:01. Every flare probe before the opus-forced ones was launched before
+  13:10, so all of them ran on Opus 5.
+- Section 1 and 3.7, the matched probes: two completed, 7 of 7 each, 188 s and 188 s; the third left no study.
+  Whether `model: "opus"` is opus-5-5 is inference here too; the agreement with the screen is the only evidence.
+- Section 3.7, the official trials: 2m58, 2m39 and 3m06, worst departure 0.34 per cent, and each trial's
+  analysis names the meter correction or passes instrument-air failure within 0.16 per cent, which a missed
+  correction puts at 2.2.
+- Section 4, "unstated corrections that are still cells of text": found by all six Opus 5 probes of round 4,
+  not three, and by the three official trials and both matched probes.
+- Section 6.1: 0.729, 0.512, 0.296; the bounds are 0.632 and 0.283.
+
+**What it does to the three ideas this session proposed at 17:30** (gearbox bench efficiency, shaft alignment
+moves, engine cylinder balance). All three were of kind C with one discovery each, and each had a free witness
+of a kind section 4 lists as found: a heat balance (a closure), face readings on four trains (a second
+instrument on the same object, then a carried fact), fuel-cut traces split by bank (a split the solver makes
+unprompted). None should be built as proposed.
