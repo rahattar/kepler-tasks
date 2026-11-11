@@ -268,3 +268,26 @@ it was the run that solved the task.
 
 The finding is recorded in docs/difficulty-calibration.md: what defeats these runs is not an obscure fact but a
 wrong answer that looks already validated.
+
+### Similarity after round 4
+
+Round 4 touched two of the files a similarity gate compares, `solution/solve.py` and `tests/sealed/isim.py`,
+and both edits were additive: a `level` method and a `steam_drop` method in the solver, a `level` function and
+the ranged-gravity table in the sealed definition. Measured with `tools/similarity.py`'s own normalisation and
+`autojunk=False` against the nearest neighbour the full sweep found, relief-valve-adequacy:
+
+| file | before | after |
+|---|---|---|
+| `solution/solve.py` | 0.476 ratio, 0.303 jaccard | 0.463, 0.293 |
+| `tests/sealed/isim.py` | 0.557 ratio, 0.411 jaccard | 0.541, 0.391 |
+
+Both fell, which is what adding original content to a file must do to either measure: the matching material is
+unchanged while the total grows. The position is otherwise the one already accepted here - the two files share
+the synthetic unit with their sibling by design, and bore-form-acceptance cleared the gate five times with a
+file at 0.855 against a task known to be live.
+
+A note on the instrument: the full sweep now takes longer than ten minutes, because `autojunk=False` on
+whitespace-normalised files of this size is quadratic and the pool is 38 tasks. A targeted comparison against
+the nearest neighbour the last full sweep found answers the only question a round of edits raises, and takes
+seconds. Running the sweep without `autojunk=False` is not a shortcut: on files this long nearly every
+character is popular enough to be treated as junk, which collapsed `solve.py` to 0.069 in a first attempt here.
