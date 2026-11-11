@@ -12,6 +12,9 @@ import re
 import subprocess
 import sys
 
+sys.dont_write_bytecode = True          # so this run cannot create the caches it is about to look for
+os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
 EV = os.path.join(ROOT, "authoring", "evidence")
@@ -54,6 +57,17 @@ def main():
     top = set(os.listdir(ROOT)) - REPO_ONLY
     check("the bundle holds exactly the seven required entries", top == TOP,
           "extra: %s; missing: %s" % (sorted(top - TOP) or "none", sorted(TOP - top) or "none"))
+
+    # no caches or compiled modules: a .pyc of the sealed definition would carry it into the bundle
+    caches = []
+    for base, dirs, files in os.walk(ROOT):
+        for n in dirs:
+            if n == "__pycache__":
+                caches.append(os.path.relpath(os.path.join(base, n), ROOT))
+        for n in files:
+            if n.endswith((".pyc", ".pyo")):
+                caches.append(os.path.relpath(os.path.join(base, n), ROOT))
+    check("no bytecode caches anywhere in the bundle", not caches, ", ".join(caches) or "none")
 
     bad_names, non_ascii, encoded = [], [], []
     for base, dirs, files in os.walk(ROOT):
