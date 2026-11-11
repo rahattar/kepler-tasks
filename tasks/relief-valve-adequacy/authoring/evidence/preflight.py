@@ -21,6 +21,9 @@ sys.path.insert(0, os.path.join(ROOT, "solution"))
 sys.path.insert(0, os.path.join(ROOT, "tests"))
 
 TOP = {"README.md", "instruction.md", "task.toml", "authoring", "environment", "solution", "tests"}
+# .source_zip records which zip this directory was unpacked from. It is the repository's marker, not bundle
+# content: the zip is built from the seven entries above by name, so it is never in the delivered bundle.
+REPO_ONLY = {".source_zip"}
 GRADING_WORDS = ("grader", "verifier", "reward", "score", "scored", "pass", "fail", "tested", "graded",
                  "partial credit", "tolerance", "within", "per cent of the true")
 LAST_PARA = ("You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints "
@@ -48,7 +51,7 @@ def text(path):
 
 def main():
     # ---- bundle shape
-    top = set(os.listdir(ROOT))
+    top = set(os.listdir(ROOT)) - REPO_ONLY
     check("the bundle holds exactly the seven required entries", top == TOP,
           "extra: %s; missing: %s" % (sorted(top - TOP) or "none", sorted(TOP - top) or "none"))
 
