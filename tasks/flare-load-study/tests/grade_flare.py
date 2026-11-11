@@ -36,6 +36,7 @@ SIZING_COLUMNS = ("tip_bore_mm", "binding_device", "back_pressure_pct")
 SIZE_CAP = 100_000
 LOAD_CEILING = 1.0e7
 PRESSURE_CEILING = 1.0e3
+FIGURES_LEAST = 3        # the instruction asks every number to at least three significant figures
 EMPTY = ("none", "-", "")
 SEPARATORS = re.compile(r"[;,\s]+")
 
@@ -75,7 +76,16 @@ def parse_devices(written, seen):
     return tuple(sorted(named))
 
 
-def bounded_number(column, ceiling, units):
+def figures(written):
+    """How many significant figures a number as written carries. Leading zeros and the point are not figures,
+    the exponent is not part of the mantissa, and trailing zeros are taken at their face value. A written zero
+    has none, whatever its spelling: it states a quantity as nil rather than to a precision."""
+    mantissa = re.split(r"[eE]", written.strip(), 1)[0]
+    digits = re.sub(r"[^0-9]", "", mantissa).lstrip("0")
+    return len(digits)
+
+
+def bounded_number(column, ceiling, units, least=FIGURES_LEAST):
     def parse(written, seen):
         try:
             value = float(written)
@@ -83,6 +93,9 @@ def bounded_number(column, ceiling, units):
             raise Rejected(0, column, "%r is not a number" % written)
         if not math.isfinite(value) or value < 0.0 or value > ceiling:
             raise Rejected(0, column, "%r is not a %s from 0 to %g" % (written, units, ceiling))
+        if value != 0.0 and figures(written) < least:
+            raise Rejected(0, column, "%r carries %d significant figures, and %d were asked for"
+                           % (written, figures(written), least))
         return value
     return parse
 

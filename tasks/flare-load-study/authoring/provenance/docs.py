@@ -462,15 +462,14 @@ Issue 2, October 2026. What the unit's test crew will run during an assessment, 
 
 ## Ordering
 
-The crew takes its orders through the `fieldtest` command, one test to an order:
+The crew takes the booking through the `fieldtest` command, every test named together in one order:
 
-    fieldtest <test>
+    fieldtest <test> <test>
 
-The booking for an assessment is {budget} tests. A test is charged to the booking when it is ordered, whatever
-its result, and the same test will not be run twice. The crew reports to `/app/field_reports`, one file an
-order, and prints where it has written. Orders are taken in any sequence, but the crew is on the unit for one
-shift only, so all of them have to be placed on what is already known rather than on the result of an earlier
-test in the same booking.
+The booking for an assessment is {budget} tests, and the crew is on the unit for one shift only: it writes the
+whole booking down before it runs any of it, and once the order is placed it will take no other. So every test
+has to be chosen on what the records already say, not on the result of another test in the same booking. The
+crew reports to `/app/field_reports`, one file a test, and prints where it has written.
 
 ## What the crew will run
 

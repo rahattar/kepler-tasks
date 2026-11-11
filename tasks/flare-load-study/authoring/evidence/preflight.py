@@ -296,7 +296,10 @@ def main():
           "install -d -o crew -g crew -m 755 /app/field_reports" in env_docker)
     check("the crew charges the booking before it runs a test",
           lab.index("O_EXCL") < lab.index("run_test"))
-    check("the crew refuses a test it has already run", "a second order for it" in lab)
+    check("the crew takes the whole booking in one order, so no choice can rest on a result",
+          "len(wanted) != S.BUDGET" in lab and "the booking was placed already" in lab)
+    check("the crew writes the booking down before it runs any of it",
+          lab.index('json.dump({"order": 1, "tests": wanted}') < lab.index("S.run_test(test, seed)"))
     check("the crew will not start if its directories are not as installed",
           "as_installed(SEALED)" in lab and "as_installed(STATE)" in lab)
     check("the crew's records cannot be a link", "O_NOFOLLOW" in lab)

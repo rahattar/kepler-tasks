@@ -113,11 +113,11 @@ def field_reports(reports=REPORTS):
 
 
 def order(tests, reports=REPORTS):
-    """Place the orders this study needs, skipping any the crew has already run."""
+    """Place the booking. Every test is named in the one order the crew will take, so the choice rests on the
+    records alone; if the booking has already been placed its reports are read as they stand."""
     have = field_reports(reports)
-    for test in tests:
-        if test not in have:
-            subprocess.run(["fieldtest", test], check=True)
+    if not all(test in have for test in tests):
+        subprocess.run(["fieldtest"] + list(tests), check=True)
     return field_reports(reports)
 
 

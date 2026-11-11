@@ -9,11 +9,10 @@ For each contingency, establish which of the unit's relief devices discharge at 
 The records are `PROBE/app/data/relief_valve_register.csv`, `PROBE/app/data/valve_history.csv`, `PROBE/app/data/fire_zones.csv`, `PROBE/app/data/flare_tie_ins.csv`, `PROBE/app/data/drive_schedule.csv`, `PROBE/app/data/control_valve_data.csv`, `PROBE/app/data/control_valve_trend.csv`, `PROBE/app/data/operating_record.csv`, `PROBE/app/data/instrument_schedule.csv`, `PROBE/app/data/sis_register.csv`, `PROBE/app/data/exchanger_data.csv`, `PROBE/app/data/pump_data.csv`, `PROBE/app/data/pump_test_record.csv`, `PROBE/app/data/gas_analysis.csv`, `PROBE/app/data/component_properties.csv`, `PROBE/app/data/fluid_properties.csv`, `PROBE/app/data/gas_properties.csv`, `PROBE/app/data/liquid_properties.csv`, `PROBE/app/data/modification_register.csv` and `PROBE/app/data/maintenance_log.csv`. The unit is described in `PROBE/app/data/docs/unit_400.md`, its vessels in `PROBE/app/data/docs/vessel_data.md`, the flare header and stack tip in `PROBE/app/data/docs/flare_system.md`, and the load study of 2019 in `PROBE/app/data/docs/flare_load_study_2019.md`.
 
 The unit's test crew is on site for one shift and will run field tests for you. What it will run is in
-`PROBE/app/data/docs/field_testing.md`; order a test by running `PROBE/app/fieldtest <test>` (the document calls
-the command `fieldtest`). The booking is two tests. A test is charged to the booking when it is ordered,
-whatever its result, and the crew will not run the same test twice, so both orders have to rest on what the
-records already tell you rather than on the result of an earlier test. The crew writes each report to
-`PROBE/app/lab_reports`.
+`PROBE/app/data/docs/field_testing.md`; place the booking by running `PROBE/app/fieldtest <test> <test>` (the
+document calls the command `fieldtest`). The booking is two tests, and the crew takes both names in a single
+order and will take no other, so each test has to be chosen on what the records already tell you rather than on
+the result of the other. The crew writes a report for each test to `PROBE/app/lab_reports`.
 
 RP-7 also asks for the stack tip to be re-rated where the tip as installed leaves a device standing against
 too much built-up back pressure. Carry out that duty as well, on the bores the flare system note says the

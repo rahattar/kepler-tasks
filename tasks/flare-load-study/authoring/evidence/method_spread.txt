@@ -2,14 +2,14 @@ Sound variations, graded against the sealed definition. Tolerance 0.010 relative
 
 | Method | Right of 7 | Worst load | Worst pressure | Worst seed |
 |---|---|---|---|---|
-| the reference | 7 | 0.084% | 0.226% | - |
-| the trend fitted by least squares | 7 | 0.110% | 0.273% | - |
-| only trend points above 60 per cent travel | 7 | 0.084% | 0.226% | - |
-| the reboiler from the record's mean duty over its mean difference | 7 | 0.084% | 0.226% | - |
-| the pump curve by least squares on all four points | 7 | 0.084% | 0.226% | - |
-| least squares throughout | 7 | 0.110% | 0.273% | - |
-| high travel points and the mean ratio | 7 | 0.084% | 0.226% | - |
-| least squares and the mean ratio together | 7 | 0.110% | 0.273% | - |
+| the reference | 7 | 0.084% | 0.226% | 7 of 7 |
+| the trend fitted by least squares | 7 | 0.110% | 0.273% | 7 of 7 |
+| only trend points above 60 per cent travel | 7 | 0.084% | 0.226% | 7 of 7 |
+| the reboiler from the record's mean duty over its mean difference | 7 | 0.084% | 0.226% | 7 of 7 |
+| the pump curve by least squares on all four points | 7 | 0.084% | 0.226% | 7 of 7 |
+| least squares throughout | 7 | 0.110% | 0.273% | 7 of 7 |
+| high travel points and the mean ratio | 7 | 0.084% | 0.226% | 7 of 7 |
+| least squares and the mean ratio together | 7 | 0.110% | 0.273% | 7 of 7 |
 
 widest load spread 0.110% and pressure spread 0.273% against a band of 1.0%
 

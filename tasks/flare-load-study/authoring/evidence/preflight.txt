@@ -61,7 +61,8 @@ pass the agent may run one program as the crew, with no environment carried acro
 pass the only way in is the fieldtest wrapper                                                 
 pass the crew writes where the agent can read and the agent cannot write                      
 pass the crew charges the booking before it runs a test                                       
-pass the crew refuses a test it has already run                                               
+pass the crew takes the whole booking in one order, so no choice can rest on a result         
+pass the crew writes the booking down before it runs any of it                                
 pass the crew will not start if its directories are not as installed                          
 pass the crew's records cannot be a link                                                      
 pass instruction.md states the booking the crew's document gives                              
@@ -91,4 +92,4 @@ pass only one way of spending the booking gets every row
 pass the second study agrees on the shipped records                                           
 pass the second study agrees on every laboratory seed                                         
 
-92 checks, 0 failed: the bundle is clean
+93 checks, 0 failed: the bundle is clean

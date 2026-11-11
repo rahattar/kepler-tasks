@@ -131,6 +131,40 @@ def main():
     check("a contingency in upper case", render([["POWER_FAILURE"] + rows[0][1:]] + rows[1:]), "rejected")
     check("non-ASCII text", render(rows).replace("power", "pow" + chr(233) + "r"), "rejected")
     check("a sheet larger than the cap", render(rows) + "# " + "x" * 100_001, "rejected")
+
+    # the instruction asks every number to at least three significant figures, and the grader holds that line
+    def retype(contingency, column, text):
+        out = []
+        for r in rows:
+            r = list(r)
+            if r[0] == contingency:
+                r[column] = text
+            out.append(r)
+        return out
+
+    def resize(share_text):
+        head, row = good_sizing.strip().split("\n")
+        bore, device, _share = row.split(",")
+        return "%s\n%s,%s,%s\n" % (head, bore, device, share_text)
+
+    graded = [r for r in rows if float(r[3]) != 0.0]
+    floored = [r for r in rows if float(r[3]) == 0.0]
+    share_now = float(good_sizing.strip().split("\n")[1].split(",")[2])
+    check("a load to two significant figures",
+          render(retype(rows[0][0], 2, "%.1e" % float(rows[0][2]))), "rejected")
+    check("a load to three significant figures in exponent form",
+          render(retype(rows[0][0], 2, "%.2e" % float(rows[0][2]))), "accepted")
+    check("a pressure to two significant figures",
+          render(retype(graded[0][0], 3, "%.2g" % float(graded[0][3]))), "rejected")
+    check("a pressure to three significant figures",
+          render(retype(graded[0][0], 3, "%.3g" % float(graded[0][3]))), "accepted")
+    if floored:
+        check("a pressure below the floor written as nil", render(retype(floored[0][0], 3, "0")), "accepted")
+    check("the re-rating share to two significant figures", render(rows), "rejected",
+          sizing=resize("%.2g" % share_now))
+    check("the re-rating share to three significant figures", render(rows), "accepted",
+          sizing=resize("%.3g" % share_now))
+
     for label, val in (("an unknown device", "PSV-499"), ("a device in lower case", "psv-401"),
                        ("a device named twice", rows[0][1] + ";" + rows[0][1].split(";")[0]),
                        ):

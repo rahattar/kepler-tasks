@@ -23,6 +23,13 @@ ok  an unknown contingency                               -> rejected: 'flood' is
 ok  a contingency in upper case                          -> rejected: 'POWER_FAILURE' is not a contingency of the standard
 ok  non-ASCII text                                       -> rejected: the study is not ASCII text
 ok  a sheet larger than the cap                          -> rejected: the study is larger than 100000 bytes
+ok  a load to two significant figures                    -> rejected: '9.5e+04' carries 2 significant figures, and 3 were asked for
+ok  a load to three significant figures in exponent form -> accepted
+ok  a pressure to two significant figures                -> rejected: '1.2' carries 2 significant figures, and 3 were asked for
+ok  a pressure to three significant figures              -> accepted
+ok  a pressure below the floor written as nil            -> accepted
+ok  the re-rating share to two significant figures       -> rejected: '4.4' carries 2 significant figures, and 3 were asked for
+ok  the re-rating share to three significant figures     -> accepted
 ok  an unknown device                                    -> rejected: 'PSV-499' is not a relief device of this unit
 ok  a device in lower case                               -> rejected: 'psv-401' is not a relief device of this unit
 ok  a device named twice                                 -> rejected: 'PSV-401;PSV-403;PSV-407;PSV-409;PSV-401' names a device twice
@@ -67,5 +74,5 @@ ok  pytest passes but the report holds two tests         -> reward 0
 ok  pytest fails though the report looks right           -> reward 0
 ok  pytest passes and writes no report at all            -> reward 0
 
-63 cases, 0 UNEXPECTED
+70 cases, 0 UNEXPECTED
 The grader never crashed, and the reward followed the run rather than anything written during it.

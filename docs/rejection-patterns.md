@@ -313,3 +313,49 @@ submission, against tasks still in validation or review or approved; a task reje
 leave the pool, which is why the 0.99 against impeller-shrink-fits has not bitten. Leave bore-form's harness;
 rewrite skid-noise-guarantee's and recip-cylinder-limits' before either is submitted while bore-form is live.
 `tools/similarity.py` measures it.
+
+## Quality rejection, Nov 11 (flare-load-study 20261111d)
+
+Two blocking failures, both about the bundle's own honesty rather than its engineering.
+
+**"Not every stated requirement is enforced."** Two gaps, and they are different in kind.
+
+The first was precision. The instruction asked for every number to at least three significant figures and the
+grader accepted any precision, so a value rounded to two figures could still land inside the 1 per cent band and
+pass. The fix is a figure count on the text as written, not on the parsed value: strip the sign, the point and
+the exponent, drop leading zeros, count what is left. A written zero counts none and is exempt, because zero
+states a quantity as nil rather than to a precision, and one graded pressure here sits below the floor where no
+band applies; the instruction now says a pressure too small to matter may be given as 0, so the two agree
+exactly. Seven cases in verifier_checks hold the line.
+
+The second could not be fixed by a check at all. The instruction required both field-test orders to be chosen
+before any result was seen, and nothing could verify it: the reports and the booking state are not artifacts the
+verifier reads, and the crew took one test an order, so order-read-order was open. A verifier cannot police a
+sequence it cannot observe. So the sequence was removed instead: the crew now takes every test of the booking in
+a single order, writes the whole booking down before it runs any of it, and refuses a second order outright.
+The requirement holds by construction and needs no check.
+
+**"Parts of the supporting calibration record contradict the committed evidence."** The README quoted 54
+malformed cases where verifier_checks.txt reported 63; two hedged contingencies where hedge_study.txt listed
+four; a 192-times load spread where tune.txt said 185; six graded rows where the task has had seven parts since
+the re-rating was added; 19 of 20 acceptable seeds; and 20-seed route and method results that those logs did not
+contain, because both scripts have a `--seeds` flag I had not been passing. Each number had been true of an
+earlier round. Nothing in the pipeline compared the prose against the logs.
+
+**Rules taken from this**
+- Every number the README or task.toml states about the evidence must appear verbatim in the evidence file it
+  cites. Quote the log's own figure, not a rounding of it: 95489.5, not 95490.
+- A claim about seeds requires the seed sweep to have been run. If a script has a sweep flag, either pass it or
+  do not make the claim.
+- After any change to the graded answer, re-read every figure in the README, not only the ones the change
+  touched. A round that renames six rows to seven parts invalidates prose written three rounds earlier.
+- Check it mechanically: extract every number from the README and confirm it appears in the evidence corpus.
+  What is left over is either a plant fact or a defect, and the list is short enough to read.
+- Where a stated requirement cannot be observed by the verifier, change the environment so the requirement
+  cannot be broken, rather than weakening the instruction or leaving the gap.
+
+**Advisory, now seen twice:** the name prefix is printed redacted as "the benchmark/..." and flagged on every
+pass; the playbook settles that this is not a change request. The same pass again called category, subcategory
+and the three explanation fields unrecognized and said the explanations belong in README.md. They are left as
+they are: the intake's own structure check rejects a bundle without the full `[metadata]` block, and all 39
+tasks here carry these fields. The two gates disagree; this is one for Alex to settle with the programme.

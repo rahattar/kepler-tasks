@@ -21,6 +21,8 @@ Hedges between a defective reading and the sealed answer. Tolerance 0.010 relati
 | the reboiler coefficient-area from the data sheet duty | power_failure, cooling_water_failure | none |
 | the data sheet duty taken as the relieving duty | power_failure, cooling_water_failure | none |
 | the duty divided by the overhead's latent heat | power_failure, cooling_water_failure | none |
+| the steam's latent heat taken as the whole duty | power_failure, cooling_water_failure | none |
+| the level transmitter's indication read as the level | fire_zone_c | none |
 | the pump's data sheet curve | instrument_air_failure | none |
 | the last pump test on record, made before the element was renewed | instrument_air_failure | none |
 | the tip coefficient the 2019 study worked to | power_failure, cooling_water_failure, instrument_air_failure, fire_zone_a, fire_zone_c | none |
