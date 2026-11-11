@@ -575,3 +575,4 @@ Probes on the leak fault, low effort: 2 of 3 solved (A1, A3), and all three foun
 2026 speed test reads about 0.88 of rated on every chamber with a healthy pump"). A2 missed VC03 and VC07 on the
 crossed serials. A low-effort run compares every test with its rated speed as a matter of course, so a fault that
 shows as a ratio is found, however many chambers it spans.
+xhigh on the leak fault: 3 of 3 solved (B1, B2, B3), each finding the fault and correcting VC03 and VC05 by it.
