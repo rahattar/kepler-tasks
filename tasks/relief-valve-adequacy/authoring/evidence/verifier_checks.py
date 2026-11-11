@@ -70,8 +70,8 @@ def main():
         tag = "ok " if got.split()[0] == expect.split()[0] else "UNEXPECTED"
         if tag != "ok ":
             bad += 1
-        print("%s %-52s -> %s%s" % (tag, label, got,
-                                    (": " + r["error"]) if "error" in r else ""))
+        note = ("" if "error" not in r else ": " + r["error"].replace(tmp + os.sep, "").replace(tmp, ""))
+        print("%s %-52s -> %s%s" % (tag, label, got, note))
         if write == "dir":
             shutil.rmtree(path, ignore_errors=True)
 

@@ -5,7 +5,7 @@ ok  the reference sheet with CRLF line ends              -> accepted
 ok  the reference sheet with blank lines                 -> accepted
 ok  the reference sheet with padded fields               -> accepted
 ok  the reference sheet with the rows reversed           -> accepted
-ok  no file at all                                       -> rejected: no assessment at /tmp/rv_vc_d_veo8ul/relief.csv
+ok  no file at all                                       -> rejected: no assessment at relief.csv
 ok  a symbolic link to a good sheet                      -> rejected: the assessment is not a regular file
 ok  a directory in place of the file                     -> rejected: the assessment is not a regular file
 ok  an empty file                                        -> rejected: the first line must be exactly: valve,governing_case,required_area_mm2,verdict

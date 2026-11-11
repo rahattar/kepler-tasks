@@ -104,3 +104,26 @@ computed area that spans four orders of magnitude across the deliverable.
   size and let the solver write as many figures as it likes.
 - Where a deliverable's values span orders of magnitude, say in the instruction how many significant figures are
   wanted. Three probe runs lost the same valve by rounding 0.052 to 0.05 before this was added.
+
+## Bundle-structure rejection, Nov 10 (relief-valve-adequacy 20261110c)
+"Bundle contains blocked internal terms: afterquery. Found at
+authoring/evidence/preflight.py:138." The benchmark allows the programme's own name only as the task's own
+`task.toml` name, `<prefix>/<task>`; every other occurrence is refused, and bundles must be self-contained and
+provenance-free. My preflight had the prefix written down in the check that enforced it, so the tool that was
+supposed to catch this was the only thing in the bundle that broke it. No other bundle in the repository has the
+literal anywhere.
+
+This also settles the advisory open since impeller-shrink-fits: `<prefix>/<task-name>` **is** the required form,
+and the prefix we have been using is right. What was wrong was spelling it anywhere else.
+
+**Rules taken from this**
+- Never write the programme's name in a bundle file. Where a check needs it, derive it at run time from
+  `task.toml`'s own name field and then confirm it appears on no other line.
+- Check the name's *shape*, not its value: exactly one prefix segment, and a last segment equal to the task's own
+  name.
+- A checker that must name a forbidden string to look for it exempts itself explicitly, with a comment saying so.
+  This happens twice now, for the decoder names and for the path prefixes; it is transparent, and it is not the
+  obfuscation the security review refused.
+- Verify the **zip**, not the working tree: unpack it into an empty directory and run preflight there. Two defects
+  in two days existed only in the delivered artefact and not in the tree it was built from, a stale zip inside the
+  bundle folder and a `__pycache__` holding a compiled copy of the sealed definition.

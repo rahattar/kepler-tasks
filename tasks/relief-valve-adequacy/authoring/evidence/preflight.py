@@ -24,9 +24,10 @@ sys.path.insert(0, os.path.join(ROOT, "solution"))
 sys.path.insert(0, os.path.join(ROOT, "tests"))
 
 TOP = {"README.md", "instruction.md", "task.toml", "authoring", "environment", "solution", "tests"}
-# .source_zip records which zip this directory was unpacked from. It is the repository's marker, not bundle
-# content: the zip is built from the seven entries above by name, so it is never in the delivered bundle.
-REPO_ONLY = {".source_zip"}
+TASK = "relief-valve-adequacy"
+# the bundle is these seven entries. A hidden entry beside them is never packaged, so it is not bundle content.
+OUTSIDE_PATHS = ("/home/", "/Users/", "/mnt/", "/tmp/")
+DATA_MUST_NOT_SAY = ("sealed", "isim", "grader", "verifier", "synthetic", "authoring", "provenance")
 GRADING_WORDS = ("grader", "verifier", "reward", "score", "scored", "pass", "fail", "tested", "graded",
                  "partial credit", "tolerance", "within", "per cent of the true")
 LAST_PARA = ("You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints "
@@ -54,7 +55,7 @@ def text(path):
 
 def main():
     # ---- bundle shape
-    top = set(os.listdir(ROOT)) - REPO_ONLY
+    top = {n for n in os.listdir(ROOT) if not n.startswith(".")}
     check("the bundle holds exactly the seven required entries", top == TOP,
           "extra: %s; missing: %s" % (sorted(top - TOP) or "none", sorted(TOP - top) or "none"))
 
@@ -100,6 +101,32 @@ def main():
     check("every file is ASCII", not non_ascii, ", ".join(non_ascii) or "none")
     check("nothing encoded or obfuscated anywhere", not encoded, "; ".join(encoded) or "none")
 
+    strays, links = [], []
+    for base, dirs, files in os.walk(ROOT):
+        dirs[:] = [d for d in dirs if not d.startswith(".")]
+        for n in dirs + files:
+            if os.path.islink(os.path.join(base, n)):
+                links.append(os.path.relpath(os.path.join(base, n), ROOT))
+        for n in files:
+            fp = os.path.join(base, n)
+            # the prefixes are looked for everywhere but in this file, which has to write them down to
+            # look for them
+            if os.path.abspath(fp) == os.path.abspath(__file__):
+                continue
+            for i, line in enumerate(text(fp).splitlines(), 1):
+                if any(q in line for q in OUTSIDE_PATHS):
+                    strays.append("%s:%d" % (os.path.relpath(fp, ROOT), i))
+    check("no path from outside the bundle in any file", not strays, ", ".join(strays) or "none")
+    check("no symbolic links in the bundle", not links, ", ".join(links) or "none")
+
+    said = []
+    for base, dirs, files in os.walk(os.path.join(ROOT, "environment", "data")):
+        for n in files:
+            fp = os.path.join(base, n)
+            low = text(fp).lower()
+            said += ["%s: %s" % (os.path.relpath(fp, ROOT), w) for w in DATA_MUST_NOT_SAY if w in low]
+    check("the agent's records use no authoring vocabulary", not said, ", ".join(said) or "none")
+
     # ---- instruction.md
     ins = text(os.path.join(ROOT, "instruction.md"))
     check("instruction.md has no heading", not re.search(r"(?m)^\s*#", ins))
@@ -116,6 +143,10 @@ def main():
     missing = [p for p in inputs if p not in ins]
     check("instruction.md names every input file by absolute path", not missing,
           ", ".join(sorted(missing)) or "none")
+    named = set(re.findall(r"/app/data/[\w/.-]+", ins))
+    check("every path instruction.md names is a file that exists",
+          not [p for p in named if not os.path.exists(p.replace("/app/data", data))],
+          ", ".join(sorted(p for p in named if not os.path.exists(p.replace("/app/data", data)))) or "none")
     check("instruction.md names the output path and header",
           "/app/output/relief.csv" in ins and "valve,governing_case,required_area_mm2,verdict" in ins)
     import isim as S
@@ -135,8 +166,25 @@ def main():
           'domain = "engineering-sciences"' in toml and 'field = "mechanical-engineering"' in toml)
     check("task.toml declares the artifact", '/app/output/relief.csv' in toml)
     m = re.search(r'(?m)^name = "([^"]+)"', toml)
-    check("task.toml name carries the prefix used so far", m and m.group(1).startswith("afterquery/"),
-          m.group(1) if m else "absent")
+    parts = m.group(1).split("/") if m else []
+    check("task.toml name is one prefix followed by this task's own name",
+          len(parts) == 2 and parts[0] and parts[1] == TASK,
+          ("<prefix>/%s" % parts[1]) if len(parts) == 2 else (m.group(1) if m else "absent"))
+    # the prefix belongs to that name and nowhere else: anywhere else it is provenance, and a submission
+    # carrying it is refused
+    if len(parts) == 2:
+        stray = []
+        for base, dirs, files in os.walk(ROOT):
+            dirs[:] = [d for d in dirs if not d.startswith(".")]
+            for n in files:
+                fp = os.path.join(base, n)
+                for i, line in enumerate(text(fp).splitlines(), 1):
+                    if parts[0] not in line:
+                        continue
+                    if n == "task.toml" and line.strip().startswith("name ="):
+                        continue
+                    stray.append("%s:%d" % (os.path.relpath(fp, ROOT), i))
+        check("the name's prefix appears nowhere but that one line", not stray, ", ".join(stray) or "none")
     expl = {}
     for field in ("difficulty_explanation", "solution_explanation", "verification_explanation"):
         mm = re.search(r'%s = """(.*?)"""' % field, toml, re.S)
