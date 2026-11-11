@@ -1,0 +1,6 @@
+tag,stream_source,characteristic,rangeability,data_sheet_cv_rated,xt,fp,flow_measurement
+PV-4001,pipeline at the unit limit,equal percentage,50,64.0,0.70,1.00,FE-4011
+PV-4021,V-401,equal percentage,50,2.5,0.66,1.00,FE-4021
+PV-4031,T-401,equal percentage,50,48.0,0.68,1.00,FE-4031
+PV-4061,T-402,equal percentage,50,36.0,0.72,1.00,FE-4061
+PV-4071,T-403 overhead,equal percentage,50,27.0,0.70,1.00,FE-4071

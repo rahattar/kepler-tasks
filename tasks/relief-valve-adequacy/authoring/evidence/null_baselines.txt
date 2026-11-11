@@ -1,0 +1,9 @@
+Answers made without the assessment. Area tolerance 0.010 relative; the gate is all nine.
+
+| Null answer | Right of 9 | Free passes |
+|---|---|---|
+| fire taken as governing everywhere | 1 | PSV-406 |
+| blocked outlet taken as governing everywhere | 1 | PSV-408 |
+| the orifice fitted quoted as the requirement, every valve adequate | 0 | none |
+| the register and data sheets taken as the whole truth | 2 | PSV-402, PSV-408 |
+| the 2019 study copied out | 1 | PSV-402 |

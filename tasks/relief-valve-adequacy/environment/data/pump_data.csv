@@ -1,0 +1,2 @@
+pump,service,pumped_fluid,temperature_C,rated_flow_m3h,rated_head_m,data_sheet_shutoff_head_m,speed_rpm,normal_suction_pressure_barg,stages
+P-401,T-402 bottoms product to storage,bottoms_product,95,96,505,590,2975,9.5,6

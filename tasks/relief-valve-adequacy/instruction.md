@@ -1,0 +1,9 @@
+Unit 400 is a natural gas liquids recovery train. Its pressure relief has not been reassessed since the unit's capacity was increased in 2024, and an assessment to the current issue of the plant's relief standard is now due. Nine relief valves are in scope: PSV-401 to PSV-409.
+
+For each valve, establish which of the contingencies listed for it in the relief valve register requires the largest relieving capacity, the effective orifice area that contingency requires, and whether the valve as it now stands is adequate. Plant standard RP-7 is in `/app/data/docs/standard.md` and governs the whole assessment.
+
+The records are `/app/data/relief_valve_register.csv`, `/app/data/valve_history.csv`, `/app/data/relief_piping.csv`, `/app/data/control_valve_data.csv`, `/app/data/control_valve_trend.csv`, `/app/data/operating_record.csv`, `/app/data/instrument_schedule.csv`, `/app/data/sis_register.csv`, `/app/data/exchanger_data.csv`, `/app/data/pump_data.csv`, `/app/data/pump_test_record.csv`, `/app/data/blocked_in_sections.csv`, `/app/data/gas_analysis.csv`, `/app/data/fluid_properties.csv`, `/app/data/gas_properties.csv`, `/app/data/liquid_properties.csv`, `/app/data/modification_register.csv` and `/app/data/maintenance_log.csv`. The unit is described in `/app/data/docs/unit_400.md`, its vessels in `/app/data/docs/vessel_data.md`, and the relief study of 2019 is in `/app/data/docs/relief_study_2019.md`.
+
+Write the assessment to `/app/output/relief.csv` with the header `valve,governing_case,required_area_mm2,verdict`. Include one row for each of PSV-401 to PSV-409. Give the governing case as one of the contingency names RP-7 defines, the required effective orifice area in mm2 to at least three significant figures, and the verdict as `adequate` or `inadequate`. Commit to one figure and one name per valve.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

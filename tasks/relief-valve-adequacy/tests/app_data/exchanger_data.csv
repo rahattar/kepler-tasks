@@ -1,0 +1,4 @@
+item,service,shell_side,shell_inlet_temp_C,tube_side,tube_inlet_temp_C,shell_design_barg,tube_design_barg,tubes,tube_od_mm,tube_wall_mm,tube_bore_mm,surface_m2,design_duty_kw,design_basis
+E-402,feed/bottoms exchanger,bottoms product,95,feed liquid,30,20,55,168,19.05,1.67,15.70,212,1980,unit feed 310 t/d
+E-403,T-401 reboiler,T-401 bottoms,78,13 barg steam,195,31,15,284,25.40,2.11,21.18,268,2650,unit feed 310 t/d
+E-406,T-402 reboiler,T-402 bottoms,79,13 barg steam,195,18,15,396,25.40,2.00,21.40,402,4200,unit feed 310 t/d

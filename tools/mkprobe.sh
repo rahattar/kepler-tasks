@@ -5,8 +5,13 @@
 set -e
 B=$1; D=$2; SEED=${3:-}; shift 3 2>/dev/null || shift $# ; CMDS=${@:-cte}; PY=${PY:-python3}
 rm -rf $D; mkdir -p $D/app/output $D/app/lab_reports $D/app/work $D/rig/state $D/rig/sealed
-cp -r $B/environment/data $D/app/data; cp $B/environment/rig/lab.py $D/rig/lab.py; cp $B/environment/rig/sealed/* $D/rig/sealed/
-[ -n "$SEED" ] && echo "{\"seed\": $SEED}" > $D/rig/sealed/seed.json
+cp -r $B/environment/data $D/app/data
+if [ -d $B/environment/rig ]; then
+  cp $B/environment/rig/lab.py $D/rig/lab.py; cp $B/environment/rig/sealed/* $D/rig/sealed/
+  [ -n "$SEED" ] && echo "{\"seed\": $SEED}" > $D/rig/sealed/seed.json
+else
+  CMDS=""      # a records-only task has no laboratory program
+fi
 chmod 700 $D/rig/sealed $D/rig/state; chmod 755 $D/app/lab_reports
 for c in $CMDS; do
   printf '#!/bin/bash\nLAB_DIR=%s/rig REPORT_DIR=%s/app/lab_reports exec %s -B %s/rig/lab.py %s "$@"\n' $D $D $PY $D $c > $D/app/$c

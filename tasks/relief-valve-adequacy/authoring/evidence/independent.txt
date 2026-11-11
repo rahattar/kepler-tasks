@@ -1,0 +1,16 @@
+A second assessment, written separately. Area tolerance 0.010 relative.
+
+| valve | governing case | area, mm2 | finding | against the sealed answer |
+|---|---|---|---|---|
+| PSV-401 | control_valve_failure | 479.0434 | adequate | -0.0024 |
+| PSV-402 | tube_rupture | 516.6445 | inadequate | +0.0000 |
+| PSV-403 | cooling_failure | 1377.1984 | inadequate | -0.0001 |
+| PSV-404 | blocked_outlet | 202.1896 | inadequate | +0.0000 |
+| PSV-405 | thermal_expansion | 0.0522 | adequate | +0.0000 |
+| PSV-406 | fire | 664.3131 | adequate | +0.0000 |
+| PSV-407 | control_valve_failure | 701.7090 | inadequate | -0.0008 |
+| PSV-408 | blocked_outlet | 425.6318 | adequate | +0.0000 |
+| PSV-409 | control_valve_failure | 347.8032 | inadequate | +0.0009 |
+
+9 of 9 right on the shipped records
+all nine right on 20 of 20 laboratory seeds; worst relative area 0.0050

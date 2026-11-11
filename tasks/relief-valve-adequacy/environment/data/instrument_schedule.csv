@@ -1,0 +1,23 @@
+tag,service,type,range,flow_computer_density,last_calibration,stated_uncertainty_pct
+FE-4011,unit feed gas,orifice plate with flow computer,0 to 25000 kg/h,fixed relative density 0.780 entered at commissioning,2026-02-17,1.0
+FE-4021,fuel gas to V-402,coriolis,0 to 3000 kg/h,measured,2026-02-17,0.5
+FE-4033,T-401 reflux,coriolis,0 to 8000 kg/h,measured,2026-01-29,0.5
+FE-4034,ethane product,coriolis,0 to 6000 kg/h,measured,2026-01-29,0.5
+FE-4035,T-402 feed,coriolis,0 to 20000 kg/h,measured,2026-03-04,0.5
+FE-4036,T-402 reflux,coriolis,0 to 4000 kg/h,measured,2026-03-04,0.5
+FE-4037,T-402 overhead product,coriolis,0 to 14000 kg/h,measured,2026-03-04,0.5
+FE-4038,butane product,coriolis,0 to 8000 kg/h,measured,2026-01-29,0.5
+FE-4051,bottoms product,coriolis,0 to 8000 kg/h,measured,2026-02-02,0.5
+FE-4071,propane vapour to V-405,coriolis,0 to 9000 kg/h,measured,2026-02-02,0.5
+FE-4072,propane product,coriolis,0 to 8000 kg/h,measured,2026-01-29,0.5
+PT-4012,"V-401 pressure, control",pressure transmitter,0 to 100 barg,,2026-04-20,0.3
+PT-4013,"V-401 pressure, protection",pressure transmitter,0 to 100 barg,,2026-04-20,0.3
+PT-4021,"V-402 pressure, control",pressure transmitter,0 to 25 barg,,2026-04-20,0.3
+PT-4022,"V-402 pressure, protection",pressure transmitter,0 to 25 barg,,2026-04-20,0.3
+PT-4031,"T-401 pressure, control",pressure transmitter,0 to 50 barg,,2026-01-29,0.3
+PT-4061,"T-402 pressure, control",pressure transmitter,0 to 25 barg,,2026-03-04,0.3
+PT-4063,"T-402 pressure, protection",pressure transmitter,0 to 25 barg,,2026-03-04,0.3
+PT-4071,"V-405 pressure, control",pressure transmitter,0 to 25 barg,,2026-02-02,0.3
+TI-4014,V-401 gas temperature,resistance thermometer,0 to 120 C,,2026-04-20,0.5
+TI-4034,T-401 bottoms temperature,resistance thermometer,0 to 200 C,,2026-01-29,0.5
+TI-4064,T-402 bottoms temperature,resistance thermometer,0 to 250 C,,2026-03-04,0.5

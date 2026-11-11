@@ -1,0 +1,8 @@
+stream,temperature_C,density_kg_per_m3,viscosity_cp,cubical_expansion_per_C,specific_heat_kj_per_kg_K
+bottoms_product,60,672,2.90,0.00086,2.12
+bottoms_product,95,648,1.80,0.00092,2.26
+bottoms_product,130,622,1.20,0.00099,2.41
+c3_liquid,20,500,0.11,0.00301,2.52
+c3_liquid,50,445,0.09,0.00372,2.78
+feed_liquid,30,512,0.28,0.00142,2.48
+feed_liquid,60,481,0.22,0.00158,2.63

@@ -1,0 +1,17 @@
+Sound variations, graded against the sealed definition. Area tolerance 0.010 relative.
+
+| Method | Right of 9 | Worst area | At | Seeds with 9 | Worst over seeds |
+|---|---|---|---|---|---|
+| the reference | 9 | 0.0021 | PSV-401 | 20 of 20 | 0.0051 |
+| the trend fitted by least squares | 9 | 0.0024 | PSV-401 | 20 of 20 | 0.0050 |
+| only trend points above 60 per cent travel | 9 | 0.0021 | PSV-401 | 20 of 20 | 0.0051 |
+| the reboiler from the record's mean duty over its mean difference | 9 | 0.0021 | PSV-401 | 20 of 20 | 0.0051 |
+| the pump curve by least squares on all four points | 9 | 0.0021 | PSV-401 | 20 of 20 | 0.0051 |
+| the viscosity iteration stopped after two passes | 9 | 0.0021 | PSV-401 | 20 of 20 | 0.0051 |
+| least squares throughout | 9 | 0.0024 | PSV-401 | 20 of 20 | 0.0050 |
+| high travel points and the mean ratio | 9 | 0.0021 | PSV-401 | 20 of 20 | 0.0051 |
+| least squares, mean ratio and two viscosity passes | 9 | 0.0024 | PSV-401 | 20 of 20 | 0.0050 |
+
+methods that do not get all nine: none
+worst relative area over all sound methods on the shipped records: 0.0024 against a band of 0.0100
+worst relative area over all sound methods and all 20 seeds: 0.0051

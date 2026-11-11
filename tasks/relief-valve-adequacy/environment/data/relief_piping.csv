@@ -1,0 +1,10 @@
+valve,inlet_bore_mm,inlet_developed_length_m,elbows_90deg,tees_through_run,full_bore_valves,vessel_entrances
+PSV-401,97.2,3.5,2,0,1,1
+PSV-402,73.7,2.4,1,0,1,1
+PSV-403,97.2,5.2,2,1,1,1
+PSV-404,52.5,5.0,3,0,1,1
+PSV-405,42.9,1.8,1,0,1,1
+PSV-406,146.3,4.6,2,0,1,1
+PSV-407,122.3,3.0,2,0,1,1
+PSV-408,73.7,2.8,1,0,1,1
+PSV-409,40.9,7.0,4,0,1,1

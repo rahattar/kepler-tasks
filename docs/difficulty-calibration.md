@@ -146,3 +146,43 @@ about inference from data already in hand rather than about what to go and measu
 - a fault visible only in the raw data (a drifting instrument, swapped tags, an offset estimated from repeats);
 - a quantity to be identified where the natural estimator is biased, so care alone does not get it right.
 To which the twelve probe reports add a third: an answer the solver cannot confirm from its own inputs.
+
+## What the untried levers were actually worth (Nov 10, relief-valve-adequacy)
+
+A task built deliberately on three of the levers above: a categorical deliverable (which of six contingencies
+governs each of nine relief valves, plus the area it needs and whether the valve is adequate), two quantities
+identified from records rather than read, and twenty-two layers. Twelve local probe rounds, nine at low effort and
+three at xhigh, each graded with the task's own grader.
+
+Result: low effort 1 of 6 solved on clean records, xhigh 1 of 3. Both gates met, which is the first design since
+superheater-tube-life to meet them. But **what separates a pass from a failure is a single layer**, and the lever
+it belongs to is narrower than the list above suggests.
+
+- **An answer the solver cannot confirm from its inputs** was worth little. Nothing in the records states any
+  valve's governing contingency or finding, yet a run that gets the physics right gets the name right as a
+  by-product. Worse, the runs found their own anchor: most of them reproduced the superseded 2019 relief study
+  from its own stated basis and used the match to validate their implementation. A dated wrong answer is a
+  self-check, not just a decoy - which is worth knowing before putting one in a task again.
+- **A quantity whose natural estimator is biased** was worth nothing as stated. The valves' data sheet
+  coefficients are the biased estimator and the plant's trends the unbiased one; every single run used the
+  trends, because the standard has to tell them to for the task to be fair.
+- **A fault visible only in raw data** was worth something, but only in one form. The feed meter's flow computer
+  holds a density the gas no longer has; every run found that and corrected the feed. What two thirds of them
+  missed is that the same meter also supplies the flow column of one control valve's trend, so the coefficient
+  fitted from it is 4 per cent low. That one link is the whole difficulty of the task.
+
+**The sharpened lever: a fact that has to be carried from one record into the use of another.** Not a hidden fact
+- impeller-shrink-fits settled that a fact stated anywhere is found. A fact that is read, understood, and then
+not applied in the second place it bears on. Across twelve runs this went wrong about two thirds of the time, at
+low effort and at xhigh alike, which is the only behaviour yet observed that effort does not fix. Twenty-two
+layers threw up exactly one such link, and by accident. A task built out of six or eight of them deliberately -
+one quantity used in two places, one correction that bears on two files, one instrument feeding two derived
+numbers - would have headroom instead of riding on one.
+
+**And the structural tension behind all of this.** Every layer had to be derivable from the agent's files to be
+fair, which meant writing it down, and writing it down is what made it findable. The first probe round of
+relief-valve-adequacy found three defects, and all three were places where a layer was unfair because something
+had *not* been written down: a stream named inconsistently between two documents, the latest analysis dated after
+the assessment, a shop record out of step with the sealed definition. Fixing each removed a failure and made the
+task easier. Expect that trade on every future design: the honest ceiling on difficulty for a records-reduction
+task is set by what fairness obliges you to state.

@@ -92,3 +92,15 @@ was easy, from the three traces:
 - task.name should use the benchmark's required prefix rather than "afterquery/"; ask Alex for the exact
   string.
 - category/subcategory and the three explanation fields may belong only in README.md, not task.toml.
+
+## Grader-design failure caught by a probe, Nov 10 (relief-valve-adequacy)
+A decimal-places cap copied from impeller-shrink-fits rejected a whole sheet because one answer, a thermal
+expansion area of 0.052 mm2, was written to more than six decimals. The run had every valve right but one and was
+graded 0 of 9. The cap made sense where it came from, a honed bore quoted to the micrometre; it makes none for a
+computed area that spans four orders of magnitude across the deliverable.
+
+**Rules taken from this**
+- Cap decimals only where the physical quantity has a resolution. Otherwise bound the input by range and file
+  size and let the solver write as many figures as it likes.
+- Where a deliverable's values span orders of magnitude, say in the instruction how many significant figures are
+  wanted. Three probe runs lost the same valve by rounding 0.052 to 0.05 before this was added.

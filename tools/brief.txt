@@ -1,19 +1,28 @@
-Your working environment: the directory /home/claude/rcprobe/PROBE/app stands for /app. Read /app/... as /home/claude/rcprobe/PROBE/app/... and write your output to /home/claude/rcprobe/PROBE/app/output/cylinder_limits.csv. Put any scratch files under /home/claude/rcprobe/PROBE/app/work. The service commands are /home/claude/rcprobe/PROBE/app/gc and /home/claude/rcprobe/PROBE/app/weigh (run them as ./gc and ./weigh from that directory). Do not read or list anything under /home/claude/rcprobe/PROBE/rig, /home/claude/kepler-tasks, /home/claude/scratch, /home/claude/rcprobe (other than your own PROBE/app directory) or any other directory outside /home/claude/rcprobe/PROBE/app, do not read the source of the service scripts, and do not consult any project documents or notes; use only the records in /app/data and the service commands. No internet, and no package installs: numpy, scipy and pandas are already there.
+You are assessing the pressure relief of a process unit. Work only inside PROBE. Do not read, list or open
+anything outside PROBE: not the repository it sits in, not any file about how this exercise was made. Everything
+you need is under PROBE/app.
 
-Task:
+Unit 400's pressure relief valves have not been reassessed since the unit's capacity was increased, and an
+assessment to the current issue of the plant standard is now due. Nine valves are in scope: PSV-401 to PSV-409.
 
-K-4101 is a six-throw, three-stage reciprocating gas booster, two throws to a stage. It takes suction from a declining field and discharges into an export pipeline whose pressure is held. The unit has to keep delivering its contract flow as the field declines, and the plant needs to know how far each cylinder can be taken before the machine has to be re-staged.
+For each valve, work out which of the contingencies listed for it in the register requires the largest relieving
+capacity, the effective orifice area that contingency requires, and whether the valve as it now stands is
+adequate. Plant standard RP-7 is in PROBE/app/data/docs/standard.md and governs the whole assessment.
 
-Work out, for each of the six cylinders 1A, 1B, 2A, 2B, 3A and 3B, the lowest field pressure at which that cylinder may be run, and which requirement of plant standard RC-4 governs it.
+The records are PROBE/app/data/relief_valve_register.csv, PROBE/app/data/valve_history.csv,
+PROBE/app/data/relief_piping.csv, PROBE/app/data/control_valve_data.csv,
+PROBE/app/data/control_valve_trend.csv, PROBE/app/data/operating_record.csv,
+PROBE/app/data/instrument_schedule.csv, PROBE/app/data/sis_register.csv,
+PROBE/app/data/exchanger_data.csv, PROBE/app/data/pump_data.csv, PROBE/app/data/pump_test_record.csv,
+PROBE/app/data/blocked_in_sections.csv, PROBE/app/data/gas_analysis.csv,
+PROBE/app/data/fluid_properties.csv, PROBE/app/data/gas_properties.csv,
+PROBE/app/data/liquid_properties.csv, PROBE/app/data/modification_register.csv,
+PROBE/app/data/maintenance_log.csv, PROBE/app/data/docs/unit_400.md, PROBE/app/data/docs/vessel_data.md and
+PROBE/app/data/docs/relief_study_2019.md.
 
-The standard is at `/app/data/docs/standard.md`. It gives the duty, the requirements, the figures each is checked against, and what the lowest allowable field pressure and its governing requirement mean. Follow it as written.
+Write the assessment to PROBE/app/output/relief.csv with the header
+valve,governing_case,required_area_mm2,verdict. Include one row for each of PSV-401 to PSV-409. Give the governing
+case as one of the contingency names the standard defines, the required effective orifice area in mm2 to at least
+three significant figures, and the verdict as adequate or inadequate.
 
-The machine is to be taken as it now stands, not as it was supplied. The records are `/app/data/docs/machine_data_sheet.md`, `/app/data/docs/overhaul_register.md`, `/app/data/docs/service_bulletin.md`, `/app/data/cylinder_schedule.csv`, `/app/data/liner_records.csv`, `/app/data/operating_record.csv`, `/app/data/instrument_schedule.csv`, `/app/data/temperature_trend.csv`, `/app/data/drive_record.csv`, `/app/data/gas_analysis_feed.csv`, `/app/data/component_properties.csv` and `/app/data/maintenance_log.csv`.
-
-Two services can be called on, described in `/app/data/docs/laboratory.md`: `gc <stage>` and `weigh <cylinder>`. The allowance is 2 readings in all, across both services together, and it does not refill. Each reading is reported back and a copy is written to `/app/lab_reports`. Plan the allowance before you spend any of it.
-
-Write your answer to `/app/output/cylinder_limits.csv`, with the header `cylinder,field_pressure_bar,governing_limit` and one row for each of 1A, 1B, 2A, 2B, 3A, 3B: the lowest field pressure in bar absolute to two decimal places, and the name of the governing requirement exactly as the standard writes it.
-
-You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
-
-When done, reply with a short report: the readings you took and why, how you worked out the duty and each cylinder, and your predicted number of the 12 values that are right.
+Write any scratch files under PROBE/app/work. When you are done, report what you did and what you concluded.

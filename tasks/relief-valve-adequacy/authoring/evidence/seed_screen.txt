@@ -1,0 +1,28 @@
+Seeds screened on three conditions. Area band 0.010 relative; the third condition wants the worst
+sound method within 0.005.
+
+| seed | sound methods right | worst sound area | defective routes that pass | acceptable |
+|---|---|---|---|---|
+| 7301 | 9 of 9 | 0.0024 | 0 | yes |
+| 7302 | 9 of 9 | 0.0026 | 0 | yes |
+| 7303 | 9 of 9 | 0.0021 | 0 | yes |
+| 7304 | 9 of 9 | 0.0021 | 0 | yes |
+| 7305 | 9 of 9 | 0.0016 | 0 | yes |
+| 7306 | 9 of 9 | 0.0018 | 0 | yes |
+| 7307 | 9 of 9 | 0.0038 | 0 | yes |
+| 7308 | 9 of 9 | 0.0042 | 0 | yes |
+| 7309 | 9 of 9 | 0.0025 | 0 | yes |
+| 7310 | 9 of 9 | 0.0016 | 0 | yes |
+| 7311 | 9 of 9 | 0.0030 | 0 | yes |
+| 7312 | 9 of 9 | 0.0018 | 0 | yes |
+| 7313 | 9 of 9 | 0.0023 | 0 | yes |
+| 7314 | 9 of 9 | 0.0036 | 0 | yes |
+| 7315 | 9 of 9 | 0.0017 | 0 | yes |
+| 7316 | 9 of 9 | 0.0011 | 0 | yes |
+| 7317 | 9 of 9 | 0.0041 | 0 | yes |
+| 7318 | 9 of 9 | 0.0027 | 0 | yes |
+| 7319 | 9 of 9 | 0.0042 | 0 | yes |
+| 7320 | 9 of 9 | 0.0051 | 0 | no |
+
+first acceptable seed: 7301
+shipped seed: 7301

@@ -1,0 +1,43 @@
+Defective routes, graded against the sealed definition. Area tolerance 0.010 relative.
+
+| Route | Right of 9 | Worst valve | Seeds with 9 |
+|---|---|---|---|
+| the data sheet coefficient for every control valve | 6 | PSV-401 area +16.4% | 0 of 20 |
+| a linear characteristic for every control valve | 6 | PSV-401 case blocked_outlet; area -41.2% | 0 of 20 |
+| the largest logged flow taken as the relieving rate | 6 | PSV-401 case blocked_outlet; area -41.2% | 0 of 20 |
+| the feed meter read as indicated | 8 | PSV-401 area -4.0% | 0 of 20 |
+| the reboiler coefficient-area from the data sheet duty | 8 | PSV-403 area -15.3%; verdict adequate | 0 of 20 |
+| the data sheet duty taken as the relieving duty | 7 | PSV-403 area -15.3%; verdict adequate | 0 of 20 |
+| no credit for instrumented protection | 8 | PSV-406 case cooling_failure; area +299.8%; verdict inadequate | 0 of 20 |
+| credit taken without testing independence | 7 | PSV-403 case blocked_outlet; area -67.2%; verdict adequate | 0 of 20 |
+| credit taken without the proof test interval | 8 | PSV-409 case fire; area -13.2% | 0 of 20 |
+| the two-thirds rule applied to the wrong ratio | 8 | PSV-402 case fire; area -44.0%; verdict adequate | 0 of 20 |
+| one tube area discharging instead of two | 8 | PSV-402 case fire; area -44.0%; verdict adequate | 0 of 20 |
+| the register's orifice letter | 8 | PSV-407 verdict adequate | 0 of 20 |
+| the register's set pressure | 8 | PSV-409 area -12.7% | 0 of 20 |
+| the rupture disc combination factor left out | 8 | PSV-402 area -10.0% | 0 of 20 |
+| elevation changes since the data book left out | 8 | PSV-406 area +11.1% | 0 of 20 |
+| no insulation credit anywhere | 8 | PSV-404 case fire; area +6.6% | 0 of 20 |
+| the viscosity correction left at 1 | 8 | PSV-405 area -5.9% | 0 of 20 |
+| the pump's data sheet curve | 8 | PSV-405 case blocked_outlet; area +254699.2% | 0 of 20 |
+| properties at the item's normal pressure | 6 | PSV-401 area +1.2% | 0 of 20 |
+| the inlet line rule not checked | 8 | PSV-404 verdict adequate | 0 of 20 |
+| 10 per cent accumulation for the fire case | 8 | PSV-406 area +6.2% | 0 of 20 |
+| no drainage or firefighting credit | 5 | PSV-406 area +64.1%; verdict inadequate | 0 of 20 |
+| the whole shell taken as wetted | 6 | PSV-407 case fire; area +37.6% | 0 of 20 |
+| the vapour discharge coefficient used for liquid | 7 | PSV-402 area -33.3% | 0 of 20 |
+| the 2019 study's findings taken as the answer | 1 | PSV-401 area +16.4% | 0 of 20 |
+
+Routes failing each valve:
+  PSV-401 6
+  PSV-402 4
+  PSV-403 5
+  PSV-404 3
+  PSV-405 4
+  PSV-406 7
+  PSV-407 7
+  PSV-408 3
+  PSV-409 9
+
+valves failed by fewer than 3 routes: none
+routes that pass on the shipped records: none

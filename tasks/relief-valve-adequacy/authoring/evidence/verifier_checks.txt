@@ -1,0 +1,46 @@
+Sheets put through tests/grade_relief.py. Every case is built from the current reference.
+
+ok  the reference sheet                                  -> accepted
+ok  the reference sheet with CRLF line ends              -> accepted
+ok  the reference sheet with blank lines                 -> accepted
+ok  the reference sheet with padded fields               -> accepted
+ok  the reference sheet with the rows reversed           -> accepted
+ok  no file at all                                       -> rejected: no assessment at /tmp/rv_vc_d_veo8ul/relief.csv
+ok  a symbolic link to a good sheet                      -> rejected: the assessment is not a regular file
+ok  a directory in place of the file                     -> rejected: the assessment is not a regular file
+ok  an empty file                                        -> rejected: the first line must be exactly: valve,governing_case,required_area_mm2,verdict
+ok  the header alone                                     -> rejected: the assessment must have one row for each of PSV-401, PSV-402, PSV-403, PSV-404, PSV-405, PSV-406, PSV-407, PSV-408, PSV-409
+ok  no header                                            -> rejected: the first line must be exactly: valve,governing_case,required_area_mm2,verdict
+ok  a misspelt header                                    -> rejected: the first line must be exactly: valve,governing_case,required_area_mm2,verdict
+ok  an extra header column                               -> rejected: the first line must be exactly: valve,governing_case,required_area_mm2,verdict
+ok  a row of the wrong length                            -> rejected: every row must have four fields: ['PSV-409', 'control_valve_failure', '347.9196']
+ok  a valve missing                                      -> rejected: the assessment must have one row for each of PSV-401, PSV-402, PSV-403, PSV-404, PSV-405, PSV-406, PSV-407, PSV-408, PSV-409
+ok  a valve repeated                                     -> rejected: valve PSV-401 appears twice
+ok  an unknown valve                                     -> rejected: unknown valve 'PSV-410'
+ok  a valve in lower case                                -> rejected: unknown valve 'psv-401'
+ok  non-ASCII text                                       -> rejected: the assessment is not ASCII text
+ok  an unknown contingency name                          -> rejected: PSV-401 governing_case must be one of fire, blocked_outlet, control_valve_failure, cooling_failure, tube_rupture, thermal_expansion
+ok  a contingency in upper case                          -> rejected: PSV-401 governing_case must be one of fire, blocked_outlet, control_valve_failure, cooling_failure, tube_rupture, thermal_expansion
+ok  an empty contingency                                 -> rejected: PSV-401 governing_case must be one of fire, blocked_outlet, control_valve_failure, cooling_failure, tube_rupture, thermal_expansion
+ok  an unknown verdict                                   -> rejected: PSV-401 verdict must be one of adequate, inadequate
+ok  a verdict in upper case                              -> rejected: PSV-401 verdict must be one of adequate, inadequate
+ok  an empty verdict                                     -> rejected: PSV-401 verdict must be one of adequate, inadequate
+ok  an area that is not a number                         -> rejected: PSV-401 required_area_mm2 is not a number: 'about 500'
+ok  an empty area                                        -> rejected: PSV-401 required_area_mm2 is not a number: ''
+ok  an area of NaN                                       -> rejected: PSV-401 required_area_mm2 must be finite
+ok  an infinite area                                     -> rejected: PSV-401 required_area_mm2 must be finite
+ok  a negative area                                      -> rejected: PSV-401 required_area_mm2 must be from 0.001 to 100000
+ok  an area of zero                                      -> rejected: PSV-401 required_area_mm2 must be from 0.001 to 100000
+ok  an area below the range                              -> rejected: PSV-401 required_area_mm2 must be from 0.001 to 100000
+ok  an area above the range                              -> rejected: PSV-401 required_area_mm2 must be from 0.001 to 100000
+ok  an area in exponent form                             -> accepted
+ok  an area with six decimals                            -> accepted
+ok  an area with twelve decimals                         -> accepted
+ok  an area with a leading plus                          -> accepted
+ok  one contingency name changed                         -> graded 8 of 9
+ok  one verdict changed                                  -> graded 8 of 9
+ok  one area moved by 2 per cent                         -> graded 8 of 9
+ok  every area moved by 2 per cent                       -> graded 0 of 9
+
+41 cases, 0 UNEXPECTED
+The grader never crashed and the reward never depended on anything but the nine rows.

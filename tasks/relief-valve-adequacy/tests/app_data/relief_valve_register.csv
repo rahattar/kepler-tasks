@@ -1,0 +1,10 @@
+valve,protected_item,relieving_fluid,mawp_barg,set_pressure_barg,orifice,valve_type,rupture_disc_upstream,superimposed_back_pressure_barg,inlet_flow_tags,contingencies
+PSV-401,V-401,feed_gas,62,62.0,J,bellows,no,1.10,FE-4011,blocked_outlet control_valve_failure fire
+PSV-402,E-402,bottoms_product,20,20.0,G,conventional,yes,1.20,,tube_rupture fire thermal_expansion
+PSV-403,T-401,c2_overhead,31,31.0,K,bellows,no,1.10,FE-4011,cooling_failure fire blocked_outlet
+PSV-404,V-403,c2_overhead,29,29.0,H,bellows,no,1.10,FE-4033+FE-4034,blocked_outlet fire
+PSV-405,P-401,bottoms_product,42,42.0,F,conventional,no,0.00,,blocked_outlet thermal_expansion
+PSV-406,T-402,c4_product,16,16.0,J,conventional,no,1.40,FE-4035,cooling_failure fire blocked_outlet
+PSV-407,V-405,c3_product,19,19.0,J,bellows,no,1.10,,fire control_valve_failure thermal_expansion
+PSV-408,V-404,c4_product,18,18.0,H,conventional,no,1.20,FE-4036+FE-4037,blocked_outlet fire control_valve_failure
+PSV-409,V-402,feed_gas,11,11.0,G,bellows,no,1.10,FE-4021,control_valve_failure blocked_outlet fire

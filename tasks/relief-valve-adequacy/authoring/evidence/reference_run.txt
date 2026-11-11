@@ -1,0 +1,45 @@
+solution/solve.py on the shipped records (seed {"seed": 7301}).
+
+Quantities it identifies rather than reads:
+
+| quantity | identified | on the data sheet | difference |
+|---|---|---|---|
+| PV-4001 coefficient at full travel | 54.88 | 64.00 | -14.2% |
+| PV-4021 coefficient at full travel | 3.08 | 2.50 | +23.3% |
+| PV-4031 coefficient at full travel | 48.19 | 48.00 | +0.4% |
+| PV-4061 coefficient at full travel | 36.12 | 36.00 | +0.3% |
+| PV-4071 coefficient at full travel | 37.78 | 27.00 | +39.9% |
+| E-403 coefficient-area, kW/K | 26.73 | 22.64 | +18.1% |
+| E-406 coefficient-area, kW/K | 42.73 | 36.19 | +18.1% |
+| feed flow against FE-4011's indication | x 1.0394 | x 1.0000 | +3.9% |
+| P-401 shutoff head, m | 545.4 | 590.0 | -7.6% |
+
+Its answer, against the sealed definition:
+
+| valve | governing case | area, mm2 | finding | sealed area | difference |
+|---|---|---|---|---|---|
+| PSV-401 | control_valve_failure | 479.1862 | adequate | 480.1918 | -0.0021 |
+| PSV-402 | tube_rupture | 516.6445 | inadequate | 516.6445 | +0.0000 |
+| PSV-403 | cooling_failure | 1377.2901 | inadequate | 1377.3698 | -0.0001 |
+| PSV-404 | blocked_outlet | 202.1896 | inadequate | 202.1888 | +0.0000 |
+| PSV-405 | thermal_expansion | 0.0522 | adequate | 0.0522 | +0.0000 |
+| PSV-406 | fire | 664.3131 | adequate | 664.3131 | +0.0000 |
+| PSV-407 | control_valve_failure | 701.8897 | inadequate | 702.2742 | -0.0005 |
+| PSV-408 | blocked_outlet | 425.6318 | adequate | 425.6275 | +0.0000 |
+| PSV-409 | control_valve_failure | 347.9196 | inadequate | 347.5001 | +0.0012 |
+
+worst relative area 0.0021 against a band of 0.0100
+
+Where each finding comes from:
+
+| valve | required | installed | inlet loss | limit | finding |
+|---|---|---|---|---|---|
+| PSV-401 | 479.2 | J 830 | 0.335 bar | 1.860 bar | adequate |
+| PSV-402 | 516.6 | G 325 | liquid service | 0.600 bar | inadequate |
+| PSV-403 | 1377.3 | K 1186 | 0.426 bar | 0.930 bar | inadequate |
+| PSV-404 | 202.2 | H 506 | 1.159 bar | 0.870 bar | inadequate |
+| PSV-405 | 0.1 | F 198 | liquid service | 1.260 bar | adequate |
+| PSV-406 | 664.3 | J 830 | 0.017 bar | 0.480 bar | adequate |
+| PSV-407 | 701.9 | H 506 | 0.013 bar | 0.570 bar | inadequate |
+| PSV-408 | 425.6 | H 506 | 0.088 bar | 0.540 bar | adequate |
+| PSV-409 | 347.9 | G 325 | 0.709 bar | 0.285 bar | inadequate |

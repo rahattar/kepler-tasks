@@ -1,0 +1,4 @@
+valve,section,projected_area_m2,liquid,liquid_temp_C,exposure
+PSV-402,"E-402 shell, isolated at both ends with the tube side in service",12.0,bottoms_product,95,full sun
+PSV-405,"P-401 discharge line to the storage tank farm, isolated at the tank farm",7.6,bottoms_product,95,full sun
+PSV-407,"V-405 liquid filling line from T-403, isolated at the drum",14.0,c3_liquid,35,full sun

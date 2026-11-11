@@ -1,0 +1,32 @@
+Hedges between a defective reading and the sealed answer. Area tolerance 0.010 relative.
+
+| Route | Valves it changes | Hedge possible on |
+|---|---|---|
+| the data sheet coefficient for every control valve | PSV-401, PSV-407, PSV-409 | none |
+| a linear characteristic for every control valve | PSV-401, PSV-407, PSV-409 | none |
+| the largest logged flow taken as the relieving rate | PSV-401, PSV-407, PSV-409 | none |
+| the feed meter read as indicated | PSV-401 | none |
+| the reboiler coefficient-area from the data sheet duty | PSV-403 | none |
+| the data sheet duty taken as the relieving duty | PSV-403, PSV-406 | none |
+| no credit for instrumented protection | PSV-406 | none |
+| credit taken without testing independence | PSV-403, PSV-409 | none |
+| credit taken without the proof test interval | PSV-409 | none |
+| the two-thirds rule applied to the wrong ratio | PSV-402 | none |
+| one tube area discharging instead of two | PSV-402 | none |
+| the register's orifice letter | PSV-407 | none |
+| the register's set pressure | PSV-409 | none |
+| the rupture disc combination factor left out | PSV-402 | none |
+| elevation changes since the data book left out | PSV-406 | none |
+| no insulation credit anywhere | PSV-404 | none |
+| the viscosity correction left at 1 | PSV-405 | none |
+| the pump's data sheet curve | PSV-405 | none |
+| properties at the item's normal pressure | PSV-401, PSV-403, PSV-406 | PSV-401 |
+| the inlet line rule not checked | PSV-404 | none |
+| 10 per cent accumulation for the fire case | PSV-406 | none |
+| no drainage or firefighting credit | PSV-406, PSV-407, PSV-408, PSV-409 | none |
+| the whole shell taken as wetted | PSV-407, PSV-408, PSV-409 | none |
+| the vapour discharge coefficient used for liquid | PSV-402, PSV-405 | none |
+
+valves on which any hedge exists at all: PSV-401
+A hedge needs the same contingency name, the same finding, and two area bands that overlap. Where the
+name or the finding differs, no single row can satisfy both readings.
