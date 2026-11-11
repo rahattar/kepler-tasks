@@ -53,7 +53,13 @@ left the pool. That is why 0.99 against it has never bitten. *Inference from the
 the nearest files are:
 - skid-noise-guarantee: environment/Dockerfile 0.912, tests/Dockerfile 0.992, instruction 0.441;
 - recip-cylinder-limits: grade_form.py 0.578;
-- skid-noise-guarantee again: test.sh 0.998, test_form.py 0.868.
+- skid-noise-guarantee again: test.sh 0.998;
+- flange-torque-spec: test_form.py 0.855, solve.sh 0.749.
+
+flange-torque-spec is the one neighbour known to be in the pool: shrink-fit-hubs was refused against it as "still
+in validation or review, or already approved" (seen). bore-form has cleared similarity five times with test_form.py
+at 0.855 and solve.sh at 0.749 against it. So the gate is not refusing on harness files at these levels; what it
+refused shrink-fit-hubs for was the whole task, which shared the subject and the deliverable as well. *Inference.*
 
 If skid-noise-guarantee or recip-cylinder-limits is submitted while bore-form is in validation or review, the
 second one to arrive is the one at risk. *Inference from the shrink-fit-hubs message.*
