@@ -461,8 +461,8 @@ found by every probe.
 
 On the shipped records (gauge equation corrected; these probes were briefed with the 2.5% speed band, the
 shipped band is 3.5%, and no probe sheet lands between them): low effort 1 of 3 (R4 solved; R5 and R6 missed
-VC07, one on the gas load by -29%, one on the speed by +43%), xhigh 2 of the 2 finished (S5, S6; S4 still
-running at packaging). Across both rounds: low 1 of 6, xhigh 4 of 5. Every probe again ordered a gas-load test
+VC07, one on the gas load by -29%, one on the speed by +43%), xhigh 3 of 3 (S4, S5, S6). Across both rounds:
+low 1 of 6, xhigh 5 of 6. Every probe again ordered a gas-load test
 on VC08 at 36 h, and every miss is on VC07.
 
 Reading for the official run: inside the low-effort bar, but xhigh solves at a rate that puts the official 8
