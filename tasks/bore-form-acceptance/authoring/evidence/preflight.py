@@ -98,8 +98,16 @@ def main():
     ins = open("instruction.md").read()
     check(ins.rstrip().endswith("You have 28800 seconds to complete this task. Do not cheat by using online "
                                 "solutions or hints specific to this task."), "instruction's closing line")
-    for w in ("grader", "verifier", "reward", "scoring", "test_", "tolerance"):
+    for w in ("grader", "verifier", "reward", "score", "pass", "fail", "tested", "graded", "partial credit",
+              "scoring", "test_", "tolerance"):
         check(w not in ins.lower(), "instruction mentions %r" % w)
+    check(not ins.lstrip().startswith("#"), "the instruction must carry no heading")
+    for f in ("feature_register.csv", "drawing_requirements.csv", "machining_log.csv", "measurement_index.csv",
+              "docs/standard_fm7.md", "docs/instrument_notes.md", "docs/metrology_room.md",
+              "docs/inspection_report.md", "measurements"):
+        check("/app/data/" + f in ins, "the instruction must name /app/data/%s by its path" % f)
+    for f in ("/app/scan_reports", "/app/output/form.csv"):
+        check(f in ins, "the instruction must name %s" % f)
     for w in ("minimum zone", "least squares", "least-squares", "spindle", "error motion", "nyquist", "alias",
               "undulation", "taylor", "mating", "envelope", "re-hone", "rehone", "same setup", "transfer",
               "temperature", "filter", "harmonic"):
