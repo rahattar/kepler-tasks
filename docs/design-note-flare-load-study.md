@@ -170,3 +170,60 @@ The precedent that made shipping reasonable rather than rebuilding from scratch:
 as too similar to flange-torque-spec and reworked as impeller-shrink-fits, which passed while its rejected
 predecessor sat in the pool. A reworked sibling is not blocked by its predecessor; what the gate caught in
 November was scaffolding shared with *other, independent* tasks, and the archetype.
+
+## Rounds 2 and 3, after the screen rejected it
+
+The screen solved it 3 of 3 at low effort in about two minutes. Two rounds of design followed.
+
+**Round 2: the study stops coming out in sequence.** A conventional spring device is referenced to atmosphere,
+so it opens at its set pressure plus whatever stands at its outlet, which is the header pressure at its own
+tie-in, built up by the flow every device is putting in. The register says which devices carry a balanced
+bellows and are immune. So rates, relieving pressures and header pressures are one system: section 6 now says
+to sweep from no built-up pressure until no tie-in moves by more than 0.0001 bar. The feedback is negative, so
+the sweeps close from below at about a tenth of the gap each pass and the fixed point is unique; nothing has to
+be guessed and nothing can be skipped. A sequential reading is 8 per cent out on the governing load and gets
+three of six contingencies wrong; ignoring the bonnet column gets two wrong.
+
+Section 9 was added with it: the smallest tip the vendor supplies at which no conventional device is left
+standing against more than 5 per cent of its own set pressure, reported as a second artifact with the binding
+device named. That is an outer search with the whole coupled system inside it, because each candidate bore
+changes the tip's loss and so every back pressure and so every rate. Scaling the shares off the installed tip
+instead of re-converging picks 355.6 mm, one size too small. The answer is 406.4 mm, binding on PSV-409 at 4.45
+per cent, with 355.6 mm failing at 5.96.
+
+**Round 3: two silent two-state traps.** Each of the three re-trimmed valves has a trend in two blocks, one
+before the work the maintenance log records on its trim and one in the last days of the record; all three came
+back about 14 per cent below their data sheets, so a trend read whole overstates all three and the errors add.
+E-403's operating record splits the same way at the steam trap renewal, the exchanger having been flooding and
+making 85 per cent of its surface before it. Both figures that come out of a pooled read sit between the data
+sheet and the truth, so there is nothing in them to check. Section 1 states the principle.
+
+## What the three rounds actually measured
+
+| Round | Low probes that solved it | What the failures failed on |
+|---|---|---|
+| 1, records only | 3 of 3 | nothing |
+| 2, coupled system and the re-rating | 1 of 3 | the feed meter |
+| 3, the two-state traps | 1 of 3 | the feed meter |
+
+Nine probe runs. Every one implemented the coupled sweep. Every one found both two-state traps and cut both
+records at the right day. Every one got the re-rating bore and the binding device right. The only thing that has
+ever separated one run from another is the feed meter's stale configured density.
+
+**The lesson, which is now in difficulty-calibration.md: stated against unstated, not hard against easy.** Every
+layer these runs found is a principle written in the standard. The meter is the one layer no rule asks for: the
+instrument schedule records a fixed relative density, the analyses record the gas, and the solver has to know
+unprompted that mass through an orifice goes as the square root of density. One such correction at a
+one-in-three failure rate leaves a two-in-three chance a run solves the task, which is a reject at screening;
+three or four independent ones would put it at 0 of 3. Stated layers are what make a task fair and long. They
+are not what makes it hard.
+
+## Similarity, against the live pool
+
+`tools/similarity.py` with relief-valve-adequacy, impeller-shrink-fits and shrink-fit-hubs excluded, those
+being out of the pool: the sealed model 0.081, solution/solve.py 0.104, tests/grade_flare.py 0.240,
+instruction.md 0.329, tests/Dockerfile 0.398. Four short files that the structure literals and the harness fix
+sit higher: environment/Dockerfile 0.804, solution/solve.sh 0.560, tests/test.sh 0.521, tests/test_flare.py
+0.471. Left alone on the evidence recorded in answers-bore-form-2026-11-11.md, where bore-form cleared
+similarity five times with test_form.py at 0.855 and solve.sh at 0.749 against a task known to be live. The
+substantive files are the ones that carry originality, and they are all far below.
