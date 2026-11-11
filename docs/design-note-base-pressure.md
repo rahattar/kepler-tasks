@@ -242,3 +242,137 @@ them to be removed, and for `task.name` to change from `afterquery/base-pressure
 advisory once already cost a submission with seven blocking errors, so the current bundle satisfies the blocking
 checks and keeps drawing the advisory. This needs a dataset owner to arbitrate; do not "fix" it from the
 advisory alone.
+
+---
+
+# REVIEW OF 11 NOVEMBER, REPRODUCED
+
+An independent review of `b3bbac9` (`docs/review-base-pressure-2026-11-11.md` on branch
+`review/base-pressure-diagnosis`, not merged). Its scripts were extracted to a scratch directory, each was read
+before it was run (all are read-only analyses; `perturb.sh` works on copies), and each was run against this tree.
+Where a claim changes what the redesign must do, it was also checked with a separate script written for the
+purpose rather than the review's own.
+
+**Every finding reproduces. None was refuted.**
+
+## Confirmed
+
+| Finding | Review says | Reproduced |
+|---|---|---|
+| Speed independent of the split | pump curves flat at base pressure | spread 0.0000% on all ten chambers, 1e-8 to 1e-5 mbar |
+| VC09 speed from a matched pair | +0.1% | +0.1% on IG-7209 (own script) |
+| VC10 speed from a matched pair | -1.4% | -1.4% on CC-7110 (own script) |
+| Permeation is a table lookup | K20 L theta_p, no factor | `bpphys.q_perm` is exactly that |
+| Seven chambers from one record, noise-free | VC01 -2.2 ... VC09 -3.5/-2.9 | identical, all seven |
+| Same, on the shipped data | within 4% on all seven | each of the seven has a record and mode within 4% |
+| Every orderable test at 16 h | | `fleet.AUDIT_TESTS`: all 16.0 h |
+| tau hard-coded at 9 h in both solvers | | `diagnose.py` 873, 902, 924; `independent.py` 496 |
+| VC08 gas load over tau 24-48 h | -13.8% to +17% | -13.8% to +17.0% (own arithmetic) |
+| VC10 with perfect knowledge | +11.1% / +4.2% pooled | +11.1% / +4.2% |
+| VC07 with perfect knowledge | +1.2% | +1.2%, tau 25.8 h (true 24) |
+| Monte Carlo VC07 / VC10 | 0.73 / 0.45, 0.82 pooled | 0.73 / 0.45; 0.82 pooled with `mc.py` cut at the pump change removed |
+| Stale evidence | six of eight, plus fleet_ranges | seven of eight stale; only `null_baselines` unchanged |
+| Stale figures | 0/41 orders, 16/40 hedge, 8 UNEXPECTED, margin 0.06x | all four exactly |
+| No study requires its baseline | route_study exits 0 at 8/10 | exits 0. `verifier_checks` does exit 1; `route_study`, `hedge_study`, `plan_sweep` do not |
+| routes.py copies the pipeline | config_for ... audit | all five functions present |
+| independent.py shares heuristics | 0.25, 0.60, 0.08, 2x spec, 1.02, first four rows | all six, line by line |
+| VC01 ordered speed test, shared bug | 913.7 L/s, factor 1.00, both divide: -12.5% | identical; `independent.py:462` divides the contractor's file explicitly |
+| Reference check is a substring | "1360 L" passes | not caught, and it *satisfies* the failing check (3 -> 2 failures) |
+| GATE not tied to the prose | | not caught |
+| Unread CSVs exempt | | not caught when mirrored into `tests/app_data` (see below) |
+| Basename anywhere passes | `tests/sealed/README.md` | not caught |
+| `tests/app_data` unread | | nothing in `grade_audit.py`, `test.sh` or `test_audit.py` reads `/app/data` |
+| Instruction says 16 h | | yes |
+| vacwork.md vs the reports | "at the reference pumping time" | every report header says 16.0 h |
+| audit_note.md | 24 h; two ionization gauges | VC06 has 26 h; three chambers carry one (VC01, VC02, VC09). **Agent-facing.** |
+| README fixture list | omits VC04 | VC04 carries a shield set on P2 and P4 |
+| Typed 16 h | three in meta.py; hedge_study tau 16 h | three; `hedge_study.py:82` |
+| null_best never substituted | | parsed once, substituted nowhere |
+| grade_audit.py comment | 1.7x / 2.1x | evidence says 1.52x / 2.58x |
+
+The review listed as **not verifiable** "4 of the 8 attempts passed with orders the sweep says fail". It is
+verifiable from the official run data attached on 10 November: the passing orders were VC08 helium x4, VC08
+rate-of-rise x1, VC10 rate-of-rise x2 and VC02 rate-of-rise x1, and the sweep of the time booked only VC08 helium
+and VC08 analysis as working. Confirmed.
+
+## Nuances added in reproduction
+
+- The VC09 matched-pair route works on the **ionization gauge only**: on the drifting cold cathode CC-7109 the same
+  arithmetic gives +14.1%. It still needs no gas-budget fit, and the ionization gauge is the reference instrument.
+- An unread CSV in `environment/data` alone *is* caught, but incidentally, by the check that the verifier's data
+  copy mirrors the agent's. Mirrored into both, it passes. The exemption is real.
+- The shortcut routes all run through the reference's own `front_end`, so they presuppose the instrument and
+  configuration layers are solved. The official attempts solved those easily, so the conclusion stands.
+
+## Found in reproduction, not in the review
+
+- `tests/Dockerfile` still carries an internal infrastructure name in a comment ("which harbor uploads here"). The
+  earlier sweep for such names covered `.py`, `.md`, `.toml` and `.sh`, and missed Dockerfiles.
+
+## Claims of this note refuted by the review
+
+All of these were stated as fact in the STATE OF PLAY section above. Each is wrong:
+- "still contributes 32-41% of its initial load at 36 h": it is 22% (VC07, tau 24) and 32% (VC08, tau 32). The
+  32-41% range was computed for tau 32-40, which is not VC07's.
+- "nearly flat across a 12-24 h record window": it falls 1.65x (VC07) and 1.45x (VC08). And if it *were* flat,
+  clause 3.3 would make the right cause `air-leak`, so flatness was never the property wanted.
+- "the helium test becomes decisive": for the cause, not for the gas load, which still depends on tau.
+- "changed in all three places": the 16 h regime survives in `hedge_study.py`, `meta.py`, a docstring, `vacwork.md`,
+  the instruction and the README.
+- The three failing preflight checks are two fleet ranges and the reference-condition check, not three README
+  checks.
+- VC10's failure "because its guards were tuned for 6-9 h trapped volumes": VC10 has no trapped volume. It is
+  wall-against-leak conditioning, and it fails even with perfect knowledge.
+- "rewrite the reference" as step 1 of what remains: it cannot reach 10 of 10. VC08 is unidentifiable and VC10
+  misses with perfect knowledge on the shipped readings.
+
+## Measured for the redesign
+
+Two measurements made to test the old plan, both exact model, true speeds, 0.6% read noise:
+
+- **Coupling does not pin VC08.** If VC08 shared VC07's trap type and inherited the tau VC07's records give, then
+  even with VC08's leak and wall factor known exactly, VC08 is within 4% on 0.58 of draws (95% range -28.4% to
+  +4.4%). VC07's own tau estimate spans 14.7-25.9 h. Step 2 of the old plan would not have fixed VC08.
+- **One observation past the reference time does.** Adding one VC08 observation at a chosen pumping time:
+
+  | Extra observation at | Leak | P(within 4%) |
+  |---|---|---|
+  | 8 h | known (helium) | 0.32 |
+  | 24 h | known | 0.78 |
+  | 40 h | unknown | 0.89 |
+  | 40 h | known | 1.00 |
+  | 48 h | known | 1.00 |
+
+  The missing information is a long-hold observation and the leak. Measured on VC08 only.
+
+---
+
+# DECISIONS FOR THE REDESIGN (11 November, agreed with Alex)
+
+Supersedes "What remains" in STATE OF PLAY above.
+
+1. **The agent chooses the pumping time of the ordered test**, within fixed bounds that the `vacwork` wrapper
+   enforces. It goes in `vacwork.md`'s plan format, not in the instruction. Measured basis: one VC08 observation
+   past the reference time pins tau (P = 1.00 at 40-48 h with the leak known); one before it does not (0.32 at 8 h).
+   Ordering at exactly 36 h reads that chamber's gas load almost directly; that is the right engineering decision
+   and helps one chamber only, so the other nine must be identifiable from their records.
+2. **Speed stays the instrument-and-configuration check.** Its band comes from the new sound-method spread, with
+   the nearest defective speed route at 1.5x the band or more and no tighter than the stated repeatability supports.
+   This adds no difficulty (narrow windows do not); it makes the band honest.
+3. **No permeation factor in the documents.** An MS-BP clause explaining one would be a hint in the files (Alex's
+   Nov 5 rule) and, being stated, no trap at all. Instead, a **data-only seal layer**:
+   - the register's seal material on one chamber is wrong from the start, a clerical error, with no log line;
+   - the seal actually fitted is another material in the same table, so the inference lands on a discrete,
+     checkable answer;
+   - placed on a chamber with seasonal temperature spread (eight qualify, x1.62-1.82 in permeation across their own
+     records; VC06 and VC08 do not), where trusting the register gives the wrong cause;
+   - kept only if it passes both checks below and a "trust the register's seal" route fails on it.
+4. **Shared-coefficient coupling is dropped.** Measured: VC08 inheriting VC07's tau is within 4% on 0.58 of draws
+   even in the best case.
+5. **Order of work: the checks before the fleet.** `tune.py` gains two measured design rules, and the fleet is
+   redesigned until both pass on every chamber, before any solver rewrite or tolerance retune:
+   - *load-bearing*: the best single-record shortcut misses by at least 2x the tolerance or names the wrong cause;
+   - *identifiable*: a sound solver with the records and the right single test is within tolerance on at least 0.99
+     of draws.
+6. Also required by the playbook and missing until now: a seed screen, and route counts on lab seeds 5301-5320.
+7. `task.toml` metadata advisory: not acted on.
