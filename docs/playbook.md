@@ -35,6 +35,15 @@ Sciences). Follow this exactly unless Alex says otherwise.
   as the task.toml explanation fields.
 - **Verifier pins:** numpy 2.1.3, scipy 1.14.1, pandas 2.2.3, pytest 8.4.1, pytest-json-ctrf 0.3.5. test.sh writes
   0 to the reward file first, then 1 only if pytest exits 0 and the ctrf report shows exactly 1 test, 1 passed.
+- **Literals the structure validator looks for.** It reads the files as text, so these have to appear verbatim
+  however the rest of the file is written. Found the hard way, twice, on relief-valve-adequacy:
+  - `tests/Dockerfile`: `RUN mkdir -p /app/output` on a line of its own (error code
+    `artifact-parent-not-created`), the five pins as `pkg==version`, `COPY . /tests/`, `WORKDIR /tests`,
+    `ENV PYTHONUNBUFFERED=1`;
+  - `tests/test.sh`: `echo -n "0" > /logs/verifier/reward.txt` and `echo -n "1" > /logs/verifier/reward.txt`
+    with the path written out in full, not through a shell variable (error code `reward-txt-missing`);
+    `mkdir -p /logs/verifier`; `--ctrf=/logs/verifier/ctrf.json`; `-p no:cacheprovider`.
+  Originality has to be built *around* these, never by replacing them. See `docs/rejection-patterns.md` for how.
 - **Truth:** comes from a sealed definition, never from running the reference. The agent can't read it: it sits
   in a root- or lab-owned 700 directory, reached only through a sudo wrapper that validates arguments and enforces
   the booking.

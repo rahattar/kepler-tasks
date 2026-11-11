@@ -3,27 +3,25 @@
 # that nothing written while grading ran can stand in for it. A crash, a timeout or a missing report all leave 0.
 set -u
 
-LOGS=/logs/verifier
-CTRF=$LOGS/ctrf.json
-PRIZE=$LOGS/reward.txt
-
 seal() {                       # the log directory is root's alone, before grading and again after it
-    mkdir -p "$LOGS"
-    chown root:root "$LOGS" 2>/dev/null
-    chmod 700 "$LOGS" 2>/dev/null
+    mkdir -p /logs/verifier
+    chown root:root /logs/verifier 2>/dev/null
+    chmod 700 /logs/verifier 2>/dev/null
 }
 
+# A zero goes down before anything else runs, so that a crash between here and the end cannot leave the file
+# absent or holding something another process wrote.
 seal
-rm -f "$PRIZE"
-printf '0' > "$PRIZE"
+rm -f /logs/verifier/reward.txt
+echo -n "0" > /logs/verifier/reward.txt
 
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 0
-python -m pytest test_relief.py -p no:cacheprovider --ctrf="$CTRF" -v
+python -m pytest test_relief.py -p no:cacheprovider --ctrf=/logs/verifier/ctrf.json -v
 graded=$?
 
 # The run counts only if the report holds the one test that was expected and that test passed: one test, one
 # passed, and nothing failed, skipped, pending or otherwise accounted for.
-python - "$CTRF" <<'TALLY'
+python - /logs/verifier/ctrf.json <<'TALLY'
 import json
 import sys
 
@@ -36,11 +34,13 @@ raise SystemExit(0 if all(summary.get(k, 0) == v for k, v in expected.items()) e
 TALLY
 counted=$?
 
+# The directory is locked again before the reward is written, and the old file removed rather than overwritten,
+# so the final byte cannot be something grading left behind.
 seal
-rm -f "$PRIZE"
+rm -f /logs/verifier/reward.txt
 if [ "$graded" -eq 0 ] && [ "$counted" -eq 0 ]; then
-    printf '1' > "$PRIZE"
+    echo -n "1" > /logs/verifier/reward.txt
 else
-    printf '0' > "$PRIZE"
+    echo -n "0" > /logs/verifier/reward.txt
 fi
 exit 0

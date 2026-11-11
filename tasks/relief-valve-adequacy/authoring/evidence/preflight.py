@@ -212,25 +212,28 @@ def main():
 
     # ---- the verifier
     vdock = text(os.path.join(ROOT, "tests", "Dockerfile"))
-    reqs = text(os.path.join(ROOT, "tests", "requirements.txt"))
     for pkg, ver in PINS.items():
-        check("the verifier pins %s %s" % (pkg, ver), "%s==%s" % (pkg, ver) in reqs)
-    check("the verifier installs exactly what it pins and nothing else",
-          sorted(l.strip() for l in reqs.splitlines() if l.strip())
-          == sorted("%s==%s" % kv for kv in PINS.items()))
-    check("the verifier image installs from the pinned list", "-r /tests/requirements.txt" in vdock)
+        check("the verifier pins %s %s" % (pkg, ver), "%s==%s" % (pkg, ver) in vdock)
+    check("the verifier image installs its stack", "pip install --no-cache-dir" in vdock)
+    # the validator looks for this line verbatim: without it harbor has nowhere to upload the artifact
+    check("the verifier image creates the artifact's parent directory",
+          "RUN mkdir -p /app/output" in vdock)
     sh = text(os.path.join(ROOT, "tests", "test.sh"))
+    zero = 'echo -n "0" > /logs/verifier/reward.txt'
+    one = 'echo -n "1" > /logs/verifier/reward.txt'
+    check("test.sh writes the reward to the one path the harness reads", zero in sh and one in sh)
     check("test.sh writes a zero reward before it grades anything",
-          "printf '0'" in sh and "python -m pytest" in sh
-          and sh.index("printf '0'") < sh.index("python -m pytest"))
+          "python -m pytest" in sh and sh.index(zero) < sh.index("python -m pytest"))
     check("test.sh requires the report to hold exactly one passing test",
           all(k in sh for k in ('"tests": 1', '"passed": 1', '"failed": 0', '"skipped": 0')))
     check("test.sh writes a reward of one only on a clean run and a counted report",
           '[ "$graded" -eq 0 ] && [ "$counted" -eq 0 ]' in sh)
     check("test.sh re-locks the log directory before the reward is written",
-          sh.rindex("seal") < sh.index("printf '1'"))
-    check("test.sh never lets the reward path be chosen from outside",
-          "VERIFIER_LOGS" not in sh and sh.count("LOGS=/logs/verifier") == 1)
+          sh.rindex("seal") < sh.index(one))
+    check("test.sh names the report it reads, and reads only that one",
+          sh.count("/logs/verifier/ctrf.json") == 2)
+    check("test.sh takes no path for the reward from outside",
+          not re.search(r"reward\.txt[\"']?\s*=|\$\{?\w*REWARD", sh))
 
     # ---- the sealed definition
     a = os.path.join(PROV, "isim.py")
