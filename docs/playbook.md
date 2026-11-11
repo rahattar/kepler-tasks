@@ -126,12 +126,17 @@ Sciences). Follow this exactly unless Alex says otherwise.
 
 ## Calibration targets
 - Easiness: 3 low-effort runs, at most 1 solved. 1 of 3 has passed (vav-airflow-calibration Oct 19,
-  chill-bench-commissioning); 2 of 3 has failed (cooler-fouling-assessment).
+  chill-bench-commissioning); 2 of 3 has failed (cooler-fouling-assessment). As of Nov 11 the screen runs
+  claude-opus-5-5 at low effort and states allowed 0 solves (flare-load-study 20261111e, 3 of 3, rejected).
+  Treat 0 of 3 as the bar until a 1 of 3 is seen to pass again.
 - Difficulty: 8 official xhigh runs. 7 of 8 has passed (vav-airflow-calibration, superheater-tube-life)
   and 0 of 8 has passed once (turbine-tool-repair); 8 of 8 fails as too easy
   (impeller-shrink-fits, Nov 9). Aim for 2 to 6 so that one draw either way does not decide it.
 - Locally, run probe subagents (general-purpose, effort xhigh, and low for easiness) in sandboxes built by
   `tools/mkprobe.sh`, with the brief in `tools/brief.txt`. Probes must not read anything outside their sandbox.
+  **Force the probe's model to the screen's** (`model: "opus"` on the Agent call): a probe on the session's own
+  model read flare-load-study 1 of 3 for three rounds while the screen solved it 3 of 3, and the matched probe
+  reproduced the screen exactly. Probe the bare core of a design this way before building anything around it.
   Grade each with the task's own grader.
 - The local rig is not calibrated, and it has been wrong in both directions (chill-bench 12: local low 1/3,
   official 3/3; chill-bench 16: local 2/3, official 1/3). Do not assume official runs are weaker: local xhigh

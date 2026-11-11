@@ -393,3 +393,42 @@ Rules taken from this:
 - **Use the weaker model only as a sanity check** that the layers bind at all. It says nothing about the gate.
 - When a redesign and a model change coincide, run the two-by-two (old and new bundle, old and new model)
   before drawing any conclusion. It costs four probes and about eight minutes.
+
+## flare-load-study official easiness screen, Nov 11 (20261111e): 3 of 3 in three minutes, and the instrument finally matched
+
+The official screen (claude-opus-5-5, low effort, allowed 0 solves) solved the bundle 3 of 3 in 2m39s to 3m06s,
+each on its first numerical run, with a worst departure of 0.34 per cent against the 1 per cent band. All eight
+quality checks passed on every trial, so the bundle is clean; it is only easy. The trial notes list what each
+run did unprompted: the post-maintenance windows, the meter and level corrections, the condensate sub-cooling,
+the SIF credit, the fire geometry and insulation, the segmented header, the coupled sweep, the re-converged
+sizing, and the right two tests in the one booking. That is every layer in the task, including the carried
+fact (FE-4011's density applied to PV-4001's trend) that had been the only step ever to separate a local run.
+
+Local probes of the same bundle, with the model forced to the screen's (`model: "opus"`, effort low): 7 of 7 and
+7 of 7 in about three minutes each, the third still running after nine minutes when this was written. The local
+probes that had read 1 of 3 on rounds 2, 3 and 4 were on the session's earlier, weaker model. **With the model
+matched, the local probe reproduces the official screen.** Every local count in the flare sections above is a
+statement about the weaker model and nothing else.
+
+What this settles, on top of the skid-noise, recip-cylinder and impeller sections:
+
+- **The carried fact is not a lever against this model either.** It was the one behaviour "effort does not
+  fix"; a stronger model fixes it. It joins layers, coupling, precision, budgets with flagged gaps and unstated
+  corrections on the list of things that were measured and are worth nothing at this gate.
+- **The shape is the problem, not the content.** "Reduce supplied records by a documented method to a computed
+  quantity" is read in one pass and written in one script. Fifteen layers and one script took 500k input tokens
+  and 18k output tokens. Nothing that fairness obliges the standard to state survives that reading.
+- **Five rounds on this task went into levers this file already recorded as dead**, because each round was
+  checked against a probe that could not see the gate. The process failure is the instrument, and it is now
+  fixed: probes run with `model: "opus"` at low effort, three of them, before anything is called calibrated.
+- **The bar has moved.** The playbook's target of at most 1 of 3 at low effort was written when 1 of 3 passed.
+  This screen states allowed 0. A design is not worth building out until a first rough version of its core
+  already defeats three matched probes.
+
+What a matched probe has not yet been seen to do in one pass, and so what the next design should be built
+around: get right something that cannot be had by reading and computing once. Candidates, none of them measured
+yet on the matched model: a result that has to be earned by iterating against a simulator or plant that answers
+back (the controller tasks); a program that must stay right on hidden cases over a documented envelope
+(turbine-tool-repair went 0 of 8 and was accepted); a measurement plan that a wrong first choice leaves
+unrecoverable. Measure the core of any of them on three matched probes first, before the evidence harness, the
+second implementation or the README exist.

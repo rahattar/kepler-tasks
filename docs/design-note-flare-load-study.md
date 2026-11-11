@@ -291,3 +291,15 @@ whitespace-normalised files of this size is quadratic and the pool is 38 tasks. 
 the nearest neighbour the last full sweep found answers the only question a round of edits raises, and takes
 seconds. Running the sweep without `autojunk=False` is not a shortcut: on files this long nearly every
 character is popular enough to be treated as junk, which collapsed `solve.py` to 0.069 in a first attempt here.
+
+## Official easiness screen on 20261111e: 3 of 3, rejected as too easy
+
+All eight quality checks passed on all three trials; the precision rule and the single-order booking both held
+(every trial placed the two tests together and wrote at least three figures). The screen, claude-opus-5-5 at low
+effort, solved it 3 of 3 in about three minutes each, worst departure 0.34 per cent. Local probes with the model
+matched to the screen then gave 7 of 7 twice in three minutes. The earlier local counts of 1 of 3 were the
+weaker session model.
+
+The task is finished as an engineering artefact and is not hard enough for the gate. Nothing of the kind added
+in rounds 1 to 4 can change that: the screen found every layer, the carried fact included, in one reading. See
+docs/difficulty-calibration.md for what that settles and what the next design has to be built around.
