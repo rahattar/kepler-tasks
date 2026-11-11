@@ -576,3 +576,18 @@ Probes on the leak fault, low effort: 2 of 3 solved (A1, A3), and all three foun
 crossed serials. A low-effort run compares every test with its rated speed as a matter of course, so a fault that
 shows as a ratio is found, however many chambers it spans.
 xhigh on the leak fault: 3 of 3 solved (B1, B2, B3), each finding the fault and correcting VC03 and VC05 by it.
+
+---
+
+# Every local probe, regraded against its own sealed fleet (tools/probe-regrade)
+
+`tools/probe-regrade/regrade.py` grades each sandbox's sheet against the `rig/sealed` fleet that sandbox was built
+from, at today's tolerances (4.0 / 3.5); output in `regrade-2026-11-11.txt`. All probes since R1 ran through the
+Agent tool with no model override, so on this session's model, claude-opus-5-5, the screen's model; effort as
+labelled (R, U, W, Y, A low; S, T, V, X, Z, B xhigh).
+
+- VC04 with the "fresh certificate" and "would not strike" cues (T, U, V, W, X): missed by 13 of 15 (low 5 of 6,
+  xhigh 8 of 9); passed by U1 and V2. With neutral wording (Y, Z, A, B): passed by 12 of 12.
+- VC01 since the redesign: missed by 0 of 39 sheets (R1 to B3). The three VC01 misses on record are all in the
+  earlier multi-test rounds (M2, N3, P2 of L1 to Q3).
+- The test: 21 of 21 VC08-era sheets ordered VC08 at 36 h; 18 of 18 on the new core ordered VC07.

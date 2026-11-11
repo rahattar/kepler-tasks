@@ -1,0 +1,54 @@
+A1  VC07/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+A2  VC07/rate-of-rise/36.0  8  01:ok 02:ok 03:X 04:ok 05:ok 06:ok 07:X 08:ok 09:ok 10:ok
+A3  VC07/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+B1  VC07/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+B2  VC07/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+B3  VC07/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+L1  VC09/rate-of-rise/ VC10/rate-of-rise/ VC08/helium/ VC06/rate-of-rise/ 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+L2  VC06/rga/ VC08/helium/ VC09/speed-test/ VC10/speed-test/ 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+L3  VC06/rga/ VC08/rate-of-rise/ VC09/rate-of-rise/ VC10/rate-of-rise/ 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+M1  VC01/rate-of-rise/ VC06/rga/ VC08/helium/ VC09/rate-of-rise/ 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+M2  VC06/rga/ VC08/rga/ VC09/rate-of-rise/ VC04/helium/  7  01:X 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:X 09:ok 10:ok
+M3  VC01/rate-of-rise/ VC06/rga/ VC04/helium/ VC08/helium/ 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+N1  VC08/helium/           10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+N2  VC08/helium/           10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+N3  VC08/rga/               9  01:X 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+P1  VC08/rate-of-rise/      9  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:X 08:ok 09:ok 10:ok
+P2  VC08/rate-of-rise/      9  01:X 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+P3  VC08/helium/           10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+Q1  VC08/helium/           10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+Q2  VC08/rate-of-rise/     10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+Q3  VC08/rate-of-rise/     10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+R1  VC08/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:X 08:ok 09:ok 10:ok
+R2  VC08/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:X 08:ok 09:ok 10:ok
+R3  VC08/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:X 08:ok 09:ok 10:ok
+R4  VC08/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+R5  VC08/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:X 08:ok 09:ok 10:ok
+R6  VC08/rga/36.0           9  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:X 08:ok 09:ok 10:ok
+S1  VC08/rga/36.0          10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+S2  VC08/rga/36.0           9  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:X 08:ok 09:ok 10:ok
+S3  VC08/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+S4  VC08/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+S5  VC08/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+S6  VC08/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+T1  VC08/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+T2  VC08/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+T3  VC08/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+U1  VC08/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+U2  VC08/rate-of-rise/36.0  8  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:X 08:ok 09:ok 10:ok
+U3  VC08/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+V1  VC08/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+V2  VC08/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+V3  VC08/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+W1  VC07/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+W2  VC07/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+W3  VC07/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+X1  VC07/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+X2  VC07/speed-test/36.0    9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+X3  VC07/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:X 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+Y1  VC07/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+Y2  VC07/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+Y3  VC07/rate-of-rise/36.0  9  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:X 08:ok 09:ok 10:ok
+Z1  VC07/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+Z2  VC07/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
+Z3  VC07/rate-of-rise/36.0 10  01:ok 02:ok 03:ok 04:ok 05:ok 06:ok 07:ok 08:ok 09:ok 10:ok
