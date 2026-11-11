@@ -3,8 +3,12 @@ sheets run through tests/test_form.py under pytest, one subprocess each:
   ok   reward 1 (expected 1)  the reference solution's sentencing
   ok   reward 1 (expected 1)  the independent solution's sentencing
   ok   reward 0 (expected 0)  the tester's error motion charged to the parts
-  ok   reward 0 (expected 0)  one error motion pooled over the whole campaign
+  ok   reward 0 (expected 0)  one error motion pooled over the whole inspection
+  ok   reward 0 (expected 0)  only the line every record agrees on taken off
+  ok   reward 0 (expected 0)  each campaign's mean vector at the machine's orders
+  ok   reward 0 (expected 0)  the machine's orders struck out of the records
   ok   reward 0 (expected 0)  each campaign's whole average taken off its parts
+  ok   reward 0 (expected 0)  a least-squares zone in place of the minimum zone
   ok   reward 0 (expected 0)  the Gaussian band left off
   ok   reward 0 (expected 0)  nothing removed from the profile at all
   ok   reward 0 (expected 0)  the mean diameter in place of the mating cylinder
@@ -13,6 +17,7 @@ sheets run through tests/test_form.py under pytest, one subprocess each:
   ok   reward 0 (expected 0)  roundness where the drawing calls cylindricity
   ok   reward 0 (expected 0)  no transfer from the scan to the twin
   ok   reward 0 (expected 0)  no scans ordered at all
+  ok   reward 0 (expected 0)  the honed bore's twin scanned in its place
   ok   reward 0 (expected 0)  every feature accept, form 20.00
   ok   reward 0 (expected 0)  every feature reject_both, form 26.00
 

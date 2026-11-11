@@ -1,8 +1,9 @@
-"""A second solution, written separately from solution/solve.py and from common.py: pandas for the records, a
-Nelder-Mead minimax instead of a linear program, the machine's error motion taken as the median across the
-tester's records with every order above 1 um kept, cylindricity parameterised by the two end radii rather than by
-position and tilt, and the other feature of each pair scanned. It is graded against the sealed definition only at
-the end.
+"""A second solution, written separately from solution/solve.py and from common.py: pandas for the records, the
+minimum zone and the mating cylinder solved as constrained problems rather than as linear programs, cylindricity
+parameterised by the two end offsets rather than by position and tilt, the tester's error motion reached by
+agreement tests and a least-squares fit of the angle between setup twins with medians where the reference uses
+weighted means, and the other feature of each sparse pair scanned. It holds no opinion about what counts as
+right: its sheet is handed to the verifier.
 
     python3 independent.py > independent.txt
 """
@@ -22,7 +23,7 @@ sys.path.insert(0, os.path.join(HERE, "..", "provenance"))
 import isim as SEALED  # noqa: E402  (grading only)
 
 DATA = os.path.join(HERE, "..", "..", "environment", "data")
-PLAN = ["RJ-44", "CB-25", "RJ-43", "RJ-45"]       # RJ-44 shares its setup with the re-honed bore
+PLAN = ["CB-22", "CB-25", "RJ-43", "RJ-45"]       # the other feature of each sparse pair; the honed bore itself
 G = 0.4697
 
 
@@ -102,45 +103,95 @@ def main():
     dense = [f for f in feats if idx.loc[f, "points_per_rev"] >= 101]
     tester = [f for f in dense if "form tester" in idx.loc[f, "instrument"]]
 
-    # The machine's error motion, found by a different test from the reference's: an order belongs to the machine
-    # when its phase is the same in every record (the parts are clamped at unrelated angles, so their own lobing
-    # scatters in phase). The mean resultant length of the phases is 1 for a machine order and about 1/sqrt(N) for
-    # a part order. The amplitude is then the median across the records, which ignores an odd part.
-    # The test runs on each side of the day the log has the tester's spindle re-greased: a bearing that has been
-    # re-greased and re-preloaded does not run as it ran before, so the records before and after that day are two
-    # machines, and one estimate over all of them describes neither. Pooled, the phases disagree and the test
-    # keeps nothing at all, which is the symptom of having mixed two states rather than of a clean machine.
+    # The machine's error motion, reached by a different road from the reference's.
+    #
+    # The records on each side of the day the log has the tester's spindle re-greased are treated as two machines:
+    # a bearing that has been re-greased and re-preloaded does not run as it ran before.
+    #
+    # Within a campaign the test is agreement. An order is the machine's alone when every record carries it at the
+    # same amplitude and the same phase (the parts sit at unrelated angles, so nothing of theirs can do that); its
+    # value is then the median over the records, which ignores an odd part. What is left is the order the boring
+    # setups share with the machine. The process note says two features of one setup carry the same lobing at
+    # whatever angle each was clamped, so for each such pair the angle is fitted by least squares over the orders
+    # at which the two records have the same amplitude, and the orders at which they do not are the ones where
+    # something other than the shared lobing is present. At those the pair gives the machine's coefficient
+    # directly. An order is kept when every pair of the campaign flags it and their coefficients agree, and the
+    # value is their median. The campaign after the service has a single pair and takes the earlier campaign's
+    # orders, since a re-grease changes how a bearing runs and not how many rollers it has.
     service = [r["date"] for _, r in log.iterrows() if r["setup"] == "-"
                and "greas" in (str(r["operation"]) + str(r["note"])).lower()]
     cut = max(service) if service else None
     sides = {}
     for f in tester:
         sides.setdefault("after" if cut and idx.loc[f, "measured_on"] > cut else "before", []).append(f)
+    spec = {f: np.fft.rfft(np.mean([prof(t, r) for t, r in recs[f]], axis=0)) for f in tester}
+    npts = len(recs[tester[0]][0][0])
+    spec = {f: v / npts for f, v in spec.items()}
+    th0 = np.arange(npts) / npts * 2.0 * np.pi
+    ks = np.arange(2, 51)
+
+    def cmedian(v):
+        v = np.asarray(v)
+        return np.median(v.real) + 1j * np.median(v.imag)
+
+    def campaign(fs, orders=None):
+        coef = {}
+        for k in ks:                                       # lines every record agrees on
+            col = np.array([spec[f][k] for f in fs])
+            a = np.abs(col)
+            if 2 * np.median(a) > 0.5 and a.max() / a.min() < 1.5 and abs((col / a).mean()) > 0.9:
+                coef[k] = cmedian(col)
+        twins = {}
+        for f in fs:
+            twins.setdefault(setup[f], []).append(f)
+        twins = [v for v in twins.values() if len(v) == 2]
+        flagged, value = [], {}
+        for a, b in twins:
+            A = spec[a].copy()
+            B = spec[b].copy()
+            for k, c in coef.items():
+                A[k] -= c
+                B[k] -= c
+            big = np.maximum(np.abs(A[ks]), np.abs(B[ks]))
+            same = (2 * big > 0.3) & (np.abs(np.abs(A[ks]) - np.abs(B[ks])) < 0.12 * big)
+            use = ks[same]
+
+            def misfit(d):
+                return float(np.sum(np.abs(A[use] - B[use] * np.exp(-1j * use * d)) ** 2))
+            grid = np.linspace(0.0, 2.0 * np.pi, 3600, endpoint=False)
+            d0 = grid[int(np.argmin([misfit(d) for d in grid]))]
+            d = minimize(lambda x: misfit(x[0]), [d0], method="Nelder-Mead",
+                         options={"xatol": 1e-7, "fatol": 1e-12}).x[0]
+            odd = [int(k) for k in ks[(2 * big > 0.5) & ~same] if k not in coef]
+            flagged.append(set(odd))
+            for k in odd if orders is None else [k for k in orders if k not in coef]:
+                turn = np.exp(-1j * k * d)
+                if abs(1.0 - turn) > 0.45:
+                    value.setdefault(k, []).append((A[k] - B[k] * turn) / (1.0 - turn))
+        if orders is None:
+            shared = set.intersection(*flagged) if flagged else set()
+            for k in sorted(shared):
+                v = np.array(value.get(k, []))
+                if len(v) >= 2 and np.abs(v - cmedian(v)).max() < 0.35 * abs(cmedian(v)):
+                    coef[k] = cmedian(v)
+        else:
+            for k in orders:
+                if k not in coef and k in value:
+                    coef[k] = cmedian(value[k])
+        return coef
+
+    lead = max(sides, key=lambda s: len(sides[s]))
+    orders = sorted(campaign(sides[lead]))
     err = {}
     for side in sorted(sides):
-        stack = np.array([np.mean([prof(t, r) for t, r in recs[f]], axis=0) for f in sides[side]])
-        n = stack.shape[1]
-        th0 = np.arange(n) / n * 2.0 * np.pi
-        F = np.fft.rfft(stack, axis=1) / n
-        e = np.zeros(n)
-        kept = []
-        for k in range(2, 120):
-            col = F[:, k]
-            if np.median(2 * np.abs(col)) < 0.5:
-                continue
-            unit = col / np.abs(col)
-            a = np.abs(col)
-            # the machine writes the same amplitude as well as the same phase into every record it touches, so an
-            # order is the machine's only if both agree; phase alone lets a part order through when the side of
-            # the service date being tested holds only a few records
-            if abs(unit.mean()) > 0.9 and float(a.max() / a.min()) < 1.5:
-                ph = np.angle(unit.mean())
-                amp = float(np.median(np.abs(col)))
-                e += 2.0 * amp * np.cos(k * th0 + ph)
-                kept.append(k)
+        coef = campaign(sides[side], orders)
+        e = np.zeros(npts)
+        for k, c in coef.items():
+            e += 2.0 * (c.real * np.cos(k * th0) - c.imag * np.sin(k * th0))
         err[side] = e
-        print("# machine error motion by phase agreement, %s %s: orders %s, %.2f um peak to valley"
-              % (side, cut, kept, float(np.ptp(e))))
+        print("# machine error motion, %s %s: %d records, orders %s at %s um, %.2f um peak to valley"
+              % (side, cut, len(sides[side]), sorted(int(k) for k in coef),
+                 " and ".join("%.2f" % (2 * abs(coef[k])) for k in sorted(coef)), float(np.ptp(e))))
 
     scans = {}
     for k, f in enumerate(PLAN, 1):

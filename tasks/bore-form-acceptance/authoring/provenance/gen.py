@@ -66,7 +66,7 @@ def records(out):
         pts = S.TESTER_PTS if tester else S.CMM_PTS
         inst = "form tester RT-1" if tester else "coordinate machine CMM-4, bore/journal program"
         rng = np.random.default_rng([SEED, S.ORDER.index(f)])
-        psi = S.mount_phase(f, rng)
+        psi = S.mount_phase(f, rng, shop_tester=tester)
         rows = ["section_mm,angle_deg,radius_mm"]
         for j, frac in enumerate(S.SECTIONS):
             state = (("after" if MEAS_DATE[d["setup"]] > S.REGREASE else "before") if tester else False)
@@ -136,7 +136,7 @@ def shop_figures():
         tester = d["src"] == "tester"
         pts = S.TESTER_PTS if tester else S.CMM_PTS
         rng = np.random.default_rng([SEED, S.ORDER.index(f)])
-        psi = S.mount_phase(f, rng)
+        psi = S.mount_phase(f, rng, shop_tester=tester)
         zs, means, ls = [], [], []
         for j, frac in enumerate(S.SECTIONS):
             state = (("after" if MEAS_DATE[d["setup"]] > S.REGREASE else "before") if tester else False)

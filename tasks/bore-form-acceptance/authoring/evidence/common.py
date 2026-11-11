@@ -139,43 +139,161 @@ def group_of(f):
     return "after" if (day and INDEX[f]["measured_on"] > day) else "before"
 
 
-def spindle_estimate(filt="band", how="significant"):
-    """The component every record of the shop's form tester carries at the same phase. A part's lobing sits at
-    whatever phase it was clamped at, so averaging the tester's records leaves the machine's error motion and
-    averages the parts down. Nothing in the documents gives this; only the records of several parts together.
-
-    how="significant" keeps only the orders whose mean stands clear of the scatter between parts (3 standard
-    errors), which is the orders the machine actually contributes; how="mean" subtracts the whole average, and so
-    takes a share of every part's own lobing off every other part."""
-    return spindle_of(None, filt, how)
+def _spectrum(g, filt):
+    """The Fourier coefficients of one tester record: its sections averaged, since one clamping serves all three."""
+    secs, T = shop_record(g)
+    _, p, _ = section_data(secs, T, filt=filt)
+    a = np.mean(np.array(p), axis=0)
+    return np.fft.rfft(a) / len(a), len(a)
 
 
-def spindle_of(group, filt="band", how="significant"):
-    """The error motion of the tester in one of its states. group=None pools every record, which is what a solver
-    gets who does not notice the maintenance."""
+def _twins(members):
+    """The pairs of records in a campaign whose features were finished in one boring setup. The honed bore's
+    record counts with its setup: it was taken before the hone, when the bore still had the setup's lobing."""
+    by = {}
+    for g in members:
+        by.setdefault(SETUP_OF[g], []).append(g)
+    return [tuple(v) for v in by.values() if len(v) == 2]
+
+
+def _rotation(Fa, Fb, m, skip=()):
+    """The angle by which record a's part sits round from record b's, their features being twins of one setup.
+    The twins carry the same lobing, so with the machine's share m taken off, a's coefficient at order k is b's
+    turned by k times that angle; the angle is the one that makes all the orders agree at once."""
+    # Turning a part round changes the phase of each order and leaves its amplitude alone. So the orders to fix
+    # the angle with are those at which the two records agree in amplitude: where they do not, something other
+    # than the shared lobing is in one of them, the machine or a mark of the part's own, and that order would
+    # pull the angle off. Using every order here costs a few hundredths of a radian, and eleven times that is
+    # enough to spoil the machine's vector at order 11.
+    A, B = Fa - m, Fb - m
+    ks = np.array([k for k in range(2, 51) if k not in skip and 2.0 * max(abs(A[k]), abs(B[k])) > 0.3
+                   and abs(abs(A[k]) - abs(B[k])) < 0.12 * max(abs(A[k]), abs(B[k]))])
+    cross = A[ks] * np.conj(B[ks])
+    grid = np.linspace(0.0, 2.0 * np.pi, 7200, endpoint=False)
+    score = (cross[None, :] * np.exp(1j * np.outer(grid, ks))).real.sum(axis=1)
+    d = grid[int(np.argmax(score))]
+    for step in (2e-4, 2e-5, 2e-6):                       # refine about the best grid point
+        fine = d + np.arange(-5, 6) * step
+        d = fine[int(np.argmax((cross[None, :] * np.exp(1j * np.outer(fine, ks))).real.sum(axis=1)))]
+    return float(d)
+
+
+def twin_model(group, filt="band", orders=None, tell=None):
+    """The tester's error motion in one campaign, order by order, with the parts' lobing told apart from it.
+
+    A record's coefficient at order k is the machine's, m, plus the part's. Where no part has anything at that
+    order the records of a campaign agree and their mean is m. Where the setups left lobing at that order they do
+    not agree, and the mean is m plus whatever the parts happen to sum to. The twins settle it: the two records
+    of a setup's pair are  Fa = m + c  and  Fb = m + c exp(ik d)  with d the angle between the two clampings,
+    which the other orders fix, so  m = (Fa - Fb exp(-ik d)) / (1 - exp(-ik d)).  Every pair of the campaign has
+    to give the same m, which is what tells a machine order from a part that merely differs from its twin.
+
+    orders=None finds the machine's orders, which needs two pairs to agree; a campaign with one pair is given the
+    orders found in the other, the orders being the spindle bearing's geometry, which a re-grease does not alter.
+    Returns the coefficients (zero off the machine's orders)."""
+    members = tester_groups()[group]
+    F = {g: _spectrum(g, filt)[0] for g in members}
+    n = _spectrum(members[0], filt)[1]
+    pairs = _twins(members)
+    m = np.zeros(n // 2 + 1, dtype=complex)
+    found = set()
+    # The lines every record of the campaign agrees on need no angle to find, and they have to come out before
+    # any angle is fitted: a line that is the same in both records of a pair says the parts sit at the same
+    # angle, whatever angle they sit at, and it is strong enough to drag the fit there.
+    for k in range(2, 51):
+        mean = np.mean([F[g][k] for g in members])
+        if 2.0 * abs(mean) > 0.5 and max(abs(F[g][k] - mean) for g in members) < 0.25 * abs(mean):
+            m[k] = mean
+            found.add(k)
+    for sweep in range(4):                                # the machine's share and the angles settle together
+        ang = {p: _rotation(F[p[0]], F[p[1]], m, skip=found) for p in pairs}
+        m = np.zeros_like(m)
+        now = set()
+        for k in range(2, 51):
+            mean = np.mean([F[g][k] for g in members])
+            agree = max(abs(F[g][k] - mean) for g in members) < 0.25 * abs(mean)
+            est, wts = [], []
+            for p in pairs:
+                turn = np.exp(-1j * k * ang[p])
+                w = abs(1.0 - turn) ** 2
+                if w > 0.2:                               # a pair clamped a whole lobe apart says nothing here
+                    est.append((F[p[0]][k] - F[p[1]][k] * turn) / (1.0 - turn))
+                    wts.append(w)
+            bar = np.average(est, weights=wts) if est else 0.0
+            if orders is None:
+                is_machine = (agree and 2.0 * abs(mean) > 0.5) or (
+                    len(est) >= 2 and 2.0 * abs(bar) > 0.5 and max(abs(e - bar) for e in est) < 0.35 * abs(bar))
+            else:
+                is_machine = k in orders
+            if tell is not None and sweep == 3 and (is_machine or 2.0 * abs(mean) > 1.0):
+                tell.append((k, 2.0 * abs(mean), agree, [2.0 * abs(e) for e in est], is_machine))
+            if is_machine:
+                now.add(k)
+                m[k] = mean if agree else bar
+        found = now
+    return m, sorted(found)
+
+
+def spindle_orders(filt="band"):
+    """The machine's orders, from whichever campaign has the pairs to establish them."""
+    best = max(tester_groups(), key=lambda g: len(_twins(tester_groups()[g])))
+    return twin_model(best, filt)[1]
+
+
+def spindle_of(group, filt="band", how="twins"):
+    """The error motion of the tester in one of its states, as a profile to take off its records.
+
+      twins        the sound route: twin_model above
+      lines        only the orders at which a campaign's records agree, which is the line no part shares
+      epoch        the campaign's mean vector at the machine's orders, as if no part had anything there
+      mean         the campaign's whole average profile
+      significant  with group None: one error for the whole inspection, the orders whose pooled mean stands
+                   three standard errors clear of the scatter, which is what a solver gets who does not notice
+                   the maintenance
+    """
     key = (group, filt, how)
     if key in _spin:
         return _spin[key]
     members = tester_groups()[group] if group else [g for g in ORDER if g not in SPARSE]
-    per = []
-    for g in members:
-        secs, T = shop_record(g)
-        _, p, _ = section_data(secs, T, filt=filt)
-        per.append(np.mean(np.array(p), axis=0))       # one mounting per record, so its sections share a phase
-    A = np.array(per)
-    th = np.arange(A.shape[1]) / A.shape[1] * 2.0 * np.pi
-    if how == "mean":
-        _spin[key] = A.mean(axis=0)
-        return _spin[key]
-    F = np.fft.rfft(A, axis=1) / A.shape[1]
-    out = np.zeros(A.shape[1])
-    for k in range(2, min(F.shape[1], 120)):
-        m = F[:, k].mean()
-        se = (F[:, k].real.std(ddof=1) + 1j * F[:, k].imag.std(ddof=1)) / np.sqrt(max(len(per), 2))
-        if abs(m.real) > 3.0 * se.real and abs(m.imag) > 3.0 * se.imag:
-            out += 2.0 * (m.real * np.cos(k * th) - m.imag * np.sin(k * th))
-    _spin[key] = out
+    F = np.array([_spectrum(g, filt)[0] for g in members])
+    n = _spectrum(members[0], filt)[1]
+    th = np.arange(n) / n * 2.0 * np.pi
+
+    def profile(coef):
+        out = np.zeros(n)
+        for k in np.nonzero(coef)[0]:
+            out += 2.0 * (coef[k].real * np.cos(k * th) - coef[k].imag * np.sin(k * th))
+        return out
+
+    coef = np.zeros(F.shape[1], dtype=complex)
+    if how == "twins":
+        coef = twin_model(group, filt, orders=spindle_orders(filt))[0]
+    elif how == "mean":
+        coef[2:51] = F[:, 2:51].mean(axis=0)
+    elif how == "epoch":
+        for k in spindle_orders(filt):
+            coef[k] = F[:, k].mean()
+    elif how == "lines":
+        for k in range(2, 51):
+            mean = F[:, k].mean()
+            if 2.0 * abs(mean) > 0.5 and max(abs(F[:, k] - mean)) < 0.25 * abs(mean):
+                coef[k] = mean
+    else:
+        for k in range(2, 51):
+            mean = F[:, k].mean()
+            se = (F[:, k].real.std(ddof=1) + 1j * F[:, k].imag.std(ddof=1)) / np.sqrt(max(len(members), 2))
+            if abs(mean.real) > 3.0 * se.real and abs(mean.imag) > 3.0 * se.imag:
+                coef[k] = mean
+    _spin[key] = profile(coef)
     return _spin[key]
+
+
+def _strike(p, orders):
+    """A profile with the given orders removed outright, machine and part alike."""
+    Fp = np.fft.rfft(p)
+    for k in orders:
+        Fp[k] = 0.0
+    return np.fft.irfft(Fp, len(p))
 
 
 DETAIL = {}
@@ -199,14 +317,21 @@ def assess(f, shape_src, size_src, route):
     _, profs, ths = section_data(ssecs, sT, tcorr=tcorr, filt=filt)
     zsecs, zT = _source(size_src)
     means, mprofs, mths = section_data(zsecs, zT, tcorr=tcorr, filt=filt)
-    if spin in ("remove", "mean", "pooled"):   # only the tester's records carry it; a scan is from the room
-        how = "mean" if spin == "mean" else "significant"
+    if spin != "keep":                         # only the tester's records carry it; a scan is from the room
+        # `est`, not `how`: that name is the reference figure's, and sharing it once switched a route off unseen
+        est = {"remove": "twins", "pooled": "significant"}.get(spin, spin)
         grp = None if spin == "pooled" else group_of(shape_src[0] if shape_src[1] is None else f)
-        e = spindle_of(grp, filt, how)
+        e = spindle_of(grp, filt, est)
+        if spin == "delete":                   # the machine's orders struck out of the record altogether
+            e = None
+        if e is None:
+            strike = lambda p: _strike(p, spindle_orders(filt))
+        else:
+            strike = lambda p: p - e
         if shape_src[1] is None and shape_src[0] not in SPARSE:
-            profs = [p - e for p in profs]
+            profs = [strike(p) for p in profs]
         if size_src[1] is None and size_src[0] not in SPARSE:
-            mprofs = [p - e for p in mprofs]
+            mprofs = [strike(p) for p in mprofs]
     n = len(profs)
     zs = [(j - (n - 1) / 2.0) for j in range(n)]
     bar = float(np.mean(means))

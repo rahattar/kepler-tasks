@@ -15,7 +15,12 @@ It reads only /app/data and the scans it orders through `formscan`. The sealed d
    Its size is its own, and its own record carries that: twelve points average a mean radius well, and the taper
    from section to section is the part's own. So the features needing a scan are grouped by setup and one scan is
    ordered per group, which brings four needs inside the booking of four.
-3. **The assessment.** For each section: the mean radius, referred to 20 C with 11.7 um/m K from the room
+3. **The instrument.** The shop's form tester adds an error motion of its own to every record it takes, at
+   the spindle's angle, and it is in no document. It is estimated from the tester's records and taken off them
+   before anything is assessed: separately on each side of the day the log has the spindle re-greased, the line
+   no part shares from the records' mean, and the line the setups' lobing shares from the setup pairs. See
+   spindle_error. A scan from the metrology room carries none of it.
+4. **The assessment.** For each section: the mean radius, referred to 20 C with 11.7 um/m K from the room
    temperature of that record, and the deviations with order 0 and order 1 dropped and order n scaled by
    exp(-pi (0.4697 n / 50)^2). Then, by minimum zone (a linear program, the deviations being microns on a radius
    of hundreds of millimetres):
@@ -24,7 +29,7 @@ It reads only /app/data and the scans it orders through `formscan`. The sealed d
      mean radii carried in so that taper counts;
    - mating size: the largest inscribed (bore) or smallest circumscribed (journal) cylinder over all sections;
    - local sizes: diametrically opposite pairs, section by section.
-4. **The sentence.** A bore accepts on size when its mating size is at or above the lower limit and its worst
+5. **The sentence.** A bore accepts on size when its mating size is at or above the lower limit and its worst
    local size at or below the upper; a journal the other way about. Form accepts within tolerance. The two give
    accept, reject_size, reject_form or reject_both.
 """
@@ -93,46 +98,101 @@ def minimax(cols, dev, what):
     return float(r.x[-1])
 
 
-def spindle_error(index, log):
-    """What every record of the shop's form tester carries at the same phase. A record's angle is the spindle's
-    angle and a part is clamped wherever it comes to rest, so a component that repeats in amplitude AND phase
-    across parts bored in different setups on different machines belongs to the measuring machine. It is in no
-    document. Averaging the tester's records leaves it and averages the parts' own lobing down; the orders kept
-    are those whose mean stands three standard errors clear of the scatter between parts, so that nothing of any
-    one part's lobing is taken off the others.
+def spindle_error(index, log, setup_of):
+    """The error motion of the shop's form tester, which is in no document: only its records, taken together,
+    show it. A record's angle is the spindle's angle and a part is clamped wherever it comes to rest, so what the
+    machine adds sits at the same phase in every record and what a part carries sits wherever that part sat.
 
-    The machine does not have one error motion over the whole campaign: the maintenance log has its spindle
-    bearings re-greased and the preload reset part way through, so its records fall into two states and are
-    estimated separately. Pooled across the maintenance the two states cancel into a mean belonging to neither,
-    and the scatter they add is wide enough that no order looks significant at all, so a pooled estimate quietly
-    finds nothing to remove."""
+    Two states. The log has the spindle bearings re-greased and the preload reset part way through the
+    inspection, so the records before that day and after it are two machines and are treated apart. Pooled, the
+    two disagree in phase and nothing stands clear of the scatter.
+
+    Two kinds of line. At an order no part has anything at, every record of a campaign agrees in amplitude and
+    phase, and the campaign's mean is the machine. At an order the boring setups left lobing at, a record is the
+    machine's vector plus the part's, the records do not agree, and their mean is the machine plus whatever the
+    parts happen to add up to. The process note separates the two: features finished in one setup carry the same
+    lobing, at whatever angle each was clamped. The angle between the two records of such a pair is fixed by the
+    orders at which they agree in amplitude (turning a part changes phase, not amplitude). With that angle d, the
+    pair is two equations at order k,  Fa = m + c  and  Fb = m + c exp(ik d),  so
+    m = (Fa - Fb exp(-ik d)) / (1 - exp(-ik d)).  An order is the machine's when the pairs of a campaign agree on
+    m. The campaign after the maintenance has one pair, which cannot vouch for itself, so it is solved at the
+    orders the earlier campaign established: the orders are the bearing's geometry, which grease does not change.
+
+    The honed bore's shop record belongs with its setup here. It was taken before the hone, when the bore still
+    carried the setup's lobing, and it is the tester that is being characterised, not the bore."""
     day = next((r["date"] for r in log if "form tester" in r["machine"] and "spindle" in r["operation"]), None)
-    groups = {}
+    spec, camp = {}, {}
     for f, r in index.items():
         if int(r["points_per_rev"]) < MIN_PTS or "form tester" not in r["instrument"]:
             continue
         secs = sections(os.path.join(DATA, r["file"].split("data/", 1)[1]))
         _, profs, _ = shape(secs, float(r["room_c"]))
-        key = "after" if (day and r["measured_on"] > day) else "before"
-        groups.setdefault(key, []).append(np.mean(np.array(profs), axis=0))
+        mean = np.mean(np.array(profs), axis=0)           # one clamping serves a record's three sections
+        spec[f] = np.fft.rfft(mean) / len(mean)
+        camp.setdefault("after" if (day and r["measured_on"] > day) else "before", []).append(f)
+    n = 2 * (len(next(iter(spec.values()))) - 1)
+    th = np.arange(n) / n * 2.0 * np.pi
+    band = range(2, UPR + 1)
+
+    def pairs(members):
+        by = {}
+        for f in members:
+            by.setdefault(setup_of[f], []).append(f)
+        return [v for v in by.values() if len(v) == 2]
+
+    def angle(A, B):
+        ks = np.array([k for k in band if 2.0 * max(abs(A[k]), abs(B[k])) > 0.3
+                       and abs(abs(A[k]) - abs(B[k])) < 0.12 * max(abs(A[k]), abs(B[k]))])
+        cross = A[ks] * np.conj(B[ks])
+        d, step = 0.0, 2.0 * np.pi / 7200
+        grid = np.arange(7200) * step
+        for _ in range(4):                                # a coarse sweep of the turn, then three refinements
+            d = grid[int(np.argmax((cross[None, :] * np.exp(1j * np.outer(grid, ks))).real.sum(axis=1)))]
+            step /= 10.0
+            grid = d + np.arange(-10, 11) * step
+        return float(d)
+
+    def solve(members, orders=None):
+        m = np.zeros(n // 2 + 1, dtype=complex)
+        agreed = {}
+        for k in band:                                    # the lines the records agree on come out first
+            mean = np.mean([spec[f][k] for f in members])
+            if 2.0 * abs(mean) > 0.5 and max(abs(spec[f][k] - mean) for f in members) < 0.25 * abs(mean):
+                agreed[k] = mean
+                m[k] = mean
+        turn = {tuple(p): angle(spec[p[0]] - m, spec[p[1]] - m) for p in pairs(members)}
+        found = dict(agreed)
+        for k in band:
+            if k in agreed:
+                continue
+            est, wts = [], []
+            for (a, b), d in turn.items():
+                e = np.exp(-1j * k * d)
+                if abs(1.0 - e) ** 2 > 0.2:               # a pair a whole lobe apart says nothing at this order
+                    est.append((spec[a][k] - spec[b][k] * e) / (1.0 - e))
+                    wts.append(abs(1.0 - e) ** 2)
+            if not est:
+                continue
+            bar = np.average(est, weights=wts)
+            vouched = len(est) >= 2 and 2.0 * abs(bar) > 0.5 and max(abs(e - bar) for e in est) < 0.35 * abs(bar)
+            if (orders is None and vouched) or (orders is not None and k in orders):
+                found[k] = bar
+        return found
+
+    lead = max(camp, key=lambda c: len(pairs(camp[c])))   # the campaign with the pairs to establish the orders
+    orders = sorted(solve(camp[lead]))
     out = {}
-    for key, per in groups.items():
-        A = np.array(per)
-        n = A.shape[1]
-        th = np.arange(n) / n * 2.0 * np.pi
-        F = np.fft.rfft(A, axis=1) / n
+    for key, members in camp.items():
+        found = solve(members, orders)
         e = np.zeros(n)
-        kept = []
-        for k in range(2, min(F.shape[1], 120)):
-            m = F[:, k].mean()
-            sr = F[:, k].real.std(ddof=1) / np.sqrt(len(per))
-            si = F[:, k].imag.std(ddof=1) / np.sqrt(len(per))
-            if abs(m.real) > 3.0 * sr and abs(m.imag) > 3.0 * si:
-                e += 2.0 * (m.real * np.cos(k * th) - m.imag * np.sin(k * th))
-                kept.append(k)
+        for k in orders:
+            if k in found:
+                e += 2.0 * (found[k].real * np.cos(k * th) - found[k].imag * np.sin(k * th))
         out[key] = e
-        print("# the form tester %s %s: error motion from %d records, orders %s, %.2f um peak to valley"
-              % (key, day, len(per), ",".join(str(k) for k in kept), e.max() - e.min()))
+        print("# the form tester %s %s: %d records, %d pair(s), error motion at orders %s (%s um), %.2f um peak "
+              "to valley" % (key, day, len(members), len(pairs(members)), ",".join(str(k) for k in orders),
+                             ", ".join("%.2f" % (2.0 * abs(found[k])) for k in orders if k in found),
+                             e.max() - e.min()))
     return out, day
 
 
@@ -172,7 +232,7 @@ def main():
         groups.setdefault(setup_of.get(f, f), []).append(f)
     plan = [g[0] for g in groups.values()]
     assert len(plan) <= budget, (plan, budget)
-    spin, regrease = spindle_error(index, log)
+    spin, regrease = spindle_error(index, log, setup_of)
     print("# needs a scan: %s" % " ".join(need))
     print("# scans ordered (one per boring setup): %s" % " ".join(plan))
     for f in plan:

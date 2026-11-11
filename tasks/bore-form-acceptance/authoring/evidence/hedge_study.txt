@@ -2,13 +2,13 @@ band 1.2 um on the form error; two readings can both be satisfied only if they d
 less. The sentence admits no hedge: it is one of four words and the gate is all 14 features.
 
   the tester's error motion removed or charged to the parts  features where one number fits both:  7 of 14
-                                                             widest gap 12.25 um; the sentence itself differs on 6
-  minimum zone or least-squares zone                         features where one number fits both: 14 of 14
-                                                             widest gap  0.00 um; the sentence itself differs on 0
-  the 50 UPR band or the profile unfiltered                  features where one number fits both:  8 of 14
+                                                             widest gap 10.78 um; the sentence itself differs on 5
+  minimum zone or least-squares zone                         features where one number fits both: 13 of 14
+                                                             widest gap  2.82 um; the sentence itself differs on 0
+  the 50 UPR band or the profile unfiltered                  features where one number fits both: 10 of 14
                                                              widest gap  2.71 um; the sentence itself differs on 0
   cylindricity or roundness where the drawing calls cylindricity features where one number fits both: 10 of 14
-                                                             widest gap  4.55 um; the sentence itself differs on 0
+                                                             widest gap  8.90 um; the sentence itself differs on 0
   a scan carried to the twin of its setup, or the sparse record used features where one number fits both: 12 of 14
                                                              widest gap  8.48 um; the sentence itself differs on 2
 

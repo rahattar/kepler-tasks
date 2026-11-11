@@ -39,16 +39,28 @@ BUDGET = 4              # dense scans the metrology room's booking allows
 SEED_SCAN = 4409        # drives the scatter of a scan, nothing else
 # The shop's form tester RT-1 has a worn spindle, and its error motion rides on every profile it measures, at the
 # same phase in every record because a record's angle is the spindle's angle. A part's own lobing sits at whatever
-# phase the part was clamped at, so the two separate: a component that is identical in phase across parts bored in
-# different setups on different machines belongs to the measuring machine, not to the parts. Nothing in the
-# records says so; only the records of several parts together show it. The metrology room's tester is certified
-# and its error motion is below the noise.
+# phase the part was clamped at, so the two separate. Nothing in the records says so; only the records of several
+# parts together show it. The metrology room's tester is certified and its error motion is below the noise.
+#
+# The error motion has two lines, and they are not equally easy to find.
+#   Order 23 sits where no part has anything to speak of, so it is identical in amplitude and phase in every
+#   record of a campaign and stands out the moment the records are laid side by side.
+#   Order 11 is a different matter: every setup whose parts went on this tester left lobing at 11 undulations
+#   as well. A record's line at 11 is the machine's vector plus the part's, the part's turned by eleven times
+#   the angle that part happened to be clamped at. So the line is neither constant across records nor absent
+#   from the certified scans, the mean over a campaign is the machine's vector plus whatever the parts' vectors
+#   happen to sum to, and throwing order 11 away removes real form. What does separate it is the process note:
+#   two features of one setup carry the same lobing at different angles, and the angle between them is fixed by
+#   every other order they share. With that angle known, the two records of a pair are two equations in the
+#   machine's vector and the setup's, and each pair of a campaign gives the same machine vector.
+#
 # The error motion of the shop's form tester, order -> (amplitude um, phase rad in the machine's own reference).
 # Its spindle bearings were re-greased and the preload reset on the evening of REGREASE (the maintenance log dates
-# it), which left the machine with a different error motion. Records taken before that date carry the first,
+# it), which left the machine with a different error motion at the same orders, the orders being the bearing's
+# geometry and the amplitudes and phases its running condition. Records taken before that date carry the first,
 # records after it the second. One estimate pooled over all of them belongs to neither.
-SPINDLE_BEFORE = {23: (4.62, 0.95), 29: (3.87, 2.35)}
-SPINDLE_AFTER = {23: (3.10, 2.40), 29: (2.45, 0.60)}
+SPINDLE_BEFORE = {23: (4.62, 0.95), 11: (3.40, 2.35)}
+SPINDLE_AFTER = {23: (3.10, 2.40), 11: (2.60, 0.60)}
 REGREASE = "2026-09-30"
 # Two features came off the boring bar with an ovality of their own: a thin wall clamped once takes a form the
 # setup's lobing does not explain, and the part keeps it after release. That ovality is what decides those two
@@ -71,13 +83,13 @@ AMP = {f: 1.00 for f in ("CB-21", "RJ-41", "CB-24", "CB-25", "CB-22", "RJ-44", "
 # two-point size catches them. That is both halves of Taylor's principle earning their place, and it is why S6
 # and S8 carry their amplitude at odd orders while the ovality of CB-26 and RJ-46 sits at order 2.
 SETUP = {
-    "S1": {2: (4.98, 0.35), 3: (6.63, 1.10), 6: (1.54, 2.40), 17: (0.95, 0.90)},
+    "S1": {2: (3.62, 0.35), 3: (4.83, 1.10), 6: (1.12, 2.40), 11: (3.56, 1.95), 17: (0.70, 0.90)},
     "S2": {2: (1.44, 0.80), 7: (3.16, 0.95), 9: (2.81, 2.20), 11: (1.98, 0.40), 13: (1.65, 1.70)},
-    "S3": {2: (4.24, 0.00), 3: (1.53, 0.60), 5: (2.37, 0.25), 9: (0.77, 1.30)},
-    "S4": {3: (1.90, 1.45), 7: (4.14, 0.20), 9: (5.51, 1.05), 13: (3.29, 2.60), 15: (2.34, 0.75)},
-    "S5": {2: (3.94, 1.20), 4: (5.75, 0.45), 7: (1.91, 2.05), 19: (1.08, 0.30)},
+    "S3": {2: (3.09, 0.00), 3: (1.12, 0.60), 5: (1.73, 0.25), 9: (0.56, 1.30), 11: (2.87, 0.70)},
+    "S4": {3: (1.28, 1.45), 7: (2.78, 0.20), 9: (3.71, 1.05), 11: (3.89, 2.05), 13: (2.21, 2.60), 15: (1.57, 0.75)},
+    "S5": {2: (3.06, 1.20), 4: (4.47, 0.45), 7: (1.49, 2.05), 11: (3.52, 1.40), 19: (0.84, 0.30)},
     "S6": {2: (2.07, 0.55), 9: (6.59, 1.60), 11: (4.40, 0.85), 13: (3.43, 2.30), 19: (1.83, 1.15)},
-    "S7": {2: (7.71, 0.90), 3: (4.61, 2.15), 6: (3.56, 0.70), 11: (1.78, 1.80)},
+    "S7": {2: (5.41, 0.90), 3: (3.23, 2.15), 6: (2.49, 0.70), 11: (3.33, 1.80)},
     "S8": {2: (1.39, 0.10), 9: (6.56, 1.35), 12: (4.91, 2.45), 15: (3.14, 0.60)},
 }
 
@@ -85,34 +97,34 @@ SETUP = {
 # where the record comes from, mean radius deviation per section in um, the part's own harmonics, taper
 FEATURES = {
     "CB-21": dict(kind="bore", nom=320.0, lim=(0, 57), tol=("cylindricity", 27.5), setup="S1", src="tester",
-                  mean=(13.0, 16.0, 14.0), own={23: (0.55, 1.42), 5: (1.1, 0.4), 17: (0.6, 1.9)}, tilt=(2.0, -1.0)),
+                  mean=(13.2, 16.2, 14.2), own={23: (0.30, 1.42), 5: (1.1, 0.4), 17: (0.6, 1.9)}, tilt=(2.0, -1.0)),
     "CB-22": dict(kind="bore", nom=320.0, lim=(0, 57), tol=("cylindricity", 20.0), setup="S3", src="tester",
-                  mean=(0.6, 2.7, 4.8), own={29: (0.48, 0.21), 7: (0.9, 1.6), 19: (0.5, 0.3)}, tilt=(3.5, 1.5)),
+                  mean=(-0.9, 3.8, 8.2), own={29: (0.48, 0.21), 7: (0.9, 1.6), 19: (0.5, 0.3)}, tilt=(3.5, 1.5)),
     "CB-23": dict(kind="bore", nom=250.0, lim=(0, 52), tol=("roundness", 15.0), setup="S5", src="tester",
-                  mean=(13.1, 14.6, 13.6), own={23: (0.61, 2.70), 6: (1.0, 2.2), 18: (0.7, 0.8)}, tilt=(0.5, 0.0)),
+                  mean=(12.1, 13.6, 12.6), own={23: (0.34, 2.70), 6: (1.0, 2.2), 18: (0.7, 0.8)}, tilt=(0.5, 0.0)),
     "CB-24": dict(kind="bore", nom=250.0, lim=(0, 52), tol=("roundness", 11.5), setup="S2", src="cmm",
                   mean=(12.8, 13.8, 12.3), own={5: (0.4, 1.1), 17: (0.3, 0.5)}, tilt=(0.5, 0.5)),
     "CB-25": dict(kind="bore", nom=250.0, lim=(0, 52), tol=("roundness", 11.5), setup="S2", src="cmm",
                   mean=(3.3, 4.8, 2.3), own={5: (0.3, 2.6), 17: (0.4, 1.8)}, tilt=(-0.5, 0.5)),
     "CB-26": dict(kind="bore", nom=400.0, lim=(0, 63), tol=("cylindricity", 33.0), setup="S7", src="tester",
-                  mean=(17.4, 23.4, 20.4), own={2: (9.5, 0.90), 29: (0.52, 1.05), 4: (1.2, 0.9), 16: (0.6, 2.4)},
+                  mean=(18.3, 24.3, 21.3), own={2: (9.5, 0.90), 29: (0.52, 1.05), 4: (1.2, 0.9), 16: (0.6, 2.4)},
                   tilt=(4.0, -2.5)),
     "GB-31": dict(kind="bore", nom=180.0, lim=(0, 46), tol=("roundness", 17.0), setup="S4", src="tester",
-                  mean=(6.2, 7.2, 6.7), own={23: (0.44, 0.33), 4: (0.4, 0.7), 19: (0.3, 2.1)}, tilt=(0.0, 0.5)),
+                  mean=(6.2, 7.2, 6.7), own={23: (0.24, 0.33), 4: (0.4, 0.7), 19: (0.3, 2.1)}, tilt=(0.0, 0.5)),
     "GB-32": dict(kind="bore", nom=180.0, lim=(0, 46), tol=("roundness", 24.0), setup="S4", src="tester",
-                  mean=(17.4, 17.9, 16.4), own={29: (0.57, 2.21), 4: (0.3, 1.9), 19: (0.4, 0.6)}, tilt=(0.5, -0.5)),
+                  mean=(17.1, 17.6, 16.1), own={29: (0.57, 2.21), 4: (0.3, 1.9), 19: (0.4, 0.6)}, tilt=(0.5, -0.5)),
     "RJ-41": dict(kind="journal", nom=300.0, lim=(-52, 0), tol=("cylindricity", 30.0), setup="S1", src="tester",
-                  mean=(-5.9, -9.4, -6.6), own={29: (0.50, 1.77), 5: (1.0, 1.3), 15: (0.6, 0.4)}, tilt=(2.5, 1.0)),
+                  mean=(-5.3, -11.3, -6.5), own={29: (0.50, 1.77), 5: (1.0, 1.3), 15: (0.6, 0.4)}, tilt=(2.5, 1.0)),
     "RJ-42": dict(kind="journal", nom=300.0, lim=(-52, 0), tol=("roundness", 22.5), setup="S6", src="cmm",
                   mean=(-20.7, -21.7, -20.2), own={5: (0.4, 0.2), 18: (0.3, 1.4)}, tilt=(0.5, 0.0)),
     "RJ-43": dict(kind="journal", nom=300.0, lim=(-52, 0), tol=("roundness", 22.5), setup="S6", src="cmm",
                   mean=(-10.3, -11.8, -9.8), own={5: (0.3, 1.7), 18: (0.4, 2.3)}, tilt=(-0.5, 0.5)),
     "RJ-44": dict(kind="journal", nom=220.0, lim=(-46, 0), tol=("roundness", 17.5), setup="S3", src="tester",
-                  mean=(-9.4, -10.4, -9.9), own={23: (0.46, 0.64), 6: (0.9, 0.5), 17: (0.5, 1.2)}, tilt=(0.5, -0.5)),
+                  mean=(-10.2, -11.2, -10.7), own={23: (0.25, 0.64), 6: (0.9, 0.5), 17: (0.5, 1.2)}, tilt=(0.5, -0.5)),
     "RJ-45": dict(kind="journal", nom=220.0, lim=(-46, 0), tol=("roundness", 18.5), setup="S8", src="cmm",
                   mean=(-13.8, -14.8, -12.8), own={4: (0.4, 2.0), 17: (0.3, 0.9)}, tilt=(0.0, 0.5)),
     "RJ-46": dict(kind="journal", nom=180.0, lim=(-40, 0), tol=("roundness", 26.5), setup="S5", src="tester",
-                  mean=(-12.9, -14.4, -13.4), own={2: (6.69, 1.20), 29: (0.59, 1.19), 7: (1.1, 1.8), 16: (0.6, 0.1)},
+                  mean=(-14.6, -16.1, -15.1), own={2: (6.26, 1.20), 29: (0.59, 1.19), 7: (1.1, 1.8), 16: (0.6, 0.1)},
                   tilt=(0.5, 0.0)),
 }
 # feed waviness, order -> amplitude um: above the 50 UPR assessment band, so it belongs to no form error, but it
@@ -123,11 +135,20 @@ LENGTH = {"CB-21": 640.0, "CB-22": 640.0, "CB-23": 480.0, "CB-24": 480.0, "CB-25
           "RJ-45": 450.0, "RJ-46": 300.0}           # the feature's own length, mm: the sections sit along it
 ORDER = list(FEATURES)
 SPARSE = tuple(f for f, d in FEATURES.items() if d["src"] == "cmm")
-# CB-22 as the shop measured it, before the re-hone of 2026-10-03: the score it was honed to clear, and the
-# material the hone had not yet taken out. The truth, and a scan, are of the bore as it stands now.
+# CB-22 was honed through on 2026-10-03, after the shop measured it. The process note says what that means and
+# the model follows it: a re-worked feature no longer carries its setup's lobing. The bore as it stands carries
+# the hone's own signature (HONED) and nothing of setup S3; the truth, and a scan, are of that surface. The
+# shop's record is of the bore before the hone: S3's lobing as its twin RJ-44 still has it, plus the score the
+# hone was sent in to clear (EXTRA). Two things follow, and both are deliberate. A scan of RJ-44 says nothing
+# about CB-22 now, so CB-22 has to be scanned itself. And CB-22's own clean scan cannot be laid over its shop
+# record to read the tester's error off the difference, because the difference is the hone as well.
+# The hone's signature is well under the boring bar's, as a hone's is; what keeps this bore's cylindricity up is
+# its taper, which the hone left alone.
 # A hone follows the bore it is in. It takes out size and it changes the lobing, but it does not correct taper,
 # so the pre-hone surface carries the same taper as the present one, DROP micrometres smaller in diameter.
-PRE_HONE = {"CB-22": dict(drop=4.5, extra={4: (3.6, 2.05), 6: (2.4, 0.80), 10: (1.7, 1.55)})}
+PRE_HONE = {"CB-22": dict(drop=4.5,
+                          extra={4: (3.6, 2.05), 6: (2.4, 0.80), 10: (1.7, 1.55)},
+                          honed={2: (1.7, 1.90), 3: (1.0, 0.40), 4: (1.3, 2.60), 8: (0.7, 1.00), 14: (0.4, 2.20)})}
 
 
 def pre_hone_mean(f):
@@ -145,14 +166,14 @@ REHONED = ("CB-22",)
 # Where the jaws or the steady bore against the part, and how deep the mark is (um) and how wide (rad). The mark
 # is what opens the gap between a mating size and a mean diameter: a plug gauge is stopped by the mark while the
 # mean radius barely notices it, so a bore whose mean diameter sits mid-tolerance can still be under its lower
-# limit on the gauge. It does not make a least-squares zone differ from a minimum-zone one. With orders 0 and 1
-# dropped the least-squares centre is already the origin, and under a translation of the centre a single narrow
-# feature moves the zone's high and low points together, so the origin is the minimax centre too.
+# limit on the gauge. It belongs to the setup, like the lobing: it is left by the way the casting is held, and
+# the two features of a setup are held the same way, so they carry the same mark. (The honed bore keeps its
+# setup's mark as well; a hone that takes a few micrometres of stock does not take out a clamping mark.)
 MARK = {"CB-21": (3.4, 0.30, 1.15), "CB-22": (4.1, 0.26, 2.40), "CB-23": (2.9, 0.33, 0.55),
         "CB-24": (3.8, 0.28, 1.90), "CB-25": (3.8, 0.28, 1.90), "CB-26": (4.6, 0.24, 0.20),
-        "GB-31": (3.1, 0.31, 2.75), "GB-32": (3.1, 0.31, 2.75), "RJ-41": (3.6, 0.29, 1.60),
-        "RJ-42": (3.3, 0.30, 0.85), "RJ-43": (3.3, 0.30, 0.85), "RJ-44": (2.7, 0.34, 2.10),
-        "RJ-45": (3.9, 0.27, 0.40), "RJ-46": (3.0, 0.32, 1.35)}
+        "GB-31": (3.1, 0.31, 2.75), "GB-32": (3.1, 0.31, 2.75), "RJ-41": (3.4, 0.30, 1.15),
+        "RJ-42": (3.3, 0.30, 0.85), "RJ-43": (3.3, 0.30, 0.85), "RJ-44": (4.1, 0.26, 2.40),
+        "RJ-45": (3.9, 0.27, 0.40), "RJ-46": (2.9, 0.33, 0.55)}
 
 
 def local_mark(f, th, psi=0.0):
@@ -162,23 +183,47 @@ def local_mark(f, th, psi=0.0):
     return -depth * np.exp(-(d / width) ** 2)
 
 
-def mount_phase(f, rng):
+# Where each part came to rest on the shop's tester, in radians from the spindle encoder's zero. Any angle is as
+# likely as any other, and these are one such set: nothing about the parts depends on them. What depends on them
+# is how the records look. They are fixed here, rather than drawn, so that two things hold. Each setup's two
+# records sit far enough apart, in elevenths of a turn, for the pair to separate the machine's line at order 11
+# from the setup's. And the parts' own lines at order 11 do not happen to cancel over a campaign, so a campaign's
+# mean at that order is the machine's vector plus more than 2 um of the parts' and is not a near miss.
+MOUNT = {"CB-21": 0.379, "CB-22": 5.663, "CB-23": 0.055, "CB-26": 3.365, "GB-31": 5.656, "GB-32": 3.526,
+         "RJ-41": 1.657, "RJ-44": 0.652, "RJ-46": 0.468}
+
+
+def mount_phase(f, rng, shop_tester=False):
     """Where the part happened to sit on the instrument. Form and size do not depend on it; the separation of the
-    machine's error motion from the part's lobing does."""
-    return float(rng.uniform(0.0, 2.0 * np.pi))
+    machine's error motion from the part's lobing does. The shop tester's records use MOUNT; a coordinate
+    machine's record, and every scan in the metrology room, sits wherever the draw puts it."""
+    drawn = float(rng.uniform(0.0, 2.0 * np.pi))       # drawn either way, so the stream does not depend on MOUNT
+    return MOUNT[f] if shop_tester else drawn
 
 
-def harmonics(f):
-    """The setup's lobing, plus the part's own content. Two parts finished in one setup without unclamping carry
-    the same lobing, which is what lets a scan of one of them carry the form error and the mating deviation of the
-    other; each still takes its own size from its own record. AMP is a per-part scale on the lobing, left at 1.00
-    for every part: a round of authoring tried making it differ from part to part, and the transfer then became
-    asymmetric (a twin 3 per cent low in amplitude cost 3 um, one 15 per cent high cost far more), which penalises
-    the booking for a choice the records give no way to make. The hook is kept, the values are not used."""
+def harmonics(f, pre=False):
+    """The lobing of feature f: its setup's, plus the part's own content. Two parts finished in one setup without
+    unclamping carry the same lobing, which is what lets a scan of one of them carry the form error and the
+    mating deviation of the other; each still takes its own size from its own record.
+
+    A honed feature is the exception, as the process note has it. As it stands (pre False) it carries the hone's
+    signature and its own content, and nothing of its setup. As the shop measured it before the hone (pre True)
+    it carries the setup's lobing exactly as its twin does, plus the score the hone was sent in to clear.
+
+    AMP is a per-part scale on the lobing, left at 1.00 for every part: a round of authoring tried making it
+    differ from part to part, and the transfer then became asymmetric, which penalises the booking for a choice
+    the records give no way to make. The hook is kept, the values are not used."""
     a = AMP.get(f, 1.0)
-    h = {n: (amp * a, ph) for n, (amp, ph) in SETUP[FEATURES[f]["setup"]].items()}
-    h.update(FEATURES[f]["own"])
-    return h
+    setup = {n: (amp * a, ph) for n, (amp, ph) in SETUP[FEATURES[f]["setup"]].items()}
+    if f in PRE_HONE:
+        if pre:
+            setup.update(PRE_HONE[f]["extra"])
+            return setup
+        h = dict(PRE_HONE[f]["honed"])
+        h.update(FEATURES[f]["own"])
+        return h
+    setup.update(FEATURES[f]["own"])
+    return setup
 
 
 def surface(f, j, th):
@@ -199,11 +244,10 @@ def measured(f, j, pts, rng, T=None, ecc=None, pre=False, spindle=False, psi=0.0
     d = FEATURES[f]
     th = np.arange(pts) / pts * 2.0 * np.pi
     mean = d["mean"]
-    h = harmonics(f)
-    if pre and f in PRE_HONE:
+    was = pre and f in PRE_HONE                # the shop's record of a feature honed since
+    h = harmonics(f, pre=was)
+    if was:
         mean = pre_hone_mean(f)
-        h = dict(h)
-        h.update(PRE_HONE[f]["extra"])
     out = np.full(len(th), mean[j])
     for n, (a, ph) in h.items():               # the part, at the phase it was clamped at
         out = out + a * np.cos(n * (th - psi) - ph)

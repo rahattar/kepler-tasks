@@ -48,8 +48,12 @@ def main():
 
     # every defective route has to be refused
     for name, route in (("the tester's error motion charged to the parts", dict(spindle="keep")),
-                        ("one error motion pooled over the whole campaign", dict(spindle="pooled")),
+                        ("one error motion pooled over the whole inspection", dict(spindle="pooled")),
+                        ("only the line every record agrees on taken off", dict(spindle="lines")),
+                        ("each campaign's mean vector at the machine's orders", dict(spindle="epoch")),
+                        ("the machine's orders struck out of the records", dict(spindle="delete")),
                         ("each campaign's whole average taken off its parts", dict(spindle="mean")),
+                        ("a least-squares zone in place of the minimum zone", dict(how="ls")),
                         ("the Gaussian band left off", dict(filt="none")),
                         ("nothing removed from the profile at all", dict(filt="order1")),
                         ("the mean diameter in place of the mating cylinder", dict(size="mean")),
@@ -59,6 +63,7 @@ def main():
                         ("no transfer from the scan to the twin", dict(transfer=False))):
         cases.append((name, C.sentence(plan=P, **route), 0))
     cases.append(("no scans ordered at all", C.sentence(plan=()), 0))
+    cases.append(("the honed bore's twin scanned in its place", C.sentence(plan=["RJ-44", "CB-24", "RJ-42", "RJ-45"]), 0))
 
     # the best a sheet made without doing the work can do
     cases.append(("every feature accept, form 20.00", {f: (20.0, "accept") for f in C.ORDER}, 0))

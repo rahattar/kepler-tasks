@@ -6,9 +6,9 @@ carry it; the true bank is accept 3, reject_size 4, reject_form 4, reject_both 3
   every feature reject_form, form 0                              right  0 of 14 (form  0, sentence  4)
   every feature reject_both, form 0                              right  0 of 14 (form  0, sentence  3)
   every feature accept, form taken as the drawing tolerance      right  0 of 14 (form  0, sentence  3)
-  the inspection report's roundness, every feature accept        right  0 of 14 (form  1, sentence  3)
-  the inspection report's roundness, sentenced on it and the report's mean diameter right  0 of 14 (form  1, sentence  2)
-  the inspection report's roundness, sentenced on form alone     right  0 of 14 (form  1, sentence  2)
+  the inspection report's roundness, every feature accept        right  0 of 14 (form  0, sentence  3)
+  the inspection report's roundness, sentenced on it and the report's mean diameter right  0 of 14 (form  0, sentence  2)
+  the inspection report's roundness, sentenced on form alone     right  0 of 14 (form  0, sentence  2)
 
   swept 4804 constant sheets through the verifier: the best of them picks up 1 of 14 features
   one feature is the floor and cannot be helped: a sheet that happens to name a feature's own form
