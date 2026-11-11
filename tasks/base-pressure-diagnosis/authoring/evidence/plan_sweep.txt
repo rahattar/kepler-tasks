@@ -1,4 +1,4 @@
-inputs: 80f8394611d0d685
+inputs: b176a65b703c3f69
 Both audits under every order the budget allows
 ===============================================
 
@@ -101,14 +101,14 @@ VC05 rga at 36 h           rejected (VC07)  rejected (VC07)
 VC05 rga at 42 h           rejected (VC07)  rejected (VC07)
 VC05 rga at 48 h           rejected (VC07)  rejected (VC07)
 VC05 rate-of-rise at 16 h  rejected (VC07)  rejected (VC07)
-VC05 rate-of-rise at 20 h  rejected (VC07)  rejected (VC07)
+VC05 rate-of-rise at 20 h  rejected (VC07)  rejected (VC05 VC07)
 VC05 rate-of-rise at 24 h  rejected (VC07)  rejected (VC05 VC07)
 VC05 rate-of-rise at 30 h  rejected (VC07)  rejected (VC07)
 VC05 rate-of-rise at 36 h  rejected (VC07)  rejected (VC07)
 VC05 rate-of-rise at 42 h  rejected (VC07)  rejected (VC07)
 VC05 rate-of-rise at 48 h  rejected (VC07)  rejected (VC05 VC07)
 VC05 speed-test at 16 h    rejected (VC07)  rejected (VC07)
-VC05 speed-test at 20 h    rejected (VC07)  rejected (VC05 VC07)
+VC05 speed-test at 20 h    rejected (VC07)  rejected (VC07)
 VC05 speed-test at 24 h    rejected (VC07)  rejected (VC07)
 VC05 speed-test at 30 h    rejected (VC07)  rejected (VC07)
 VC05 speed-test at 36 h    rejected (VC07)  rejected (VC07)

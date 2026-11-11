@@ -21,7 +21,7 @@ fixture in the chamber during that pumpdown, blank if none) and `note`.
 The throughput tests by which the shop measures a chamber's effective pumping speed: a known flow of dry nitrogen is
 admitted through a calibrated leak and the pressure rise is read. A test is run on the empty chamber at the end of
 a pumpdown after an air vent. `date`, `chamber`, `pumping_time_h` (from the start of roughing to the test),
-`wall_temp_c`, `flow_mbarl_s`, `p_with_flow_mbar`, `p_without_flow_mbar` (the chamber's own base pressure, read on
+`wall_temp_c`, `flow_mbarl_s` (the flow the shop's calibrated leak is stated to admit), `p_with_flow_mbar`, `p_without_flow_mbar` (the chamber's own base pressure, read on
 the gauge before the flow is admitted), `gauge`, `s_eff_l_s` (the speed the contractor reported, the flow divided by
 the pressure rise).
 

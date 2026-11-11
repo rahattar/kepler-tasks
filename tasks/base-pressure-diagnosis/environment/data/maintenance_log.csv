@@ -1,5 +1,5 @@
 date,chamber,entry
-2026-06-10,VC03,Baffle fitted in the high-vacuum port. Port conductance after the work: 420 L/s.
+2026-06-10,VC03,Baffle fitted in the high-vacuum port.
 2026-06-18,VC04,Baffle fitted in the high-vacuum port. Port conductance after the work: 700 L/s.
 2026-07-20,VC07,Substrate fixture plate refitted with new clamping bars.
 2026-07-21,VC01,Rotary feedthrough regreased.
@@ -7,7 +7,7 @@ date,chamber,entry
 2026-08-17,VC10,Turbo drive reported over-temperature; fan filter cleaned.
 2026-08-19,VC03,Gate valve actuator serviced.
 2026-08-20,VC04,Door seal replaced; nitrile section fitted. Seal material after the work: nitrile.
-2026-08-24,VC05,Liquid nitrogen trap fitted in the high-vacuum port. Port conductance after the work: 620 L/s.
+2026-08-24,VC05,Liquid nitrogen trap fitted in the high-vacuum port.
 2026-09-08,VC01,Quartz monitor head replaced.
 2026-09-10,VC01,"Chamber relined with machined panels. Internal surfaces after the work: 9.00 m2 stainless steel, as machined."
 2026-09-10,VC02,"Heat shields and planetary drive replaced. Internal surfaces after the work: 5.50 m2 stainless steel, as machined; 2.60 m2 aluminum, anodized."

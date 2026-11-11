@@ -66,7 +66,7 @@ convention the audit needs, so a worked answer would add nothing but an end-to-e
 known figure.
 
 The ten chambers carry the faults that shop records carry. Each looks like ordinary data, and the documents say only
-what was done, never its effect. Thirteen of the layers are settled by the data alone:
+what was done, never its effect. Fourteen of the layers are settled by the data alone:
 - **A reference condition no entry reaches.** Every chamber carries at least two mechanisms of comparable size, and
   its entries are spread in pumping time, vent gas and wall temperature, so that reading the latest entry across to
   the reference condition by any one mechanism's law misses. The budget has to be identified.
@@ -84,6 +84,15 @@ what was done, never its effect. Thirteen of the layers are settled by the data 
 - **A leak against permeation.** Both are constant in pumping time and both admit air, so only the gas load's
   temperature dependence across the log, or the oxygen and argon of a residual gas analysis, separates them (VC04
   against VC06).
+- **A shop instrument that is wrong for every chamber at once.** Every shop speed test admits the same calibrated
+  leak, and since the spring it has admitted more than it states, so every shop test since reports a speed low by
+  one factor, on every chamber, while each chamber's own record looks like a pump that has lost a little speed and
+  every controller shows its pump in order. Only the fleet shows it: a pump in order delivers its rated speed, and
+  every chamber whose rated speed is on record tested at it before the change and below it by the same factor after.
+  It matters most where nothing else gives the speed: on two chambers a baffle or trap was fitted without its
+  conductance being recorded, so their speed is their speed test's, put right by the fleet's factor (VC03, VC05). It
+  also moves every gas load read through a test's speed, VC08's 42 h reading among them, and the factor a test puts
+  on a gauge certificate (VC01, VC04).
 - **A speed test that is also a reading.** A shop speed test records the chamber's own base pressure before the flow
   is admitted, at the pumping time and wall temperature of that pumpdown. On one chamber it is the only reading at a
   long pumping time: VC08's load went up ninefold when its cryopanel brackets were replaced, every log entry since
@@ -144,11 +153,11 @@ Nine more are recorded somewhere in the documents and have to be found and appli
   4 to 48 h (`vacwork.md`). At 16 h the one chamber the test is needed on only repeats its log.
 
 Each check left out or done the obvious way gets chambers wrong, and every chamber of the fleet must be right
-(`authoring/evidence/route_study.txt`). Twenty-four routes, each leaving out one check or doing it the obvious way,
+(`authoring/evidence/route_study.txt`). Twenty-five routes, each leaving out one check or doing it the obvious way,
 are each rejected; each chamber is missed by at least three routes; and each chamber is missed by at least one route
 on its cause alone, so no chamber's grading turns on where the tolerance is drawn. Taking the records at face value
 - the register's surfaces, seal and port, the latest speed test, the logged serials, every entry pooled, the table's
-gas load and no gauge correction - gets nine of the ten wrong.
+gas load and no gauge correction - gets ten of the ten wrong.
 
 The audit test is load-bearing and measured to be so (`authoring/evidence/plan_sweep.txt`), over the whole space of
 orders the budget allows: each gas-load test (rga, rate-of-rise, speed-test) on each chamber at each of the pumping
@@ -174,6 +183,10 @@ it does the following.
   to the pumpdowns the reference instrument did not see. A certificate is out where the throughput tests read on
   that gauge report a speed the pump and port cannot have: above rated, or below it while the controller shows the
   pump in order. That gauge's readings and those tests' speeds are put right by the same factor.
+- **The shop's calibrated leak.** Every shop speed test on a chamber whose rated speed is on record and whose pump
+  was in order that day measures the leak's real flow against its stated one. Split in date order where the two
+  sides' medians are best separated, they show the leak changed in the spring, and every test since is put right by
+  that factor before anything else reads it.
 - **The speed.** The pump curves are flat at base pressure, so the speed is one constant between the dates on which
   it can change: a trap fitted in the port, or a step in the controller's drive power and bearing temperature. The
   speed now is the ordered test's, read on the contractor's own gauge, or the latest shop test since the last such
@@ -206,7 +219,7 @@ carry the reference to a pass, all a gas-load test on VC07 at a pumping time fro
 (`authoring/evidence/plan_sweep.txt`).
 
 Run through `tests/grade_audit.py` as the verifier reads a submission, the reference gets every chamber right, with
-its gas loads within 1.39 per cent of the truth and its speeds within 1.52 per cent
+its gas loads within 1.39 per cent of the truth and its speeds within 1.70 per cent
 (`authoring/evidence/reference_run.txt`).
 
 ## Verification
@@ -239,21 +252,22 @@ Why these tolerances, and why every chamber:
   logarithm of the gas load, selects structures by BIC rather than AIC, with any added mechanism required to leave
   two degrees of freedom and to improve the fit significantly at one per cent, finds a seal the register gets wrong
   as a free permeation scale that is adopted only where it is well determined and lands on a material of the table,
-  and dates a turbo's change by a changepoint test; and six variations of the reference - dropping the oldest entry,
-  averaging the period's speed tests, asking twice or half the evidence before setting the register's seal aside,
-  weighting the ordered test as a gauge reading, and a finer grid of time constants. Both audits are also right on
-  VC07 on each of the twenty laboratory seeds of the ordered test's scatter, and on records rebuilt from each of
-  twenty other draws of the shop's instrument noise (`authoring/evidence/seed_screen.txt`). Over every sound method
-  and chamber the widest deviation is 2.18 per cent on the gas load and 1.70 per cent on the speed, so the
-  tolerances stand at 1.84 and 2.06 times the spread of sound work.
-- **Defective routes.** Twenty-four routes, each the reference with one check left out or done the obvious way, are
-  all rejected (`authoring/evidence/route_study.txt`). Four of them are rejected by a single chamber -
-  register_seal, trust_register_seal, undated_certificates, register_pump - and the study fails unless each of those
-  misses its chamber by at least 2.00 times the tolerance or on the cause outright, so no route is rejected on a
-  knife edge. Routes that miss several chambers may graze a band on one of them: the nearest miss on a quantity
-  anywhere in the study is 4.00 per cent, 1.00 times the gas-load tolerance. That costs nothing, because every
-  chamber is missed by at least three routes, and by at least one on its cause alone. On every laboratory seed of
-  the ordered test VC07 is still missed by at least 6 routes.
+  dates a turbo's change by a changepoint test, and finds the calibrated leak's change by the largest separation of
+  trimmed means rather than of medians; and six variations of the reference - dropping the oldest entry, averaging
+  the period's speed tests, asking twice or half the evidence before setting the register's seal aside, weighting
+  the ordered test as a gauge reading, and a finer grid of time constants. Both audits are also right on VC07 on
+  each of the twenty laboratory seeds of the ordered test's scatter, and on records rebuilt from each of twenty
+  other draws of the shop's instrument noise (`authoring/evidence/seed_screen.txt`). Over every sound method and
+  chamber the widest deviation is 2.00 per cent on the gas load and 1.79 per cent on the speed, so the tolerances
+  stand at 2.00 and 1.96 times the spread of sound work.
+- **Defective routes.** Twenty-five routes, each the reference with one check left out or done the obvious way, are
+  all rejected (`authoring/evidence/route_study.txt`). Three of them are rejected by a single chamber -
+  register_seal, trust_register_seal, undated_certificates - and the study fails unless each of those misses its
+  chamber by at least 2.00 times the tolerance or on the cause outright, so no route is rejected on a knife edge.
+  Routes that miss several chambers may graze a band on one of them: the nearest miss on a quantity anywhere in the
+  study is 4.04 per cent, 1.01 times the gas-load tolerance. That costs nothing, because every chamber is missed by
+  at least three routes, and by at least one on its cause alone. On every laboratory seed of the ordered test VC07
+  is still missed by at least 8 routes.
 - **Every chamber.** The allowance of one wrong chamber that earlier tasks carried is not used here, and the reason
   is measured (`authoring/evidence/plan_sweep.txt`): with an allowance of one, the audit test is not load-bearing at
   all, because the reference passes with no test ordered. Requiring every chamber makes the one chamber whose own

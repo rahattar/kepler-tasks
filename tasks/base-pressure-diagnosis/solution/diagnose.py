@@ -186,7 +186,7 @@ def read_csv(path):
 
 
 def load_data(d):
-    return dict(
+    data = dict(
         register=read_csv(os.path.join(d, "chamber_register.csv")),
         log=read_csv(os.path.join(d, "base_pressure_log.csv")),
         speed=read_csv(os.path.join(d, "speed_tests.csv")),
@@ -194,6 +194,64 @@ def load_data(d):
         maint=read_csv(os.path.join(d, "maintenance_log.csv")),
         certs=parse_certs(os.path.join(d, "gauge_certificates.md")),
     )
+    return correct_flow(data)
+
+
+def flow_standard(data):
+    """Whether the shop's calibrated leak has delivered its stated flow: (date from which it has not, the factor of
+    its stated flow it delivers), or None.
+
+    Every shop speed test admits the same calibrated leak, so a fault in it moves every test after it by one factor,
+    on every chamber at once, while no chamber's own record shows anything. The fleet is its own check: a pump in
+    order delivers its rated speed (the vacuum data), so each test on a chamber whose rated speed is known and whose
+    pump was in order that day is a measurement of the leak's flow against its statement, in the ratio of the
+    reported speed to the rated one. Those ratios are split at the date that best separates them into a before and
+    an after (the least absolute deviation from each side's median); where the two medians differ by more than the tests' scatter allows, the leak changed there. Medians,
+    because a chamber whose own gauge certificate is out sits off the rest by its own factor and must not move the
+    fleet's."""
+    pts = []
+    for cid in sorted({r["chamber"] for r in data["register"]}):
+        cfg = with_controller_pump(cid, chamber_config(cid, data), data)
+        changed = pump_changed_on(cid, data)
+        for r in data["speed"]:
+            if r["chamber"] != cid or (changed and r["date"] >= changed):
+                continue
+            rated = rated_on(cfg, r["date"])
+            if rated:
+                pts.append((r["date"], float(r["s_eff_l_s"]) / rated))
+    pts.sort()
+    vals = [v for _d, v in pts]
+    whole = sum(abs(v - _median(vals)) for v in vals)
+    best = None
+    for i in range(3, len(pts) - 2):
+        if pts[i][0] == pts[i - 1][0]:
+            continue
+        lo, hi = _median(vals[:i]), _median(vals[i:])
+        cost = sum(abs(v - lo) for v in vals[:i]) + sum(abs(v - hi) for v in vals[i:])
+        if best is None or cost < best[0]:
+            best = (cost, pts[i][0], hi / lo)
+    if best is None or abs(math.log(best[2])) < FLOW_SLACK or best[0] > 0.5 * whole:
+        return None
+    return best[1], best[2]
+
+
+def correct_flow(data):
+    """Every shop speed test after a fault in the calibrated leak, reported at the speed the flow it really
+    admitted gives."""
+    fs = flow_standard(data)
+    data["flow"] = fs
+    if fs is None:
+        return data
+    since, factor = fs
+    data["speed"] = [dict(r, s_eff_l_s="%.6g" % (float(r["s_eff_l_s"]) / factor)) if r["date"] >= since else r
+                     for r in data["speed"]]
+    return data
+
+
+def _median(v):
+    v = sorted(v)
+    n = len(v)
+    return v[n // 2] if n % 2 else 0.5 * (v[n // 2 - 1] + v[n // 2])
 
 
 def parse_certs(path):
@@ -234,7 +292,8 @@ def chamber_config(cid, data):
                seal=r0["seal_material"], seal_cm=float(r0["seal_length_cm"]),
                surfaces=[(float(r["surface_area_m2"]), r["surface"]) for r in reg],
                p_spec=float(r0["p_spec_mbar"]), internals_from=None, trap_from=None,
-               turbo_register=r0["turbo"], seal_register=r0["seal_material"], seal_logged_from=None)
+               turbo_register=r0["turbo"], seal_register=r0["seal_material"], seal_logged_from=None,
+               c_port_register=float(r0["c_port_l_s"]))
     # the seal is kept as a history, because a seal changed part way through the log means one permeation
     # constant will not serve every entry
     cfg["seal_hist"] = [("0000-00-00", cfg["seal"], cfg["seal_cm"])]
@@ -254,6 +313,11 @@ def chamber_config(cid, data):
         if "Port conductance after the work:" in e:
             v = e.split("Port conductance after the work:", 1)[1]
             cfg["c_port"] = float(v.strip().split()[0])
+            cfg["trap_from"] = row["date"]
+        elif "fitted in the high-vacuum port" in e:
+            # a trap or baffle whose conductance nobody recorded: the port is no longer the register's, and what it
+            # is has to be measured
+            cfg["c_port"] = None
             cfg["trap_from"] = row["date"]
         if "Seal material after the work:" in e:
             cfg["seal"] = e.split("Seal material after the work:", 1)[1].strip().rstrip(".")
@@ -819,10 +883,20 @@ def shop_speed_in(cid, data, cuts, period, k):
 
 # ---------------------------------------------------------------------------------------------------- audit
 CERT_SLACK = 0.02                   # a measured speed may sit this far from rated on the test's own scatter
+FLOW_SLACK = 0.03                   # a shift in the fleet's median speed ratio larger than the tests' scatter allows
 
 
 def rated_at(cfg, p=1e-6):
+    """The chamber's rated speed as it stands, or None where its port's conductance is not known."""
+    if cfg["c_port"] is None:
+        return None
     return series(curve(TURBO[cfg["turbo"]], p), cfg["c_port"])
+
+
+def rated_on(cfg, date, p=1e-6):
+    """The rated speed on a date: before a trap was fitted the port was the register's."""
+    c = cfg["c_port_register"] if cfg["trap_from"] and date < cfg["trap_from"] else cfg["c_port"]
+    return series(curve(TURBO[cfg["turbo"]], p), c) if c else None
 
 
 def with_controller_pump(cid, cfg, data):
@@ -848,6 +922,8 @@ def certificate_error(cid, cfg, data):
     for each. A test taken before a trap was fitted measured a larger port, and one taken after the turbo changed
     measured another pump; neither is evidence about a certificate."""
     rated = rated_at(cfg)
+    if rated is None:
+        return {}                     # a port of unknown conductance gives no rated speed to check a test against
     changed = pump_changed_on(cid, data)
     by = {}
     for r in data["speed"]:
@@ -919,7 +995,9 @@ def front_end(cid, data, certs, fix, vac):
         # gas load there
         obs.append(dict(kind="rga", date=AUDIT, t_h=rga["t_h"], t_k=rga["t_k"], vent="air", load="",
                         value=sum(rga["pp"].values()), gauge=False, speed="now", sd=TEST_SD["rga"]))
-    rated = rated_at(cfg)
+    # where the port's conductance is unknown the pump is in order (only then is there nothing else to go on), and
+    # its measured speed is its rated one
+    rated = rated_at(cfg) or s_now
     return cfg, obs, s_now, (0.05 * rated, 1.2 * rated)
 
 
@@ -940,7 +1018,9 @@ def audit_chamber(cid, data, certs, fix, vac):
     params, chi2, k = choose_budget(cid, cfg, data, obs, s_now, s_range, hel["leak"] if hel else None)
     parts, q_total = at_reference(cfg, params)
     s_eff = params["s_now"]
-    s_rated = rated_at(cfg)
+    # MS-BP clause 4: the rated speed is the same pump in series with the port as fitted, with the pump as new. A
+    # pump in order behind a port of unknown conductance delivers exactly that, so its measured speed is its rated
+    s_rated = rated_at(cfg) or s_eff
     cause = "pump-speed" if s_eff < PUMP_GATE * s_rated else max(parts, key=lambda k: parts[k])
     return dict(chamber=cid, cause=cause, q_total=q_total, s_eff=s_eff, parts=parts, s_rated=s_rated,
                 params=params, chi2=chi2, n_obs=len(obs))

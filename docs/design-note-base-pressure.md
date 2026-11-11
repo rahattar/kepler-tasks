@@ -548,3 +548,30 @@ Probes after the neutral wording (spare head with a 2025 certificate, plain main
 3 of 3. VC04 is a switch on wording: with the "fresh certificate" and "would not strike" cues every probe failed
 it, without them nearly every probe passes it. The decoy fooled no one (12 of 12 ordered VC07). Not shipped;
 waiting on a decision about the core.
+
+---
+
+# A FLEET-WIDE HIDDEN FAULT: THE SHOP'S CALIBRATED LEAK (11 November, late)
+
+Agreed with Alex. The layers that separate effort levels are the ones that need more than one chamber (the crossed
+serials); every single-chamber call is found by a careful fit at any effort.
+
+- One calibrated leak for every shop speed test (`STATED_FLOW` 0.0200 mbar L/s). From 2026-05-18 it admits 1.14
+  of its stated flow (`FLOW_FAULT`), so every 2026 shop test reports a speed 0.88 of the truth on every chamber at
+  once, and no pump appears faster than its curve. Nothing in any document says so; `records_format.md` says only
+  that the column is the flow the leak is stated to admit. The contractor's tests are unaffected.
+- VC03's baffle and VC05's trap are now logged without their conductance, so their speed has to come from their
+  post-fit speed tests, put right by the fleet's factor. MS-BP clause 4 makes the rated speed the pump as new in
+  series with the port as fitted, so a pump in order behind an unrecorded port is at its rated speed: their
+  pump-speed gate is not in question.
+- VC01's 2026 test moved to 07-21 so that it is not the first test after the change: its certificate error (1.14)
+  almost cancels the leak's factor, and as the first 2026 test it made the changepoint ambiguous. VC00's 2026 test
+  moved before the change, so the example stays sound throughout.
+- Both audits estimate the factor before anything reads a test: the reference by the least-absolute-deviation split
+  of the fleet's speed ratios (medians), the independent by the split with the largest separation of trimmed means.
+  Both find 2026-06-30 and 0.879. New route `flow_as_stated` misses all ten chambers.
+
+Probes on the leak fault, low effort: 2 of 3 solved (A1, A3), and all three found the fault themselves ("every
+2026 speed test reads about 0.88 of rated on every chamber with a healthy pump"). A2 missed VC03 and VC07 on the
+crossed serials. A low-effort run compares every test with its rated speed as a matter of course, so a fault that
+shows as a ratio is found, however many chambers it spans.

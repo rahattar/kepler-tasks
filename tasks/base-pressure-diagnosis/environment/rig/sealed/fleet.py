@@ -36,6 +36,19 @@ EXAMPLE = "VC00"                    # the worked example chamber, outside the fl
 # How well the instruments repeat, each as the relative standard deviation of one reading. The records and the
 # reports draw their noise from these, and records_format.md and vacwork.md state them, so the figures an agent
 # weights its fit by are the figures the scatter was drawn from.
+# The shop's calibrated leak, the nitrogen flow every shop speed test admits. Its stated flow is right until
+# FLOW_FAULT's date; from then on it delivers FLOW_FAULT's factor of what it states, so the pressure rise is that
+# much larger and every shop speed test after that date reports a speed low by that factor, on every chamber at
+# once, with no pump shown faster than its curve. Nothing in any document says so. The contractor's own tests use
+# the contractor's leak and are not affected.
+STATED_FLOW = 0.0200                # mbar L/s
+FLOW_FAULT = ("2026-05-18", 1.14)
+
+
+def true_flow(date):
+    return STATED_FLOW * (FLOW_FAULT[1] if date >= FLOW_FAULT[0] else 1.0)
+
+
 REPEAT = dict(
     reading=0.006,                  # a gauge reading in the base-pressure log
     speed_pressure=0.005,           # each pressure of a throughput speed test, the shop's or the contractor's
@@ -129,7 +142,7 @@ EX = Ch(
          ("2026-10-06", "P4", "air", 16.0, 19.1, "CC-7000", None),
          ("2026-10-20", "P5", "air", 24.0, 17.0, "CC-7000", None)],
     certs={"CC-7000": [("2026-01-12", 1.00)]},
-    speed=[("2025-03-11", 16.0, 10.7), ("2026-07-07", 16.0, 25.4)],
+    speed=[("2025-03-11", 16.0, 10.7), ("2026-04-14", 16.0, 15.4)],
     ctrl=["2026-07-01", "2026-07-08", "2026-07-15", "2026-07-22", "2026-07-29", "2026-08-05", "2026-08-12", "2026-08-19", "2026-08-26", "2026-09-02", "2026-09-09", "2026-09-16", "2026-09-23", "2026-09-30", "2026-10-07", "2026-10-14", "2026-10-21", "2026-10-28"],
 )
 
@@ -159,7 +172,7 @@ FLEET = [
             ("2026-10-27", "P6", "air", 16.0, 15.8, "CC-7101", "carrier set A"),
             ("2026-10-27", "P6", "air", 16.0, 15.8, "IG-7201", "carrier set A")],
        certs={"CC-7101": [("2026-02-03", 1.00)], "IG-7201": [("2026-02-03", 1.00)]},
-       speed=[("2025-03-25", 16.0, 12.4), ("2026-06-23", 18.0, 24.5)],
+       speed=[("2025-03-25", 16.0, 12.4), ("2026-07-21", 18.0, 24.9)],
        ctrl=["2026-07-01", "2026-07-08", "2026-07-15", "2026-07-22", "2026-07-29", "2026-08-05", "2026-08-12", "2026-08-19", "2026-08-26", "2026-09-02", "2026-09-09", "2026-09-16", "2026-09-23", "2026-09-30", "2026-10-07", "2026-10-14", "2026-10-21", "2026-10-28"]),
 
     # VC02 wall-outgassing: internals replaced in September, so the earlier entries no longer apply. Its anodized
@@ -191,7 +204,7 @@ FLEET = [
        reg_entry(1200, "TMP-700", 900, "perfluoroelastomer", 150,
                  [(4.2, "stainless steel, electropolished")], 2.0e-7),
        true=dict(wall_factor=2.50, leak=3.7e-5),
-       events=[("2026-06-10", "trap", (420, "Baffle fitted in the high-vacuum port.")),
+       events=[("2026-06-10", "trap", (420, "Baffle fitted in the high-vacuum port.", False)),
                ("2026-08-19", "note", "Gate valve actuator serviced.")],
        log=[("2026-07-22", "P1", "air", 16.0, 24.0, "CC-7103", None),
             ("2026-08-12", "P2", "air", 24.0, 23.4, "CC-7103", None),
@@ -243,7 +256,7 @@ FLEET = [
        reg_entry(2600, "TMP-1100", 1500, "perfluoroelastomer", 520,
                  [(6.0, "stainless steel, as machined")], 1.0e-7),
        true=dict(wall_factor=1.40, leak=3.5e-5, seal_actual="nitrile"),
-       events=[("2026-08-24", "trap", (620, "Liquid nitrogen trap fitted in the high-vacuum port.")),
+       events=[("2026-08-24", "trap", (620, "Liquid nitrogen trap fitted in the high-vacuum port.", False)),
                ("2026-09-16", "note", "Door seal renewed, same material and section.")],
        log=[("2026-07-14", "P1", "air", 16.0, 24.9, "CC-7105", None),
             ("2026-08-04", "P2", "air", 20.0, 24.8, "CC-7105", None),

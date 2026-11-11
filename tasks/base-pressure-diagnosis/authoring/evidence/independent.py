@@ -138,6 +138,11 @@ def shop(data_dir):
              ctl=rows_of(os.path.join(data_dir, "turbo_controller.csv")),
              mnt=rows_of(os.path.join(data_dir, "maintenance_log.csv")))
     d["cert"] = certificates(os.path.join(data_dir, "gauge_certificates.md"))
+    d["leak_std"] = leak_standard(d)
+    if d["leak_std"]:
+        since, factor = d["leak_std"]
+        d["spd"] = [dict(r, s_eff_l_s=str(float(r["s_eff_l_s"]) / factor)) if r["date"] >= since else r
+                    for r in d["spd"]]
     return d
 
 
@@ -179,7 +184,7 @@ def state_on(cid, data, date):
               seal=head["seal_material"], seal_cm=float(head["seal_length_cm"]),
               surfaces=[(float(r["surface_area_m2"]), r["surface"]) for r in mine],
               spec=float(head["p_spec_mbar"]), relined=None, ported=None, seal_register=head["seal_material"],
-              seal_logged=None)
+              seal_logged=None, port_register=float(head["c_port_l_s"]))
     fitted = pump_fitted(cid, data)
     if fitted:
         st["pump"] = fitted
@@ -196,6 +201,9 @@ def state_on(cid, data, date):
             st["relined"] = row["date"]
         if "Port conductance after the work:" in txt:
             st["port"] = float(txt.split("Port conductance after the work:", 1)[1].strip().split()[0])
+            st["ported"] = row["date"]
+        elif "fitted in the high-vacuum port" in txt:
+            st["port"] = None                 # nobody recorded its conductance: the port has to be measured
             st["ported"] = row["date"]
         if "Seal material after the work:" in txt:
             st["seal"] = txt.split("Seal material after the work:", 1)[1].strip().rstrip(".")
@@ -331,9 +339,52 @@ def surfaces_of(st, load):
     return out
 
 
-def rated_of(st, p=1e-6):
+def rated_of(st, p=1e-6, date=None):
+    """The rated speed, on the audit date or on another; None where the port's conductance is not recorded."""
+    port = st["port_register"] if (date and st["ported"] and date < st["ported"]) else st["port"]
+    if port is None:
+        return None
     pump = speed_curve(st["pump"], p)
-    return pump * st["port"] / (pump + st["port"])
+    return pump * port / (pump + port)
+
+
+def leak_standard(data):
+    """Whether the shop's calibrated leak, which every shop speed test admits, has changed: (from, factor) or None.
+
+    Every test on a chamber whose rated speed is on record, with its pump in order that day, measures the leak's
+    real flow against its stated one (a pump in order delivers its rated speed). The change is put where a split of
+    those tests in date order gives the largest separation of the two sides' trimmed means, in units of their
+    scatter, and the factor is the ratio of those trimmed means. Trimming drops a side's extreme fifth, so a chamber
+    whose own certificate is out does not move it."""
+    pts = []
+    for cid in sorted({r["chamber"] for r in data["reg"]}):
+        st = state_on(cid, data, AUDIT_DATE)
+        altered = turbo_altered(cid, data)
+        for r in data["spd"]:
+            if r["chamber"] != cid or (altered and r["date"] >= altered):
+                continue
+            rated = rated_of(st, date=r["date"])
+            if rated:
+                pts.append((r["date"], float(r["s_eff_l_s"]) / rated))
+    pts.sort()
+
+    def trimmed(v):
+        v = sorted(v)
+        cut = len(v) // 5
+        v = v[cut:len(v) - cut] if len(v) - 2 * cut >= 2 else v
+        return float(np.mean(v)), float(np.std(v)) + SPEED_REPEAT
+
+    best = None
+    for i in range(3, len(pts) - 2):
+        if pts[i][0] == pts[i - 1][0]:
+            continue
+        (m1, s1), (m2, s2) = trimmed([v for _d, v in pts[:i]]), trimmed([v for _d, v in pts[i:]])
+        z = abs(m2 - m1) / math.hypot(s1, s2)
+        if best is None or z > best[0]:
+            best = (z, pts[i][0], m2 / m1)
+    if best is None or best[0] < 5.0:
+        return None
+    return best[1], best[2]
 
 
 def cert_out_by(cid, data, st):
@@ -343,6 +394,8 @@ def cert_out_by(cid, data, st):
     errors of the stated repeatability, that ratio is how far the gauge's certificate is out. A test after a trap
     was fitted, or after the turbo changed, measured another configuration and is set aside."""
     rated = rated_of(st)
+    if rated is None:
+        return {}
     altered = turbo_altered(cid, data)
     by = {}
     for r in data["spd"]:
@@ -573,7 +626,7 @@ def audit_one(cid, data, vac):
                         sd=math.hypot(SPEED_REPEAT, SPEED_REPEAT * 1.5)))
     obs += ordered
 
-    rated = rated_of(st)
+    rated = rated_of(st) or s_now        # a pump in order behind an unrecorded port: its measured speed is rated
     lo_d, hi_d = min(o["date"] for o in obs), max(o["date"] for o in obs)
     worked = sorted({r["date"] for r in data["mnt"] if r["chamber"] == cid and lo_d < r["date"] <= hi_d})
     best = None

@@ -20,6 +20,7 @@ Routes, one per layer:
     rated_speed          take a pump in order at its rated speed now and leave the speed tests aside, every
                          certificate as issued
     speeds_only          read the speed tests for their speeds alone, not their no-flow pressures as readings
+    flow_as_stated       take the calibrated leak at its stated flow on every test
     undated_certificates apply a gauge's latest certificate factor to every reading, whatever its date
     register_pump        take the pump the register names, whatever the controller's own figures report
     latest_speed_test    take the latest speed test whatever the controller rows show since
@@ -58,13 +59,14 @@ sys.path.insert(0, os.path.join(TASK, "solution"))
 import diagnose as D                                                    # noqa: E402
 
 ROUTES = ["register_surfaces", "register_port", "register_seal", "trust_register_seal", "trust_certificate",
-          "rated_speed", "speeds_only", "undated_certificates", "register_pump", "latest_speed_test", "commissioning_speed",
+          "rated_speed", "speeds_only", "flow_as_stated", "undated_certificates", "register_pump", "latest_speed_test", "commissioning_speed",
           "no_gas_correction", "all_entries", "void_before_change", "uncorrected_cathode", "logged_serials",
           "ignore_vent_gas", "ignore_load", "ignore_temperature", "table_outgassing", "no_time_reference",
           "leak_only", "skip_pump_gate", "face_value"]
 
 FACE_VALUE = ["register_surfaces", "register_port", "register_seal", "trust_register_seal", "trust_certificate",
-              "undated_certificates", "register_pump", "latest_speed_test", "no_gas_correction", "all_entries",
+              "undated_certificates", "register_pump", "latest_speed_test", "flow_as_stated", "no_gas_correction",
+              "all_entries",
               "uncorrected_cathode", "logged_serials", "ignore_vent_gas", "ignore_load", "ignore_temperature",
               "table_outgassing", "leak_only"]
 
@@ -107,7 +109,7 @@ def _rated_speed(front_end):
     def fe(cid, data, certs, fix, vac):
         cfg, obs, s_now, rng = front_end(cid, data, certs, fix, vac)
         if D.pump_changed_on(cid, data) is None and D.ordered_speed(cid, cfg, vac)[0] is None:
-            s_now = D.rated_at(cfg)
+            s_now = D.rated_at(cfg) or s_now
         return cfg, obs, s_now, rng
     return fe
 
@@ -254,6 +256,8 @@ def _patches(name):
         return [("certificate_error", lambda cid, cfg, data: {}),
                 ("speed_test_points", lambda cid, cfg, data, certs: []),
                 ("front_end", _rated_speed(D.front_end))]
+    if name == "flow_as_stated":
+        return [("correct_flow", lambda data: dict(data, flow=None))]
     if name == "speeds_only":
         return [("speed_test_points", lambda cid, cfg, data, certs: [])]
     if name == "undated_certificates":

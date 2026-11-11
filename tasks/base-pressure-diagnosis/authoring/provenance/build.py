@@ -99,8 +99,8 @@ def speed_rows(ids):
             s = P.s_eff(c, P.p_base(c, P.q_total(c, hours, "air", temp_c + 273.15)))
             # the chamber's own gas, as the gauge indicates it, and the nitrogen the test admits on top of it
             base_ind = P.indicated(c, hours, "air", temp_c + 273.15)
-            flow = float("%.3g" % (s * 4.0e-5))
-            rise_ind = flow / s                        # admitted nitrogen, K = 1.00, so indicated = partial
+            flow = F.STATED_FLOW                       # what the test sheet records
+            rise_ind = F.true_flow(date) / s           # what is admitted; nitrogen, K = 1.00, so indicated = partial
             cert = F.cert_factor(serial, date) * F.drift_factor(ch, serial, date)
             real = cert * F.cert_wrong_factor(ch, serial)
             g = rng_for(cid, "speed", n)
@@ -143,7 +143,9 @@ def maintenance_rows(ids):
                 text = "%s Internal surfaces after the work: %s." % (
                     args[1], "; ".join("%.2f m2 %s" % (a, m) for a, m in args[0]))
             elif kind == "trap":
-                text = "%s Port conductance after the work: %d L/s." % (args[1], args[0])
+                # a trap whose conductance the fitter did not record leaves the chamber's port to be measured
+                documented = args[2] if len(args) > 2 else True
+                text = "%s Port conductance after the work: %d L/s." % (args[1], args[0]) if documented else args[1]
             elif kind == "seal":
                 text = "%s Seal material after the work: %s." % (args[1], args[0])
             elif kind == "seal_len":

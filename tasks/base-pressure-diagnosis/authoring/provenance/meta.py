@@ -278,7 +278,7 @@ every convention the audit needs, so a worked answer would add nothing but an en
 against a known figure.
 
 The ten chambers carry the faults that shop records carry. Each looks like ordinary data, and the documents say
-only what was done, never its effect. Thirteen of the layers are settled by the data alone:
+only what was done, never its effect. Fourteen of the layers are settled by the data alone:
 - **A reference condition no entry reaches.** Every chamber carries at least two mechanisms of comparable size,
   and its entries are spread in pumping time, vent gas and wall temperature, so that reading the latest entry
   across to the reference condition by any one mechanism's law misses. The budget has to be identified.
@@ -296,6 +296,15 @@ only what was done, never its effect. Thirteen of the layers are settled by the 
 - **A leak against permeation.** Both are constant in pumping time and both admit air, so only the gas load's
   temperature dependence across the log, or the oxygen and argon of a residual gas analysis, separates them
   (VC04 against VC06).
+- **A shop instrument that is wrong for every chamber at once.** Every shop speed test admits the same calibrated
+  leak, and since the spring it has admitted more than it states, so every shop test since reports a speed low by
+  one factor, on every chamber, while each chamber's own record looks like a pump that has lost a little speed and
+  every controller shows its pump in order. Only the fleet shows it: a pump in order delivers its rated speed, and
+  every chamber whose rated speed is on record tested at it before the change and below it by the same factor
+  after. It matters most where nothing else gives the speed: on two chambers a baffle or trap was fitted without
+  its conductance being recorded, so their speed is their speed test's, put right by the fleet's factor (VC03,
+  VC05). It also moves every gas load read through a test's speed, VC08's 42 h reading among them, and the factor
+  a test puts on a gauge certificate (VC01, VC04).
 - **A speed test that is also a reading.** A shop speed test records the chamber's own base pressure before the
   flow is admitted, at the pumping time and wall temperature of that pumpdown. On one chamber it is the only
   reading at a long pumping time: VC08's load went up ninefold when its cryopanel brackets were replaced, every
@@ -386,6 +395,10 @@ For each chamber it does the following.
   to the pumpdowns the reference instrument did not see. A certificate is out where the throughput tests read on that
   gauge report a speed the pump and port cannot have: above rated, or below it while the controller shows the pump
   in order. That gauge's readings and those tests' speeds are put right by the same factor.
+- **The shop's calibrated leak.** Every shop speed test on a chamber whose rated speed is on record and whose pump
+  was in order that day measures the leak's real flow against its stated one. Split in date order where the two
+  sides' medians are best separated, they show the leak changed in the spring, and every test since is put right
+  by that factor before anything else reads it.
 - **The speed.** The pump curves are flat at base pressure, so the speed is one constant between the dates on which
   it can change: a trap fitted in the port, or a step in the controller's drive power and bearing temperature. The
   speed now is the ordered test's, read on the contractor's own gauge, or the latest shop test since the last such
@@ -449,7 +462,7 @@ Why these tolerances, and why every chamber:
   the reference, on each of the same orders - it solves the whole budget jointly by nonlinear least squares in the
   logarithm of the gas load, selects structures by BIC rather than AIC, with any added mechanism required to leave two degrees of freedom and to improve the fit significantly at one per cent, finds a seal the register gets wrong as a
   free permeation scale that is adopted only where it is well determined and lands on a material of the table,
-  and dates a turbo's change by a changepoint test; and six variations of the reference - dropping the oldest
+  dates a turbo's change by a changepoint test, and finds the calibrated leak's change by the largest separation of trimmed means rather than of medians; and six variations of the reference - dropping the oldest
   entry, averaging the period's speed tests, asking twice or half the evidence before setting the register's seal
   aside, weighting the ordered test as a gauge reading, and a finer grid of time constants. Both audits are also
   right on VC07 on each of the twenty laboratory seeds of the ordered test's scatter, and on records rebuilt from

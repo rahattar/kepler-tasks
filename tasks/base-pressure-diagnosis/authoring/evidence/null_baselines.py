@@ -94,7 +94,7 @@ def single_entry(how):
         else:
             c_w = max(q - perm, 0.0) / D.nominal_wall(cfg, o)
             parts = {"wall-outgassing": c_w * w_ref, "permeation": perm_ref}
-        rated = D.rated_at(cfg)
+        rated = D.rated_at(cfg) or s_now
         cause = "pump-speed" if s_now < D.PUMP_GATE * rated else max(parts, key=lambda k: parts[k])
         out[cid] = (cause, sum(parts.values()), s_now)
     return out
