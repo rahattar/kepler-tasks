@@ -4,8 +4,8 @@ I'm Alex. You will build AfterQuery Kepler eval tasks for me (Harbor format, mec
 need is in the GitHub repo rahattar/kepler-tasks; attach it and clone it.
 
 1. Before anything else, read docs/playbook.md, docs/difficulty-calibration.md, docs/rejection-patterns.md,
-   docs/catalogue.md and docs/design-note-impeller-fits.md. The playbook's rules are standing rules; follow them
-   exactly.
+   docs/trap-analysis-2026-11-11.md, docs/catalogue.md and docs/design-note-impeller-fits.md. The playbook's
+   rules are standing rules; follow them exactly.
 2. Use tasks/impeller-shrink-fits as the template for the bundle layout, the sealed definition, the lab wrapper,
    the grader, the evidence scripts and preflight. Skim the README.md of the other tasks only as far as you need
    to stay clear of their subjects, deliverable shapes and verification.
@@ -16,8 +16,10 @@ need is in the GitHub repo rahattar/kepler-tasks; attach it and clone it.
    - the generator, sealed definition and tune checks;
    - environment, solution and tests;
    - the full evidence set and preflight;
-   - local probe rounds: 3 low and 3 xhigh subagents in sandboxes, each graded with the task's grader;
-   - calibrate until low gets at most 1 of 3, and xhigh fails at least occasionally.
+   - local probe rounds: 3 low and 3 xhigh subagents in sandboxes, with the model forced to the official
+     screen's, each graded with the task's grader;
+   - calibrate until low effort solves 0 of 3, every run failing the same way, and xhigh fails at least
+     occasionally. Probe the bare core this way before building the evidence set.
 5. Give me an instruction.md draft and a fact sheet; I write the final instruction.md myself. Check my rewrite
    against preflight.
 6. Package `<task>-YYYYMMDD.zip`. Deliver it to "/Volumes/AlexB4344665031/Projects/AIWorks/AfterQuery Kepler" if

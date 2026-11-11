@@ -1,5 +1,14 @@
 # Answers on bore-form-acceptance (20261111c, commit 3de1906), Nov 11
 
+> **Corrected the same evening; see `docs/trap-analysis-2026-11-11.md`, section 8.** Three statements below no
+> longer hold:
+> - Question 4, "Official 1 of 3 passes": true in October. On Nov 11 the screen allowed 0 solves (flare-load-study
+>   3 of 3 and base-pressure-diagnosis 1 of 3 were both rejected).
+> - Question 4, "I have no record of an official 0 of 3 with a local count beside it": hvac-submittal-review went
+>   0 of 3 locally and 0 of 3 officially on Oct 15.
+> - Question 4, the local probe counts: they were taken on the session's earlier model. Fable 5.2 solves the same
+>   bundle at low effort. Probe on the screen's model before reading any count.
+
 ## Where the evidence comes from
 - **Seen by me:**
   - impeller-shrink-fits 20261109b: the review text, with security and verification-explanation blocking and the
