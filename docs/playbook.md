@@ -83,6 +83,8 @@ Sciences). Follow this exactly unless Alex says otherwise.
 
 ## Before any zip goes to Alex
 - `python3 tools/shipcheck.py <new.zip> <previous.zip>` clean. It checks the zip itself, not the working tree.
+- `python3 tools/similarity.py tasks/<task> --exclude <tasks out of the pool>` read, not obeyed: it is a proxy
+  for a gate whose measure is not published (see the bore-form entry in `docs/rejection-patterns.md`).
 - preflight clean, on the tree the zip is made from.
 - The task.toml compared key for key, section by section and type for type, with a task that has passed
   intake. Never change the schema to satisfy an advisory comment; if an advisory and a rule in this playbook
@@ -123,12 +125,18 @@ Sciences). Follow this exactly unless Alex says otherwise.
   documents are missing it.
 
 ## Calibration targets
-- Easiness: 3 low-effort runs, at most 1 solved.
-- Difficulty: 8 official xhigh runs, 1 to 5 solved.
+- Easiness: 3 low-effort runs, at most 1 solved. 1 of 3 has passed (vav-airflow-calibration Oct 19,
+  chill-bench-commissioning); 2 of 3 has failed (cooler-fouling-assessment).
+- Difficulty: 8 official xhigh runs. 7 of 8 has passed (vav-airflow-calibration, superheater-tube-life)
+  and 0 of 8 has passed once (turbine-tool-repair); 8 of 8 fails as too easy
+  (impeller-shrink-fits, Nov 9). Aim for 2 to 6 so that one draw either way does not decide it.
 - Locally, run probe subagents (general-purpose, effort xhigh, and low for easiness) in sandboxes built by
   `tools/mkprobe.sh`, with the brief in `tools/brief.txt`. Probes must not read anything outside their sandbox.
   Grade each with the task's own grader.
-- Local xhigh runs stronger than official.
+- The local rig is not calibrated, and it has been wrong in both directions (chill-bench 12: local low 1/3,
+  official 3/3; chill-bench 16: local 2/3, official 1/3). Do not assume official runs are weaker: local xhigh
+  3/3 on impeller-shrink-fits came true as official 8/8. Treat local xhigh 3/3 as a warning, not a pass;
+  superheater-tube-life went local xhigh 2/2 and official 7/8, so it is not a verdict either.
 
 ## Packaging and delivery
 - Zip in the cloud: `zip -qr -X <task>-YYYYMMDD.zip README.md instruction.md task.toml authoring environment solution tests`.

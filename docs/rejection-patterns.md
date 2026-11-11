@@ -236,8 +236,8 @@ to a column, rather than four hand-written blocks mirroring the predecessor. `so
 it is the same physics on the same plant, and 0.35 is what that costs.
 
 **The precedent worth knowing before panicking about a sibling.** shrink-fit-hubs was rejected as too similar to
-flange-torque-spec and reworked as impeller-shrink-fits, which passed validation while its rejected predecessor
-sat in the pool with near-identical code. A reworked sibling is not blocked by its predecessor. What the gate
+flange-torque-spec and reworked as impeller-shrink-fits, which cleared the similarity gate and the quality review
+(it failed later, at the difficulty gate, 8 of 8 solved) while its rejected predecessor had near-identical code. A reworked sibling is not blocked by its predecessor. What the gate
 caught in November was scaffolding shared with *other, independent* tasks that had gone in hours earlier, and
 the archetype of the deliverable. Fix those two and a family resemblance to your own earlier attempt is
 survivable.
@@ -307,3 +307,9 @@ tests/grade_form.py 0.610, all against impeller-shrink-fits; solution 0.169; ins
 file is above the 0.4 rewrite line. The bundle has nonetheless been through five submissions without a
 similarity rejection, so the harness has been left alone rather than rewritten on inference. Put to the other
 account's chat; act on its answer before the next submission.
+
+Answered Nov 11 (`docs/answers-bore-form-2026-11-11.md`): similarity runs third, before quality review, on every
+submission, against tasks still in validation or review or approved; a task rejected at a later gate appears to
+leave the pool, which is why the 0.99 against impeller-shrink-fits has not bitten. Leave bore-form's harness;
+rewrite skid-noise-guarantee's and recip-cylinder-limits' before either is submitted while bore-form is live.
+`tools/similarity.py` measures it.
