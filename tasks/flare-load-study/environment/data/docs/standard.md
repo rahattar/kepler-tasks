@@ -152,6 +152,10 @@ arrives is their mixture, whose properties are
   own molar mass;
 - ratio of specific heats, compressibility and temperature: the mass-weighted means of the contributions.
 
+A device discharging liquid contributes its mass like any other, and enters the mixture with the molar mass of
+the liquid it passes, a ratio of specific heats of 1.05, a compressibility of 1, and the temperature at which
+that liquid is pumped.
+
 ## 6 The pressure at the header's inlet
 
 The header runs from a blinded end at the unit limit to the stack base. Relief devices tie into it at the

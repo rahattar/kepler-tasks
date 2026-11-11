@@ -479,7 +479,9 @@ class Study(object):
             if need >= shutoff:
                 return None
             q = math.sqrt((1.0 - need / shutoff) / b)
-            return (q * rho, 86.0, 1.05, 1.0, temp + 273.15)
+            # a liquid enters the mixture on the molar mass of what it passes, k 1.05 and Z 1, at its
+            # pumped temperature, as section 5 directs
+            return (q * rho, self.sat("bottoms_product", p1, "mw"), 1.05, 1.0, temp + 273.15)
         raise ValueError(cause)
 
     # -- the study ----------------------------------------------------------

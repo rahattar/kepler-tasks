@@ -1,6 +1,6 @@
 # Design note: flare-load-study
 
-Built 10-11 November 2026, delivered as `flare-load-study-20261111.zip`. It began as the reshape of
+Built 10-11 November 2026, delivered as `flare-load-study-20261111b.zip`. It began as the reshape of
 relief-valve-adequacy after that task's fourth rejection, and ended as a different kind of task: the first in
 the catalogue keyed on the contingency rather than on the equipment, and the first of mine whose difficulty
 comes from deciding what to measure rather than from reading records carefully.
@@ -132,6 +132,11 @@ Six defects, all found by probe runs rather than by me:
 6. **The leaked answer.** My first draft of the flare note said the 2019 figure was 1.80 - the true
    coefficient of the tip the agent is supposed to measure. The note now quotes nothing and the 2019 study
    states its own basis, 1.55.
+7. **How a liquid joins the mixture.** Section 5 said nothing about it, so two probes validating against the
+   2019 study reproduced five of its six rows and not the air-failure pressure, which is the one row a pumped
+   liquid enters. It touches no graded value - the pump screen keeps PSV-405 out of all six present rows - but
+   it cost a probe real effort and could have led one to "fix" a correct method. Section 5 now states that a
+   liquid enters on the molar mass of what it passes, k 1.05, Z 1, at its pumped temperature.
 
 ## Local probe rounds
 
