@@ -106,7 +106,7 @@ pressure:
 
 The true total pressure follows from the composition of the chamber's gas:
 
-    p = p_N2 / sum_i ( x_i / K_i )
+    p = p_N2 / sum_i ( x_i K_i )
 
 with x_i the fraction of species i in the chamber's gas and K_i its relative sensitivity from the shop's vacuum data
 (ar 1.29, co2 1.42, h2 0.42, h2o 1.12, n2 1.00, o2 1.01). The composition is that of the gas the chamber's mechanisms admit, in the proportions of their gas loads;

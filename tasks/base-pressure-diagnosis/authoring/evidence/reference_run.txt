@@ -1,22 +1,22 @@
-inputs: d9a936749b141766
+inputs: 3c43e4d4478e83cb
 The reference solution against the sealed fleet
 ===============================================
 
 chamber  cause            true cause       gas load    true gas load  deviation  speed  true speed  deviation
 -------  ---------------  ---------------  ----------  -------------  ---------  -----  ----------  ---------  --
-VC01     wall-outgassing  wall-outgassing  3.3330e-04  3.3685e-04     -1.05%     910.4  915.5       -0.55%     ok
-VC02     wall-outgassing  wall-outgassing  5.4419e-04  5.3955e-04     +0.86%     621.3  619.2       +0.35%     ok
-VC03     air-leak         air-leak         6.4314e-05  6.3717e-05     +0.94%     254.4  253.6       +0.32%     ok
-VC04     air-leak         air-leak         8.1866e-04  8.2755e-04     -1.07%     470.7  475.2       -0.95%     ok
-VC05     permeation       permeation       2.7158e-04  2.7247e-04     -0.33%     385.7  384.2       +0.40%     ok
-VC06     permeation       permeation       2.0450e-04  2.0326e-04     +0.61%     944.3  943.1       +0.12%     ok
-VC07     virtual-leak     virtual-leak     1.4323e-04  1.4203e-04     +0.85%     408.5  404.6       +0.96%     ok
-VC08     virtual-leak     virtual-leak     1.6287e-04  1.6313e-04     -0.16%     570.6  568.4       +0.39%     ok
-VC09     pump-speed       pump-speed       1.9245e-04  1.9400e-04     -0.80%     221.3  223.6       -1.03%     ok
-VC10     pump-speed       pump-speed       1.0312e-04  1.0319e-04     -0.06%     124.2  124.3       -0.11%     ok
+VC01     wall-outgassing  wall-outgassing  3.3323e-04  3.3685e-04     -1.07%     910.4  915.5       -0.55%     ok
+VC02     wall-outgassing  wall-outgassing  5.4169e-04  5.3955e-04     +0.40%     621.3  619.2       +0.35%     ok
+VC03     air-leak         air-leak         6.4311e-05  6.3717e-05     +0.93%     254.4  253.6       +0.32%     ok
+VC04     air-leak         air-leak         8.2103e-04  8.2755e-04     -0.79%     470.7  475.2       -0.95%     ok
+VC05     permeation       permeation       2.7078e-04  2.7247e-04     -0.62%     385.7  384.2       +0.40%     ok
+VC06     permeation       permeation       2.0471e-04  2.0326e-04     +0.72%     944.3  943.1       +0.12%     ok
+VC07     virtual-leak     virtual-leak     1.4422e-04  1.4203e-04     +1.54%     408.5  404.6       +0.96%     ok
+VC08     virtual-leak     virtual-leak     1.6286e-04  1.6313e-04     -0.17%     570.6  568.4       +0.39%     ok
+VC09     pump-speed       pump-speed       1.9181e-04  1.9400e-04     -1.13%     220.4  223.6       -1.43%     ok
+VC10     pump-speed       pump-speed       1.0305e-04  1.0319e-04     -0.13%     124.2  124.3       -0.11%     ok
 
 order placed: VC08 rga at 36 h
-tolerances: gas load 4.0%, speed 2.5%; gate 10 of 10 chambers
-worst deviation: gas load 1.07%, speed 1.03%
+tolerances: gas load 4.0%, speed 3.5%; gate 10 of 10 chambers
+worst deviation: gas load 1.54%, speed 1.43%
 
 10 of 10 chambers right: accepted

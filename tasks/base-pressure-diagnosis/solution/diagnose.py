@@ -174,7 +174,7 @@ def gas_correction(parts, seal):
         s = sum(w.values())
         for k, v in w.items():
             mix[k] = mix.get(k, 0.0) + q / tot * v / s
-    denom = sum(x / GAS_FACTOR[k] for k, x in mix.items())
+    denom = sum(x * GAS_FACTOR[k] for k, x in mix.items())      # the gauge reads sum_i K_i p_i
     return 1.0 / denom if denom > 0 else 1.0
 
 

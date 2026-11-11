@@ -205,10 +205,10 @@ def partials(cfg, t_h, vent="air", T_K=T_REF):
 
 
 def indicated(cfg, t_h, vent="air", T_K=T_REF):
-    """What a nitrogen-calibrated gauge indicates: the sum of the partial pressures divided by each species' gas
-    factor."""
+    """What a nitrogen-calibrated gauge indicates: the sum of the partial pressures, each weighted by the gauge's
+    relative sensitivity to that species (a species with K above 1 reads high)."""
     pp = partials(cfg, t_h, vent, T_K)
-    return sum(v / GAS_FACTOR[k] for k, v in pp.items())
+    return sum(v * GAS_FACTOR[k] for k, v in pp.items())
 
 
 def cause(cfg, t_h, T_K=T_REF):

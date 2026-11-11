@@ -127,7 +127,7 @@ def mixture(wall, perm, channel, seal):
         acc[k] += perm / total * v
     for k, v in zip(("n2", "o2", "ar", "co2"), DRY_AIR):
         acc[k] += channel / total * v
-    shown = sum(x / SENS[k] for k, x in acc.items())
+    shown = sum(x * SENS[k] for k, x in acc.items())            # an ionization gauge reads sum K_i p_i
     return acc, shown
 
 

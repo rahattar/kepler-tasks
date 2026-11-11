@@ -1,9 +1,9 @@
-inputs: 3b01d8466ee40981
+inputs: a21320d719c81705
 Both audits under every order the budget allows
 ===============================================
 
 order                      reference        independent
--------------------------  ---------------  ---------------
+-------------------------  ---------------  --------------------
 no order                   rejected (VC08)  rejected (VC08)
 VC01 rga at 16 h           rejected (VC08)  rejected (VC08)
 VC01 rga at 20 h           rejected (VC08)  rejected (VC08)
@@ -101,12 +101,12 @@ VC05 rga at 36 h           rejected (VC08)  rejected (VC08)
 VC05 rga at 42 h           rejected (VC08)  rejected (VC08)
 VC05 rga at 48 h           rejected (VC08)  rejected (VC08)
 VC05 rate-of-rise at 16 h  rejected (VC08)  rejected (VC08)
-VC05 rate-of-rise at 20 h  rejected (VC08)  rejected (VC08)
-VC05 rate-of-rise at 24 h  rejected (VC08)  rejected (VC08)
+VC05 rate-of-rise at 20 h  rejected (VC08)  rejected (VC05 VC08)
+VC05 rate-of-rise at 24 h  rejected (VC08)  rejected (VC05 VC08)
 VC05 rate-of-rise at 30 h  rejected (VC08)  rejected (VC08)
 VC05 rate-of-rise at 36 h  rejected (VC08)  rejected (VC08)
 VC05 rate-of-rise at 42 h  rejected (VC08)  rejected (VC08)
-VC05 rate-of-rise at 48 h  rejected (VC08)  rejected (VC08)
+VC05 rate-of-rise at 48 h  rejected (VC08)  rejected (VC05 VC08)
 VC05 speed-test at 16 h    rejected (VC08)  rejected (VC08)
 VC05 speed-test at 20 h    rejected (VC08)  rejected (VC08)
 VC05 speed-test at 24 h    rejected (VC08)  rejected (VC08)

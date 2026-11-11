@@ -194,7 +194,7 @@ carry the reference to a pass, all a gas-load test on VC08 at a pumping time fro
 (`authoring/evidence/plan_sweep.txt`).
 
 Run through `tests/grade_audit.py` as the verifier reads a submission, the reference gets every chamber right, with
-its gas loads within 1.07 per cent of the truth and its speeds within 1.03 per cent
+its gas loads within 1.54 per cent of the truth and its speeds within 1.43 per cent
 (`authoring/evidence/reference_run.txt`)."""
 verification_explanation = """`tests/grade_audit.py` reads the submitted `/app/output/diagnosis.csv` and compares it with the sealed fleet. The
 truth is computed from `tests/sealed/fleet.py` and `tests/sealed/bpphys.py` at grading time, from the chamber's true
@@ -211,7 +211,7 @@ Anything else is rejected, with a reason, and no submission crashes the grader. 
 these rules.
 
 A chamber is right when all three of its fields are right: the cause matches exactly, the gas load is within 4.0 per
-cent of the truth and the speed within 2.5 per cent. The sheet is accepted when every one of the ten chambers is
+cent of the truth and the speed within 3.5 per cent. The sheet is accepted when every one of the ten chambers is
 right. The instruction states the two tolerances; it does not say how many chambers must be right.
 
 Why these tolerances, and why every chamber:
@@ -228,15 +228,15 @@ Why these tolerances, and why every chamber:
   half the evidence before setting the register's seal aside, weighting the ordered test as a gauge reading, and a
   finer grid of time constants. Both audits are also right on VC08 on each of the twenty laboratory seeds of the
   ordered test's scatter, and on records rebuilt from each of twenty other draws of the shop's instrument noise
-  (`authoring/evidence/seed_screen.txt`). Over every sound method and chamber the widest deviation is 2.00 per cent
-  on the gas load and 1.25 per cent on the speed, so the tolerances stand at 2.00 and 2.00 times the spread of sound
+  (`authoring/evidence/seed_screen.txt`). Over every sound method and chamber the widest deviation is 1.99 per cent
+  on the gas load and 1.70 per cent on the speed, so the tolerances stand at 2.01 and 2.06 times the spread of sound
   work.
 - **Defective routes.** Twenty-two routes, each the reference with one check left out or done the obvious way, are
-  all rejected (`authoring/evidence/route_study.txt`). Five of them are rejected by a single chamber -
-  register_seal, trust_register_seal, trust_certificate, undated_certificates, register_pump - and the study fails
+  all rejected (`authoring/evidence/route_study.txt`). Six of them are rejected by a single chamber - register_seal,
+  trust_register_seal, trust_certificate, undated_certificates, register_pump, ignore_load - and the study fails
   unless each of those misses its chamber by at least 2.00 times the tolerance or on the cause outright, so no route
   is rejected on a knife edge. Routes that miss several chambers may graze a band on one of them: the nearest miss
-  on a quantity anywhere in the study is 4.05 per cent, 1.01 times the gas-load tolerance. That costs nothing,
+  on a quantity anywhere in the study is 4.49 per cent, 1.12 times the gas-load tolerance. That costs nothing,
   because every chamber is missed by at least three routes, and by at least one on its cause alone. On every
   laboratory seed of the ordered test VC08 is still missed by at least 4 routes.
 - **Every chamber.** The allowance of one wrong chamber that earlier tasks carried is not used here, and the reason

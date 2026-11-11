@@ -414,10 +414,12 @@ studies, not planned, and two of them were faults in the reference that the ship
 
 ## Retuned
 
-- Gas-load tolerance 4.0% (unchanged), speed tolerance 3.0% -> **2.5%**. Rule: twice the widest deviation any
-  sound method reaches on any chamber (method_spread.txt: 2.00% and 1.25%), rounded up to the half per cent.
-  Preflight recomputes the rule from the record.
-- The instruction's two figures were edited to match (16 h -> 36 h, 3.0 -> 2.5 percent). Those are the only
+- Gas-load tolerance 4.0% (unchanged), speed tolerance 3.0% -> **3.5%**. Rule: twice the widest deviation any
+  sound method reaches on any chamber, rounded up to the half per cent; preflight recomputes it from the record.
+  On the records with the inverted gauge equation the spread was 2.00% and 1.25%, giving 2.5% on the speed; after
+  the fix below the independent audit's VC09 speed (fitted through the gas budget, so through the gauge
+  correction) reaches 1.70%, and the rule gives 3.5%.
+- The instruction's two figures were edited to match (16 h -> 36 h, 3.0 -> 3.5 percent). Those are the only
   edits to Alex's text.
 
 ## Measured, for calibration
@@ -437,3 +439,32 @@ studies, not planned, and two of them were faults in the reference that the ship
 - Every evidence record carries a fingerprint of its inputs on its first line; preflight fails a stale record.
 - Preflight's read check is path-aware (directory and name, or the path in the image), and a CSV is exempt only if
   the record definitions or the instruction name it.
+
+## The gauge equation was inverted (found by the probes, fixed)
+
+Three of the first six probes remarked that MS-BP clause 5, p = p_N2 / sum(x_i / K_i), is the reverse of the
+physics, and they were right: vacuum_data.md lists K as the gauge's relative sensitivity (H2 0.42, H2O 1.12, Ar
+1.29, CO2 1.42, the textbook figures), and a gauge with sensitivity K_i reads sum(K_i p_i), so the true pressure
+is p_N2 / sum(x_i K_i). The generator, both audits and the standard all used the inverted form, so the task was
+self-consistent but physically wrong, by about 25% on a water-dominated gas between the two forms. A domain
+reviewer would reject it. Fixed in `bpphys.indicated`, `diagnose.gas_correction`, the independent audit and
+clause 5's text; the records were rebuilt. The truth does not depend on the gauge, and tune.py and both audits
+still pass unchanged. Every study was rerun after the fix.
+
+## Local calibration
+
+On the records with the inverted gauge equation (superseded, recorded for the trend): low effort 0 of 3 (each
+9 of 10, all on VC07), xhigh 2 of 3 (the miss on VC07). Every probe ordered a gas-load test on VC08 at 36 h.
+The one discriminating chamber is VC07: its crossed serials read as a wrong certificate (fit CC-7107 at 1.00
+everywhere) and its register names the wrong pump. Every other layer, VC05's wrong register seal included, was
+found by every probe.
+
+On the shipped records (gauge equation corrected; these probes were briefed with the 2.5% speed band, the
+shipped band is 3.5%, and no probe sheet lands between them): low effort 1 of 3 (R4 solved; R5 and R6 missed
+VC07, one on the gas load by -29%, one on the speed by +43%), xhigh 2 of the 2 finished (S5, S6; S4 still
+running at packaging). Across both rounds: low 1 of 6, xhigh 4 of 5. Every probe again ordered a gas-load test
+on VC08 at 36 h, and every miss is on VC07.
+
+Reading for the official run: inside the low-effort bar, but xhigh solves at a rate that puts the official 8
+near the top of 1-5 or above it. VC07 is a single point of difficulty. A further layer that no fit residual shows
+(as VC01's certificate and VC07's pump are) would be needed to bring it down with confidence.
