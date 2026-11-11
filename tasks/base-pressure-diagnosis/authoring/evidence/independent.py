@@ -313,22 +313,26 @@ def rated_of(st, p=1e-6):
 
 
 def cert_out_by(cid, data, st):
-    """A chamber's throughput tests cannot report a speed above its pump in series with its port (MS-BP clause 4).
-    Where they sit above it by more than three standard errors of their stated repeatability, the mean ratio is how
-    far the gauge certificate is out."""
+    """{gauge tag: how far its certificate is out}. A chamber's throughput tests cannot report a speed its pump in
+    series with its port does not deliver (MS-BP clause 4; a pump in order delivers its rated speed, vacuum data).
+    Grouped by the gauge each test was read on, where the mean ratio to rated sits off 1 by more than three standard
+    errors of the stated repeatability, that ratio is how far the gauge's certificate is out. A test after a trap
+    was fitted, or after the turbo changed, measured another configuration and is set aside."""
     rated = rated_of(st)
-    good, tags = [], set()
+    altered = turbo_altered(cid, data)
+    by = {}
     for r in data["spd"]:
         if r["chamber"] != cid or (st["ported"] and r["date"] < st["ported"]):
             continue
-        good.append(float(r["s_eff_l_s"]) / rated)
-        tags.add(r["gauge"])
-    if not good:
-        return 1.0, None
-    k = float(np.mean(good))
-    if k - 1.0 <= 3.0 * SPEED_REPEAT / math.sqrt(len(good)):
-        return 1.0, None
-    return k, (sorted(tags)[0] if len(tags) == 1 else None)
+        if altered and r["date"] >= altered:
+            continue
+        by.setdefault(r["gauge"], []).append(float(r["s_eff_l_s"]) / rated)
+    out = {}
+    for tag, vals in by.items():
+        k = float(np.mean(vals))
+        if abs(k - 1.0) > 3.0 * SPEED_REPEAT / math.sqrt(len(vals)):
+            out[tag] = k
+    return out
 
 
 def _cuts(st, altered):
@@ -340,8 +344,8 @@ def _period(date, cuts):
 
 
 def shop_speed(cid, data, cuts, period, k):
-    """The mean of the shop's speed tests in a period, read back through the chamber's certificate."""
-    vals = [float(r["s_eff_l_s"]) / k for r in data["spd"]
+    """The mean of the shop's speed tests in a period, each read back through its own gauge's certificate."""
+    vals = [float(r["s_eff_l_s"]) / k.get(r["gauge"], 1.0) for r in data["spd"]
             if r["chamber"] == cid and _period(r["date"], cuts) == period]
     return float(np.mean(vals)) if vals else None
 
@@ -521,7 +525,7 @@ def tau_is_measured(cid, data, st, obs, s_now, trapped_from, free_perm, speed_ra
 def audit_one(cid, data, vac):
     st = state_on(cid, data, AUDIT_DATE)
     altered = turbo_altered(cid, data)
-    k, k_tag = cert_out_by(cid, data, st)
+    k = cert_out_by(cid, data, st)
     cuts = _cuts(st, altered)
     now = _period(AUDIT_DATE, cuts)
     ordered, s_now, leak = order_observations(cid, st, vac)
@@ -530,7 +534,7 @@ def audit_one(cid, data, vac):
 
     obs = []
     for r in readings(cid, data, st, swapped_tags(data)):
-        shown = r["shown"] * k if (k != 1.0 and (k_tag is None or r["tag"] == k_tag)) else r["shown"]
+        shown = r["shown"] * k.get(r["tag"], 1.0)
         per = _period(r["date"], cuts)
         speed = "now" if per == now else shop_speed(cid, data, cuts, per, k)
         if speed is None:

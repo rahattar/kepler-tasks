@@ -277,7 +277,7 @@ every convention the audit needs, so a worked answer would add nothing but an en
 against a known figure.
 
 The ten chambers carry the faults that shop records carry. Each looks like ordinary data, and the documents say
-only what was done, never its effect. Eleven of the layers are settled by the data alone:
+only what was done, never its effect. Twelve of the layers are settled by the data alone:
 - **A reference condition no entry reaches.** Every chamber carries at least two mechanisms of comparable size,
   and its entries are spread in pumping time, vent gas and wall temperature, so that reading the latest entry
   across to the reference condition by any one mechanism's law misses. The budget has to be identified.
@@ -314,6 +314,14 @@ only what was done, never its effect. Eleven of the layers are settled by the da
   pump in series with its port can deliver. MS-BP clause 4 says a pump delivers at most its curve, so the chamber's
   own throughput tests contradict its certificate, and its hot-filament gauge, the reference instrument of clause 5,
   disagrees with it by exactly that factor (VC01).
+- **A replacement gauge whose certificate is out, which every simple reading fits.** On one chamber the cold
+  cathode was replaced part way through the log, and the replacement's certificate is out: it reads every pressure
+  high, so the speed test run on it reports the pump, which its controller shows in order, well below rated. Take
+  that test at its word and the gas budget fits to the noise, with the gas load right and the speed wrong. Take the
+  pump at its rated speed and the certificate as issued, and the readings step up at the replacement, which a
+  trapped volume dated to that maintenance entry absorbs just as cleanly, with the gas load and the cause wrong.
+  Only the gauge explains both the step and the low test: a trapped volume cannot change a throughput test, and the
+  vacuum data say a pump in order delivers its rated speed (VC04).
 - **A register that names the wrong pump, which no fit can see.** On one chamber the register names a larger pump
   than the one that is fitted. Nothing in the gas budget depends on it; what depends on it is the rated speed, and
   with the register's pump the chamber's sound speed falls below clause 6's gate. The controller reports the rotor
@@ -364,9 +372,9 @@ For each chamber it does the following.
 - **The instruments.** Where a gauge serial in one chamber's log belongs to another chamber's certificate and that
   chamber's log carries this one's serial, the two are read back the right way round. A cold cathode is checked
   against the hot-filament gauge wherever both were read, and a drift in their ratio is carried as a straight line
-  to the pumpdowns the reference instrument did not see. A certificate is out where the chamber's own throughput
-  tests report a speed above what its pump and port can deliver; that gauge's readings and those tests' speeds are
-  put right by the same factor.
+  to the pumpdowns the reference instrument did not see. A certificate is out where the throughput tests read on that
+  gauge report a speed the pump and port cannot have: above rated, or below it while the controller shows the pump
+  in order. That gauge's readings and those tests' speeds are put right by the same factor.
 - **The speed.** The pump curves are flat at base pressure, so the speed is one constant between the dates on which
   it can change: a trap fitted in the port, or a step in the controller's drive power and bearing temperature. The
   speed now is the ordered test's, read on the contractor's own gauge, or the latest shop test since the last such

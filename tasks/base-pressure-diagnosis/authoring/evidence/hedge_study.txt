@@ -1,4 +1,4 @@
-inputs: 87dd215a3aaa2b7d
+inputs: c14a2568283185cc
 Every chamber read as every cause but its own, each a whole sheet through the grader
 ====================================================================================
 
@@ -16,10 +16,10 @@ VC03     air-leak         wall-outgassing  wall-outgassing        4.240e-05  -33
 VC03     air-leak         virtual-leak     virtual-leak           5.391e-05  -15.39%    no                           rejected
 VC03     air-leak         permeation       air-leak               6.721e-05  +5.48%     no                           rejected
 VC03     air-leak         pump-speed       air-leak               6.431e-05  +0.93%     yes                          rejected
-VC04     air-leak         wall-outgassing  wall-outgassing        5.765e-04  -30.34%    no                           rejected
-VC04     air-leak         virtual-leak     virtual-leak           6.852e-04  -17.21%    no                           rejected
-VC04     air-leak         permeation       air-leak               8.272e-04  -0.04%     yes                          rejected
-VC04     air-leak         pump-speed       air-leak               8.210e-04  -0.79%     yes                          rejected
+VC04     air-leak         wall-outgassing  wall-outgassing        5.812e-04  -29.77%    no                           rejected
+VC04     air-leak         virtual-leak     virtual-leak           6.907e-04  -16.53%    no                           rejected
+VC04     air-leak         permeation       air-leak               8.338e-04  +0.76%     yes                          rejected
+VC04     air-leak         pump-speed       air-leak               8.276e-04  +0.00%     yes                          rejected
 VC05     permeation       wall-outgassing  wall-outgassing        1.643e-04  -39.71%    no                           rejected
 VC05     permeation       air-leak         wall-outgassing        2.194e-04  -19.48%    no                           rejected
 VC05     permeation       virtual-leak     wall-outgassing        1.865e-04  -31.57%    no                           rejected

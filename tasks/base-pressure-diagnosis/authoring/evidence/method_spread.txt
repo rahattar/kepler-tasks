@@ -1,4 +1,4 @@
-inputs: 3fac9d85c89d51c7
+inputs: 0dd598119788b1b8
 Sound methods, each scored through the task's grader
 ====================================================
 

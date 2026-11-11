@@ -1,6 +1,6 @@
 Your working environment: the directory /home/claude/bpprobe/PROBE/app stands for /app. Read /app/... as /home/claude/bpprobe/PROBE/app/... and write your output to /home/claude/bpprobe/PROBE/app/output/diagnosis.csv. Put any scratch files under /home/claude/bpprobe/PROBE/app/work. The contractor's order command is /home/claude/bpprobe/PROBE/app/vacwork-run (run it as ./vacwork-run from that directory); wherever the task text says `vacwork`, use `./vacwork-run`. Its reports are written to /home/claude/bpprobe/PROBE/app/vacwork/, which is what the task text calls /app/vacwork/.
 
-Do not read or list anything under /home/claude/bpprobe/PROBE/rig, any other directory under /home/claude/bpprobe, /home/claude/kepler-tasks, or any other directory outside /home/claude/bpprobe/PROBE/app. Do not read the source of the order program. Do not consult any project documents, notes or repositories. Use only the documents and records under /app/data and the order command. No internet.
+Do not read or list anything under /home/claude/bpprobe/PROBE/rig, any other directory under /home/claude/bpprobe, /home/claude/kepler-tasks, /tmp, or any other directory outside /home/claude/bpprobe/PROBE/app. Do not read the source of the order program. Do not consult any project documents, notes or repositories. Use only the documents and records under /app/data and the order command. No internet.
 
 Task:
 

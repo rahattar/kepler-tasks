@@ -1,4 +1,4 @@
-inputs: b975a4f26572644c
+inputs: 159ea54c487dd6d0
 Defective routes, each scored through the task's grader
 =======================================================
 
@@ -8,7 +8,8 @@ register_surfaces     2      rejected  VC01 VC02
 register_port         3      rejected  VC03 VC04 VC05
 register_seal         1      rejected  VC04
 trust_register_seal   1      rejected  VC05
-trust_certificate     1      rejected  VC01
+trust_certificate     2      rejected  VC01 VC04
+rated_speed           1      rejected  VC04
 undated_certificates  1      rejected  VC10
 register_pump         1      rejected  VC07
 latest_speed_test     2      rejected  VC09 VC10
@@ -34,18 +35,20 @@ route                 chamber  wrong      cause given      q deviation  s deviat
 --------------------  -------  ---------  ---------------  -----------  -----------
 register_surfaces     VC01     cause+q    permeation       +11.9%       -0.6%
 register_surfaces     VC02     cause+q    air-leak         -4.6%        +0.3%
-register_port         VC03     cause      pump-speed       +0.9%        +0.3%
-register_port         VC04     cause      pump-speed       -0.8%        -1.0%
-register_port         VC05     cause+q    pump-speed       -9.5%        +0.4%
-register_seal         VC04     q          air-leak         -8.4%        -1.0%
+register_port         VC03     s          air-leak         +0.9%        +19.6%
+register_port         VC04     s          air-leak         +1.7%        +61.8%
+register_port         VC05     q+s        permeation       -9.5%        +22.0%
+register_seal         VC04     cause+q    wall-outgassing  -7.7%        -0.0%
 trust_register_seal   VC05     cause+q    wall-outgassing  -19.5%       +0.4%
 trust_certificate     VC01     q+s        wall-outgassing  +12.5%       +13.4%
+trust_certificate     VC04     cause+q+s  wall-outgassing  -9.3%        -19.6%
+rated_speed           VC04     cause+q    wall-outgassing  +10.5%       -0.0%
 undated_certificates  VC10     q+s        pump-speed       -13.7%       -4.8%
-register_pump         VC07     cause      pump-speed       +1.5%        +1.0%
+register_pump         VC07     s          virtual-leak     +1.5%        +57.2%
 latest_speed_test     VC09     cause+q+s  air-leak         +55.7%       +75.0%
 latest_speed_test     VC10     cause+q+s  virtual-leak     +55.0%       +90.2%
 commissioning_speed   VC03     q+s        air-leak         +46.8%       +47.1%
-commissioning_speed   VC04     q+s        air-leak         +59.5%       +61.9%
+commissioning_speed   VC04     q+s        air-leak         +59.3%       +61.9%
 commissioning_speed   VC05     q+s        permeation       +39.1%       +58.1%
 commissioning_speed   VC09     cause+q+s  air-leak         +55.0%       +74.1%
 commissioning_speed   VC10     cause+q+s  virtual-leak     +56.0%       +91.5%
@@ -65,14 +68,14 @@ logged_serials        VC03     q          air-leak         +58.8%       +0.3%
 logged_serials        VC07     cause+q    permeation       -13.7%       +1.0%
 ignore_vent_gas       VC01     q          wall-outgassing  -41.7%       -0.6%
 ignore_vent_gas       VC02     cause+q    air-leak         +8.3%        +0.3%
-ignore_vent_gas       VC04     cause+q    wall-outgassing  -40.1%       -1.0%
+ignore_vent_gas       VC04     cause+q    wall-outgassing  -39.7%       -0.0%
 ignore_vent_gas       VC06     q          permeation       -18.7%       +0.1%
 ignore_vent_gas       VC09     cause+q+s  wall-outgassing  -30.9%       +39.9%
 ignore_vent_gas       VC10     q+s        pump-speed       -29.1%       +18.9%
 ignore_load           VC01     q          wall-outgassing  +9.0%        -0.6%
 ignore_temperature    VC01     q          wall-outgassing  -7.2%        -0.6%
 ignore_temperature    VC03     q          air-leak         +25.2%       +0.3%
-ignore_temperature    VC04     q          air-leak         -5.6%        -1.0%
+ignore_temperature    VC04     q          air-leak         -4.9%        -0.0%
 ignore_temperature    VC05     cause+q    air-leak         -7.3%        +0.4%
 ignore_temperature    VC06     q          permeation       -8.6%        +0.1%
 ignore_temperature    VC08     q          virtual-leak     -9.3%        +0.4%
@@ -81,14 +84,14 @@ ignore_temperature    VC10     q+s        pump-speed       +20.4%       +24.4%
 table_outgassing      VC01     cause      permeation       -2.3%        -0.6%
 table_outgassing      VC02     q          wall-outgassing  +34.8%       +0.3%
 table_outgassing      VC03     q          air-leak         +5.4%        +0.3%
-table_outgassing      VC04     cause+q    permeation       -43.0%       -1.0%
+table_outgassing      VC04     cause+q    permeation       -42.9%       -0.0%
 table_outgassing      VC06     q          permeation       +7.9%        +0.1%
 table_outgassing      VC09     q          pump-speed       +9.4%        -2.1%
 table_outgassing      VC10     q+s        pump-speed       +18.8%       +9.1%
 no_time_reference     VC01     q          wall-outgassing  +38.4%       -0.6%
 no_time_reference     VC02     q          wall-outgassing  +46.5%       +0.3%
 no_time_reference     VC03     q          air-leak         +21.4%       +0.3%
-no_time_reference     VC04     q          air-leak         -20.5%       -1.0%
+no_time_reference     VC04     q          air-leak         -20.0%       -0.0%
 no_time_reference     VC05     q          permeation       -10.3%       +0.4%
 no_time_reference     VC06     cause+q    wall-outgassing  +26.6%       +0.1%
 no_time_reference     VC07     q          virtual-leak     +99.6%       +1.0%
@@ -101,7 +104,7 @@ skip_pump_gate        VC09     cause      wall-outgassing  -1.1%        -1.4%
 skip_pump_gate        VC10     cause      wall-outgassing  -0.1%        -0.1%
 face_value            VC01     q+s        wall-outgassing  -16.9%       +13.4%
 face_value            VC03     cause+q    pump-speed       +53.3%       +0.3%
-face_value            VC04     cause+q    pump-speed       +4.8%        -1.0%
+face_value            VC04     cause+s    pump-speed       -3.7%        -19.6%
 face_value            VC05     cause+q    pump-speed       -6.3%        +0.4%
 face_value            VC06     cause+q    wall-outgassing  +35.5%       +0.1%
 face_value            VC07     cause+q    pump-speed       +17.4%       +1.0%
@@ -116,11 +119,11 @@ chamber  routes that miss it  of those, on the cause  cause
 -------  -------------------  ----------------------  ---------------
 VC01     10                   3                       wall-outgassing
 VC02     8                    4                       wall-outgassing
-VC03     8                    2                       air-leak
-VC04     8                    4                       air-leak
-VC05     6                    4                       permeation
+VC03     8                    1                       air-leak
+VC04     10                   6                       air-leak
+VC05     6                    3                       permeation
 VC06     5                    2                       permeation
-VC07     5                    4                       virtual-leak
+VC07     5                    3                       virtual-leak
 VC08     5                    3                       virtual-leak
 VC09     10                   6                       pump-speed
 VC10     11                   4                       pump-speed
@@ -141,6 +144,6 @@ VC08     (fewest routes missing it on one seed)  4
 gate: at least 10 of 10 chambers right; a route is rejected when more than 0 are wrong
 tolerances: gas load 4.0%, speed 3.5%
 nearest defective miss on a quantity: 4.49% (1.12x the gas-load tolerance)
-routes rejected by one chamber alone: 6 (register_seal trust_register_seal trust_certificate undated_certificates register_pump ignore_load), each required to miss it by at least 2.00x the tolerance or on the cause
+routes rejected by one chamber alone: 6 (register_seal trust_register_seal rated_speed undated_certificates register_pump ignore_load), each required to miss it by at least 2.00x the tolerance or on the cause
 
-all 22 routes rejected; every chamber defeats at least 3 routes
+all 23 routes rejected; every chamber defeats at least 3 routes

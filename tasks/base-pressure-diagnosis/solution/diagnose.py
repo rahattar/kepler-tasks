@@ -14,9 +14,10 @@ Method, per chamber:
 2. **The instruments.** Where a gauge's serial in the log is owned by another chamber's certificate and that
    chamber's log carries this chamber's serial on the same dates, the two are read back the right way round. A
    cold cathode is checked against the ionization gauge wherever both were read, and a drift in their ratio is
-   carried to the pumpdowns the reference instrument did not see. A certificate is out when the chamber's own
-   throughput tests report a speed above what its pump and port can deliver, which clause 4 rules out; the
-   readings of that gauge, and the speeds of those tests, are put right by the same factor.
+   carried to the pumpdowns the reference instrument did not see. A certificate is out when the throughput
+   tests read on that gauge report a speed the pump and port cannot have: above rated, which clause 4 rules out,
+   or below it while the controller shows the pump in order, which by the vacuum data delivers its rated speed.
+   The readings of that gauge, and the speeds of those tests, are put right by the same factor.
 
 3. **The speed.** The pump curves are flat at base pressure, so the speed is one constant between the dates on
    which it can change: a trap fitted in the port, and the turbo becoming another pump. The speed now is the
@@ -762,14 +763,15 @@ def period_of(date, cuts):
 
 
 def shop_speed_in(cid, data, cuts, period, k):
-    """The latest of the shop's own speed tests taken in a period, read back through the chamber's certificate."""
+    """The latest of the shop's own speed tests taken in a period, read back through the certificate of the gauge
+    it was read on (k: {serial: the factor that certificate is out by})."""
     rows = [r for r in sorted(data["speed"], key=lambda r: r["date"])
             if r["chamber"] == cid and period_of(r["date"], cuts) == period]
-    return float(rows[-1]["s_eff_l_s"]) / k if rows else None
+    return float(rows[-1]["s_eff_l_s"]) / k.get(rows[-1]["gauge"], 1.0) if rows else None
 
 
 # ---------------------------------------------------------------------------------------------------- audit
-CERT_SLACK = 0.02                   # a measured speed may sit this far above rated on the test's own scatter
+CERT_SLACK = 0.02                   # a measured speed may sit this far from rated on the test's own scatter
 
 
 def rated_at(cfg, p=1e-6):
@@ -785,33 +787,36 @@ def with_controller_pump(cid, cfg, data):
 
 
 def certificate_error(cid, cfg, data):
-    """How far a chamber's gauge certificate is out, if it is.
+    """How far each of a chamber's gauge certificates is out, where one is: {serial: factor}.
 
-    A wrong calibration factor cancels in the gas load: every pressure the certificate yields is low by the same
-    factor and every speed it yields is high by it, so Q = p S_eff comes out right and the gas budget fits as well
-    as ever. What it cannot do is hide in the speed. MS-BP clause 4 has the chamber's effective speed as its pump
-    in series with its port, and a pump delivers at most its curve, so a speed above the rated speed is not
-    possible. The chamber's own throughput tests are where that shows, whatever the audit ends up taking its speed
-    from, so they are what is checked here: the ratio of the speed they report to the rated speed is the factor
-    the certificate is out by.
+    A wrong calibration factor cancels in the gas load: every pressure the certificate yields is off by the same
+    factor and every speed it yields is off by its inverse, so Q = p S_eff comes out right and the gas budget fits
+    as well as ever. What it cannot do is hide in the speed. MS-BP clause 4 has the chamber's effective speed as
+    its pump in series with its port, and the vacuum data say a pump in order delivers its rated speed. So a
+    throughput test read on a gauge whose certificate is out reports a speed the pump and port cannot have: above
+    rated, which no pump delivers, or below it while the pump is in order. The ratio of the reported speed to the
+    rated speed is the factor that gauge's certificate is out by.
 
-    A test taken before a trap was fitted measured a larger port and is left out; it is not evidence of anything
-    about the certificate."""
+    Tests are grouped by the gauge they were read on, since a chamber whose gauge was replaced has a certificate
+    for each. A test taken before a trap was fitted measured a larger port, and one taken after the turbo changed
+    measured another pump; neither is evidence about a certificate."""
     rated = rated_at(cfg)
-    ratios, serials = [], set()
+    changed = pump_changed_on(cid, data)
+    by = {}
     for r in data["speed"]:
         if r["chamber"] != cid:
             continue
         if cfg["trap_from"] and r["date"] < cfg["trap_from"]:
             continue
-        ratios.append(float(r["s_eff_l_s"]) / rated)
-        serials.add(r["gauge"])
-    if not ratios:
-        return 1.0, None
-    k = sum(ratios) / len(ratios)
-    if k <= 1.0 + CERT_SLACK:
-        return 1.0, None
-    return k, (sorted(serials)[0] if len(serials) == 1 else None)
+        if changed and r["date"] >= changed:
+            continue
+        by.setdefault(r["gauge"], []).append(float(r["s_eff_l_s"]) / rated)
+    out = {}
+    for serial, ratios in by.items():
+        k = sum(ratios) / len(ratios)
+        if abs(k - 1.0) > CERT_SLACK:
+            out[serial] = k
+    return out
 
 
 def front_end(cid, data, certs, fix, vac):
@@ -830,7 +835,7 @@ def front_end(cid, data, certs, fix, vac):
     changed = pump_changed_on(cid, data)
     # the certificate is checked first, because every pressure and every reported speed of this chamber has to be
     # put right by the same factor before anything is fitted
-    k, k_serial = certificate_error(cid, cfg, data)
+    k = certificate_error(cid, cfg, data)
     cuts = speed_periods(cid, cfg, data, changed)
     now = period_of(AUDIT, cuts)
     s_now, order_ob = ordered_speed(cid, cfg, vac)
@@ -838,11 +843,10 @@ def front_end(cid, data, certs, fix, vac):
         s_now = shop_speed_in(cid, data, cuts, now, k)
 
     pts = correct_drift(entry_points(cid, cfg, data, certs, fix), cid, data)
-    if k != 1.0:
-        # only the readings taken with the gauge whose certificate is out need putting right; a chamber that also
-        # carries the reference instrument of clause 5 has readings that were never affected
-        pts = [dict(q, p_n2=q["p_n2"] * k) if (k_serial is None or q["serial"] == k_serial) else q
-               for q in pts]
+    if k:
+        # only the readings taken with a gauge whose certificate is out need putting right; a chamber's other
+        # gauges, the reference instrument of clause 5 among them, were never affected
+        pts = [dict(q, p_n2=q["p_n2"] * k.get(q["serial"], 1.0)) for q in pts]
     obs = []
     for p in pts:
         per = period_of(p["date"], cuts)

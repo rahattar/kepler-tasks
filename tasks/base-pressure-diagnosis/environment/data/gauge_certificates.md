@@ -93,6 +93,14 @@ Cold cathode gauge, installed on chamber VC10.
 | 2026-04-14 | 1.00 |
 | 2026-09-22 | 0.88 |
 
+## CC-7114
+
+Cold cathode gauge, installed on chamber VC04.
+
+| issued | factor |
+|---|---|
+| 2026-09-08 | 1.00 |
+
 ## IG-7201
 
 Hot-filament ionization gauge, installed on chamber VC01.

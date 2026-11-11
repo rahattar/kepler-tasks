@@ -15,7 +15,9 @@ Routes, one per layer:
     register_port        keep the register's port conductance, ignoring the trap fitted in the high-vacuum port
     register_seal        keep the register's seal, ignoring a seal change the maintenance log records
     trust_register_seal  never set the register's seal material aside, whatever the records show
-    trust_certificate    take every gauge certificate as right, even where the speed it yields is above rated
+    trust_certificate    take every gauge certificate as right, even where the speed it yields is not the rated
+                         speed of a pump in order
+    rated_speed          take a pump in order at its rated speed now, and every certificate as issued
     undated_certificates apply a gauge's latest certificate factor to every reading, whatever its date
     register_pump        take the pump the register names, whatever the controller's own figures report
     latest_speed_test    take the latest speed test whatever the controller rows show since
@@ -54,7 +56,7 @@ sys.path.insert(0, os.path.join(TASK, "solution"))
 import diagnose as D                                                    # noqa: E402
 
 ROUTES = ["register_surfaces", "register_port", "register_seal", "trust_register_seal", "trust_certificate",
-          "undated_certificates", "register_pump", "latest_speed_test", "commissioning_speed",
+          "rated_speed", "undated_certificates", "register_pump", "latest_speed_test", "commissioning_speed",
           "no_gas_correction", "all_entries", "void_before_change", "uncorrected_cathode", "logged_serials",
           "ignore_vent_gas", "ignore_load", "ignore_temperature", "table_outgassing", "no_time_reference",
           "leak_only", "skip_pump_gate", "face_value"]
@@ -98,6 +100,16 @@ def _register_port(cfg, reg):
     cfg["trap_from"] = None
 
 
+def _rated_speed(front_end):
+    """A pump the controller shows in order is taken at its rated speed now, whatever the speed tests say."""
+    def fe(cid, data, certs, fix, vac):
+        cfg, obs, s_now, rng = front_end(cid, data, certs, fix, vac)
+        if D.pump_changed_on(cid, data) is None and D.ordered_speed(cid, cfg, vac)[0] is None:
+            s_now = D.rated_at(cfg)
+        return cfg, obs, s_now, rng
+    return fe
+
+
 def _register_seal(cfg, reg):
     cfg["seal"] = reg[0]["seal_material"]
     cfg["seal_cm"] = float(reg[0]["seal_length_cm"])
@@ -112,13 +124,13 @@ def _all_entries(cfg, reg):
 def _commissioning_speed(orig):
     def shop_speed_in(cid, data, cuts, period, k):
         rows = sorted([r for r in data["speed"] if r["chamber"] == cid], key=lambda r: r["date"])
-        return float(rows[0]["s_eff_l_s"]) / k if rows else None
+        return float(rows[0]["s_eff_l_s"]) / k.get(rows[0]["gauge"], 1.0) if rows else None
     return shop_speed_in
 
 
 def _mean_speed_test(orig):
     def shop_speed_in(cid, data, cuts, period, k):
-        rows = [float(r["s_eff_l_s"]) / k for r in data["speed"]
+        rows = [float(r["s_eff_l_s"]) / k.get(r["gauge"], 1.0) for r in data["speed"]
                 if r["chamber"] == cid and D.period_of(r["date"], cuts) == period]
         return sum(rows) / len(rows) if rows else None
     return shop_speed_in
@@ -235,7 +247,9 @@ def _patches(name):
     if name == "leak_only":
         return [("candidate_structures", _structures(lambda s: s["trapped_from"] is None))]
     if name == "trust_certificate":
-        return [("certificate_error", lambda cid, cfg, data: (1.0, None))]
+        return [("certificate_error", lambda cid, cfg, data: {})]
+    if name == "rated_speed":
+        return [("certificate_error", lambda cid, cfg, data: {}), ("front_end", _rated_speed(D.front_end))]
     if name == "undated_certificates":
         return [("cert_factor", _undated(D.cert_factor))]
     if name == "register_pump":

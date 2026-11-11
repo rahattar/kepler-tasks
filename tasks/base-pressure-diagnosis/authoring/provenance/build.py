@@ -91,8 +91,9 @@ def speed_rows(ids):
     out = []
     for cid in ids:
         ch = F.BY[cid]
-        serial = primary_gauge(ch)
-        for n, (date, hours, temp_c) in enumerate(ch["speed"]):
+        for n, entry in enumerate(ch["speed"]):
+            date, hours, temp_c = entry[:3]
+            serial = entry[3] if len(entry) > 3 else primary_gauge(ch)
             c = F.config(ch, date)
             s = P.s_eff(c, P.p_base(c, P.q_total(c, hours, "air", temp_c + 273.15)))
             # the chamber's own gas, as the gauge indicates it, and the nitrogen the test admits on top of it

@@ -1,4 +1,4 @@
-inputs: 4915d8f9f862f489
+inputs: fd45d0e85a7c0da7
 Malformed sheets and edge cases, each scored by the grader the verifier calls
 =============================================================================
 
@@ -41,7 +41,7 @@ padded past the size limit                           rejected  rejected  0/10   
 bytes that are not ASCII                             rejected  rejected  0/10   the audit sheet is not ASCII text
 a sheet that is a symlink                            rejected  rejected  0/10   the audit sheet is not a regular file
 a sheet that is a directory                          rejected  rejected  0/10   the audit sheet is not a regular file
-no sheet at all                                      rejected  rejected  0/10   no audit sheet at /tmp/bpd-verifier-xfkzy0gg/d
+no sheet at all                                      rejected  rejected  0/10   no audit sheet at /tmp/bpd-verifier-7fnygue9/d
 
 tolerances: gas load 4.0%, speed 3.5%; gate 10 of 10 chambers; size limit 100000 bytes
 

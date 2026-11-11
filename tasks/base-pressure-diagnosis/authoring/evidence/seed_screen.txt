@@ -1,4 +1,4 @@
-inputs: 0b7b01a1f7c19d24
+inputs: 39deeb5d2e69e39c
 Both audits on records rebuilt from each screened seed, reference order
 =======================================================================
 
@@ -14,18 +14,18 @@ build seed          audit        right  worst q deviation  worst s deviation
 5303                independent  10/10  3.25% (VC02)       1.03% (VC09)
 5304                reference    10/10  1.10% (VC03)       1.23% (VC05)
 5304                independent  10/10  1.31% (VC02)       1.23% (VC05)
-5305                reference    10/10  1.42% (VC04)       1.07% (VC09)
-5305                independent  10/10  1.43% (VC04)       1.52% (VC09)
+5305                reference    10/10  1.17% (VC03)       1.07% (VC09)
+5305                independent  10/10  1.17% (VC03)       1.52% (VC09)
 5306                reference    10/10  2.27% (VC02)       1.39% (VC09)
 5306                independent  10/10  2.93% (VC02)       1.34% (VC09)
 5307                reference    10/10  1.43% (VC03)       0.99% (VC02)
-5307                independent  10/10  1.49% (VC02)       0.58% (VC04)
+5307                independent  10/10  1.49% (VC02)       0.53% (VC06)
 5308                reference    10/10  1.43% (VC02)       0.56% (VC02)
 5308                independent  10/10  1.67% (VC02)       0.52% (VC03)
-5309                reference    10/10  1.40% (VC04)       1.30% (VC08)
-5309                independent  10/10  1.40% (VC04)       0.78% (VC06)
-5310                reference    10/10  1.05% (VC04)       1.29% (VC04)
-5310                independent  10/10  1.05% (VC04)       1.29% (VC04)
+5309                reference    10/10  0.93% (VC07)       1.30% (VC08)
+5309                independent  10/10  1.91% (VC04)       0.78% (VC06)
+5310                reference    10/10  1.04% (VC03)       0.99% (VC08)
+5310                independent  10/10  1.04% (VC03)       0.54% (VC07)
 5311                reference    10/10  1.48% (VC02)       1.06% (VC08)
 5311                independent  10/10  1.02% (VC02)       1.12% (VC09)
 5312                reference    10/10  1.43% (VC05)       1.52% (VC09)
@@ -35,7 +35,7 @@ build seed          audit        right  worst q deviation  worst s deviation
 5314                reference    10/10  1.55% (VC02)       1.61% (VC09)
 5314                independent  10/10  1.58% (VC02)       1.25% (VC09)
 5315                reference    10/10  1.33% (VC07)       1.83% (VC09)
-5315                independent  10/10  0.91% (VC07)       2.32% (VC09)
+5315                independent  10/10  1.23% (VC04)       2.32% (VC09)
 5316                reference    10/10  1.22% (VC09)       0.76% (VC10)
 5316                independent  10/10  1.21% (VC05)       0.89% (VC09)
 5317                reference    10/10  1.24% (VC06)       0.98% (VC09)
@@ -43,9 +43,9 @@ build seed          audit        right  worst q deviation  worst s deviation
 5318                reference    10/10  1.40% (VC03)       1.57% (VC09)
 5318                independent  10/10  1.39% (VC03)       0.81% (VC09)
 5319                reference    10/10  2.19% (VC02)       1.25% (VC02)
-5319                independent  10/10  1.58% (VC02)       1.07% (VC09)
+5319                independent  10/10  1.66% (VC04)       1.07% (VC09)
 5320                reference    10/10  1.55% (VC07)       1.25% (VC09)
-5320                independent  10/10  0.96% (VC04)       0.98% (VC09)
+5320                independent  10/10  0.90% (VC10)       0.98% (VC09)
 
 tolerances: gas load 4.0%, speed 3.5%
 

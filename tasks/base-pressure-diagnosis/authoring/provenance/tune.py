@@ -107,7 +107,7 @@ def main():
             check(abs(t - climate(date)) <= 3.0,
                   "%s %s wall temperature %.1f C is %.1f C off the shop climate on %s"
                   % (cid, pid, t, t - climate(date), date))
-        for date, hours, temp in ch["speed"]:
+        for date, hours, temp, *_g in ch["speed"]:
             check(abs(temp - climate(date)) <= 3.0,
                   "%s speed test of %s at %.1f C is %.1f C off the shop climate"
                   % (cid, date, temp, temp - climate(date)))

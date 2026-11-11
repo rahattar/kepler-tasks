@@ -205,22 +205,32 @@ FLEET = [
 
     # VC04 air-leak: a long nitrile seal makes permeation a credible reading, but the gas load does not follow the
     # shop temperature as permeation would. Bead-blasted internals add a wall load well above the table's. A
-    # fixture set is in on two pumpdowns, and the last is vented with dry nitrogen.
+    # fixture set is in on two pumpdowns, and the last is vented with dry nitrogen. Its cold cathode was replaced in
+    # September, and the replacement's certificate is out: it reads every pressure high by a quarter, so the speed
+    # test run on it reports the pump, which its controller shows in order, at 0.80 of rated, where the old gauge's
+    # tests in July and early September both reported it at rated. Both natural readings
+    # fit cleanly and both are wrong. Take the speed test and every entry at the speed in force on its date, and the
+    # gas load is right and the speed a fifth low; take the pump at its rated speed and the certificate as issued,
+    # and the readings step up at the replacement, which a trapped volume dated to that maintenance entry absorbs to
+    # the noise, putting the gas load out by a tenth and the cause on the wall. Only the gauge explains both the step
+    # and the test: a trapped volume cannot change a throughput test, and a pump in order delivers its rated speed.
     Ch("VC04",
        reg_entry(4200, "TMP-1600", 1600, "fluoroelastomer", 600,
                  [(4.5, "stainless steel, bead blasted")], 1.5e-7),
-       true=dict(wall_factor=2.30, leak=4.0e-4),
+       true=dict(wall_factor=2.30, leak=4.0e-4, cert_wrong=("CC-7114", 0.80)),
        events=[("2026-06-18", "trap", (700, "Baffle fitted in the high-vacuum port.")),
                ("2026-08-05", "note", "Viewport 2 reseated."),
-               ("2026-08-20", "seal", ("nitrile", "Door seal replaced; nitrile section fitted."))],
+               ("2026-08-20", "seal", ("nitrile", "Door seal replaced; nitrile section fitted.")),
+               ("2026-09-15", "note", "Cold cathode gauge CC-7104 would not strike; replaced by CC-7114.")],
        log=[("2026-07-15", "P1", "air", 16.0, 26.0, "CC-7104", None),
             ("2026-08-05", "P2", "air", 20.0, 25.9, "CC-7104", "shield set"),
             ("2026-09-09", "P3", "air", 16.0, 23.1, "CC-7104", None),
-            ("2026-09-30", "P4", "air", 12.0, 20.4, "CC-7104", "shield set"),
-            ("2026-10-21", "P5", "air", 14.0, 17.2, "CC-7104", None),
-            ("2026-10-29", "P6", "nitrogen", 16.0, 16.0, "CC-7104", None)],
-       certs={"CC-7104": [("2026-02-24", 1.00)]},
-       speed=[("2025-05-06", 16.0, 19.2), ("2026-07-08", 16.0, 25.8)],
+            ("2026-09-30", "P4", "air", 12.0, 20.4, "CC-7114", "shield set"),
+            ("2026-10-21", "P5", "air", 14.0, 17.2, "CC-7114", None),
+            ("2026-10-29", "P6", "nitrogen", 16.0, 16.0, "CC-7114", None)],
+       certs={"CC-7104": [("2026-02-24", 1.00)], "CC-7114": [("2026-09-08", 1.00)]},
+       speed=[("2025-05-06", 16.0, 19.2, "CC-7104"), ("2026-07-08", 16.0, 25.8, "CC-7104"),
+              ("2026-09-02", 16.0, 23.4, "CC-7104"), ("2026-10-07", 20.0, 18.6, "CC-7114")],
        ctrl=["2026-07-01", "2026-07-08", "2026-07-15", "2026-07-22", "2026-07-29", "2026-08-05", "2026-08-12", "2026-08-19", "2026-08-26", "2026-09-02", "2026-09-09", "2026-09-16", "2026-09-23", "2026-09-30", "2026-10-07", "2026-10-14", "2026-10-21", "2026-10-28"]),
 
     # VC05 permeation: the register gives a perfluoroelastomer door seal; a nitrile seal has been fitted from the

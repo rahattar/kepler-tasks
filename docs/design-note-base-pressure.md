@@ -468,3 +468,42 @@ on VC08 at 36 h, and every miss is on VC07.
 Reading for the official run: inside the low-effort bar, but xhigh solves at a rate that puts the official 8
 near the top of 1-5 or above it. VC07 is a single point of difficulty. A further layer that no fit residual shows
 (as VC01's certificate and VC07's pump are) would be needed to bring it down with confidence.
+
+---
+
+# A LAYER THAT EVERY SIMPLE READING FITS (11 November, afternoon)
+
+Agreed with Alex after the calibration above: add a data-only layer that leaves the fit clean, since every layer
+that shows as a misfit was found by every probe.
+
+**VC04: a replacement gauge whose certificate is out.** CC-7104 would not strike on 09-15 and was replaced by
+CC-7114, certificate factor 1.00. Its true factor is 0.80 of that, so it reads every pressure high by a quarter.
+The old gauge's speed tests (07-08, 09-02) put the pump at rated; the new gauge's (10-07) at 0.80 of rated, while
+the controller shows the pump in order throughout. Measured on the reference's own fit:
+
+| Reading | Fit | q | s | cause |
+|---|---|---|---|---|
+| each entry at the speed tested on its gauge (trust the test) | clean | -0.4% | -19.8% | right |
+| rated speed, certificates as issued | clean, chi2 0.3, by a trapped volume dated to the gauge replacement | +10.5% | 0 | wrong (wall) |
+| every entry at the latest test | misfit | -9.5% | -19.8% | wrong |
+| rated speed, CC-7114 put right by test/rated | clean | -0.2% | 0 | right |
+
+Only the gauge explains both the step in the readings and the low test: a trapped volume cannot change a
+throughput test, and the vacuum data say a pump in order delivers its rated speed. The September test on the old
+gauge was added after a prototype probe argued that the old gauge might have been reading low before it failed; it
+rules that out directly.
+
+Both audits now group speed tests by the gauge they were read on, and treat a certificate as out where its tests
+report a speed the pump cannot have: above rated, or below it with the pump in order. New route `rated_speed`
+(pump in order at rated, certificates as issued) misses VC04 on the cause; `trust_certificate` now misses VC01 and
+VC04.
+
+Prototype probes (xhigh, the layer without the September test): 0 of 3, every one on VC04's speed, two of them
+reading the low test as the newly calibrated gauge being right.
+
+Final records: all 23 routes rejected; 18 sound methods accepted with spread 1.99% / 1.70% (tolerances 4.0 / 3.5,
+unchanged); 18 of 221 orders work for both audits; seed screen 20 of 20; preflight 349 of 349. Low effort 1 of 3
+(U1 solved; U2 missed VC04 and VC07, U3 VC04).
+Final records, xhigh 1 of 3 (V2 solved; V1 and V3 took the new gauge's low test, both naming the replacement gauge
+as the possible culprit and choosing against it). With the prototype round: xhigh 1 of 6 on this layer, every
+miss on VC04's speed; low 1 of 3.
