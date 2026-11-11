@@ -1,11 +1,11 @@
-The hydraulic press of a forging shop has been stripped for overhaul. Its cylinder bores, gland bores and ram journals have been finish-machined and measured, and the overhaul engineer has to sentence every one of them before the press is rebuilt.
+The hydraulic press is apart for overhaul, and its cylinder bores, gland bores, and ram journals have already been finish-machined and measured. Before the press goes back together, the overhaul engineer needs a disposition for every measured feature.
 
-Sentence each of the 14 features in `/app/data/feature_register.csv`: its form error, and whether it is acceptable against its drawing. Plant standard FM-7, `/app/data/docs/standard_fm7.md`, defines what a measurement of a feature means and what makes a feature acceptable. Follow it as written. The drawings' requirements are in `/app/data/drawing_requirements.csv`.
+There are 14 features in `/app/data/feature_register.csv`. For each one, report its form error and decide whether it is acceptable against the drawing. Plant standard FM-7 in `/app/data/docs/standard_fm7.md` defines what a measurement of a feature means and what makes that feature acceptable; follow FM-7 as written. The drawing requirements are in `/app/data/drawing_requirements.csv`. Every feature is to be sentenced as it now stands.
 
-Every feature is to be sentenced as it now stands. The records are `/app/data/feature_register.csv`, `/app/data/drawing_requirements.csv`, `/app/data/machining_log.csv`, `/app/data/measurement_index.csv` and one file of measured points per feature under `/app/data/measurements`, together with `/app/data/docs/inspection_report.md`, `/app/data/docs/instrument_notes.md` and `/app/data/docs/metrology_room.md`.
+The rest of the records are `/app/data/machining_log.csv`, `/app/data/measurement_index.csv`, and the individual measured-point files under `/app/data/measurements`. Supporting documents are `/app/data/docs/inspection_report.md`, `/app/data/docs/instrument_notes.md`, and `/app/data/docs/metrology_room.md`.
 
-The metrology room will scan a feature on request, as `/app/data/docs/metrology_room.md` describes: `formscan <feature>`. The booking is 4 scans in all and it does not refill. Each scan's points are written to `/app/scan_reports`. Plan the booking before you spend any of it.
+Additional metrology is available through the room described in `/app/data/docs/metrology_room.md`. From `/app`, the request is `formscan <feature>`. The booking covers 4 scans for the whole job and does not refill. Each scan writes its measured points under `/app/scan_reports`. Plan the booking before using any of it.
 
-Write your answer to `/app/output/form.csv`, with the header `feature,form_um,verdict` and one row for each of the 14 features: the form error in micrometres to two decimal places, and one of `accept`, `reject_size`, `reject_form`, `reject_both`.
+Write `/app/output/form.csv` with the exact header `feature,form_um,verdict` and one row for each of the 14 features. Give `form_um` in micrometres to two decimal places. The `verdict` must be one of `accept`, `reject_size`, `reject_form`, or `reject_both`.
 
 You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

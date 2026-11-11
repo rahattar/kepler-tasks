@@ -1,8 +1,8 @@
 # Design note: bore-form-acceptance (Nov 10 2026)
 
 **Status:** built and preflight-clean (110 checks). Local probes: low effort 0 of 3, xhigh 2 of 3. Zip
-bore-form-acceptance-20261110b.zip sent to Alex (20261110 was the same bundle before the instruction
-draft named every input file by its path). The instruction is a draft
+bore-form-acceptance-20261110c.zip sent to Alex, carrying Alex's own instruction.md (the two
+earlier zips of the day held my draft). The instruction is a draft
 awaiting Alex's approval, including its relevant_experience line.
 
 **Task:** `/app/output/form.csv` with `feature,form_um,verdict` for each of 14 finish-machined features of a press
