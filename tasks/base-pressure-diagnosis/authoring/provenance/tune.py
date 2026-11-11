@@ -24,7 +24,7 @@ PUMP_CLEAR_HI = 0.95                # a sound pump at or above it
 NEAR = 0.08
 NEEDS_TEST = ("VC08",)              # the one chamber the audit test must be spent on
 TEST_TIMES = (16.0, 20.0, 24.0, 30.0, 36.0, 42.0, 48.0)
-DEFAULT_TEST_H = 16.0               # the contractor's standing pumping time, used when a plan names none
+DEFAULT_TEST_H = F.DEFAULT_TEST_H    # the contractor's standing pumping time, used when a plan names none
 
 fails = []
 

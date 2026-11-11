@@ -9,35 +9,44 @@ Method, per chamber:
 
 1. **The chamber as it stands.** The register entry, changed by every maintenance log row on or before the audit
    date: internal surfaces replaced, seal material or length changed, a trap or baffle fitted in the high-vacuum
-   port.
+   port. The pump is the one the turbo controller's own figures identify, which need not be the register's.
 
-2. **Which records still describe it.** Base-pressure entries are kept from the last change of internals onwards.
-   A speed test is kept only if no trap was fitted after it and the turbo controller shows no step in drive power
-   or bearing temperature after it; a step voids the test, because the pump it measured is not the pump now.
-   Where a gauge's serial in the log is owned by another chamber's certificate and that chamber's log carries this
-   chamber's serial on the same dates, the two are read back the right way round.
+2. **The instruments.** Where a gauge's serial in the log is owned by another chamber's certificate and that
+   chamber's log carries this chamber's serial on the same dates, the two are read back the right way round. A
+   cold cathode is checked against the ionization gauge wherever both were read, and a drift in their ratio is
+   carried to the pumpdowns the reference instrument did not see. A certificate is out when the chamber's own
+   throughput tests report a speed above what its pump and port can deliver, which clause 4 rules out; the
+   readings of that gauge, and the speeds of those tests, are put right by the same factor.
 
-3. **The gas loads that can be computed.** Wall and internals outgassing follows from the current surfaces, the
-   entry's pumping time, vent gas and wall temperature, and the outgassing table, plus the area of any fixture the
-   entry names. Permeation follows from the current seal material and length and the wall temperature. Neither
-   needs a measurement.
+3. **The speed.** The pump curves are flat at base pressure, so the speed is one constant between the dates on
+   which it can change: a trap fitted in the port, and the turbo becoming another pump. The speed now is the
+   ordered test's, or the latest shop test since the last such date; a contractor's test is read on its own gauge,
+   whose factor its report states, and owes nothing to the chamber's certificate. Where neither exists, the speed
+   now is found with the gas budget, below.
 
-4. **The gas load that cannot.** For each kept entry the indicated pressure is the reading times the certificate
-   factor in force, and the true total pressure follows from the composition by MS-BP clause 5; since the
-   composition depends on the split, the correction is iterated to a fixed point. The total gas load of the entry
-   is the true pressure times the effective speed. What remains after the computable loads are taken out is fitted
-   over the kept entries as a constant leak, or as a constant leak plus a decaying trapped volume where the
-   evidence supports one.
+4. **The observations.** Every kept base-pressure entry is an observation of the gas load, whichever pump or port
+   it was taken with, at the speed in force on its date: the gas load does not depend on the pump. Entries are kept
+   from the last change of internals onwards; a seal change does not void them, since the seal in place on each
+   date is known. An ordered analysis or rate-of-rise test is one more observation at its own pumping time and wall
+   temperature, and a helium test is an observation of the leak.
 
-5. **Which model.** A trapped volume is accepted only on evidence: a residual gas analysis whose nitrogen and
-   oxygen outweigh its water, or a clear improvement in fit over a constant leak with a time constant in a
-   physical range. Otherwise the residual is a leak.
+5. **The gas budget.** Fitted over the observations as clause 3 gives it:
 
-6. **Referring to the audit condition.** The fitted model is evaluated at %s h, 20 C, an air vent and no load, and
-   the cause is named by MS-BP clause 6 against the rated speed of the chamber as it is now.
+       Q_i = C_w W_i + Q_L + Q_v0 exp(-t_i / tau) [on and after the trapped volume's date] + Q_perm,i
 
-Where a chamber's speed is not available from a surviving test, it is taken from an ordered speed test or
-rate-of-rise test, and failing that from the chamber's own records before the turbo changed.
+   with W_i the outgassing table's nominal wall load for the entry's surfaces, fixtures, vent gas and wall
+   temperature, and Q_perm,i the seal's permeation at its wall temperature. A gauge reading needs clause 5's
+   correction for composition, which depends on the split, so it is iterated to a fixed point. Each observation is
+   weighted by its own repeatability.
+
+6. **Which budget.** Every structure the records leave open is fitted: no trapped volume, or one present from the
+   start, or one that appeared on a date the maintenance log records work on the chamber; and the register's seal
+   material, or another in its place. The fit with the least AIC is kept. Setting the register's seal aside costs
+   OVERRIDE_CHI2, so it happens only where the records plainly contradict it. A structure with more parameters
+   than observations is not admissible.
+
+7. **Referring to the audit condition.** The fitted budget is evaluated at %s h, 20 C, an air vent and no load,
+   and the cause is named by MS-BP clause 6 against the rated speed of the chamber as it is now.
 """
 import csv
 import json
@@ -221,7 +230,7 @@ def chamber_config(cid, data):
                seal=r0["seal_material"], seal_cm=float(r0["seal_length_cm"]),
                surfaces=[(float(r["surface_area_m2"]), r["surface"]) for r in reg],
                p_spec=float(r0["p_spec_mbar"]), internals_from=None, trap_from=None,
-               turbo_register=r0["turbo"])
+               turbo_register=r0["turbo"], seal_register=r0["seal_material"], seal_logged_from=None)
     # the seal is kept as a history, because a seal changed part way through the log means one permeation
     # constant will not serve every entry
     cfg["seal_hist"] = [("0000-00-00", cfg["seal"], cfg["seal_cm"])]
@@ -245,6 +254,8 @@ def chamber_config(cid, data):
         if "Seal material after the work:" in e:
             cfg["seal"] = e.split("Seal material after the work:", 1)[1].strip().rstrip(".")
             cfg["seal_hist"].append((row["date"], cfg["seal"], cfg["seal_cm"]))
+            if cfg["seal_logged_from"] is None:
+                cfg["seal_logged_from"] = row["date"]
         if "Seal length after the work:" in e:
             cfg["seal_cm"] = float(e.split("Seal length after the work:", 1)[1].strip().split()[0])
             cfg["seal_hist"].append((row["date"], cfg["seal"], cfg["seal_cm"]))
@@ -416,108 +427,142 @@ def perm_of(cfg, pt):
     return q_perm(mat, cm, pt["t_k"])
 
 
-def _lstsq_nonneg(cols, y):
-    """Least squares in the given columns with every coefficient at or above zero. With at most three columns the
-    active set is found by trying each subset, which is exact and needs no iteration."""
-    import itertools
+READ_SD = 0.006                     # the shop's gauge readings repeat to 0.6 per cent (records_format.md)
+TEST_SD = {"rga": 0.010, "rate-of-rise": 0.005, "speed-test": 0.005}
+HELIUM_SD = 0.03                    # a helium test's leak, relative
+TAU_MAX = 48.0                      # MS-BP clause 3.3: no trapped volume of the shop takes longer to empty
+TAUS = [math.exp(i * math.log(TAU_MAX) / 47.0) for i in range(48)]     # 1 h to TAU_MAX, log-spaced
+OVERRIDE_CHI2 = 10.0                # how much better a seal other than the register's must fit to be believed
+
+
+def _seal_for(cfg, date, register_seal):
+    """The seal on a date. Where the maintenance log records a change of material, that is what was fitted. Before
+    any such record the material is the register's, unless the fit is testing another in its place."""
+    mat, cm = seal_at(cfg, date)
+    logged = cfg.get("seal_logged_from")
+    if register_seal and (logged is None or date < logged):
+        mat = register_seal
+    return mat, cm
+
+
+def fit_budget(cfg, obs, structure, s_now, helium=None):
+    """The gas budget of MS-BP clause 3, fitted to the observations for one structure:
+
+        Q_i = C_w W_i + Q_L + Q_v0 exp(-t_i / tau) [on and after the trapped volume's date] + Q_perm,i
+
+    W_i is the outgassing table's nominal wall load for the entry's surfaces, fixtures, vent and temperature, and
+    Q_perm,i the seal's permeation at its temperature. Every coefficient is non-negative; tau is searched on a grid
+    and the rest is linear. Each observation is weighted by its own repeatability, relative to its size. A gauge
+    reading needs clause 5's correction for composition, which depends on the split, so the correction is iterated
+    to a fixed point. A helium test, where there is one, measures Q_L and enters as one more observation of it.
+
+    Returns (chi2, number of parameters, the parameters, the observations' gas loads)."""
     import numpy as np
-    n = len(y)
-    k = len(cols)
-    A = np.array(cols, dtype=float).T
-    yv = np.array(y, dtype=float)
+    from scipy.optimize import nnls
+    seal = structure.get("seal")
+    trap_from = structure.get("trapped_from")
+    n = len(obs)
+    W = np.array([nominal_wall(cfg, o) for o in obs])
+    mats = [_seal_for(cfg, o["date"], seal) for o in obs]
+    PM = np.array([q_perm(m, cm, o["t_k"]) for (m, cm), o in zip(mats, obs)])
+    H = np.array([o["t_h"] for o in obs])
+    TR = np.array([1.0 if trap_from is not None and o["date"] >= trap_from else 0.0 for o in obs])
+    SD = np.array([o["sd"] for o in obs])
+    S = np.array([s_now if o["speed"] == "now" else o["speed"] for o in obs], dtype=float)
+    G = np.array([1.0 if o["gauge"] else 0.0 for o in obs])
+    taus = TAUS if trap_from is not None else [None]
+    corr = np.ones(n)
     best = None
-    for size in range(k, 0, -1):
-        for sub in itertools.combinations(range(k), size):
-            M = A[:, list(sub)]
-            if M.shape[0] < M.shape[1]:
-                continue
-            try:
-                c, *_ = np.linalg.lstsq(M, yv, rcond=None)
-            except np.linalg.LinAlgError:
-                continue
-            if np.any(c < -1e-18):
-                continue
-            full = np.zeros(k)
-            full[list(sub)] = np.maximum(c, 0.0)
-            ss = float(np.sum((A @ full - yv) ** 2))
-            if best is None or ss < best[1] - 1e-30:
-                best = (full, ss)
-    if best is None:
-        return [0.0] * k, float(sum(v * v for v in y))
-    return list(best[0]), best[1]
-
-
-def fit_split(cfg, pts, s_eff, tau=None):
-    """Identifies the chamber's gas budget from its entries.
-
-    Each entry's true total pressure is its nitrogen-equivalent pressure times MS-BP clause 5's correction, and
-    its total gas load is that times the effective speed. The loads are fitted to
-
-        Q_i = C_w * W_i + Q_perm(T_i) + Q_L [ + Q_v0 exp(-t_i / tau) ]
-
-    with W_i the nominal wall shape of the entry and Q_perm computable from the seal. Since the correction depends
-    on the split and the split on the correction, the two are iterated to a fixed point. Returns
-    (C_w, Q_L, Q_v0, residual sum of squares, the entries' total gas loads)."""
-    n = len(pts)
-    W = [nominal_wall(cfg, p) for p in pts]
-    QP = [perm_of(cfg, p) for p in pts]
-    corr = [1.0] * n
-    coef = [1.0, 0.0, 0.0]
-    ss = 0.0
-    q = [0.0] * n
-    for _ in range(20):
-        q = [pts[i]["p_n2"] * corr[i] * s_eff for i in range(n)]
-        y = [q[i] - QP[i] for i in range(n)]
-        cols = [W, [1.0] * n]
-        if tau:
-            cols.append([math.exp(-pts[i]["t_h"] / tau) for i in range(n)])
-        c, ss = _lstsq_nonneg(cols, y)
-        coef = [c[0], c[1], c[2] if tau else 0.0]
-        new = []
+    for _ in range(40):
+        q = np.array([o["value"] for o in obs]) * np.where(G > 0, corr, 1.0) * S
+        w = 1.0 / (q * SD)
+        best = None
+        for tau in taus:
+            cols = [W, np.ones(n)] + ([TR * np.exp(-H / tau)] if tau is not None else [])
+            A = np.column_stack(cols) * w[:, None]
+            b = (q - PM) * w
+            if helium is not None:
+                sd_l = max(HELIUM_SD * helium, 2e-9)
+                row = np.zeros(A.shape[1])
+                row[1] = 1.0 / sd_l
+                A = np.vstack([A, row])
+                b = np.append(b, helium / sd_l)
+            x, rn = nnls(A, b)
+            if best is None or rn < best[0]:
+                best = (rn, x, tau)
+        rn, x, tau = best
+        new = np.ones(n)
         for i in range(n):
-            parts = {"wall-outgassing": coef[0] * W[i], "permeation": QP[i], "air-leak": coef[1]}
-            if tau:
-                parts["virtual-leak"] = coef[2] * math.exp(-pts[i]["t_h"] / tau)
-            new.append(gas_correction(parts, seal_at(cfg, pts[i]["date"])[0]))
-        if max(abs(a - b) for a, b in zip(new, corr)) < 1e-10:
-            corr = new
-            break
+            if not G[i]:
+                continue
+            parts = {"wall-outgassing": x[0] * W[i], "air-leak": x[1], "permeation": PM[i]}
+            if tau is not None:
+                parts["virtual-leak"] = x[2] * TR[i] * math.exp(-H[i] / tau)
+            new[i] = gas_correction(parts, mats[i][0])
+        done = float(np.max(np.abs(new - corr))) < 1e-9
         corr = new
-    return coef[0], coef[1], coef[2], ss, q
+        if done:
+            break
+    rn, x, tau = best
+    params = dict(c_w=float(x[0]), leak=float(x[1]), qv0=float(x[2]) if tau is not None else 0.0, tau=tau,
+                  seal=seal, trapped_from=trap_from, s_now=s_now)
+    k = 2 + (2 if trap_from is not None else 0)
+    return float(rn * rn), k, params, q
 
 
-def durations(pts):
-    return sorted({round(p["t_h"], 2) for p in pts})
+def _golden(f, lo, hi, iters=40):
+    """Minimises f over [lo, hi] by golden section."""
+    g = (math.sqrt(5.0) - 1.0) / 2.0
+    a, b = lo, hi
+    c, d = b - g * (b - a), a + g * (b - a)
+    fc, fd = f(c), f(d)
+    for _ in range(iters):
+        if fc < fd:
+            b, d, fd = d, c, fc
+            c = b - g * (b - a)
+            fc = f(c)
+        else:
+            a, c, fc = c, d, fd
+            d = a + g * (b - a)
+            fd = f(d)
+    return (c, fc) if fc < fd else (d, fd)
 
 
-TAU_RANGE = (2.0, 48.0)
-TAU_SPREAD = 12.0                   # the exponential may not vary by more than this over the entries
-MIN_TRAPPED_SHARE = 0.08            # a trapped volume that contributes less than this at the reference condition
-                                    # is not what limits the chamber, whatever it does to the residual
+def candidate_structures(cid, cfg, data, obs):
+    """Every structure the records leave open. The seal is the documents' unless another material is tried in the
+    register's place; a trapped volume is absent, or present from the start, or appeared on a date the maintenance
+    log records work on this chamber within the span of the records."""
+    seals = [None] + [m for m in sorted(SEALS) if m != cfg["seal_register"]]
+    lo, hi = min(o["date"] for o in obs), max(o["date"] for o in obs)
+    worked = sorted({r["date"] for r in data["maint"] if r["chamber"] == cid and lo < r["date"] <= hi})
+    traps = [None, "0000-00-00"] + worked
+    return [dict(seal=sm, trapped_from=tf) for sm in seals for tf in traps]
 
 
-def best_trapped(cfg, pts, s_eff):
-    """The trapped-volume model over a grid of time constants, by residual sum of squares.
-
-    A time constant short against the entries' pumping times makes the exponential column vanish at every entry
-    but one, and such a fit will take up noise with an arbitrarily large coefficient. Only time constants whose
-    exponential is comparable across the entries are considered, and only fits whose trapped volume still carries
-    a real share of the gas load at the reference condition."""
+def choose_budget(cid, cfg, data, obs, s_now, s_range=None, helium=None):
+    """Fits every candidate structure and keeps the one with the least AIC. A structure is admissible only where
+    there are at least as many observations as parameters. Overturning the register's seal costs OVERRIDE_CHI2:
+    an engineer does not set the register aside on a marginal fit, but does when the records plainly contradict it.
+    Where the pump has changed since its last speed test, the speed now is one more parameter, found with the rest."""
+    n = len(obs) + (1 if helium is not None else 0)
     best = None
-    for i in range(int(TAU_RANGE[0] * 2), int(TAU_RANGE[1] * 2) + 1):
-        tau = 0.5 * i
-        ex = [math.exp(-p["t_h"] / tau) for p in pts]
-        if min(ex) <= 0 or max(ex) / min(ex) > TAU_SPREAD:
+    for st in candidate_structures(cid, cfg, data, obs):
+        k = 2 + (2 if st["trapped_from"] is not None else 0) + (1 if s_now is None else 0)
+        if n < k:
             continue
-        c_w, q_l, qv0, ss, _q = fit_split(cfg, pts, s_eff, tau)
-        if qv0 <= 0 or c_w <= 0:
-            continue
-        _parts, total = at_reference(cfg, c_w, q_l, qv0, tau)
-        if total <= 0 or qv0 * math.exp(-REF_H / tau) / total < MIN_TRAPPED_SHARE:
-            continue
-        if best is None or ss < best[3]:
-            best = (c_w, q_l, qv0, ss, tau)
-    return best
+        if s_now is None:
+            lo, hi = s_range
+
+            def f(ls):
+                return fit_budget(cfg, obs, st, math.exp(ls), helium)[0]
+            ls, _ = _golden(f, math.log(lo), math.log(hi))
+            chi2, kk, params, q = fit_budget(cfg, obs, st, math.exp(ls), helium)
+        else:
+            chi2, kk, params, q = fit_budget(cfg, obs, st, s_now, helium)
+        score = chi2 + 2 * k + (OVERRIDE_CHI2 if st["seal"] else 0.0)
+        if best is None or score < best[0]:
+            best = (score, params, chi2, k)
+    return best[1], best[2], best[3]
 
 
 def _header_values(path):
@@ -639,65 +684,51 @@ def helium_says(cid, vac):
 
 
 def ordered_speed(cid, cfg, vac):
-    """The effective speed from an ordered test, and whether it came through a gauge certificate: a throughput
-    test does, so a wrong certificate carries into it, while a rate-of-rise test is read with a spinning rotor
-    gauge and does not."""
+    """The effective speed from an ordered test, with the gas-load observation it carries. The contractor brings
+    its own gauge, calibrated against nitrogen, and the report states its factor; its readings owe nothing to the
+    chamber's own certificate. A rate-of-rise test is read with a spinning rotor gauge and needs no correction at
+    all."""
     if not vac:
-        return None, True
+        return None, None
     sp = os.path.join(vac, "speed_test_%s.csv" % cid.lower())
     if os.path.exists(sp):
+        factor = 1.0
         with open(sp) as f:
-            rows = [l for l in f if not l.startswith("#") and not l.startswith("flow")]
+            lines = f.readlines()
+        for line in lines:
+            if line.startswith("#") and "factor" in line:
+                factor = float(line.rsplit("factor", 1)[1].strip().split()[0])
+        rows = [l for l in lines if not l.startswith("#") and not l.startswith("flow")]
         if rows:
-            return float(rows[-1].strip().split(",")[3]), True
+            flow, p_w, p_wo, s = (float(x) for x in rows[-1].strip().split(","))
+            t_h, t_k = _header_values(sp)
+            ob = dict(kind="speed-test", date=AUDIT, t_h=t_h, t_k=t_k, vent="air", load="",
+                      value=p_wo * factor, gauge=True, speed=s, sd=TEST_SD["speed-test"])
+            return s, ob
     ror = rate_of_rise_says(cid, cfg, vac)
     if ror and ror["p_base"] > 0:
-        return ror["q_total"] / ror["p_base"], False
-    return None, True
+        ob = dict(kind="rate-of-rise", date=AUDIT, t_h=ror["t_h"], t_k=ror["t_k"], vent="air", load="",
+                  value=ror["q_total"], gauge=False, speed=1.0, sd=TEST_SD["rate-of-rise"])
+        return ror["q_total"] / ror["p_base"], ob
+    return None, None
 
 
-def surviving_speed(cid, cfg, data, changed):
-    """The latest speed test that still describes the chamber: after any trap, and before any turbo change."""
-    rows = sorted([r for r in data["speed"] if r["chamber"] == cid], key=lambda r: r["date"])
-    ok = []
-    for r in rows:
-        if cfg["trap_from"] and r["date"] < cfg["trap_from"]:
-            continue
-        if changed and r["date"] >= changed:
-            continue
-        ok.append(r)
-    if not ok:
-        return None
-    if changed:
-        return None                                   # a test before the change does not describe the pump now
-    return float(ok[-1]["s_eff_l_s"])
+def speed_periods(cid, cfg, data, changed):
+    """The dates on which the chamber's speed changed: a trap or baffle fitted in the port, and the turbo becoming
+    another pump. Between two of them the speed is one constant (MS-BP clause 4: the pump curves are flat at base
+    pressure)."""
+    return sorted(d for d in (cfg["trap_from"], changed) if d)
 
 
-def baseline_speed(cid, cfg, data, certs, fix, changed, k=1.0):
-    """Failing a test, the speed now from the chamber's own records. The gas budget is identified from the entries
-    before the turbo changed, where the old speed test still described the pump; the same budget evaluated at a
-    later entry's condition, divided by that entry's true pressure, gives the speed now."""
-    old = [r for r in sorted(data["speed"], key=lambda r: r["date"])
-           if r["chamber"] == cid and r["date"] < changed
-           and not (cfg["trap_from"] and r["date"] < cfg["trap_from"])]
-    if not old:
-        return None
-    s_old = float(old[-1]["s_eff_l_s"]) / k
-    pts = correct_drift(entry_points(cid, cfg, data, certs, fix), cid, data)
-    if k != 1.0:
-        pts = [dict(q, p_n2=q["p_n2"] * k) for q in pts]
-    before = [p for p in pts if p["date"] < changed]
-    after = [p for p in pts if p["date"] >= changed]
-    if not before or not after:
-        return None
-    c_w, q_l, _qv, _ss, _q = fit_split(cfg, before, s_old)
-    est = []
-    for p in after:
-        qw = c_w * nominal_wall(cfg, p)
-        qp = perm_of(cfg, p)
-        parts = {"wall-outgassing": qw, "permeation": qp, "air-leak": q_l}
-        est.append((qw + qp + q_l) / (p["p_n2"] * gas_correction(parts, seal_at(cfg, p["date"])[0])))
-    return sum(est) / len(est)
+def period_of(date, cuts):
+    return sum(1 for c in cuts if date >= c)
+
+
+def shop_speed_in(cid, data, cuts, period, k):
+    """The latest of the shop's own speed tests taken in a period, read back through the chamber's certificate."""
+    rows = [r for r in sorted(data["speed"], key=lambda r: r["date"])
+            if r["chamber"] == cid and period_of(r["date"], cuts) == period]
+    return float(rows[-1]["s_eff_l_s"]) / k if rows else None
 
 
 # ---------------------------------------------------------------------------------------------------- audit
@@ -747,181 +778,77 @@ def certificate_error(cid, cfg, data):
 
 
 def front_end(cid, data, certs, fix, vac):
-    """The chamber as it stands, the records that still describe it and the speed: everything the audit settles
-    before it attributes the gas load to a mechanism.
+    """The chamber as it stands, the observations of its gas load and the speed in force on each: everything the
+    audit settles before it attributes the gas load to a mechanism.
 
     This is a function rather than the first half of `audit_chamber` because the authoring studies need exactly
     the audit's own front end. A study that keeps its own copy measures the copy: when the copy falls behind, the
-    study reports its own drift as a finding."""
+    study reports its own drift as a finding.
+
+    Every kept entry is an observation, whichever pump or port it was taken with: the gas load does not depend on
+    the pump. What does is the speed it is multiplied by, so each entry takes the speed in force on its date. The
+    speed now is the ordered test's, or the latest shop test since the last change; failing both it is left to the
+    fit (`None`), with the range it may lie in."""
     cfg = with_controller_pump(cid, chamber_config(cid, data), data)
     changed = pump_changed_on(cid, data)
     # the certificate is checked first, because every pressure and every reported speed of this chamber has to be
     # put right by the same factor before anything is fitted
     k, k_serial = certificate_error(cid, cfg, data)
-    s_eff, from_gauge = ordered_speed(cid, cfg, vac)
-    if s_eff is None:
-        s_eff, from_gauge = surviving_speed(cid, cfg, data, changed), True
-    if s_eff is None and changed:
-        s_eff, from_gauge = baseline_speed(cid, cfg, data, certs, fix, changed, k), False
-    if s_eff is None:
-        s_eff, from_gauge = rated_at(cfg), False
-    if from_gauge:
-        s_eff = s_eff / k                             # the contractor read it with the same certificate
+    cuts = speed_periods(cid, cfg, data, changed)
+    now = period_of(AUDIT, cuts)
+    s_now, order_ob = ordered_speed(cid, cfg, vac)
+    if s_now is None:
+        s_now = shop_speed_in(cid, data, cuts, now, k)
 
     pts = correct_drift(entry_points(cid, cfg, data, certs, fix), cid, data)
-    if changed:
-        pts = [p for p in pts if p["date"] >= changed] or pts
     if k != 1.0:
         # only the readings taken with the gauge whose certificate is out need putting right; a chamber that also
         # carries the reference instrument of clause 5 has readings that were never affected
         pts = [dict(q, p_n2=q["p_n2"] * k) if (k_serial is None or q["serial"] == k_serial) else q
                for q in pts]
-    return cfg, pts, s_eff
-
-
-def audit_chamber(cid, data, certs, fix, vac):
-    cfg, pts, s_eff = front_end(cid, data, certs, fix, vac)
-
+    obs = []
+    for p in pts:
+        per = period_of(p["date"], cuts)
+        speed = "now" if per == now else shop_speed_in(cid, data, cuts, per, k)
+        if speed is None:
+            continue                                  # a period with no speed test describes nothing usable
+        obs.append(dict(kind="entry", date=p["date"], t_h=p["t_h"], t_k=p["t_k"], vent=p["vent"],
+                        load=p["load"], value=p["p_n2"], gauge=True, speed=speed, sd=READ_SD,
+                        serial=p["serial"]))
+    if order_ob is not None:
+        obs.append(order_ob)
     rga = rga_says(cid, vac)
-    nd = len(durations(pts))
-    if nd >= 2:
-        parts, q_total = identify_from_log(cid, cfg, pts, s_eff, data, rga)
-    else:
-        parts, q_total = identify_from_rga(cid, cfg, pts, s_eff, data, rga, vac)
-
-    s_rated = series(curve(TURBO[cfg["turbo"]], q_total / max(s_eff, 1.0)), cfg["c_port"])
-    if s_eff < PUMP_GATE * s_rated:
-        cause = "pump-speed"
-    else:
-        cause = max(parts, key=lambda k: parts[k])
-    return dict(chamber=cid, cause=cause, q_total=q_total, s_eff=s_eff, parts=parts, s_rated=s_rated,
-                durations=nd)
+    if rga:
+        # an analyser's partial pressures are true pressures: their sum is the whole pressure at the test's own
+        # pumping time and wall temperature, with no correction for composition, and times the speed now it is the
+        # gas load there
+        obs.append(dict(kind="rga", date=AUDIT, t_h=rga["t_h"], t_k=rga["t_k"], vent="air", load="",
+                        value=sum(rga["pp"].values()), gauge=False, speed="now", sd=TEST_SD["rga"]))
+    rated = rated_at(cfg)
+    return cfg, obs, s_now, (0.05 * rated, 1.2 * rated)
 
 
-def at_reference(cfg, c_w, q_l, qv0, tau):
-    """The gas budget evaluated at MS-BP's reference condition: 16 h, 20 C, an air vent and no load, with the
-    chamber's internal surfaces and seal as they are on the audit date."""
-    qw = c_w * q_wall_nominal(cfg["surfaces"], REF_H, "air", T_REF)
-    mat, cm = seal_at(cfg, AUDIT)
+def at_reference(cfg, params):
+    """The gas budget evaluated at MS-BP's reference condition: REF_H hours after an air vent, 20 C, no load, with
+    the chamber's internal surfaces and seal as they are on the audit date."""
+    qw = params["c_w"] * q_wall_nominal(cfg["surfaces"], REF_H, "air", T_REF)
+    mat, cm = _seal_for(cfg, AUDIT, params["seal"])
     qp = q_perm(mat, cm, T_REF)
-    qv = qv0 * math.exp(-REF_H / tau) if qv0 and tau else 0.0
-    parts = {"wall-outgassing": qw, "permeation": qp, "air-leak": max(q_l, 0.0), "virtual-leak": qv}
+    qv = params["qv0"] * math.exp(-REF_H / params["tau"]) if params["qv0"] and params["tau"] else 0.0
+    parts = {"wall-outgassing": qw, "permeation": qp, "air-leak": params["leak"], "virtual-leak": qv}
     return parts, sum(parts.values())
 
 
-def identify_from_log(cid, cfg, pts, s_eff, data, rga):
-    """The ordinary case: the log spans more than one pumping time, so the wall coefficient and the constant part
-    of the gas load separate. A trapped volume is admitted only on evidence."""
-    c_w, q_l, _qv, ss_leak, _q = fit_split(cfg, pts, s_eff)
-    trapped = best_trapped(cfg, pts, s_eff) if len(pts) >= 3 else None
-    use_trapped = False
-    if trapped:
-        better = trapped[3] < 0.25 * ss_leak
-        if rga is not None:
-            # a gas of nitrogen and oxygen in air's proportions is a leak or a trapped volume; whether it decays
-            # is what separates the two
-            air_like = rga["kind"] == "air" and rga["o2_n2"] < 0.45
-            use_trapped = air_like and trapped[3] < 0.60 * ss_leak
-        else:
-            use_trapped = better and 0.5 <= trapped[4] <= 48.0
-    if use_trapped:
-        c_w, q_l, qv0, _ss, tau = trapped
-        return at_reference(cfg, c_w, q_l, qv0, tau)
-    return at_reference(cfg, c_w, q_l, 0.0, None)
-
-
-WALL_WATER = (SPECIES["wall-outgassing"]["h2o"] + SPECIES["wall-outgassing"]["h2"]) / sum(
-    SPECIES["wall-outgassing"].values())
-
-
-def identify_from_rga(cid, cfg, pts, s_eff, data, rga, vac=None):
-    """A chamber whose log holds only one pumping time. The wall gas load cannot be separated from the constant
-    part by the log alone, so the split comes from the composition instead.
-
-    Of the mechanisms, only the wall admits water, so the water the analyser reads fixes the wall's gas load. The
-    analyser's partial pressures are true pressures and need no gas correction, so their sum times the effective
-    speed is the whole gas load at the test's condition. Permeation is computable from the seal, and what is left
-    is air through a channel: a leak, or a trapped volume if the chamber was sound when it was first speed-tested
-    and has been worked on since.
-
-    Everything is done at the test's own pumping time and wall temperature, and only then referred to the
-    reference condition, so the log's temperature never enters."""
+def audit_chamber(cid, data, certs, fix, vac):
+    cfg, obs, s_now, s_range = front_end(cid, data, certs, fix, vac)
     hel = helium_says(cid, vac)
-    if rga is None and hel is not None:
-        # The helium test gives the real leak and leaves everything else as it was. The gas load at the single
-        # pumping time is p S_eff as before; permeation is computable; the leak is measured; and the wall and any
-        # trapped volume share what remains. A trapped volume is what a chamber worked on since it was last sound
-        # has, and the wall takes the rest at the table's nominal coefficient.
-        q_meas = sum(q["p_n2"] for q in pts) / len(pts) * s_eff
-        qp = q_perm(*seal_at(cfg, AUDIT), t_k=pts[-1]["t_k"])
-        w_t = q_wall_nominal(cfg["surfaces"], pts[-1]["t_h"], "air", pts[-1]["t_k"])
-        corr = 1.0
-        for _ in range(20):
-            total = q_meas * corr
-            rest = max(total - qp - hel["leak"], 0.0)
-            trapped = rest if was_sound_and_worked_on(cid, cfg, data) else 0.0
-            wall = 0.0 if trapped else rest
-            new = gas_correction({"wall-outgassing": wall, "permeation": qp, "air-leak": hel["leak"],
-                                  "virtual-leak": trapped}, seal_at(cfg, pts[-1]["date"])[0])
-            if abs(new - corr) < 1e-10:
-                corr = new
-                break
-            corr = new
-        total = q_meas * corr
-        rest = max(total - qp - hel["leak"], 0.0)
-        if was_sound_and_worked_on(cid, cfg, data):
-            tau = 9.0
-            c_w = 1.0 * 0.0
-            return at_reference(cfg, c_w, hel["leak"], rest * math.exp(pts[-1]["t_h"] / tau), tau)
-        c_w = rest / w_t if w_t > 0 else 1.0
-        return at_reference(cfg, c_w, hel["leak"], 0.0, None)
-    ror = rate_of_rise_says(cid, cfg, vac)
-    if rga is None and ror is not None:
-        # A rate-of-rise is read with a spinning rotor gauge, so it gives the whole gas load at its own condition
-        # without any correction for composition. The split is then needed only to carry that total from the
-        # test's wall temperature to 20 C, where it moves the answer by a fraction of what it would if it had to
-        # fix the total as well: permeation is computable, and the wall takes the rest.
-        qp_t = q_perm(*seal_at(cfg, AUDIT), t_k=ror["t_k"])
-        w_t = q_wall_nominal(cfg["surfaces"], ror["t_h"], "air", ror["t_k"])
-        c_w = max((ror["q_total"] - qp_t) / w_t, 0.0) if w_t > 0 else 1.0
-        return at_reference(cfg, c_w, 0.0, 0.0, None)
-    if rga is None:
-        # Nothing to separate the wall coefficient from the constant part: a least squares lands anywhere along
-        # the line that fits the single pumping time, and this is the chamber the audit order is for.
-        c_w, q_l, _qv, _ss, _q = fit_split(cfg, pts, s_eff)
-        return at_reference(cfg, c_w, q_l, 0.0, None)
-    pp = rga["pp"]
-    t_test, temp_test = rga["t_h"], rga["t_k"]
-    q_total = sum(pp.values()) * s_eff
-    q_wall_t = (pp.get("h2o", 0.0) + pp.get("h2", 0.0)) * s_eff / WALL_WATER
-    q_perm_t = q_perm(*seal_at(cfg, AUDIT), t_k=temp_test)
-    nominal = q_wall_nominal(cfg["surfaces"], t_test, "air", temp_test)
-    c_w = q_wall_t / nominal if nominal > 0 else 1.0
-    channel = max(q_total - q_wall_t - q_perm_t, 0.0)
-    if was_sound_and_worked_on(cid, cfg, data):
-        tau = 9.0
-        return at_reference(cfg, c_w, 0.0, channel * math.exp(t_test / tau), tau)
-    return at_reference(cfg, c_w, channel, 0.0, None)
-
-
-def was_sound_and_worked_on(cid, cfg, data):
-    """True when the chamber's own earliest speed test shows it was close to its specification then, and the
-    maintenance log records work on it since the last base-pressure entry it had before that work."""
-    tests = sorted([r for r in data["speed"] if r["chamber"] == cid], key=lambda r: r["date"])
-    if not tests:
-        return False
-    first = tests[0]
-    p_then = float(first["p_without_flow_mbar"])
-    reg = [r for r in data["register"] if r["chamber"] == cid][0]
-    sound_then = p_then <= 2.0 * float(reg["p_spec_mbar"])
-    work = [r for r in data["maint"] if r["chamber"] == cid and r["date"] > first["date"]
-            and r["date"] <= AUDIT]
-    return bool(sound_then and work)
-
-
-def _trapped_from_one(rows, cfg):
-    r = rows[-1]
-    return max(r["residual"], 0.0) * math.exp(r["t_h"] / 9.0)
+    params, chi2, k = choose_budget(cid, cfg, data, obs, s_now, s_range, hel["leak"] if hel else None)
+    parts, q_total = at_reference(cfg, params)
+    s_eff = params["s_now"]
+    s_rated = rated_at(cfg)
+    cause = "pump-speed" if s_eff < PUMP_GATE * s_rated else max(parts, key=lambda k: parts[k])
+    return dict(chamber=cid, cause=cause, q_total=q_total, s_eff=s_eff, parts=parts, s_rated=s_rated,
+                params=params, chi2=chi2, n_obs=len(obs))
 
 
 def main(argv):

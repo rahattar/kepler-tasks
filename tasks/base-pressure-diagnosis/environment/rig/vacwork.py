@@ -4,8 +4,10 @@ fleet.BUDGET tests across the whole fleet, placed once.
     python3 -I vacwork.py status OUT_DIR STATE_FILE
     python3 -I vacwork.py submit OUT_DIR STATE_FILE  < plan.json
 
-plan.json: {"tests": [{"chamber": "VC03", "test": "rga"}, ...]}, 1 to BUDGET entries, the test one of
-rate-of-rise, speed-test, rga or helium, no entry repeated.
+plan.json: {"tests": [{"chamber": "VC03", "test": "rga", "pumping_time_h": 20}, ...]}, 1 to BUDGET entries, the
+test one of rate-of-rise, speed-test, rga or helium, no entry repeated. `pumping_time_h` is optional: the hours from
+the start of roughing at which the measurement is taken, from TEST_H_MIN to TEST_H_MAX, and DEFAULT_TEST_H when the
+plan names none. A helium test is taken with the chamber under vacuum and does not depend on it.
 
 The order is charged to the state file before any record is written, and a state that cannot be read counts as
 already ordered, so no test can be had twice. Records are created in OUT_DIR as new files only, never following a
@@ -27,6 +29,10 @@ import bpphys as P                                                      # noqa: 
 import fleet as F                                                       # noqa: E402
 
 TESTS = ("rate-of-rise", "speed-test", "rga", "helium")
+DEFAULT_TEST_H = F.DEFAULT_TEST_H    # the contractor's standing pumping time, and its range: one source, sealed
+TEST_H_MIN = F.TEST_H_MIN
+TEST_H_MAX = F.TEST_H_MAX
+LAB_SEED = 91137                    # the laboratory's scatter; authoring studies vary it in memory, never here
 NOFOLLOW = os.O_NOFOLLOW | getattr(os, "O_CLOEXEC", 0)
 ROR_MIN = 60
 ROR_STEP = 10
@@ -74,35 +80,54 @@ def save(state, s):
     os.replace(tmp, state)
 
 
+def parse_hours(t):
+    """The plan's pumping time, or the default. A number in range; never a boolean, a string or a non-finite."""
+    if "pumping_time_h" not in t:
+        return DEFAULT_TEST_H
+    v = t["pumping_time_h"]
+    assert isinstance(v, (int, float)) and not isinstance(v, bool)
+    v = float(v)
+    assert math.isfinite(v) and TEST_H_MIN <= v <= TEST_H_MAX
+    return round(v, 1)
+
+
 def parse(text):
     try:
         plan = json.loads(text)
+        assert isinstance(plan, dict) and set(plan) == {"tests"}
         tests = plan["tests"]
         assert isinstance(tests, list) and 1 <= len(tests) <= F.BUDGET
         out = []
         for t in tests:
+            assert isinstance(t, dict) and set(t) <= {"chamber", "test", "pumping_time_h"}
             cid = str(t["chamber"]).strip().upper()
             kind = str(t["test"]).strip().lower()
             assert cid in F.CHAMBER_IDS and kind in TESTS
-            out.append((cid, kind))
-        assert len(set(out)) == len(out)
+            out.append((cid, kind, parse_hours(t)))
+        assert len({(c, k) for c, k, _h in out}) == len(out)
         return out
     except Exception:
-        fail('plan must be {"tests": [{"chamber": "VC01".."VC10", "test": "%s"}, ...]}, 1 to %d entries, '
-             "none repeated" % (" | ".join(TESTS), F.BUDGET))
+        fail('plan must be {"tests": [{"chamber": "VC01".."VC10", "test": "%s", "pumping_time_h": %g..%g}]}, '
+             "1 to %d entries, none repeated; pumping_time_h is optional and defaults to %g"
+             % (" | ".join(TESTS), TEST_H_MIN, TEST_H_MAX, F.BUDGET, DEFAULT_TEST_H))
 
 
 def rng_for(cid, kind):
-    return np.random.default_rng([91137, F.CHAMBER_IDS.index(cid), TESTS.index(kind)])
+    return np.random.default_rng([LAB_SEED, F.CHAMBER_IDS.index(cid), TESTS.index(kind)])
+
+
+def day_temperature(cid):
+    """The chamber wall temperature on the day the contractor runs this quarter's tests."""
+    return F.AUDIT_TESTS[cid][1]
 
 
 # ----------------------------------------------------------------------------------------------------------------
-def make_rate_of_rise(cid):
+def make_rate_of_rise(cid, t0):
     """Pressure against time with the high-vacuum valve closed, read with a spinning rotor gauge, which needs no
     gas correction."""
     ch = F.BY[cid]
     c = F.config(ch)
-    t0, temp = F.AUDIT_TESTS[cid]
+    temp = day_temperature(cid)
     g = rng_for(cid, "rate-of-rise")
     pts = P.rate_of_rise(c, t0, ROR_MIN, ROR_STEP, temp + 273.15)
     base = pts[0][1] * float(math.exp(g.normal(0, 0.003)))
@@ -118,10 +143,10 @@ def make_rate_of_rise(cid):
     return "rate_of_rise_%s.csv" % cid.lower(), "\n".join(head + rows) + "\n"
 
 
-def make_speed_test(cid):
+def make_speed_test(cid, t0):
     ch = F.BY[cid]
     c = F.config(ch)
-    t0, temp = F.AUDIT_TESTS[cid]
+    temp = day_temperature(cid)
     g = rng_for(cid, "speed-test")
     s = P.s_eff(c, P.p_base(c, P.q_total(c, t0, "air", temp + 273.15)))
     base_ind = P.indicated(c, t0, "air", temp + 273.15)
@@ -137,10 +162,10 @@ def make_speed_test(cid):
     return "speed_test_%s.csv" % cid.lower(), "\n".join(head + rows) + "\n"
 
 
-def make_rga(cid):
+def make_rga(cid, t0):
     ch = F.BY[cid]
     c = F.config(ch)
-    t0, temp = F.AUDIT_TESTS[cid]
+    temp = day_temperature(cid)
     g = rng_for(cid, "rga")
     pp = P.partials(c, t0, "air", temp + 273.15)
     head = ["# residual gas analysis, chamber %s" % cid,
@@ -156,7 +181,7 @@ def make_rga(cid):
     return "rga_%s.csv" % cid.lower(), "\n".join(head + rows) + "\n"
 
 
-def make_helium(cid):
+def make_helium(cid, _t0=None):
     """The detector's helium leak rate against time while each region is hooded in turn. A channel in molecular
     flow answers in seconds; gas crossing an elastomer seal by permeation answers over minutes."""
     ch = F.BY[cid]
@@ -206,20 +231,24 @@ def main():
     if cmd == "status":
         print(json.dumps(dict(ordered=s["ordered"], tests=s["tests"], budget=F.BUDGET,
                               tests_remaining=0 if s["ordered"] else F.BUDGET,
-                              tests_available=list(TESTS), chambers=list(F.CHAMBER_IDS)), indent=1))
+                              tests_available=list(TESTS), chambers=list(F.CHAMBER_IDS),
+                              pumping_time_h=dict(default=DEFAULT_TEST_H, min=TEST_H_MIN, max=TEST_H_MAX)),
+                         indent=1))
         return
     if s["ordered"]:
         fail("the audit test order has already been placed", 3)
     plan = parse(sys.stdin.read(65536))
-    s = dict(ordered=True, tests=[dict(chamber=c, test=k) for c, k in plan])
+    s = dict(ordered=True, tests=[dict(chamber=c, test=k, pumping_time_h=h) for c, k, h in plan])
     save(state, s)                                   # charged before any record is written
     dfd = open_dir(out)
     index = []
-    for cid, kind in plan:
-        name, text = MAKERS[kind](cid)
+    for cid, kind, hours in plan:
+        name, text = MAKERS[kind](cid, hours)
         write_file(dfd, name, text)
-        index.append(dict(file=name, chamber=cid, test=kind))
-    lines = ["file,chamber,test"] + ["%s,%s,%s" % (r["file"], r["chamber"], r["test"]) for r in index]
+        index.append(dict(file=name, chamber=cid, test=kind, hours=hours))
+    lines = ["file,chamber,test,pumping_time_h"] + [
+        "%s,%s,%s,%s" % (r["file"], r["chamber"], r["test"], "" if r["test"] == "helium" else "%.1f" % r["hours"])
+        for r in index]
     write_file(dfd, "vacwork_index.csv", "\n".join(lines) + "\n")
     print(json.dumps(dict(ordered=True, tests=s["tests"], records=len(index),
                           index="vacwork_index.csv"), indent=1))

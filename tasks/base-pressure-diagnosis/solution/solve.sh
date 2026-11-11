@@ -3,12 +3,13 @@
 set -eu
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# The order buys the only thing the records cannot supply: the composition of the gas in the one chamber whose log
-# holds a single pumping time, which is what separates a trapped volume from wall gas there. Everything else - the
-# speeds of the two chambers whose turbo has changed, the chamber whose gauge certificate is out, and the leak
-# that has to be told from permeation - comes from the records.
+# The order buys the one thing the records cannot supply. VC08's trapped volume appeared when its cryopanel
+# brackets were replaced, and both pumpdowns since are at 16 h: they give its trapped load at 16 h and nothing about
+# how fast it empties, which is what its gas load at the 36 h reference condition turns on. One measurement of the
+# gas load at a longer pumping time settles it; at the contractor's default 16 h it would only repeat the log. The
+# other nine chambers are identified from their own records.
 cat > /tmp/plan.json <<'PLAN'
-{"tests": [{"chamber": "VC08", "test": "rga"}]}
+{"tests": [{"chamber": "VC08", "test": "rga", "pumping_time_h": 36}]}
 PLAN
 vacwork submit < /tmp/plan.json
 

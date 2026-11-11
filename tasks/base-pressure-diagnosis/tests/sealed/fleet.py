@@ -28,6 +28,9 @@ REF_H = 36.0                        # h from the start of roughing, the audit re
 AUDIT = "2026-11-02"
 CHAMBER_IDS = ["VC%02d" % i for i in range(1, 11)]
 BUDGET = 1                          # tests in the one audit order
+DEFAULT_TEST_H = 16.0               # the contractor's standing pumping time, used when a plan names none
+TEST_H_MIN = 4.0                    # the shortest and longest pumping times the contractor will test at
+TEST_H_MAX = 48.0
 EXAMPLE = "VC00"                    # the worked example chamber, outside the fleet
 
 
@@ -348,9 +351,9 @@ LEAK_AT = {
     "VC10": "chamber weld seam",
 }
 
-# The condition at which the contractor runs this quarter's audit tests on each chamber: the pumping time in hours
-# at which the measurement is taken, and the chamber wall temperature on the day. Neither is the reference
-# condition of MS-BP clause 2.
+# The contractor's standing pumping time for each chamber and the chamber wall temperature on the day it runs
+# this quarter's tests. The order may name another pumping time (DEFAULT_TEST_H to TEST_H_MAX); the wall
+# temperature is the day's either way, and is not the reference condition of MS-BP clause 2.
 AUDIT_TESTS = {
     "VC01": (16.0, 14.9), "VC02": (16.0, 16.3), "VC03": (16.0, 13.3), "VC04": (16.0, 15.4),
     "VC05": (16.0, 13.8), "VC06": (16.0, 13.0), "VC07": (16.0, 15.0), "VC08": (16.0, 13.7),
