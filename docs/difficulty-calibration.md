@@ -405,7 +405,7 @@ sizing, and the right two tests in the one booking. That is every layer in the t
 fact (FE-4011's density applied to PV-4001's trend) that had been the only step ever to separate a local run.
 
 Local probes of the same bundle, with the model forced to the screen's (`model: "opus"`, effort low): 7 of 7 and
-7 of 7 in about three minutes each, the third still running after nine minutes when this was written. The local
+7 of 7 in about three minutes each; the third did not finish and left no study, so the count is 2 of 2 completed runs. The local
 probes that had read 1 of 3 on rounds 2, 3 and 4 were on the session's earlier, weaker model. **With the model
 matched, the local probe reproduces the official screen.** Every local count in the flare sections above is a
 statement about the weaker model and nothing else.
@@ -432,3 +432,25 @@ back (the controller tasks); a program that must stay right on hidden cases over
 (turbine-tool-repair went 0 of 8 and was accepted); a measurement plan that a wrong first choice leaves
 unrecoverable. Measure the core of any of them on three matched probes first, before the evidence harness, the
 second implementation or the README exist.
+
+### Correction to the section above (Alex, Nov 11): the placement of the traps, not the shape
+
+"The shape is the problem" overreaches. Set flare-load-study beside bore-form-acceptance and the difference is
+where the traps sat, not the domain or the deliverable:
+
+| | flare-load-study, every round | bore-form, the layer that worked |
+|---|---|---|
+| where the fact lives | a cell of text in one record: "fixed relative density 0.780", "ranged for specific gravity 0.500", a condensate outlet column, a dated log line | in no document; only in nine records taken together |
+| what the first reading sees | an odd cell, named | nothing |
+| the obvious check on the wrong answer | fails (pre-overhaul rows miss the data sheet by 3.6 per cent) | passes (the plant's own report carries the same error) |
+| the obvious diagnostic | finds it | pooled over two machine states, comes back clean |
+
+"Unstated in the standard" was never the test. A model that reads every cell treats a stated oddity as a
+signpost whichever file it is in. The test for a trap is:
+
+1. no cell of text names it; it exists only in numbers, across records the documented method never combines;
+2. the natural route is self-consistent, and the checks a careful solver runs on it (the plant's own report, a
+   closure rule, a peer ratio, a step search) pass;
+3. the first-order diagnostic that would expose it returns a clean bill, so a solver who looks is reassured;
+4. it is still fair: derivable from the records together by a physical argument, with at most an oblique note
+   that records a circumstance without naming the error or its size.
