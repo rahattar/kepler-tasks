@@ -24,7 +24,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import bpphys as P                                                      # noqa: E402
 
-REF_H = 16.0                        # h from the start of roughing, the audit reference condition
+REF_H = 36.0                        # h from the start of roughing, the audit reference condition
 AUDIT = "2026-11-02"
 CHAMBER_IDS = ["VC%02d" % i for i in range(1, 11)]
 BUDGET = 1                          # tests in the one audit order
@@ -98,12 +98,13 @@ FIXTURES = {
 
 # ----------------------------------------------------------------------------------------------------------------
 # The example chamber: sound records throughout, one mechanism plainly dominant, no change in the maintenance log,
-# one gauge, a current speed test. Its audit result is given in the worked example, since MS-BP defines it.
+# one gauge, a current speed test. No audited result is published for it: it is there to show the record formats
+# and a chamber in sound condition, not to be a worked answer.
 EX = Ch(
     EXAMPLE,
-    reg_entry(2000, "TMP-1100", 1500, "fluoroelastomer", 240,
+    reg_entry(2000, "TMP-1100", 1500, "fluoroelastomer", 170,
               [(6.0, "stainless steel, as machined")], 5e-7),
-    true=dict(wall_factor=1.15, leak=1.0e-5),
+    true=dict(wall_factor=2.00, leak=1.0e-5),
     events=[("2026-06-15", "note", "Annual inspection: door seal sound, no work required.")],
     log=[("2026-08-04", "P1", "air", 16.0, 25.5, "CC-7000", None),
          ("2026-08-25", "P2", "air", 12.0, 24.2, "CC-7000", None),
@@ -242,7 +243,7 @@ FLEET = [
        reg_entry(1600, "TMP-1600", 1100, "fluoroelastomer", 170,
                  [(4.8, "stainless steel, electropolished")], 1.5e-7),
        true=dict(wall_factor=1.40, leak=9.0e-6, pump_actual="TMP-700"),
-       events=[("2026-07-20", "trapped", (2.0e-3, 6.0)),
+       events=[("2026-07-20", "trapped", (4.5e-4, 24.0)),
                ("2026-07-20", "note", "Substrate fixture plate refitted with new clamping bars.")],
        log=[("2026-08-03", "P1", "air", 16.0, 25.5, "CC-7107", None),
             ("2026-08-24", "P2", "nitrogen", 20.0, 24.3, "CC-7107", None),
@@ -260,7 +261,7 @@ FLEET = [
        reg_entry(2200, "TMP-1100", 1300, "fluoroelastomer", 200,
                  [(5.2, "stainless steel, electropolished")], 1.2e-7),
        true=dict(wall_factor=1.30, leak=7.0e-6),
-       events=[("2026-10-06", "trapped", (9.0e-4, 9.0)),
+       events=[("2026-10-06", "trapped", (3.7e-4, 32.0)),
                ("2026-10-06", "note", "Cryopanel brackets replaced.")],
        log=[("2026-10-13", "P1", "air", 16.0, 16.7, "CC-7108", None),
             ("2026-10-27", "P2", "air", 16.0, 14.6, "CC-7108", None)],

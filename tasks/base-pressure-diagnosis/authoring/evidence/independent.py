@@ -20,7 +20,7 @@ import os
 import numpy as np
 from scipy.optimize import least_squares, nnls
 
-REF_HOURS = 16.0
+REF_HOURS = 36.0
 T0 = 293.15
 RGAS = 8.3145
 EW = 30.0e3

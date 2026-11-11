@@ -169,3 +169,76 @@ is the easiness bar: low effort is at 2 of 3 after three rounds of hardening, ag
 The measured path to the bar is above; it is Alex's call whether to spend it.
 
 The instruction is a draft awaiting Alex's rewrite, with the fact sheet in `fact-sheet-base-pressure.md`.
+
+---
+
+# STATE OF PLAY — 11 November 2026, 01:00 (mid-rebuild, do not submit)
+
+The bundle on this branch is **part way through a redesign** and will not pass its own preflight. Three checks
+fail on purpose (the README's fleet ranges for `tau_h`, `q_total` and `p_base` are stale until the physics is
+frozen). Do not package or submit it in this state.
+
+## Why it is being rebuilt
+
+The fourth submission passed every structural and quality check and was then failed on difficulty: **8 of 8
+official attempts solved it**, in 16 to 29 minutes of an eight-hour budget, against a bar of at most 5 of 8.
+
+The root cause is one number. MS-BP clause 2 put the reference condition at **16 h**, and all ten chambers have
+pumpdowns at exactly 16.0 h. So `q_total` at the reference condition was just *corrected pressure x correct
+speed* — a product of two measurements. The mechanism split, which is the only hard inference in the task, was
+worth **exactly 0.0%** of the graded answer. That is why every attempt passed, why they clustered at ~1.3% gas
+load and ~0.5% speed against 4.0%/3.0% bands, and why `hedge_study` found 27 of 40 wrong attributions still
+landing inside the band. The evidence had measured the defect; the author read it as reassurance.
+
+Two framings in the review that are **wrong**, recorded so nobody rebuilds on them:
+- "The fleet is 70 observations against 40 unknowns, 20 of them discarded." `p_without_flow_mbar` carries no
+  pumping time and no wall temperature, so it is not a gas-load observation. There is no discarded-observation
+  problem.
+- A table of "cost of a wrong attribution by reference time" circulated with wrong numbers. It called
+  `components(cfg, t, 293.15)`, and that function's third argument is the **vent gas**, not the temperature.
+
+## What has been done (step 1 of 4)
+
+- Reference condition **16 h -> 36 h**, off every measured pumpdown time (12/16/20/24/26 h). Changed in all
+  three places: `authoring/provenance/fleet.py`, `solution/diagnose.py` (`REF_H`) and
+  `authoring/evidence/independent.py` (`REF_HOURS`).
+- Trapped volumes into the slow band: VC07 `(4.5e-4, 24.0)`, VC08 `(3.7e-4, 32.0)`, was `(2.0e-3, 6.0)` and
+  `(9.0e-4, 9.0)`. A slow trapped volume is nearly flat across a 12-24 h record window, so the records cannot
+  separate it from a real air leak and the helium test becomes decisive. It still contributes 32-41% of its
+  initial load at 36 h, so `virtual-leak` survives as a dominant cause. Clause 3.3's 48 h bound still covers it.
+- The worked example VC00 re-tuned (`wall_factor` 1.15 -> 2.00, seal 240 -> 170 cm): at 36 h its permeation had
+  closed to 1.8x and `tune.py` wants 3x. Its stale comment about publishing an audited result is corrected.
+- `tune.py` reports 0 failures. All five causes present, every chamber above its specified base pressure.
+
+**Measured effect:** the reference solution now scores **8 of 10**, failing VC08 by -62.6% and VC10 by +9.5%.
+The inference is load-bearing for the first time.
+
+## What remains
+
+1. **Rewrite the reference for the slow-tau regime.** Its guards (`TAU_RANGE`, `TAU_SPREAD`,
+   `MIN_TRAPPED_SHARE`) and `identify_from_rga` were tuned for 6-9 h trapped volumes. This is why it fails VC08
+   and VC10. `independent.py` needs the same treatment.
+2. **Couple the fleet.** Outgassing coefficient per surface-treatment/cleaning class, turbo knockdown per
+   overhaul batch, trapped-volume tau per trap type — shared across chambers and recorded only as class labels,
+   so no chamber is identifiable from its own records alone. Today each chamber is an independent 4-parameter
+   fit, which is why getting the model right once wins ten times.
+3. **Thin the records** so several chambers are underdetermined alone and one test cannot cover the gaps.
+4. **Re-measure everything and retune the tolerances.** 4.0%/3.0% gave the attempts 3x and 6x headroom.
+   Rewrite `plan_sweep` to require *both* solvers to pass, so it cannot measure one solver's blind spot again —
+   the old sweep claimed 2 of 41 orders work, and 4 of the 8 attempts passed with orders it says fail.
+
+## A defect fixed on the way, worth knowing about
+
+The sealed definition exists three times — `authoring/provenance/`, `tests/sealed/`, `environment/rig/sealed/`
+— with **no sync step**. Editing the authoring copy alone leaves the grader scoring against the old truth, which
+presents as the solver being wrong by 7-75% on every chamber. Preflight now checks all three copies are
+byte-identical. Copy by hand after any edit to `fleet.py` or `bpphys.py`.
+
+## Open, and not resolvable here
+
+Two validators contradict each other on `task.toml`. The blocking structure check requires `category`,
+`subcategory` and the three explanations in `[metadata]`; an advisory calls all five unsupported and asks for
+them to be removed, and for `task.name` to change from `afterquery/base-pressure-diagnosis`. Acting on that
+advisory once already cost a submission with seven blocking errors, so the current bundle satisfies the blocking
+checks and keeps drawing the advisory. This needs a dataset owner to arbitrate; do not "fix" it from the
+advisory alone.

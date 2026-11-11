@@ -354,6 +354,26 @@ def check_readme_matches_toml():
           (out.strip().splitlines() or [""])[-1])
 
 
+def check_sealed_copies_agree():
+    """The sealed definition exists three times over - under authoring/provenance, under tests/sealed and under
+    environment/rig/sealed - and nothing syncs them.
+
+    Editing the authoring copy alone leaves the grader scoring against the old truth, which reads as the solver
+    being wrong by tens of per cent on every chamber. Nothing caught that; this does."""
+    for name in ("bpphys.py", "fleet.py"):
+        master = os.path.join("authoring", "provenance", name)
+        if not os.path.exists(os.path.join(TASK, master)):
+            bad("the sealed definition %s exists" % name, master)
+            continue
+        want = read(master)
+        for where in (os.path.join("tests", "sealed", name), os.path.join("environment", "rig", "sealed", name)):
+            if not os.path.exists(os.path.join(TASK, where)):
+                bad("%s is present" % where, "missing")
+                continue
+            check(read(where) == want, "%s is byte-identical to the authoring copy" % where,
+                  "copy it from authoring/provenance/%s" % name)
+
+
 def check_self_contained():
     """The bundle may not name the programme it was written for, anywhere but as this task's own name.
 
@@ -695,6 +715,7 @@ def main():
     check_instruction()
     check_task_toml()
     check_readme_matches_toml()
+    check_sealed_copies_agree()
     check_self_contained()
     check_evidence_is_sound()
     check_claims_about_studies()

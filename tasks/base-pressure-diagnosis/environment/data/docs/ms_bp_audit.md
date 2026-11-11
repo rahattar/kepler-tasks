@@ -11,7 +11,7 @@ through a high-vacuum port, with its gas load measured or inferred from the cham
 
 Every chamber is referred to the same condition, whatever its records were taken at:
 
-- **16.0 hours** from the start of roughing, following a vent to atmospheric air;
+- **36.0 hours** from the start of roughing, following a vent to atmospheric air;
 - the chamber wall at the reference temperature **20.00 C**;
 - **no load** in the chamber (no fixtures, carriers, racks or work).
 

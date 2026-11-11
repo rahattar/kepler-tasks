@@ -45,7 +45,7 @@ import math
 import os
 import sys
 
-REF_H = 16.0
+REF_H = 36.0
 T_REF = 293.15
 R_GAS = 8.3145
 E_W = 30.0e3
