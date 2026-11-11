@@ -7,15 +7,13 @@ RUN pip install --no-cache-dir \
     pytest==8.4.1 \
     pytest-json-ctrf==0.3.5
 
-# parent of the declared artifact, /app/output/diagnosis.csv, which harbor uploads here
+# parent of the declared artifact, /app/output/diagnosis.csv, which the harness copies here
 RUN mkdir -p /app/output
 
 COPY . /tests/
 
-# the agent's /app/data at the same path, read-only, for the record; the sealed fleet stays under /tests (700)
-RUN mkdir -p /app/data && cp -r /tests/app_data/. /app/data/ && chown -R root:root /app/data \
-    && chmod -R a+rX,go-w /app/data \
-    && chmod +x /tests/test.sh \
+# the sealed fleet stays under /tests (700); the grader needs nothing from the agent's /app/data
+RUN chmod +x /tests/test.sh \
     && chmod -R go-rwx /tests \
     && chmod 700 /tests \
     && mkdir -p /logs/verifier \

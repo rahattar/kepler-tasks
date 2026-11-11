@@ -40,6 +40,7 @@ def span(vals, fmt="%g"):
 
 
 def main():
+    C.header(__file__)
     fleet = [ch for ch in C.F.FLEET if ch["id"] in C.F.CHAMBER_IDS]
     cfg = {ch["id"]: C.F.config(ch) for ch in fleet}
     tr = {ch["id"]: C.F.truth(ch) for ch in fleet}

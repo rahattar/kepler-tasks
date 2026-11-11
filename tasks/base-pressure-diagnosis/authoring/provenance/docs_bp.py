@@ -247,6 +247,21 @@ its area to the outgassing sum of MS-BP clause 3.1.
 """ % dict(t0=P.T_REF - 273.15, turbo=turbo_tbl, og=og, seals=seals, air=air, gasf=gasf, mech=mech, fx=fx)
 
 
+def _pct(x):
+    """A relative figure as per cent, without trailing zeros: 0.006 -> '0.6', 0.0025 -> '0.25'."""
+    return ("%.3f" % (100 * x)).rstrip("0").rstrip(".")
+
+
+def _words_n(n):
+    return ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][n]
+
+
+def _hours_words(h):
+    w = {12: "twelve", 14: "fourteen", 16: "sixteen", 20: "twenty", 24: "twenty-four", 44: "forty-four",
+         48: "forty-eight"}
+    return w.get(int(h), "%g" % h) if float(h).is_integer() else "%g" % h
+
+
 def records_format():
     return """# The audit records
 
@@ -273,6 +288,9 @@ admitted through a calibrated leak and the pressure rise is read. `date`, `chamb
 `p_with_flow_mbar`, `p_without_flow_mbar`, `gauge`, `s_eff_l_s` (the speed the contractor reported, the flow divided
 by the pressure rise).
 
+Each `reading_mbar` repeats to %(rd)s per cent (one standard deviation) between pumpdowns at the same condition, and
+each pressure of a speed test to %(sp)s per cent.
+
 ## turbo_controller.csv
 
 What each chamber's turbo controller reported at the weekly check: `date`, `chamber`, `rotor_hz`,
@@ -296,7 +314,7 @@ the previous audit, `vacwork.md` the audit test order, and this file.
 The records of chamber %(ex)s, a chamber of the same shop audited in an earlier quarter, in the same format, so
 that the format and the units are plain, with `about_this_chamber.md` describing them. MS-BP defines what the
 audit reports, so no audited result is given for it.
-""" % dict(audit=F.AUDIT, ex=F.EXAMPLE)
+""" % dict(audit=F.AUDIT, ex=F.EXAMPLE, rd=_pct(F.REPEAT["reading"]), sp=_pct(F.REPEAT["speed_pressure"]))
 
 
 def audit_note():
@@ -309,13 +327,13 @@ before the winter shutdown is planned.
 A few things worth knowing before you start on the records.
 
 **Pumpdown lengths vary.** Chambers are pumped overnight and the length depends on what time the crew vented them,
-so the base-pressure log holds pumpdowns of anything from twelve to twenty-four hours. The shop's own jobs do not
+so the base-pressure log holds pumpdowns of anything from %(hmin)s to %(hmax)s hours. The shop's own jobs do not
 care, but the audit does: MS-BP refers everything to one condition.
 
 **The shop is not temperature controlled.** The south bay runs several degrees warmer than the north bay in summer
 and colder in winter. The daily climate record goes back further than the log.
 
-**Gauges.** The gauge on each chamber is the one the log names. Certificates are in `gauge_certificates.md`. Two
+**Gauges.** The gauge on each chamber is the one the log names. Certificates are in `gauge_certificates.md`. %(n_ig)s
 chambers carry an ionization gauge alongside the cold cathode; where both were read, both readings are in the log.
 Cold cathode heads foul in coating service and we have had them read progressively low between calibrations, which
 is why the ionization gauge is the reference instrument where there is one.
@@ -329,7 +347,9 @@ test no longer describes the pump.
 
 **Last quarter.** Two of the chambers on the list were worked on in the autumn and their records are thin as a
 result. There was not time to repeat the pumpdowns.
-"""
+""" % dict(hmin=_hours_words(min(e[3] for c in F.CHAMBER_IDS for e in F.BY[c]["log"])),
+           hmax=_hours_words(max(e[3] for c in F.CHAMBER_IDS for e in F.BY[c]["log"])),
+           n_ig=_words_n(sum(1 for c in F.CHAMBER_IDS if any(s.startswith("IG") for s in F.BY[c]["certs"]))).capitalize())
 
 
 def vacwork_doc():
@@ -362,20 +382,25 @@ temperature the shop is on the day, and each report gives it, with the pumping t
 **`rate-of-rise`** - the chamber is pumped to its base pressure, the high-vacuum valve is closed, and the pressure
 is logged for 60 minutes at 10 s intervals with a spinning rotor gauge, which needs no gas correction. The record
 holds the time from valve closure, the pressure, the pumping time and wall temperature at which the test was run,
-and the chamber's base pressure over the ten minutes before the valve was closed.
+and the chamber's base pressure over the ten minutes before the valve was closed. Each point of the trace repeats to
+%(ror_t)s per cent and the base pressure to %(ror_b)s per cent.
 
 **`speed-test`** - a throughput test as the shop's own speed tests are run: a known flow of dry nitrogen through a
 calibrated leak, the pressure read with and without the flow on the contractor's own gauge. The record holds the
-flow, both pressures, the speed they give, and the gauge's calibration factor.
+flow, both pressures, the speed they give, and the gauge's calibration factor. Each pressure repeats to %(sp)s per
+cent.
 
 **`rga`** - a quadrupole residual gas analyser on the chamber at its base pressure. The record holds the partial
-pressure of each species it resolves, with the pumping time and wall temperature of the measurement.
+pressure of each species it resolves, with the pumping time and wall temperature of the measurement. Each partial
+pressure repeats to %(rga)s per cent.
 
 **`helium`** - a helium leak test with the chamber under vacuum: the suspect seals and welds are hooded in turn and
-the leak detector's signal is logged against time. The record holds the signal against time for each hooded region.
-It does not depend on the pumping time.
+the leak detector's signal is logged against time. The record holds the signal against time for each hooded region;
+each point repeats to %(he)s per cent. It does not depend on the pumping time.
 """ % dict(budget="%d test%s" % (F.BUDGET, "" if F.BUDGET == 1 else "s"), n=F.BUDGET,
            tmin=F.TEST_H_MIN, tmax=F.TEST_H_MAX, tdef=F.DEFAULT_TEST_H,
+           ror_t=_pct(F.REPEAT["ror_trace"]), ror_b=_pct(F.REPEAT["ror_base"]), sp=_pct(F.REPEAT["speed_pressure"]),
+           rga=_pct(F.REPEAT["rga"]), he=_pct(F.REPEAT["helium"]),
            entries=("The plan holds one entry." if F.BUDGET == 1
                     else "Between 1 and %d entries, no entry repeated." % F.BUDGET))
 

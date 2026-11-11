@@ -1,3 +1,4 @@
+inputs: 01db6d68a29ae073
 Method-free answers, each scored through the task's grader
 ==========================================================
 
@@ -12,6 +13,9 @@ pump-speed for every chamber                                0/10   rejected  -
 the latest reading times the latest speed test              0/10   rejected  -
 the specified base pressure times the latest speed test     0/10   rejected  -
 the register's rated speed and the specified base pressure  0/10   rejected  -
+the latest entry's gas load, as it stands                   0/10   rejected  -
+the latest entry, the table's wall and the rest a leak      0/10   rejected  -
+the latest entry, the rest put down to the wall             0/10   rejected  -
 
 Free passes, chamber by chamber
 ===============================

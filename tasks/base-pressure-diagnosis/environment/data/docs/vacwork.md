@@ -27,15 +27,18 @@ temperature the shop is on the day, and each report gives it, with the pumping t
 **`rate-of-rise`** - the chamber is pumped to its base pressure, the high-vacuum valve is closed, and the pressure
 is logged for 60 minutes at 10 s intervals with a spinning rotor gauge, which needs no gas correction. The record
 holds the time from valve closure, the pressure, the pumping time and wall temperature at which the test was run,
-and the chamber's base pressure over the ten minutes before the valve was closed.
+and the chamber's base pressure over the ten minutes before the valve was closed. Each point of the trace repeats to
+0.25 per cent and the base pressure to 0.3 per cent.
 
 **`speed-test`** - a throughput test as the shop's own speed tests are run: a known flow of dry nitrogen through a
 calibrated leak, the pressure read with and without the flow on the contractor's own gauge. The record holds the
-flow, both pressures, the speed they give, and the gauge's calibration factor.
+flow, both pressures, the speed they give, and the gauge's calibration factor. Each pressure repeats to 0.5 per
+cent.
 
 **`rga`** - a quadrupole residual gas analyser on the chamber at its base pressure. The record holds the partial
-pressure of each species it resolves, with the pumping time and wall temperature of the measurement.
+pressure of each species it resolves, with the pumping time and wall temperature of the measurement. Each partial
+pressure repeats to 1 per cent.
 
 **`helium`** - a helium leak test with the chamber under vacuum: the suspect seals and welds are hooded in turn and
-the leak detector's signal is logged against time. The record holds the signal against time for each hooded region.
-It does not depend on the pumping time.
+the leak detector's signal is logged against time. The record holds the signal against time for each hooded region;
+each point repeats to 2 per cent. It does not depend on the pumping time.

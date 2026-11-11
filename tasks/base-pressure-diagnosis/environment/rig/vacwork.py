@@ -130,7 +130,7 @@ def make_rate_of_rise(cid, t0):
     temp = day_temperature(cid)
     g = rng_for(cid, "rate-of-rise")
     pts = P.rate_of_rise(c, t0, ROR_MIN, ROR_STEP, temp + 273.15)
-    base = pts[0][1] * float(math.exp(g.normal(0, 0.003)))
+    base = pts[0][1] * float(math.exp(g.normal(0, F.REPEAT["ror_base"])))
     head = ["# rate-of-rise test, chamber %s" % cid,
             "# pumping time at valve closure: %.1f h" % t0,
             "# chamber wall temperature: %.1f C" % temp,
@@ -139,7 +139,7 @@ def make_rate_of_rise(cid, t0):
             "seconds,pressure_mbar"]
     rows = []
     for sec, p in pts:
-        rows.append("%d,%.4e" % (sec, p * float(math.exp(g.normal(0, 0.0025)))))
+        rows.append("%d,%.4e" % (sec, p * float(math.exp(g.normal(0, F.REPEAT["ror_trace"])))))
     return "rate_of_rise_%s.csv" % cid.lower(), "\n".join(head + rows) + "\n"
 
 
@@ -151,8 +151,8 @@ def make_speed_test(cid, t0):
     s = P.s_eff(c, P.p_base(c, P.q_total(c, t0, "air", temp + 273.15)))
     base_ind = P.indicated(c, t0, "air", temp + 273.15)
     flow = float("%.3g" % (s * 4.0e-5))
-    p_wo = base_ind * float(math.exp(g.normal(0, 0.005)))
-    p_w = (base_ind + flow / s) * float(math.exp(g.normal(0, 0.005)))
+    p_wo = base_ind * float(math.exp(g.normal(0, F.REPEAT["speed_pressure"])))
+    p_w = (base_ind + flow / s) * float(math.exp(g.normal(0, F.REPEAT["speed_pressure"])))
     head = ["# throughput speed test, chamber %s" % cid,
             "# pumping time: %.1f h" % t0,
             "# chamber wall temperature: %.1f C" % temp,
@@ -176,7 +176,7 @@ def make_rga(cid, t0):
     rows = []
     for name, mz in SPECIES_MZ:
         v = pp.get(name, 0.0)
-        v = v * float(math.exp(g.normal(0, 0.010))) + abs(float(g.normal(0, 8e-12)))
+        v = v * float(math.exp(g.normal(0, F.REPEAT["rga"]))) + abs(float(g.normal(0, 8e-12)))
         rows.append("%s,%d,%.3e" % (name, mz, v))
     return "rga_%s.csv" % cid.lower(), "\n".join(head + rows) + "\n"
 
@@ -205,7 +205,7 @@ def make_helium(cid, _t0=None):
             if region == leak_region:
                 v += sharp * (1.0 - math.exp(-sec / 8.0))
             v += perm_he * share * (1.0 - math.exp(-sec / 180.0))
-            v = v * float(math.exp(g.normal(0, 0.02))) + abs(float(g.normal(0, 3e-12)))
+            v = v * float(math.exp(g.normal(0, F.REPEAT["helium"]))) + abs(float(g.normal(0, 3e-12)))
             rows.append("%s,%d,%.3e" % (region, sec, v))
     return "helium_%s.csv" % cid.lower(), "\n".join(head + rows) + "\n"
 

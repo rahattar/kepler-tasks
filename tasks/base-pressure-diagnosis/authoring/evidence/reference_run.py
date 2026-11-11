@@ -14,6 +14,7 @@ import common as C                                                      # noqa: 
 
 
 def main():
+    C.header(__file__)
     answers = C.reference_answers()
     r = C.score(answers)
     tr = C.truth()
@@ -26,7 +27,8 @@ def main():
     print(C.report("The reference solution against the sealed fleet", rows,
                    ["chamber", "cause", "true cause", "gas load", "true gas load", "deviation",
                     "speed", "true speed", "deviation", ""]))
-    print("order placed: " + ", ".join("%s %s" % (t["chamber"], t["test"]) for t in C.REFERENCE_PLAN))
+    print("order placed: " + ", ".join("%s %s%s" % (t["chamber"], t["test"], " at %g h" % t["pumping_time_h"]
+                                                     if "pumping_time_h" in t else "") for t in C.REFERENCE_PLAN))
     print("tolerances: gas load %.1f%%, speed %.1f%%; gate %d of %d chambers"
           % (100 * C.G.Q_TOL, 100 * C.G.S_TOL, C.G.GATE, len(C.IDS)))
     print("worst deviation: gas load %.2f%%, speed %.2f%%"

@@ -126,6 +126,7 @@ def score_file(path):
 
 
 def main():
+    C.header(__file__)
     answers = C.reference_answers()
     work = tempfile.mkdtemp(prefix="bpd-verifier-")
     rows = []

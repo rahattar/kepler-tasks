@@ -1,24 +1,16 @@
-"""What the audit test order is worth: the reference method under a range of orders.
+"""What the audit test order is worth: both audits under every order the budget allows.
 
-The budget is one test across ten chambers, placed once before any result is known. VC08's log holds a single
-pumping time, so nothing in it separates a trapped volume from wall gas, and the test has to be spent there and
-has to be one that answers that question: a residual gas analysis, which gives the composition outright, or a
-helium test, which measures the real leak and so leaves what remains to be the trapped volume. A rate-of-rise
-gives VC08's whole gas load but not what the gas is, and a throughput test gives a speed that was never in
-doubt.
+The budget is one test across ten chambers, placed once before any result is known, and a gas-load test is taken
+after a pumping time the plan chooses. The space of orders is therefore: each gas-load test (rga, rate-of-rise,
+speed-test) on each chamber at each pumping time in TIMES, a helium test on each chamber (it does not depend on
+the pumping time), and placing no order. The sweep covers all of it, and counts how many orders carry each audit
+to a pass. Do not restate that count elsewhere; read it off plan_sweep.txt, which is where README.md gets it.
 
-Every other chamber is settleable from the records - the two whose turbo has changed, from their pumpdowns either
-side of the change; the one whose gauge certificate is out, from the speed its own throughput tests report; the
-one whose constant gas load could be a leak or permeation, from how it follows the shop temperature - so a test
-spent anywhere else is the test taken from where it was needed.
+Only the ordered chamber reads the order. So for each order the ordered chamber is re-audited and the other nine
+are taken from the audit with no order at all. That shortcut is checked, not assumed: on a sample of orders the
+whole audit is run as well, and the two sheets must be identical.
 
-That is what makes the order load-bearing. The table below is the measurement, not an illustration: it covers
-every order the budget allows - each of the four tests on each of the ten chambers - and placing no order at all,
-and it counts how many of them carry the reference to a pass. Do not restate that count here; read it off
-plan_sweep.txt, which is also where README.md gets it.
-
-This script places each order through the real `vacwork` program and scores the reference's sheet, so the worth of
-an order is measured and not assumed.
+Every order goes through the real `vacwork` program and every sheet through the task's grader.
 
     python3 -I plan_sweep.py  > plan_sweep.txt
 """
@@ -28,54 +20,89 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import common as C                                                      # noqa: E402
+import independent as I                                                 # noqa: E402
+import routes as R                                                      # noqa: E402
 
-T = lambda c, k: dict(chamber=c, test=k)                                # noqa: E731
+TIMES = [16.0, 20.0, 24.0, 30.0, 36.0, 42.0, 48.0]
+GAS_TESTS = ["rga", "rate-of-rise", "speed-test"]
+CHECK_WHOLE = [("VC08", "rga", 36.0), ("VC03", "rate-of-rise", 24.0), ("VC09", "speed-test", 16.0),
+               ("VC05", "helium", None)]
 
-# Exhaustive, not a selection. The budget is one test, so the whole space of orders is every test on every
-# chamber, plus placing no order: 4 x 10 + 1. An earlier version of this script listed ten orders by hand while
-# the prose claimed a result over all forty, which is a claim the study never made.
-WORDS = {"rga": "an analysis", "rate-of-rise": "a rate-of-rise", "helium": "a helium test",
-         "speed-test": "a speed test"}
-PLANS = ([("no order at all", [])]
-         + [("%s on %s" % (WORDS[k], c), [T(c, k)]) for c in C.IDS for k in sorted(WORDS)])
+
+def plans():
+    out = [("no order", None, [])]
+    for cid in C.IDS:
+        for k in GAS_TESTS:
+            for h in TIMES:
+                out.append(("%s %s at %g h" % (cid, k, h), cid, [dict(chamber=cid, test=k, pumping_time_h=h)]))
+        out.append(("%s helium" % cid, cid, [dict(chamber=cid, test="helium")]))
+    return out
 
 
 def main():
-    assert len(PLANS) == len(C.IDS) * len(WORDS) + 1, "the sweep must cover every order"
+    C.header(__file__)
     assert C.F.BUDGET == 1, "this sweep enumerates single-test orders; the budget is %d" % C.F.BUDGET
+    C.require_baseline(C.reference_answers())
+    none_vac = os.path.join(C._work, "no-such-vacwork")
+    base = {"reference": R.run(C.DATA, none_vac), "independent": I.audit_all(C.DATA, None)}
+    data_i = I.shop(C.DATA)
+    fails = []
+
+    # the shortcut, checked
+    for cid, k, h in CHECK_WHOLE:
+        plan = [dict(chamber=cid, test=k, **({"pumping_time_h": h} if h else {}))]
+        vac = C.place_order(plan, "check")
+        whole = {"reference": R.run(C.DATA, vac), "independent": I.audit_all(C.DATA, vac)}
+        for who in whole:
+            part = dict(base[who])
+            part[cid] = (R.run(C.DATA, vac, only=[cid])[cid] if who == "reference"
+                         else I.audit_one(cid, data_i, vac))
+            if C.sheet(part) != C.sheet(whole[who]):
+                fails.append("the %s's whole sheet on %s differs from the ordered chamber's re-audit" % (who, plan))
+
     rows = []
-    good = []
-    for name, plan in PLANS:
-        tag = "sweep-" + name.replace(" ", "-")
-        if plan:
-            vac = C.place_order(plan, tag)
-            answers = C.reference_answers(plan, tag)
-        else:
-            vac = None
-            answers = C.reference_answers_without_order()
-        r = C.score(answers)
-        wrong = [cid for cid in C.IDS if not r["chambers"][cid]["ok"]]
-        rows.append([name, len(plan), "%d/%d" % (r["npass"], len(C.IDS)),
-                     "accepted" if r["accepted"] else "rejected", " ".join(wrong) or "-"])
-        if r["accepted"]:
-            good.append((name, plan))
-    print(C.report("The reference method under different audit orders", rows,
-                   ["order", "tests", "right", "verdict", "chambers wrong"]))
-    print("budget: %d tests across %d chambers, placed once" % (C.F.BUDGET, len(C.IDS)))
+    good = {"reference": [], "independent": []}
+    for name, cid, plan in plans():
+        verdicts = []
+        for who in ("reference", "independent"):
+            answers = dict(base[who])
+            if plan:
+                vac = C.place_order(plan, "sweep")
+                answers[cid] = (R.run(C.DATA, vac, only=[cid])[cid] if who == "reference"
+                                else I.audit_one(cid, data_i, vac))
+            r = C.score(answers)
+            wrong = [c for c in C.IDS if not r["chambers"][c]["ok"]]
+            verdicts.append("accepted" if r["accepted"] else "rejected (%s)" % " ".join(wrong))
+            if r["accepted"]:
+                good[who].append(name)
+        rows.append([name] + verdicts)
+
+    print(C.report("Both audits under every order the budget allows", rows, ["order", "reference", "independent"]))
+    print("budget: %d test across %d chambers, placed once; pumping times tried: %s h"
+          % (C.F.BUDGET, len(C.IDS), " ".join("%g" % h for h in TIMES)))
     print("gate: at least %d of %d chambers right" % (C.G.GATE, len(C.IDS)))
-    print("orders tried: %d (every test on every chamber, and no order)" % len(PLANS))
+    print("orders tried: %d" % len(rows))
     print("")
-    # Counted from the sweep rather than stated, so the number in the README cannot drift from the number here.
-    print("ORDERS THAT WORK: %d of %d" % (len(good), len(PLANS)))
-    for name, plan in good:
-        print("  %s" % name)
-    chambers = sorted({t["chamber"] for _n, p in good for t in p})
-    print("chambers they are spent on: %s" % (" ".join(chambers) or "-"))
+    # counted from the sweep rather than stated, so the number in the README cannot drift from the number here
+    for who in ("reference", "independent"):
+        print("ORDERS THAT WORK FOR THE %s: %d of %d" % (who.upper(), len(good[who]), len(rows)))
+        for name in good[who]:
+            print("  %s" % name)
+    if set(good["reference"]) != set(good["independent"]):
+        fails.append("the two audits are carried by different orders: %s"
+                     % sorted(set(good["reference"]) ^ set(good["independent"])))
+    if "VC08 rga at %g h" % C.F.DEFAULT_TEST_H in good["reference"]:
+        fails.append("the default pumping time works; the order would not need choosing")
     print("")
-    print("Every other order leaves the reference a chamber short. The chambers each failing order gets wrong")
-    print("are in the table above, so what the test is worth is read off the sweep and not asserted.")
+    if fails:
+        print("%d PROBLEM(S)" % len(fails))
+        for f in fails:
+            print("  " + f)
+    else:
+        print("the shortcut matches the whole audit on every sampled order; both audits are carried by the same"
+              " orders")
     C.cleanup()
-    return 0
+    return 1 if fails else 0
 
 
 if __name__ == "__main__":

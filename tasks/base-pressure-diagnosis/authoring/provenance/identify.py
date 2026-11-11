@@ -37,7 +37,7 @@ import fleet as F                                                       # noqa: 
 Q_TOL = 0.040                       # the gas-load tolerance the design is measured against
 SHORTCUT_X = 2.0                    # a single-entry route must miss by this many tolerances
 IDENT_P = 0.99                      # a sound solver must be right on this share of draws
-READ_NOISE = 0.006                  # one gauge reading, lognormal sd (build.py's READ_NOISE)
+READ_NOISE = F.REPEAT["reading"]     # one gauge reading, lognormal sd
 TEST_NOISE = 0.005                  # the audit test's gas-load observation
 DRAWS = 300
 TAUS = np.exp(np.linspace(math.log(1.0), math.log(P.TAU_MAX), 48))

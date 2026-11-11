@@ -406,12 +406,21 @@ def order_observations(cid, st, vac):
             pts.sort()
             v = np.array([x for _t, x in pts])
             tt = np.array([t for t, _x in pts])
-            base, end = v[0], v[tt >= 240.0].mean()
-            # a channel answers in seconds and a seal over minutes: a step reaches most of its end value within
-            # the first thirty seconds, a permeation ramp does not
-            if end > base and v[tt <= 30.0].max() - base > 0.5 * (end - base):
-                step = max(step, end - base)
-        leak = step / 2.69
+            # a channel answers in seconds and a seal over minutes. From forty seconds on a channel's step has
+            # settled, so the trace there is a constant plus a seal's ramp; that constant, less the reading before
+            # the hood went on, is the step, whatever ramp lies over it
+            late = tt >= 40.0
+            fit = None
+            for tb in np.geomspace(40.0, 2000.0, 60):
+                X = np.column_stack([np.ones(late.sum()), 1.0 - np.exp(-tt[late] / tb)])
+                coef, *_ = np.linalg.lstsq(X, v[late], rcond=None)
+                if coef[1] < 0:
+                    coef = np.array([v[late].mean(), 0.0])
+                r = float(np.sum(((X @ coef) - v[late]) ** 2 / np.maximum(v[late], 1e-14) ** 2))
+                if fit is None or r < fit[0]:
+                    fit = (r, coef)
+            step = max(step, float(fit[1][0] - v[0]))
+        leak = max(step, 0.0) / 2.69
     return obs, s_now, leak
 
 
@@ -536,8 +545,10 @@ def audit_one(cid, data, vac):
     for tf in [None, "0000-00-00"] + worked:
         for free in (False, True):
             chi2, p, n, kpar = solve(cid, data, st, obs, s_now, tf, free, (0.05 * rated, 1.2 * rated), leak)
-            if n < kpar:
-                continue
+            if n <= kpar:
+                continue                    # a budget that passes through every observation is untested
+            if (tf is not None or free) and n < kpar + 2:
+                continue                    # an added mechanism has to leave two degrees of freedom to be tested
             bic = chi2 + kpar * math.log(n)
             if best is None or bic < best[0]:
                 best = (bic, p, tf, free)

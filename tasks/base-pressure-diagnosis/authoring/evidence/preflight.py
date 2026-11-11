@@ -11,10 +11,13 @@ the physics it is supposed to describe.
 Exit status 0 when every check passes.
 """
 import importlib.util
+import json
 import os
 import re
+import shutil
 import sys
 import subprocess
+import tempfile
 import tomllib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -26,8 +29,10 @@ LAST_PARAGRAPH = ("You have 28800 seconds to complete this task. Do not cheat by
                   "specific to this task.")
 PINS = {"numpy": "2.1.3", "scipy": "1.14.1", "pandas": "2.2.3", "pytest": "8.4.1",
         "pytest-json-ctrf": "0.3.5"}
+# where each container tree is placed in its image, so a file can be named by the path it is read at
+MOUNTS = [("environment/rig/", "/opt/vacwork/"), ("environment/data/", "/app/data/"), ("tests/", "/tests/")]
 EVIDENCE = ["reference_run", "method_spread", "route_study", "null_baselines", "plan_sweep", "hedge_study",
-            "verifier_checks"]
+            "verifier_checks", "fleet_ranges", "seed_screen"]
 
 checks = []
 
@@ -218,8 +223,21 @@ def check_instruction():
     check("%.0f" % (100 * G.S_TOL) in text or "%.1f" % (100 * G.S_TOL) in text,
           "the instruction states the speed tolerance", "%.1f%%" % (100 * G.S_TOL))
     check(str(G.MAX_BYTES) in text, "the instruction states the size limit", str(G.MAX_BYTES))
-    check("%.1f" % F.REF_H in text or str(int(F.REF_H)) in text,
-          "the instruction or the standard fixes the reference condition")
+    m = re.search(r"reference condition from MS-BP clause 2: ([\d.]+) h from the start of roughing", text)
+    check(m is not None and float(m.group(1)) == F.REF_H,
+          "the instruction states the reference pumping time the fleet is graded at",
+          "%s vs %g h" % (m.group(1) if m else "not stated", F.REF_H))
+    std = read("environment/data/docs/ms_bp_audit.md")
+    m2 = re.search(r"(?s)## 2\. The reference condition.*?\*\*([\d.]+) hours\*\* from the start of roughing", std)
+    check(m2 is not None and float(m2.group(1)) == F.REF_H,
+          "MS-BP clause 2 states the same reference pumping time", m2.group(1) if m2 else "not found")
+    for name, pat in (("the gas-load tolerance", r"`q_total_mbarl_s` is[^.]*?within ([\d.]+) percent"),
+                      ("the speed tolerance", r"`s_eff_l_s` is[^.]*?within ([\d.]+) percent")):
+        m3 = re.search(pat, text, re.S)
+        want = G.Q_TOL if "gas" in name else G.S_TOL
+        check(m3 is not None and abs(float(m3.group(1)) / 100.0 - want) < 1e-12,
+              "the instruction states %s exactly as the grader applies it" % name,
+              "%s vs %.1f" % (m3.group(1) if m3 else "not stated", 100 * want))
 
     # the instruction must not hint at any trap
     hints = ["drift", "crossed", "swapped", "misfiled", "trap ", "baffle", "degraded", "contaminated",
@@ -323,6 +341,21 @@ def check_task_toml():
 
 def check_readme_matches_toml():
     readme = read("README.md")
+    # the gate the prose states is the gate the grader applies
+    sys.path.insert(0, os.path.join(TASK, "tests"))
+    import grade_audit as G
+    flat = " ".join(readme.split())
+    if G.GATE == len(G.IDS):
+        check("accepted when every one of the ten chambers is right" in flat,
+              "README.md states the gate the grader applies: every chamber", "GATE = %d" % G.GATE)
+    else:
+        check("accepted when at least %d of the ten chambers are right" % G.GATE in flat,
+              "README.md states the gate the grader applies", "GATE = %d" % G.GATE)
+    for tol, what in ((G.Q_TOL, "the gas load is within"), (G.S_TOL, "the speed within")):
+        m = re.search(r"%s ([\d.]+) per cent" % what, flat)
+        check(m is not None and abs(float(m.group(1)) / 100.0 - tol) < 1e-12,
+              "README.md states %s the grader applies" % what.split(" is")[0].replace(" within", ""),
+              m.group(1) if m else "not stated")
     for head in ("## Difficulty", "## Reference solution", "## Verification"):
         check(head in readme, "README.md carries %s" % head)
 
@@ -438,7 +471,7 @@ def check_claims_about_studies():
     stored = read(os.path.join("authoring", "evidence", "fleet_ranges.txt"))
     fresh = {}
     for line in out.splitlines():
-        if ": " in line and not line.startswith(" "):
+        if ": " in line and not line.startswith(" ") and not line.startswith("inputs: "):
             k, v = line.split(": ", 1)
             fresh[k.strip()] = v.strip()
     drift = [k for k, v in fresh.items() if ("%s: %s" % (k, v)) not in stored]
@@ -472,7 +505,7 @@ def check_claims_about_studies():
         check(chambers == n_ids, "the hedge study covers every chamber", "%d of %d" % (chambers, n_ids))
         check(alts == 4, "the hedge study covers every cause but the chamber's own", "%d alternatives" % alts)
         check(total == n_ids * 4, "the hedge study runs every chamber-cause pair", "%d cases" % total)
-        rows = len(re.findall(r"^VC\d\d\s+\S+\s+\S+\s+\d", hs, re.M))
+        rows = len(re.findall(r"^VC\d\d\s+\S+\s+\S+\s+\S+\s+(?:[\d.]+e[-+]\d+|-)\s", hs, re.M))
         check(rows == total, "the hedge study's table holds every case it claims", "%d rows" % rows)
     check("through the grader" in hs, "the hedge study scores its sheets through the grader")
     check("PROBLEM" not in hs, "no hedged sheet is accepted")
@@ -497,17 +530,36 @@ def check_no_unused_runtime_files():
                 except OSError:
                     pass
     corpus = "\n".join(corpus)
+    named_records = read("environment/data/docs/records_format.md") + read("instruction.md")
     for tree in ("environment", "tests"):
         for root, dirs, files in os.walk(os.path.join(TASK, tree)):
             dirs[:] = [d for d in dirs if d != "__pycache__"]
             for n in sorted(files):
                 rel = os.path.relpath(os.path.join(root, n), TASK)
-                if n in structural or n.endswith(".csv"):
-                    continue           # csv records are named in records_format.md and the instruction
-                # the file's own text does not count as a mention of it
+                if n in structural:
+                    continue
+                if n.endswith(".csv"):
+                    # a record is read by the agent: it must be one the record definitions or the instruction name,
+                    # and it must sit in the data tree where they say it is
+                    in_data = rel.startswith("environment/data/")
+                    check(in_data and n in named_records, "the record %s is one the documents define" % rel,
+                          "records_format.md and the instruction name no such record")
+                    continue
+                # A mention is the file's directory and name together ("sealed/fleet.py", "docs/vacwork.md"), so
+                # a file is not counted as read because another file of the same name is. The file's own text
+                # does not count as a mention of it.
+                parent = os.path.basename(root)
+                names = ["%s/%s" % (parent, n)]
+                for local, inside in MOUNTS:
+                    if rel.startswith(local):
+                        names.append(inside + rel[len(local):])
                 others = corpus.replace(open(os.path.join(root, n), errors="replace").read(), "")
-                check(n in others, "something reads %s" % rel,
-                      "nothing in the bundle names it; generation records belong in authoring/provenance")
+                # a file in the same directory may name it bare, as test.sh runs test_audit.py from /tests
+                siblings = "\n".join(open(os.path.join(root, m), errors="replace").read() for m in files if m != n)
+                check(any(x in others for x in names) or re.search(r"(?<![\w/.])%s\b" % re.escape(n), siblings),
+                      "something reads %s" % rel,
+                      "nothing in the bundle names %s; generation records belong in authoring/provenance"
+                      % " or ".join(names))
     for tree in ("environment", "tests"):
         for root, _dirs, files in os.walk(os.path.join(TASK, tree)):
             for n in files:
@@ -613,6 +665,8 @@ def check_constants_do_not_drift():
         ("the reference temperature", P.T_REF, D.T_REF),
         ("the pump gate", P.PUMP_GATE, D.PUMP_GATE),
         ("the reference pumping time", F.REF_H, D.REF_H),
+        ("the reading repeatability", F.REPEAT["reading"], D.READ_SD),
+        ("the analyser's repeatability", F.REPEAT["rga"], D.TEST_SD["rga"]),
         ("the audit date", F.AUDIT, D.AUDIT),
         ("the shop's fixtures", F.FIXTURES, D.FIXTURES),
     ]:
@@ -634,6 +688,8 @@ def check_constants_do_not_drift():
         ("the nitrogen vent factor", P.N2_FACTOR, I.VENT_N2),
         ("the pump gate", P.PUMP_GATE, I.GATE),
         ("the reference pumping time", F.REF_H, I.REF_HOURS),
+        ("the reading repeatability", F.REPEAT["reading"], I.READ_REPEAT),
+        ("the analyser's repeatability", F.REPEAT["rga"], I.ORDER_REPEAT["rga"]),
         ("the shop's fixtures", F.FIXTURES, I.KIT),
         ("dry air", tuple(P.AIR[k] for k in ("n2", "o2", "ar", "co2")), I.DRY_AIR),
     ]:
@@ -649,7 +705,7 @@ def check_constants_do_not_drift():
     sys.path.insert(0, os.path.join(TASK, "authoring", "provenance"))
     docs = load(os.path.join(TASK, "authoring", "provenance", "docs_bp.py"), "pf_docs")
     for rel, text in docs.docs().items():
-        for where in ("environment/data", "tests/app_data"):
+        for where in ("environment/data",):
             path = os.path.join(TASK, where, rel)
             if not check(os.path.exists(path), "%s/%s is present" % (where, rel), "missing"):
                 continue
@@ -662,43 +718,76 @@ def check_constants_do_not_drift():
 # ---------------------------------------------------------------------------------------------- evidence
 def check_evidence():
     ed = os.path.join(TASK, "authoring", "evidence")
+    sys.path.insert(0, ed)
+    import common as C
     for name in EVIDENCE:
         py = os.path.join(ed, name + ".py")
+        if name == "seed_screen":
+            py = os.path.join(TASK, "authoring", "provenance", name + ".py")
         txt = os.path.join(ed, name + ".txt")
-        check(os.path.exists(py), "the evidence script %s.py is present" % name, "missing")
+        check(os.path.exists(py), "the evidence script for %s is present" % name, "missing")
         if not check(os.path.exists(txt), "the evidence record %s.txt is present" % name, "missing"):
             continue
         body = open(txt).read()
+        # the record was written from the inputs as they are now: every file its result depends on is
+        # fingerprinted on its first line, and a record whose inputs have changed since is stale
+        first = body.splitlines()[0] if body else ""
+        want = "inputs: %s" % C.fingerprint(py)
+        check(first == want, "%s.txt was written from the current inputs" % name,
+              "%s, want %s; rerun the study" % (first or "no fingerprint", want))
         check("Traceback" not in body, "%s.txt records no crash" % name)
         check("PROBLEM" not in body, "%s.txt reports no problem" % name,
               "it does; read the file")
         if name == "verifier_checks":
             check("UNEXPECTED" not in body, "verifier_checks.txt holds no UNEXPECTED case",
                   "a case did not behave as the rules say")
+    # the studies run the order solve.sh places
+    m = re.search(r"<<'PLAN'\n(.*?)\nPLAN", read("solution/solve.sh"), re.S)
+    plan = json.loads(m.group(1))["tests"] if m else None
+    norm = lambda ts: [dict(t, **({"pumping_time_h": float(t["pumping_time_h"])} if "pumping_time_h" in t else {}))  # noqa: E731
+                       for t in ts]
+    check(plan is not None and norm(plan) == norm(C.REFERENCE_PLAN),
+          "the evidence runs the order solution/solve.sh places", "%r vs %r" % (plan, C.REFERENCE_PLAN))
+    # the tolerances are the rule the grader's comment states, applied to the sound-method record
+    ms = open(os.path.join(ed, "method_spread.txt")).read() if os.path.exists(os.path.join(ed, "method_spread.txt")) \
+        else ""
+    m = re.search(r"widest deviation over every sound method and chamber: gas load ([\d.]+)%, speed ([\d.]+)%", ms)
+    if check(m is not None, "method_spread.txt states the widest sound deviation"):
+        import math as _m
+        rule = lambda x: _m.ceil(round(2.0 * float(x) / 100.0 * 200.0, 9)) / 200.0      # noqa: E731
+        check(abs(C.G.Q_TOL - rule(m.group(1))) < 1e-12, "the gas-load tolerance is twice the widest sound deviation,"
+              " rounded up to the half per cent", "%.3f vs %.3f" % (C.G.Q_TOL, rule(m.group(1))))
+        check(abs(C.G.S_TOL - rule(m.group(2))) < 1e-12, "the speed tolerance is twice the widest sound deviation,"
+              " rounded up to the half per cent", "%.3f vs %.3f" % (C.G.S_TOL, rule(m.group(2))))
+    C.cleanup()
     prov = os.path.join(TASK, "authoring", "provenance")
-    for f in ("bpphys.py", "fleet.py", "docs_bp.py", "build.py", "tune.py"):
+    for f in ("bpphys.py", "fleet.py", "docs_bp.py", "build.py", "tune.py", "identify.py", "seed_screen.py"):
         check(os.path.exists(os.path.join(prov, f)), "the provenance holds %s" % f, "missing")
 
 
 def check_data_tree():
-    for where in ("environment/data", "tests/app_data"):
-        for f in ("chamber_register.csv", "base_pressure_log.csv", "speed_tests.csv", "turbo_controller.csv",
-                  "maintenance_log.csv", "shop_climate.csv", "gauge_certificates.md"):
-            check(os.path.exists(os.path.join(TASK, where, f)), "%s/%s is present" % (where, f), "missing")
-        check(os.path.isdir(os.path.join(TASK, where, "example")), "%s/example is present" % where, "missing")
-    a = sorted(os.path.relpath(os.path.join(r, n), os.path.join(TASK, "environment/data"))
-               for r, _d, fs in os.walk(os.path.join(TASK, "environment/data"))
-               if "__pycache__" not in r for n in fs)
-    b = sorted(os.path.relpath(os.path.join(r, n), os.path.join(TASK, "tests/app_data"))
-               for r, _d, fs in os.walk(os.path.join(TASK, "tests/app_data"))
-               if "__pycache__" not in r for n in fs)
-    check(a == b, "the verifier's copy of the data holds the same files as the agent's")
-    for rel in a:
-        p1 = os.path.join(TASK, "environment/data", rel)
-        p2 = os.path.join(TASK, "tests/app_data", rel)
-        if os.path.exists(p2):
-            check(open(p1, "rb").read() == open(p2, "rb").read(),
-                  "the two copies of %s are identical" % rel, "they differ")
+    where = "environment/data"
+    for f in ("chamber_register.csv", "base_pressure_log.csv", "speed_tests.csv", "turbo_controller.csv",
+              "maintenance_log.csv", "shop_climate.csv", "gauge_certificates.md"):
+        check(os.path.exists(os.path.join(TASK, where, f)), "%s/%s is present" % (where, f), "missing")
+    check(os.path.isdir(os.path.join(TASK, where, "example")), "%s/example is present" % where, "missing")
+    # the agent's data is what build.py writes now, byte for byte
+    fresh = tempfile.mkdtemp(prefix="bpd-preflight-")
+    try:
+        subprocess.run([sys.executable, "-I", os.path.join(TASK, "authoring", "provenance", "build.py"), fresh],
+                       check=True, capture_output=True)
+        a = sorted(os.path.relpath(os.path.join(r, n), fresh) for r, _d, fs in os.walk(fresh) for n in fs)
+        b = sorted(os.path.relpath(os.path.join(r, n), os.path.join(TASK, where))
+                   for r, _d, fs in os.walk(os.path.join(TASK, where)) if "__pycache__" not in r for n in fs)
+        check(a == b, "environment/data holds exactly the files build.py writes",
+              " ".join(sorted(set(a) ^ set(b))))
+        stale = [rel for rel in a if rel in b and open(os.path.join(fresh, rel), "rb").read()
+                 != open(os.path.join(TASK, where, rel), "rb").read()]
+        check(not stale, "environment/data is what build.py writes now", " ".join(stale))
+    finally:
+        shutil.rmtree(fresh, ignore_errors=True)
+    check(not os.path.exists(os.path.join(TASK, "tests", "app_data")),
+          "the verifier carries no copy of the agent's data", "tests/app_data is read by nothing")
     # the sealed truth must not be reachable from the agent's data
     for root, _dirs, files in os.walk(os.path.join(TASK, "environment")):
         if "__pycache__" in root:

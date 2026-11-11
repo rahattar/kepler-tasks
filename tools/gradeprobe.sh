@@ -11,7 +11,7 @@ for D in "$@"; do
         python3 -c "
 import json,sys
 s=json.load(open('$D/rig/state/state.json'))
-print('order: ' + ', '.join('%s %s' % (t['chamber'], t['test']) for t in s.get('tests', [])) or 'order: none')
+print('order: ' + (', '.join('%s %s%s' % (t['chamber'], t['test'], ' at %s h' % t['pumping_time_h'] if t.get('pumping_time_h') is not None else '') for t in s.get('tests', [])) or 'none'))
 " 2>/dev/null || echo "order: unreadable"
     else
         echo "order: none placed"

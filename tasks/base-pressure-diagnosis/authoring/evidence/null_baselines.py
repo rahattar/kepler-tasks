@@ -9,8 +9,11 @@ Each is a complete audit sheet scored through the task's own grader. The answers
 - the register's specified base pressure times the latest speed test, with the commonest cause;
 - the rated speed from the register and the pump curve, with the gas load that rated speed and the specified base
   pressure imply;
-- the per-chamber median of the sound methods' answers, which is not method-free but shows what a sheet assembled
-  from the fleet's own spread is worth.
+- three shortcuts that use the reference's own front end (the chamber as it stands, its corrected readings and its
+  speed) but read the gas load off a single entry instead of fitting a budget, which is what the design rule of
+  authoring/provenance/identify.py forbids from working: the latest entry's gas load taken as the reference
+  condition's; the latest entry with the table's wall load and the rest put down to a leak; and the latest entry
+  with the permeation computed and the rest put down to the wall, scaled to the reference condition.
 
 For each the script reports how many chambers it gets right and which, so a free pass is visible.
 
@@ -65,7 +68,41 @@ def spec_pressure(cid, data):
     return float([r for r in data["register"] if r["chamber"] == cid][0]["p_spec_mbar"])
 
 
+def single_entry(how):
+    """A shortcut through the reference's front end that reads the budget off the latest entry alone."""
+    data = D.load_data(C.DATA)
+    certs = data["certs"]
+    fix = D.crossed_serials(data, certs)
+    vac = C.place_order(C.REFERENCE_PLAN)
+    out = {}
+    for cid in C.IDS:
+        cfg, obs, s_now, _rng = D.front_end(cid, data, certs, fix, vac)
+        if s_now is None:
+            s_now = latest_speed(cid, data)
+        o = max((x for x in obs if x["kind"] == "entry"), key=lambda x: x["date"])
+        s = s_now if o["speed"] == "now" else o["speed"]
+        q = o["value"] * s
+        perm = D.perm_of(cfg, o)
+        mat, cm = D.seal_at(cfg, D.AUDIT)
+        perm_ref = D.q_perm(mat, cm, D.T_REF)
+        w_ref = D.q_wall_nominal(cfg["surfaces"], D.REF_H, "air", D.T_REF)
+        if how == "as is":
+            parts = {"wall-outgassing": q}
+        elif how == "rest as leak":
+            parts = {"wall-outgassing": w_ref, "permeation": perm_ref,
+                     "air-leak": max(q - D.nominal_wall(cfg, o) - perm, 0.0)}
+        else:
+            c_w = max(q - perm, 0.0) / D.nominal_wall(cfg, o)
+            parts = {"wall-outgassing": c_w * w_ref, "permeation": perm_ref}
+        rated = D.rated_at(cfg)
+        cause = "pump-speed" if s_now < D.PUMP_GATE * rated else max(parts, key=lambda k: parts[k])
+        out[cid] = (cause, sum(parts.values()), s_now)
+    return out
+
+
 def main():
+    C.header(__file__)
+    C.require_baseline(C.reference_answers())
     data = D.load_data(C.DATA)
     ex_cause, ex_q, ex_s = example_result()
     answers = {}
@@ -82,6 +119,10 @@ def main():
     answers["the register's rated speed and the specified base pressure"] = {
         cid: (commonest_cause(data), spec_pressure(cid, data) * rated_speed(cid, data), rated_speed(cid, data))
         for cid in C.IDS}
+
+    answers["the latest entry's gas load, as it stands"] = single_entry("as is")
+    answers["the latest entry, the table's wall and the rest a leak"] = single_entry("rest as leak")
+    answers["the latest entry, the rest put down to the wall"] = single_entry("rest as wall")
 
     rows = []
     fails = []

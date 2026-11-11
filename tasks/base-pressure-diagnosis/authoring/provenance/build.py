@@ -23,8 +23,8 @@ import fleet as F                                                        # noqa:
 
 SEED = 20261109
 
-READ_NOISE = 0.006                  # gauge readings, relative
-SPEED_NOISE = 0.005                 # speed-test pressures, relative
+READ_NOISE = F.REPEAT["reading"]               # gauge readings, relative
+SPEED_NOISE = F.REPEAT["speed_pressure"]       # speed-test pressures, relative
 CLIMATE_NOISE = 1.4                 # shop air temperature, C
 
 

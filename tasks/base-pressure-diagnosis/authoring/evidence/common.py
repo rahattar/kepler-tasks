@@ -50,6 +50,8 @@ def sheet(answers):
     """answers: {chamber: (cause, q_total, s_eff)}."""
     lines = ["chamber,cause,q_total_mbarl_s,s_eff_l_s"]
     for cid in IDS:
+        if answers.get(cid) is None:          # no answer for this chamber: the row is left out
+            continue
         cause, q, s = answers[cid]
         lines.append("%s,%s,%.4e,%.1f" % (cid, cause, q, s))
     return "\n".join(lines) + "\n"
@@ -131,6 +133,40 @@ def reference_answers_without_order():
             cid, cause, q, s = line.strip().split(",")
             answers[cid] = (cause, float(q), float(s))
     return answers
+
+
+LAB_SEEDS = list(range(5301, 5321))   # the playbook's laboratory seeds
+
+
+# what every study's result depends on, besides its own script
+_INPUTS = ["tests/sealed/bpphys.py", "tests/sealed/fleet.py", "tests/grade_audit.py", "solution/diagnose.py",
+           "solution/solve.sh", "environment/rig/vacwork.py", "authoring/provenance/build.py",
+           "authoring/provenance/docs_bp.py", "authoring/evidence/common.py", "authoring/evidence/routes.py",
+           "authoring/evidence/independent.py", "authoring/provenance/fleet.py", "authoring/provenance/bpphys.py"]
+
+
+def fingerprint(script):
+    """A digest of every file the study's result depends on. Each study prints it as its first line, and preflight
+    recomputes it: a record whose inputs have changed since it was written is stale, whatever it says."""
+    h = hashlib.sha1()
+    for rel in sorted(_INPUTS + [os.path.relpath(os.path.abspath(script), TASK)]):
+        h.update(rel.encode())
+        with open(os.path.join(TASK, rel), "rb") as f:
+            h.update(f.read())
+    return h.hexdigest()[:16]
+
+
+def header(script):
+    print("inputs: %s" % fingerprint(script))
+
+
+def chamber_ok(base, cid, answer):
+    """Whether the grader takes `answer` on chamber cid, scored as a whole sheet: `base` with that one row replaced.
+    Nothing here repeats the grader's rules."""
+    sheet_answers = dict(base)
+    sheet_answers[cid] = answer
+    r = score(sheet_answers)
+    return bool(r["chambers"].get(cid, {}).get("ok"))
 
 
 def truth():

@@ -33,6 +33,18 @@ TEST_H_MIN = 4.0                    # the shortest and longest pumping times the
 TEST_H_MAX = 48.0
 EXAMPLE = "VC00"                    # the worked example chamber, outside the fleet
 
+# How well the instruments repeat, each as the relative standard deviation of one reading. The records and the
+# reports draw their noise from these, and records_format.md and vacwork.md state them, so the figures an agent
+# weights its fit by are the figures the scatter was drawn from.
+REPEAT = dict(
+    reading=0.006,                  # a gauge reading in the base-pressure log
+    speed_pressure=0.005,           # each pressure of a throughput speed test, the shop's or the contractor's
+    ror_trace=0.0025,               # each point of a rate-of-rise trace
+    ror_base=0.003,                 # a rate-of-rise report's base pressure before valve closure
+    rga=0.010,                      # each partial pressure of a residual gas analysis
+    helium=0.02,                    # each point of a helium leak detector's signal
+)
+
 
 def Ch(cid, reg, true, events, log, certs, speed, ctrl):
     return dict(id=cid, reg=reg, true=true, events=sorted(events), log=log, certs=certs, speed=speed, ctrl=ctrl)
@@ -195,7 +207,7 @@ FLEET = [
     # shop temperature as permeation would. Bead-blasted internals add a wall load well above the table's. A
     # fixture set is in on two pumpdowns, and the last is vented with dry nitrogen.
     Ch("VC04",
-       reg_entry(4200, "TMP-1600", 1600, "fluoroelastomer", 520,
+       reg_entry(4200, "TMP-1600", 1600, "fluoroelastomer", 600,
                  [(4.5, "stainless steel, bead blasted")], 1.5e-7),
        true=dict(wall_factor=2.30, leak=4.0e-4),
        events=[("2026-06-18", "trap", (700, "Baffle fitted in the high-vacuum port.")),
@@ -354,7 +366,7 @@ LEAK_AT = {
 }
 
 # The contractor's standing pumping time for each chamber and the chamber wall temperature on the day it runs
-# this quarter's tests. The order may name another pumping time (DEFAULT_TEST_H to TEST_H_MAX); the wall
+# this quarter's tests. The order may name another pumping time (TEST_H_MIN to TEST_H_MAX); the wall
 # temperature is the day's either way, and is not the reference condition of MS-BP clause 2.
 AUDIT_TESTS = {
     "VC01": (16.0, 14.9), "VC02": (16.0, 16.3), "VC03": (16.0, 13.3), "VC04": (16.0, 15.4),

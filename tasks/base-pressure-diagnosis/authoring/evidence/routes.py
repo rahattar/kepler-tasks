@@ -302,8 +302,13 @@ def patched(names):
             setattr(D, attr, old)
 
 
-def run(data_dir, vac, name=None, o=None):
-    """The reference audit with the named route or variations applied: {chamber: (cause, q_total, s_eff)}."""
+NO_ANSWER = None
+
+
+def run(data_dir, vac, name=None, o=None, only=None):
+    """The reference audit with the named route or variations applied: {chamber: (cause, q_total, s_eff)}. With
+    `only`, just those chambers are audited. A chamber the route leaves too little to fit (fewer observations than
+    any budget has parameters) gets NO_ANSWER: whoever follows that route has no answer to write for it."""
     names = list(o or []) + ([name] if name else [])
     with patched(names):
         data = D.load_data(data_dir)
@@ -311,6 +316,12 @@ def run(data_dir, vac, name=None, o=None):
         fix = D.crossed_serials(data, certs)
         out = {}
         for cid in sorted({r["chamber"] for r in data["register"]}):
-            r = D.audit_chamber(cid, data, certs, fix, vac)
+            if only and cid not in only:
+                continue
+            try:
+                r = D.audit_chamber(cid, data, certs, fix, vac)
+            except D.Underdetermined:
+                out[cid] = NO_ANSWER
+                continue
             out[cid] = (r["cause"], r["q_total"], r["s_eff"])
     return out

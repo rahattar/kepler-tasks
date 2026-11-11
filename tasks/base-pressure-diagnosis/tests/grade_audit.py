@@ -30,14 +30,18 @@ HEADER = ["chamber", "cause", "q_total_mbarl_s", "s_eff_l_s"]
 IDS = list(F.CHAMBER_IDS)
 GATE = len(IDS)                     # every chamber must be right
 
-# The allowance of one wrong chamber that earlier tasks carried is not used here, and the reason is measured in
-# `authoring/evidence/plan_sweep.txt`: with an allowance of one, the audit test order is not load-bearing, because
-# the reference passes with no order placed at all. Requiring every chamber makes the chamber whose own records
-# cannot settle its cause decide the sheet, which is what the order is for. The gate is not a knife edge either:
-# every sound method in `method_spread.txt` gets all ten chambers right, with 1.7x margin on the gas load and
-# 2.1x on the speed, and every defective route in `route_study.txt` misses at least two chambers.
+# The allowance of one wrong chamber that earlier tasks carried is not used here. With it, the audit test order is
+# not load-bearing: the reference passes with no order placed at all (`authoring/evidence/plan_sweep.txt`).
+# Requiring every chamber makes the chamber whose own records cannot settle its cause decide the sheet, which is
+# what the order is for.
+#
+# The tolerances are set from the spread of sound methods, not from the reference alone: each is twice the widest
+# deviation any sound method reaches on any chamber (`method_spread.txt`, which includes a structurally independent
+# audit and the laboratory seeds), rounded up to the next half per cent. Preflight recomputes that rule from the
+# record, so the figures below cannot drift from it. Every defective route in `route_study.txt` is rejected, and a
+# route rejected by one chamber alone misses it on the cause or by at least twice the tolerance.
 Q_TOL = 0.040                       # relative, on the total gas load
-S_TOL = 0.030                       # relative, on the effective pumping speed
+S_TOL = 0.025                       # relative, on the effective pumping speed
 Q_RANGE = (1e-10, 1e-1)
 S_RANGE = (1.0, 1e5)
 MAX_BYTES = 100_000

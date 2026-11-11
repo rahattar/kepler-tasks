@@ -23,6 +23,9 @@ admitted through a calibrated leak and the pressure rise is read. `date`, `chamb
 `p_with_flow_mbar`, `p_without_flow_mbar`, `gauge`, `s_eff_l_s` (the speed the contractor reported, the flow divided
 by the pressure rise).
 
+Each `reading_mbar` repeats to 0.6 per cent (one standard deviation) between pumpdowns at the same condition, and
+each pressure of a speed test to 0.5 per cent.
+
 ## turbo_controller.csv
 
 What each chamber's turbo controller reported at the weekly check: `date`, `chamber`, `rotor_hz`,

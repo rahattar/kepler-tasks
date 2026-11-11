@@ -41,9 +41,12 @@ Method, per chamber:
 
 6. **Which budget.** Every structure the records leave open is fitted: no trapped volume, or one present from the
    start, or one that appeared on a date the maintenance log records work on the chamber; and the register's seal
-   material, or another in its place. The fit with the least AIC is kept. Setting the register's seal aside costs
-   OVERRIDE_CHI2, so it happens only where the records plainly contradict it. A structure with more parameters
-   than observations is not admissible.
+   material, or another in its place. The fit with the least AIC is kept, with the small-sample correction (AICc)
+   wherever the sample allows it: a chamber with few observations since its last change would otherwise take a
+   trapped volume on a single degree of freedom. Setting the register's seal aside costs
+   OVERRIDE_CHI2, so it happens only where the records plainly contradict it. A structure is admissible only where
+   it leaves at least one observation over its parameters: a budget that fits every observation exactly has not
+   been tested by any of them.
 
 7. **Referring to the audit condition.** The fitted budget is evaluated at %s h, 20 C, an air vent and no load,
    and the cause is named by MS-BP clause 6 against the rated speed of the chamber as it is now.
@@ -477,6 +480,7 @@ def fit_budget(cfg, obs, structure, s_now, helium=None):
         q = np.array([o["value"] for o in obs]) * np.where(G > 0, corr, 1.0) * S
         w = 1.0 / (q * SD)
         best = None
+        profile = []
         for tau in taus:
             cols = [W, np.ones(n)] + ([TR * np.exp(-H / tau)] if tau is not None else [])
             A = np.column_stack(cols) * w[:, None]
@@ -488,8 +492,14 @@ def fit_budget(cfg, obs, structure, s_now, helium=None):
                 A = np.vstack([A, row])
                 b = np.append(b, helium / sd_l)
             x, rn = nnls(A, b)
+            profile.append((rn, x, tau))
             if best is None or rn < best[0]:
                 best = (rn, x, tau)
+        if tau_flat(profile):
+            # nothing in the observations measures how fast the trapped volume empties: every time constant fits
+            # as well as every other, and the grid's minimum is a draw of the noise. Clause 3.3's bound is taken
+            # instead, a statement of what is not known rather than an estimate
+            best = profile[-1]
         rn, x, tau = best
         new = np.ones(n)
         for i in range(n):
@@ -508,6 +518,15 @@ def fit_budget(cfg, obs, structure, s_now, helium=None):
                   seal=seal, trapped_from=trap_from, s_now=s_now)
     k = 2 + (2 if trap_from is not None else 0)
     return float(rn * rn), k, params, q
+
+
+def tau_flat(profile):
+    """Whether a fit's misfit over the grid of time constants is flat: within one unit of chi-square everywhere,
+    which is the width of a one-sigma interval on a single parameter."""
+    if len(profile) < 2:
+        return False
+    c = [rn * rn for rn, _x, _t in profile]
+    return max(c) - min(c) < 1.0
 
 
 def _golden(f, lo, hi, iters=40):
@@ -539,16 +558,22 @@ def candidate_structures(cid, cfg, data, obs):
     return [dict(seal=sm, trapped_from=tf) for sm in seals for tf in traps]
 
 
+class Underdetermined(Exception):
+    """The records leave fewer observations than the simplest budget has parameters."""
+
+
 def choose_budget(cid, cfg, data, obs, s_now, s_range=None, helium=None):
-    """Fits every candidate structure and keeps the one with the least AIC. A structure is admissible only where
-    there are at least as many observations as parameters. Overturning the register's seal costs OVERRIDE_CHI2:
+    """Fits every candidate structure and keeps the one with the least AICc, falling back to AIC only where no
+    structure leaves the two degrees of freedom AICc needs. A structure is admissible only where
+    there are more observations than parameters: a budget that passes through every observation exactly has not
+    been tested by any of them. Overturning the register's seal costs OVERRIDE_CHI2:
     an engineer does not set the register aside on a marginal fit, but does when the records plainly contradict it.
     Where the pump has changed since its last speed test, the speed now is one more parameter, found with the rest."""
     n = len(obs) + (1 if helium is not None else 0)
     best = None
     for st in candidate_structures(cid, cfg, data, obs):
         k = 2 + (2 if st["trapped_from"] is not None else 0) + (1 if s_now is None else 0)
-        if n < k:
+        if n <= k:
             continue
         if s_now is None:
             lo, hi = s_range
@@ -559,9 +584,15 @@ def choose_budget(cid, cfg, data, obs, s_now, s_range=None, helium=None):
             chi2, kk, params, q = fit_budget(cfg, obs, st, math.exp(ls), helium)
         else:
             chi2, kk, params, q = fit_budget(cfg, obs, st, s_now, helium)
-        score = chi2 + 2 * k + (OVERRIDE_CHI2 if st["seal"] else 0.0)
-        if best is None or score < best[0]:
-            best = (score, params, chi2, k)
+        aic = chi2 + 2 * k + (OVERRIDE_CHI2 if st["seal"] else 0.0)
+        # the small-sample correction, where the sample allows it; a structure that leaves a single degree of
+        # freedom has none, and is weighed against the others only where every structure is in the same case
+        aicc = aic + 2.0 * k * (k + 1) / (n - k - 1) if n - k - 1 > 0 else math.inf
+        key = (aicc, aic)
+        if best is None or key < best[0]:
+            best = (key, params, chi2, k)
+    if best is None:
+        raise Underdetermined("%s: %d observations, too few for any budget" % (cid, n))
     return best[1], best[2], best[3]
 
 
@@ -652,14 +683,17 @@ def helium_says(cid, vac):
     """From a helium leak test: the chamber's real air leak, and nothing else.
 
     A channel in molecular flow answers within seconds, so its signal is a step; gas crossing an elastomer seal by
-    permeation answers over minutes, so its signal is a ramp that is still climbing when the hood comes off. The
-    real leak is the largest step any region shows, converted from the helium rate the detector reads to an air
+    permeation answers over minutes, so its signal is a ramp that is still climbing when the hood comes off. A
+    region with both shows the step under the ramp, so each trace is split into a background, a fast rise and a
+    slow one, and the real leak is the largest fast rise any region shows, converted from the helium rate the detector reads to an air
     rate by HE_AIR. What the test cannot show is a trapped volume, which vents into the chamber and never reaches
     a hood at all: that is why a helium test tells a leak from permeation but leaves the rest of a constant gas
     load unexplained."""
     path = os.path.join(vac, "helium_%s.csv" % cid.lower()) if vac else None
     if not path or not os.path.exists(path):
         return None
+    import numpy as np
+    from scipy.optimize import nnls
     by_region = {}
     with open(path) as f:
         for line in f:
@@ -670,17 +704,20 @@ def helium_says(cid, vac):
     best = 0.0
     for region, pts in by_region.items():
         pts.sort()
-        early = [v for t, v in pts if t <= 30.0]
-        late = [v for t, v in pts if t >= 240.0]
-        if not early or not late:
-            continue
-        base = early[0]
-        rise_early = max(early) - base
-        rise_late = (sum(late) / len(late)) - base
-        # a step has most of its rise in the first half minute; a ramp is still well short of its end value there
-        if rise_late > 0 and rise_early > 0.5 * rise_late:
-            best = max(best, rise_early)
-    return dict(leak=best / HE_AIR) if best > 0 else dict(leak=0.0)
+        t = np.array([a for a, _ in pts])
+        v = np.array([b for _, b in pts])
+        # a hooded region can show both at once, a channel's step under a seal's ramp, so the trace is split into
+        # the two: a background, a rise that settles in seconds and one that takes minutes, each fitted
+        fit = None
+        for ta in (2.0, 4.0, 6.0, 8.0, 10.0, 14.0, 20.0):
+            for tb in (60.0, 90.0, 120.0, 180.0, 240.0, 360.0, 600.0, 900.0):
+                A = np.column_stack([np.ones_like(t), 1.0 - np.exp(-t / ta), 1.0 - np.exp(-t / tb)])
+                sc = np.maximum(v, 1e-14)
+                x, rn = nnls(A / sc[:, None], v / sc)
+                if fit is None or rn < fit[0]:
+                    fit = (rn, x)
+        best = max(best, float(fit[1][1]))
+    return dict(leak=best / HE_AIR)
 
 
 def ordered_speed(cid, cfg, vac):

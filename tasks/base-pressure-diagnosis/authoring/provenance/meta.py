@@ -31,6 +31,10 @@ class _Words(dict):
 
 WORDS = _Words()
 
+sys.path.insert(0, HERE)
+import bpphys as PH                                                     # noqa: E402
+import fleet as FL                                                      # noqa: E402
+
 
 def _ev(name):
     with open(os.path.join(EVIDENCE, name)) as f:
@@ -47,7 +51,8 @@ def _grab(text, pattern, name):
 
 
 def facts():
-    """Every load-bearing number the three explanations quote, read out of the evidence files that measured it.
+    """Every load-bearing number the three explanations quote, read out of the evidence files that measured it, or
+    out of the sealed definition where it is a property of the fleet rather than a measurement.
 
     The explanations used to state these from memory. They drifted - a method count, two deviations, the number
     of orders that work - leaving the prose asserting what the studies contradicted. Reading them here means
@@ -59,15 +64,33 @@ def facts():
     f["spread_q"], f["spread_s"] = _grab(
         t, r"widest deviation over every sound method and chamber: gas load ([\d.]+)%, speed ([\d.]+)%", "spread")
     f["margin_q"], f["margin_s"] = _grab(t, r"margin ([\d.]+)x and ([\d.]+)x", "margins")
-    (n,) = _grab(t, r"all (\d+) sound methods accepted", "method count")
+    (n,) = _grab(t, r"all (\d+) sound methods accepted, and both audits right on every laboratory seed",
+                 "method count")
     f["methods"], f["methods_word"] = int(n), WORDS[int(n)]
 
+    t = _ev("seed_screen.txt")
+    (n,) = _grab(t, r"both audits accepted on the shipped seed and on all (\d+) screened seeds", "seed screen")
+    f["screened"], f["screened_word"] = int(n), WORDS[int(n)]
+
     t = _ev("plan_sweep.txt")
-    (good, tried) = _grab(t, r"ORDERS THAT WORK: (\d+) of (\d+)", "orders that work")
+    (good, tried) = _grab(t, r"ORDERS THAT WORK FOR THE REFERENCE: (\d+) of (\d+)", "orders that work")
+    (good_i, tried_i) = _grab(t, r"ORDERS THAT WORK FOR THE INDEPENDENT: (\d+) of (\d+)", "independent orders")
+    if (good, tried) != (good_i, tried_i):
+        raise SystemExit("meta.py: the two audits are carried by different numbers of orders")
     f["orders_good"], f["orders_good_word"] = int(good), WORDS[int(good)]
-    f["orders_tried"], f["orders_tried_word"] = int(tried), WORDS[int(tried)]
-    f["order_names"] = re.findall(r"^  (a[n]? .+ on VC\d\d)$", t, re.M)
-    (f["order_chambers"],) = _grab(t, r"chambers they are spent on: (.+)", "order chambers")
+    f["orders_tried"] = int(tried)
+    block = t.split("ORDERS THAT WORK FOR THE REFERENCE")[1].split("ORDERS THAT WORK FOR THE INDEPENDENT")[0]
+    names = re.findall(r"^  (VC\d\d) (\S+) at ([\d.]+) h$", block, re.M)
+    if len(names) != int(good):
+        raise SystemExit("meta.py: plan_sweep.txt lists orders that are not all gas-load tests at a time")
+    chambers = sorted({c for c, _k, _h in names})
+    f["order_chambers"] = " and ".join(chambers)
+    f["order_tests"] = ", ".join(sorted({k for _c, k, _h in names}))
+    hours = sorted({float(h) for _c, _k, h in names})
+    f["order_hours"] = "from %g to %g h" % (hours[0], hours[-1])
+    (times,) = _grab(t, r"pumping times tried: ([\d ]+) h", "pumping times")
+    f["times_tried"] = ", ".join(times.split())
+    f["default_h"] = "%g" % FL.DEFAULT_TEST_H
 
     t = _ev("route_study.txt")
     (n, c) = _grab(t, r"all (\d+) routes rejected; every chamber defeats at least (\d+) routes", "route count")
@@ -81,14 +104,14 @@ def facts():
     f["single_routes"], f["single_routes_word"] = int(n), WORDS[int(n)]
     f["single_route_names"] = ", ".join(names.split())
     f["big_miss_x"] = big
+    (fv,) = _grab(t, r"(?m)^face_value\s+(\d+)\s", "face-value route")
+    f["face_value_word"] = WORDS[int(fv)]
+    (fewest,) = _grab(t, r"\(fewest routes missing it on one seed\)\s+(\d+)", "fewest routes on a seed")
+    f["fewest_on_seed"] = fewest
 
     t = _ev("null_baselines.txt")
     (n,) = _grab(t, r"the most any gets right is (\d+) of 10", "null baseline best")
     f["null_best"] = int(n)
-
-    t = _ev("verifier_checks.txt")
-    (n,) = _grab(t, r"all (\d+) cases behaved as the rules say", "verifier case count")
-    f["cases"], f["cases_word"] = int(n), WORDS[int(n)]
 
     t = _ev("reference_run.txt")
     f["ref_q"], f["ref_s"] = _grab(t, r"worst deviation: gas load ([\d.]+)%, speed ([\d.]+)%", "reference run")
@@ -111,20 +134,35 @@ def facts():
                          "hedge case count")
     f["hedge_total"], f["hedge_total_word"] = int(n), WORDS[int(n)]
     f["hedge_chambers"], f["hedge_alternatives"] = int(nch), int(nc)
-    (f["hedge_inside"],) = _grab(t, r"stays in the band under the wrong cause \((\d+) of \d+\)", "hedge inside")
+    (f["hedge_inside"],) = _grab(t, r"forced readings that keep the gas load in its band: (\d+) of \d+",
+                                 "hedge inside")
     f["hedge_inside"] = int(f["hedge_inside"])
-    f["hedge_outside"] = f["hedge_total"] - f["hedge_inside"]
+    (u,) = _grab(t, r"forced readings the records leave too few observations to fit: (\d+) of \d+", "hedge unfit")
+    f["hedge_unfit"], f["hedge_unfit_word"] = int(u), WORDS[int(u)]
+    f["hedge_outside"] = f["hedge_total"] - f["hedge_inside"] - f["hedge_unfit"]
     if "PROBLEM" in t:
-        raise SystemExit("meta.py: hedge_study.txt reports a hedged sheet was accepted")
-    for word in ("TypeError", "Traceback", "not reachable"):
-        if word in t:
-            raise SystemExit("meta.py: hedge_study.txt still reports %r; fix the study before quoting it" % word)
+        raise SystemExit("meta.py: hedge_study.txt reports a sheet naming a wrong cause was accepted")
 
+    # the grader's own figures
+    sys.path.insert(0, os.path.join(TASK, "tests"))
+    import grade_audit as G
+    f["q_tol"], f["s_tol"] = "%.1f" % (100 * G.Q_TOL), "%.1f" % (100 * G.S_TOL)
+
+    # properties of the fleet, from the sealed definition
+    f["ref_h"] = "%g" % FL.REF_H
+    f["test_h_min"], f["test_h_max"] = "%g" % FL.TEST_H_MIN, "%g" % FL.TEST_H_MAX
+    f["cross_pct"] = "%.0f" % (100 * (FL.BY["VC07"]["certs"]["CC-7107"][0][1] - 1.0))
+    f["cert_pct"] = "%.0f" % (100 * (FL.BY["VC01"]["true"]["cert_wrong"][1] - 1.0))
+    f["gate_ratio"] = "%g" % PH.PUMP_GATE
+    nv = sum(1 for cid in FL.CHAMBER_IDS if any(e[2] == "nitrogen" for e in FL.BY[cid]["log"]))
+    f["n2_chambers_word"] = WORDS[nv]
+    longest = max(e[3] for cid in FL.CHAMBER_IDS for e in FL.BY[cid]["log"])
+    f["longest_h"] = "%g" % longest
+    f["longest_at"] = [cid for cid in FL.CHAMBER_IDS if any(e[3] == longest for e in FL.BY[cid]["log"])][0]
     return f
 
 
 F = facts()
-F["order_list"] = " and ".join(F["order_names"]) if F["order_names"] else "none"
 
 
 def fill(s):
@@ -224,10 +262,13 @@ The chambers and records are synthetic, written by `authoring/provenance` (`bpph
 - {pumpdowns} recent pumpdowns per chamber, of {pumpdown_h} h, over {log_period}, in a shop whose air runs from
   {climate}, with gauge readings repeatable to {read_noise_pct} per cent.
 
-The reference condition is the same for every chamber: 16 h from the start of roughing after an air vent, the
-chamber wall at 20 C, nothing in the chamber. Each chamber's limiting cause is the mechanism with the largest gas
-load there, except that a chamber whose actual speed is below 0.75 of its rated speed is limited by its pump
-whatever its gas load is doing.
+The reference condition is the same for every chamber: {ref_h} h from the start of roughing after an air vent, the
+chamber wall at 20 C, nothing in the chamber. That is longer than every pumpdown in the records but one
+({longest_at}'s {longest_h} h), so no entry can be read across to it: every chamber's gas load is the sum of
+mechanisms that extrapolate differently in pumping time and temperature, and only a budget identified across the
+chamber's own entries reaches the reference condition. Each chamber's limiting cause is the mechanism with the
+largest gas load there, except that a chamber whose actual speed is below {gate_ratio} of its rated speed is
+limited by its pump whatever its gas load is doing.
 
 The example chamber, VC00, has sound records throughout: one gauge, a speed test that still describes its pump, no
 work in the maintenance log over the period of its log, and no load on any pumpdown. It is there to show the
@@ -236,49 +277,52 @@ every convention the audit needs, so a worked answer would add nothing but an en
 against a known figure.
 
 The ten chambers carry the faults that shop records carry. Each looks like ordinary data, and the documents say
-only what was done, never its effect. Nine of the layers are settled by the data alone:
+only what was done, never its effect. Eleven of the layers are settled by the data alone:
+- **A reference condition no entry reaches.** Every chamber carries at least two mechanisms of comparable size,
+  and its entries are spread in pumping time, vent gas and wall temperature, so that reading the latest entry
+  across to the reference condition by any one mechanism's law misses. The budget has to be identified.
 - **A fouling cold cathode.** On two chambers a cold cathode reads progressively low. The drift is a ramp and never
   a step, so it shows only as a slow trend in the ratio to the chamber's reference instrument, and on both the
   reference instrument fails part way through, leaving the later pumpdowns to be corrected by the fitted trend
   (VC02, VC09).
-- **Crossed gauge serials.** Two chambers have each other's gauge serial in the log for three pumpdowns. The
-  certificates are right, the two factors differ by 42 per cent, and the only sign is the mirror-image step in the
-  two chambers' own series on the same dates (VC03, VC07).
+- **Crossed gauge serials.** Two chambers have each other's gauge serial in the log for their last three
+  pumpdowns. The certificates are right, the two factors differ by {cross_pct} per cent, and the only sign is a step
+  in each chamber's own series where its serial changes (VC03, VC07).
+- **A seal the register gets wrong.** On one chamber the register names a perfluoroelastomer seal, while a nitrile
+  one has been in place throughout, and nothing in any document says so. Taken from the register, the permeation is
+  small and the rest of the constant gas load reads as a leak. Across the season that constant part follows the
+  wall temperature as permeation through nitrile does, which a leak cannot (VC05).
 - **A leak against permeation.** Both are constant in pumping time and both admit air, so only the gas load's
   temperature dependence across the log, or the oxygen and argon of a residual gas analysis, separates them
   (VC04 against VC06).
-- **A trapped volume against wall gas.** Both decay, one exponentially and one as a power law, and on the chamber
-  whose log holds a single pumping time nothing but the composition of its gas can tell them apart - which is
-  what the one test the audit can order is for (VC08 against VC01, VC02).
-- **A pump with an ordinary gas load.** Two chambers are limited by speed while their gas loads are unremarkable
-  and wall-dominated, so an audit that puts every shortfall down to gas names the wrong cause and reaches the wrong
-  figure for both quantities (VC09, VC10).
+- **A trapped volume against wall gas.** Both decay with pumping time, one exponentially and one as a power law. On
+  one chamber a single long weekend pumpdown in the log separates them (VC07). On the other the trapped volume
+  appeared with recent work, and every pumpdown since is at one pumping time: they give its load there and nothing
+  about how fast it empties, which is what its gas load at the reference condition turns on (VC08).
+- **A pump with an ordinary gas load.** Two chambers are limited by speed while their gas loads are unremarkable,
+  so an audit that puts every shortfall down to gas names the wrong cause and reaches the wrong figure for both
+  quantities (VC09, VC10).
 - **A gauge correction that depends on the answer.** The correction of MS-BP clause 5 follows from the composition,
   the composition follows from the split of the gas load, and the split follows from the corrected pressures, so
   the cause and the quantities have to be settled together.
 - **A wall gas load that is not the table's.** Every chamber's coefficient differs from the outgassing table's
-  nominal figure, by as much as a factor of 2.6, so the table sizes a pump but does not audit a chamber.
+  nominal figure, from {wall_factor} times it, so the table sizes a pump but does not audit a chamber.
 - **A gauge certificate that is wrong, and that no residual can show.** On one chamber the calibration laboratory
-  issued the factor wrong. The error cancels in the gas load - every pressure the certificate yields is low by the
-  same factor and every speed it yields is high by it, so Q = p S_eff comes out right and the gas budget fits to
-  the reading noise - and it shows nowhere else except in the speed, which comes out 14 per cent above what the
-  chamber's pump in series with its port can deliver. MS-BP clause 4 says a pump delivers at most its curve, so
-  the chamber's own throughput tests contradict its certificate. Which instrument is out is settled rather than
-  guessed: the chamber also carries the hot-filament gauge that clause 5 makes its reference instrument, and the
-  two disagree by exactly that factor, while its controller figures confirm the pump the register names. A fit
-  that reaches the noise floor is not evidence that the answer is right (VC01).
-- **A register that names the wrong pump, which no fit can see.** On one chamber the register names a pump two
-  sizes up from the one that is fitted. Nothing in the gas budget depends on it, because the speed comes from a
-  throughput test, so every fit is as good as ever; what depends on it is the rated speed, and with the register's
-  pump the chamber's sound speed comes to 0.64 of rated and clause 6 calls the pump the cause. The controller
-  reports the rotor frequency, drive power and bearing temperature of the pump that is actually turning, and the
-  vacuum data give those three figures for each model, so the record of what is fitted is there to be read
-  against the register (VC07).
+  issued the factor {cert_pct} per cent out. The error cancels in the gas load - every pressure the certificate
+  yields is low by the same factor and every speed it yields is high by it, so Q = p S_eff comes out right and the
+  gas budget fits to the reading noise - and it shows only in the speed, which comes out above what the chamber's
+  pump in series with its port can deliver. MS-BP clause 4 says a pump delivers at most its curve, so the chamber's
+  own throughput tests contradict its certificate, and its hot-filament gauge, the reference instrument of clause 5,
+  disagrees with it by exactly that factor (VC01).
+- **A register that names the wrong pump, which no fit can see.** On one chamber the register names a larger pump
+  than the one that is fitted. Nothing in the gas budget depends on it; what depends on it is the rated speed, and
+  with the register's pump the chamber's sound speed falls below clause 6's gate. The controller reports the rotor
+  frequency, drive power and bearing temperature of the pump that is actually turning, and the vacuum data give
+  those three figures for each model (VC07).
 
-Eight more are recorded somewhere in the documents and have to be found and applied:
+Nine more are recorded somewhere in the documents and have to be found and applied:
 - **Internal surfaces replaced**, so the register's surface no longer applies and the entries before the work
-  cannot be pooled with those after it (VC01, VC02, VC06). Note that a constant error in the surfaces is absorbed
-  by the fitted coefficient; what bites is pooling records from both sides of the change.
+  cannot be pooled with those after it (VC01, VC02, VC06).
 - **A seal changed**, so one permeation constant does not serve the whole log (VC04, VC06).
 - **A baffle or trap fitted** in the high-vacuum port, so the chamber's rated speed is not the register's and a
   sound pump is not judged against a conductance it no longer has (VC03, VC04, VC05).
@@ -286,73 +330,72 @@ Eight more are recorded somewhere in the documents and have to be found and appl
   before it (VC09, VC10).
 - **A dated recalibration** of a gauge, which the certificate carries and the log does not (VC10).
 - **Dry nitrogen vents** on some pumpdowns, after which the wall gas load is a quarter of what an air vent leaves
-  (VC01, VC02, VC07).
-- **Fixtures left in the chamber** on some pumpdowns, adding their own area to the outgassing (VC01, VC02, VC10).
+  ({n2_chambers_word} of the ten chambers).
+- **Fixtures left in the chamber** on some pumpdowns, adding their own area to the outgassing (VC01, VC02, VC04,
+  VC10).
 - **Pumpdowns of different lengths and wall temperatures**, which have to be referred to one condition before any
   of them can be compared.
+- **A test taken when the plan says.** The contractor tests at {default_h} h unless the plan names another pumping
+  time, from {test_h_min} to {test_h_max} h (`vacwork.md`). At {default_h} h the one chamber the test is needed on
+  only repeats its log.
 
 Each check left out or done the obvious way gets chambers wrong, and every chamber of the fleet must be right
 (`authoring/evidence/route_study.txt`). {Routes_word} routes, each leaving out one check or doing it the obvious
 way, are each rejected; each chamber is missed by at least {routes_per_chamber_word} routes; and each chamber is
 missed by at least one route on its cause alone, so no chamber's grading turns on where the tolerance is drawn.
 Taking the records at face value - the register's surfaces, seal and port, the latest speed test, the logged
-serials, every entry pooled, the table's gas load and no gauge correction - gets all ten wrong.
+serials, every entry pooled, the table's gas load and no gauge correction - gets {face_value_word} of the ten wrong.
 
 The audit test is load-bearing and measured to be so (`authoring/evidence/plan_sweep.txt`), over the whole space
-of orders the budget allows: each of the four kinds of test on each of the ten chambers, and placing no order at
-all, which is {orders_tried_word} in all. {Orders_good_word} of them carry the reference to a pass, and both are
-spent on {order_chambers}, whose log holds a single pumping time so that nothing in its records separates a
-trapped volume from wall gas: {order_list}. An analysis gives the composition outright; a helium test measures
-the real leak and so leaves what remains to be the trapped volume. A rate-of-rise there gives the whole gas load
-but not what the gas is, a throughput test gives a speed that was never in doubt, and a test spent on any other
-chamber is spent where the records already answer."""
+of orders the budget allows: each gas-load test (rga, rate-of-rise, speed-test) on each chamber at each of the
+pumping times {times_tried} h, a helium test on each chamber, and placing no order at all, {orders_tried} orders in
+all. {Orders_good_word} of them carry the reference to a pass, and the independent audit is carried by exactly the
+same ones: a gas-load test on {order_chambers} ({order_tests}) at a pumping time {order_hours}. At the
+contractor's default {default_h} h the test only repeats what the log already says, a helium test measures a leak
+that was never in doubt, and a test on any other chamber is spent where the records already answer."""
 
 SOLUTION = """`solution/diagnose.py` is the reference audit and `solution/solve.sh` places the order and runs it.
 For each chamber it does the following.
 
 - **The chamber as it stands.** The register entry, changed by every maintenance row on or before the audit date:
   internal surfaces replaced, a seal changed in material or length, a trap or baffle fitted in the high-vacuum
-  port. The seal is kept as a dated history, because a seal changed part way through the log means one permeation
-  constant will not serve every entry.
-- **Which records still describe it.** Base-pressure entries are kept from the last change of internals onwards,
-  one per pumpdown, preferring the hot-filament gauge where a chamber carries both. Where a cold cathode reads
-  progressively low against that reference instrument, the ratio is fitted as a straight line in days and carried
-  forward to correct the pumpdowns the reference instrument did not see. A speed test is kept only if no trap was
-  fitted after it and the controller shows no step in drive power or bearing temperature since; a step voids it,
-  because the pump it measured is not the pump now. Where a gauge serial in one chamber's log belongs to another
-  chamber's certificate and that chamber's log carries this one's serial, the two are read back the right way
-  round.
-- **The speed.** From an ordered speed test, or from an ordered rate-of-rise test as the gas load it measures
-  divided by the base pressure it reports; failing either, from the latest surviving speed test; and failing that,
-  from the chamber's own records before the turbo changed, by identifying the gas budget there against the speed
-  test that still held and dividing the same budget, evaluated at a later entry's condition, into that entry's
-  true pressure.
-- **The gas budget.** Each entry's nitrogen-equivalent pressure is its reading times the certificate factor in
-  force; the true pressure follows from the composition by MS-BP clause 5, and the entry's total gas load is that
-  times the effective speed. The loads are fitted to C_w W + Q_perm + Q_L, with W the nominal wall shape of the
-  entry from the outgassing table, its pumping time, vent gas, wall temperature and any fixture it names, and
-  Q_perm computable from the seal. Since the correction depends on the split and the split on the correction, the
-  two are iterated to a fixed point, and the linear fit is solved with every coefficient held at or above zero.
-- **A trapped volume, or not.** Where the log spans more than one pumping time, the constant model is compared
-  with one carrying a decaying trapped volume, over a grid of time constants from 2 to 48 h, keeping only those
-  whose exponential is comparable across the entries and whose trapped volume still carries at least 8 per cent of
-  the gas load at the reference condition. It is accepted on evidence: a residual gas analysis whose nitrogen and
-  oxygen outweigh its water, with the oxygen short of what an elastomer would pass, or failing an analysis a clear
-  improvement in fit.
-- **A log of one pumping time.** Where the log holds only one, the wall gas load cannot be separated from the
-  constant part by the log alone and the split comes from the composition: only the wall admits water, so the water
-  the analyser reads fixes the wall's load; the analyser's partial pressures are true pressures, so their sum times
-  the speed is the whole gas load; permeation is computable; and what is left is air through a channel, a leak
-  unless the chamber was sound when it was first speed-tested and has been worked on since, in which case it is a
-  trapped volume. All of it is done at the test's own pumping time and wall temperature.
-- **The reference condition and the cause.** The fitted budget is evaluated at 16 h, 20 C, an air vent and no
-  load, with the surfaces and seal the chamber has on the audit date. The cause is the pump where the actual speed
-  is below 0.75 of the rated speed of the chamber as it is now, and otherwise the mechanism with the largest load.
+  port. The pump is the one the controller's own figures identify. The seal is kept as a dated history, because a
+  seal changed part way through the log means one permeation constant will not serve every entry.
+- **The instruments.** Where a gauge serial in one chamber's log belongs to another chamber's certificate and that
+  chamber's log carries this one's serial, the two are read back the right way round. A cold cathode is checked
+  against the hot-filament gauge wherever both were read, and a drift in their ratio is carried as a straight line
+  to the pumpdowns the reference instrument did not see. A certificate is out where the chamber's own throughput
+  tests report a speed above what its pump and port can deliver; that gauge's readings and those tests' speeds are
+  put right by the same factor.
+- **The speed.** The pump curves are flat at base pressure, so the speed is one constant between the dates on which
+  it can change: a trap fitted in the port, or a step in the controller's drive power and bearing temperature. The
+  speed now is the ordered test's, read on the contractor's own gauge, or the latest shop test since the last such
+  date; where neither exists it is found with the gas budget.
+- **The observations.** Every kept base-pressure entry is an observation of the gas load at the speed in force on
+  its date, whichever pump or port it was taken with: the gas load does not depend on the pump. Entries are kept
+  from the last change of internals on. An ordered analysis or rate-of-rise is one more observation at its own
+  pumping time and wall temperature, and a helium test is an observation of the leak.
+- **The gas budget.** Fitted as MS-BP clause 3 gives it, Q_i = C_w W_i + Q_L + Q_v0 exp(-t_i / tau) + Q_perm,i,
+  the trapped term only on and after the date it appeared, with W_i the table's nominal wall load for the entry's
+  surfaces, fixtures, vent gas and wall temperature and Q_perm,i the seal's permeation at its temperature. Every
+  coefficient is non-negative, each observation is weighted by its own repeatability, and the gauge correction of
+  clause 5, which depends on the split, is iterated to a fixed point.
+- **Which budget.** Every structure the records leave open is fitted: no trapped volume, one present from the
+  start, or one that appeared on a date of logged work; the register's seal material, or another of the table's in
+  its place. The fit with the least AIC is kept, with the small-sample correction wherever the sample allows it, so
+  that a chamber with few entries since its last change does not take on a trapped volume on one degree of freedom.
+  Setting the register's seal aside costs a fixed penalty, so it happens only where the records plainly contradict
+  it. A structure is admissible only if it leaves more
+  observations than parameters, and where the misfit is flat in the time constant - nothing measures how fast the
+  trapped volume empties - the bound of clause 3.3 is taken, as a statement of what is not known.
+- **The reference condition and the cause.** The fitted budget is evaluated at {ref_h} h, 20 C, an air vent and
+  no load, with the surfaces and seal the chamber has on the audit date. The cause is the pump where the actual
+  speed is below {gate_ratio} of the rated speed of the chamber as it is now, and otherwise the mechanism with the
+  largest load.
 
-The order it places is the whole budget of one test: a residual gas analysis on VC08, the one chamber whose own
-records cannot settle its cause. Of the {orders_tried_word} orders that budget allows - every one of the four
-tests on each of the ten chambers, and placing no order at all - {orders_good_word} carry the reference to a
-pass, and both are spent on {order_chambers}: {order_list} (`authoring/evidence/plan_sweep.txt`).
+The order it places is the whole budget of one test: {ref_order}. Of the {orders_tried} orders the budget allows,
+{orders_good_word} carry the reference to a pass, all a gas-load test on {order_chambers} at a pumping time
+{order_hours} (`authoring/evidence/plan_sweep.txt`).
 
 Run through `tests/grade_audit.py` as the verifier reads a submission, the reference gets every chamber right, with
 its gas loads within {ref_q} per cent of the truth and its speeds within {ref_s} per cent
@@ -372,60 +415,67 @@ finite numbers inside generous ranges. Blank lines and surrounding spaces are ig
 order. Anything else is rejected, with a reason, and no submission crashes the grader. The instruction states
 every one of these rules.
 
-A chamber is right when all three of its fields are right: the cause matches exactly, the gas load is within 4.0
-per cent of the truth and the speed within 3.0 per cent. The sheet is accepted when every one of the ten chambers
-is right. The instruction states the two tolerances; it does not say how many chambers must be right.
+A chamber is right when all three of its fields are right: the cause matches exactly, the gas load is within {q_tol}
+per cent of the truth and the speed within {s_tol} per cent. The sheet is accepted when every one of the ten
+chambers is right. The instruction states the two tolerances; it does not say how many chambers must be right.
 
 Why these tolerances, and why every chamber:
-- **Correct methods.** {Methods_word} of them are accepted, each a complete sheet scored through this grader
-  (`authoring/evidence/method_spread.txt`): the reference on the order it places and on the other order that
-  works, a helium test in place of the analysis; `authoring/evidence/independent.py`, a second audit written from
-  the documents alone that shares no code with the reference, solving the whole budget by a nonlinear least
-  squares in the logarithm of the gas load with the gauge correction inside the residual and unmixing all six
-  species of an analysis by non-negative least squares; and three variations of the reference - dropping the
-  oldest entry, taking the constant part as a median rather than a fit, and using the second speed test rather
-  than the latest. Over every one of them and every chamber the widest deviation is {spread_q} per cent on the
-  gas load and {spread_s} per cent on the speed, so the tolerances stand at {margin_q} and {margin_s} times the
-  spread of sound work.
+- **Correct methods.** Each tolerance is twice the widest deviation any sound method reaches on any chamber,
+  rounded up to the half per cent, and preflight recomputes that rule from the record. {Methods_word} sound methods
+  are accepted, each a complete sheet scored through this grader (`authoring/evidence/method_spread.txt`): the
+  reference on the order it places and on five other sound orders, gas-load tests on VC08 at other pumping times;
+  `authoring/evidence/independent.py`, a second audit written from the documents alone that shares no code with
+  the reference, on each of the same orders - it solves the whole budget jointly by nonlinear least squares in the
+  logarithm of the gas load, selects structures by BIC rather than AIC, with any added mechanism required to leave two degrees of freedom, finds a seal the register gets wrong as a
+  free permeation scale that is adopted only where it is well determined and lands on a material of the table,
+  and dates a turbo's change by a changepoint test; and six variations of the reference - dropping the oldest
+  entry, averaging the period's speed tests, asking twice or half the evidence before setting the register's seal
+  aside, weighting the ordered test as a gauge reading, and a finer grid of time constants. Both audits are also
+  right on VC08 on each of the twenty laboratory seeds of the ordered test's scatter, and on records rebuilt from
+  each of {screened_word} other draws of the shop's instrument noise (`authoring/evidence/seed_screen.txt`). Over
+  every sound method and chamber the widest deviation is {spread_q} per cent on the gas load and {spread_s} per
+  cent on the speed, so the tolerances stand at {margin_q} and {margin_s} times the spread of sound work.
 - **Defective routes.** {Routes_word} routes, each the reference with one check left out or done the obvious way,
   are all rejected (`authoring/evidence/route_study.txt`). {Single_routes_word} of them are rejected by a single
   chamber - {single_route_names} - and the study fails unless each of those misses its chamber by at least
   {big_miss_x} times the tolerance or on the cause outright, so no route is rejected on a knife edge. Routes that
-  miss several chambers may well graze a band on one of them: the nearest miss on a quantity anywhere in the
-  study is {nearest_miss} per cent, {nearest_miss_x} times the gas-load tolerance. That costs nothing, because
-  every chamber is missed by at least {routes_per_chamber_word} routes, and by at least one on its cause alone -
-  and a cause is right or wrong whatever the tolerances are.
+  miss several chambers may graze a band on one of them: the nearest miss on a quantity anywhere in the study is
+  {nearest_miss} per cent, {nearest_miss_x} times the gas-load tolerance. That costs nothing, because every chamber
+  is missed by at least {routes_per_chamber_word} routes, and by at least one on its cause alone. On every
+  laboratory seed of the ordered test VC08 is still missed by at least {fewest_on_seed} routes.
 - **Every chamber.** The allowance of one wrong chamber that earlier tasks carried is not used here, and the
   reason is measured (`authoring/evidence/plan_sweep.txt`): with an allowance of one, the audit test is not
   load-bearing at all, because the reference passes with no test ordered. Requiring every chamber makes the one
-  chamber whose own records cannot settle its cause decide the sheet, which is what the test is for. It is not a
-  knife edge: every sound method gets all ten right, with the margins above.
+  chamber whose own records cannot settle its gas load decide the sheet, which is what the test is for.
 
 Method-free answers are all rejected and none of them gets a single chamber right
 (`authoring/evidence/null_baselines.txt`): the true result of one real chamber of the same shop copied onto all
-ten; each of
-the five causes given to all ten; the latest reading times the latest speed test; the specified base pressure times
-the latest speed test; and the register's rated speed with the gas load it and the specification imply. No chamber
-has a free pass.
+ten; each of the five causes given to all ten; the latest reading times the latest speed test; the specified base
+pressure times the latest speed test; the register's rated speed with the gas load it and the specification imply;
+and three single-entry shortcuts that use the reference's own corrected readings and speed but read the gas load
+off the latest entry - as it stands, with the table's wall and the rest a leak, or with the rest put down to the
+wall. No chamber has a free pass.
 
-`authoring/evidence/hedge_study.txt` records what a wrong attribution does. It covers every chamber against
-every cause but its own - {hedge_chambers} chambers times {hedge_alternatives} alternatives, {hedge_total_word}
-cases - and each case is a complete sheet scored through this grader, so the verdicts below are the grader's and
-not the study's own arithmetic. {Hedge_inside} of the {hedge_total} leave the gas load inside its band and
-{hedge_outside} put it outside, and not one of the {hedge_total} is accepted. The total gas load is the total
-whatever it is attributed to, so on most chambers a sheet that names the wrong mechanism still has its quantity
-right; every one of those chambers is then decided by the cause, which is graded on its own and cannot be
-hedged.
+`authoring/evidence/hedge_study.txt` records what a wrong attribution does to the quantities. It runs the reference
+with its reading forced to each cause but the chamber's own - {hedge_chambers} chambers times {hedge_alternatives}
+alternatives, {hedge_total_word} cases - and scores each sheet, naming that cause, through this grader. A wrong
+cause fails the chamber by definition; what the study measures is whether the gas load survives the wrong reading.
+In {hedge_inside} of the {hedge_total} cases it does and in {hedge_outside} it does not; in the other
+{hedge_unfit_word} the records leave too few observations to fit the forced reading at all. Not one sheet is
+accepted. Where the total survives a wrong attribution the chamber is decided by the cause, which is graded on its
+own.
 
 Malformed sheets and edge cases are all built from the current reference at run time, never hard-coded, and scored
-by the same grader the verifier calls (`authoring/evidence/verifier_checks.txt`). {cases_word} cases all behave as
+by the same grader the verifier calls (`authoring/evidence/verifier_checks.txt`). {Cases_word} cases all behave as
 the rules say: a sheet that is a symlink, a directory or absent; no header, a renamed column, the columns
 reordered, an extra column; a row missing or repeated; an unknown chamber; a cause outside the list or in the
 wrong case; a gas load that is not a number, NaN, infinite, negative, zero or far out of range; a speed of zero,
 far out of range, or a boolean; an empty file; bytes that are not ASCII; and a sheet padded past the size limit.
 {band_cases} of those cases are the bands themselves: each band is tried just inside and just outside, above and
-below the truth, so both edges of both bands are measured rather than assumed. Preflight fails if any case in
-that record did not behave as the rules say.
+below the truth, so both edges of both bands are measured rather than assumed.
+
+Every evidence record carries on its first line a fingerprint of the files its result depends on, and preflight
+fails if any record was written from inputs that have since changed.
 
 The single pytest test decides the reward. `tests/test.sh` writes 0 to the reward file before grading starts, locks
 `/logs/verifier` to root before grading and again before the reward, and writes 1 only when pytest exits 0 and the
@@ -439,6 +489,7 @@ The audit test order and the sealed definition belong to a separate contractor u
 order through one sudo rule that allows nothing but its status and submit commands. The order is charged to the
 contractor's state file before any report is written, and a state that cannot be read counts as already placed, so
 no test can be had twice."""
+
 
 
 # Every figure in the three texts above comes from fill(), which reads the evidence files. A number typed into
@@ -461,7 +512,7 @@ of atmospheric air through the elastomer seals, constant in time, steeply temper
 oxygen by the elastomer. The effective speed is the turbo pump in series with the high-vacuum port as fitted. A
 chamber whose actual speed has fallen below 0.75 of its rated speed is limited by its pump, whatever its gas load.
 
-Everything is referred to one condition: 16 h from the start of roughing after an air vent, the chamber wall at
+Everything is referred to one condition: %s h from the start of roughing after an air vent, the chamber wall at
 20 C, nothing in the chamber.
 
 The deliverable is `/app/output/diagnosis.csv`, with the header `chamber,cause,q_total_mbarl_s,s_eff_l_s` and one
@@ -473,7 +524,8 @@ controllers' weekly rows, the maintenance log, the gauge certificates and the sh
 standard and the shop's vacuum data in `docs/` and an example chamber's records, without a result, in `example/`.
 
 Beyond the records there is one contractor's test, ordered once through the `vacwork` command before its result is
-known, from four kinds: a rate-of-rise, a throughput speed test, a residual gas analysis and a helium leak test.
+known, from four kinds: a rate-of-rise, a throughput speed test, a residual gas analysis and a helium leak test,
+the first three taken after a pumping time the plan may choose.
 
 ## Difficulty
 
@@ -486,7 +538,7 @@ known, from four kinds: a rate-of-rise, a throughput speed test, a residual gas 
 ## Verification
 
 %s
-""" % (DIFFICULTY, SOLUTION, VERIFICATION)
+""" % (F["ref_h"], DIFFICULTY, SOLUTION, VERIFICATION)
 
 
 def task_toml():

@@ -12,8 +12,10 @@ standard MS-BP. For each chamber: what limits it, and two numbers.
 ## The reference condition
 
 Everything the audit reports is at one condition, and the instruction should state it so there is nothing to infer
-(P: the instruction or the standard fixes it): **16 h from the start of roughing after an air vent, the chamber
-wall at 20 C, nothing in the chamber.** It is MS-BP clause 2.
+(P: the instruction's figure must equal `REF_H`, and MS-BP clause 2 must state the same): **36 h from the start of
+roughing after an air vent, the chamber wall at 20 C, nothing in the chamber.** It is MS-BP clause 2. (It was 16 h
+until the 11 November redesign; the instruction's sentence "Use the reference condition from MS-BP clause 2: 36 h
+from the start..." is parsed exactly by preflight, so keep that wording or tell me to change the check.)
 
 ## Input paths, all absolute (P: every one of these appears in full)
 
@@ -43,7 +45,9 @@ wall at 20 C, nothing in the chamber.** It is MS-BP clause 2.
 - Placed **once**: no result is known until the order has been placed, and it cannot be changed, extended or
   replaced afterwards.
 - Reports are written to `/app/vacwork/`.
-- The plan format is in `vacwork.md`, and `vacwork submit` prints it on a bad plan.
+- The plan format is in `vacwork.md`, and `vacwork submit` prints it on a bad plan. Since the redesign a plan entry
+  may also name `pumping_time_h`, the pumping time the test is taken at (4 to 48 h, default 16 h). `vacwork.md`
+  documents it; the instruction need not and should not mention it, since choosing it is part of the audit.
 
 ## The output (P: the header appears exactly)
 
@@ -54,8 +58,9 @@ wall at 20 C, nothing in the chamber.** It is MS-BP clause 2.
   standard spells it (P: all five names appear).
 - `q_total_mbarl_s`: the chamber's total gas load at the reference condition, mbar L/s, within **4.0 percent**
   of its true value (P).
-- `s_eff_l_s`: the chamber's actual effective pumping speed at the reference condition, L/s, within **3.0 percent**
-  of its true value (P).
+- `s_eff_l_s`: the chamber's actual effective pumping speed at the reference condition, L/s, within **2.5 percent**
+  of its true value (P: parsed exactly against `S_TOL`). It was 3.0 until the 11 November retune; both tolerances
+  are now twice the widest sound-method deviation, rounded up to the half per cent.
 - A regular file of at most **100000 bytes** of ASCII text (P). Blank lines, surrounding spaces and any row order
   are accepted; nothing else is.
 

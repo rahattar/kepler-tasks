@@ -376,3 +376,64 @@ Supersedes "What remains" in STATE OF PLAY above.
      of draws.
 6. Also required by the playbook and missing until now: a seed screen, and route counts on lab seeds 5301-5320.
 7. `task.toml` metadata advisory: not acted on.
+
+---
+
+# THE REBUILD OF 11 NOVEMBER: WHAT THE EVIDENCE FOUND
+
+Steps 5-7 of the redesign (evidence, prose, packaging). Recorded because several of these were found by the
+studies, not planned, and two of them were faults in the reference that the shipped seed hid.
+
+## Found by the studies and fixed
+
+- **The reference overfitted small samples.** With an RGA on VC02 the reference took a trapped volume from
+  2026-10-10 (the date of the note that VC02's ionization gauge filament had failed) on four observations and four
+  parameters, chi-square zero, and missed VC02 by 17%. A structure is now admissible only if it leaves more
+  observations than parameters. The independent audit had the same fault and the same fix.
+- **The seed screen caught a spurious trapped volume on VC10.** On 2 of the 20 screened build seeds both audits
+  gave VC10 a trapped volume from the date its turbo drive overheated, on one degree of freedom, and missed it by
+  10% on the gas load and 15% on the speed. The shipped draw happens not to. The reference now selects by AICc
+  (AIC where no structure leaves two degrees of freedom, which is VC01's case), and the independent requires any
+  added mechanism to leave two degrees of freedom. After the fix both are right on every chamber on all 21 draws.
+  Measured: the reference's VC02 is the loosest chamber across draws (sd about 1.4%, worst 3.6% on seed 5303);
+  left as is, inside the band on every draw.
+- **The reference took tau by luck where nothing measured it.** With a helium test on VC08 the reference was right
+  (-0.1%): its misfit is flat in tau to the fourth decimal, and the grid's minimum landed near 14 h by noise. The
+  independent already took clause 3.3's bound in that case. The reference now does too (`tau_flat`: chi-square
+  within 1 across the grid), and VC08 with helium is +129% for it, as it should be: helium measures the leak, not
+  how fast the trapped volume empties.
+- **Both helium readers missed a leak under a permeation ramp.** On VC05 and VC06, whose seals are long, the
+  leak region's step sits under a seal's ramp, and the "most of the rise in 30 s" test rejected it, reading the
+  leak as zero and pushing the constant load into a trapped volume. The reference now fits each trace as a
+  background, a fast rise and a slow rise; the independent fits the trace from 40 s on as a constant plus a ramp
+  and takes the step from the constant. Both now read every chamber's leak within a few per cent.
+- **VC04's register_seal route grazed.** It missed VC04 alone by 1.94x the tolerance. VC04's seal length went
+  from 520 to 600 cm; the route now names the wrong cause there.
+- **The plan sweep had collateral damage**: before the fixes above, five off-path orders (an RGA on VC02 at 16 or
+  20 h, a rate-of-rise there at 16 h, helium on VC05 or VC06) broke the chamber they were spent on. None does now.
+
+## Retuned
+
+- Gas-load tolerance 4.0% (unchanged), speed tolerance 3.0% -> **2.5%**. Rule: twice the widest deviation any
+  sound method reaches on any chamber (method_spread.txt: 2.00% and 1.25%), rounded up to the half per cent.
+  Preflight recomputes the rule from the record.
+- The instruction's two figures were edited to match (16 h -> 36 h, 3.0 -> 2.5 percent). Those are the only
+  edits to Alex's text.
+
+## Measured, for calibration
+
+- Orders that carry the reference: 18 of 221, every one a gas-load test (rga, rate-of-rise or speed-test) on VC08
+  at 20 to 48 h. The default 16 h does not. The independent audit is carried by exactly the same 18. The design
+  tool (`identify.py`) predicted 24-48 h; the solvers do better at 20 h than its noise model allows.
+- Routes: 22, all rejected; every chamber missed by at least 5, and VC08 by at least 4 on every laboratory seed.
+- Sound methods: 18, all accepted; both audits right on VC08 on all 20 laboratory seeds.
+
+## Other changes
+
+- `tests/app_data` removed (read by nothing), with its Dockerfile copy and the mirror check; preflight instead
+  checks that `environment/data` is byte for byte what build.py writes now.
+- Instrument repeatabilities are single-sourced in `fleet.py` (`REPEAT`) and stated in `records_format.md` and
+  `vacwork.md`, so the figures an agent weights by are the figures the noise was drawn from.
+- Every evidence record carries a fingerprint of its inputs on its first line; preflight fails a stale record.
+- Preflight's read check is path-aware (directory and name, or the path in the image), and a CSV is exempt only if
+  the record definitions or the instruction name it.
