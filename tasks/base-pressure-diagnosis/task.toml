@@ -308,13 +308,15 @@ Why these tolerances, and why every chamber:
   all, because the reference passes with no test ordered. Requiring every chamber makes the one chamber whose own
   records cannot settle its gas load decide the sheet, which is what the test is for.
 
-Method-free answers are all rejected and none of them gets a single chamber right
-(`authoring/evidence/null_baselines.txt`): the true result of one real chamber of the same shop copied onto all ten;
-each of the five causes given to all ten; the latest reading times the latest speed test; the specified base
-pressure times the latest speed test; the register's rated speed with the gas load it and the specification imply;
-and three single-entry shortcuts that use the reference's own corrected readings and speed but read the gas load off
-the latest entry - as it stands, with the table's wall and the rest a leak, or with the rest put down to the wall.
-No chamber has a free pass.
+Method-free answers are all rejected (`authoring/evidence/null_baselines.txt`): the true result of one real chamber
+of the same shop copied onto all ten; each of the five causes given to all ten; the latest reading times the latest
+speed test; the specified base pressure times the latest speed test; the register's rated speed with the gas load it
+and the specification imply; and three single-entry shortcuts that use the reference's own corrected readings and
+speed but read the gas load off the latest entry - as it stands, with the table's wall and the rest a leak, or with
+the rest put down to the wall. The most any of them gets right is one of 10: the latest entry, the table's wall and
+the rest a leak gets VC03 right, on a chamber whose gas is mostly a leak, so that taking the wall at the table's
+figure moves its total little. No chamber is got right by more than one of them, so none is free: each is still
+decided by the work.
 
 `authoring/evidence/hedge_study.txt` records what a wrong attribution does to the quantities. It runs the reference
 with its reading forced to each cause but the chamber's own - 10 chambers times 4 alternatives, forty cases - and

@@ -130,6 +130,23 @@ def facts():
     t = _ev("null_baselines.txt")
     (n,) = _grab(t, r"the most any gets right is (\d+) of 10", "null baseline best")
     f["null_best"] = int(n)
+    rows = re.findall(r"(?m)^(\S.*?)\s{2,}(\d+)/10\s+(rejected|accepted)\s+(.+?)\s*$", t)
+    if not rows or any(v == "accepted" for _a, _n, v, _c in rows):
+        raise SystemExit("meta.py: null_baselines.txt has no table, or a method-free answer is accepted")
+    hits = [(a, c) for a, k, _v, c in rows if int(k) > 0]
+    free = {cid: int(k) for cid, k in re.findall(r"(?m)^(VC\d\d)\s+(\d+)\s", t.split("Free passes")[1])}
+    if len(free) != 10:
+        raise SystemExit("meta.py: null_baselines.txt does not list the ten chambers' free passes")
+    if max(free.values()) >= 2:
+        raise SystemExit("meta.py: a chamber is got right by two method-free answers: an item is free")
+    if not hits:
+        f["null_hits"] = "None of them gets a single chamber right."
+    else:
+        said = "; ".join("%s gets %s right" % (a.strip(), c.strip().replace(" ", ", ")) for a, c in hits)
+        f["null_hits"] = ("The most any of them gets right is %s of 10: %s, on a chamber whose gas is mostly a "
+                          "leak, so that taking the wall at the table's figure moves its total little. No chamber "
+                          "is got right by more than one of them, so none is free: each is still decided by the "
+                          "work." % (WORDS[int(n)], said))
 
     t = _ev("reference_run.txt")
     f["ref_q"], f["ref_s"] = _grab(t, r"worst deviation: gas load ([\d.]+)%, speed ([\d.]+)%", "reference run")
@@ -530,13 +547,12 @@ Why these tolerances, and why every chamber:
   load-bearing at all, because the reference passes with no test ordered. Requiring every chamber makes the one
   chamber whose own records cannot settle its gas load decide the sheet, which is what the test is for.
 
-Method-free answers are all rejected and none of them gets a single chamber right
-(`authoring/evidence/null_baselines.txt`): the true result of one real chamber of the same shop copied onto all
-ten; each of the five causes given to all ten; the latest reading times the latest speed test; the specified base
-pressure times the latest speed test; the register's rated speed with the gas load it and the specification imply;
-and three single-entry shortcuts that use the reference's own corrected readings and speed but read the gas load
-off the latest entry - as it stands, with the table's wall and the rest a leak, or with the rest put down to the
-wall. No chamber has a free pass.
+Method-free answers are all rejected (`authoring/evidence/null_baselines.txt`): the true result of one real
+chamber of the same shop copied onto all ten; each of the five causes given to all ten; the latest reading times
+the latest speed test; the specified base pressure times the latest speed test; the register's rated speed with
+the gas load it and the specification imply; and three single-entry shortcuts that use the reference's own
+corrected readings and speed but read the gas load off the latest entry - as it stands, with the table's wall and
+the rest a leak, or with the rest put down to the wall. {null_hits}
 
 `authoring/evidence/hedge_study.txt` records what a wrong attribution does to the quantities. It runs the reference
 with its reading forced to each cause but the chamber's own - {hedge_chambers} chambers times {hedge_alternatives}
