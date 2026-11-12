@@ -10,7 +10,7 @@ systems. The screen allows 0 low solves, so no xhigh probes were run.
 |---|---|---|---|---|
 | S1 | 8 min | **accepted, 8 of 8**, within 1.3% | static offsets; a robust fit of every C and every valve; port tags reassigned within each run by optimal assignment; misfit runs dropped | nothing |
 | S2 | 5 min | 4 of 8 | the same, but readings that do not fit are dropped, not reassigned | DC-1, DC-4, DC-6 over the 20 s limit; DC-5 20% low |
-| S3 | 14 min (program as it stood; the run had not reported) | 7 of 8 | static offsets; a soft-L1 fit; swaps undone for the whole campaign or run by run; a run's flow corrected from the common factor of its drops | DC-3 3.6% high |
+| S3 | 16 min (its report was lost; the final program was graded) | 7 of 8 | static offsets; a soft-L1 fit; swaps undone for the whole campaign or run by run; a run's flow corrected from the common factor of its drops | DC-3 3.6% high |
 
 - **All three found all five kinds of fault from the examples alone**, including the four that move no
   visible result. S1's and S2's reports name WH-B's gauge, WH-C's register, WH-E's swapped ports and WH-E's
