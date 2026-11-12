@@ -39,6 +39,7 @@ pass test.sh: the literal contract
 pass test.sh: zero first, then grading, then the reward                                               
 pass test.sh: an old report is removed before grading                                                 
 pass test.sh: the reward is one only on a clean exit and a counted report                             
+pass test.sh: every write of the reward is a line of its own with a literal 0 or 1                    
 pass test.sh: the log directory is closed before grading and again before the reward                  
 pass the verifier's test is one test                                                                  
 pass the sealed definition is identical in provenance, tests and the contractor's directory           
@@ -88,4 +89,4 @@ pass pytest agrees on every complete sheet
 pass the reference run ends with every train aligned and pytest passing                               
 pass every screened seed is acceptable                                                                
 
-89 checks, 0 failed: the bundle is clean
+90 checks, 0 failed: the bundle is clean

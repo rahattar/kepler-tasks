@@ -209,8 +209,12 @@ def main():
     check("test.sh: an old report is removed before grading",
           sh.index("rm -f /logs/verifier/ctrf.json") < sh.index(run))
     check("test.sh: the reward is one only on a clean exit and a counted report",
-          'case "$graded:$counted" in' in sh and '0:0) ' + one in sh and "*)   " + zero in sh
+          'if [ "$graded" -eq 0 ] && [ "$counted" -eq 0 ]; then' in sh
           and "graded=$?" in sh and "python count_report.py /logs/verifier/ctrf.json\ncounted=$?" in sh)
+    # intake reads the write sites as text: each must be a line holding the literal write and nothing else
+    writes = [line.strip() for line in sh.splitlines() if "reward.txt" in line and "echo" in line]
+    check("test.sh: every write of the reward is a line of its own with a literal 0 or 1",
+          len(writes) == 3 and all(line in (zero, one) for line in writes), "; ".join(writes))
     check("test.sh: the log directory is closed before grading and again before the reward",
           sh.count("\nclose_logs\n") == 2 and sh.index(run) < sh.rindex("\nclose_logs\n") < sh.index(one))
     check("the verifier's test is one test", len(re.findall(r"(?m)^def test_", text("tests", "test_moves.py"))) == 1)

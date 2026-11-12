@@ -31,8 +31,9 @@ counted=$?
 # taken away, and the final character is written from the two exit statuses alone.
 close_logs
 rm -f /logs/verifier/reward.txt
-case "$graded:$counted" in
-    0:0) echo -n "1" > /logs/verifier/reward.txt ;;
-    *)   echo -n "0" > /logs/verifier/reward.txt ;;
-esac
+if [ "$graded" -eq 0 ] && [ "$counted" -eq 0 ]; then
+    echo -n "1" > /logs/verifier/reward.txt
+else
+    echo -n "0" > /logs/verifier/reward.txt
+fi
 exit 0

@@ -51,6 +51,8 @@ Sciences). Follow this exactly unless Alex says otherwise.
     `ENV PYTHONUNBUFFERED=1`;
   - `tests/test.sh`: `echo -n "0" > /logs/verifier/reward.txt` and `echo -n "1" > /logs/verifier/reward.txt`
     with the path written out in full, not through a shell variable (error code `reward-txt-missing`);
+    each of them on a line of its own with nothing before it, so not in a `case` arm or after `&&`
+    (shaft-alignment-moves, Nov 11);
     `mkdir -p /logs/verifier`; `--ctrf=/logs/verifier/ctrf.json`; `-p no:cacheprovider`.
   Originality has to be built *around* these, never by replacing them. See `docs/rejection-patterns.md` for how.
 - **Truth:** comes from a sealed definition, never from running the reference. The agent can't read it: it sits

@@ -123,6 +123,13 @@ for art in a.get("artifacts", []):
 for v in ("0", "1"):
     # reward-txt-missing: the path written out, not built from shell variables
     chk('echo -n "%s" > /logs/verifier/reward.txt' % v in tsh, 'tests/test.sh writes `echo -n "%s" > /logs/verifier/reward.txt`' % v)
+# reward-not-literal (shaft-alignment-moves 20261111): every write site is read as text and must be the literal
+# write on a line of its own; a write inside a case arm (`0:0) echo -n "1" > ...`) is refused
+sites = [ln.strip() for ln in tsh.splitlines() if "reward.txt" in ln and re.search(r"\b(echo|printf)\b|>", ln)
+         and not ln.strip().startswith(("#", "rm "))]
+chk(sites and all(ln in ('echo -n "0" > /logs/verifier/reward.txt', 'echo -n "1" > /logs/verifier/reward.txt') for ln in sites),
+    "every reward write in tests/test.sh is the literal write on a line of its own%s"
+    % ("" if all(ln in ('echo -n "0" > /logs/verifier/reward.txt', 'echo -n "1" > /logs/verifier/reward.txt') for ln in sites) else ": %s" % sites[:3]))
 pins = tdock + "".join(open(os.path.join(dp, f)).read() for dp, _, fs in os.walk(os.path.join(d, "tests"))
                        for f in fs if f == "requirements.txt")
 # pytest and the ctrf plugin are always needed; the libraries only if installed, and then at the standard version

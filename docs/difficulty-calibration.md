@@ -534,7 +534,7 @@ against 1 of 12 and 1 of 6 on v6.
 
 ## shaft-alignment-moves, the bundle built on v7 (Nov 11)
 
-`tasks/shaft-alignment-moves`, zip `shaft-alignment-moves-20261111.zip`; `docs/design-note-shaft-alignment.md`.
+`tasks/shaft-alignment-moves`, zip `shaft-alignment-moves-20261111b.zip`; `docs/design-note-shaft-alignment.md`.
 The agent's records are byte for byte v7's and the statement is v7's brief, so the bare-core rates (low 1 of 6,
 xhigh 3 of 6) are the only local estimate; the bundle itself was not probed.
 
@@ -549,4 +549,4 @@ What building it showed that the bare rounds had not:
   answer to compare with, so any sound method passes by construction (seven variations and a second
   solution, 21 seeds).
 - Harness similarity after two rewrites, difflib ratio against the nearest bundle: agent image 0.386, verifier
-  image 0.346, reward script 0.456, pytest entry 0.389, instruction 0.438.
+  image 0.346, reward script 0.479, pytest entry 0.389, instruction 0.438.
