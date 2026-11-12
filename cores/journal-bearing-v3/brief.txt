@@ -1,0 +1,11 @@
+Work only inside PROBE. Do not read, list or open anything outside PROBE. Everything you need is under PROBE/app.
+
+The site checks its plain journal bearings by calculating each one's operating points to the plant's standard LS-3, `PROBE/app/data/docs/ls3_journal_bearings.md`, from the bearing's package of records: the minimum film thickness, the attitude angle, the power loss, the effective film temperature and the peak film pressure at every operating point on record. Write the program that does this calculation, `PROBE/app/output/bearing.py`.
+
+The program is run as `python3 bearing.py PACKAGE_DIR OUT_CSV`. PACKAGE_DIR is one bearing's package in the format of `PROBE/app/data/docs/package_format.md`. It writes OUT_CSV with the header `point,h_min_um,attitude_deg,power_kW,t_eff_C,p_max_MPa` and one row for every point of the package's `points.csv`. Three packages with their results to LS-3 are in `PROBE/app/data/examples`.
+
+The program will be run on the packages of ten other bearings from elsewhere on the site, in the same format. Every bearing and operating point is within the scope of LS-3 section 1. Some packages are hourly records: a package holds up to 32,000 operating points. Each run of bearing.py must finish within 30 seconds on 1 CPU. For every point of every package the minimum film thickness, the power loss and the peak pressure must each be within 1.5 per cent of the result to LS-3, the attitude angle within 1 degree and the effective temperature within 0.5 K.
+
+Each run takes place in a scratch directory holding a copy of bearing.py alone, so the program cannot read any other file you leave. Python 3 with numpy and scipy is available.
+
+This machine is shared with other jobs, so judge your program's speed by its CPU time (user plus system, as `time` reports it), not by the wall clock. Write any scratch files under PROBE/app/work. When you are done, report what you did, how you checked it and how long a run takes.

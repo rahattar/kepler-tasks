@@ -1,0 +1,14 @@
+{
+ "tag": "C-9",
+ "machine": "compressor",
+ "position": "DE",
+ "journal_diameter_mm": 90,
+ "length_mm": 72,
+ "radial_clearance_um": 60,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil_grade": "ISO VG 46",
+ "oil_flow_L_min": 3.0
+}

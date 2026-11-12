@@ -1,0 +1,14 @@
+{
+ "tag": "K-105",
+ "machine": "fan",
+ "position": "DE",
+ "journal_diameter_mm": 160,
+ "length_mm": 130,
+ "radial_clearance_um": 110,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil_grade": "ISO VG 46",
+ "oil_flow_L_min": 9.0
+}

@@ -1,0 +1,14 @@
+{
+ "tag": "ID-2",
+ "machine": "fan",
+ "position": "NDE",
+ "journal_diameter_mm": 220.0,
+ "length_mm": 200.0,
+ "radial_clearance_um": 150,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil_grade": "ISO VG 68",
+ "oil_flow_L_min": 11.0
+}

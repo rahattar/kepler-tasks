@@ -1,0 +1,14 @@
+{
+ "tag": "V-3",
+ "machine": "vertical",
+ "position": "DE",
+ "journal_diameter_mm": 70,
+ "length_mm": 42,
+ "radial_clearance_um": 50,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil_grade": "ISO VG 32",
+ "oil_flow_L_min": 2.0
+}

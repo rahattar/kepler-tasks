@@ -1,0 +1,14 @@
+{
+ "tag": "T-1",
+ "machine": "turbine",
+ "position": "DE",
+ "journal_diameter_mm": 560,
+ "length_mm": 400,
+ "radial_clearance_um": 420,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil_grade": "ISO VG 46",
+ "oil_flow_L_min": 900.0
+}

@@ -1,0 +1,2 @@
+pipeline_L-7       ran         89.8 s    0 of 30480 points out  worst/band {'h_min_um': 0.13, 'power_kW': 0.23, 'p_max_MPa': 0.11, 'attitude_deg': 0.08, 't_eff_C': 0.17}
+ACCEPTED
