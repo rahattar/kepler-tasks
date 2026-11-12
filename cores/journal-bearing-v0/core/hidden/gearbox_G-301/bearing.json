@@ -1,0 +1,17 @@
+{
+ "tag": "G-301",
+ "diameter_mm": 140,
+ "length_mm": 112,
+ "radial_clearance_um": 95,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil": {
+  "grade": "ISO VG 100",
+  "nu40_cSt": 100.0,
+  "nu100_cSt": 11.4,
+  "rho15_kg_m3": 880.0
+ },
+ "oil_flow_L_min": 9.0
+}

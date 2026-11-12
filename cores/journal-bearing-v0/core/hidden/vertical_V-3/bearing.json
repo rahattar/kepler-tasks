@@ -1,0 +1,17 @@
+{
+ "tag": "V-3",
+ "diameter_mm": 70,
+ "length_mm": 42,
+ "radial_clearance_um": 50,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil": {
+  "grade": "ISO VG 32",
+  "nu40_cSt": 32.0,
+  "nu100_cSt": 5.4,
+  "rho15_kg_m3": 865.0
+ },
+ "oil_flow_L_min": 2.0
+}

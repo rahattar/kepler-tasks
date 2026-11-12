@@ -1,0 +1,17 @@
+{
+ "tag": "Z-12",
+ "diameter_mm": 200,
+ "length_mm": 200,
+ "radial_clearance_um": 130,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil": {
+  "grade": "ISO VG 68",
+  "nu40_cSt": 68.0,
+  "nu100_cSt": 8.7,
+  "rho15_kg_m3": 875.0
+ },
+ "oil_flow_L_min": 6.0
+}

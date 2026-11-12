@@ -1,0 +1,17 @@
+{
+ "tag": "C-9",
+ "diameter_mm": 90,
+ "length_mm": 72,
+ "radial_clearance_um": 60,
+ "groove_angles_deg": [
+  60,
+  240
+ ],
+ "oil": {
+  "grade": "ISO VG 46",
+  "nu40_cSt": 46.0,
+  "nu100_cSt": 6.8,
+  "rho15_kg_m3": 870.0
+ },
+ "oil_flow_L_min": 3.0
+}
