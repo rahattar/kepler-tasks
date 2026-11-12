@@ -1,0 +1,11 @@
+Work only inside PROBE. Do not read, list or open anything outside PROBE. Everything you need is under PROBE/app.
+
+You are the rotating equipment engineer closing out Unit 3's turnaround. Thirty-six coupled machine trains have had their as-found alignment read by the fitters, and every one of them has to be left aligned to the plant's procedure AP-12, `PROBE/app/data/docs/alignment_procedure.md`, before start-up.
+
+For each train, work out the moves to make at the movable machine's feet: the shim change at the front feet and at the rear feet, and the lateral move at the front feet and at the rear feet.
+
+The records are `PROBE/app/data/train_register.csv`, `PROBE/app/data/dial_sheets.csv`, `PROBE/app/data/tool_crib_log.csv`, `PROBE/app/data/sag_cards.csv`, `PROBE/app/data/support_temperatures.csv`, `PROBE/app/data/gearbox_running_position.csv`, `PROBE/app/data/hot_checks.csv` and `PROBE/app/data/work_orders.csv`. The dial bracket kits are described in `PROBE/app/data/docs/kit_leaflets.md`. The laser contractor's service is described in `PROBE/app/data/docs/laser_service.md`; the command it calls `laservisit` is `PROBE/app/laservisit`, and its reports go to `PROBE/app/laser_reports`.
+
+Write `PROBE/app/output/moves.csv` with the header `tag,v_front_mm,v_rear_mm,h_front_mm,h_rear_mm` and one row for every train: the moves in mm to three decimals, with the signs of AP-12 section 4. Give one figure for every move of every train.
+
+Write any scratch files under PROBE/app/work. When you are done, report what you did, which trains you had the laser contractor visit and why, and what you concluded.

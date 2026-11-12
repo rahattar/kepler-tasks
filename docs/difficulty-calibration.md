@@ -454,3 +454,18 @@ signpost whichever file it is in. The test for a trap is:
 3. the first-order diagnostic that would expose it returns a clean bill, so a solver who looks is reassured;
 4. it is still fair: derivable from the records together by a physical argument, with at most an oblique note
    that records a circumstance without naming the error or its size.
+
+## A bare kind-A core, killed in an hour (shaft alignment, Nov 11)
+
+First use of the rule "probe the bare core on the screen's model before building anything". The core is in
+`cores/shaft-alignment-v0/` with its result. 36 trains, five laser visits, nine open items that five visits
+cover only through two overlaps and one free derivation, three salient machines the records already settle;
+4 of 376,992 bookings pass. Three opus low-effort probes made the same passing booking in about 80 seconds
+each and aligned 36 of 36.
+
+- **A zero-slack budget is not kind A by itself.** When the procedure states what voids a record and what
+  carries from one unit to its class, the open items are a list and the booking is a count, however tight.
+- **Overlaps and a free derivation add nothing.** All three runs found both overlaps and the twice-read train.
+- **Salient decoys drew no visit.**
+- What remains untested is the part of hvac this did not have: classes that no document declares.
+- The cost was about an hour of building and four minutes of probes, against the five rounds flare took.
