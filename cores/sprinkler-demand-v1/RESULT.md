@@ -1,7 +1,41 @@
-# sprinkler-demand bare core v1 (Nov 12): built and checked, not yet probed
+# sprinkler-demand bare core v1 (Nov 12): low effort solves it, 1 of 3 accepted in eight minutes
 
-Opus probes cannot run until the weekly limit resets (Nov 14, 3 am Central). Everything below is the author's
-side: the reference, the programs that stop short of it, the naive version and the seed study.
+The premise failed. Low effort looks at how well its fit explains the visible readings without being asked,
+finds every kind of fault in five to eight minutes, and one of three runs was accepted on all eight hidden
+systems. The screen allows 0 low solves, so no xhigh probes were run.
+
+## Probes (opus, low effort)
+
+| probe | time | hidden | what it built | what it missed |
+|---|---|---|---|---|
+| S1 | 8 min | **accepted, 8 of 8**, within 1.3% | static offsets; a robust fit of every C and every valve; port tags reassigned within each run by optimal assignment; misfit runs dropped | nothing |
+| S2 | 5 min | 4 of 8 | the same, but readings that do not fit are dropped, not reassigned | DC-1, DC-4, DC-6 over the 20 s limit; DC-5 20% low |
+| S3 | 14 min (program as it stood; the run had not reported) | 7 of 8 | static offsets; a soft-L1 fit; swaps undone for the whole campaign or run by run; a run's flow corrected from the common factor of its drops | DC-3 3.6% high |
+
+- **All three found all five kinds of fault from the examples alone**, including the four that move no
+  visible result. S1's and S2's reports name WH-B's gauge, WH-C's register, WH-E's swapped ports and WH-E's
+  flow, and S3's program handles the same four.
+- **They test the shift themselves.** S1 built packages from the examples with lower C, valves at factors of
+  20 to 300, swapped tags and a wrong flow; S2 made nine damaged sheets. Once an agent has a forward model,
+  "the same fault, larger, where it decides" is something it tries before it submits.
+- **S2's three timeouts are a fault of the core, not difficulty.** The hidden grids are three to four times the
+  size of any example. By the Nov 12 tips a size that decides the result belongs in the visible data.
+- **DC-5 is the one miss on substance.** The swapped ports there are the only ones that carry the information
+  on the branch lines, so discarding them leaves the lines at the register's figure. S1 and S3 undo the swap
+  and pass.
+- S3's miss is DC-3, the mis-entered flow on a drain run: 3.6% against a 3% tolerance.
+
+## Reading
+
+Unlabelled faults in a redundant record of a documented physical model are not a source of difficulty, whether
+or not they move a visible result. The method is generic (robust regression, assignment, dropping what does not
+fit), and low effort reaches for it at once. Together with v0 this closes the two ideas tried on this subject:
+a decision made during the run, and inference nobody prompts.
+
+What is left on this subject would have to be a fault that discarding cannot handle and that a generic fit
+cannot absorb, in every hidden system and not in one. DC-5 is the only instance here.
+
+The sections below are the author's side as built before the probes.
 
 ## What changed from v0
 
@@ -43,18 +77,6 @@ the hydraulics and the timed re-run and moves the difficulty to inference nobody
   worse, except where two explanations are the same pipe (the feed main's C and its gate valve), and those
   give the same demand.
 - Full table of the programs that stop short: `ladder_seed1.txt`.
-
-## The premise to probe
-
-A program that fits every group's C passes all five examples and fails six hidden systems. The question for the
-probes is whether an agent looks at how well its fit explains the visible readings when the visible results
-already agree, and then works out what the misfit is. Low effort is expected to stop at "every C fitted";
-whether xhigh goes further is what the probe measures.
-
-Things to watch in the probe reports:
-- If every probe misses the sheet faults the same way, the visible instances are too quiet and WH-E or WH-D
-  should be made to decide its own result.
-- If low effort finds them, the instances are too loud; shrink them toward five times the scatter.
 
 ## Files
 

@@ -582,3 +582,21 @@ making for as long as it likes. Anything determinate from the documents and the 
 effort, in 20 to 90 minutes. What stopped low effort on the alignment task was different in kind: a decision
 that cannot be tested before it is spent. A program task has no such decision unless the program itself has to
 spend something on the hidden case.
+
+## Timed programs on shifted hidden data: sprinkler-demand v0 and v1 (Nov 12)
+Two bare cores on one subject (a wet-pipe sprinkler system's demand), both solved at low effort. Details in
+`cores/sprinkler-demand-v0/RESULT.md` and `cores/sprinkler-demand-v1/RESULT.md`.
+- **A decision made during the run is not difficulty.** v0 gave the program one field test to choose. Nine
+  minutes in, all three low drafts were choosing it by Fisher information.
+- **Unlabelled faults in a redundant record are not difficulty.** v1 hid five kinds in the readings (a wrong
+  registered C, a valve off its seat, swapped port tags, a mis-entered flow, a gauge zero error), four of them
+  moving no visible result. Low effort found all five in five to eight minutes and one run was accepted 8 of 8.
+  Its method: static offsets, a robust fit of every parameter, tags reassigned by optimal assignment, misfit
+  runs dropped.
+- **Low effort tests the shift itself.** With a forward model in hand it corrupts the examples with every
+  fault it has seen, at larger values. A hidden shift the agent's own simulator can produce is not a shift.
+- **A size that decides must be visible.** Hidden systems three to four times the size of any example put one
+  run over the time limit. That is a design fault under the Nov 12 tips, not difficulty.
+- **The one thing that bit:** a fault sitting on the only readings that carry the information, so that it has
+  to be undone and cannot be discarded. One hidden system of eight had it; two of three low runs handled it.
+
