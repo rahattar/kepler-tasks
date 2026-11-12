@@ -69,6 +69,10 @@ Sciences). Follow this exactly unless Alex says otherwise.
   fails the task), on hidden data deliberately shifted from the visible data (new regime, injected faults,
   out-of-range values, unseen categories, edge cases; not a reseed), and 0-5 of 8 on the difficulty probe.
   Full checklist and the verbatim messages: `docs/afterquery-asks-2026-11-11.md`.
+- Nov 11-12 tips (same doc): every deciding fault or condition shows at least once in the visible data; docs and
+  labels unambiguous; a correct standard method passes; the tolerance is checked by an independent solution; all
+  probes failing the same check the same way means something is hidden or unclear; 0 of 8 is reviewed on the same
+  rubric, and the difficulty must come from the science.
 
 ## Design rules (Alex's standing rule, Nov 5)
 - Give no hints in the prompt or the files. Hide the trap in the analysis layer: the general approach must look

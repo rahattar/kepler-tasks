@@ -40,6 +40,37 @@ inputs). It sits against the Nov 5 design rule in `docs/playbook.md` ("No more v
 ~8 hidden cases'"). A timed re-run on deliberately shifted hidden data is a different verification shape from the
 untimed program tasks in the catalogue, but how the two rules fit together is Alex's call.
 
+## Further guidance (team channel, 11 Nov 11:38 PM and 12 Nov 1:23 AM)
+
+Two later announcements, verbatim below. As working rules:
+- **Every deciding fault or condition shows at least once in the visible data.** A hidden case may combine,
+  move or scale them, but a kind of fault or condition that decides a result must have a visible instance. This
+  bounds requirement 2 above: the shift is in regime, combination, location or range, never a kind of thing the
+  agent has never seen.
+- **Docs and labels accurate and unambiguous.** Every column and every term means one thing and says what it is.
+- **A correct standard method passes.** No unwritten rules, no matching the reference's exact formula; the
+  tolerance comes from an independent solution (here: twice the widest sound deviation, floored at the seed
+  screen, as preflight checks).
+- **Every probe failing the same check with the same wrong answer is a warning** that something is hidden or
+  unclear, not a success. Read such a run's reasoning before calling the trap fair.
+- **0 of 8 is accepted but not a pass by itself.** It is reviewed on the same rubric; the difficulty has to come
+  from the science, not from tricky setup, unclear wording or arbitrary constraints.
+
+> **11:38 PM.** A few tips for strong tasks:
+>
+> Any fault or condition that decides the result should appear at least once in the visible data.
+> Keep docs and labels accurate and unambiguous.
+> A correct standard method should pass. Don't make it about guessing unwritten rules or matching your exact
+> formula.
+> Check your tolerance with an independent solution.
+> If every probe attempt fails the same check with the same wrong answer, something is likely hidden or unclear.
+
+> **1:23 AM.** Hi everyone, a quick FYI! Tasks that score 0/8 in the difficulty probe are still accepted, but
+> they're reviewed against the same rubric as every other task in the difficulty band. A 0/8 result doesn't mean
+> a task passes automatically. Difficulty needs to come from the science itself, so tasks made hard through tricky
+> setup, unclear wording or arbitrary constraints won't meet the standard we're looking for. Keep building those
+> challenging, science-driven tasks!
+
 ## The announcement (team channel, Anwes MisTeam, 11 Nov 2026, 4:34 PM)
 
 > We're looking for more Science tasks like this
