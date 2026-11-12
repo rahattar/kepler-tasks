@@ -1,4 +1,4 @@
-# shaft-alignment bare cores v4, v5, v6 (Nov 11). v6: low 0 of 6, xhigh 1 of 3
+# shaft-alignment bare cores v4, v5, v6 (Nov 11). v6: low 1 of 12, xhigh 1 of 6
 
 Three more bare rounds after v2 and v3, every probe on `model: "opus"`. The summary of all six versions:
 
@@ -9,7 +9,7 @@ Three more bare rounds after v2 and v3, every probe on `model: "opus"`. The summ
 | v2, v5 | two pump models listed alike, 0.38 and 0.47 in the 2019 survey | one at a time | 3 of 12 | 3 of 6 |
 | v3 | inside one model; every class one model | one at a time | 0 of 6 | 0 of 3 |
 | v4 | inside one model; the other classes two models each | one at a time | 0 of 3 | 0 of 3 |
-| **v6** | two pump models listed alike (as v2) | **all six in one order** | **0 of 6** | **1 of 3** |
+| **v6** | two pump models listed alike (as v2) | **all six in one order** | **1 of 12** | **1 of 6** |
 
 v5 is v2 with one defect removed: the maker's gearbox lateral figure had no stated direction, which gave a
 careful run a real reason to spend a visit on a compressor. v6 is v5 with the laser programme placed in a
@@ -46,3 +46,31 @@ times the tolerance on the same pumps in every run; nothing is fitted, so no res
 - None of this has met the official screen.
 - Probe 1 of v6 reported listing `/var/tmp` by mistake. The bare sandbox keeps the rig there in the open; the
   container will not.
+
+## Confirmation round on v6 (same evening): six more at low effort, three more at xhigh
+
+| probe | effort | the one order | trains |
+|---|---|---|---|
+| 31 | low | P-310A, P-325B, P-342, **K-201A**, TP-301A, TP-301B | 34 of 36 |
+| 32 | low | TP-301A, TP-301B, **K-201A**, P-301A, P-325B, P-342 | 34 of 36 |
+| 33 | low | TP-301A, TP-301B, P-301A, P-320A, P-325B, P-342 | 36 of 36 |
+| 34 | low | **K-201A**, P-310A, P-325B, P-342, TP-301A, TP-301B | 34 of 36 |
+| 35 | low | TP-301A, TP-301B, P-310A, **K-201A**, P-325B, P-342 | 34 of 36 |
+| 36 | low | **K-201A**, TP-301A, TP-301B, P-301A, P-325B, P-342 | 34 of 36 |
+| 37 | xhigh | TP-301A, TP-301B, P-301A, P-320A, P-345A, **K-201B** | 33 of 36 |
+| 38 | xhigh | TP-301A, TP-301B, **K-201A**, P-304, P-325B, P-342 | 34 of 36 |
+| 39 | xhigh | TP-301A, TP-301B, P-301A, P-320A, P-345A, **K-201B** | fails (order placed) |
+
+- **Totals for v6: low 1 of 12, xhigh 1 of 6.** Seventeen of the eighteen runs named the two turbines; sixteen
+  named a compressor as the sixth train.
+- The low-effort pass (probe 33) took "one visit for each jacketed pump model", found that made seven needs,
+  and dropped the second centreline model because it "had the same 2019 fraction (0.16)". That is the intended
+  argument, made before ordering.
+- At 1 in 12 a three-run screen with none allowed passes about 77 per cent of the time; 1 of 12 bounds the
+  rate below about 0.34 at 95 per cent.
+- **There is no effort gradient to speak of.** The single order that removed the low-effort passes removed
+  most of the xhigh ones too (3 of 6 one at a time, 1 of 6 in one order). The trap analysis says the same of
+  this kind: chill-bench went 1 of 3 at low effort and 1 of 8 at xhigh. At 1 in 6 an eight-run difficulty
+  screen sees at least one pass 77 per cent of the time and none 23 per cent.
+- The sentence most often quoted by failing runs to justify one visit for both models is the close-out's own:
+  "Every jacketed pedestal was blanked and drained in the same way."
