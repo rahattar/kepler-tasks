@@ -469,3 +469,27 @@ each and aligned 36 of 36.
 - **Salient decoys drew no visit.**
 - What remains untested is the part of hvac this did not have: classes that no document declares.
 - The cost was about an hour of building and four minutes of probes, against the five rounds flare took.
+
+## The first core with an effort gradient on the screen's model (shaft alignment v2, Nov 11)
+
+Three bare cores in one evening, each probed on `model: "opus"`: `cores/shaft-alignment-v0`, `-v1`, `-v2`,
+each with a RESULT.md.
+
+| core | what carries it | low | xhigh |
+|---|---|---|---|
+| v0 | zero-slack budget, classes and voiding rules stated in the procedure | 3 of 3 solved, 80 s | - |
+| v1 | nothing declared; the budget exactly equals the needs a careful count finds | 1 of 3 | - |
+| v2 | a careful count comes one short of the budget; the last need is a ratio in an old survey | 1 of 6 | 2 of 3 |
+
+What the three together say:
+
+- **Declared or not made no difference to finding the classes.** v1's runs saw the stale survey, found the
+  fraction law and sorted the pumps without being told any of it.
+- **A salient, settled machine draws a visit only when the run thinks it has one to spare.** v0: 9 needs for 5
+  visits, no run looked at the compressors. v1: 2 of 3 bought one before counting. v2: 5 of 6 at low effort and
+  1 of 3 at xhigh. The perceived budget has to look comfortable.
+- **The spare has to be the one visit the task needs,** and what it is needed for must not show until the
+  records are tested against themselves. Then a run that counts first is also caught, which v1 could not do.
+- **The false confirmation matters.** The wasted visit returned the maker's figure exactly and matched the dial
+  sheet to 0.001 mm; every run that bought it reported its method confirmed.
+- Each bare round cost about twenty minutes to build and two to probe at low effort.
