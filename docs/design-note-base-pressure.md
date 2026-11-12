@@ -645,3 +645,46 @@ Probes on this bundle (claude-opus-5-5, built before the fifth VC06 pumpdown; gr
 - xhigh, 2 of 3. All three ordered VC06 at 36 h by the planning rule's own reasoning ("the least constrained
   chamber ... fits that matched equally well gave Q_ref anywhere from 4.5e-4 to 6.1e-4"). D1 and D2 also uncrossed
   the VC03/VC07 serials and passed; D3 kept CC-7107 at 1.00 and missed VC07.
+
+---
+
+# OFFICIAL DIFFICULTY RUN 6 OF 8, AND A DECOY ONLY BOTH GAUGES SETTLE (11 November, night)
+
+The official difficulty run on 20261111b (claude-opus-5-5, xhigh) solved 6 of 8 against a band of 0-5. Every pass
+did the same thing: profiled the admissible trapped-volume budgets per chamber, saw VC06 at 29.7 per cent against
+9.2 for the next, and spent the test there. The two failures ordered VC08 (no profile) and VC07 (and missed VC04's
+spare gauge and VC07's pump). So the plan step was the part to make harder.
+
+The change:
+- **Two gauge-type sensitivity tables.** The vacuum data now give hot-filament ionization and cold cathode gauges
+  their own relative sensitivities; the cold cathode reads water at 0.80 against the ionization gauge's 1.12.
+  Clause 5 says K is the gauge type's. Every cold cathode reading needs its own table, and on a pumpdown read with
+  both, their ratio measures the wall's share of the gas.
+- **VC01 is the decoy.** Since its September reline its air vents are short (12, 14 h) and its nitrogen vent long
+  (24 h), VC06's confounding; both gauges were read on every pumpdown, and it has no trapped volume. Profiled on
+  the reference instrument alone (clause 5 names the ionization gauge as such) VC01 spreads about 60 per cent at
+  36 h, ahead of VC06's 30, so that profile orders VC01 and misses VC06. Read with both gauges, each through its
+  own table, VC01 closes to about 3 per cent.
+- **The reference** keeps both readings where the cold cathode holds its line. It fits a first budget on one
+  reading per pumpdown, divides each pair's composition ratio out of the CC/IG ratio, tests the remainder for a
+  drift (a change of more than 4 per cent across the pairings; 2 per cent flagged noise on one seed), and keeps
+  every reading the drift does not cloud. Pre-change pairs (VC02's drift evidence) get their composition from a
+  plain budget fitted to their own reference readings on the then-surfaces. `determinacy` now works in reading
+  space with per-type weights, so a paired pumpdown tells wall water from air.
+- **The independent audit** does the same in its own idiom (forward model in log space, so both readings carry the
+  composition into its fit directly; composition iterated four rounds).
+- **Truth: a change of internals brings its own wall coefficient** (VC01 1.90 to 2.60, VC02 0.70 to 0.45, VC06
+  2.30 to 1.60). Before this the fleet kept one coefficient across a reline, and two probes had used that
+  regularity, which the documents do not give, to pin VC06 and VC01 from their pre-change records.
+- **Routes:** `reference_gauge_only` and `one_sensitivity_table`, each placing the order its own reading of the
+  records gives (VC01), then missing VC06. VC04's seal length 600 to 680 cm so that `register_seal` misses VC04 by
+  more than twice the band under the cold cathode table.
+- **records_format.md:** the shop's reported speed is the flow over the rise taken through the gauge's certificate
+  factor, which is what the records have always held (a probe found the unstated factor on VC07's test).
+
+Local probes on this bundle (claude-opus-5-5, graded at 4.0/4.0), before the VC04 seal and drift-threshold changes:
+- Low effort, 0 of 3: E1 ordered VC06 but missed VC07's speed (dropped CC-7107's certificate); E2 ordered VC09
+  and missed VC06 by +19 per cent; E3 ordered VC08 and missed VC06 and VC07.
+- xhigh, 0 of 3: F1 and F3 ordered VC07 (unsure of CC-7107's factor), F2 ordered VC08; all three missed VC06 by
+  +19 per cent, F1 also VC07's cause and F2 VC03's speed. None ordered VC01: the decoy did not draw the order this
+  round, VC07's instruments did.

@@ -101,7 +101,11 @@ SPECIES = {
     "air-leak": dict(AIR),
     "virtual-leak": dict(AIR),
 }
-GAS_FACTOR = dict(h2o=1.12, h2=0.42, n2=1.00, o2=1.01, ar=1.29, co2=1.42)
+# MS-BP clause 5 and the vacuum data: each gauge type's sensitivity, by the prefix of its serial
+GAS_FACTOR = {
+    "IG": dict(h2o=1.12, h2=0.42, n2=1.00, o2=1.01, ar=1.29, co2=1.42),
+    "CC": dict(h2o=0.80, h2=0.46, n2=1.00, o2=0.94, ar=1.12, co2=1.30),
+}
 FIXTURES = {
     "carrier set A": (2.4, "stainless steel, as machined"),
     "carrier set B": (1.6, "stainless steel, bead blasted"),
@@ -162,8 +166,8 @@ def perm_mix(seal):
     return {k: v / tot for k, v in w.items()}
 
 
-def gas_correction(parts, seal):
-    """p_true / p_N2 for a gas made of the given mechanism loads."""
+def gas_correction(parts, seal, gtype="IG"):
+    """p_true / p_N2 for a gas made of the given mechanism loads, read on a gauge of the given type (IG or CC)."""
     tot = sum(parts.values())
     if tot <= 0:
         return 1.0
@@ -175,7 +179,8 @@ def gas_correction(parts, seal):
         s = sum(w.values())
         for k, v in w.items():
             mix[k] = mix.get(k, 0.0) + q / tot * v / s
-    denom = sum(x * GAS_FACTOR[k] for k, x in mix.items())      # the gauge reads sum_i K_i p_i
+    kk = GAS_FACTOR[gtype]
+    denom = sum(x * kk[k] for k, x in mix.items())              # the gauge reads sum_i K_i p_i
     return 1.0 / denom if denom > 0 else 1.0
 
 
@@ -308,6 +313,7 @@ def chamber_config(cid, data):
                 part = part.strip()
                 a, mat = part.split(" m2 ", 1)
                 surf.append((float(a), mat.strip()))
+            cfg["surfaces_before"] = cfg["surfaces"]
             cfg["surfaces"] = surf
             cfg["internals_from"] = row["date"]
         if "Port conductance after the work:" in e:
@@ -400,8 +406,10 @@ def crossed_serials(data, certs):
 
 
 # ---------------------------------------------------------------------------------------------------- fitting
-def entry_points(cid, cfg, data, certs, fix):
-    """The kept base-pressure entries as dicts, one per pumpdown, preferring the reference instrument."""
+def entry_points(cid, cfg, data, certs, fix, every=False):
+    """The kept base-pressure entries as dicts. With `every` false, one per pumpdown, preferring the reference
+    instrument; with it true, every reading of every pumpdown, each marked with whether the other gauge type was
+    read on the same pumpdown."""
     rows = [r for r in data["log"] if r["chamber"] == cid and r["date"] <= AUDIT]
     if cfg["internals_from"]:
         rows = [r for r in rows if r["date"] >= cfg["internals_from"]]
@@ -410,26 +418,23 @@ def entry_points(cid, cfg, data, certs, fix):
         by_pd.setdefault((r["date"], r["pumpdown"]), []).append(r)
     pts = []
     for (date, pd), group in sorted(by_pd.items()):
-        pick = None
-        for r in group:                                      # the ionization gauge is the reference instrument
-            if r["gauge"].startswith("IG"):
-                pick = r
-                break
-        if pick is None:
-            if len(group) == 1:
-                pick = group[0]
-            else:
-                pick = sorted(group, key=lambda r: r["gauge"])[0]
-            if any(g["gauge"].startswith("IG") for g in by_pd.get((date, pd), [])):
-                pass
-        serial = fix.get((cid, date, pd), pick["gauge"])
-        if serial not in certs:
-            continue
-        load = pick["load"].strip()
-        pts.append(dict(date=date, pd=pd, vent=pick["vent_gas"], t_h=float(pick["pumpdown_h"]),
-                        t_k=float(pick["wall_temp_c"]) + 273.15,
-                        p_n2=float(pick["reading_mbar"]) * cert_factor(certs, serial, date),
-                        load=load, serial=serial, reference=pick["gauge"].startswith("IG")))
+        hot = [r for r in group if r["gauge"].startswith("IG")]  # the ionization gauge is the reference instrument
+        if every:
+            picks = sorted(group, key=lambda r: r["gauge"])
+        else:
+            picks = [hot[0] if hot else sorted(group, key=lambda r: r["gauge"])[0]]
+        types = {r["gauge"][:2] for r in group}
+        for pick in picks:
+            serial = pick["gauge"]
+            if serial.startswith("CC"):
+                serial = fix.get((cid, date, pd), serial)
+            if serial not in certs:
+                continue
+            pts.append(dict(date=date, pd=pd, vent=pick["vent_gas"], t_h=float(pick["pumpdown_h"]),
+                            t_k=float(pick["wall_temp_c"]) + 273.15,
+                            p_n2=float(pick["reading_mbar"]) * cert_factor(certs, serial, date),
+                            raw=float(pick["reading_mbar"]), load=pick["load"].strip(), serial=serial,
+                            reference=pick["gauge"].startswith("IG"), paired={"CC", "IG"} <= types))
     return pts
 
 
@@ -459,21 +464,30 @@ def _day_number(date):
     return datetime.date(y, m, d).toordinal()
 
 
-def correct_drift(pts, cid, data):
+DRIFT_MIN = 0.04                    # the change in the cold cathode's ratio across its pairings that makes a drift
+
+
+def correct_drift(pts, cid, data, comp=None):
     """Where a chamber carries both gauge types, the cold cathode is checked against the reference instrument on
     every pumpdown both were read on. A cold cathode that fouls reads progressively low, so the ratio is fitted as
     a straight line in days and carried forward to the pumpdowns the reference instrument did not see, whose
     cold cathode readings are corrected by it; a reading from before the first pairing (a speed test's, say) is
-    taken at the first pairing's ratio. Where the two agree, nothing is changed."""
+    taken at the first pairing's ratio. Where the two agree, nothing is changed.
+
+    The two types do not read the same gas alike (clause 5): a cold cathode reads water well below an ionization
+    gauge, so their ratio on a pumpdown is its gas's composition ratio as well as any drift. `comp` gives, for each
+    pumpdown both were read on, the ratio the composition alone makes; the drift is what is left when it is divided
+    out. Without it the raw ratio is taken, which is right only for a gas of one composition throughout."""
     rows = [r for r in data["log"] if r["chamber"] == cid]
     if not {"CC", "IG"} <= {r["gauge"][:2] for r in rows}:
         return pts
     paired = {}
     for r in rows:
         paired.setdefault((r["date"], r["pumpdown"]), {})[r["gauge"][:2]] = float(r["reading_mbar"])
-    obs = [(_day_number(d), v["CC"] / v["IG"]) for (d, _p), v in sorted(paired.items())
+    comp = comp or {}
+    obs = [(_day_number(d), v["CC"] / v["IG"] / comp.get((d, p_), 1.0)) for (d, p_), v in sorted(paired.items())
            if "CC" in v and "IG" in v]
-    if len(obs) < 2 or abs(obs[-1][1] - obs[0][1]) <= 0.02:
+    if len(obs) < 2:
         return pts
     n = len(obs)
     sx = sum(x for x, _ in obs)
@@ -485,9 +499,14 @@ def correct_drift(pts, cid, data):
         return pts
     b = (n * sxy - sx * sy) / den
     a = (sy - b * sx) / n
+    # a ratio of two readings that each repeat to 0.6 per cent scatters by close to 1 per cent, and the composition
+    # divided out of it carries an error of its own, so only a change of more than DRIFT_MIN across the pairs is a
+    # drift; a fouling cathode loses far more than that
+    if abs(b * (obs[-1][0] - obs[0][0])) <= DRIFT_MIN:
+        return pts
     out = []
     for p in pts:
-        if p["reference"]:
+        if p["reference"] or not p["serial"].startswith("CC"):
             out.append(p)
             continue
         # the line is carried forward, never back: before the first pumpdown both gauges were read on there is no
@@ -538,6 +557,11 @@ def _seal_for(cfg, date, register_seal):
     return mat, cm
 
 
+def gauge_type(o):
+    """The type of the gauge an observation was read on: its serial's prefix, IG for the contractor's gauge."""
+    return (o.get("serial") or "IG")[:2]
+
+
 def fit_budget(cfg, obs, structure, s_now, helium=None):
     """The gas budget of MS-BP clause 3, fitted to the observations for one structure:
 
@@ -563,6 +587,7 @@ def fit_budget(cfg, obs, structure, s_now, helium=None):
     SD = np.array([o["sd"] for o in obs])
     S = np.array([s_now if o["speed"] == "now" else o["speed"] for o in obs], dtype=float)
     G = np.array([1.0 if o["gauge"] else 0.0 for o in obs])
+    GT = [gauge_type(o) for o in obs]
     taus = TAUS if trap_from is not None else [None]
     corr = np.ones(n)
     best = None
@@ -620,7 +645,7 @@ def fit_budget(cfg, obs, structure, s_now, helium=None):
             parts = {"wall-outgassing": x[0] * W[i], "air-leak": x[1], "permeation": PM[i]}
             if tau is not None:
                 parts["virtual-leak"] = x[2] * TR[i] * math.exp(-H[i] / tau)
-            new[i] = gas_correction(parts, mats[i][0])
+            new[i] = gas_correction(parts, mats[i][0], GT[i])
         done = float(np.max(np.abs(new - corr))) < 1e-9
         corr = new
         if done:
@@ -942,6 +967,28 @@ def certificate_error(cid, cfg, data):
     return out
 
 
+def speed_obs(cid, cfg, data, certs, k, drift):
+    """A speed test is a base-pressure reading as well as a speed: its no-flow pressure, read at its own pumping
+    time, is often the only reading a chamber has at any but its usual pumping time."""
+    out = []
+    for p in drift(speed_test_points(cid, cfg, data, certs)):
+        f = k.get(p["serial"], 1.0) if k else 1.0
+        out.append(dict(kind="speed-test", date=p["date"], t_h=p["t_h"], t_k=p["t_k"], vent="air", load="",
+                        value=p["p_n2"] * f, gauge=True, speed=p["s_test"] / f, sd=SPEED_OB_SD,
+                        serial=p["serial"]))
+    return out
+
+
+def parts_at(cfg, params, pt):
+    """The mechanism loads of a fitted budget at one entry's pumping time, vent, temperature and load."""
+    mat, cm = _seal_for(cfg, pt["date"], params["seal"])
+    parts = {"wall-outgassing": params["c_w"] * nominal_wall(cfg, pt), "air-leak": params["leak"],
+             "permeation": q_perm(mat, cm, pt["t_k"])}
+    if params["qv0"] and params["tau"] and params["trapped_from"] is not None and pt["date"] >= params["trapped_from"]:
+        parts["virtual-leak"] = params["qv0"] * math.exp(-pt["t_h"] / params["tau"])
+    return parts
+
+
 def front_end(cid, data, certs, fix, vac):
     """The chamber as it stands, the observations of its gas load and the speed in force on each: everything the
     audit settles before it attributes the gas load to a mechanism.
@@ -965,27 +1012,71 @@ def front_end(cid, data, certs, fix, vac):
     if s_now is None:
         s_now = shop_speed_in(cid, data, cuts, now, k)
 
-    pts = correct_drift(entry_points(cid, cfg, data, certs, fix), cid, data)
-    if k:
-        # only the readings taken with a gauge whose certificate is out need putting right; a chamber's other
-        # gauges, the reference instrument of clause 5 among them, were never affected
-        pts = [dict(q, p_n2=q["p_n2"] * k.get(q["serial"], 1.0)) for q in pts]
+    def entries(pts):
+        if k:
+            # only the readings taken with a gauge whose certificate is out need putting right; a chamber's other
+            # gauges, the reference instrument of clause 5 among them, were never affected
+            pts = [dict(q, p_n2=q["p_n2"] * k.get(q["serial"], 1.0)) for q in pts]
+        out = []
+        for p in pts:
+            per = period_of(p["date"], cuts)
+            speed = "now" if per == now else shop_speed_in(cid, data, cuts, per, k)
+            if speed is None:
+                continue                              # a period with no speed test describes nothing usable
+            out.append(dict(kind="entry", date=p["date"], t_h=p["t_h"], t_k=p["t_k"], vent=p["vent"],
+                            load=p["load"], value=p["p_n2"], gauge=True, speed=speed, sd=READ_SD,
+                            serial=p["serial"], pd=p["pd"]))
+        return out
+
+    every = entry_points(cid, cfg, data, certs, fix, every=True)
     obs = []
-    for p in pts:
-        per = period_of(p["date"], cuts)
-        speed = "now" if per == now else shop_speed_in(cid, data, cuts, per, k)
-        if speed is None:
-            continue                                  # a period with no speed test describes nothing usable
-        obs.append(dict(kind="entry", date=p["date"], t_h=p["t_h"], t_k=p["t_k"], vent=p["vent"],
-                        load=p["load"], value=p["p_n2"], gauge=True, speed=speed, sd=READ_SD,
-                        serial=p["serial"]))
-    # a speed test is a base-pressure reading as well as a speed: its no-flow pressure, read at its own pumping
-    # time, is often the only reading a chamber has at any but its usual pumping time
-    for p in correct_drift(speed_test_points(cid, cfg, data, certs), cid, data):
-        f = k.get(p["serial"], 1.0) if k else 1.0
-        obs.append(dict(kind="speed-test", date=p["date"], t_h=p["t_h"], t_k=p["t_k"], vent="air", load="",
-                        value=p["p_n2"] * f, gauge=True, speed=p["s_test"] / f, sd=SPEED_OB_SD,
-                        serial=p["serial"]))
+    if any(p["paired"] for p in every):
+        # Both gauge types were read on some pumpdowns. Each reads the gas through its own sensitivities, so the
+        # ratio of the two is the gas's composition as well as the cold cathode's calibration. A first budget, on
+        # one reading per pumpdown, gives each paired pumpdown's composition; the drift check is made on what is
+        # left of the ratio once that is divided out; and then every reading the drift does not cloud is kept, so
+        # that the ratio's information about the wall's share of the gas goes into the fit.
+        first = entries(entry_points(cid, cfg, data, certs, fix))
+        first += speed_obs(cid, cfg, data, certs, k, lambda pts: pts)
+        try:
+            p1, _c1, _k1 = choose_budget(cid, cfg, data, first, s_now, (0.05 * (rated_at(cfg) or s_now or 500.0),
+                                                                     1.2 * (rated_at(cfg) or s_now or 500.0)))
+        except Underdetermined:
+            p1 = None
+        comp = {}
+
+        def note(c, prm, pts):
+            for p in pts:
+                if p["paired"] and p["reference"]:
+                    parts = parts_at(c, prm, p)
+                    mat = _seal_for(c, p["date"], prm["seal"])[0]
+                    comp[(p["date"], p["pd"])] = gas_correction(parts, mat, "IG") / gas_correction(parts, mat, "CC")
+        if p1 is not None:
+            note(cfg, p1, every)
+        if cfg["internals_from"] and cfg.get("surfaces_before"):
+            # pumpdowns from before a change of internals still show the cold cathode's drift, but their gas came
+            # from the surfaces then in the chamber: their composition is that of a plain budget fitted to their own
+            # reference readings
+            old = dict(cfg, surfaces=cfg["surfaces_before"], internals_from=None)
+            before = [p for p in entry_points(cid, old, data, certs, fix, every=True) if p["date"] < cfg["internals_from"]]
+            ob0 = [o for o in entries([p for p in before if p["reference"] or not p["paired"]])
+                   if o["speed"] != "now" or s_now]
+            if len(ob0) >= 2:
+                try:
+                    _c0, _k0, p0, _q0 = fit_budget(old, ob0, dict(seal=None, trapped_from=None),
+                                                   s_now or rated_at(cfg) or 500.0)
+                    note(old, p0, before)
+                except Exception:
+                    pass
+        fixed = correct_drift(every, cid, data, comp)
+        drifted = any(p.get("drift_corrected") for p in fixed)
+        keep = [p for p in fixed if p["reference"] or not p["paired"] or not drifted]
+        obs = entries(keep)
+        drift = lambda pts: correct_drift(pts, cid, data, comp)       # noqa: E731
+    else:
+        obs = entries(correct_drift(entry_points(cid, cfg, data, certs, fix), cid, data))
+        drift = lambda pts: correct_drift(pts, cid, data)             # noqa: E731
+    obs += speed_obs(cid, cfg, data, certs, k, drift)
     if order_ob is not None:
         obs.append(order_ob)
     rga = rga_says(cid, vac)
@@ -1045,23 +1136,42 @@ def determinacy(cid, data, certs, fix):
     import numpy as np
     from scipy.optimize import nnls
     cfg, obs, s_now, s_range = front_end(cid, data, certs, fix, None)
-    params, chi2_best, _k = choose_budget(cid, cfg, data, obs, s_now, s_range)
+    params, _chi2, _k = choose_budget(cid, cfg, data, obs, s_now, s_range)
     _parts, q_best = at_reference(cfg, params)
-    struct = dict(seal=params["seal"], trapped_from=params["trapped_from"])
-    _c, _kk, _p, q = fit_budget(cfg, obs, struct, params["s_now"])
-    q = np.asarray(q, dtype=float)
+    # Worked where the observations are: a gauge reading times the speed is the sum of the mechanisms' loads, each
+    # weighted by the gauge type's sensitivity to that mechanism's gas (clause 5), so the budget is linear in its
+    # coefficients there, and a pumpdown read on both gauge types tells the wall's water from the air of a leak or a
+    # trapped volume. An analyser's or a rotor gauge's pressure is a true pressure, weighted by one throughout.
     n = len(obs)
-    W = np.array([nominal_wall(cfg, o) for o in obs])
-    PM = np.array([q_perm(*_seal_for(cfg, o["date"], params["seal"]), o["t_k"]) for o in obs])
+    mats = [_seal_for(cfg, o["date"], params["seal"]) for o in obs]
+
+    def kbar(mix, o):
+        if not o["gauge"]:
+            return 1.0
+        kk = GAS_FACTOR[gauge_type(o)]
+        return sum(v * kk[sp] for sp, v in mix.items()) / sum(mix.values())
+
+    KW = np.array([kbar(SPECIES["wall-outgassing"], o) for o in obs])
+    KA = np.array([kbar(AIR, o) for o in obs])
+    KP = np.array([kbar(perm_mix(m), o) for (m, _cm), o in zip(mats, obs)])
+    W = np.array([nominal_wall(cfg, o) for o in obs]) * KW
+    PM = np.array([q_perm(m, cm, o["t_k"]) for (m, cm), o in zip(mats, obs)]) * KP
+    S = np.array([params["s_now"] if o["speed"] == "now" else o["speed"] for o in obs], dtype=float)
+    y = np.array([o["value"] for o in obs]) * S
     H = np.array([o["t_h"] for o in obs])
-    w = 1.0 / (q * np.array([o["sd"] for o in obs]))
+    w = 1.0 / (y * np.array([o["sd"] for o in obs]))
     mat, cm = _seal_for(cfg, AUDIT, params["seal"])
     w36 = q_wall_nominal(cfg["surfaces"], REF_H, "air", T_REF)
     p36 = q_perm(mat, cm, T_REF)
-    lo = hi = q_best
-    thr = chi2_best + PLAN_DCHI2
-    A = np.column_stack([W, np.ones(n)]) * w[:, None]
+    A = np.column_stack([W, KA]) * w[:, None]
     worked = sorted({r["date"] for r in data["maint"] if r["chamber"] == cid})
+
+    def solve(a, shape):
+        x, rn = nnls(A, (y - PM - a * KA * shape) * w)
+        return x, rn * rn
+
+    # every trapped volume clause 3.3 allows, and none: the misfit of each, refitted, and its gas load at 36 h
+    cands = [(np.zeros(n), 0.0, TAU_MAX)]
     for start in ["0000-00-00"] + worked:
         TR = np.array([1.0 if o["date"] >= start else 0.0 for o in obs])
         if not TR.any():
@@ -1070,37 +1180,42 @@ def determinacy(cid, data, certs, fix):
         taus = TAUS + ([params["tau"]] if params["trapped_from"] == start and params["tau"] else [])
         for tau in taus:
             shape = TR * np.exp(-H / tau)
-            a_max = float(np.min((q - PM)[TR > 0] / shape[TR > 0]))
-            if a_max <= 0:
+            a_max = float(np.min(((y - PM) / KA)[TR > 0] / shape[TR > 0]))
+            if a_max > 0:
+                cands.append((shape, a_max, tau))
+    best = min(solve(0.0, cands[0][0])[1],
+               min((_golden(lambda a, sh=sh: solve(a, sh)[1], 0.0, am)[1] for sh, am, _t in cands[1:]),
+                   default=float("inf")))
+    thr = best + PLAN_DCHI2
+    lo = hi = q_best
+    for shape, a_max, tau in cands[1:]:
+        def chi2_at(a, sh=shape):
+            return solve(a, sh)[1]
+
+        def q36_at(a, sh=shape, tt=tau):
+            x, _c = solve(a, sh)
+            return x[0] * w36 + x[1] + p36 + a * math.exp(-REF_H / tt)
+
+        # the misfit is convex in the trapped load: its least, then the loads where it crosses the bound
+        a0, c0 = _golden(chi2_at, 0.0, a_max)
+        if c0 > thr:
+            continue
+        ends = [a0]
+        for side in ((0.0, a0), (a0, a_max)):
+            inside, outside = (side[1], side[0]) if side[0] < a0 else (side[0], side[1])
+            if chi2_at(outside) <= thr:
+                ends.append(outside)
                 continue
-
-            def chi2_at(a):
-                return nnls(A, (q - PM - a * shape) * w)[1] ** 2
-
-            def q36_at(a):
-                x, _rn = nnls(A, (q - PM - a * shape) * w)
-                return x[0] * w36 + x[1] + p36 + a * math.exp(-REF_H / tau)
-
-            # the misfit is convex in the trapped load: its least, then the loads where it crosses the bound
-            a0, c0 = _golden(chi2_at, 0.0, a_max)
-            if c0 > thr:
-                continue
-            ends = [a0]
-            for side in ((0.0, a0), (a0, a_max)):
-                inside, outside = (side[1], side[0]) if side[0] < a0 else (side[0], side[1])
-                if chi2_at(outside) <= thr:
-                    ends.append(outside)
-                    continue
-                for _ in range(50):
-                    mid = 0.5 * (inside + outside)
-                    if chi2_at(mid) <= thr:
-                        inside = mid
-                    else:
-                        outside = mid
-                ends.append(inside)
-            for a in ends:
-                v = q36_at(a)
-                lo, hi = min(lo, v), max(hi, v)
+            for _ in range(50):
+                mid = 0.5 * (inside + outside)
+                if chi2_at(mid) <= thr:
+                    inside = mid
+                else:
+                    outside = mid
+            ends.append(inside)
+        for a in ends:
+            v = q36_at(a)
+            lo, hi = min(lo, v), max(hi, v)
     return dict(chamber=cid, q_best=q_best, lo=lo, hi=hi, spread=(hi - lo) / q_best, n_obs=n)
 
 

@@ -85,6 +85,9 @@ def config(ch, date=AUDIT):
             continue
         if kind == "internals":                      # the internal surfaces were replaced
             c["surfaces"] = [(a * 1e4, m) for a, m in args[0]]
+            if len(args) > 2:                        # new surfaces have a history of their own, so their own
+                c["wall_factor"] = args[2]           # coefficient: `wall_factor` is the old surfaces'
+
         elif kind == "seal":                         # the door seal material was changed
             c["seal"] = args[0]
         elif kind == "seal_len":
@@ -149,7 +152,11 @@ EX = Ch(
 # ----------------------------------------------------------------------------------------------------------------
 FLEET = [
     # VC01 wall-outgassing: a large chamber relined mid-log, with a real leak beside the wall gas that a single
-    # entry cannot separate from it. Nitrogen vents on two pumpdowns, a fixture set in on two, and a cold cathode
+    # entry cannot separate from it. Since the reline its air vents are short and its nitrogen vent long, so a
+    # trapped volume from the reline would read on its reference gauge alone as wall gas and leak, much as VC06's
+    # does: profiled on that gauge its gas load at 36 h is the fleet's least determined. Both gauges were read on
+    # every pumpdown since, and the two types' different sensitivity to water makes their ratio a measure of the
+    # wall's share of the gas on each one; read with both, its records settle it, and it has no trapped volume. Nitrogen vents on two pumpdowns, a fixture set in on two, and a cold cathode
     # whose certificate the calibration laboratory issued 14 per cent out. That error
     # cancels in the gas load and shows only in the speed, which its throughput tests then report above what the
     # pump and port can deliver. Its reference instrument reads true, so which of the two gauges is out is
@@ -157,20 +164,20 @@ FLEET = [
     Ch("VC01",
        reg_entry(3200, "TMP-1600", 2400, "fluoroelastomer", 590,
                  [(9.0, "stainless steel, bead blasted")], 2.0e-7),
-       true=dict(wall_factor=2.60, leak=1.0e-4, cert_wrong=("CC-7101", 1.14)),
+       true=dict(wall_factor=1.90, leak=1.0e-4, cert_wrong=("CC-7101", 1.14)),
        events=[("2026-07-21", "note", "Rotary feedthrough regreased."),
                ("2026-09-10", "internals", ([(9.0, "stainless steel, as machined")],
-                                            "Chamber relined with machined panels.")),
+                                            "Chamber relined with machined panels.", 2.60)),
                ("2026-09-08", "note", "Quartz monitor head replaced.")],
        log=[("2026-07-28", "P1", "air", 16.0, 25.6, "CC-7101", None),
             ("2026-08-18", "P2", "nitrogen", 16.0, 24.7, "CC-7101", None),
             ("2026-09-01", "P3", "air", 12.0, 23.5, "CC-7101", None),
-            ("2026-09-22", "P4", "air", 20.0, 21.0, "CC-7101", "carrier set A"),
-            ("2026-09-22", "P4", "air", 20.0, 21.0, "IG-7201", "carrier set A"),
+            ("2026-09-22", "P4", "air", 12.0, 21.0, "CC-7101", "carrier set A"),
+            ("2026-09-22", "P4", "air", 12.0, 21.0, "IG-7201", "carrier set A"),
             ("2026-10-13", "P5", "nitrogen", 24.0, 17.9, "CC-7101", None),
             ("2026-10-13", "P5", "nitrogen", 24.0, 17.9, "IG-7201", None),
-            ("2026-10-27", "P6", "air", 16.0, 15.8, "CC-7101", "carrier set A"),
-            ("2026-10-27", "P6", "air", 16.0, 15.8, "IG-7201", "carrier set A")],
+            ("2026-10-27", "P6", "air", 14.0, 15.8, "CC-7101", "carrier set A"),
+            ("2026-10-27", "P6", "air", 14.0, 15.8, "IG-7201", "carrier set A")],
        certs={"CC-7101": [("2026-02-03", 1.00)], "IG-7201": [("2026-02-03", 1.00)]},
        speed=[("2025-03-25", 16.0, 12.4), ("2026-07-21", 18.0, 24.9)],
        ctrl=["2026-07-01", "2026-07-08", "2026-07-15", "2026-07-22", "2026-07-29", "2026-08-05", "2026-08-12", "2026-08-19", "2026-08-26", "2026-09-02", "2026-09-09", "2026-09-16", "2026-09-23", "2026-09-30", "2026-10-07", "2026-10-14", "2026-10-21", "2026-10-28"]),
@@ -181,9 +188,9 @@ FLEET = [
     Ch("VC02",
        reg_entry(1900, "TMP-1100", 1600, "fluoroelastomer", 180,
                  [(5.5, "stainless steel, as machined"), (1.8, "aluminum, anodized")], 5.0e-7),
-       true=dict(wall_factor=0.45, leak=1.95e-4, drift=("CC-7102", "2026-07-14", 0.00265)),
+       true=dict(wall_factor=0.70, leak=1.95e-4, drift=("CC-7102", "2026-07-14", 0.00265)),
        events=[("2026-09-10", "internals", ([(5.5, "stainless steel, as machined"), (2.6, "aluminum, anodized")],
-                                            "Heat shields and planetary drive replaced.")),
+                                            "Heat shields and planetary drive replaced.", 0.45)),
                ("2026-10-10", "note", "Ionization gauge IG-7202 filament open; head awaiting replacement.")],
        log=[("2026-07-14", "P1", "air", 16.0, 26.9, "CC-7102", None),
             ("2026-07-14", "P1", "air", 16.0, 26.9, "IG-7202", None),
@@ -229,7 +236,7 @@ FLEET = [
     # the noise, putting the gas load out by a tenth and the cause on the wall. Only the gauge explains both the step
     # and the test: a trapped volume cannot change a throughput test, and a pump in order delivers its rated speed.
     Ch("VC04",
-       reg_entry(4200, "TMP-1600", 1600, "fluoroelastomer", 600,
+       reg_entry(4200, "TMP-1600", 1600, "fluoroelastomer", 680,
                  [(4.5, "stainless steel, bead blasted")], 1.5e-7),
        true=dict(wall_factor=2.30, leak=4.0e-4, cert_wrong=("CC-7114", 0.80)),
        events=[("2026-06-18", "trap", (700, "Baffle fitted in the high-vacuum port.")),
@@ -283,9 +290,9 @@ FLEET = [
     Ch("VC06",
        reg_entry(5200, "TMP-1600", 2600, "perfluoroelastomer", 900,
                  [(11.0, "stainless steel, bead blasted")], 8.0e-8),
-       true=dict(wall_factor=1.60, leak=1.5e-5),
+       true=dict(wall_factor=2.30, leak=1.5e-5),
        events=[("2026-09-28", "internals", ([(11.0, "stainless steel, electropolished")],
-                                            "Shroud panels replaced with electropolished panels.")),
+                                            "Shroud panels replaced with electropolished panels.", 1.60)),
                ("2026-09-28", "seal", ("nitrile", "Shroud seals replaced with nitrile sections.")),
                ("2026-09-28", "trapped", (4.0e-4, 40.0))],
        log=[("2026-10-02", "P1", "air", 12.0, 19.0, "CC-7106", None),
@@ -462,5 +469,5 @@ def log_reading(ch, entry, fixtures=FIXTURES):
     c = config(ch, date)
     if load:
         c = dict(c, surfaces=list(c["surfaces"]) + load_surfaces([load], fixtures))
-    ind = P.indicated(c, hours, vent, temp_c + 273.15)
+    ind = P.indicated(c, hours, vent, temp_c + 273.15, real)
     return ind / (cert_factor(real, date) * drift_factor(ch, real, date) * cert_wrong_factor(ch, real))

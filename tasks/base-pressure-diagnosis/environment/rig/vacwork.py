@@ -149,14 +149,15 @@ def make_speed_test(cid, t0):
     temp = day_temperature(cid)
     g = rng_for(cid, "speed-test")
     s = P.s_eff(c, P.p_base(c, P.q_total(c, t0, "air", temp + 273.15)))
-    base_ind = P.indicated(c, t0, "air", temp + 273.15)
+    base_ind = P.indicated(c, t0, "air", temp + 273.15, "IG")
     flow = float("%.3g" % (s * 4.0e-5))
     p_wo = base_ind * float(math.exp(g.normal(0, F.REPEAT["speed_pressure"])))
     p_w = (base_ind + flow / s) * float(math.exp(g.normal(0, F.REPEAT["speed_pressure"])))
     head = ["# throughput speed test, chamber %s" % cid,
             "# pumping time: %.1f h" % t0,
             "# chamber wall temperature: %.1f C" % temp,
-            "# dry nitrogen admitted through a calibrated leak; gauge calibrated against nitrogen, factor 1.00",
+            "# dry nitrogen admitted through a calibrated leak; the contractor's hot-filament ionization gauge, "
+            "calibrated against nitrogen, factor 1.00",
             "flow_mbarl_s,p_with_flow_mbar,p_without_flow_mbar,s_eff_l_s"]
     rows = ["%.4g,%.4e,%.4e,%.1f" % (flow, p_w, p_wo, flow / (p_w - p_wo))]
     return "speed_test_%s.csv" % cid.lower(), "\n".join(head + rows) + "\n"

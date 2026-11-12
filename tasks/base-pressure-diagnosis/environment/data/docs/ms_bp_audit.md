@@ -108,8 +108,8 @@ The true total pressure follows from the composition of the chamber's gas:
 
     p = p_N2 / sum_i ( x_i K_i )
 
-with x_i the fraction of species i in the chamber's gas and K_i its relative sensitivity from the shop's vacuum data
-(ar 1.29, co2 1.42, h2 0.42, h2o 1.12, n2 1.00, o2 1.01). The composition is that of the gas the chamber's mechanisms admit, in the proportions of their gas loads;
+with x_i the fraction of species i in the chamber's gas and K_i the relative sensitivity of the gauge's type to it,
+from the shop's vacuum data (hot-filament ionization gauge: ar 1.29, co2 1.42, h2 0.42, h2o 1.12, n2 1.00, o2 1.01; cold cathode gauge: ar 1.12, co2 1.30, h2 0.46, h2o 0.80, n2 1.00, o2 0.94). The composition is that of the gas the chamber's mechanisms admit, in the proportions of their gas loads;
 the vacuum data give the composition of each mechanism's gas.
 
 Where a chamber carries both a cold cathode gauge and a hot-filament ionization gauge, the ionization gauge is the

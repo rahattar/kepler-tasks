@@ -42,7 +42,7 @@ GATE = len(IDS)                     # every chamber must be right
 # Preflight recomputes that rule from the record, so the figures below cannot drift from it. Every defective route in `route_study.txt` is rejected, and a
 # route rejected by one chamber alone misses it on the cause or by at least twice the tolerance.
 Q_TOL = 0.040                       # relative, on the total gas load
-S_TOL = 0.040                       # relative, on the effective pumping speed
+S_TOL = 0.035                       # relative, on the effective pumping speed
 Q_RANGE = (1e-10, 1e-1)
 S_RANGE = (1.0, 1e5)
 MAX_BYTES = 100_000

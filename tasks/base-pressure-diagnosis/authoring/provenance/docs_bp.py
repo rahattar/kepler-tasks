@@ -24,7 +24,8 @@ def _tbl(head, rows):
 
 
 def ms_bp():
-    gas = ", ".join("%s %.2f" % (k, v) for k, v in sorted(P.GAS_FACTOR.items()))
+    gas = "; ".join("%s: %s" % (P.GAUGE_TYPES[t], ", ".join("%s %.2f" % (k, v) for k, v in sorted(f.items())))
+                    for t, f in sorted(P.GAS_FACTOR.items(), reverse=True))
     return """# MS-BP: base-pressure audit of the shop's vacuum chambers
 
 ## 1. Scope
@@ -135,8 +136,8 @@ The true total pressure follows from the composition of the chamber's gas:
 
     p = p_N2 / sum_i ( x_i K_i )
 
-with x_i the fraction of species i in the chamber's gas and K_i its relative sensitivity from the shop's vacuum data
-(%(gas)s). The composition is that of the gas the chamber's mechanisms admit, in the proportions of their gas loads;
+with x_i the fraction of species i in the chamber's gas and K_i the relative sensitivity of the gauge's type to it,
+from the shop's vacuum data (%(gas)s). The composition is that of the gas the chamber's mechanisms admit, in the proportions of their gas loads;
 the vacuum data give the composition of each mechanism's gas.
 
 Where a chamber carries both a cold cathode gauge and a hot-filament ionization gauge, the ionization gauge is the
@@ -185,7 +186,8 @@ def vacuum_data():
     seals = _tbl(["seal material", "K20, mbar L/(s cm)", "relative permeability"], seal_rows)
 
     air = _tbl(["species", "fraction of dry air"], [[k, "%.5f" % v] for k, v in sorted(P.AIR.items())])
-    gasf = _tbl(["species", "relative sensitivity K"], [[k, "%.2f" % v] for k, v in sorted(P.GAS_FACTOR.items())])
+    gasf = _tbl(["species", "K, ionization gauge (IG-)", "K, cold cathode gauge (CC-)"],
+                [[k, "%.2f" % P.GAS_FACTOR["IG"][k], "%.2f" % P.GAS_FACTOR["CC"][k]] for k in sorted(P.GAS_FACTOR["IG"])])
 
     mech_rows = []
     for mech in ("wall-outgassing", "air-leak", "virtual-leak"):
@@ -230,7 +232,8 @@ are referred to nitrogen and set the composition of permeated gas.
 
 ## Gauge sensitivities
 
-Relative sensitivity of a nitrogen-calibrated ionization or cold cathode gauge to each species, for MS-BP clause 5.
+Relative sensitivity of a nitrogen-calibrated gauge to each species, by the gauge's type, for MS-BP clause 5. A
+gauge's type is the prefix of its serial: IG for a hot-filament ionization gauge, CC for a cold cathode gauge.
 
 %(gasf)s
 
@@ -288,7 +291,7 @@ admitted through a calibrated leak and the pressure rise is read. A test is run 
 a pumpdown after an air vent. `date`, `chamber`, `pumping_time_h` (from the start of roughing to the test),
 `wall_temp_c`, `flow_mbarl_s` (the flow the shop's calibrated leak is stated to admit), `p_with_flow_mbar`, `p_without_flow_mbar` (the chamber's own base pressure, read on
 the gauge before the flow is admitted), `gauge`, `s_eff_l_s` (the speed the contractor reported, the flow divided by
-the pressure rise).
+the pressure rise, the rise taken through the gauge's certificate factor on the test's date).
 
 Each `reading_mbar` repeats to %(rd)s per cent (one standard deviation) between pumpdowns at the same condition, and
 each pressure of a speed test to %(sp)s per cent.

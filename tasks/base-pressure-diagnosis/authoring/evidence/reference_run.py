@@ -35,6 +35,23 @@ def main():
              spreads[0], spreads[1], spreads[0] / spreads[1]))
     same = [dict(t, pumping_time_h=float(t["pumping_time_h"])) for t in plan] == C.REFERENCE_PLAN
     print("the planned order is the reference order: %s" % ("yes" if same else "NO"))
+    vc01 = [float(l.rsplit("(", 1)[1].split("%")[0]) for l in rows_plan if l.startswith("VC01")]
+    print("VC01 read with both gauges: %.1f%% wide" % vc01[0])
+    # the same step, profiled on the reference instrument alone wherever both gauges read a pumpdown
+    import contextlib
+    import io
+    import routes as R
+    buf = io.StringIO()
+    with contextlib.redirect_stderr(buf):
+        naive = R.own_plan("reference_gauge_only", C.DATA)
+    lines = [l[2:] for l in buf.getvalue().splitlines() if l.startswith("# ")]
+    print("")
+    print("The same, profiled on the reference instrument alone (routes.reference_gauge_only), widest first:")
+    for line in lines[:3]:
+        print("  " + line)
+    v01 = [float(l.rsplit("(", 1)[1].split("%")[0]) for l in lines if l.startswith("VC01")]
+    print("VC01 on the reference instrument alone: %.1f%% wide; that profile orders %s"
+          % (v01[0], ", ".join("%s %s" % (t["chamber"], t["test"]) for t in naive)))
     print("")
     answers = C.reference_answers()
     r = C.score(answers)

@@ -1,9 +1,9 @@
-inputs: e4e971165cd57569
+inputs: b764e58f1b939173
 Both audits under every order the budget allows
 ===============================================
 
 order                      reference        independent
--------------------------  ---------------  --------------------
+-------------------------  ---------------  ---------------
 no order                   rejected (VC06)  rejected (VC06)
 VC01 rga at 16 h           rejected (VC06)  rejected (VC06)
 VC01 rga at 20 h           rejected (VC06)  rejected (VC06)
@@ -102,11 +102,11 @@ VC05 rga at 42 h           rejected (VC06)  rejected (VC06)
 VC05 rga at 48 h           rejected (VC06)  rejected (VC06)
 VC05 rate-of-rise at 16 h  rejected (VC06)  rejected (VC06)
 VC05 rate-of-rise at 20 h  rejected (VC06)  rejected (VC06)
-VC05 rate-of-rise at 24 h  rejected (VC06)  rejected (VC05 VC06)
+VC05 rate-of-rise at 24 h  rejected (VC06)  rejected (VC06)
 VC05 rate-of-rise at 30 h  rejected (VC06)  rejected (VC06)
 VC05 rate-of-rise at 36 h  rejected (VC06)  rejected (VC06)
 VC05 rate-of-rise at 42 h  rejected (VC06)  rejected (VC06)
-VC05 rate-of-rise at 48 h  rejected (VC06)  rejected (VC05 VC06)
+VC05 rate-of-rise at 48 h  rejected (VC06)  rejected (VC06)
 VC05 speed-test at 16 h    rejected (VC06)  rejected (VC06)
 VC05 speed-test at 20 h    rejected (VC06)  rejected (VC06)
 VC05 speed-test at 24 h    rejected (VC06)  rejected (VC06)
@@ -116,7 +116,7 @@ VC05 speed-test at 42 h    rejected (VC06)  rejected (VC06)
 VC05 speed-test at 48 h    rejected (VC06)  rejected (VC06)
 VC05 helium                rejected (VC06)  rejected (VC06)
 VC06 rga at 16 h           rejected (VC06)  rejected (VC06)
-VC06 rga at 20 h           rejected (VC06)  accepted
+VC06 rga at 20 h           accepted         accepted
 VC06 rga at 24 h           accepted         accepted
 VC06 rga at 30 h           accepted         accepted
 VC06 rga at 36 h           accepted         accepted
@@ -130,7 +130,7 @@ VC06 rate-of-rise at 36 h  accepted         accepted
 VC06 rate-of-rise at 42 h  accepted         accepted
 VC06 rate-of-rise at 48 h  accepted         accepted
 VC06 speed-test at 16 h    rejected (VC06)  rejected (VC06)
-VC06 speed-test at 20 h    rejected (VC06)  rejected (VC06)
+VC06 speed-test at 20 h    accepted         accepted
 VC06 speed-test at 24 h    accepted         accepted
 VC06 speed-test at 30 h    accepted         accepted
 VC06 speed-test at 36 h    accepted         accepted
@@ -230,25 +230,7 @@ budget: 1 test across 10 chambers, placed once; pumping times tried: 16 20 24 30
 gate: at least 10 of 10 chambers right
 orders tried: 221
 
-ORDERS THAT WORK FOR THE REFERENCE: 17 of 221
-  VC06 rga at 24 h
-  VC06 rga at 30 h
-  VC06 rga at 36 h
-  VC06 rga at 42 h
-  VC06 rga at 48 h
-  VC06 rate-of-rise at 20 h
-  VC06 rate-of-rise at 24 h
-  VC06 rate-of-rise at 30 h
-  VC06 rate-of-rise at 36 h
-  VC06 rate-of-rise at 42 h
-  VC06 rate-of-rise at 48 h
-  VC06 speed-test at 24 h
-  VC06 speed-test at 30 h
-  VC06 speed-test at 36 h
-  VC06 speed-test at 42 h
-  VC06 speed-test at 48 h
-  VC06 helium
-ORDERS THAT WORK FOR THE INDEPENDENT: 18 of 221
+ORDERS THAT WORK FOR THE REFERENCE: 19 of 221
   VC06 rga at 20 h
   VC06 rga at 24 h
   VC06 rga at 30 h
@@ -261,12 +243,33 @@ ORDERS THAT WORK FOR THE INDEPENDENT: 18 of 221
   VC06 rate-of-rise at 36 h
   VC06 rate-of-rise at 42 h
   VC06 rate-of-rise at 48 h
+  VC06 speed-test at 20 h
   VC06 speed-test at 24 h
   VC06 speed-test at 30 h
   VC06 speed-test at 36 h
   VC06 speed-test at 42 h
   VC06 speed-test at 48 h
   VC06 helium
-ORDERS AT THE EDGE, CARRYING ONE AUDIT ONLY: VC06 rga at 20 h (independent only)
+ORDERS THAT WORK FOR THE INDEPENDENT: 19 of 221
+  VC06 rga at 20 h
+  VC06 rga at 24 h
+  VC06 rga at 30 h
+  VC06 rga at 36 h
+  VC06 rga at 42 h
+  VC06 rga at 48 h
+  VC06 rate-of-rise at 20 h
+  VC06 rate-of-rise at 24 h
+  VC06 rate-of-rise at 30 h
+  VC06 rate-of-rise at 36 h
+  VC06 rate-of-rise at 42 h
+  VC06 rate-of-rise at 48 h
+  VC06 speed-test at 20 h
+  VC06 speed-test at 24 h
+  VC06 speed-test at 30 h
+  VC06 speed-test at 36 h
+  VC06 speed-test at 42 h
+  VC06 speed-test at 48 h
+  VC06 helium
+ORDERS AT THE EDGE, CARRYING ONE AUDIT ONLY: none
 
 the shortcut matches the whole audit on every sampled order; both audits are carried by the same orders, apart from any at the edge listed above

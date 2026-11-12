@@ -26,6 +26,8 @@ Routes, one per layer:
     latest_speed_test    take the latest speed test whatever the controller rows show since
     commissioning_speed  take the chamber's first speed test
     no_gas_correction    take the nitrogen-equivalent pressure as the true pressure
+    one_sensitivity_table read both gauge types through the ionization gauge's sensitivities (plans its own order)
+    reference_gauge_only where both gauges read a pumpdown, use the ionization gauge alone (plans its own order)
     all_entries          use every entry of the log, including those before the internals were replaced
     void_before_change   discard every record from before the chamber's last logged work
     uncorrected_cathode  use the cold cathode readings as they stand, without checking them against the reference
@@ -62,7 +64,17 @@ ROUTES = ["register_surfaces", "register_port", "register_seal", "trust_register
           "rated_speed", "speeds_only", "flow_as_stated", "undated_certificates", "register_pump", "latest_speed_test", "commissioning_speed",
           "no_gas_correction", "all_entries", "void_before_change", "uncorrected_cathode", "logged_serials",
           "ignore_vent_gas", "ignore_load", "ignore_temperature", "table_outgassing", "no_time_reference",
-          "leak_only", "skip_pump_gate", "face_value"]
+          "leak_only", "skip_pump_gate", "face_value", "one_sensitivity_table", "reference_gauge_only"]
+
+# routes whose defect is in what they make of the gauges before the order is placed: each places the order its own
+# reading of the records gives (diagnose.plan under the route), not the reference's
+OWN_PLAN = ["one_sensitivity_table", "reference_gauge_only"]
+
+
+def own_plan(name, data_dir):
+    """The order the reference's planning step places when the route's defect is in it."""
+    with patched([name]):
+        return D.plan(data_dir)["tests"]
 
 FACE_VALUE = ["register_surfaces", "register_port", "register_seal", "trust_register_seal", "trust_certificate",
               "undated_certificates", "register_pump", "latest_speed_test", "flow_as_stated", "no_gas_correction",
@@ -269,9 +281,9 @@ def _patches(name):
     if name == "commissioning_speed":
         return [("shop_speed_in", _commissioning_speed(D.shop_speed_in))]
     if name == "no_gas_correction":
-        return [("gas_correction", lambda parts, seal: 1.0)]
+        return [("gas_correction", lambda parts, seal, gtype="IG": 1.0)]
     if name == "uncorrected_cathode":
-        return [("correct_drift", lambda pts, cid, data: pts)]
+        return [("correct_drift", lambda pts, cid, data, comp=None: pts)]
     if name == "logged_serials":
         return [("crossed_serials", lambda data, certs: {})]
     if name == "ignore_vent_gas":
@@ -289,6 +301,10 @@ def _patches(name):
         return [("front_end", _void_before_change())]
     if name == "skip_pump_gate":
         return [("PUMP_GATE", 0.0)]
+    if name == "reference_gauge_only":
+        return [("entry_points", _reference_gauge_only(D.entry_points))]
+    if name == "one_sensitivity_table":
+        return [("GAS_FACTOR", {"IG": dict(D.GAS_FACTOR["IG"]), "CC": dict(D.GAS_FACTOR["IG"])})]
     if name == "drop_oldest":
         return [("front_end", _drop_oldest())]
     if name == "mean_speed_test":
@@ -302,6 +318,15 @@ def _patches(name):
     if name == "fine_tau_grid":
         return [("TAUS", [math.exp(i * math.log(D.TAU_MAX) / 95.0) for i in range(96)])]
     raise KeyError(name)
+
+
+def _reference_gauge_only(orig):
+    """Where both gauges were read on a pumpdown, the reference instrument's reading alone, as clause 5's naming of
+    it suggests: the cold cathode then only ever fills in for it."""
+    def entry_points(cid, cfg, data, certs, fix, every=False):
+        pts = orig(cid, cfg, data, certs, fix, every)
+        return [p for p in pts if p["reference"] or not p["paired"]]
+    return entry_points
 
 
 @contextlib.contextmanager

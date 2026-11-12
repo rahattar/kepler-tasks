@@ -80,8 +80,15 @@ SPECIES = {
     "virtual-leak": dict(n2=AIR["n2"], o2=AIR["o2"], ar=AIR["ar"], co2=AIR["co2"]),
 }
 
-# the gauge's sensitivity to each species relative to nitrogen (ionization and cold cathode gauges)
-GAS_FACTOR = dict(h2o=1.12, h2=0.42, n2=1.00, o2=1.01, ar=1.29, co2=1.42)
+# each gauge type's sensitivity to each species relative to nitrogen, keyed by the serial's prefix: hot-filament
+# ionization gauges (IG) and cold cathode gauges (CC). The two differ most for water, which a cold cathode's
+# discharge reads well below nitrogen, so on a pumpdown read with both the ratio of their readings depends on how
+# much of the gas is water.
+GAS_FACTOR = {
+    "IG": dict(h2o=1.12, h2=0.42, n2=1.00, o2=1.01, ar=1.29, co2=1.42),
+    "CC": dict(h2o=0.80, h2=0.46, n2=1.00, o2=0.94, ar=1.12, co2=1.30),
+}
+GAUGE_TYPES = {"IG": "hot-filament ionization gauge", "CC": "cold cathode gauge"}
 
 CAUSES = ("air-leak", "virtual-leak", "wall-outgassing", "permeation", "pump-speed")
 TAU_MAX = 48.0                      # h, the longest time constant a trapped volume of this shop has; a source
@@ -204,11 +211,13 @@ def partials(cfg, t_h, vent="air", T_K=T_REF):
     return out
 
 
-def indicated(cfg, t_h, vent="air", T_K=T_REF):
+def indicated(cfg, t_h, vent="air", T_K=T_REF, gauge="IG"):
     """What a nitrogen-calibrated gauge indicates: the sum of the partial pressures, each weighted by the gauge's
-    relative sensitivity to that species (a species with K above 1 reads high)."""
+    relative sensitivity to that species (a species with K above 1 reads high). `gauge` is the gauge's serial or its
+    type prefix; the sensitivities are its type's."""
     pp = partials(cfg, t_h, vent, T_K)
-    return sum(v * GAS_FACTOR[k] for k, v in pp.items())
+    k = GAS_FACTOR[gauge[:2]]
+    return sum(v * k[s] for s, v in pp.items())
 
 
 def cause(cfg, t_h, T_K=T_REF):

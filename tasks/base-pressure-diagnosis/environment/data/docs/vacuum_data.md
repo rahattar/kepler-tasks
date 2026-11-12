@@ -52,16 +52,17 @@ are referred to nitrogen and set the composition of permeated gas.
 
 ## Gauge sensitivities
 
-Relative sensitivity of a nitrogen-calibrated ionization or cold cathode gauge to each species, for MS-BP clause 5.
+Relative sensitivity of a nitrogen-calibrated gauge to each species, by the gauge's type, for MS-BP clause 5. A
+gauge's type is the prefix of its serial: IG for a hot-filament ionization gauge, CC for a cold cathode gauge.
 
-| species | relative sensitivity K |
-|---|---|
-| ar | 1.29 |
-| co2 | 1.42 |
-| h2 | 0.42 |
-| h2o | 1.12 |
-| n2 | 1.00 |
-| o2 | 1.01 |
+| species | K, ionization gauge (IG-) | K, cold cathode gauge (CC-) |
+|---|---|---|
+| ar | 1.29 | 1.12 |
+| co2 | 1.42 | 1.30 |
+| h2 | 0.42 | 0.46 |
+| h2o | 1.12 | 0.80 |
+| n2 | 1.00 | 1.00 |
+| o2 | 1.01 | 0.94 |
 
 ## Composition of the gas each mechanism admits
 

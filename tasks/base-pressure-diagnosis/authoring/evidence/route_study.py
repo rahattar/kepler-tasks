@@ -107,8 +107,14 @@ def main():
     detail = []
     fails = []
 
+    own = {}
     for name in R.ROUTES:
-        answers = R.run(C.DATA, vac, name)
+        if name in R.OWN_PLAN:
+            plan = [dict(t, pumping_time_h=float(t["pumping_time_h"])) for t in R.own_plan(name, C.DATA)]
+            own[name] = plan
+            answers = R.run(C.DATA, C.place_order(plan, tag=name), name)
+        else:
+            answers = R.run(C.DATA, vac, name)
         blank = [cid for cid in C.IDS if answers[cid] is R.NO_ANSWER]
         if blank:
             # whoever follows the route has no row to write for these chambers; the grader rejects such a sheet
@@ -162,7 +168,13 @@ def main():
         if n < 1:
             fails.append("chamber %s is not got wrong by any route on the cause alone" % cid)
 
-    seed_rows = seed_study(base, misses_ordered, alone, fails)
+    # a route that places its own order never tests the ordered chamber, so the laboratory's scatter on that test
+    # does not reach it: its miss there is the same on every seed
+    seed_rows = seed_study(base, [n for n in misses_ordered if n not in own], alone - set(own), fails)
+    for name, plan in sorted(own.items()):
+        print("route %s places its own order: %s" % (name, ", ".join("%s %s at %g h" % (t["chamber"], t["test"],
+                                                                                    t["pumping_time_h"])
+                                                                   for t in plan)))
 
     print(C.report("Defective routes, each scored through the task's grader",
                    rows, ["route", "wrong", "verdict", "chambers wrong"]))

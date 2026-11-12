@@ -1,4 +1,4 @@
-inputs: 0cb90b82d05949d3
+inputs: 563fb3a9b302e93f
 Malformed sheets and edge cases, each scored by the grader the verifier calls
 =============================================================================
 
@@ -12,10 +12,10 @@ one chamber +3.6% on the gas-load band (inside it)   accepted  accepted  10/10  
 one chamber -3.6% on the gas-load band (inside it)   accepted  accepted  10/10  -
 one chamber +4.4% on the gas-load band (outside it)  rejected  rejected  9/10   -
 one chamber -4.4% on the gas-load band (outside it)  rejected  rejected  9/10   -
-one chamber +3.6% on the speed band (inside it)      accepted  accepted  10/10  -
-one chamber -3.6% on the speed band (inside it)      accepted  accepted  10/10  -
-one chamber +4.4% on the speed band (outside it)     rejected  rejected  9/10   -
-one chamber -4.4% on the speed band (outside it)     rejected  rejected  9/10   -
+one chamber +3.2% on the speed band (inside it)      accepted  accepted  10/10  -
+one chamber -3.2% on the speed band (inside it)      accepted  accepted  10/10  -
+one chamber +3.9% on the speed band (outside it)     rejected  rejected  9/10   -
+one chamber -3.9% on the speed band (outside it)     rejected  rejected  9/10   -
 one chamber with the wrong cause                     rejected  rejected  9/10   -
 no header                                            rejected  rejected  0/10   the first line must be exactly: chamber,cause,
 a renamed column                                     rejected  rejected  0/10   the first line must be exactly: chamber,cause,
@@ -41,8 +41,8 @@ padded past the size limit                           rejected  rejected  0/10   
 bytes that are not ASCII                             rejected  rejected  0/10   the audit sheet is not ASCII text
 a sheet that is a symlink                            rejected  rejected  0/10   the audit sheet is not a regular file
 a sheet that is a directory                          rejected  rejected  0/10   the audit sheet is not a regular file
-no sheet at all                                      rejected  rejected  0/10   no audit sheet at /tmp/bpd-verifier-32pomz95/d
+no sheet at all                                      rejected  rejected  0/10   no audit sheet at /tmp/bpd-verifier-atbsilsj/d
 
-tolerances: gas load 4.0%, speed 4.0%; gate 10 of 10 chambers; size limit 100000 bytes
+tolerances: gas load 4.0%, speed 3.5%; gate 10 of 10 chambers; size limit 100000 bytes
 
 all 38 cases behaved as the rules say; the grader raised nothing it could not name

@@ -98,7 +98,7 @@ def speed_rows(ids):
             c = F.config(ch, date)
             s = P.s_eff(c, P.p_base(c, P.q_total(c, hours, "air", temp_c + 273.15)))
             # the chamber's own gas, as the gauge indicates it, and the nitrogen the test admits on top of it
-            base_ind = P.indicated(c, hours, "air", temp_c + 273.15)
+            base_ind = P.indicated(c, hours, "air", temp_c + 273.15, serial)
             flow = F.STATED_FLOW                       # what the test sheet records
             rise_ind = F.true_flow(date) / s           # what is admitted; nitrogen, K = 1.00, so indicated = partial
             cert = F.cert_factor(serial, date) * F.drift_factor(ch, serial, date)

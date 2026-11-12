@@ -1,54 +1,53 @@
-inputs: f4f8d101d8226b38
+inputs: bd755036daf38ac9
 Every chamber read as every cause but its own, each a whole sheet through the grader
 ====================================================================================
 
-chamber  true cause       forced reading   largest load under it  gas load   deviation  quantity in band             verdict
--------  ---------------  ---------------  ---------------------  ---------  ---------  ---------------------------  --------
-VC01     wall-outgassing  air-leak         wall-outgassing        3.329e-04  -1.17%     yes                          rejected
-VC01     wall-outgassing  virtual-leak     -                      -          -          too few observations to fit  -
-VC01     wall-outgassing  permeation       wall-outgassing        3.283e-04  -2.53%     yes                          rejected
-VC01     wall-outgassing  pump-speed       wall-outgassing        3.329e-04  -1.17%     yes                          rejected
-VC02     wall-outgassing  air-leak         wall-outgassing        5.424e-04  +0.53%     yes                          rejected
-VC02     wall-outgassing  virtual-leak     wall-outgassing        4.754e-04  -11.90%    no                           rejected
-VC02     wall-outgassing  permeation       wall-outgassing        5.413e-04  +0.32%     yes                          rejected
-VC02     wall-outgassing  pump-speed       wall-outgassing        5.424e-04  +0.53%     yes                          rejected
-VC03     air-leak         wall-outgassing  wall-outgassing        4.253e-05  -33.25%    no                           rejected
-VC03     air-leak         virtual-leak     virtual-leak           5.353e-05  -15.98%    no                           rejected
-VC03     air-leak         permeation       air-leak               6.719e-05  +5.45%     no                           rejected
-VC03     air-leak         pump-speed       air-leak               6.412e-05  +0.64%     yes                          rejected
-VC04     air-leak         wall-outgassing  wall-outgassing        5.828e-04  -29.57%    no                           rejected
-VC04     air-leak         virtual-leak     virtual-leak           6.918e-04  -16.41%    no                           rejected
-VC04     air-leak         permeation       air-leak               8.329e-04  +0.65%     yes                          rejected
-VC04     air-leak         pump-speed       air-leak               8.271e-04  -0.06%     yes                          rejected
-VC05     permeation       wall-outgassing  wall-outgassing        1.642e-04  -39.75%    no                           rejected
-VC05     permeation       air-leak         wall-outgassing        2.189e-04  -19.66%    no                           rejected
-VC05     permeation       virtual-leak     wall-outgassing        1.860e-04  -31.72%    no                           rejected
-VC05     permeation       pump-speed       permeation             2.703e-04  -0.81%     yes                          rejected
-VC06     permeation       wall-outgassing  permeation             4.747e-04  -8.34%     no                           rejected
-VC06     permeation       air-leak         permeation             5.991e-04  +15.68%    no                           rejected
-VC06     permeation       virtual-leak     permeation             5.172e-04  -0.12%     yes                          rejected
-VC06     permeation       pump-speed       permeation             5.172e-04  -0.12%     yes                          rejected
-VC07     virtual-leak     wall-outgassing  wall-outgassing        5.575e-05  -60.74%    no                           rejected
-VC07     virtual-leak     air-leak         air-leak               1.409e-04  -0.77%     yes                          rejected
-VC07     virtual-leak     permeation       air-leak               1.437e-04  +1.16%     yes                          rejected
-VC07     virtual-leak     pump-speed       virtual-leak           1.424e-04  +0.25%     yes                          rejected
-VC08     virtual-leak     wall-outgassing  permeation             4.087e-05  -74.95%    no                           rejected
-VC08     virtual-leak     air-leak         permeation             4.741e-05  -70.94%    no                           rejected
-VC08     virtual-leak     permeation       air-leak               4.848e-05  -70.28%    no                           rejected
-VC08     virtual-leak     pump-speed       virtual-leak           1.629e-04  -0.17%     yes                          rejected
-VC09     pump-speed       wall-outgassing  pump-speed             1.443e-04  -25.61%    no                           rejected
-VC09     pump-speed       air-leak         pump-speed             1.913e-04  -1.39%     yes                          rejected
-VC09     pump-speed       virtual-leak     pump-speed             1.702e-04  -12.27%    no                           rejected
-VC09     pump-speed       permeation       pump-speed             1.966e-04  +1.33%     yes                          rejected
-VC10     pump-speed       wall-outgassing  pump-speed             7.927e-05  -23.18%    no                           rejected
-VC10     pump-speed       air-leak         pump-speed             1.026e-04  -0.59%     yes                          rejected
-VC10     pump-speed       virtual-leak     pump-speed             9.243e-05  -10.42%    no                           rejected
-VC10     pump-speed       permeation       pump-speed             1.033e-04  +0.14%     yes                          rejected
+chamber  true cause       forced reading   largest load under it  gas load   deviation  quantity in band  verdict
+-------  ---------------  ---------------  ---------------------  ---------  ---------  ----------------  --------
+VC01     wall-outgassing  air-leak         wall-outgassing        3.342e-04  -0.80%     yes               rejected
+VC01     wall-outgassing  virtual-leak     wall-outgassing        3.052e-04  -9.38%     no                rejected
+VC01     wall-outgassing  permeation       wall-outgassing        3.289e-04  -2.36%     yes               rejected
+VC01     wall-outgassing  pump-speed       wall-outgassing        3.342e-04  -0.80%     yes               rejected
+VC02     wall-outgassing  air-leak         wall-outgassing        5.354e-04  -0.76%     yes               rejected
+VC02     wall-outgassing  virtual-leak     wall-outgassing        6.421e-04  +19.00%    no                rejected
+VC02     wall-outgassing  permeation       wall-outgassing        5.353e-04  -0.80%     yes               rejected
+VC02     wall-outgassing  pump-speed       wall-outgassing        5.365e-04  -0.57%     yes               rejected
+VC03     air-leak         wall-outgassing  wall-outgassing        4.801e-05  -24.65%    no                rejected
+VC03     air-leak         virtual-leak     virtual-leak           5.244e-05  -17.70%    no                rejected
+VC03     air-leak         permeation       air-leak               6.637e-05  +4.16%     no                rejected
+VC03     air-leak         pump-speed       air-leak               6.398e-05  +0.41%     yes               rejected
+VC04     air-leak         wall-outgassing  wall-outgassing        6.643e-04  -22.28%    no                rejected
+VC04     air-leak         virtual-leak     virtual-leak           7.188e-04  -15.90%    no                rejected
+VC04     air-leak         permeation       air-leak               8.659e-04  +1.30%     yes               rejected
+VC04     air-leak         pump-speed       air-leak               8.540e-04  -0.08%     yes               rejected
+VC05     permeation       wall-outgassing  wall-outgassing        1.919e-04  -29.58%    no                rejected
+VC05     permeation       air-leak         wall-outgassing        2.318e-04  -14.91%    no                rejected
+VC05     permeation       virtual-leak     wall-outgassing        2.000e-04  -26.61%    no                rejected
+VC05     permeation       pump-speed       permeation             2.715e-04  -0.34%     yes               rejected
+VC06     permeation       wall-outgassing  permeation             5.232e-04  +1.03%     yes               rejected
+VC06     permeation       air-leak         permeation             6.064e-04  +17.10%    no                rejected
+VC06     permeation       virtual-leak     permeation             5.172e-04  -0.13%     yes               rejected
+VC06     permeation       pump-speed       permeation             5.172e-04  -0.13%     yes               rejected
+VC07     virtual-leak     wall-outgassing  wall-outgassing        5.909e-05  -58.39%    no                rejected
+VC07     virtual-leak     air-leak         air-leak               1.203e-04  -15.33%    no                rejected
+VC07     virtual-leak     permeation       air-leak               1.229e-04  -13.44%    no                rejected
+VC07     virtual-leak     pump-speed       virtual-leak           1.429e-04  +0.61%     yes               rejected
+VC08     virtual-leak     wall-outgassing  permeation             4.205e-05  -74.22%    no                rejected
+VC08     virtual-leak     air-leak         permeation             4.675e-05  -71.34%    no                rejected
+VC08     virtual-leak     permeation       air-leak               4.816e-05  -70.48%    no                rejected
+VC08     virtual-leak     pump-speed       virtual-leak           1.629e-04  -0.12%     yes               rejected
+VC09     pump-speed       wall-outgassing  pump-speed             1.456e-04  -24.92%    no                rejected
+VC09     pump-speed       air-leak         pump-speed             1.908e-04  -1.65%     yes               rejected
+VC09     pump-speed       virtual-leak     pump-speed             1.695e-04  -12.64%    no                rejected
+VC09     pump-speed       permeation       pump-speed             1.957e-04  +0.86%     yes               rejected
+VC10     pump-speed       wall-outgassing  pump-speed             8.397e-05  -18.63%    no                rejected
+VC10     pump-speed       air-leak         pump-speed             1.027e-04  -0.46%     yes               rejected
+VC10     pump-speed       virtual-leak     pump-speed             9.162e-05  -11.21%    no                rejected
+VC10     pump-speed       permeation       pump-speed             1.032e-04  +0.04%     yes               rejected
 
 cases: 40 (each of 10 chambers against each of the other 4 causes)
-forced readings the records leave too few observations to fit: 1 of 40
-  VC01 read as virtual-leak
-forced readings that keep the gas load in its band: 20 of 40
+forced readings the records leave too few observations to fit: 0 of 40
+forced readings that keep the gas load in its band: 19 of 40
   VC01 read as air-leak
   VC01 read as permeation
   VC01 read as pump-speed
@@ -59,10 +58,9 @@ forced readings that keep the gas load in its band: 20 of 40
   VC04 read as permeation
   VC04 read as pump-speed
   VC05 read as pump-speed
+  VC06 read as wall-outgassing
   VC06 read as virtual-leak
   VC06 read as pump-speed
-  VC07 read as air-leak
-  VC07 read as permeation
   VC07 read as pump-speed
   VC08 read as pump-speed
   VC09 read as air-leak

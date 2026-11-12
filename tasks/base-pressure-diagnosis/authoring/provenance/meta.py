@@ -75,6 +75,12 @@ def facts():
         raise SystemExit("meta.py: the planned order is on %s, not VC06" % ch)
     f["vc06_spread"] = "%.0f" % float(sp)
     f["plan_x"] = WORDS[int(float(x))]
+    (v1,) = _grab(t, r"VC01 read with both gauges: ([\d.]+)% wide", "VC01 with both gauges")
+    (v1n, naive_ch) = _grab(t, r"VC01 on the reference instrument alone: ([\d.]+)% wide; that profile orders (VC\d\d)",
+                            "VC01 on the reference instrument")
+    if naive_ch != "VC01":
+        raise SystemExit("meta.py: the profile on the reference instrument alone orders %s, not VC01" % naive_ch)
+    f["vc01_spread"], f["vc01_naive"] = "%.0f" % float(v1), "%.0f" % float(v1n)
 
     t = _ev("seed_screen.txt")
     (n,) = _grab(t, r"both audits accepted on the shipped seed and on all (\d+) screened seeds", "seed screen")
@@ -334,6 +340,16 @@ only what was done, never its effect. Fourteen of the layers are settled by the 
   each with every trapped volume clause 3.3 allows and keep the budgets the records cannot reject. VC06's kept
   budgets spread over {vc06_spread} per cent at 36 h, more than {plan_x} times any other chamber's; so it is the
   chamber the test is needed on, at a long pumping time.
+- **Two gauge types that read the same gas differently, and a chamber that only both of them settle.** The vacuum
+  data give each gauge type its own sensitivities, and the cold cathode reads water well below the ionization
+  gauge, so every cold cathode reading needs its own type's correction, and on a pumpdown read with both the ratio
+  of the two readings measures the wall's share of the gas. VC01 was relined in September; since then its air vents
+  have been short and its nitrogen vent long, the same confounding as VC06's, and both gauges were read on every
+  pumpdown. Profiled on its reference instrument alone, as clause 5's naming of the ionization gauge invites, VC01's
+  gas load at 36 h is the fleet's least determined, at {vc01_naive} per cent, ahead of VC06; an audit that profiles
+  that way spends the test on VC01 and misses VC06. Read with both gauges, each through its own sensitivities,
+  VC01 closes to {vc01_spread} per cent and has no trapped volume. The same ratio, with the composition divided out,
+  is what shows a cold cathode drifting.
 - **A chamber that looks as if it needs the test and does not.** VC07's fixture plate was refitted in July and a
   trapped volume behind it empties with a time constant of a day; its pump is not the register's and its gauge
   serial is crossed with VC03's. Its pumpdowns since span 12 to 24 h and both vent gases, so once the pump and
@@ -412,8 +428,10 @@ For each chamber it does the following.
   seal changed part way through the log means one permeation constant will not serve every entry.
 - **The instruments.** Where a gauge serial in one chamber's log belongs to another chamber's certificate and that
   chamber's log carries this one's serial, the two are read back the right way round. A cold cathode is checked
-  against the hot-filament gauge wherever both were read, and a drift in their ratio is carried as a straight line
-  to the pumpdowns the reference instrument did not see. A certificate is out where the throughput tests read on that
+  against the hot-filament gauge wherever both were read: the two types read the same gas through different
+  sensitivities, so the composition each pumpdown's first budget gives is divided out of their ratio, and a drift in
+  what is left is carried as a straight line to the pumpdowns the reference instrument did not see. Where the cold
+  cathode holds its line, both readings of every pumpdown are kept. A certificate is out where the throughput tests read on that
   gauge report a speed the pump and port cannot have: above rated, or below it while the controller shows the pump
   in order. That gauge's readings and those tests' speeds are put right by the same factor.
 - **The shop's calibrated leak.** Every shop speed test on a chamber whose rated speed is on record and whose pump
@@ -434,7 +452,7 @@ For each chamber it does the following.
   the trapped term only on and after the date it appeared, with W_i the table's nominal wall load for the entry's
   surfaces, fixtures, vent gas and wall temperature and Q_perm,i the seal's permeation at its temperature. Every
   coefficient is non-negative, each observation is weighted by its own repeatability, and the gauge correction of
-  clause 5, which depends on the split, is iterated to a fixed point.
+  clause 5, which depends on the split and on the gauge's type, is iterated to a fixed point.
 - **Which budget.** Every structure the records leave open is fitted: no trapped volume, one present from the
   start, or one that appeared on a date of logged work; the register's seal material, or another of the table's in
   its place. The fit with the least AIC is kept, with the small-sample correction wherever the sample allows it, so
@@ -447,9 +465,10 @@ For each chamber it does the following.
   other budgets they would accept as well. Clause 3.3 allows a trapped volume on any chamber, present from the
   start or from any logged work, of any size and with any time constant up to its bound; for each, the rest of the
   budget is refitted, and kept if its chi-square is within four of the best, the 95 per cent bound on one quantity.
-  The spread of the kept budgets' gas loads at 36 h is how far that chamber's records determine its answer. The one
-  test goes, at the reference condition's own 36 h, to the chamber where the spread is widest
-  (`diagnose.py --plan`).
+  The spread of the kept budgets' gas loads at 36 h is how far that chamber's records determine its answer. It is
+  worked where the observations are, each reading the mechanisms' loads weighted by its gauge type's sensitivity
+  to their gas, so a pumpdown read on both types tells wall from air. The one test goes, at the reference
+  condition's own 36 h, to the chamber where the spread is widest (`diagnose.py --plan`).
 - **The reference condition and the cause.** The fitted budget is evaluated at {ref_h} h, 20 C, an air vent and
   no load, with the surfaces and seal the chamber has on the audit date. The cause is the pump where the actual
   speed is below {gate_ratio} of the rated speed of the chamber as it is now, and otherwise the mechanism with the
@@ -604,13 +623,21 @@ the first three taken after a pumping time the plan may choose.
 """ % (F["ref_h"], DIFFICULTY, SOLUTION, VERIFICATION)
 
 
+def _task_name():
+    """The task's name as task.toml already holds it. The name's prefix is written in task.toml alone and appears
+    nowhere else in the bundle (the playbook's packaging rule), so it is read back rather than restated here."""
+    import tomllib
+    with open(os.path.join(TASK, "task.toml"), "rb") as f:
+        return tomllib.load(f)["task"]["name"]
+
+
 def task_toml():
     return '''schema_version = "1.4"
 
 artifacts = ["/app/output/diagnosis.csv"]
 
 [task]
-name = "afterquery/base-pressure-diagnosis"
+name = "%s"
 description = "Audit the ten vacuum chambers of a coating shop that are missing their specified base pressure: for each one name the mechanism that limits it and report its total gas load and its actual effective pumping speed at the standard's reference condition, from the chambers' own records and one contractor's test order of a single test placed before any result is known."
 authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
 keywords = [
@@ -667,15 +694,16 @@ memory_mb = 4096
 storage_mb = 4096
 gpus = 0
 network_mode = "public"
-''' % (DIFFICULTY, SOLUTION, VERIFICATION)
+''' % (_task_name(), DIFFICULTY, SOLUTION, VERIFICATION)
 
 
 def main(argv):
     if "--write" in argv:
+        texts = readme(), task_toml()         # built before either file is opened: task_toml reads the old name
         with open(os.path.join(TASK, "README.md"), "w") as f:
-            f.write(readme())
+            f.write(texts[0])
         with open(os.path.join(TASK, "task.toml"), "w") as f:
-            f.write(task_toml())
+            f.write(texts[1])
         print("wrote README.md and task.toml")
         return 0
     if "--check" in argv:

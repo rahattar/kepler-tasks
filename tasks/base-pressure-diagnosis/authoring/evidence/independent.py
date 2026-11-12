@@ -65,7 +65,9 @@ CTRL = {
     "TMP-1600": (600.0, 170.0, 48.0),
 }
 DRY_AIR = (0.7808, 0.2095, 0.00934, 0.00042)            # n2, o2, ar, co2
-SENS = dict(h2=0.42, h2o=1.12, n2=1.00, o2=1.01, ar=1.29, co2=1.42)
+# vacuum_data.md: each gauge type's sensitivity, by its serial's prefix
+SENS = {"IG": dict(h2=0.42, h2o=1.12, n2=1.00, o2=1.01, ar=1.29, co2=1.42),
+        "CC": dict(h2=0.46, h2o=0.80, n2=1.00, o2=0.94, ar=1.12, co2=1.30)}
 WALL_GAS = dict(h2o=0.960, h2=0.015, n2=0.025)
 KIT = {
     "carrier set A": (2.4, "stainless steel, as machined"),
@@ -114,9 +116,9 @@ def perm_species(seal):
     return dict(zip(("n2", "o2", "ar", "co2"), [v / tot for v in raw]))
 
 
-def mixture(wall, perm, channel, seal):
-    """Species fractions of a gas made of the three sources, and the pressure the gauge would indicate for one
-    unit of true pressure."""
+def mixture(wall, perm, channel, seal, kind="IG"):
+    """Species fractions of a gas made of the three sources, and the pressure a gauge of the given type would
+    indicate for one unit of true pressure."""
     acc = {k: 0.0 for k in ORDER}
     total = wall + perm + channel
     if total <= 0:
@@ -127,7 +129,7 @@ def mixture(wall, perm, channel, seal):
         acc[k] += perm / total * v
     for k, v in zip(("n2", "o2", "ar", "co2"), DRY_AIR):
         acc[k] += channel / total * v
-    shown = sum(x * SENS[k] for k, x in acc.items())            # an ionization gauge reads sum K_i p_i
+    shown = sum(x * SENS[kind][k] for k, x in acc.items())      # a gauge reads sum K_i p_i, K its type's
     return acc, shown
 
 
@@ -278,45 +280,53 @@ def _ord(date):
     return datetime.date(*map(int, date.split("-"))).toordinal()
 
 
-def readings(cid, data, st, swaps):
-    """One reading per pumpdown since the chamber was last relined, preferring the ionization gauge, which
-    audit_note.md makes the reference instrument, and correcting each cold cathode reading by the fitted line of
-    its ratio to that gauge wherever both were ever read."""
+def _cc_line(cid, data, comp):
+    """The cold cathode's ratio to the ionization gauge on the pumpdowns both read, as a line in days, with each
+    ratio's share that comes from the gas's composition divided out (`comp`, by pumpdown; one where unknown)."""
+    pairs = {}
+    for r in [x for x in data["log"] if x["chamber"] == cid]:
+        pairs.setdefault((r["date"], r["pumpdown"]), {})[r["gauge"][:2]] = float(r["reading_mbar"])
+    both = [(_ord(d), v["CC"] / v["IG"] / comp.get((d, p_), 1.0)) for (d, p_), v in sorted(pairs.items())
+            if "CC" in v and "IG" in v]
+    line = np.polyfit([x for x, _ in both], [y for _, y in both], 1) if len(both) >= 2 else None
+    return both, line
+
+
+def readings(cid, data, st, swaps, comp=None, every=False):
+    """The readings since the chamber was last relined. With `every` false, one per pumpdown, preferring the
+    ionization gauge, which audit_note.md makes the reference instrument; with it true, every reading on a
+    pumpdown read with both types too, which is what lets the fit see the gas's composition. A cold cathode
+    reading on a pumpdown without the ionization gauge is corrected by the fitted line of its ratio to that gauge,
+    composition divided out, wherever both were ever read."""
     mine = [r for r in data["log"] if r["chamber"] == cid and r["date"] <= AUDIT_DATE]
     if st["relined"]:
         mine = [r for r in mine if r["date"] >= st["relined"]]
     groups = {}
     for r in mine:
         groups.setdefault((r["date"], r["pumpdown"]), []).append(r)
-    pairs = {}
-    for r in [x for x in data["log"] if x["chamber"] == cid]:
-        pairs.setdefault((r["date"], r["pumpdown"]), {})[r["gauge"][:2]] = float(r["reading_mbar"])
-    both = [(_ord(d), v["CC"] / v["IG"]) for (d, _p), v in sorted(pairs.items()) if "CC" in v and "IG" in v]
-    line = np.polyfit([x for x, _ in both], [y for _, y in both], 1) if len(both) >= 2 else None
+    _both, line = _cc_line(cid, data, comp or {})
     out = []
     for (date, pd), group in sorted(groups.items()):
         hot = [r for r in group if r["gauge"].startswith("IG")]
-        pick = hot[0] if hot else sorted(group, key=lambda r: r["gauge"])[0]
-        tag = swaps.get((cid, date, pd), pick["gauge"])
-        if tag not in data["cert"]:
-            continue
-        shown = float(pick["reading_mbar"]) * factor_on(data["cert"], tag, date)
-        if not hot and line is not None and tag.startswith("CC"):
-            shown /= float(np.polyval(line, _ord(date)))
-        out.append(dict(date=date, hours=float(pick["pumpdown_h"]), t_c=float(pick["wall_temp_c"]),
-                        vent=pick["vent_gas"], load=pick["load"].strip(), shown=shown, tag=tag))
+        picks = group if (every and hot) else [hot[0] if hot else sorted(group, key=lambda r: r["gauge"])[0]]
+        for pick in picks:
+            tag = swaps.get((cid, date, pd), pick["gauge"]) if pick["gauge"].startswith("CC") else pick["gauge"]
+            if tag not in data["cert"]:
+                continue
+            shown = float(pick["reading_mbar"]) * factor_on(data["cert"], tag, date)
+            if not hot and line is not None and tag.startswith("CC"):
+                shown /= float(np.polyval(line, _ord(date)))
+            out.append(dict(date=date, hours=float(pick["pumpdown_h"]), t_c=float(pick["wall_temp_c"]),
+                            vent=pick["vent_gas"], load=pick["load"].strip(), shown=shown, tag=tag, pd=pd,
+                            paired=bool(hot) and len(group) > 1))
     return out
 
 
-def test_readings(cid, data, st):
+def test_readings(cid, data, st, comp=None):
     """Each shop speed test's no-flow pressure as one more reading: the empty chamber after an air vent, at the
     test's pumping time and wall temperature, with the speed that test measured. A cold cathode that has drifted is
     corrected as in readings(); before the first pumpdown both gauges were read on, it is taken as it was then."""
-    pairs = {}
-    for r in [x for x in data["log"] if x["chamber"] == cid]:
-        pairs.setdefault((r["date"], r["pumpdown"]), {})[r["gauge"][:2]] = float(r["reading_mbar"])
-    both = [(_ord(d), v["CC"] / v["IG"]) for (d, _p), v in sorted(pairs.items()) if "CC" in v and "IG" in v]
-    line = np.polyfit([x for x, _ in both], [y for _, y in both], 1) if len(both) >= 2 else None
+    both, line = _cc_line(cid, data, comp or {})
     out = []
     for r in data["spd"]:
         if r["chamber"] != cid or r["date"] > AUDIT_DATE or (st["relined"] and r["date"] < st["relined"]):
@@ -550,7 +560,7 @@ def solve(cid, data, st, obs, s_now, trapped_from, free_perm, speed_range, leak=
             true = wall + pm + chan
             speed = p["s_now"] if o["speed"] == "now" else o["speed"]
             if o["gauge"]:
-                _mix, shown_per_true = mixture(wall, pm, chan, seals[i][0])
+                _mix, shown_per_true = mixture(wall, pm, chan, seals[i][0], (o.get("tag") or "IG")[:2])
                 model = true * shown_per_true / speed
             else:
                 model = true / speed
@@ -612,21 +622,75 @@ def audit_one(cid, data, vac):
     if s_now is None:
         s_now = shop_speed(cid, data, cuts, now, k)
 
-    obs = []
-    for r in readings(cid, data, st, swapped_tags(data)):
-        shown = r["shown"] * k.get(r["tag"], 1.0)
-        per = _period(r["date"], cuts)
-        speed = "now" if per == now else shop_speed(cid, data, cuts, per, k)
-        if speed is None:
-            continue
-        obs.append(dict(r, shown=shown, gauge=True, speed=speed, sd=READ_REPEAT))
-    for r in test_readings(cid, data, st):
-        f = k.get(r["tag"], 1.0)
-        obs.append(dict(r, shown=r["shown"] * f, gauge=True, speed=r["s_test"] / f,
-                        sd=math.hypot(SPEED_REPEAT, SPEED_REPEAT * 1.5)))
-    obs += ordered
+    swaps = swapped_tags(data)
+
+    def gather(st_, comp, every, before=None):
+        out = []
+        rs = readings(cid, data, st_, swaps, comp, every)
+        if before:
+            rs = [r for r in rs if r["date"] < before]
+        for r in rs:
+            shown = r["shown"] * k.get(r["tag"], 1.0)
+            per = _period(r["date"], cuts)
+            speed = "now" if per == now else shop_speed(cid, data, cuts, per, k)
+            if speed is None:
+                continue
+            out.append(dict(r, shown=shown, gauge=True, speed=speed, sd=READ_REPEAT))
+        if before is None:
+            for r in test_readings(cid, data, st_, comp):
+                f = k.get(r["tag"], 1.0)
+                out.append(dict(r, shown=r["shown"] * f, gauge=True, speed=r["s_test"] / f,
+                                sd=math.hypot(SPEED_REPEAT, SPEED_REPEAT * 1.5)))
+        return out
 
     rated = rated_of(st) or s_now        # a pump in order behind an unrecorded port: its measured speed is rated
+    paired = any(r["paired"] for r in readings(cid, data, st, swaps, None, True))
+    comp, every = {}, False
+    if paired or {x["gauge"][:2] for x in data["log"] if x["chamber"] == cid} >= {"CC", "IG"}:
+        # The two gauge types read the same gas differently (vacuum_data.md), so their ratio on a pumpdown is the
+        # gas's composition as well as the cold cathode's own calibration. A plain budget on one reading per
+        # pumpdown gives each paired pumpdown's composition; what is left of the ratio is the cold cathode; if it
+        # holds still, every reading is kept and the fit reads the composition from the pairs itself.
+        def note(st_, p, rs):
+            for r in rs:
+                if not r["paired"] or not r["tag"].startswith("IG"):
+                    continue
+                here = state_on(cid, data, r["date"])
+                wall = p["c_w"] * wall_shape(surfaces_of(st_, r["load"]), r["hours"], r["vent"], r["t_c"])
+                pm = perm_load(here["seal"] if here["seal_logged"] else st_["seal_register"], here["seal_cm"],
+                               r["t_c"])
+                cc = mixture(wall, pm, p["leak"], here["seal"], "CC")[1]
+                ig = mixture(wall, pm, p["leak"], here["seal"], "IG")[1]
+                comp[(r["date"], r["pd"])] = cc / ig
+        if st["relined"]:
+            old = state_on(cid, data, "0000-00-00")
+            old = dict(old, relined=None)
+            pre = gather(old, {}, False, before=st["relined"])
+            if len(pre) >= 2:
+                try:
+                    _c0, p0, _n0, _k0 = solve(cid, data, old, pre, s_now or rated, None, False,
+                                              (0.05 * rated, 1.2 * rated))
+                    note(old, p0, [r for r in readings(cid, data, old, swaps, None, True)
+                                   if r["date"] < st["relined"]])
+                except Exception:
+                    pass
+        # the composition of the pumpdowns since: the budget on one reading per pumpdown, its cold cathode
+        # readings corrected by the line as the composition last estimated leaves it, a few times over
+        for _round in range(4):
+            first = gather(st, dict(comp), False) + ordered
+            try:
+                _c1, p1, _n1, _k1 = solve(cid, data, st, first, s_now, None, False, (0.05 * rated, 1.2 * rated),
+                                          leak)
+                note(st, p1, readings(cid, data, st, swaps, None, True))
+            except Exception:
+                break
+        both, line = _cc_line(cid, data, comp)
+        if line is not None and len(both) >= 2:
+            span = both[-1][0] - both[0][0]
+            every = abs(line[0] * span) <= 0.04      # within what two readings' scatter and the composition
+            # estimate's own error leave in a ratio; a fouling cathode loses far more
+    obs = gather(st, comp, every) + ordered
+
     lo_d, hi_d = min(o["date"] for o in obs), max(o["date"] for o in obs)
     worked = sorted({r["date"] for r in data["mnt"] if r["chamber"] == cid and lo_d < r["date"] <= hi_d})
     best = None

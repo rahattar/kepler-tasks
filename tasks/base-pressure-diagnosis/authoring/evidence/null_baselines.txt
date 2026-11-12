@@ -1,4 +1,4 @@
-inputs: 7aec80ea544fb14d
+inputs: 2bc8184dce289a68
 Method-free answers, each scored through the task's grader
 ==========================================================
 
@@ -14,17 +14,17 @@ the latest reading times the latest speed test              0/10   rejected  -
 the specified base pressure times the latest speed test     0/10   rejected  -
 the register's rated speed and the specified base pressure  0/10   rejected  -
 the latest entry's gas load, as it stands                   0/10   rejected  -
-the latest entry, the table's wall and the rest a leak      0/10   rejected  -
+the latest entry, the table's wall and the rest a leak      1/10   rejected  VC03
 the latest entry, the rest put down to the wall             0/10   rejected  -
 
 Free passes, chamber by chamber
 ===============================
 
 chamber  answers it is free to  which
--------  ---------------------  -----
+-------  ---------------------  ------------------------------------------------------
 VC01     0                      none
 VC02     0                      none
-VC03     0                      none
+VC03     1                      the latest entry, the table's wall and the rest a leak
 VC04     0                      none
 VC05     0                      none
 VC06     0                      none
@@ -35,4 +35,4 @@ VC10     0                      none
 
 gate: at least 10 of 10 chambers right
 
-every method-free answer rejected; the most any gets right is 0 of 10
+every method-free answer rejected; the most any gets right is 1 of 10
