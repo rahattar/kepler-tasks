@@ -1,0 +1,7 @@
+canal_works   20.1 s     0 of 2420 points out  ran [G-151-DE G-158-DE C-160-DE P-165-DE P-173-DE M-189-DE]  worst/band {'h_min_um': 0.04, 'power_kW': 
+quay_site     19.8 s     0 of 2640 points out  ran [B-133-DE P-141-DE P-148-DE M-150-DE C-152-DE B-162-DE M-167-DE]  worst/band {'h_min_um': 0.05, 'po
+ridge_plant   21.1 s     0 of 2310 points out  ran [B-135-DE K-138-DE M-149-DE G-154-DE M-165-DE G-168-DE]  worst/band {'h_min_um': 0.04, 'power_kW': 
+south_yard    21.3 s     0 of 2090 points out  ran [M-173-DE G-180-DE G-189-DE C-207-DE G-209-DE]  worst/band {'h_min_um': 0.04, 'power_kW': 0.02, 'p_
+tank_farm     20.5 s     0 of 2310 points out  ran [G-145-DE K-154-DE M-160-DE K-162-DE G-176-DE P-181-DE G-185-DE]  worst/band {'h_min_um': 0.05, 'po
+upper_mill    21.5 s     0 of 2310 points out  ran [K-172-DE M-177-DE G-179-DE B-184-DE G-188-DE K-200-DE M-203-DE]  worst/band {'h_min_um': 0.05, 'po
+ACCEPTED
