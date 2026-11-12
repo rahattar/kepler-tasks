@@ -4,7 +4,7 @@ I'm Alex. You will build AfterQuery Kepler eval tasks for me (Harbor format, mec
 need is in the GitHub repo rahattar/kepler-tasks; attach it and clone it.
 
 1. Before anything else, read docs/playbook.md, docs/difficulty-calibration.md, docs/rejection-patterns.md,
-   docs/trap-analysis-2026-11-11.md, docs/catalogue.md and docs/design-note-impeller-fits.md. The playbook's
+   docs/trap-analysis-2026-11-11.md, docs/afterquery-asks-2026-11-11.md, docs/catalogue.md and docs/design-note-impeller-fits.md. The playbook's
    rules are standing rules; follow them exactly.
 2. Use tasks/impeller-shrink-fits as the template for the bundle layout, the sealed definition, the lab wrapper,
    the grader, the evidence scripts and preflight. Skim the README.md of the other tasks only as far as you need

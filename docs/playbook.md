@@ -57,6 +57,13 @@ Sciences). Follow this exactly unless Alex says otherwise.
   in a root- or lab-owned 700 directory, reached only through a sudo wrapper that validates arguments and enforces
   the booking.
 
+## Current intake priority (AfterQuery, Nov 11)
+- Top priority: Science tasks whose tests re-run the agent's program on hidden inputs under a per-run time limit
+  stated in instruction.md (about 2-3x the reference's runtime, so a naive correct version times out; a timeout
+  fails the task), on hidden data deliberately shifted from the visible data (new regime, injected faults,
+  out-of-range values, unseen categories, edge cases; not a reseed), and 0-5 of 8 on the difficulty probe.
+  Full checklist and the verbatim messages: `docs/afterquery-asks-2026-11-11.md`.
+
 ## Design rules (Alex's standing rule, Nov 5)
 - Give no hints in the prompt or the files. Hide the trap in the analysis layer: the general approach must look
   right at first glance, and only checking the files or very fine, non-obvious details exposes it.
