@@ -1,0 +1,7 @@
+canal_works   40.0 s   298 of 2420 points out  ran [B-170-NDE C-180-NDE C-160-DE G-158-DE M-189-DE]  worst/band {'h_min_um': 7.71, 'power_kW': 10.97, 'p_max_MPa': 3.24, 'attitude_deg': 3.09, 't_eff_C': 3.16}
+quay_site     38.8 s   296 of 2640 points out  ran [P-148-DE B-135-DE C-152-DE M-150-NDE M-167-DE B-162-DE]  worst/band {'h_min_um': 1.73, 'power_kW': 2.38, 'p_max_MPa': 0.59, 'attitude_deg': 0.61, 't_eff_C': 0.6}
+ridge_plant   32.9 s   262 of 2310 points out  ran [G-144-NDE M-153-DE B-135-DE M-165-NDE G-168-DE]  worst/band {'h_min_um': 9.59, 'power_kW': 12.41, 'p_max_MPa': 3.18, 'attitude_deg': 3.14, 't_eff_C': 1.96}
+south_yard    39.1 s     0 of 2090 points out  ran [G-180-DE G-189-DE P-177-DE G-209-NDE C-207-NDE]  worst/band {'h_min_um': 0.03, 'power_kW': 0.02, 'p_max_MPa': 0.08, 'attitude_deg': 0.02, 't_eff_C': 0.02}
+tank_farm     32.6 s   223 of 2310 points out  ran [G-145-NDE K-162-DE M-158-NDE G-185-NDE P-181-DE G-176-DE]  worst/band {'h_min_um': 4.27, 'power_kW': 7.41, 'p_max_MPa': 1.81, 'attitude_deg': 2.0, 't_eff_C': 2.26}
+upper_mill    39.8 s   368 of 2310 points out  ran [G-179-DE G-188-DE M-177-DE K-200-DE M-174-DE M-203-DE]  worst/band {'h_min_um': 4.17, 'power_kW': 5.19, 'p_max_MPa': 1.64, 'attitude_deg': 1.38, 't_eff_C': 1.24}
+NOT ACCEPTED
