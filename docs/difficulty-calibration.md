@@ -493,3 +493,23 @@ What the three together say:
 - **The false confirmation matters.** The wasted visit returned the maker's figure exactly and matched the dial
   sheet to 0.001 mm; every run that bought it reported its method confirmed.
 - Each bare round cost about twenty minutes to build and two to probe at low effort.
+
+## Shaft alignment, six bare cores: what moved the low-effort rate, and what moved xhigh (Nov 11)
+
+`cores/shaft-alignment-v6/RESULT.md` has the table. About four hours in all, 63 probes, nothing built out.
+
+- **Low effort is beaten by a budget only when the run believes it has a visit to spare.** A count that comes
+  out one short of the budget, with a salient settled machine to spend the spare on, caught 5 of 6 at low
+  effort where a count that fills the budget caught 2 of 3.
+- **The remaining low-effort passes were bought with information.** Ordering one visit at a time let a run
+  see three reports before choosing the sixth train. One order for the whole programme removed every one of
+  them: 3 of 12 became 0 of 6.
+- **xhigh needs a label that raises the question, though not one that answers it.** Two model names listed
+  alike made careful runs compare the models' old behaviour before ordering (3 of 6, then 1 of 3 with a single
+  order). With one model name nobody asked, at any effort (0 of 15). Hide the answer in the numbers, and leave
+  a reason to look at them.
+- **A decoy must have no honest justification.** An unstated sign convention on the decoy's own record gave
+  careful runs a real reason to check it. Stating it in the procedure with the word "put in the sense of" read
+  as "converted, so suspect" and drew a visit; naming the direction in the column header did not.
+- **A second decoy catches what the first misses.** The pump whose grout was repaired after its sheet drew
+  three visits from runs that had declined the compressor.
