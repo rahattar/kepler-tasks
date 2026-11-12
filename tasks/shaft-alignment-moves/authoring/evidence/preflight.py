@@ -139,7 +139,11 @@ def main():
           "exactly three decimal places" in ins and "one figure for every move" in ins)
     check("the statement says where the contractor reports and that the programme is one order",
           "/app/laser_reports" in ins and "in one order" in ins)
-    check("the statement does not print the acceptance", ("%.2f" % common.unit3.TOL) not in ins)
+    # the requirement is stated as the physical condition AP-12 section 7 gives, as the approved tasks state theirs
+    check("the statement gives the running condition every train has to meet, as AP-12 section 7 has it",
+          ("within %.2f mm of the stationary shaft's at both hubs' reading planes, in height and sideways" % common.unit3.TOL) in ins)
+    check("the statement assigns no role and speaks in no first or second person",
+          not re.search(r"\b(you are|your|you|we|our|I)\b", body, re.I))
     check("the statement names no train, model or group",
           not re.search(r"\b(P|K|TP|FN)-\d|HSC|HS-|CLC|CL-|lagg|blank|jacket|compressor|turbine", ins))
 

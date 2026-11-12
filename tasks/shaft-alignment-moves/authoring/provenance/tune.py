@@ -37,6 +37,20 @@ def main():
     changed = [t for t in pumps if t["change"]]
     print("Design rules on the sealed unit (seed %d). The acceptance is %.2f mm.\n" % (seed, tol))
 
+    # the scale of the physics against the acceptance
+    hot = [t for t in pumps if t["tpnow"] > 100.0]
+    grow = [U.growth(t["h_stat"], t["t_stat"], t["amb"]) for t in hot]
+    rule("the supports of the %d hot pumps rise by %.2f to %.2f mm from cold to running, %d to %d times the "
+         "acceptance" % (len(hot), min(grow), max(grow), int(min(grow) / tol), int(max(grow) / tol)), min(grow) > 10 * tol)
+    kelvin = [tol / (U.ALPHA * t["h_stat"]) for t in hot]
+    rule("the acceptance is worth %.1f to %.1f K of support temperature on a hot pump" % (min(kelvin), max(kelvin)),
+         max(kelvin) < 10.0)
+    share = [tol / (U.ALPHA * t["h_stat"] * (t["tpnow"] - U.T_REF)) for t in hot]
+    rule("in the ratio of support rise to pumped rise above 25 C, the acceptance is worth %.3f to %.3f"
+         % (min(share), max(share)), max(share) < abs(U.K_2019["Fc"] - U.K_2019["Fd"]) / 2)
+    lever = max((t["span"] + t["a"] + t["b"]) / t["span"] for t in T.values())
+    rule("the cold line is carried from the reading planes to feet up to %.1f spans away" % lever, lever > 3.0)
+
     # the programme
     turbines = [t for t in T.values() if t["kind"] == "turb"]
     by_behaviour = {(t["cons"], t["change"]) for t in changed}

@@ -19,6 +19,9 @@ Sciences). Follow this exactly unless Alex says otherwise.
 - **No obfuscation:** no base64, rot13 or encoded strings anywhere in the bundle. A security review rejected one.
 - **instruction.md:**
   - no heading, and no grading words (grader, verifier, reward, score, pass, fail, tested, graded, partial credit);
+  - no role ("You are the ... engineer"), no first or second person; it opens on the physical situation, and states
+    the requirement as a physical condition with its number where an agent-visible document gives one
+    (shaft-alignment-moves, Nov 11);
   - every input file named by absolute path;
   - no hint at any trap or mechanism;
   - the last paragraph exactly: "You have 28800 seconds to complete this task. Do not cheat by using online
@@ -38,7 +41,8 @@ Sciences). Follow this exactly unless Alex says otherwise.
     verification_explanation. A quality review may describe some of these as unrecognised in an advisory note.
     Leave them where they are: the structure check is blocking and the advisory is not (bore-form, Nov 11);
   - difficulty_explanation says the data is synthetic and realistic, names the practitioner and the research
-    analogue, and contains no agent-performance numbers.
+    analogue, and contains no agent-performance numbers. It never calls the work routine: one sentence on who does
+    it, then the physical mechanisms with the figures that make each bind, then the measurement problem.
 - **README.md:** carries `## Difficulty`, `## Reference solution` and `## Verification`, each containing the
   task.toml explanation field word for word. Edit the README, then copy the section into task.toml; preflight
   fails when the two disagree.

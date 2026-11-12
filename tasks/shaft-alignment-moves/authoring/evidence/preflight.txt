@@ -16,7 +16,8 @@ pass every input the statement names exists
 pass the statement gives the output path and the header                                               
 pass the statement asks for exactly three decimal places and one figure a move                        
 pass the statement says where the contractor reports and that the programme is one order              
-pass the statement does not print the acceptance                                                      
+pass the statement gives the running condition every train has to meet, as AP-12 section 7 has it     
+pass the statement assigns no role and speaks in no first or second person                            
 pass the statement names no train, model or group                                                     
 pass task.toml: agent 28800 s as user agent                                                           
 pass task.toml: verifier 600 s, separate, no network                                                  
@@ -89,4 +90,4 @@ pass pytest agrees on every complete sheet
 pass the reference run ends with every train aligned and pytest passing                               
 pass every screened seed is acceptable                                                                
 
-90 checks, 0 failed: the bundle is clean
+91 checks, 0 failed: the bundle is clean

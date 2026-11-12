@@ -1,5 +1,9 @@
 Design rules on the sealed unit (seed 5119). The acceptance is 0.05 mm.
 
+holds the supports of the 28 hot pumps rise by 0.63 to 2.40 mm from cold to running, 12 to 47 times the acceptance
+holds the acceptance is worth 4.8 to 6.8 K of support temperature on a hot pump
+holds in the ratio of support rise to pumped rise above 25 C, the acceptance is worth 0.015 to 0.043
+holds the cold line is carried from the reading planes to feet up to 12.9 spans away
 holds measurements the records cannot replace: 2 turbines and 4 groups of changed pumps, 6 in all, against 6 visits
 holds counted by the construction the pump data lists, the groups are 3 and the count is 5, one short of the visits
 holds a changed pump left on its 2019 ratio is out by at least 0.225 mm (every one of 15)
@@ -16,4 +20,4 @@ holds 22 of 36 trains were read with a bracket whose sag is above the acceptance
 holds no train's sealed moves leave any other train aligned (0 pairs of 1260 do)
 holds the sealed moves leave every train aligned to rounding error
 
-design rules: 15 of 15 hold
+design rules: 19 of 19 hold

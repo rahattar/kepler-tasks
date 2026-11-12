@@ -42,3 +42,9 @@ differs from v7 except the output format clause (exactly three decimal places).
 - Similarity: budget-shaped siblings in the catalogue are vav-airflow-calibration (40 boxes, five visits),
   chill-bench-commissioning and cooler-fouling-assessment. The subject, deliverable and verifier differ; the
   harness files were written fresh and measured with `tools/similarity.py`.
+
+**20261111c, after the quality review of b.** The instruction lost its role sentence and its turnaround framing,
+and now states AP-12 section 7's condition with its 0.05 mm; nothing else the agent sees changed. The README's
+difficulty text was rewritten to lead with the three pieces of physics (thermoelastic growth, heat transfer to
+the supports as a dimensionless temperature, the kinematics of the reading), with figures added to tune.txt.
+The bare-core rates were measured on the old wording; the changes name no train, model or group.

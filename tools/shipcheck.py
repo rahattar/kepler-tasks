@@ -186,6 +186,9 @@ n_sec = int(ag.get("timeout_sec", 0))
 chk(re.search(r"\n\n" + re.escape(CLOSE.replace("28800", str(n_sec))) + r"\n?$", ins_raw) is not None,
     "instruction ends with a blank line, the closing sentence, at most one newline")
 chk(not re.search(r"^\s{0,3}#", ins_raw, re.M), "instruction has no Markdown heading")
+# instruction clarity (shaft-alignment-moves 20261111b): "You are the ... engineer" is roleplay, not contract
+chk(not re.search(r"\b(you are|as an? [a-z ]*engineer|imagine|pretend)\b", ins_raw.replace(CLOSE, ""), re.I),
+    "instruction assigns no role")
 gw = re.findall(r"\b(grader|graded|grading|verifier|reward|score[sd]?|scoring|partial credit|tested|pass(?:es|ed)?|fail(?:s|ed)?)\b",
                 ins_raw.replace(CLOSE, ""), re.I)
 chk(not gw, "instruction has no grading words%s" % ("" if not gw else ": %s" % sorted(set(w.lower() for w in gw))))

@@ -374,3 +374,33 @@ similarity measure.
 - This is the third time the similarity rewrite has broken a textual literal (relief-valve twice). The
   literals are not material for originality. `tools/shipcheck.py` now checks the write sites line by line, and
   the task's preflight does too.
+
+## Quality rejection, Nov 11 (shaft-alignment-moves 20261111b): role in the instruction, and "not research-level science"
+
+Two blocking criteria, reviewed by a different model from the earlier reviews.
+
+**Instruction clarity.** "It opens with the unnecessary role assignment 'You are the rotating equipment
+engineer closing out Unit 3's turnaround.' That is roleplay/preamble rather than part of the artifact
+contract." The sentence came across from the probe brief. No approved instruction has one: chill-bench, vav,
+superheater, flare and bore-form all open on the physical situation in the third person.
+
+**Scientifically grounded.** "The README itself calls this routine rotating-equipment work; naming a
+thermo-mechanical-identification research analogue does not make the delivered maintenance workflow
+research-level science." The physics was in the task and the README did not lead with it. It opened on "routine
+work ... at every turnaround", spent its length on the budget and the decoy, and gave the heat transfer one
+clause. The approved difficulty texts do the reverse: one sentence on who does the work, then the physics
+("Two physical effects set each box", the temperature-jump degeneracy on chill-bench), then the numbers that
+make it bind.
+
+**Rules taken from this**
+- The instruction assigns no role and uses no first or second person. It opens on the physical situation.
+  `tools/shipcheck.py` and preflight check it.
+- The instruction states the requirement as a physical condition with its number, as chill-bench and vav do
+  ("within 0.05 mm ... at both hubs' reading planes"), when an agent-visible document already gives it.
+- Never describe the work as routine, and do not frame the deliverable as a job to close out. The difficulty
+  text names the practitioner in one sentence and then leads with the physical mechanisms, each with the figure
+  that shows it matters against the tolerance; the measurement budget comes after, as an identification
+  problem. The research analogue has to follow from that text, not be attached to it.
+- The description, subfield and tags in task.toml name the physics (heat transfer, thermoelastic displacement,
+  identification), not the trade.
+- A probe brief is not an instruction. Rewrite it against the approved instructions before it goes in a bundle.
