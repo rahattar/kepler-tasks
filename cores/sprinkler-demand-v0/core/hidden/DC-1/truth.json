@@ -1,0 +1,18 @@
+{
+ "C": {
+  "riser": 120,
+  "feed": 120,
+  "crossA": 120,
+  "crossB": 70,
+  "lines": 120
+ },
+ "valves": {},
+ "result": {
+  "area": [
+   27,
+   11
+  ],
+  "pressure_psi": 64.6971001521738,
+  "flow_gpm": 929.601671181855
+ }
+}
