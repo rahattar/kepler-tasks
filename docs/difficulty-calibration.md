@@ -550,3 +550,35 @@ What building it showed that the bare rounds had not:
   solution, 21 seeds).
 - Harness similarity after two rewrites, difflib ratio against the nearest bundle: agent image 0.386, verifier
   image 0.346, reward script 0.479, pytest entry 0.389, instruction 0.438.
+
+## Journal bearing, four bare cores of a timed program on shifted hidden data (Nov 12)
+
+`cores/journal-bearing-v0` to `-v3`, each with a RESULT.md. Built to the Nov 11 ask
+(`docs/afterquery-asks-2026-11-11.md`): a program re-run on hidden cases under a per-run limit, hidden data
+shifted on purpose. 24 probes on `model: "opus"`, 23 graded.
+
+| core | what was meant to carry the difficulty | low | xhigh |
+|---|---|---|---|
+| v0 | regimes the examples do not show, all inside the standard's stated scope; 60 s for 600 points | 3 of 3 solved | 3 of 3 |
+| v1 | plant records with sound examples, and one supply RTD stuck with nothing to witness it | 1 of 3 | 2 of 2 |
+| v2 | v1 plus RTDs reading 4 to 5 K out, with a drain RTD as the only witness | 3 of 3 | 3 of 3 |
+| v3 | v2 plus hourly records of 30 500 points under 30 s | 2 of 3 | 2 of 3 |
+
+What each one settled:
+- **A stated scope is a test plan (v0).** Each run generated 30 to 90 cases of its own across the scope,
+  checked them against finer grids and timed them. A shifted regime the documents describe is not a shift.
+- **Record semantics defined in a format document are implemented correctly with nothing to check against
+  (v1 to v3, every run).** Diametral against radial, a grind before or after a fit, the other bearing's jobs,
+  the oil charge by date: no run got one wrong. The weld-preheat pattern does not hold on this model.
+- **A column with no stated use is a signpost (v2).** Giving the witness made the fault easier than leaving it
+  to a guess.
+- **A fault with no witness is a guess (v1).** One low run in three guessed "repeats while its partner moves".
+  It separates runs by luck of first idea, which is neither wide nor fair.
+- **A time limit the obvious method misses is an instruction to find the better method (v3).** All six found
+  the tabulation; the two failures were interpolation slips in different places.
+
+**The general point.** In this shape the solver writes the whole method and can test it on cases of its own
+making for as long as it likes. Anything determinate from the documents and the visible data is found, at low
+effort, in 20 to 90 minutes. What stopped low effort on the alignment task was different in kind: a decision
+that cannot be tested before it is spent. A program task has no such decision unless the program itself has to
+spend something on the hidden case.
