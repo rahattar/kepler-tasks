@@ -1,0 +1,6 @@
+#!/bin/bash
+# The contractor's audit test order: vacwork status | vacwork submit < plan.json
+case "${1:-}" in
+    status|submit) exec sudo -n -u contractor /opt/vacwork/run "$1" ;;
+    *) echo "usage: vacwork status | vacwork submit < plan.json" >&2; exit 2 ;;
+esac
