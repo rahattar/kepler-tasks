@@ -1,0 +1,14 @@
+{
+ "tag": "Z-12",
+ "machine": "mill",
+ "position": "DE",
+ "journal_diameter_mm": 200.04,
+ "length_mm": 200,
+ "radial_clearance_um": 120,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil_grade": "ISO VG 68",
+ "oil_flow_L_min": 6.0
+}

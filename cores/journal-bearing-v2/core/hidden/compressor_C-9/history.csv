@@ -1,0 +1,7 @@
+date,position,work,value,remarks
+2022-01-21,DE,SEAL_REPLACED,,oil seal replaced
+2022-01-22,DE,INSPECTED,,"bearing inspected, no findings"
+2024-02-05,DE,SPLIT_SET,-30,housing rebuilt with the split line 30 degrees against rotation
+2024-02-05,NDE,SPLIT_SET,-30,housing rebuilt with the split line 30 degrees against rotation
+2024-07-02,NDE,INSPECTED,,"bearing inspected, no findings"
+2025-02-18,NDE,ALIGNED,,coupling alignment checked
