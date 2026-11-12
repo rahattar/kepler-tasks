@@ -1,0 +1,61 @@
+{
+ "C": {
+  "riser": 120,
+  "feed": 75,
+  "crossA": 120,
+  "lines": 88
+ },
+ "valves": {},
+ "sheet": [
+  {
+   "kind": "swap",
+   "ports": [
+    "L6H10",
+    "L6H5"
+   ]
+  }
+ ],
+ "actual_runs": [
+  [
+   null,
+   0.0
+  ],
+  [
+   "FC-A",
+   280.0
+  ],
+  [
+   "FC-A",
+   440.0
+  ],
+  [
+   "FC-A",
+   575.0
+  ],
+  [
+   "DR-L",
+   50.0
+  ],
+  [
+   "DR-L",
+   70.0
+  ],
+  [
+   "DR-L",
+   90.0
+  ],
+  [
+   null,
+   0.0
+  ]
+ ],
+ "shift": "a registered C wrong on the branch lines and, together with it, the two ports on the drained line entered against each other; a 60 ft riser and a weak supply",
+ "result": {
+  "area": [
+   10,
+   6
+  ],
+  "pressure_psi": 75.44197535281656,
+  "flow_gpm": 648.6947542469461
+ }
+}

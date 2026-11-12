@@ -1,0 +1,60 @@
+{
+ "C": {
+  "riser": 120,
+  "feed": 78,
+  "crossA": 96,
+  "crossB": 120,
+  "lines": 82
+ },
+ "valves": {},
+ "sheet": [
+  {
+   "kind": "zero",
+   "port": "A14",
+   "psi": 4.0
+  }
+ ],
+ "actual_runs": [
+  [
+   null,
+   0.0
+  ],
+  [
+   "FC-A",
+   620.0
+  ],
+  [
+   "FC-A",
+   930.0
+  ],
+  [
+   "FC-B",
+   570.0
+  ],
+  [
+   "FC-B",
+   855.0
+  ],
+  [
+   "FC-B1",
+   575.0
+  ],
+  [
+   "FC-B1",
+   865.0
+  ],
+  [
+   null,
+   0.0
+  ]
+ ],
+ "shift": "a registered C wrong on the feed main (WH-C: branch lines of a tree) together with a gauge 4 psi out (WH-B: 0.8 psi); a ceiling sloped across the lines",
+ "result": {
+  "area": [
+   25,
+   9
+  ],
+  "pressure_psi": 87.19659036087329,
+  "flow_gpm": 938.0544505075362
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "C": {
+  "riser": 120,
+  "feed": 120,
+  "crossA": 85,
+  "lines": 120
+ },
+ "valves": {
+  "P0010": 200.0
+ },
+ "sheet": [],
+ "actual_runs": [
+  [
+   null,
+   0.0
+  ],
+  [
+   "FC-A",
+   355.0
+  ],
+  [
+   "FC-A",
+   555.0
+  ],
+  [
+   "FC-A",
+   730.0
+  ],
+  [
+   "DR-L",
+   75.0
+  ],
+  [
+   "DR-L",
+   115.0
+  ],
+  [
+   "DR-L",
+   145.0
+  ],
+  [
+   null,
+   0.0
+  ]
+ ],
+ "shift": "the sectional valve far off its seat on a tree, inside the group the register leaves open",
+ "result": {
+  "area": [
+   12,
+   6
+  ],
+  "pressure_psi": 70.53446677673057,
+  "flow_gpm": 709.3620482954447
+ }
+}

@@ -1,0 +1,56 @@
+{
+ "C": {
+  "riser": 120,
+  "feed": 120,
+  "crossA": 120,
+  "crossB": 70,
+  "lines": 120
+ },
+ "valves": {
+  "P0018": 250.0
+ },
+ "sheet": [],
+ "actual_runs": [
+  [
+   null,
+   0.0
+  ],
+  [
+   "FC-A",
+   610.0
+  ],
+  [
+   "FC-A",
+   915.0
+  ],
+  [
+   "FC-B",
+   510.0
+  ],
+  [
+   "FC-B",
+   765.0
+  ],
+  [
+   "FC-B1",
+   555.0
+  ],
+  [
+   "FC-B1",
+   835.0
+  ],
+  [
+   null,
+   0.0
+  ]
+ ],
+ "shift": "a larger grid; the sectional valve far off its seat (factor 250 against 6 in WH-D)",
+ "result": {
+  "area": [
+   27,
+   11
+  ],
+  "pressure_psi": 75.4095114097388,
+  "flow_gpm": 929.5683379371261
+ }
+}

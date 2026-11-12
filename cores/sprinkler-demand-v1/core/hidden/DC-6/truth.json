@@ -1,0 +1,63 @@
+{
+ "C": {
+  "riser": 120,
+  "feed": 120,
+  "crossA": 120,
+  "crossB": 120,
+  "lines": 120,
+  "lines_old": 72
+ },
+ "valves": {
+  "P0002": 150.0
+ },
+ "sheet": [
+  {
+   "kind": "flow",
+   "run": 5,
+   "recorded": 0.75
+  }
+ ],
+ "actual_runs": [
+  [
+   null,
+   0.0
+  ],
+  [
+   "FC-A",
+   675.0
+  ],
+  [
+   "FC-A",
+   1015.0
+  ],
+  [
+   "FC-B",
+   580.0
+  ],
+  [
+   "FC-B",
+   875.0
+  ],
+  [
+   "FC-B1",
+   565.0
+  ],
+  [
+   "FC-B1",
+   850.0
+  ],
+  [
+   null,
+   0.0
+  ]
+ ],
+ "shift": "the feed main's gate valve off its seat (WH-D: the sectional valve) together with a flow written down a quarter low; older pipe on the riser-end lines only",
+ "result": {
+  "area": [
+   10,
+   9
+  ],
+  "pressure_psi": 147.1172373785562,
+  "flow_gpm": 1331.3683449100874
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "C": {
+  "riser": 120,
+  "feed": 120,
+  "crossA": 90,
+  "crossB": 75,
+  "lines": 120
+ },
+ "valves": {},
+ "sheet": [
+  {
+   "kind": "swap",
+   "ports": [
+    "A13",
+    "B13"
+   ]
+  }
+ ],
+ "actual_runs": [
+  [
+   null,
+   0.0
+  ],
+  [
+   "FC-A",
+   670.0
+  ],
+  [
+   "FC-A",
+   1005.0
+  ],
+  [
+   "FC-B",
+   545.0
+  ],
+  [
+   "FC-B",
+   820.0
+  ],
+  [
+   "FC-B1",
+   565.0
+  ],
+  [
+   "FC-B1",
+   850.0
+  ],
+  [
+   null,
+   0.0
+  ]
+ ],
+ "shift": "a registered C wrong on cross main B together with two ports entered against each other across the grid; a ceiling sloped across the lines",
+ "result": {
+  "area": [
+   23,
+   9
+  ],
+  "pressure_psi": 111.30776676979681,
+  "flow_gpm": 1193.5290917439788
+ }
+}

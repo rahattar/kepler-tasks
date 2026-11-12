@@ -1,0 +1,62 @@
+{
+ "C": {
+  "riser": 120,
+  "feed": 120,
+  "crossA": 120,
+  "crossB": 120,
+  "lines": 84
+ },
+ "valves": {},
+ "sheet": [
+  {
+   "kind": "swap",
+   "ports": [
+    "A24",
+    "B24"
+   ]
+  }
+ ],
+ "actual_runs": [
+  [
+   null,
+   0.0
+  ],
+  [
+   "FC-A",
+   660.0
+  ],
+  [
+   "FC-A",
+   990.0
+  ],
+  [
+   "FC-B",
+   535.0
+  ],
+  [
+   "FC-B",
+   805.0
+  ],
+  [
+   "FC-B1",
+   540.0
+  ],
+  [
+   "FC-B1",
+   810.0
+  ],
+  [
+   null,
+   0.0
+  ]
+ ],
+ "shift": "two ports at one elevation entered against each other, on a grid (WH-E: a tree, ports on one main), so the static readings do not show it",
+ "result": {
+  "area": [
+   21,
+   9
+  ],
+  "pressure_psi": 112.08772975329084,
+  "flow_gpm": 1087.4312440651934
+ }
+}

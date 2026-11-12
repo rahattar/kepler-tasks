@@ -1,0 +1,59 @@
+{
+ "C": {
+  "riser": 120,
+  "feed": 120,
+  "crossA": 120,
+  "lines": 70
+ },
+ "valves": {},
+ "sheet": [
+  {
+   "kind": "flow",
+   "run": 7,
+   "recorded": 0.65
+  }
+ ],
+ "actual_runs": [
+  [
+   null,
+   0.0
+  ],
+  [
+   "FC-A",
+   560.0
+  ],
+  [
+   "FC-A",
+   870.0
+  ],
+  [
+   "FC-A",
+   1145.0
+  ],
+  [
+   "DR-L",
+   145.0
+  ],
+  [
+   "DR-L",
+   215.0
+  ],
+  [
+   "DR-L",
+   275.0
+  ],
+  [
+   null,
+   0.0
+  ]
+ ],
+ "shift": "a flow written down a third low on a drain run, where it bears on the open group (WH-E: a tenth low on a cross main run); a density and K-factor beyond the examples'",
+ "result": {
+  "area": [
+   16,
+   7
+  ],
+  "pressure_psi": 94.24163170997355,
+  "flow_gpm": 1357.3109885938316
+ }
+}
