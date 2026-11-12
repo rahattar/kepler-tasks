@@ -1,0 +1,14 @@
+{
+ "tag": "U-200",
+ "machine": "survey",
+ "position": "DE",
+ "journal_diameter_mm": 300,
+ "length_mm": 240,
+ "radial_clearance_um": 240,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil_grade": "ISO VG 68",
+ "oil_flow_L_min": 120.0
+}

@@ -1,0 +1,14 @@
+{
+ "tag": "G-301",
+ "machine": "gearbox",
+ "position": "DE",
+ "journal_diameter_mm": 140,
+ "length_mm": 112,
+ "radial_clearance_um": 80,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil_grade": "ISO VG 100",
+ "oil_flow_L_min": 9.0
+}

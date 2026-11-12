@@ -1,0 +1,14 @@
+{
+ "tag": "S-5",
+ "machine": "startup",
+ "position": "DE",
+ "journal_diameter_mm": 125,
+ "length_mm": 110,
+ "radial_clearance_um": 85,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil_grade": "ISO VG 46",
+ "oil_flow_L_min": 6.0
+}

@@ -1,0 +1,14 @@
+{
+ "tag": "M-410",
+ "machine": "motor",
+ "position": "DE",
+ "journal_diameter_mm": 110,
+ "length_mm": 100,
+ "radial_clearance_um": 70,
+ "groove_angles_deg": [
+  90,
+  270
+ ],
+ "oil_grade": "ISO VG 46",
+ "oil_flow_L_min": 5.0
+}
