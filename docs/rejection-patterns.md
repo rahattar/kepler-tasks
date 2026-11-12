@@ -404,3 +404,22 @@ make it bind.
 - The description, subfield and tags in task.toml name the physics (heat transfer, thermoelastic displacement,
   identification), not the trade.
 - A probe brief is not an instruction. Rewrite it against the approved instructions before it goes in a bundle.
+
+## Verification-explanation rejection, Nov 11 (base-pressure-diagnosis 20261111c): a prose claim the evidence contradicts
+
+**What failed.** "The explanation falsely says no method-free answer gets any chamber right and that no chamber has
+a free pass. null_baselines.txt explicitly records VC03 passing for the latest-entry/table-wall/rest-as-leak
+shortcut (1/10), contradicting the prose." Blocking. The README advisory said the same; the task.toml schema
+advisory (metadata fields, the name's prefix) was the usual one and was not acted on (playbook).
+
+The sentence was typed into meta.py once, when it was true, and every later redesign regenerated the figures
+around it but not the claim. meta.py read the study's best count (1 of 10) and never used it.
+
+**Rules taken from this**
+- Every claim the README makes about a study is generated from that study, including the qualitative ones
+  ("none", "no chamber", "every"). meta.py now builds the null-baseline sentence from null_baselines.txt's own
+  tables: which answer gets which chamber right, and stops if a method-free answer is accepted or a chamber is got
+  right by two of them (the playbook's free item).
+- When a design changes, grep the generator for absolute words (none, no, every, all, never, single) and check each
+  against the study it names before the zip goes out.
+- One null hit on one chamber is the floor the playbook allows; it has to be stated as what it is, not denied.
