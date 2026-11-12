@@ -513,3 +513,21 @@ What the three together say:
   as "converted, so suspect" and drew a visit; naming the direction in the column header did not.
 - **A second decoy catches what the first misses.** The pump whose grout was repaired after its sheet drew
   three visits from runs that had declined the compressor.
+
+## Shaft alignment v7: a sentence of reassurance was holding xhigh down (Nov 11)
+
+`cores/shaft-alignment-v7/RESULT.md`. v7 is v6 less two sentences in the close-out that said the lagging and
+the blanking were done the same way on every pump. Twelve probes on `model: "opus"`: low 1 of 6, xhigh 3 of 6,
+against 1 of 12 and 1 of 6 on v6.
+
+- **A sentence that answers the uniformity question is a lever on xhigh and hardly one on low.** With it, five
+  of six xhigh runs took the classes as listed and spent the spare on a compressor. Without it, one of six did,
+  and three compared the models' old ratios before ordering and passed. Low effort named a compressor four
+  times in six either way.
+- **Taking reassurance away spreads the spare; it does not aim it.** Three runs spent it on a second lagged
+  pump, the class where the two models really are alike, and then had nothing for the jacketed one.
+- **An unstated physical assumption is a trap nobody wrote.** Two runs took a drained jacket for a plain
+  pedestal and visited no jacketed pump: ten trains out by 0.11 to 0.52 mm.
+- **Six runs a side is a diagnostic, not a rate.** 3 of 6 against 1 of 6 is not separated by the count. The
+  evidence is the change in where the sixth visit went. The low-effort rate of v7 needs six more runs before
+  anything is built on it.
