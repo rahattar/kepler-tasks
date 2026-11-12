@@ -1,0 +1,40 @@
+Sheets midway between the reference and each defective route, graded by tests/grade_moves.py.
+
+| route | the route aligned of 36 | the midway sheet aligned of 36 |
+|---|---|---|
+| no sag correction | 15 | 26 |
+| the sag correction applied with the wrong sign | 9 | 15 |
+| bar set 2 taken at every span | 24 | 36 |
+| the two reading planes taken the wrong way round | 7 | 8 |
+| the bottom readings taken with the wrong sign | 6 | 6 |
+| right and left taken the wrong way round | 6 | 6 |
+| the offset at the movable hub taken as the move at both pairs of feet | 1 | 2 |
+| the feet placed from the stationary plane without the span | 1 | 2 |
+| front and rear feet interchanged | 0 | 0 |
+| every move made in the opposite sense | 0 | 0 |
+| aligned cold to zero, no running position | 0 | 0 |
+| the running position applied the wrong way round | 0 | 0 |
+| the two machines' shaft heights interchanged | 11 | 13 |
+| the 2019 survey taken as it stands for every pump | 14 | 16 |
+| the pumped temperature taken as the support temperature | 13 | 14 |
+| the gearbox taken by the thermal formula from the survey | 33 | 33 |
+| the gearbox's lateral shift left out | 33 | 33 |
+| the gearbox's lateral shift taken to the left | 33 | 33 |
+| the 2023 hot checks used for both turbines | 34 | 34 |
+| one turbine measured and its figure used for the other | 35 | 35 |
+| the turbines taken by the thermal formula from the survey | 34 | 34 |
+| one visit for each class as listed, HSC-250 measured, the spare on a compressor | 33 | 33 |
+| one visit for each class as listed, HSC-400 measured, the spare on a compressor | 34 | 34 |
+| one visit for each class as listed, the spare on the pump with the grout repair | 34 | 34 |
+| both lagged models measured and the two HSC models taken as one | 34 | 34 |
+| drained jackets taken as plain pedestals, no blanked pump measured | 26 | 26 |
+| the lagged pumps left on their 2019 ratio, the spare on a compressor | 31 | 31 |
+| HSC-250 left unmeasured and given HSC-400's change in ratio | 34 | 34 |
+| HSC-250 left unmeasured and given HSC-400's ratio scaled by their 2019 ratios | 34 | 34 |
+| every changed pump left on its 2019 ratio at today's temperature, the visits spent elsewhere | 21 | 21 |
+| a measured support temperature carried to the group as a temperature | 30 | 34 |
+| a measured rise carried to the group in millimetres | 28 | 29 |
+| no visit ordered: hot checks, and every pump on its 2019 ratio at today's temperature | 19 | 19 |
+
+routes: 33
+midway sheets accepted: 1 (bar set 2 taken at every span)

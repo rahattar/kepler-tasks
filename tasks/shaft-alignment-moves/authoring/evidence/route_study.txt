@@ -1,0 +1,84 @@
+Defective routes on the shipped records (seed 5119), graded by tests/grade_moves.py.
+
+| route | laser programme | aligned of 36 | worst miss | seeds of 20 with every train |
+|---|---|---|---|---|
+| no sag correction | TP-301A TP-301B P-301A P-320A P-322 P-340A | 15 | P-338B -0.175 mm | 0 |
+| the sag correction applied with the wrong sign | TP-301A TP-301B P-301A P-320A P-322 P-340A | 9 | P-338B -0.345 mm | 0 |
+| bar set 2 taken at every span | TP-301A TP-301B P-301A P-320A P-322 P-340A | 24 | P-338B -0.086 mm | 0 |
+| the two reading planes taken the wrong way round | TP-301A TP-301B P-301A P-320A P-322 P-340A | 7 | P-345B -0.992 mm | 0 |
+| the bottom readings taken with the wrong sign | TP-301A TP-301B P-301A P-320A P-322 P-340A | 6 | K-201C +1.178 mm | 0 |
+| right and left taken the wrong way round | TP-301A TP-301B P-301A P-320A P-322 P-340A | 6 | K-201A -1.139 mm | 0 |
+| the offset at the movable hub taken as the move at both pairs of feet | TP-301A TP-301B P-301A P-320A P-322 P-340A | 1 | P-345B -0.992 mm | 0 |
+| the feet placed from the stationary plane without the span | TP-301A TP-301B P-301A P-320A P-322 P-340A | 1 | P-345B +0.991 mm | 0 |
+| front and rear feet interchanged | TP-301A TP-301B P-301A P-320A P-322 P-340A | 0 | P-331 +9.279 mm | 0 |
+| every move made in the opposite sense | TP-301A TP-301B P-301A P-320A P-322 P-340A | 0 | P-310B -4.411 mm | 0 |
+| aligned cold to zero, no running position | TP-301A TP-301B P-301A P-320A P-322 P-340A | 0 | P-320A -2.179 mm | 0 |
+| the running position applied the wrong way round | TP-301A TP-301B P-301A P-320A P-322 P-340A | 0 | P-320A -4.356 mm | 0 |
+| the two machines' shaft heights interchanged | TP-301A TP-301B P-301A P-320A P-322 P-340A | 11 | P-302 -1.509 mm | 0 |
+| the 2019 survey taken as it stands for every pump | TP-301A TP-301B P-301A P-320A P-322 P-340A | 14 | P-320B -1.188 mm | 0 |
+| the pumped temperature taken as the support temperature | TP-301A TP-301B P-301A P-320A P-322 P-340A | 13 | P-330A +2.316 mm | 0 |
+| the gearbox taken by the thermal formula from the survey | TP-301A TP-301B P-301A P-320A P-322 P-340A | 33 | K-201A -0.141 mm | 0 |
+| the gearbox's lateral shift left out | TP-301A TP-301B P-301A P-320A P-322 P-340A | 33 | K-201A -0.141 mm | 0 |
+| the gearbox's lateral shift taken to the left | TP-301A TP-301B P-301A P-320A P-322 P-340A | 33 | K-201A -0.281 mm | 0 |
+| the 2023 hot checks used for both turbines | P-301A P-320A P-322 P-340A K-201A K-201B | 34 | TP-301B +0.242 mm | 0 |
+| one turbine measured and its figure used for the other | TP-301A P-301A P-320A P-322 P-340A K-201A | 35 | TP-301B -0.213 mm | 0 |
+| the turbines taken by the thermal formula from the survey | P-301A P-320A P-322 P-340A K-201A K-201B | 34 | TP-301A +0.275 mm | 0 |
+| one visit for each class as listed, HSC-250 measured, the spare on a compressor | TP-301A TP-301B P-301A P-320A P-340A K-201A | 33 | P-325A +0.441 mm | 0 |
+| one visit for each class as listed, HSC-400 measured, the spare on a compressor | TP-301A TP-301B P-301A P-322 P-340A K-201A | 34 | P-320A -0.399 mm | 0 |
+| one visit for each class as listed, the spare on the pump with the grout repair | TP-301A TP-301B P-310A P-325B P-342 P-331 | 34 | P-320A -0.399 mm | 0 |
+| both lagged models measured and the two HSC models taken as one | TP-301A TP-301B P-301A P-310B P-325A P-345A | 34 | P-320A -0.398 mm | 0 |
+| drained jackets taken as plain pedestals, no blanked pump measured | TP-301A TP-301B P-301A P-304 P-310A K-201B | 26 | P-320A -0.514 mm | 0 |
+| the lagged pumps left on their 2019 ratio, the spare on a compressor | TP-301A TP-301B P-320A P-322 P-340A K-201A | 31 | P-301A -0.329 mm | 0 |
+| HSC-250 left unmeasured and given HSC-400's change in ratio | TP-301A TP-301B P-301A P-322 P-340A K-201A | 34 | P-320A -0.648 mm | 0 |
+| HSC-250 left unmeasured and given HSC-400's ratio scaled by their 2019 ratios | TP-301A TP-301B P-301A P-322 P-340A K-201A | 34 | P-320A -0.749 mm | 0 |
+| every changed pump left on its 2019 ratio at today's temperature, the visits spent elsewhere | TP-301A TP-301B K-201A K-201B K-201C P-331 | 21 | P-320A -1.185 mm | 0 |
+| a measured support temperature carried to the group as a temperature | TP-301A TP-301B P-301A P-320A P-322 P-340A | 30 | P-325A +0.139 mm | 0 |
+| a measured rise carried to the group in millimetres | TP-301A TP-301B P-301A P-320A P-322 P-340A | 28 | P-304 +0.725 mm | 0 |
+| no visit ordered: hot checks, and every pump on its 2019 ratio at today's temperature | none | 19 | P-320A -1.185 mm | 0 |
+
+routes: 33
+routes that pass on the shipped records: none
+trains missed by fewer than 3 routes: none
+
+Routes that miss each train:
+
+| train | routes |
+|---|---|
+| FN-370 | 12 |
+| FN-371 | 12 |
+| K-201A | 15 |
+| K-201B | 16 |
+| K-201C | 15 |
+| P-301A | 9 |
+| P-301B | 18 |
+| P-302 | 14 |
+| P-304 | 16 |
+| P-306A | 15 |
+| P-306B | 15 |
+| P-310A | 19 |
+| P-310B | 18 |
+| P-312 | 14 |
+| P-320A | 14 |
+| P-320B | 22 |
+| P-322 | 10 |
+| P-325A | 21 |
+| P-325B | 21 |
+| P-330A | 15 |
+| P-330B | 14 |
+| P-331 | 12 |
+| P-333 | 12 |
+| P-336 | 14 |
+| P-338A | 15 |
+| P-338B | 15 |
+| P-340A | 9 |
+| P-340B | 18 |
+| P-342 | 18 |
+| P-345A | 17 |
+| P-345B | 17 |
+| P-360A | 9 |
+| P-360B | 9 |
+| P-365 | 12 |
+| TP-301A | 9 |
+| TP-301B | 10 |
+
+fewest routes missing any one train: 9 (P-301A)

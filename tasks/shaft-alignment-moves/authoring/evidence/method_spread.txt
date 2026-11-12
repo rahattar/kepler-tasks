@@ -1,0 +1,22 @@
+Sound variations, graded by tests/grade_moves.py. The acceptance is 0.05 mm.
+
+| variation | laser programme | aligned of 36 | worst left, mm | seeds of 20 with every train | worst left on any seed, mm |
+|---|---|---|---|---|---|
+| the reference | TP-301A TP-301B P-301A P-320A P-322 P-340A | 36 | 0.0080 | 20 | 0.0122 |
+| each untouched pump on its own 2019 ratio, not its model's | TP-301A TP-301B P-301A P-320A P-322 P-340A | 36 | 0.0118 | 20 | 0.0183 |
+| the last train of each group visited, not the first | TP-301A TP-301B P-310B P-320B P-325B P-345B | 36 | 0.0080 | 20 | 0.0122 |
+| visited trains kept on their dial sheets for the cold position | TP-301A TP-301B P-301A P-320A P-322 P-340A | 36 | 0.0080 | 20 | 0.0122 |
+| visited motors taken from the survey, not the laser | TP-301A TP-301B P-301A P-320A P-322 P-340A | 36 | 0.0080 | 20 | 0.0122 |
+| the side readings left uncorrected for sag (the two halves cancel) | TP-301A TP-301B P-301A P-320A P-322 P-340A | 36 | 0.0080 | 20 | 0.0122 |
+| own ratios, last trains, dial positions and survey motors together | TP-301A TP-301B P-310B P-320B P-325B P-345B | 36 | 0.0118 | 20 | 0.0183 |
+
+Readings AP-12 does not sanction, whose effect the acceptance absorbs on the shipped records:
+
+| reading | aligned of 36 | worst left, mm | seeds of 20 with every train | worst left on any seed, mm |
+|---|---|---|---|---|
+| the kit a fitter first drew taken for every one of his sheets | 36 | 0.0349 | 20 | 0.0423 |
+| 25 C taken as the ambient of every sheet | 36 | 0.0454 | 17 | 0.0539 |
+
+variations: 7
+variations that miss a train: none
+worst left by any sound variation on any seed: 0.0183 mm against 0.05

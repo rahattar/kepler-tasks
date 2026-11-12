@@ -1,0 +1,83 @@
+solution/solve.py on the shipped records (seed 5119), through environment/rig/lab.py.
+
+laser programme: TP-301A TP-301B P-301A P-320A P-322 P-340A
+a second order: the programme was placed already, for TP-301A, TP-301B, P-301A, P-320A, P-322, P-340A; the contractor takes no second order
+pytest on the sheet it wrote: 1 passed in 0.01s
+
+The groups of changed pumps, and what one measurement of each gave:
+
+| group | models | their 2019 ratios | measured on | ratio now |
+|---|---|---|---|---|
+| P-301A P-301B P-304 P-310A P-310B | HS-200, HS-300 | 0.619, 0.619 | P-301A | 0.720 |
+| P-320A P-320B | HSC-250 | 0.382 | P-320A | 0.800 |
+| P-322 P-325A P-325B | HSC-400 | 0.470 | P-322 | 0.660 |
+| P-340A P-340B P-342 P-345A P-345B | CLC-200, CLC-350 | 0.158, 0.162 | P-340A | 0.430 |
+
+The other models, on their 2019 ratios at today's pumped temperatures:
+
+| model | 2019 ratio |
+|---|---|
+| CL-150 | 0.301 |
+| CL-300 | 0.300 |
+| WP-100 | 0.631 |
+
+The turbines:
+
+| turbine | 2023 hot check, rise / lateral | measured now, rise / lateral |
+|---|---|---|
+| TP-301A | 0.41 / 0.12 | 0.580 / -0.050 |
+| TP-301B | 0.55 / -0.08 | 0.370 / 0.160 |
+
+The dial sheets against the laser, on the six trains visited (cold position, mm):
+
+| train | kit | bar set | mandrel | largest difference at either plane |
+|---|---|---|---|---|
+| TP-301A | B | 3 | -0.28 | 0.002 |
+| TP-301B | C | 3 | -0.34 | 0.003 |
+| P-301A | B | 2 | -0.14 | 0.003 |
+| P-320A | C | 2 | -0.18 | 0.004 |
+| P-322 | B | 3 | -0.28 | 0.002 |
+| P-340A | C | 3 | -0.34 | 0.006 |
+
+The sheet, as the verifier found each train (running, mm):
+
+| train | shim front | shim rear | lateral front | lateral rear | worst left | where |
+|---|---|---|---|---|---|---|
+| FN-370 | 1.071 | 4.563 | 0.293 | -0.327 | -0.0029 | height at the movable hub |
+| FN-371 | -1.169 | -5.128 | -0.321 | -0.210 | +0.0080 | sideways at the movable hub |
+| K-201A | 1.164 | 3.684 | 0.917 | 1.722 | +0.0030 | height at the stationary hub |
+| K-201B | 0.481 | 1.887 | -0.793 | -2.170 | +0.0020 | height at the movable hub |
+| K-201C | -1.179 | -3.434 | 1.121 | 2.887 | +0.0025 | sideways at the movable hub |
+| P-301A | 1.206 | -0.415 | 1.490 | 6.093 | -0.0008 | height at the movable hub |
+| P-301B | 2.017 | 1.792 | -0.464 | -1.394 | +0.0023 | height at the stationary hub |
+| P-302 | 1.166 | 0.591 | -0.425 | -0.975 | -0.0057 | height at the movable hub |
+| P-304 | 2.020 | 1.960 | -0.228 | -0.168 | -0.0028 | sideways at the movable hub |
+| P-306A | 0.589 | -0.765 | 0.197 | 1.260 | -0.0023 | sideways at the movable hub |
+| P-306B | 0.959 | 0.554 | -0.094 | 0.241 | +0.0004 | sideways at the movable hub |
+| P-310A | 1.389 | 1.836 | 0.339 | 1.091 | +0.0039 | sideways at the movable hub |
+| P-310B | 1.276 | 0.338 | 0.551 | 0.543 | -0.0027 | sideways at the movable hub |
+| P-312 | 1.491 | 0.092 | 0.565 | 2.269 | -0.0035 | sideways at the movable hub |
+| P-320A | 2.341 | 3.287 | -0.267 | -1.128 | -0.0005 | height at the stationary hub |
+| P-320B | 2.237 | 3.346 | 0.481 | 1.483 | +0.0039 | sideways at the movable hub |
+| P-322 | 1.605 | 2.114 | -0.432 | -1.098 | -0.0004 | sideways at the stationary hub |
+| P-325A | 2.209 | 3.288 | -0.028 | 0.700 | +0.0024 | height at the stationary hub |
+| P-325B | 2.437 | 4.399 | 0.231 | 1.485 | -0.0033 | height at the stationary hub |
+| P-330A | 0.798 | 1.490 | 0.413 | 0.240 | -0.0051 | sideways at the movable hub |
+| P-330B | -0.043 | -1.529 | -0.541 | -1.570 | -0.0057 | sideways at the stationary hub |
+| P-331 | 1.387 | 4.984 | 1.738 | 6.552 | +0.0038 | height at the stationary hub |
+| P-333 | 0.840 | 1.914 | -1.384 | -4.749 | +0.0070 | height at the stationary hub |
+| P-336 | 0.161 | -1.493 | 0.846 | 3.359 | -0.0036 | sideways at the movable hub |
+| P-338A | 0.517 | 0.567 | 0.193 | -0.042 | +0.0051 | sideways at the movable hub |
+| P-338B | 0.710 | 1.442 | -0.229 | -0.856 | -0.0060 | sideways at the stationary hub |
+| P-340A | 0.756 | 0.779 | -1.148 | -2.623 | +0.0013 | sideways at the stationary hub |
+| P-340B | 0.601 | 0.373 | 0.507 | 0.996 | -0.0032 | sideways at the stationary hub |
+| P-342 | 0.263 | -1.218 | -0.301 | -0.510 | +0.0029 | height at the stationary hub |
+| P-345A | 0.065 | -2.649 | 0.819 | 3.349 | +0.0011 | height at the movable hub |
+| P-345B | 0.982 | 1.416 | -2.156 | -5.591 | +0.0020 | height at the stationary hub |
+| P-360A | 0.623 | 1.759 | -1.302 | -4.044 | -0.0024 | sideways at the movable hub |
+| P-360B | -0.810 | -3.918 | 1.523 | 6.184 | +0.0036 | sideways at the movable hub |
+| P-365 | 1.052 | 5.153 | -0.672 | -1.761 | +0.0041 | height at the stationary hub |
+| TP-301A | 0.994 | 2.794 | -0.701 | -1.941 | -0.0006 | height at the stationary hub |
+| TP-301B | 0.715 | 1.274 | 0.502 | 1.513 | +0.0005 | sideways at the stationary hub |
+
+36 of 36 trains aligned; worst left 0.0080 mm against an acceptance of 0.05

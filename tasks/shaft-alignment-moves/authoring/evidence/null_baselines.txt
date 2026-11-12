@@ -1,0 +1,14 @@
+Null sheets on the shipped records, graded by tests/grade_moves.py. The sealed moves run from -5.607 to 6.529 mm.
+
+| null sheet | sheets tried | most trains aligned of 36 |
+|---|---|---|
+| no move anywhere | 1 | 0 |
+| one figure for all four moves of every train, swept | 2448 | 0 |
+| one shim figure for every train and no lateral move, swept | 2448 | 0 |
+| one lateral figure for every train and no shim, swept | 2448 | 0 |
+| one train's sealed moves written for every train, each train in turn | 36 | 1 |
+| the dial sheets alone: no sag, no running position, no visit | 1 | 0 |
+| the unit as the 2019 survey and the 2023 hot checks describe it, no visit | 1 | 8 |
+
+most trains a sheet of constants aligns: 1
+most trains any null sheet aligns: 8

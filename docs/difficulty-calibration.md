@@ -531,3 +531,22 @@ against 1 of 12 and 1 of 6 on v6.
 - **Six runs a side is a diagnostic, not a rate.** 3 of 6 against 1 of 6 is not separated by the count. The
   evidence is the change in where the sixth visit went. The low-effort rate of v7 needs six more runs before
   anything is built on it.
+
+## shaft-alignment-moves, the bundle built on v7 (Nov 11)
+
+`tasks/shaft-alignment-moves`, zip `shaft-alignment-moves-20261111.zip`; `docs/design-note-shaft-alignment.md`.
+The agent's records are byte for byte v7's and the statement is v7's brief, so the bare-core rates (low 1 of 6,
+xhigh 3 of 6) are the only local estimate; the bundle itself was not probed.
+
+What building it showed that the bare rounds had not:
+- **150 of 1947792 programmes leave every train aligned**, the ones that measure all six unknowns. The best
+  any other programme can do is 35 of 36, and no way of filling in an unmeasured group from the records
+  rescues it (`visit_study.txt`).
+- **Two things the core carried are not graded layers.** Taking the wrong kit moves the sag by at most
+  0.03 mm on these sheets, and taking 25 C for every sheet's ambient leaves 0.0454 mm. Both are inside the
+  acceptance. They are reported as absorbed, not claimed as difficulty.
+- **The verifier applies the moves to the sealed unit** and measures what is left; there is no reference
+  answer to compare with, so any sound method passes by construction (seven variations and a second
+  solution, 21 seeds).
+- Harness similarity after two rewrites, difflib ratio against the nearest bundle: agent image 0.386, verifier
+  image 0.346, reward script 0.456, pytest entry 0.389, instruction 0.438.

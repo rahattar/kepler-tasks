@@ -1,0 +1,8 @@
+authoring/evidence/independent.py against the sealed definition, graded by tests/grade_moves.py.
+
+its laser programme: TP-301A TP-301B P-345B P-310B P-320B P-325B
+the reference's:     TP-301A TP-301B P-301A P-320A P-322 P-340A
+
+on the shipped records: 36 of 36 trains aligned, worst left 0.0080 mm against 0.05
+largest difference between its moves and the reference's, any foot of any train: 0.0393 mm
+worst over 20 laboratory seeds: 36 of 36 trains aligned, worst left 0.0206 mm

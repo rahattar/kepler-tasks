@@ -1,0 +1,25 @@
+| seed | reference aligned | sound variations with every train | defective routes with every train | worst left by a sound variation, mm | acceptable |
+|---|---|---|---|---|---|
+| 5119 (shipped) | 36 of 36 | 7 of 7 | 0 of 33 | 0.0118 | yes |
+| 5301 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0109 | yes |
+| 5302 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0114 | yes |
+| 5303 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0123 | yes |
+| 5304 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0122 | yes |
+| 5305 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0152 | yes |
+| 5306 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0117 | yes |
+| 5307 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0180 | yes |
+| 5308 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0112 | yes |
+| 5309 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0136 | yes |
+| 5310 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0123 | yes |
+| 5311 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0131 | yes |
+| 5312 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0110 | yes |
+| 5313 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0133 | yes |
+| 5314 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0104 | yes |
+| 5315 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0128 | yes |
+| 5316 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0108 | yes |
+| 5317 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0127 | yes |
+| 5318 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0183 | yes |
+| 5319 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0132 | yes |
+| 5320 | 36 of 36 | 7 of 7 | 0 of 33 | 0.0132 | yes |
+
+acceptable seeds: 21 of 21, the shipped one among them: yes

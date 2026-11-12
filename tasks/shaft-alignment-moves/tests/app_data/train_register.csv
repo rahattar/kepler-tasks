@@ -1,0 +1,37 @@
+tag,service,criticality,movable_machine,stationary_machine,speed_rpm,hub_plane_to_front_feet_mm,front_to_rear_feet_mm,movable_shaft_height_mm,stationary_shaft_height_mm
+FN-370,air cooler fan,B,motor,fan,2960,190,970,640,450
+FN-371,air cooler fan,C,motor,fan,1780,240,1110,700,370
+K-201A,process gas compressor,A,motor,gearbox GR-800,3560,270,1050,550,300
+K-201B,process gas compressor,A,motor,gearbox GR-800,1780,340,1000,530,370
+K-201C,process gas compressor,A,motor,gearbox GR-800,1480,170,680,620,400
+P-301A,product rundown pump,B,motor,pump HS-200,1780,235,1010,610,890
+P-301B,product rundown pump,C,motor,pump HS-200,1480,240,630,420,680
+P-302,hot oil pump,C,motor,pump HS-200,1780,190,550,350,900
+P-304,pumparound pump,C,motor,pump HS-300,2960,185,660,340,640
+P-306A,bottoms pump,C,motor,pump HS-300,1780,330,1200,320,760
+P-306B,bottoms pump,C,motor,pump HS-300,2960,340,810,340,710
+P-310A,product rundown pump,B,motor,pump HS-300,3560,160,620,680,660
+P-310B,product rundown pump,B,motor,pump HS-300,2960,220,530,610,780
+P-312,side stripper pump,B,motor,pump HS-200,2960,240,1170,330,800
+P-320A,pumparound pump,C,motor,pump HSC-250,2960,260,720,350,760
+P-320B,pumparound pump,C,motor,pump HSC-250,3560,255,1130,690,700
+P-322,pumparound pump,C,motor,pump HSC-400,1480,285,830,660,660
+P-325A,pumparound pump,C,motor,pump HSC-400,3560,260,1040,690,860
+P-325B,pumparound pump,B,motor,pump HSC-400,2960,255,1180,520,820
+P-330A,side stripper pump,C,motor,pump CL-300,1780,325,840,690,880
+P-330B,side stripper pump,C,motor,pump CL-300,1480,360,1000,640,660
+P-331,pumparound pump,C,motor,pump CL-150,2960,235,830,680,660
+P-333,bottoms pump,C,motor,pump CL-150,3560,330,820,540,890
+P-336,side stripper pump,C,motor,pump CL-300,3560,155,970,310,750
+P-338A,heater charge pump,C,motor,pump CL-300,2960,365,1190,590,690
+P-338B,heater charge pump,C,motor,pump CL-300,2960,235,1060,300,830
+P-340A,pumparound pump,C,motor,pump CLC-350,1480,385,710,400,830
+P-340B,pumparound pump,C,motor,pump CLC-350,1480,395,620,460,850
+P-342,bottoms pump,B,motor,pump CLC-200,2960,245,590,600,870
+P-345A,side stripper pump,C,motor,pump CLC-200,2960,220,1150,690,900
+P-345B,side stripper pump,C,motor,pump CLC-200,1480,395,850,470,860
+P-360A,cooling water pump,B,motor,pump WP-100,1480,330,940,420,430
+P-360B,cooling water pump,C,motor,pump WP-100,1480,300,1130,400,320
+P-365,condensate pump,C,motor,pump WP-100,1480,200,980,570,390
+TP-301A,boiler feed water pump,B,steam turbine,pump HS-300,4650,200,810,390,870
+TP-301B,boiler feed water pump,B,steam turbine,pump HS-300,4650,180,690,610,860

@@ -1,0 +1,91 @@
+pass the bundle holds the seven entries and nothing else                                              
+pass no bytecode caches                                                                               
+pass no all-uppercase names                                                                           
+pass every file is ASCII                                                                              
+pass no symbolic links and no zip                                                                     
+pass no path from outside the bundle                                                                  
+pass nothing encoded                                                                                  
+pass the records carry no authoring vocabulary                                                        
+pass tests/app_data is the records exactly                                                            
+pass the generator reproduces the shipped records from the seed                                       
+pass the statement has no heading                                                                     
+pass the statement uses no grading words                                                              
+pass the statement ends with the required paragraph after a blank line                                
+pass the statement names every input by its absolute path                                             
+pass every input the statement names exists                                                           
+pass the statement gives the output path and the header                                               
+pass the statement asks for exactly three decimal places and one figure a move                        
+pass the statement says where the contractor reports and that the programme is one order              
+pass the statement does not print the acceptance                                                      
+pass the statement names no train, model or group                                                     
+pass task.toml: agent 28800 s as user agent                                                           
+pass task.toml: verifier 600 s, separate, no network                                                  
+pass task.toml: the artifact is the sheet                                                             
+pass task.toml: the full metadata block                                                               
+pass task.toml: domain, field, category and a subcategory                                             
+pass task.toml: keywords are the tags                                                                 
+pass task.toml: the name is one prefix and this task's name                                           
+pass the name's prefix is on that one line and nowhere else                                           
+pass the difficulty explanation says the data is synthetic and realistic                              
+pass the difficulty explanation names who does the work and the research analogue                     
+pass the difficulty explanation carries no agent-performance numbers                                  
+pass difficulty_explanation is in task.toml and word for word in the README under ## Difficulty       
+pass solution_explanation is in task.toml and word for word in the README under ## Reference solution 
+pass verification_explanation is in task.toml and word for word in the README under ## Verification   
+pass every figure in the README is in the evidence, the records or the sealed definition              
+pass tests/Dockerfile: the five pins                                                                  
+pass tests/Dockerfile: the literal lines                                                              
+pass test.sh: the literal contract                                                                    
+pass test.sh: zero first, then grading, then the reward                                               
+pass test.sh: an old report is removed before grading                                                 
+pass test.sh: the reward is one only on a clean exit and a counted report                             
+pass test.sh: the log directory is closed before grading and again before the reward                  
+pass the verifier's test is one test                                                                  
+pass the sealed definition is identical in provenance, tests and the contractor's directory           
+pass the seed is identical in the three places                                                        
+pass the sealed definition is nowhere else in the agent's environment                                 
+pass the image gives the contractor its own account with no shell                                     
+pass the image closes the contractor's directories                                                    
+pass the agent runs one program as the contractor with a clean environment                            
+pass the way in is the laservisit wrapper                                                             
+pass the contractor's reports are its own to write                                                    
+pass the agent's image ends as root                                                                   
+pass the contractor writes the order down before measuring, exclusively and never through a link      
+pass the contractor takes exactly the budget, once                                                    
+pass the contractor refuses to work in directories that are not as installed                          
+pass the service note and the sealed budget agree                                                     
+pass AP-12 states the acceptance the sealed definition uses                                           
+pass the grader accepts the reference                                                                 
+pass the reference is within half the acceptance on every train                                       
+pass the reader on CRLF line ends: taken                                                              
+pass the reader on the rows reversed: taken                                                           
+pass the reader on a blank in the header: refused                                                     
+pass the reader on a move to two decimals: refused                                                    
+pass the reader on a move to four decimals: refused                                                   
+pass the reader on a train left out: refused                                                          
+pass the design rules hold (tune.py)                                                                  
+pass authoring/evidence/route_study.txt is there                                                      
+pass authoring/evidence/method_spread.txt is there                                                    
+pass authoring/evidence/independent.txt is there                                                      
+pass authoring/evidence/null_baselines.txt is there                                                   
+pass authoring/evidence/hedge_study.txt is there                                                      
+pass authoring/evidence/visit_study.txt is there                                                      
+pass authoring/evidence/verifier_checks.txt is there                                                  
+pass authoring/evidence/verifier_run.txt is there                                                     
+pass authoring/evidence/reference_run.txt is there                                                    
+pass authoring/evidence/seed_screen.txt is there                                                      
+pass authoring/evidence/tune.txt is there                                                             
+pass no study is older than the code it describes                                                     
+pass no study reports a crash or an unexpected case                                                   
+pass every defective route misses a train                                                             
+pass every train is missed by at least three routes                                                   
+pass every sound variation gets every train, on every seed                                            
+pass the second solution gets every train, shipped and on every laboratory seed                       
+pass no sheet of constants aligns two trains                                                          
+pass only the programmes that measure all six get every train                                         
+pass the verifier checks report nothing unexpected                                                    
+pass pytest agrees on every complete sheet                                                            
+pass the reference run ends with every train aligned and pytest passing                               
+pass every screened seed is acceptable                                                                
+
+89 checks, 0 failed: the bundle is clean

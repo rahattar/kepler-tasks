@@ -1,0 +1,57 @@
+Sheets put through tests/grade_moves.py. Every sheet is built from the reference's answer.
+
+ok         the reference sheet                                  -> accepted
+ok         CRLF line ends                                       -> accepted
+ok         no terminator on the last line                       -> accepted
+ok         an empty line after every row                        -> accepted
+ok         the rows in reverse order                            -> accepted
+ok         blanks around every field of every row               -> accepted
+ok         every field quoted                                   -> accepted
+ok         a plus sign on a positive move                       -> accepted
+ok         no digit before the point                            -> accepted
+ok         an empty file                                        -> refused: the sheet is empty
+ok         blanks and line ends only                            -> refused: the sheet is empty
+ok         the header alone                                     -> refused: no row for FN-370, FN-371, K-201A, K-201B, K-201C, P-301A, P-301B, P-302, P-304, P-306A, P-306B, P-310A, P-310
+ok         no header                                            -> refused: the first line must be exactly tag,v_front_mm,v_rear_mm,h_front_mm,h_rear_mm
+ok         a misspelt header                                    -> refused: the first line must be exactly tag,v_front_mm,v_rear_mm,h_front_mm,h_rear_mm
+ok         blanks inside the header                             -> refused: the first line must be exactly tag,v_front_mm,v_rear_mm,h_front_mm,h_rear_mm
+ok         the header in capitals                               -> refused: the first line must be exactly tag,v_front_mm,v_rear_mm,h_front_mm,h_rear_mm
+ok         an empty line above the header                       -> refused: the first line must be exactly tag,v_front_mm,v_rear_mm,h_front_mm,h_rear_mm
+ok         a sixth column                                       -> refused: the first line must be exactly tag,v_front_mm,v_rear_mm,h_front_mm,h_rear_mm
+ok         a row with three moves                               -> refused: a row carries 4 fields, not 5
+ok         a row with five moves                                -> refused: a row carries 6 fields, not 5
+ok         a train left out                                     -> refused: no row for FN-370
+ok         a train given twice                                  -> refused: FN-370 has a second row
+ok         a train that is not on the unit                      -> refused: 'P-999' is not a train of the unit
+ok         a tag in lower case                                  -> refused: 'fn-370' is not a train of the unit
+ok         a move to two decimals                               -> refused: K-201C v_rear_mm: '-3.43' is not a move written to 3 decimal places
+ok         a move to four decimals                              -> refused: K-201C v_rear_mm: '-3.4340' is not a move written to 3 decimal places
+ok         a move with no decimals                              -> refused: K-201C v_rear_mm: '1' is not a move written to 3 decimal places
+ok         a move in exponent form                              -> refused: K-201C v_rear_mm: '1.250e+00' is not a move written to 3 decimal places
+ok         a move with a decimal comma                          -> refused: K-201C v_rear_mm: '1,250' is not a move written to 3 decimal places
+ok         a move with its unit                                 -> refused: K-201C v_rear_mm: '1.250 mm' is not a move written to 3 decimal places
+ok         two figures for one move                             -> refused: K-201C v_rear_mm: '1.250/1.300' is not a move written to 3 decimal places
+ok         an empty move                                        -> refused: K-201C v_rear_mm: '' is not a move written to 3 decimal places
+ok         a move of nan                                        -> refused: K-201C v_rear_mm: 'nan' is not a move written to 3 decimal places
+ok         a move of inf                                        -> refused: K-201C v_rear_mm: 'inf' is not a move written to 3 decimal places
+ok         text that is not ASCII                               -> refused: the sheet is not ASCII text
+ok         a sheet over the size cap                            -> refused: the sheet is larger than 200000 bytes
+ok         one train left 0.040 mm high at both planes          -> accepted
+ok         one train left 0.070 mm high at both planes          -> read, 35 of 36 aligned
+ok         one train left 0.070 mm to one side at both planes   -> read, 35 of 36 aligned
+ok         every train left 0.070 mm high                       -> read, 0 of 36 aligned
+ok         one train's four moves set to zero                   -> read, 35 of 36 aligned
+ok         no file at all                                       -> refused: there is no sheet at moves.csv
+ok         a directory in place of the sheet                    -> refused: the sheet is not a regular file
+ok         a symbolic link to a good sheet                      -> refused: the sheet is a symbolic link
+
+The reward script tests/test.sh, run for real with pytest replaced by a stand-in that exits and reports as told.
+
+ok         pytest exits 0 and reports one test, passed          -> reward 1
+ok         pytest exits 0 and reports two tests, both passed    -> reward 0
+ok         pytest exits 0 and reports one test, skipped         -> reward 0
+ok         pytest exits 1 though the report shows a pass        -> reward 0
+ok         pytest exits 0 and writes no report                  -> reward 0
+ok         pytest exits 0 and the report is not JSON            -> reward 0
+
+50 cases, 0 UNEXPECTED

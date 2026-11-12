@@ -1,0 +1,208 @@
+schema_version = "1.4"
+
+artifacts = ["/app/output/moves.csv"]
+
+[task]
+name = "afterquery/shaft-alignment-moves"
+description = "Work out the shim change and the lateral move at the front and rear feet of the movable machine of each of thirty-six coupled trains at a refinery unit's turnaround, so that every train is in line at its running condition as the unit now runs after a revamp: from the fitters' reverse-indicator dial sheets, the bracket sag cards, a support temperature survey that predates the revamp, the present process conditions, the work orders, and a laser contractor who will measure six trains named together in one order."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "shaft-alignment",
+    "thermal-growth",
+    "rotating-equipment",
+    "measurement-planning",
+    "turnaround",
+    "reverse-indicator",
+    "machinery-reliability",
+]
+
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only textbook rotating equipment engineering (reverse indicator shaft alignment, dial bracket sag, the thermal growth of machine supports and the transfer of heat from a pumped liquid to a pump's supports) on a synthetic plant with synthetic records. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "rotating equipment: shaft alignment and thermal growth"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "shaft-alignment",
+    "thermal-growth",
+    "rotating-equipment",
+    "measurement-planning",
+    "turnaround",
+    "reverse-indicator",
+    "machinery-reliability",
+]
+expert_time_estimate_hours = 5
+relevant_experience = """I am a control scientist and mechanical engineer with a PhD in mechanical engineering. Setting machines so that they are right at their operating temperature rather than cold, identifying how a structure's temperature follows its duty from sparse measurements, reading a plant's records for what has changed since they were made, and planning a few measurements so that many items can be inferred from them are part of my work on industrial equipment and of my teaching. The unit, its records and its documents are synthetic."""
+difficulty_explanation = """
+Setting the cold alignment of a hot machine train is routine work for a rotating equipment engineer, and it is done on every train of a unit at every turnaround. The shafts are not set in line cold. They are set out of line by the amount each machine's shaft will move as it comes up to temperature, so that they are in line running. The engineer therefore needs two things for each train: where the shafts sit now, and how far each machine will move. The first comes off the fitters' dial sheets. The second comes from whatever the plant knows about each machine's supports when it runs, and that knowledge goes out of date whenever the machine or its duty is changed.
+
+The method is the reverse indicator method with thermal growth targets, as API's recommended practice for machinery installation and the plant procedures built on it describe; here the procedure is AP-12. Its research analogue is the thermo-mechanical identification of a machine structure from sparse measurements, and the design of a measurement campaign under a fixed budget: deciding which few members of a population to measure so that the rest can be inferred, and from which earlier data the grouping can be justified. The unit, its records and its documents are synthetic and realistic: the dimensions, temperatures, sag figures and growths are those of real refinery pump, compressor and fan trains.
+
+- **The unit:** 36 coupled trains. Three gas compressors driven through a gearbox, two boiler feed pumps driven by steam turbines, two air cooler fans, and motor-driven process and utility pumps of nine models.
+- **The deliverable:** four moves for each train, the shim change and the lateral move at the front and at the rear feet of the movable machine, to three decimals of a millimetre.
+- **The acceptance:** AP-12 section 7. Running, the movable shaft's centreline within 0.05 mm of the stationary shaft's at both hubs' reading planes, in height and sideways. All 36 trains.
+- **The laser contractor:** measures a train's cold position and both machines' movement from cold to running, to a micrometre. It has time for 6 trains and takes all six names in one order, before any report exists.
+
+**The cold position** is ordinary work that has to be right on every train. The dial sheets are reverse indicator rim readings, and each carries the sag of the bracket it was taken with. The sag depends on the bar set, the bar set on the span, and the mandrel reading of each set is on the sag card of the kit the fitter had out that day, which the tool crib log gives. The corrected readings give the offset of the movable shaft at two planes; the line through them has to be carried out to the feet, which lie beyond the movable hub.
+
+**The running position** is where the records stop describing the unit.
+
+- **The survey predates the revamp.** AP-12 asks for the temperature of each machine's supports with the machine running as it now runs. The only support temperatures on file are a 2019 survey. The 2026 revamp moved the pumped temperature of most hot pumps, by up to 46 K. The survey carries each pump's pumped temperature beside its support temperature, and shows that a support runs above 25 C by a fixed fraction of what its pumped liquid does, a fraction that belongs to the pump model. That is what a linear heat path through a casing and a pedestal gives. So an untouched pump's support temperature today follows from its model's fraction and today's pumped temperature in the process conditions. Taking the survey as it stands leaves every such pump out of acceptance.
+- **Two kinds of work in the revamp changed the fraction itself.** Five pumps had their casings and pedestals lagged, and ten had the cooling water to their pedestal jackets blanked and the jackets drained. The work orders say which. No record gives the new fraction of either, and nothing in the records can: a drained jacket is not a plain pedestal, and treating it as one is out by at least 0.102 mm on every one of the ten.
+- **Both turbines' hot checks are void.** AP-12 says work on the piping connected to a turbine ends its hot check, and that one turbine's figure is not another's. Both turbines had their exhaust expansion joints replaced and the exhaust line spring supports re-set after their 2023 checks.
+
+So seventeen trains cannot be worked out from the records, and the contractor will measure six. A measurement has to stand for a group, and the whole difficulty is in what the groups are.
+
+- **The count that reads off the documents is five.** Two turbines, the lagged pumps, the blanked foot-mounted pumps and the blanked centreline-mounted pumps: the pump data lists the constructions, and by that listing there are three groups of changed pumps. Five needs against six visits leaves one to spare.
+- **There is an obvious place to spend the spare, and it is settled.** The three gas compressors are the unit's only criticality A trains and each has a work order from operations about vibration and alignment. Their gearbox running position is the maker's figure, which AP-12 says to use, and the close-out states the compressors and gearboxes were not in the revamp. Nothing about them has changed, and a visit to one returns what the records already give.
+- **The sixth need is in the survey's numbers and in no sentence.** The two foot-mounted water-cooled models, HSC-250 and HSC-400, are listed alike in the pump data. In 2019 their supports ran at 0.38 and 0.47 of the pumped temperature: the water was doing a different amount of work on each. Two pedestals that were cooled differently cannot be taken to respond alike to losing the cooling, and they do not: they now run at 0.80 and 0.66. An HSC pump given the other model's measured figure is out by at least 0.358 mm. The other two groups each hold two models as well, and those ran alike before, HS-200 and HS-300 at 0.62 and CLC-200 and CLC-350 at 0.16, and run alike now, so one visit serves each pair. Six needs, six visits, no spare.
+- **The programme is one order.** Nothing can be learned from a first report and spent on a second visit. The sixth train has to be chosen on the records alone.
+- **The wrong route confirms itself.** A programme that spends the spare on a compressor gets back a gearbox figure that matches the maker's to the micrometre, cold positions that match the dial sheets within 0.006 mm, and round figures for every group it measured. Nothing in what comes back points at the two or three trains left out of acceptance.
+
+Each of these defeats an assumption the general approach makes on first reading:
+- that a survey of the plant running describes the plant as it now runs;
+- that a check made on a machine still stands after work near it;
+- that pumps a data table lists alike behave alike;
+- that the most critical trains with the loudest complaints are where a spare measurement belongs;
+- that a measurement worth making can be decided after the first results are in;
+- that a result which agrees with the records has confirmed the plan that produced it.
+
+The gate is every one of the 36 trains.
+"""
+solution_explanation = """
+solution/solve.py is the reference; solution/solve.sh runs it in the agent's environment. It uses only the records in /app/data and the six laser reports it orders.
+
+1. **The cold position.** For each dial sheet the kit is the one the tool crib log shows out to that fitter on that date, the bar set follows from the span by the kit leaflets, and the mandrel reading is that set's on the sag card. The whole of it comes off each bottom reading and half off each side (AP-12 section 3). The SM reading then gives the offset at the movable hub's plane and the MS reading the offset at the stationary hub's plane (section 2).
+2. **What the records still describe.** Motors and fans take the survey's support temperatures, less the ambient on the dial sheet. Gearboxes take the maker's rise and lateral shift to the right. For pumps the survey gives each model's ratio of support rise to pumped rise above 25 C, by least squares through the origin over the model's pumps; an untouched pump's support today is that ratio at today's pumped temperature.
+3. **What they do not.** A turbine whose hot check has been followed by work on its exhaust or supports has no figure. A pump the work orders show lagged or blanked has no ratio.
+4. **The groups.** Changed pumps are grouped by construction and by the work done, and a group is split where two models' 2019 ratios differ by enough to move one of their pumps by more than the acceptance. That leaves four groups: the lagged HS-200 and HS-300 pumps, the blanked HSC-250 pumps, the blanked HSC-400 pumps, and the blanked CLC-200 and CLC-350 pumps.
+5. **The programme.** Both turbines and the first train of each group: TP-301A, TP-301B, P-301A, P-320A, P-322 and P-340A, placed through `laservisit` in one order.
+6. **The measured groups.** A visited pump's stationary rise gives its support temperature, and with its pumped temperature the group's ratio as it now is. Every other pump of the group takes that ratio at its own pumped temperature.
+7. **The moves.** Visited trains take the laser's cold position and movements as measured. For every train the cold line through the two planes is carried out to the front and rear feet, and each move is minus the cold offset there, less the amount by which the movable shaft will rise or shift more than the stationary one.
+
+**On the shipped records** (authoring/evidence/reference_run.txt) the four groups measure 0.720, 0.800, 0.660 and 0.430 against 2019 ratios of 0.619, 0.382, 0.470 and 0.158 to 0.162; the turbines measure 0.580 and 0.370 mm of rise against hot checks of 0.41 and 0.55; and the sheet leaves all 36 trains aligned, the worst at 0.0080 mm against 0.05.
+
+**authoring/evidence/independent.py** is a second solution, written separately and sharing no code with the reference. It reads the records as pandas tables, takes the cold line by a straight-line fit, a model's ratio as the median of its pumps' ratios, splits groups where two models' ratios differ by more than three times what one degree of survey reading is worth, and visits the last train of each group where the reference visits the first. Its programme is TP-301A, TP-301B, P-345B, P-310B, P-320B and P-325B. It leaves 36 of 36 trains aligned on the shipped records and on every one of 20 laboratory seeds (authoring/evidence/independent.txt), the worst at 0.0206 mm; its moves differ from the reference's by at most 0.0393 mm at any foot.
+"""
+verification_explanation = """
+The deliverable is one CSV file, /app/output/moves.csv: a header and one row for each of the 36 trains with the shim change at the front and rear feet and the lateral move at the front and rear feet. The verifier (tests/grade_moves.py, run by tests/test_moves.py under pytest) does not compare the moves with a reference answer. It applies them to the sealed definition of the unit in tests/sealed: each train's sealed cold position is moved by the submitted moves, both machines are brought to their sealed running positions, and the distance between the two centrelines is taken at both hubs' reading planes, in height and sideways. A train is aligned when all four are within 0.05 mm, which is AP-12 section 7 as the agent has it. The sheet is accepted only when all 36 trains are aligned. One pytest test carries the reward. test.sh writes 0 first, and writes 1 only when pytest exits 0 and tests/count_report.py finds that the ctrf report shows exactly 1 test, 1 passed.
+
+The reader holds the sheet to the task statement and no further. The header must be exactly the one given; there must be one row for every train and none for anything else; each move must be a plain decimal with exactly three places. Row order, line ends, empty lines after the header, quoting and blanks around a field are not stated and are not judged.
+
+The truth is the sealed definition authoring/provenance/unit3.py with the seed in seed.json, never a run of the reference. The agent's image holds a copy only in the laser contractor's own directory. The contractor is a separate account; the agent reaches it through the `laservisit` wrapper and one sudo rule, with no environment carried across. The contractor takes six different trains in a single order, writes the order to its own records before it measures anything, and refuses any second order, so no train can be chosen on another train's report. This is enforced by the program, not asked of the agent. The reports go to a directory the agent can read and cannot write.
+
+authoring/provenance/tune.py recomputes the design rules from the sealed definition alone (authoring/evidence/tune.txt; 15 of 15 hold):
+- measurements the records cannot replace: 2 turbines and 4 groups of changed pumps, 6 in all, against 6 visits;
+- counted by the construction the pump data lists, the groups are 3 and the count is 5, one short of the visits;
+- a changed pump left on its 2019 ratio is out by at least 0.225 mm (every one of 15);
+- an HSC pump given the other HSC model's measured ratio is out by at least 0.358 mm (every one of 5);
+- the two HSC models' 2019 ratios, 0.38 and 0.47, are worth at least 0.230 mm on any of their pumps, so the survey tells them apart;
+- the other two changed groups hold two models each with one ratio before and one after: HS-200 and HS-300; CLC-200 and CLC-350;
+- a drained pedestal taken as a plain one of the same casing support is out by at least 0.102 mm (every one of 10);
+- an untouched pump whose pumped temperature moved, left on its survey temperature, is out by at least 0.061 mm (every one of 11);
+- the survey's own scatter, 1.5 K at most on a support, is worth at most 0.018 mm on any pump;
+- each turbine's running position has moved from its 2023 hot check by at least 0.17 mm;
+- the two turbines differ from each other by 0.21 mm, so one cannot stand for the other;
+- the 3 compressor trains run where the maker's gearbox figure and the survey put them: a visit to one returns what the records already give;
+- 22 of 36 trains were read with a bracket whose sag is above the acceptance;
+- no train's sealed moves leave any other train aligned (0 pairs of 1260 do);
+- the sealed moves leave every train aligned to rounding error.
+
+authoring/provenance/seed_screen.py screens seeds (authoring/evidence/seed_screen.txt). The seed drives the trains' dimensions, as-found positions and the scatter of the records; the physics is fixed. A seed is acceptable when the reference and every sound variation leave every train aligned, every defective route misses a train, and no sound variation leaves a train beyond half the acceptance. 21 of 21 seeds are acceptable, the shipped seed 5119 and the laboratory seeds 5301 to 5320.
+
+Every study below writes a complete sheet and has it graded by tests/grade_moves.py. authoring/evidence/verifier_run.txt runs the whole pytest verifier in a fresh process on 43 complete sheets: the reference, the second solution and the sound variations all pass, and every defective route and null sheet fails.
+
+**The programme** (visit_study.txt). There are 1947792 ways to name 6 trains of 36. What a programme can give depends only on which of the six unknowns it measures, so they fall into 64 kinds. For each kind, whatever is left unmeasured is filled in every way the records allow (the model's 2019 ratio, a plain pedestal's ratio, another group's measured ratio, that group's change in ratio added or scaled; for a turbine its 2023 hot check, the other turbine's figure, or the thermal formula) and the best sheet is graded. Only the 150 programmes that measure all six unknowns leave every train aligned, and each of the 150 was carried through by the reference and accepted. The best any other programme can do is 35 of 36. The kind that measures all six, and the kinds that miss one:
+| measured | left unmeasured | programmes | best sheet, aligned of 36 | trains it misses |
+|---|---|---|---|---|
+| TP-301A, TP-301B, HS-200/HS-300 (5), HSC-250 (2), HSC-400 (3), CLC-200/CLC-350 (5) | nothing | 150 | 36 |  |
+| TP-301A, TP-301B, HS-200/HS-300 (5), HSC-250 (2), HSC-400 (3) | CLC-200/CLC-350 (5) | 675 | 31 | P-340A P-340B P-342 P-345A P-345B |
+| TP-301A, TP-301B, HS-200/HS-300 (5), HSC-250 (2), CLC-200/CLC-350 (5) | HSC-400 (3) | 1175 | 33 | P-322 P-325A P-325B |
+| TP-301A, TP-301B, HS-200/HS-300 (5), HSC-400 (3), CLC-200/CLC-350 (5) | HSC-250 (2) | 1800 | 34 | P-320A P-320B |
+| TP-301A, TP-301B, HSC-250 (2), HSC-400 (3), CLC-200/CLC-350 (5) | HS-200/HS-300 (5) | 675 | 31 | P-301A P-301B P-304 P-310A P-310B |
+| TP-301A, HS-200/HS-300 (5), HSC-250 (2), HSC-400 (3), CLC-200/CLC-350 (5) | TP-301B | 3675 | 35 | TP-301B |
+| TP-301B, HS-200/HS-300 (5), HSC-250 (2), HSC-400 (3), CLC-200/CLC-350 (5) | TP-301A | 3675 | 35 | TP-301A |
+
+**Correct methods** (method_spread.txt, independent.txt). The reference and six sound variations leave 36 of 36 aligned on the shipped records and on all 20 laboratory seeds:
+- each untouched pump on its own 2019 ratio, not its model's;
+- the last train of each group visited, not the first;
+- visited trains kept on their dial sheets for the cold position;
+- visited motors taken from the survey, not the laser;
+- the side readings left uncorrected for sag, where the two halves cancel;
+- and the first four of these together.
+
+The worst any of them leaves on any seed is 0.0183 mm against 0.05. Two readings AP-12 does not sanction are absorbed by the acceptance on the shipped records and are reported in the same file, not counted as routes: taking the kit a fitter first drew for all his sheets, which leaves 0.0349 mm at worst, and taking 25 C as every sheet's ambient, which leaves 0.0454 mm and misses a train on 3 of the 20 seeds.
+
+**Defective routes** (route_study.txt; the last column counts the laboratory seeds on which the route leaves every train aligned). Every one of the 33 misses at least one train on the shipped records and on all 20 seeds:
+| route | aligned of 36 | worst miss | seeds of 20 with every train |
+| --- | --- | --- | --- |
+| no sag correction | 15 | P-338B -0.175 mm | 0 |
+| the sag correction applied with the wrong sign | 9 | P-338B -0.345 mm | 0 |
+| bar set 2 taken at every span | 24 | P-338B -0.086 mm | 0 |
+| the two reading planes taken the wrong way round | 7 | P-345B -0.992 mm | 0 |
+| the bottom readings taken with the wrong sign | 6 | K-201C +1.178 mm | 0 |
+| right and left taken the wrong way round | 6 | K-201A -1.139 mm | 0 |
+| the offset at the movable hub taken as the move at both pairs of feet | 1 | P-345B -0.992 mm | 0 |
+| the feet placed from the stationary plane without the span | 1 | P-345B +0.991 mm | 0 |
+| front and rear feet interchanged | 0 | P-331 +9.279 mm | 0 |
+| every move made in the opposite sense | 0 | P-310B -4.411 mm | 0 |
+| aligned cold to zero, no running position | 0 | P-320A -2.179 mm | 0 |
+| the running position applied the wrong way round | 0 | P-320A -4.356 mm | 0 |
+| the two machines' shaft heights interchanged | 11 | P-302 -1.509 mm | 0 |
+| the 2019 survey taken as it stands for every pump | 14 | P-320B -1.188 mm | 0 |
+| the pumped temperature taken as the support temperature | 13 | P-330A +2.316 mm | 0 |
+| the gearbox taken by the thermal formula from the survey | 33 | K-201A -0.141 mm | 0 |
+| the gearbox's lateral shift left out | 33 | K-201A -0.141 mm | 0 |
+| the gearbox's lateral shift taken to the left | 33 | K-201A -0.281 mm | 0 |
+| the 2023 hot checks used for both turbines | 34 | TP-301B +0.242 mm | 0 |
+| one turbine measured and its figure used for the other | 35 | TP-301B -0.213 mm | 0 |
+| the turbines taken by the thermal formula from the survey | 34 | TP-301A +0.275 mm | 0 |
+| one visit for each class as listed, HSC-250 measured, the spare on a compressor | 33 | P-325A +0.441 mm | 0 |
+| one visit for each class as listed, HSC-400 measured, the spare on a compressor | 34 | P-320A -0.399 mm | 0 |
+| one visit for each class as listed, the spare on the pump with the grout repair | 34 | P-320A -0.399 mm | 0 |
+| both lagged models measured and the two HSC models taken as one | 34 | P-320A -0.398 mm | 0 |
+| drained jackets taken as plain pedestals, no blanked pump measured | 26 | P-320A -0.514 mm | 0 |
+| the lagged pumps left on their 2019 ratio, the spare on a compressor | 31 | P-301A -0.329 mm | 0 |
+| HSC-250 left unmeasured and given HSC-400's change in ratio | 34 | P-320A -0.648 mm | 0 |
+| HSC-250 left unmeasured and given HSC-400's ratio scaled by their 2019 ratios | 34 | P-320A -0.749 mm | 0 |
+| every changed pump left on its 2019 ratio at today's temperature, the visits spent elsewhere | 21 | P-320A -1.185 mm | 0 |
+| a measured support temperature carried to the group as a temperature | 30 | P-325A +0.139 mm | 0 |
+| a measured rise carried to the group in millimetres | 28 | P-304 +0.725 mm | 0 |
+| no visit ordered: hot checks, and every pump on its 2019 ratio at today's temperature | 19 | P-320A -1.185 mm | 0 |
+
+Every train is missed by at least 9 of the routes.
+
+**Hedging** (hedge_study.txt). The sheet takes one figure for a move, so the only hedge is a figure midway between two readings. A sheet midway between the reference and each defective route was graded. One is accepted, the one for bar set 2 taken at every span, whose own worst miss is 0.086 mm; every reading that bears on the programme or on the revamp is too far from the reference for its midpoint to stand.
+
+**Null answers** (null_baselines.txt). A sheet of constants, swept across the whole range of the sealed moves in steps of a tenth of the acceptance, aligns no train; one train's sealed moves written for every train align that train only; tune.txt shows no train's sealed moves align any other. The unit as the 2019 survey and the 2023 hot checks describe it, with no visit, aligns 8: the compressors, the fans and the three utility pumps the revamp did not reach, each of which still needs its dial sheet reduced and its running position worked out.
+
+**Malformed sheets** (verifier_checks.txt, 50 cases, none unexpected, every sheet built from the reference at run time). Refused: no file, a symbolic link, a directory, an empty file, the header alone, no header, a misspelt, padded or capitalised header, an empty line above the header, an extra column, a row of the wrong length, a train left out, given twice, unknown or in lower case, and a move with two, four or no decimals, in exponent form, with a decimal comma, with its unit, as two figures, empty, nan, inf or not ASCII, and a sheet over the size cap. Accepted: the reference with CRLF line ends, no final terminator, empty lines between rows, the rows reversed, padded or quoted fields, a plus sign, and no digit before the point. A train moved 0.040 mm off at both planes is still accepted and one moved 0.070 mm is not. The same file runs tests/test.sh for real with pytest replaced by a stand-in: the reward is 1 only when pytest exits 0 and the report counts one test, passed, and is 0 for two tests, a skipped test, a failing exit with a passing report, no report, and a report that is not JSON.
+
+The agent works as a separate user that can write only to /app/output. /app/data is read-only and root-owned. The verifier runs in a separate container without network, and /logs/verifier is root-only.
+"""
+
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[agent]
+timeout_sec = 28800.0
+user = "agent"
+
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"

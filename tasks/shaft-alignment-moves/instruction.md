@@ -1,0 +1,9 @@
+You are the rotating equipment engineer closing out Unit 3's turnaround. Thirty-six coupled machine trains have had their as-found alignment read by the fitters, and every one of them has to be left aligned to the plant's procedure AP-12, `/app/data/docs/alignment_procedure.md`, before start-up.
+
+For each train, work out the moves to make at the movable machine's feet: the shim change at the front feet and at the rear feet, and the lateral move at the front feet and at the rear feet.
+
+The records are `/app/data/train_register.csv`, `/app/data/pump_data.csv`, `/app/data/dial_sheets.csv`, `/app/data/tool_crib_log.csv`, `/app/data/sag_cards.csv`, `/app/data/support_temperature_survey.csv`, `/app/data/process_conditions.csv`, `/app/data/gearbox_running_position.csv`, `/app/data/hot_checks.csv` and `/app/data/work_orders.csv`. The dial bracket kits are described in `/app/data/docs/kit_leaflets.md` and the unit's revamp in `/app/data/docs/revamp_closeout.md`. The laser contractor's service is described in `/app/data/docs/laser_service.md`; the `laservisit` command it names is installed, and its reports go to `/app/laser_reports`. The contractor takes the whole programme of visits in one order.
+
+Write `/app/output/moves.csv` with the header `tag,v_front_mm,v_rear_mm,h_front_mm,h_rear_mm` and one row for every train: the moves in mm, each written to exactly three decimal places, with the signs of AP-12 section 4. Give one figure for every move of every train.
+
+You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.

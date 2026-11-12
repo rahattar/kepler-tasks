@@ -1,0 +1,10 @@
+model,casing_support,bearing_pedestal,maker
+CL-150,centreline,plain,as built
+CL-300,centreline,plain,as built
+CLC-200,centreline,water-cooled,as built
+CLC-350,centreline,water-cooled,as built
+HS-200,foot,plain,as built
+HS-300,foot,plain,as built
+HSC-250,foot,water-cooled,as built
+HSC-400,foot,water-cooled,as built
+WP-100,foot,plain,as built

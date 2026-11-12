@@ -1,0 +1,19 @@
+Design rules on the sealed unit (seed 5119). The acceptance is 0.05 mm.
+
+holds measurements the records cannot replace: 2 turbines and 4 groups of changed pumps, 6 in all, against 6 visits
+holds counted by the construction the pump data lists, the groups are 3 and the count is 5, one short of the visits
+holds a changed pump left on its 2019 ratio is out by at least 0.225 mm (every one of 15)
+holds an HSC pump given the other HSC model's measured ratio is out by at least 0.358 mm (every one of 5)
+holds the two HSC models' 2019 ratios, 0.38 and 0.47, are worth at least 0.230 mm on any of their pumps, so the survey tells them apart
+holds the other two changed groups hold two models each with one ratio before and one after: HS-200 and HS-300; CLC-200 and CLC-350
+holds a drained pedestal taken as a plain one of the same casing support is out by at least 0.102 mm (every one of 10)
+holds an untouched pump whose pumped temperature moved, left on its survey temperature, is out by at least 0.061 mm (every one of 11)
+holds the survey's own scatter, 1.5 K at most on a support, is worth at most 0.018 mm on any pump
+holds each turbine's running position has moved from its 2023 hot check by at least 0.17 mm
+holds the two turbines differ from each other by 0.21 mm, so one cannot stand for the other
+holds the 3 compressor trains run where the maker's gearbox figure and the survey put them: a visit to one returns what the records already give
+holds 22 of 36 trains were read with a bracket whose sag is above the acceptance
+holds no train's sealed moves leave any other train aligned (0 pairs of 1260 do)
+holds the sealed moves leave every train aligned to rounding error
+
+design rules: 15 of 15 hold
