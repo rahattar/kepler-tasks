@@ -68,6 +68,14 @@ def facts():
                  "method count")
     f["methods"], f["methods_word"] = int(n), WORDS[int(n)]
 
+    t = _ev("reference_run.txt")
+    (ch, sp, nxt, x) = _grab(t, r"planned order: (VC\d\d) \S+ at [\d.]+ h; its spread ([\d.]+)%, the next "
+                                r"chamber's ([\d.]+)% \(([\d.]+)x\)", "planned order")
+    if ch != "VC06":
+        raise SystemExit("meta.py: the planned order is on %s, not VC06" % ch)
+    f["vc06_spread"] = "%.0f" % float(sp)
+    f["plan_x"] = WORDS[int(float(x))]
+
     t = _ev("seed_screen.txt")
     (n,) = _grab(t, r"both audits accepted on the shipped seed and on all (\d+) screened seeds", "seed screen")
     f["screened"], f["screened_word"] = int(n), WORDS[int(n)]
@@ -75,19 +83,23 @@ def facts():
     t = _ev("plan_sweep.txt")
     (good, tried) = _grab(t, r"ORDERS THAT WORK FOR THE REFERENCE: (\d+) of (\d+)", "orders that work")
     (good_i, tried_i) = _grab(t, r"ORDERS THAT WORK FOR THE INDEPENDENT: (\d+) of (\d+)", "independent orders")
-    if (good, tried) != (good_i, tried_i):
-        raise SystemExit("meta.py: the two audits are carried by different numbers of orders")
+    (edge,) = _grab(t, r"ORDERS AT THE EDGE, CARRYING ONE AUDIT ONLY: (.*)", "orders at the edge")
     f["orders_good"], f["orders_good_word"] = int(good), WORDS[int(good)]
     f["orders_tried"] = int(tried)
+    f["orders_edge"] = ("" if edge == "none" else
+                        " The one difference is at the edge of that region: %s." % edge)
     block = t.split("ORDERS THAT WORK FOR THE REFERENCE")[1].split("ORDERS THAT WORK FOR THE INDEPENDENT")[0]
     names = re.findall(r"^  (VC\d\d) (\S+) at ([\d.]+) h$", block, re.M)
-    if len(names) != int(good):
-        raise SystemExit("meta.py: plan_sweep.txt lists orders that are not all gas-load tests at a time")
-    chambers = sorted({c for c, _k, _h in names})
+    others = re.findall(r"^  (VC\d\d) (helium)$", block, re.M)
+    if len(names) + len(others) != int(good):
+        raise SystemExit("meta.py: plan_sweep.txt lists orders that are neither gas-load tests at a time nor helium")
+    chambers = sorted({c for c, _k, _h in names} | {c for c, _k in others})
     f["order_chambers"] = " and ".join(chambers)
     f["order_tests"] = ", ".join(sorted({k for _c, k, _h in names}))
     hours = sorted({float(h) for _c, _k, h in names})
     f["order_hours"] = "from %g to %g h" % (hours[0], hours[-1])
+    f["order_helium"] = (", or a helium test on %s, which measures the leak the face-value budget overstates"
+                         % " and ".join(sorted({c for c, _k in others}))) if others else ""
     (times,) = _grab(t, r"pumping times tried: ([\d ]+) h", "pumping times")
     f["times_tried"] = ", ".join(times.split())
     f["default_h"] = "%g" % FL.DEFAULT_TEST_H
@@ -311,12 +323,21 @@ only what was done, never its effect. Fourteen of the layers are settled by the 
   log entry since is at 16 h, and the log alone says nothing about how fast the new source falls. Its October speed
   test, taken after a {longest_test_h} h weekend pumpdown, does, so VC08 is the chamber that looks as if it
   needs the test and does not.
-- **A trapped volume that reads as a leak.** On VC07 a trapped volume behind a fixture plate refitted in July empties
-  with a time constant of a day. Every pumpdown since is at 16 h, so it is a constant there; with the real leak
-  small, the chamber fits an air leak to the noise, the wall gas following the wall temperature and the nitrogen
-  vents and the rest doing neither. Only the July speed test, taken on the eve of the refit, shows that the constant
-  part was not there before it, and nothing at all in the records says how fast it falls, which is what its gas
-  load at the reference condition turns on. This is the chamber the test is needed on, and nothing points to it.
+- **A trapped volume that nothing shows.** VC06's shroud panels were replaced in September, and the new panels'
+  fixing holes trap a volume that empties over well more than a day. It has been there since the refit, so nothing
+  steps, and the earlier entries are void by the change of internals anyway. Of the five pumpdowns since, the two
+  short ones were air vents and the three long ones nitrogen vents: in the face-value budget the trapped gas still
+  there at 20 h reads as a constant leak, and its fall from the short pumpdowns to the long reads as the wall gas the
+  nitrogen vents leave out. That budget fits the entries and the October speed test to the noise, with plausible
+  coefficients, and puts the gas load at the reference condition about a sixth high. No residual, ratio, step or
+  record points to it. What finds it is asking of every chamber how far its records determine the answer: refit
+  each with every trapped volume clause 3.3 allows and keep the budgets the records cannot reject. VC06's kept
+  budgets spread over {vc06_spread} per cent at 36 h, more than {plan_x} times any other chamber's; so it is the
+  chamber the test is needed on, at a long pumping time.
+- **A chamber that looks as if it needs the test and does not.** VC07's fixture plate was refitted in July and a
+  trapped volume behind it empties with a time constant of a day; its pump is not the register's and its gauge
+  serial is crossed with VC03's. Its pumpdowns since span 12 to 24 h and both vent gases, so once the pump and
+  the certificate are right its own records settle the trapped volume.
 - **A pump with an ordinary gas load.** Two chambers are limited by speed while their gas loads are unremarkable,
   so an audit that puts every shortfall down to gas names the wrong cause and reaches the wrong figure for both
   quantities (VC09, VC10).
@@ -376,11 +397,11 @@ serials, every entry pooled, the table's gas load and no gauge correction - gets
 The audit test is load-bearing and measured to be so (`authoring/evidence/plan_sweep.txt`), over the whole space
 of orders the budget allows: each gas-load test (rga, rate-of-rise, speed-test) on each chamber at each of the
 pumping times {times_tried} h, a helium test on each chamber, and placing no order at all, {orders_tried} orders in
-all. {Orders_good_word} of them carry the reference to a pass, and the independent audit is carried by exactly the
-same ones: a gas-load test on {order_chambers} ({order_tests}) at a pumping time {order_hours}. A test on
-VC08, the chamber whose log points at itself, is spent where its own speed test already answers; at the
-contractor's default {default_h} h a test on VC07 only repeats what its log already says; and a helium test
-measures a leak, not how fast a trapped volume empties."""
+all. {Orders_good_word} of them carry the reference to a pass, and the independent audit is carried by the same
+ones: a gas-load test on {order_chambers} ({order_tests}) at a pumping time {order_hours}{order_helium}.{orders_edge} A test on
+VC07 or VC08, the chambers whose records point at themselves, is spent where their own entries and speed tests
+already answer; and at the contractor's default {default_h} h a test on VC06 only repeats what its log already
+says."""
 
 SOLUTION = """`solution/diagnose.py` is the reference audit and `solution/solve.sh` places the order and runs it.
 For each chamber it does the following.
@@ -422,14 +443,21 @@ For each chamber it does the following.
   it. A structure is admissible only if it leaves more
   observations than parameters, and where the misfit is flat in the time constant - nothing measures how fast the
   trapped volume empties - the bound of clause 3.3 is taken, as a statement of what is not known.
+- **The order.** Before any result is known, every chamber's records are fitted as above and then asked which
+  other budgets they would accept as well. Clause 3.3 allows a trapped volume on any chamber, present from the
+  start or from any logged work, of any size and with any time constant up to its bound; for each, the rest of the
+  budget is refitted, and kept if its chi-square is within four of the best, the 95 per cent bound on one quantity.
+  The spread of the kept budgets' gas loads at 36 h is how far that chamber's records determine its answer. The one
+  test goes, at the reference condition's own 36 h, to the chamber where the spread is widest
+  (`diagnose.py --plan`).
 - **The reference condition and the cause.** The fitted budget is evaluated at {ref_h} h, 20 C, an air vent and
   no load, with the surfaces and seal the chamber has on the audit date. The cause is the pump where the actual
   speed is below {gate_ratio} of the rated speed of the chamber as it is now, and otherwise the mechanism with the
   largest load.
 
 The order it places is the whole budget of one test: {ref_order}. Of the {orders_tried} orders the budget allows,
-{orders_good_word} carry the reference to a pass, all a gas-load test on {order_chambers} at a pumping time
-{order_hours} (`authoring/evidence/plan_sweep.txt`).
+{orders_good_word} carry the reference to a pass, all on {order_chambers}: a gas-load test at a pumping time
+{order_hours}{order_helium} (`authoring/evidence/plan_sweep.txt`).
 
 Run through `tests/grade_audit.py` as the verifier reads a submission, the reference gets every chamber right, with
 its gas loads within {ref_q} per cent of the truth and its speeds within {ref_s} per cent
@@ -454,10 +482,11 @@ per cent of the truth and the speed within {s_tol} per cent. The sheet is accept
 chambers is right. The instruction states the two tolerances; it does not say how many chambers must be right.
 
 Why these tolerances, and why every chamber:
-- **Correct methods.** Each tolerance is twice the widest deviation any sound method reaches on any chamber,
-  rounded up to the half per cent, and preflight recomputes that rule from the record. {Methods_word} sound methods
+- **Correct methods.** Each tolerance is twice the widest deviation any sound method reaches on any chamber, and
+  never less than the widest either audit reaches on records rebuilt from another draw of the instrument noise,
+  rounded up to the half per cent; preflight recomputes that rule from the record. {Methods_word} sound methods
   are accepted, each a complete sheet scored through this grader (`authoring/evidence/method_spread.txt`): the
-  reference on the order it places and on five other sound orders, gas-load tests on VC07 at other pumping times;
+  reference on the order it places and on five other sound orders, gas-load tests on VC06 at other pumping times;
   `authoring/evidence/independent.py`, a second audit written from the documents alone that shares no code with
   the reference, on each of the same orders - it solves the whole budget jointly by nonlinear least squares in the
   logarithm of the gas load, selects structures by BIC rather than AIC, with any added mechanism required to leave two degrees of freedom and to improve the fit significantly at one per cent, finds a seal the register gets wrong as a
@@ -465,7 +494,7 @@ Why these tolerances, and why every chamber:
   dates a turbo's change by a changepoint test, and finds the calibrated leak's change by the largest separation of trimmed means rather than of medians; and six variations of the reference - dropping the oldest
   entry, averaging the period's speed tests, asking twice or half the evidence before setting the register's seal
   aside, weighting the ordered test as a gauge reading, and a finer grid of time constants. Both audits are also
-  right on VC07 on each of the twenty laboratory seeds of the ordered test's scatter, and on records rebuilt from
+  right on VC06 on each of the twenty laboratory seeds of the ordered test's scatter, and on records rebuilt from
   each of {screened_word} other draws of the shop's instrument noise (`authoring/evidence/seed_screen.txt`). Over
   every sound method and chamber the widest deviation is {spread_q} per cent on the gas load and {spread_s} per
   cent on the speed, so the tolerances stand at {margin_q} and {margin_s} times the spread of sound work.
@@ -476,7 +505,7 @@ Why these tolerances, and why every chamber:
   miss several chambers may graze a band on one of them: the nearest miss on a quantity anywhere in the study is
   {nearest_miss} per cent, {nearest_miss_x} times the gas-load tolerance. That costs nothing, because every chamber
   is missed by at least {routes_per_chamber_word} routes, and by at least one on its cause alone. On every
-  laboratory seed of the ordered test VC07 is still missed by at least {fewest_on_seed} routes.
+  laboratory seed of the ordered test VC06 is still missed by at least {fewest_on_seed} routes.
 - **Every chamber.** The allowance of one wrong chamber that earlier tasks carried is not used here, and the
   reason is measured (`authoring/evidence/plan_sweep.txt`): with an allowance of one, the audit test is not
   load-bearing at all, because the reference passes with no test ordered. Requiring every chamber makes the one

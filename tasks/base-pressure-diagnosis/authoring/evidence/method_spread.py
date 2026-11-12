@@ -5,8 +5,9 @@ scored through the task's own grader, exactly as the verifier scores a submissio
 
 The methods are:
 - the reference, on the order solution/solve.sh places;
-- the reference on other sound orders: a gas-load test on VC07, the one chamber whose records cannot say how fast
-  its trapped volume empties, at other pumping times inside the range where the answers differ
+- the reference on other sound orders: a gas-load test on VC06, the one chamber whose records leave its gas load
+  at the reference condition open (solution/diagnose.py --plan measures how far), at other pumping times inside
+  the range where the answers differ
   (plan_sweep.txt measures every order, sound or not);
 - a structurally independent second audit (independent.py), which shares no code with the reference and selects
   its budgets by a different criterion, on each of those orders;
@@ -34,12 +35,12 @@ import routes as R                                                      # noqa: 
 T = lambda c, k, h: dict(chamber=c, test=k, pumping_time_h=h)           # noqa: E731
 
 ORDERS = {
-    "VC07 rga at 36 h (solve.sh)": C.REFERENCE_PLAN,
-    "VC07 rga at 24 h": [T("VC07", "rga", 24.0)],
-    "VC07 rga at 48 h": [T("VC07", "rga", 48.0)],
-    "VC07 rate-of-rise at 30 h": [T("VC07", "rate-of-rise", 30.0)],
-    "VC07 rate-of-rise at 36 h": [T("VC07", "rate-of-rise", 36.0)],
-    "VC07 speed-test at 42 h": [T("VC07", "speed-test", 42.0)],
+    "VC06 rga at 36 h (solve.sh)": C.REFERENCE_PLAN,
+    "VC06 rga at 30 h": [T("VC06", "rga", 30.0)],
+    "VC06 rga at 48 h": [T("VC06", "rga", 48.0)],
+    "VC06 rate-of-rise at 30 h": [T("VC06", "rate-of-rise", 30.0)],
+    "VC06 rate-of-rise at 36 h": [T("VC06", "rate-of-rise", 36.0)],
+    "VC06 speed-test at 42 h": [T("VC06", "speed-test", 42.0)],
 }
 
 

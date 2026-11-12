@@ -1,4 +1,4 @@
-inputs: 4ffe1ce6f869a50c
+inputs: 3609be6f8bd63cc1
 Both audits on records rebuilt from each screened seed, reference order
 =======================================================================
 
@@ -6,47 +6,75 @@ build seed          audit        right  worst q deviation  worst s deviation
 ------------------  -----------  -----  -----------------  -----------------
 20261109 (shipped)  reference    10/10  1.39% (VC09)       1.70% (VC09)
 20261109 (shipped)  independent  10/10  1.49% (VC05)       1.75% (VC09)
-5301                reference    10/10  3.40% (VC02)       2.15% (VC02)
-5301                independent  10/10  2.46% (VC02)       1.23% (VC02)
+5301                reference    10/10  3.30% (VC02)       2.15% (VC02)
+5301                independent  10/10  2.36% (VC02)       1.23% (VC02)
 5302                reference    10/10  1.72% (VC09)       1.79% (VC09)
 5302                independent  10/10  1.56% (VC09)       1.61% (VC09)
-5303                reference    10/10  3.51% (VC02)       1.39% (VC09)
-5303                independent  10/10  3.32% (VC02)       0.85% (VC09)
-5304                reference    10/10  0.94% (VC02)       1.26% (VC05)
-5304                independent  10/10  1.25% (VC02)       1.39% (VC05)
+5303                reference    10/10  3.61% (VC02)       1.39% (VC09)
+5303                independent  10/10  3.40% (VC02)       0.85% (VC09)
+5304                reference    10/10  0.90% (VC04)       1.26% (VC05)
+5304                independent  10/10  1.04% (VC02)       1.39% (VC05)
 5305                reference    10/10  1.05% (VC04)       1.17% (VC10)
-5305                independent  10/10  1.03% (VC04)       1.21% (VC09)
-5306                reference    10/10  2.75% (VC02)       2.28% (VC09)
-5306                independent  10/10  3.18% (VC02)       1.88% (VC09)
+5305                independent  10/10  1.02% (VC04)       1.21% (VC09)
+5306                reference    10/10  3.46% (VC02)       2.28% (VC09)
+5306                independent  10/10  3.88% (VC02)       1.88% (VC09)
 5307                reference    10/10  1.61% (VC03)       1.25% (VC02)
 5307                independent  10/10  1.52% (VC03)       0.60% (VC10)
-5308                reference    10/10  1.42% (VC02)       0.56% (VC02)
-5308                independent  10/10  1.74% (VC02)       0.64% (VC03)
+5308                reference    10/10  1.32% (VC02)       0.56% (VC02)
+5308                independent  10/10  1.63% (VC02)       0.64% (VC03)
 5309                reference    10/10  1.81% (VC08)       1.41% (VC08)
-5309                independent  10/10  1.50% (VC08)       0.84% (VC06)
+5309                independent  10/10  1.50% (VC08)       0.83% (VC06)
 5310                reference    10/10  0.86% (VC01)       0.70% (VC02)
-5310                independent  10/10  0.76% (VC07)       0.68% (VC10)
-5311                reference    10/10  1.23% (VC02)       1.21% (VC09)
-5311                independent  10/10  0.89% (VC02)       1.25% (VC09)
-5312                reference    10/10  1.20% (VC05)       1.32% (VC06)
+5310                independent  10/10  0.74% (VC06)       0.68% (VC10)
+5311                reference    10/10  1.83% (VC07)       1.21% (VC09)
+5311                independent  10/10  1.86% (VC07)       1.25% (VC09)
+5312                reference    10/10  1.20% (VC05)       1.35% (VC06)
 5312                independent  10/10  1.26% (VC05)       1.07% (VC09)
 5313                reference    10/10  0.92% (VC10)       2.28% (VC09)
-5313                independent  10/10  0.88% (VC07)       2.15% (VC09)
-5314                reference    10/10  1.61% (VC02)       1.43% (VC09)
-5314                independent  10/10  1.59% (VC02)       1.21% (VC09)
-5315                reference    10/10  1.92% (VC07)       2.82% (VC09)
+5313                independent  10/10  0.85% (VC03)       2.15% (VC09)
+5314                reference    10/10  1.99% (VC02)       1.43% (VC09)
+5314                independent  10/10  1.97% (VC02)       1.21% (VC09)
+5315                reference    10/10  1.40% (VC09)       2.82% (VC09)
 5315                independent  10/10  1.33% (VC09)       2.77% (VC09)
-5316                reference    10/10  1.82% (VC05)       1.32% (VC06)
+5316                reference    10/10  1.83% (VC05)       1.35% (VC06)
 5316                independent  10/10  1.62% (VC05)       1.25% (VC09)
-5317                reference    10/10  1.14% (VC06)       1.03% (VC05)
-5317                independent  10/10  0.76% (VC07)       1.16% (VC05)
+5317                reference    10/10  1.72% (VC07)       1.03% (VC05)
+5317                independent  10/10  1.56% (VC07)       1.16% (VC05)
 5318                reference    10/10  1.50% (VC03)       1.25% (VC09)
 5318                independent  10/10  1.46% (VC03)       0.81% (VC09)
-5319                reference    10/10  2.45% (VC02)       1.51% (VC02)
-5319                independent  10/10  1.73% (VC04)       1.25% (VC09)
-5320                reference    10/10  1.14% (VC10)       1.35% (VC03)
-5320                independent  10/10  1.06% (VC10)       1.43% (VC03)
+5319                reference    10/10  2.61% (VC02)       1.51% (VC02)
+5319                independent  10/10  1.72% (VC04)       1.25% (VC09)
+5320                reference    10/10  1.81% (VC07)       1.35% (VC03)
+5320                independent  10/10  1.19% (VC07)       1.43% (VC03)
 
-tolerances: gas load 4.0%, speed 3.5%
+tolerances: gas load 4.0%, speed 4.0%
+
+The order diagnose.py --plan derives on each seed's records: the widest and next spread
+=======================================================================================
+
+build seed  widest      next
+----------  ----------  ----------
+20261109    VC06 29.7%  VC01 9.2%
+5301        VC06 27.9%  VC09 7.8%
+5302        VC06 30.9%  VC01 8.6%
+5303        VC06 26.4%  VC09 11.6%
+5304        VC06 31.3%  VC01 9.8%
+5305        VC06 29.6%  VC04 10.1%
+5306        VC06 30.2%  VC02 8.3%
+5307        VC06 30.2%  VC03 8.3%
+5308        VC06 30.0%  VC01 8.5%
+5309        VC06 31.2%  VC01 9.0%
+5310        VC06 31.4%  VC02 6.4%
+5311        VC06 31.0%  VC09 9.8%
+5312        VC06 30.0%  VC09 8.9%
+5313        VC06 30.0%  VC09 6.6%
+5314        VC06 30.2%  VC04 7.4%
+5315        VC06 30.1%  VC01 5.6%
+5316        VC06 30.3%  VC01 11.0%
+5317        VC06 30.5%  VC02 8.5%
+5318        VC06 27.8%  VC01 10.4%
+5319        VC06 20.1%  VC02 6.8%
+5320        VC06 30.0%  VC01 11.0%
+
 
 both audits accepted on the shipped seed and on all 20 screened seeds

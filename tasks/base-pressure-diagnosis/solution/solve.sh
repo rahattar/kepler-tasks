@@ -3,15 +3,16 @@
 set -eu
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# The order buys the one thing the records cannot supply. VC07's constant-looking load fits an air leak, but the
-# July speed test, taken just before its fixture plate was refitted, shows the load was not there before the refit,
-# and every pumpdown since is at 16 h: a trapped volume and a leak read alike there, and nothing says how fast a
-# trapped volume would empty, which is what its gas load at the 36 h reference condition turns on. One measurement
-# at a longer pumping time settles it. VC08, whose jump after its bracket work looks like the chamber to test, is
-# settled by its own October speed test, taken after a 42 h pumpdown. The other chambers need no test.
-cat > /tmp/plan.json <<'PLAN'
-{"tests": [{"chamber": "VC07", "test": "rga", "pumping_time_h": 36}]}
-PLAN
+# The order buys the one thing the records cannot supply. Every chamber's records are fitted as the audit fits
+# them, and then asked which other budgets they would accept as well: clause 3.3 allows a trapped volume on any
+# chamber, of any size and any time constant up to its bound, so for each one the rest of the budget is refitted
+# and kept if the fit is as good within the 95 per cent bound on one quantity. The spread of the kept budgets' gas
+# loads at 36 h is how far the records determine the answer. The test goes, at 36 h, where that spread is widest:
+# VC06, whose two short pumpdowns were air vents and two long ones nitrogen vents, so a slowly emptying volume
+# reads across them as a leak beside a wall. VC07, VC08 and VC04, whose records look the most in need of a test,
+# are each settled by their own entries and speed tests once those are read correctly.
+python3 -I "$HERE/diagnose.py" --plan /app/data > /tmp/plan.json
+cat /tmp/plan.json
 vacwork submit < /tmp/plan.json
 
 mkdir -p /app/output

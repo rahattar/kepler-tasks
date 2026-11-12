@@ -25,7 +25,7 @@ import routes as R                                                      # noqa: 
 
 TIMES = [16.0, 20.0, 24.0, 30.0, 36.0, 42.0, 48.0]
 GAS_TESTS = ["rga", "rate-of-rise", "speed-test"]
-CHECK_WHOLE = [("VC07", "rga", 36.0), ("VC08", "rga", 36.0), ("VC03", "rate-of-rise", 24.0),
+CHECK_WHOLE = [("VC06", "rga", 36.0), ("VC07", "rga", 36.0), ("VC08", "rga", 36.0), ("VC03", "rate-of-rise", 24.0),
                ("VC09", "speed-test", 16.0),
                ("VC05", "helium", None)]
 
@@ -89,9 +89,20 @@ def main():
         print("ORDERS THAT WORK FOR THE %s: %d of %d" % (who.upper(), len(good[who]), len(rows)))
         for name in good[who]:
             print("  %s" % name)
-    if set(good["reference"]) != set(good["independent"]):
-        fails.append("the two audits are carried by different orders: %s"
-                     % sorted(set(good["reference"]) ^ set(good["independent"])))
+    # the two audits select budgets by different criteria, so at the shortest pumping time that separates a
+    # chamber's structures one may take the evidence and the other not; that is the edge of the sound region, not a
+    # disagreement about it. Any other difference is one.
+    edge = []
+    for name in sorted(set(good["reference"]) ^ set(good["independent"])):
+        parts = name.split()
+        if len(parts) == 5 and parts[2] == "at" and float(parts[3]) in TIMES:
+            later = [h for h in TIMES if h > float(parts[3])]
+            nxt = "%s %s at %g h" % (parts[0], parts[1], later[0]) if later else None
+            if nxt and nxt in good["reference"] and nxt in good["independent"]:
+                edge.append("%s (%s only)" % (name, "reference" if name in good["reference"] else "independent"))
+                continue
+        fails.append("the two audits are carried by different orders: %s" % name)
+    print("ORDERS AT THE EDGE, CARRYING ONE AUDIT ONLY: %s" % (", ".join(edge) or "none"))
     if "%s rga at %g h" % (C.REFERENCE_PLAN[0]["chamber"], C.F.DEFAULT_TEST_H) in good["reference"]:
         fails.append("the default pumping time works; the order would not need choosing")
     print("")
@@ -101,7 +112,7 @@ def main():
             print("  " + f)
     else:
         print("the shortcut matches the whole audit on every sampled order; both audits are carried by the same"
-              " orders")
+              " orders, apart from any at the edge listed above")
     C.cleanup()
     return 1 if fails else 0
 

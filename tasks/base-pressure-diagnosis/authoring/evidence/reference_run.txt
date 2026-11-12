@@ -1,22 +1,36 @@
-inputs: 66b3363bf5080fdf
+inputs: 66cfb8d416128cf6
+How far each chamber's records determine its gas load at 36 h (diagnose.py --plan), widest first:
+  VC06   6 observations  gas load at 36 h 6.095e-04, records allow 4.282e-04 to 6.095e-04 (29.7% wide)
+  VC01   3 observations  gas load at 36 h 3.329e-04, records allow 3.022e-04 to 3.329e-04 (9.2% wide)
+  VC09   7 observations  gas load at 36 h 1.913e-04, records allow 1.759e-04 to 1.913e-04 (8.0% wide)
+  VC02   4 observations  gas load at 36 h 5.424e-04, records allow 5.109e-04 to 5.424e-04 (5.8% wide)
+  VC04  10 observations  gas load at 36 h 8.271e-04, records allow 7.804e-04 to 8.271e-04 (5.6% wide)
+  VC05   9 observations  gas load at 36 h 2.703e-04, records allow 2.617e-04 to 2.715e-04 (3.6% wide)
+  VC03   8 observations  gas load at 36 h 6.412e-05, records allow 6.314e-05 to 6.498e-05 (2.9% wide)
+  VC10   8 observations  gas load at 36 h 1.026e-04, records allow 9.990e-05 to 1.026e-04 (2.6% wide)
+  VC08   8 observations  gas load at 36 h 1.629e-04, records allow 1.616e-04 to 1.639e-04 (1.4% wide)
+  VC07   9 observations  gas load at 36 h 1.424e-04, records allow 1.415e-04 to 1.432e-04 (1.2% wide)
+planned order: VC06 rga at 36 h; its spread 29.7%, the next chamber's 9.2% (3.2x)
+the planned order is the reference order: yes
+
 The reference solution against the sealed fleet
 ===============================================
 
 chamber  cause            true cause       gas load    true gas load  deviation  speed  true speed  deviation
 -------  ---------------  ---------------  ----------  -------------  ---------  -----  ----------  ---------  --
 VC01     wall-outgassing  wall-outgassing  3.3292e-04  3.3685e-04     -1.17%     909.5  915.5       -0.65%     ok
-VC02     wall-outgassing  wall-outgassing  5.4078e-04  5.3955e-04     +0.23%     620.3  619.2       +0.18%     ok
+VC02     wall-outgassing  wall-outgassing  5.4240e-04  5.3955e-04     +0.53%     620.3  619.2       +0.18%     ok
 VC03     air-leak         air-leak         6.4122e-05  6.3717e-05     +0.64%     253.9  253.6       +0.12%     ok
 VC04     air-leak         air-leak         8.2707e-04  8.2755e-04     -0.06%     475.2  475.2       -0.01%     ok
 VC05     permeation       permeation       2.7027e-04  2.7247e-04     -0.81%     385.0  384.2       +0.22%     ok
-VC06     permeation       permeation       2.0440e-04  2.0326e-04     +0.56%     942.7  943.1       -0.05%     ok
-VC07     virtual-leak     virtual-leak     1.4375e-04  1.4203e-04     +1.21%     407.8  404.6       +0.79%     ok
+VC06     permeation       permeation       5.1721e-04  5.1785e-04     -0.12%     942.7  943.1       -0.05%     ok
+VC07     virtual-leak     virtual-leak     1.4238e-04  1.4203e-04     +0.25%     407.8  404.6       +0.79%     ok
 VC08     virtual-leak     virtual-leak     1.6286e-04  1.6313e-04     -0.17%     569.6  568.4       +0.21%     ok
 VC09     pump-speed       pump-speed       1.9131e-04  1.9400e-04     -1.39%     219.8  223.6       -1.70%     ok
 VC10     pump-speed       pump-speed       1.0258e-04  1.0319e-04     -0.59%     123.7  124.3       -0.52%     ok
 
-order placed: VC07 rga at 36 h
-tolerances: gas load 4.0%, speed 3.5%; gate 10 of 10 chambers
+order placed: VC06 rga at 36 h
+tolerances: gas load 4.0%, speed 4.0%; gate 10 of 10 chambers
 worst deviation: gas load 1.39%, speed 1.70%
 
 10 of 10 chambers right: accepted

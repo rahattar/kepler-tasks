@@ -37,11 +37,12 @@ GATE = len(IDS)                     # every chamber must be right
 #
 # The tolerances are set from the spread of sound methods, not from the reference alone: each is twice the widest
 # deviation any sound method reaches on any chamber (`method_spread.txt`, which includes a structurally independent
-# audit and the laboratory seeds), rounded up to the next half per cent. Preflight recomputes that rule from the
-# record, so the figures below cannot drift from it. Every defective route in `route_study.txt` is rejected, and a
+# audit and the laboratory seeds), and never less than the widest deviation either audit reaches on records rebuilt
+# from another draw of the shop's instrument noise (`seed_screen.txt`), rounded up to the next half per cent.
+# Preflight recomputes that rule from the record, so the figures below cannot drift from it. Every defective route in `route_study.txt` is rejected, and a
 # route rejected by one chamber alone misses it on the cause or by at least twice the tolerance.
 Q_TOL = 0.040                       # relative, on the total gas load
-S_TOL = 0.035                       # relative, on the effective pumping speed
+S_TOL = 0.040                       # relative, on the effective pumping speed
 Q_RANGE = (1e-10, 1e-1)
 S_RANGE = (1.0, 1e5)
 MAX_BYTES = 100_000

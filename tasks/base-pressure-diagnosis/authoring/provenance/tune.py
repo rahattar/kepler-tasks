@@ -22,7 +22,7 @@ DOM_RATIO = 1.60                    # the largest gas load over the next largest
 PUMP_CLEAR_LO = 0.62                # a degraded pump must sit at or below this fraction of rated
 PUMP_CLEAR_HI = 0.95                # a sound pump at or above it
 NEAR = 0.08
-NEEDS_TEST = ("VC07",)              # the one chamber the audit test must be spent on
+NEEDS_TEST = ("VC06",)              # the one chamber the audit test must be spent on
 TEST_TIMES = (16.0, 20.0, 24.0, 30.0, 36.0, 42.0, 48.0)
 DEFAULT_TEST_H = F.DEFAULT_TEST_H    # the contractor's standing pumping time, used when a plan names none
 

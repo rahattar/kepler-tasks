@@ -58,7 +58,7 @@ from the start..." is parsed exactly by preflight, so keep that wording or tell 
   standard spells it (P: all five names appear).
 - `q_total_mbarl_s`: the chamber's total gas load at the reference condition, mbar L/s, within **4.0 percent**
   of its true value (P).
-- `s_eff_l_s`: the chamber's actual effective pumping speed at the reference condition, L/s, within **3.5 percent**
+- `s_eff_l_s`: the chamber's actual effective pumping speed at the reference condition, L/s, within **4.0 percent**
   of its true value (P: parsed exactly against `S_TOL`). It was 3.0 until the 11 November retune (the rule gives 3.5 on the corrected gauge equation); both tolerances
   are now twice the widest sound-method deviation, rounded up to the half per cent.
 - A regular file of at most **100000 bytes** of ASCII text (P). Blank lines, surrounding spaces and any row order

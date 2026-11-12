@@ -1,4 +1,4 @@
-inputs: 249c048de1b89f27
+inputs: 1103adead5c0f2f7
 Ranges of the shipped fleet, computed from the sealed definition and the built records
 ======================================================================================
 
@@ -11,10 +11,10 @@ seal_materials: fluoroelastomer, nitrile and perfluoroelastomer
 surface_m2: 2.6 to 11
 wall_factor: 0.45 to 2.6
 leak: 7 x 10^-6 to 4 x 10^-4
-tau_h: 14 and 24
+tau_h: 14 to 40
 q_total: 6.4 x 10^-5 to 8.3 x 10^-4
-p_base: 2.2 x 10^-7 to 1.7 x 10^-6
-pumpdowns: Four to seven
+p_base: 2.5 x 10^-7 to 1.7 x 10^-6
+pumpdowns: Five to seven
 pumpdown_h: 12 to 24
 climate: 27 C in July to 13 C in October
 log_period: 2026-07-02 to 2026-10-30

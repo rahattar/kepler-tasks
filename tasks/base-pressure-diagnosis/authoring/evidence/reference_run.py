@@ -13,8 +13,29 @@ sys.path.insert(0, HERE)
 import common as C                                                      # noqa: E402
 
 
+def planned_order():
+    """The order solve.sh places, as `diagnose.py --plan` derives it from the agent's records, with the spread of
+    each chamber's gas load at 36 h over the budgets its records cannot reject."""
+    import json
+    import subprocess
+    p = subprocess.run([sys.executable, "-I", os.path.join(C.TASK, "solution", "diagnose.py"), "--plan", C.DATA],
+                       capture_output=True, text=True, check=True)
+    return json.loads(p.stdout)["tests"], [l[2:] for l in p.stderr.splitlines() if l.startswith("# ")]
+
+
 def main():
     C.header(__file__)
+    plan, rows_plan = planned_order()
+    print("How far each chamber's records determine its gas load at 36 h (diagnose.py --plan), widest first:")
+    for line in rows_plan:
+        print("  " + line)
+    spreads = [float(l.rsplit("(", 1)[1].split("%")[0]) for l in rows_plan]
+    print("planned order: %s; its spread %.1f%%, the next chamber's %.1f%% (%.1fx)"
+          % (", ".join("%s %s at %g h" % (t["chamber"], t["test"], t["pumping_time_h"]) for t in plan),
+             spreads[0], spreads[1], spreads[0] / spreads[1]))
+    same = [dict(t, pumping_time_h=float(t["pumping_time_h"])) for t in plan] == C.REFERENCE_PLAN
+    print("the planned order is the reference order: %s" % ("yes" if same else "NO"))
+    print("")
     answers = C.reference_answers()
     r = C.score(answers)
     tr = C.truth()
@@ -38,7 +59,7 @@ def main():
     print("%d of %d chambers right: %s" % (r["npass"], len(C.IDS),
                                            "accepted" if r["accepted"] else "REJECTED"))
     C.cleanup()
-    return 0 if r["accepted"] else 1
+    return 0 if r["accepted"] and same else 1
 
 
 if __name__ == "__main__":

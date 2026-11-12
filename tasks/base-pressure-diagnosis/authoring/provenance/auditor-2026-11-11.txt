@@ -1,0 +1,221 @@
+
+Controllers against the vacuum data's figures for a pump in good order
+----------------------------------------------------------------------
+  clean VC01  controller matches the register's TMP-1600
+  clean VC02  controller matches the register's TMP-1100
+  clean VC03  controller matches the register's TMP-700
+  clean VC04  controller matches the register's TMP-1600
+  clean VC05  controller matches the register's TMP-1100
+  clean VC06  controller matches the register's TMP-1600
+  ODD   VC07  controller median matches TMP-700, register names TMP-1600
+  clean VC08  controller matches the register's TMP-1100
+  clean VC09  controller matches the register's TMP-700
+  ODD   VC09  rotor frequency steps 821 -> 796 Hz at 2026-09-02
+  ODD   VC10  controller median matches TMP-700, register names TMP-400
+  ODD   VC10  rotor frequency steps 1000 -> 970 Hz at 2026-07-15
+
+Every shop speed test against the rated speed of the chamber as documented on its date
+--------------------------------------------------------------------------------------
+  ODD   VC01  2025-03-25 test 1049.8 L/s = 1.147 of rated 915.5, pump in order (CC-7101)
+  clean VC01  2026-07-21 test 0.995 of rated 
+  clean VC02  2025-04-08 test 0.995 of rated 
+  ODD   VC02  2026-06-30 test 545.0 L/s = 0.880 of rated 619.2, pump in order (CC-7102)
+  clean VC03  2025-04-22 test 0.998 of rated 
+  ODD   VC03  2026-07-01 test 223.1 L/s, rated unknown (port conductance not recorded)
+  clean VC04  2025-05-06 test 1.001 of rated 
+  ODD   VC04  2026-07-08 test 412.9 L/s = 0.869 of rated 475.2, pump in order (CC-7104)
+  ODD   VC04  2026-09-02 test 418.0 L/s = 0.880 of rated 475.2, pump in order (CC-7104)
+  ODD   VC04  2026-10-07 test 335.3 L/s = 0.706 of rated 475.2, pump in order (CC-7114)
+  clean VC05  2025-05-20 test 1.006 of rated 
+  ODD   VC05  2026-09-01 test 338.3 L/s, rated unknown (port conductance not recorded)
+  clean VC06  2025-06-03 test 1.004 of rated 
+  ODD   VC06  2026-10-05 test 828.3 L/s = 0.878 of rated 943.1, pump in order (CC-7106)
+  clean VC07  2025-06-17 test 0.994 of rated 
+  ODD   VC07  2026-07-15 test 358.3 L/s = 0.886 of rated 404.6, pump in order (CC-7107)
+  clean VC08  2025-07-01 test 1.001 of rated 
+  ODD   VC08  2026-10-09 test 500.5 L/s = 0.881 of rated 568.4, pump in order (CC-7108)
+  clean VC09  2025-07-15 test 0.998 of rated 
+  ODD   VC09  2026-07-02 test 343.1 L/s = 0.879 of rated 390.2, pump in order (CC-7109)
+  clean VC10  2025-02-25 test 1.002 of rated 
+  ODD   VC10  2026-07-09 test 207.5 L/s = 0.873 of rated 237.7, pump in order (CC-7110)
+
+The fleet's speed ratios, pooled and split by date
+--------------------------------------------------
+  pooled: mean 0.943 median 0.994 sd 0.090 (n 20)
+  2025: median 1.001 mean 1.014 n 10
+  2026: median 0.879 mean 0.873 n 10
+  ODD   fleet median speed ratio moves 1.001 -> 0.879 between years
+
+Gauges: serials against their certificates, pairs on one chamber, steps at serial changes
+-----------------------------------------------------------------------------------------
+  ODD   VC01  CC/IG ratio steady at 0.882, not 1
+  ODD   VC02  CC/IG ratio drifts 1.000 -> 0.835 (2026-07-14 to 2026-09-29)
+  ODD   VC03  2026-09-23 logged CC-7107, whose certificate says it is installed on VC07
+  ODD   VC04  CC-7114 certificate issued 2025-04-02, before this year's
+  ODD   VC07  2026-10-05 logged CC-7103, whose certificate says it is installed on VC03
+  ODD   VC09  CC/IG ratio drifts 1.007 -> 0.880 (2026-07-29 to 2026-09-30)
+  ODD   VC10  CC-7110 recertified on ['2026-09-22'] (factor [('2026-09-22', 0.88)])
+
+Every chamber's spread of pumping times and wall temperatures since its last change of internals
+------------------------------------------------------------------------------------------------
+  clean VC01  pumping times 16 20 24 h, wall 15.8 to 21.0 C; speed tests at 
+  clean VC02  pumping times 12 16 h, wall 17.0 to 21.4 C; speed tests at 
+  clean VC03  pumping times 12 16 20 24 h, wall 14.0 to 24.0 C; speed tests at 2025-04-22 16 h 2026-07-01 20 h
+  clean VC04  pumping times 12 14 16 20 h, wall 16.0 to 26.0 C; speed tests at 2025-05-06 16 h 2026-07-08 16 h 2026-09-02 16 h 2026-10-07 20 h
+  clean VC05  pumping times 12 16 20 24 h, wall 14.2 to 24.9 C; speed tests at 2025-05-20 16 h 2026-09-01 18 h
+  clean VC06  pumping times 12 16 20 h, wall 15.3 to 19.0 C; speed tests at 2026-10-05 14 h
+  ODD   VC07  every entry at one pumping time: pumping times 16 h, wall 16.0 to 25.5 C; speed tests at 2025-06-17 16 h 2026-07-15 16 h
+  clean VC08  pumping times 12 16 20 24 h, wall 14.6 to 25.0 C; speed tests at 2025-07-01 16 h 2026-10-09 42 h
+  clean VC09  pumping times 12 16 20 h, wall 16.2 to 26.1 C; speed tests at 2025-07-15 16 h 2026-07-02 16 h
+  clean VC10  pumping times 12 16 20 24 h, wall 13.7 to 23.8 C; speed tests at 2025-02-25 12 h 2026-07-09 20 h
+
+Steps in each chamber's face-value gas load at dated work
+---------------------------------------------------------
+  ODD   VC08  gas load moves 8.61x across the work of 2026-10-06
+
+Every chamber's gas budget fitted at face value
+-----------------------------------------------
+  clean VC01  rated speed: plain budget chi2 0.1 over 3 entries (rms 0.12%)
+  clean VC01  speed tests: plain budget chi2 0.1 over 3 entries (rms 0.12%)
+  ODD   VC02  rated speed: plain budget chi2 783.4 over 3 entries (rms 9.70%)
+  ODD   VC02  rated speed: seal nitrile instead of fluoroelastomer improves chi2 783.4 -> 709.1
+  ODD   VC02  speed tests: plain budget chi2 778.1 over 3 entries (rms 9.66%)
+  ODD   VC02  speed tests: seal nitrile instead of fluoroelastomer improves chi2 778.1 -> 694.2
+  ODD   VC03  rated speed: 0 usable entries
+  ODD   VC03  speed tests: plain budget chi2 3359.5 over 6 entries (rms 14.20%)
+  ODD   VC03  speed tests: a trapped volume from 0000-00-00 improves chi2 3359.5 -> 1515.4
+  ODD   VC03  speed tests: a trapped volume from 2026-06-10 improves chi2 3359.5 -> 1515.4
+  ODD   VC03  speed tests: a trapped volume from 2026-08-19 improves chi2 3359.5 -> 854.7
+  ODD   VC04  rated speed: plain budget chi2 1649.1 over 6 entries (rms 9.95%)
+  ODD   VC04  rated speed: seal perfluoroelastomer instead of nitrile improves chi2 1649.1 -> 1265.1
+  ODD   VC04  rated speed: a trapped volume from 0000-00-00 improves chi2 1649.1 -> 212.2
+  ODD   VC04  rated speed: a trapped volume from 2026-06-18 improves chi2 1649.1 -> 212.2
+  ODD   VC04  rated speed: a trapped volume from 2026-08-05 improves chi2 1649.1 -> 262.2
+  ODD   VC04  rated speed: a trapped volume from 2026-08-20 improves chi2 1649.1 -> 255.9
+  ODD   VC04  rated speed: a trapped volume from 2026-09-15 improves chi2 1649.1 -> 0.3
+  ODD   VC04  speed tests: plain budget chi2 904.2 over 6 entries (rms 7.37%)
+  ODD   VC04  speed tests: seal perfluoroelastomer instead of nitrile improves chi2 904.2 -> 743.7
+  ODD   VC04  speed tests: a trapped volume from 0000-00-00 improves chi2 904.2 -> 25.9
+  ODD   VC04  speed tests: a trapped volume from 2026-06-18 improves chi2 904.2 -> 25.9
+  ODD   VC04  speed tests: a trapped volume from 2026-08-05 improves chi2 904.2 -> 30.6
+  ODD   VC04  speed tests: a trapped volume from 2026-08-20 improves chi2 904.2 -> 30.7
+  ODD   VC04  speed tests: a trapped volume from 2026-09-15 improves chi2 904.2 -> 29.7
+  ODD   VC05  rated speed: 2 usable entries
+  ODD   VC05  speed tests: plain budget chi2 2856.1 over 7 entries (rms 12.12%)
+  ODD   VC05  speed tests: seal fluoroelastomer instead of perfluoroelastomer improves chi2 2856.1 -> 1987.8
+  ODD   VC05  speed tests: seal nitrile instead of perfluoroelastomer improves chi2 2856.1 -> 467.3
+  clean VC06  rated speed: plain budget chi2 2.4 over 4 entries (rms 0.47%)
+  ODD   VC06  speed tests: plain budget chi2 289.8 over 4 entries (rms 5.11%)
+  ODD   VC07  rated speed: plain budget chi2 5280.0 over 7 entries (rms 16.48%)
+  ODD   VC07  rated speed: seal nitrile instead of fluoroelastomer improves chi2 5280.0 -> 3898.1
+  ODD   VC07  speed tests: plain budget chi2 5178.0 over 7 entries (rms 16.32%)
+  ODD   VC07  speed tests: seal nitrile instead of fluoroelastomer improves chi2 5178.0 -> 3668.6
+  ODD   VC08  rated speed: plain budget chi2 45340.1 over 6 entries (rms 52.16%)
+  ODD   VC08  rated speed: seal perfluoroelastomer instead of fluoroelastomer improves chi2 45340.1 -> 44240.6
+  ODD   VC08  rated speed: a trapped volume from 0000-00-00 improves chi2 45340.1 -> 45296.9
+  ODD   VC08  rated speed: a trapped volume from 2026-10-06 improves chi2 45340.1 -> 8.2
+  ODD   VC08  speed tests: plain budget chi2 43983.7 over 6 entries (rms 51.37%)
+  ODD   VC08  speed tests: seal perfluoroelastomer instead of fluoroelastomer improves chi2 43983.7 -> 42754.9
+  ODD   VC08  speed tests: a trapped volume from 0000-00-00 improves chi2 43983.7 -> 43929.4
+  ODD   VC08  speed tests: a trapped volume from 2026-10-06 improves chi2 43983.7 -> 8.0
+  ODD   VC09  rated speed: plain budget chi2 455.3 over 5 entries (rms 5.73%)
+  ODD   VC09  speed tests: plain budget chi2 5723.1 over 5 entries (rms 20.30%)
+  ODD   VC09  speed tests: seal perfluoroelastomer instead of fluoroelastomer improves chi2 5723.1 -> 4958.6
+  ODD   VC09  speed tests: a trapped volume from 0000-00-00 improves chi2 5723.1 -> 3480.0
+  ODD   VC09  speed tests: a trapped volume from 2026-09-12 improves chi2 5723.1 -> 1037.7
+  ODD   VC09  speed tests: a trapped volume from 2026-10-05 improves chi2 5723.1 -> 4272.2
+  clean VC10  rated speed: plain budget chi2 1.6 over 6 entries (rms 0.31%)
+  ODD   VC10  speed tests: plain budget chi2 11489.4 over 6 entries (rms 26.26%)
+  ODD   VC10  speed tests: seal perfluoroelastomer instead of fluoroelastomer improves chi2 11489.4 -> 10506.9
+  ODD   VC10  speed tests: a trapped volume from 0000-00-00 improves chi2 11489.4 -> 8751.3
+  ODD   VC10  speed tests: a trapped volume from 2026-08-17 improves chi2 11489.4 -> 752.0
+
+Summary: what a systematic first pass sees, per chamber
+-------------------------------------------------------
+fleet 1 odd
+        speed: median speed ratio moves 1.001 -> 0.879 between years
+VC01  2 odd
+        speed: 2025-03-25 test 1049.8 L/s = 1.147 of rated 915.5, pump in order (CC-7101)
+        gauge: CC/IG ratio steady at 0.882, not 1
+VC02  6 odd
+        speed: 2026-06-30 test 545.0 L/s = 0.880 of rated 619.2, pump in order (CC-7102)
+        gauge: CC/IG ratio drifts 1.000 -> 0.835 (2026-07-14 to 2026-09-29)
+        budget: rated speed: plain budget chi2 783.4 over 3 entries (rms 9.70%)
+        budget: rated speed: seal nitrile instead of fluoroelastomer improves chi2 783.4 -> 709.1
+        budget: speed tests: plain budget chi2 778.1 over 3 entries (rms 9.66%)
+        budget: speed tests: seal nitrile instead of fluoroelastomer improves chi2 778.1 -> 694.2
+VC03  7 odd
+        speed: 2026-07-01 test 223.1 L/s, rated unknown (port conductance not recorded)
+        gauge: 2026-09-23 logged CC-7107, whose certificate says it is installed on VC07
+        budget: rated speed: 0 usable entries
+        budget: speed tests: plain budget chi2 3359.5 over 6 entries (rms 14.20%)
+        budget: speed tests: a trapped volume from 0000-00-00 improves chi2 3359.5 -> 1515.4
+        budget: speed tests: a trapped volume from 2026-06-10 improves chi2 3359.5 -> 1515.4
+        budget: speed tests: a trapped volume from 2026-08-19 improves chi2 3359.5 -> 854.7
+VC04  18 odd
+        speed: 2026-07-08 test 412.9 L/s = 0.869 of rated 475.2, pump in order (CC-7104)
+        speed: 2026-09-02 test 418.0 L/s = 0.880 of rated 475.2, pump in order (CC-7104)
+        speed: 2026-10-07 test 335.3 L/s = 0.706 of rated 475.2, pump in order (CC-7114)
+        gauge: CC-7114 certificate issued 2025-04-02, before this year's
+        budget: rated speed: plain budget chi2 1649.1 over 6 entries (rms 9.95%)
+        budget: rated speed: seal perfluoroelastomer instead of nitrile improves chi2 1649.1 -> 1265.1
+        budget: rated speed: a trapped volume from 0000-00-00 improves chi2 1649.1 -> 212.2
+        budget: rated speed: a trapped volume from 2026-06-18 improves chi2 1649.1 -> 212.2
+        budget: rated speed: a trapped volume from 2026-08-05 improves chi2 1649.1 -> 262.2
+        budget: rated speed: a trapped volume from 2026-08-20 improves chi2 1649.1 -> 255.9
+        budget: rated speed: a trapped volume from 2026-09-15 improves chi2 1649.1 -> 0.3
+        budget: speed tests: plain budget chi2 904.2 over 6 entries (rms 7.37%)
+        budget: speed tests: seal perfluoroelastomer instead of nitrile improves chi2 904.2 -> 743.7
+        budget: speed tests: a trapped volume from 0000-00-00 improves chi2 904.2 -> 25.9
+        budget: speed tests: a trapped volume from 2026-06-18 improves chi2 904.2 -> 25.9
+        budget: speed tests: a trapped volume from 2026-08-05 improves chi2 904.2 -> 30.6
+        budget: speed tests: a trapped volume from 2026-08-20 improves chi2 904.2 -> 30.7
+        budget: speed tests: a trapped volume from 2026-09-15 improves chi2 904.2 -> 29.7
+VC05  5 odd
+        speed: 2026-09-01 test 338.3 L/s, rated unknown (port conductance not recorded)
+        budget: rated speed: 2 usable entries
+        budget: speed tests: plain budget chi2 2856.1 over 7 entries (rms 12.12%)
+        budget: speed tests: seal fluoroelastomer instead of perfluoroelastomer improves chi2 2856.1 -> 1987.8
+        budget: speed tests: seal nitrile instead of perfluoroelastomer improves chi2 2856.1 -> 467.3
+VC06  2 odd
+        speed: 2026-10-05 test 828.3 L/s = 0.878 of rated 943.1, pump in order (CC-7106)
+        budget: speed tests: plain budget chi2 289.8 over 4 entries (rms 5.11%)
+VC07  8 odd
+        controller: controller median matches TMP-700, register names TMP-1600
+        speed: 2026-07-15 test 358.3 L/s = 0.886 of rated 404.6, pump in order (CC-7107)
+        gauge: 2026-10-05 logged CC-7103, whose certificate says it is installed on VC03
+        coverage: every entry at one pumping time: pumping times 16 h, wall 16.0 to 25.5 C; speed tests at 2025-06-17 16 h 2026-07-15 16 h
+        budget: rated speed: plain budget chi2 5280.0 over 7 entries (rms 16.48%)
+        budget: rated speed: seal nitrile instead of fluoroelastomer improves chi2 5280.0 -> 3898.1
+        budget: speed tests: plain budget chi2 5178.0 over 7 entries (rms 16.32%)
+        budget: speed tests: seal nitrile instead of fluoroelastomer improves chi2 5178.0 -> 3668.6
+VC08  10 odd
+        speed: 2026-10-09 test 500.5 L/s = 0.881 of rated 568.4, pump in order (CC-7108)
+        steps: gas load moves 8.61x across the work of 2026-10-06
+        budget: rated speed: plain budget chi2 45340.1 over 6 entries (rms 52.16%)
+        budget: rated speed: seal perfluoroelastomer instead of fluoroelastomer improves chi2 45340.1 -> 44240.6
+        budget: rated speed: a trapped volume from 0000-00-00 improves chi2 45340.1 -> 45296.9
+        budget: rated speed: a trapped volume from 2026-10-06 improves chi2 45340.1 -> 8.2
+        budget: speed tests: plain budget chi2 43983.7 over 6 entries (rms 51.37%)
+        budget: speed tests: seal perfluoroelastomer instead of fluoroelastomer improves chi2 43983.7 -> 42754.9
+        budget: speed tests: a trapped volume from 0000-00-00 improves chi2 43983.7 -> 43929.4
+        budget: speed tests: a trapped volume from 2026-10-06 improves chi2 43983.7 -> 8.0
+VC09  9 odd
+        controller: rotor frequency steps 821 -> 796 Hz at 2026-09-02
+        speed: 2026-07-02 test 343.1 L/s = 0.879 of rated 390.2, pump in order (CC-7109)
+        gauge: CC/IG ratio drifts 1.007 -> 0.880 (2026-07-29 to 2026-09-30)
+        budget: rated speed: plain budget chi2 455.3 over 5 entries (rms 5.73%)
+        budget: speed tests: plain budget chi2 5723.1 over 5 entries (rms 20.30%)
+        budget: speed tests: seal perfluoroelastomer instead of fluoroelastomer improves chi2 5723.1 -> 4958.6
+        budget: speed tests: a trapped volume from 0000-00-00 improves chi2 5723.1 -> 3480.0
+        budget: speed tests: a trapped volume from 2026-09-12 improves chi2 5723.1 -> 1037.7
+        budget: speed tests: a trapped volume from 2026-10-05 improves chi2 5723.1 -> 4272.2
+VC10  8 odd
+        controller: controller median matches TMP-700, register names TMP-400
+        controller: rotor frequency steps 1000 -> 970 Hz at 2026-07-15
+        speed: 2026-07-09 test 207.5 L/s = 0.873 of rated 237.7, pump in order (CC-7110)
+        gauge: CC-7110 recertified on ['2026-09-22'] (factor [('2026-09-22', 0.88)])
+        budget: speed tests: plain budget chi2 11489.4 over 6 entries (rms 26.26%)
+        budget: speed tests: seal perfluoroelastomer instead of fluoroelastomer improves chi2 11489.4 -> 10506.9
+        budget: speed tests: a trapped volume from 0000-00-00 improves chi2 11489.4 -> 8751.3
+        budget: speed tests: a trapped volume from 2026-08-17 improves chi2 11489.4 -> 752.0

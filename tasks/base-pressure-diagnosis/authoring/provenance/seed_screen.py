@@ -10,6 +10,7 @@ deviation each reaches on each seed, so a draw near an edge would be visible.
 
     python3 -I seed_screen.py  > ../evidence/seed_screen.txt
 """
+import json
 import os
 import shutil
 import subprocess
@@ -60,10 +61,19 @@ def main():
                    if l.startswith("SEED = ")][0].split("=")[1])
     vac = C.place_order(C.REFERENCE_PLAN)
     rows = []
+    plans = []
     fails = []
     for seed in [shipped] + C.LAB_SEEDS:
         data = os.path.join(C._work, "data-%d" % seed)
         build_with(seed, data)
+        # the order is derived from the records, so a redrawn noise must not move it
+        pl = subprocess.run([sys.executable, "-I", os.path.join(TASK, "solution", "diagnose.py"), "--plan", data],
+                            capture_output=True, text=True)
+        planned = [dict(t, pumping_time_h=float(t["pumping_time_h"])) for t in json.loads(pl.stdout)["tests"]]
+        spreads = [l.split()[1] + " " + l.rsplit("(", 1)[1].split(" ")[0] for l in pl.stderr.splitlines()[:2]]
+        if planned != C.REFERENCE_PLAN:
+            fails.append("seed %d: the planned order is %s, not the reference order" % (seed, planned))
+        plans.append(["%d" % seed, spreads[0], spreads[1]])
         for who in ("reference", "independent"):
             if who == "reference":
                 answers = reference_on(data, vac, os.path.join(C._work, "ref-%d.csv" % seed))
@@ -86,6 +96,9 @@ def main():
     print(C.report("Both audits on records rebuilt from each screened seed, reference order", rows,
                    ["build seed", "audit", "right", "worst q deviation", "worst s deviation"]))
     print("tolerances: gas load %.1f%%, speed %.1f%%" % (100 * C.G.Q_TOL, 100 * C.G.S_TOL))
+    print("")
+    print(C.report("The order diagnose.py --plan derives on each seed's records: the widest and next spread", plans,
+                   ["build seed", "widest", "next"]))
     print("")
     if fails:
         print("%d PROBLEM(S)" % len(fails))

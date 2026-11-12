@@ -591,3 +591,57 @@ labelled (R, U, W, Y, A low; S, T, V, X, Z, B xhigh).
 - VC01 since the redesign: missed by 0 of 39 sheets (R1 to B3). The three VC01 misses on record are all in the
   earlier multi-test rounds (M2, N3, P2 of L1 to Q3).
 - The test: 21 of 21 VC08-era sheets ordered VC08 at 36 h; 18 of 18 on the new core ordered VC07.
+
+---
+
+# MECHANISM A: THE TEST'S CHAMBER UNFLAGGED (11 November, evening)
+
+Agreed with Alex after `docs/trap-analysis-2026-11-11.md` §6.3. `authoring/provenance/auditor.py` runs a
+systematic first pass on the agent-visible files (controllers against every model; every speed test against rated,
+pooled and split by year; serials against certificate owners; CC/IG ratios; pumping-time coverage; steps at dated
+work; face-value budgets with seal and trapped-volume alternatives). On the bundle before this change it flagged
+every layer, VC07's core included (controller, crossed serials, one pumping time), which is why every probe
+ordered VC07. `auditor-2026-11-11.txt` holds that run.
+
+The change:
+- **VC06 holds the core.** The September refit (new electropolished shroud panels, shroud seals renewed in
+  nitrile) brings a trapped volume (4.0e-4 mbar L/s at the vent, tau 40 h) present from the refit, so nothing
+  steps and the pre-refit entries are void by the change of internals. Of the four pumpdowns since, the air vents
+  are at 12 and 14 h and the nitrogen vents at 20 h: the face-value budget reads the trapped gas still present at
+  20 h as a leak and its fall between the short and long pumpdowns as the wall gas the nitrogen vents leave out. It
+  fits the entries and the October speed test with a chi-square noncentrality of about 0.1, with plausible
+  coefficients, and puts the 36 h gas load 17.6 per cent high (the reference with no order). Truth stays
+  permeation, dominant 1.88x. The auditor flags nothing on VC06 beyond the 2026 speed ratio every chamber shares.
+- **VC07 is a decoy.** Same trapped volume, pump and crossed serials, but its pumpdowns now span 12-24 h and both
+  vents, so its own records settle it. VC02 gained a 24 h pumpdown (10-13) so its post-refit records are not open.
+- **The order is derived, not asserted.** `diagnose.py --plan` refits every chamber with every trapped volume
+  clause 3.3 allows (start of records or any logged work, every time constant up to the bound, every size) and
+  keeps the budgets within chi-square 4 of the best; the spread of their 36 h gas loads is how open the chamber is.
+  VC06 29.7 per cent, next VC01 9.2 (3.2x); VC06 on all 20 lab-seed rebuilds (lowest 18.0, next at most 10.9).
+  `solve.sh` places that order (VC06 rga at 36 h), and preflight checks the evidence runs it.
+- Feasibility first (`/tmp` scratch, not shipped): with a 2-parameter plain budget the quiet-miss ceiling over a
+  12-22 h window with mixed vents is about 10 per cent at noncentrality 4; confounding vent gas with pumping time
+  raises it to 30 per cent at under 1. tau 40 rather than ~26 so that no single-entry route lands within 2x the
+  tolerance (identify.py: nearest 8.9 per cent).
+- Orders that work: rga or rate-of-rise on VC06 at 30 h or longer (16 h does not).
+
+Follow-ups found by the studies:
+- `reference + drop oldest` lost VC06 with four pumpdowns (three left, and the trapped structure inadmissible), so
+  VC06 gained a fifth (10-30, nitrogen, 20 h; noncentrality 0.16, face-value miss unchanged at +18 per cent).
+- At a 3.0 per cent gas-load band (the old rule on the shipped spread, 1.49 per cent) VC02 fails on three rebuilt
+  seeds (up to 3.88 per cent; it did before this change too). The rule is now twice the shipped spread and never
+  less than the widest deviation on any screened seed, rounded up to the half per cent: 4.0 and 4.0. The speed band
+  moved from 3.5 to 4.0 (twice 1.79); `instruction.md` changed in that one figure.
+- VC07's P5 moved from 20 to 24 h so that it is identifiable at the gas-load band (P 0.98 to 1.00).
+- `plan_sweep`: a helium test on VC06 also carries both audits (it measures the leak the face-value budget
+  overstates). The two audits differ on VC06 rga at 20 h alone, the shortest time that separates the structures;
+  the sweep now reports such orders as the edge of the working region rather than a disagreement.
+
+Probes on this bundle (claude-opus-5-5, built before the fifth VC06 pumpdown; graded at 4.0/4.0):
+- Low effort, 0 of 3. C1 and C2 ordered a test on VC09 (C2 had estimated VC06's load "known to about 1%") and missed
+  VC06 by +18.8 and +17.7 per cent; C3 ordered VC06 at 36 h for another reason (to separate leak from permeation)
+  and got it. All three dropped CC-7107's certificate as "inconsistent" instead of uncrossing the serials, and
+  missed VC07 (gas load -30 per cent, or the speed +42 per cent, or the cause).
+- xhigh, 2 of 3. All three ordered VC06 at 36 h by the planning rule's own reasoning ("the least constrained
+  chamber ... fits that matched equally well gave Q_ref anywhere from 4.5e-4 to 6.1e-4"). D1 and D2 also uncrossed
+  the VC03/VC07 serials and passed; D3 kept CC-7107 at 1.00 and missed VC07.

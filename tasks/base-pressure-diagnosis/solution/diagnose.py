@@ -1026,7 +1026,102 @@ def audit_chamber(cid, data, certs, fix, vac):
                 params=params, chi2=chi2, n_obs=len(obs))
 
 
+# ---------------------------------------------------------------------------------------------------- the order
+PLAN_DCHI2 = 4.0                    # a budget the records do not reject: within this of the best fit's chi-square,
+                                    # which is the two-sided 95 per cent bound on one quantity, the gas load at 36 h
+
+
+def determinacy(cid, data, certs, fix):
+    """How far a chamber's records determine its gas load at the reference condition.
+
+    The chosen budget is one budget the records accept; the question for the order is which others they also
+    accept. Clause 3.3 allows a trapped volume on any chamber, present from the start of its records or from any
+    piece of work on it, emptying with any time constant up to TAU_MAX. For each such volume, of each size, the rest
+    of the budget is refitted to the same observations; every budget whose chi-square is within PLAN_DCHI2 of the
+    best is one the records cannot tell from the chosen one. The spread of their gas loads at 36 h, as a fraction of
+    the chosen budget's, is how open the chamber's answer is. A chamber with entries at many pumping times and both
+    vent gases admits only small trapped volumes; one whose pumping times and vent gases go together admits large
+    ones, since a volume emptying across its pumpdowns reads there as a leak beside a wall."""
+    import numpy as np
+    from scipy.optimize import nnls
+    cfg, obs, s_now, s_range = front_end(cid, data, certs, fix, None)
+    params, chi2_best, _k = choose_budget(cid, cfg, data, obs, s_now, s_range)
+    _parts, q_best = at_reference(cfg, params)
+    struct = dict(seal=params["seal"], trapped_from=params["trapped_from"])
+    _c, _kk, _p, q = fit_budget(cfg, obs, struct, params["s_now"])
+    q = np.asarray(q, dtype=float)
+    n = len(obs)
+    W = np.array([nominal_wall(cfg, o) for o in obs])
+    PM = np.array([q_perm(*_seal_for(cfg, o["date"], params["seal"]), o["t_k"]) for o in obs])
+    H = np.array([o["t_h"] for o in obs])
+    w = 1.0 / (q * np.array([o["sd"] for o in obs]))
+    mat, cm = _seal_for(cfg, AUDIT, params["seal"])
+    w36 = q_wall_nominal(cfg["surfaces"], REF_H, "air", T_REF)
+    p36 = q_perm(mat, cm, T_REF)
+    lo = hi = q_best
+    thr = chi2_best + PLAN_DCHI2
+    A = np.column_stack([W, np.ones(n)]) * w[:, None]
+    worked = sorted({r["date"] for r in data["maint"] if r["chamber"] == cid})
+    for start in ["0000-00-00"] + worked:
+        TR = np.array([1.0 if o["date"] >= start else 0.0 for o in obs])
+        if not TR.any():
+            continue
+        # the grid, and the chosen budget's own time constant, which the grid need not hold
+        taus = TAUS + ([params["tau"]] if params["trapped_from"] == start and params["tau"] else [])
+        for tau in taus:
+            shape = TR * np.exp(-H / tau)
+            a_max = float(np.min((q - PM)[TR > 0] / shape[TR > 0]))
+            if a_max <= 0:
+                continue
+
+            def chi2_at(a):
+                return nnls(A, (q - PM - a * shape) * w)[1] ** 2
+
+            def q36_at(a):
+                x, _rn = nnls(A, (q - PM - a * shape) * w)
+                return x[0] * w36 + x[1] + p36 + a * math.exp(-REF_H / tau)
+
+            # the misfit is convex in the trapped load: its least, then the loads where it crosses the bound
+            a0, c0 = _golden(chi2_at, 0.0, a_max)
+            if c0 > thr:
+                continue
+            ends = [a0]
+            for side in ((0.0, a0), (a0, a_max)):
+                inside, outside = (side[1], side[0]) if side[0] < a0 else (side[0], side[1])
+                if chi2_at(outside) <= thr:
+                    ends.append(outside)
+                    continue
+                for _ in range(50):
+                    mid = 0.5 * (inside + outside)
+                    if chi2_at(mid) <= thr:
+                        inside = mid
+                    else:
+                        outside = mid
+                ends.append(inside)
+            for a in ends:
+                v = q36_at(a)
+                lo, hi = min(lo, v), max(hi, v)
+    return dict(chamber=cid, q_best=q_best, lo=lo, hi=hi, spread=(hi - lo) / q_best, n_obs=n)
+
+
+def plan(data_dir):
+    """The audit order: one test, at the reference condition's own pumping time, on the chamber whose records
+    leave its gas load there least determined."""
+    data = load_data(data_dir)
+    certs = data["certs"]
+    fix = crossed_serials(data, certs)
+    ids = sorted({r["chamber"] for r in data["register"]})
+    rows = sorted((determinacy(cid, data, certs, fix) for cid in ids), key=lambda r: -r["spread"])
+    for r in rows:
+        print("# %s  %2d observations  gas load at 36 h %.3e, records allow %.3e to %.3e (%.1f%% wide)"
+              % (r["chamber"], r["n_obs"], r["q_best"], r["lo"], r["hi"], 100 * r["spread"]), file=sys.stderr)
+    return {"tests": [{"chamber": rows[0]["chamber"], "test": "rga", "pumping_time_h": int(REF_H)}]}
+
+
 def main(argv):
+    if argv and argv[0] == "--plan":
+        print(json.dumps(plan(argv[1] if len(argv) > 1 else "/app/data")))
+        return 0
     if len(argv) < 2:
         print(__doc__ % REF_H)
         return 2

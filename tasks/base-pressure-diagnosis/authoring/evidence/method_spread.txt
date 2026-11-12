@@ -1,21 +1,21 @@
-inputs: 6e327e3e30e8fcaa
+inputs: 62c5186060e7b738
 Sound methods, each scored through the task's grader
 ====================================================
 
 method                                    right  verdict   worst q deviation  worst s deviation  causes missed
 ----------------------------------------  -----  --------  -----------------  -----------------  -------------
-reference, VC07 rga at 36 h (solve.sh)    10/10  accepted  1.39% (VC09)       1.70%              -
-independent, VC07 rga at 36 h (solve.sh)  10/10  accepted  1.49% (VC05)       1.75%              -
-reference, VC07 rga at 24 h               10/10  accepted  1.39% (VC09)       1.70%              -
-independent, VC07 rga at 24 h             10/10  accepted  1.49% (VC05)       1.75%              -
-reference, VC07 rga at 48 h               10/10  accepted  1.41% (VC07)       1.70%              -
-independent, VC07 rga at 48 h             10/10  accepted  1.49% (VC05)       1.75%              -
-reference, VC07 rate-of-rise at 30 h      10/10  accepted  1.39% (VC09)       1.70%              -
-independent, VC07 rate-of-rise at 30 h    10/10  accepted  1.49% (VC05)       1.75%              -
-reference, VC07 rate-of-rise at 36 h      10/10  accepted  1.39% (VC09)       1.70%              -
-independent, VC07 rate-of-rise at 36 h    10/10  accepted  1.49% (VC05)       1.75%              -
-reference, VC07 speed-test at 42 h        10/10  accepted  1.39% (VC09)       1.70%              -
-independent, VC07 speed-test at 42 h      10/10  accepted  1.49% (VC05)       1.75%              -
+reference, VC06 rga at 36 h (solve.sh)    10/10  accepted  1.39% (VC09)       1.70%              -
+independent, VC06 rga at 36 h (solve.sh)  10/10  accepted  1.49% (VC05)       1.75%              -
+reference, VC06 rga at 30 h               10/10  accepted  1.39% (VC09)       1.70%              -
+independent, VC06 rga at 30 h             10/10  accepted  1.49% (VC05)       1.75%              -
+reference, VC06 rga at 48 h               10/10  accepted  1.39% (VC09)       1.70%              -
+independent, VC06 rga at 48 h             10/10  accepted  1.49% (VC05)       1.75%              -
+reference, VC06 rate-of-rise at 30 h      10/10  accepted  1.39% (VC09)       1.70%              -
+independent, VC06 rate-of-rise at 30 h    10/10  accepted  1.49% (VC05)       1.75%              -
+reference, VC06 rate-of-rise at 36 h      10/10  accepted  1.39% (VC09)       1.70%              -
+independent, VC06 rate-of-rise at 36 h    10/10  accepted  1.49% (VC05)       1.75%              -
+reference, VC06 speed-test at 42 h        10/10  accepted  1.39% (VC09)       1.70%              -
+independent, VC06 speed-test at 42 h      10/10  accepted  1.49% (VC05)       1.75%              -
 reference + drop oldest                   10/10  accepted  1.40% (VC09)       1.70%              -
 reference + mean speed test               10/10  accepted  1.49% (VC09)       1.79%              -
 reference + strict seal                   10/10  accepted  1.39% (VC09)       1.70%              -
@@ -28,10 +28,10 @@ The ordered chamber on the laboratory seeds, reference order
 
 chamber  audit        right  lowest q deviation  highest q deviation
 -------  -----------  -----  ------------------  -------------------
-VC07     reference    20/20  -0.64%              +2.00%
-VC07     independent  20/20  -1.29%              +1.34%
+VC06     reference    20/20  -1.38%              +1.10%
+VC06     independent  20/20  -1.19%              +1.30%
 
-widest deviation over every sound method and chamber: gas load 2.00%, speed 1.79%
-tolerances: gas load 4.0%, speed 3.5% (margin 2.00x and 1.96x)
+widest deviation over every sound method and chamber: gas load 1.49%, speed 1.79%
+tolerances: gas load 4.0%, speed 4.0% (margin 2.68x and 2.23x)
 
 all 18 sound methods accepted, and both audits right on every laboratory seed

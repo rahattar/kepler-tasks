@@ -741,9 +741,12 @@ def check_evidence():
         if name == "verifier_checks":
             check("UNEXPECTED" not in body, "verifier_checks.txt holds no UNEXPECTED case",
                   "a case did not behave as the rules say")
-    # the studies run the order solve.sh places
-    m = re.search(r"<<'PLAN'\n(.*?)\nPLAN", read("solution/solve.sh"), re.S)
-    plan = json.loads(m.group(1))["tests"] if m else None
+    # the studies run the order solve.sh places, which diagnose.py --plan derives from the agent's records
+    check("diagnose.py\" --plan /app/data" in read("solution/solve.sh"),
+          "solution/solve.sh places the order diagnose.py --plan derives")
+    pl = subprocess.run([sys.executable, "-I", os.path.join(TASK, "solution", "diagnose.py"), "--plan",
+                         os.path.join(TASK, "environment", "data")], capture_output=True, text=True)
+    plan = json.loads(pl.stdout)["tests"] if pl.returncode == 0 else None
     norm = lambda ts: [dict(t, **({"pumping_time_h": float(t["pumping_time_h"])} if "pumping_time_h" in t else {}))  # noqa: E731
                        for t in ts]
     check(plan is not None and norm(plan) == norm(C.REFERENCE_PLAN),
@@ -754,11 +757,22 @@ def check_evidence():
     m = re.search(r"widest deviation over every sound method and chamber: gas load ([\d.]+)%, speed ([\d.]+)%", ms)
     if check(m is not None, "method_spread.txt states the widest sound deviation"):
         import math as _m
-        rule = lambda x: _m.ceil(round(2.0 * float(x) / 100.0 * 200.0, 9)) / 200.0      # noqa: E731
-        check(abs(C.G.Q_TOL - rule(m.group(1))) < 1e-12, "the gas-load tolerance is twice the widest sound deviation,"
-              " rounded up to the half per cent", "%.3f vs %.3f" % (C.G.Q_TOL, rule(m.group(1))))
-        check(abs(C.G.S_TOL - rule(m.group(2))) < 1e-12, "the speed tolerance is twice the widest sound deviation,"
-              " rounded up to the half per cent", "%.3f vs %.3f" % (C.G.S_TOL, rule(m.group(2))))
+        # and never tighter than either audit reaches on records rebuilt from another draw of the noise
+        ss = open(os.path.join(ed, "seed_screen.txt")).read() if os.path.exists(os.path.join(ed, "seed_screen.txt")) \
+            else ""
+        seed_q = max([float(x) for x in re.findall(r"^\S+(?: \(shipped\))?\s+(?:reference|independent)\s+\S+\s+"
+                                                    r"([\d.]+)% \(VC\d\d\)", ss, re.M)] or [0.0])
+        seed_s = max([float(x) for x in re.findall(r"^\S+(?: \(shipped\))?\s+(?:reference|independent)\s+\S+\s+"
+                                                    r"[\d.]+% \(VC\d\d\)\s+([\d.]+)% \(VC\d\d\)", ss, re.M)]
+                     or [0.0])
+        check(seed_q > 0 and seed_s > 0, "seed_screen.txt states each seed's widest deviations")
+        rule = lambda x, floor: _m.ceil(round(max(2.0 * float(x), floor) / 100.0 * 200.0, 9)) / 200.0  # noqa: E731
+        check(abs(C.G.Q_TOL - rule(m.group(1), seed_q)) < 1e-12, "the gas-load tolerance is twice the widest sound"
+              " deviation, at least the widest on any screened seed, rounded up to the half per cent",
+              "%.3f vs %.3f" % (C.G.Q_TOL, rule(m.group(1), seed_q)))
+        check(abs(C.G.S_TOL - rule(m.group(2), seed_s)) < 1e-12, "the speed tolerance is twice the widest sound"
+              " deviation, at least the widest on any screened seed, rounded up to the half per cent",
+              "%.3f vs %.3f" % (C.G.S_TOL, rule(m.group(2), seed_s)))
     C.cleanup()
     prov = os.path.join(TASK, "authoring", "provenance")
     for f in ("bpphys.py", "fleet.py", "docs_bp.py", "build.py", "tune.py", "identify.py", "seed_screen.py"):
