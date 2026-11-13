@@ -66,4 +66,43 @@ Scaling the test's whole drop is wrong by tens of psi; so is forgetting the cons
 
 ## Probe log
 
-(none yet)
+### First cut (Nov 12 evening): low effort 2 of 3, in three minutes each
+
+Records only, twelve layers, every one of which shows in a residual or is stated in a record. Reference within
+1.8 per cent; 17 of 19 defective routes refused.
+
+| probe | time | result |
+|---|---|---|
+| L1 | 2.8 min | 9 of 10 rows; SR06 9 per cent low (fitted its C on the last year only, after the drain change) |
+| L2 | 3.0 min | **accepted** |
+| L3 | 2.5 min | **accepted** |
+
+All three found, unprompted: the held statics (each used the main's highest pressure since the previous drain was
+shut), the overhaul's two eras, the sticking check, SR03's valve after the gland repack, the fast-ageing lead-in,
+the crossed serials (kept the register's gauges), the replaced gauge and the replaced drain valve.
+
+This repeats what the base-pressure rounds already established (`docs/design-note-base-pressure.md` on that
+branch, "What the probe rounds establish"): **a layer that perturbs a residual is found by every probe at any
+effort, because they fit until the residuals reach the reading noise.** What caught probes there was a unit the
+plain budget fits quietly and wrongly, found only by asking which admissible structures the records cannot tell
+apart, with one test to spend on it and decoys around it.
+
+### The quiet core (next)
+
+The sprinkler analogue of base-pressure's mechanism A:
+
+- A main drain test gives a riser's own loss at one flow. Lead-in friction goes as q^1.85 and a partly shut
+  control valve as q^2, so one flow cannot split them, and at 2.5 times the flow the two differ by 15 per cent.
+- FP-12 clause 3.4 says which valves can stand partly shut: a supervised valve cannot (its switch reports it); an
+  unsupervised one stands as it was left by the last work on its riser, or as it stood when the records begin.
+- What closes a riser: lined ductile iron (C fixed, so the valve follows from one flow); a wall hydrant on the
+  lead-in, flowed every year at about 900 gpm with the riser's own gauge read (C from that, the valve from the
+  drain tests); supervision.
+- **SR10 is the target**: cast iron, unsupervised, no hydrant, its valve partly shut since before the records
+  begin. All friction fits it with C about 59, inside the site's range, and puts its limit on the lead-in and its
+  pressure about 9 per cent high. Nothing steps and nothing in the log points at it.
+- Decoys: SR03 (ductile, loud step after a gland repack: settled by its own records), SR06 (cast iron,
+  unsupervised, work on the riser in 2024 with a change of drain pattern at the same visit: settled by its wall
+  hydrant).
+- One contractor's flow test, ordered once: a riser and a flow up to 1 000 gpm. It only splits the two laws at a
+  high flow.
