@@ -209,3 +209,8 @@ change (once), and the ill-conditioned split (twice, unfair). Nothing designed a
 
 What has not been tried here and did work on base-pressure: several units open by degree, so that the one to
 test has to be computed and the one that looks most open is not it.
+
+**Status, Nov 13:** paused at Alex's request. The bar as of Nov 13 is 0 of 3 on the easiness probe and a pass
+band of 0 to 5 of 8 on the difficulty probe (`docs/playbook.md`, Calibration targets). Version 5 stands at 3 of
+3 at low effort, so it is not at the bar, and no xhigh probe has been run. It is also not of the priority kind
+AfterQuery repeated on Nov 13 (a program re-run under a time limit on shifted hidden data).
