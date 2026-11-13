@@ -73,7 +73,7 @@ Every low probe, core and bundle, surveyed the airways worked on and nothing els
 districts that have a condition exactly as the `worked_on` variant does.
 
 The bundle's xhigh probes: D accepted on all six and on the three visible districts (stoppings balanced at
-their nodes, the fan behind the longer ducting read and the turn found; its program was complete after 50
+their nodes, the fan behind the longer ducting read and the turn found; its program was complete after 46
 minutes and it was still testing at 65); E surveyed the airways worked on only (25 min); F found the open
 stopping from the node balances and spent the last place on a fan, but used the reading as a check, and
 failed the two districts that hold where their records stall (33 min).
