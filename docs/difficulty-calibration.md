@@ -799,7 +799,7 @@ examples, a 35 s limit against a reference of 8.7 to 10.5 s.
 | probe | effort | time | examples | six districts | order |
 |---|---|---|---|---|---|
 | A, B, C | low | 3 to 7 min | accepted | 5 of 6 out, as the `worked_on` variant | the airways worked on |
-| D | xhigh | over 65 min | accepted | accepted, largest error 0.14 of the band | airways, the open stopping, FAN-B |
+| D | xhigh | program done at 46 min | accepted | accepted, largest error 0.14 of the band | airways, the open stopping, FAN-B |
 | E | xhigh | 25 min | accepted | 5 of 6 out | the airways worked on |
 | F | xhigh | 33 min | accepted | 2 of 6 out (the closures that hold where the records stall) | airways, the open stopping, FAN-A as a check |
 
