@@ -1,0 +1,24 @@
+{
+ "rounds": 14,
+ "rounds_stalled": 9,
+ "points": 686,
+ "branches": 165,
+ "log_rows": 98,
+ "limbs": "..sssss..ss.ss",
+ "allowance": 4,
+ "size": 0.862241270062435,
+ "band": [
+  0.5978525572992849,
+  0.9245302649422545
+ ],
+ "altered": [
+  "P1-I-03",
+  "P3-R-01",
+  "P4-I-01",
+  "P4-R-04"
+ ],
+ "breach": null,
+ "close_at": null,
+ "edge_gap_per_cent": null,
+ "limbs_on_record": "..sssss..ss.ss"
+}
