@@ -64,8 +64,10 @@ Sciences). Follow this exactly unless Alex says otherwise.
 `tasks/impeller-shrink-fits/` is the most recent complete example to copy from.
 
 ## Calibration targets
-- Easiness: 3 low-effort runs, at most 1 solved.
-- Difficulty: 8 official xhigh runs, 1 to 5 solved.
+- **The bar (Alex, Nov 13): easiness probe 0 of 3; difficulty probe pass band 0 to 5 of 8.** This branch's
+  playbook is an old copy; the current one, with the timed-task priority, is `docs/playbook.md` on main.
+- Easiness: 3 low-effort runs on claude-opus-5-5, none solved.
+- Difficulty: 8 official xhigh runs, 0 to 5 solved; 6, 7 and 8 of 8 fail.
 - Locally, run probe subagents (general-purpose, effort xhigh, and low for easiness) in sandboxes built by
   `tools/mkprobe.sh`, with the brief in `tools/brief.txt`. Probes must not read anything outside their sandbox.
   Grade each with the task's own grader.

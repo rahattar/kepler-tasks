@@ -80,7 +80,7 @@ Documented:
   throughout. Still 2 of 3, so still above the easiness bar.
 
 - **Round 4** (two more residual-invisible layers: a register naming the wrong pump, and VC01's certificate error
-  made determinate by its reference instrument): low **9/10, 9/10, 10/10** - **1 of 3, which is the bar.** The
+  made determinate by its reference instrument): low **9/10, 9/10, 10/10** - **1 of 3, which was the bar then (0 of 3 since Nov 11).** The
   progression over the four rounds is 3/3, 2/3, 2/3, 1/3. P2 failed on VC01, the certificate; P1 read VC07's
   controller correctly and caught the wrong pump, then over-corrected on the crossed gauge serials and threw away
   CC-7107's real 1.42 factor along with the clerical error, putting VC07's gas load 29 % low. That slip is
@@ -165,7 +165,8 @@ Documented:
 **Zip not cut.** Everything else is finished and verified: reference and independent audit both get all ten, five
 sound methods accepted at 1.52x and 2.58x margin, eighteen routes rejected, nulls 0 of 10, 33 verifier cases
 clean, preflight 196 checks, and a byte-identical rebuild from the provenance. The one thing standing in the way
-is the easiness bar: low effort is at 2 of 3 after three rounds of hardening, against a bar of at most 1 of 3.
+is the easiness bar: low effort is at 2 of 3 after three rounds of hardening, against a bar of at most 1 of 3
+(the bar as it stood then; it is 0 of 3 since Nov 11, with a difficulty band of 0 to 5 of 8).
 The measured path to the bar is above; it is Alex's call whether to spend it.
 
 The instruction is a draft awaiting Alex's rewrite, with the fact sheet in `fact-sheet-base-pressure.md`.

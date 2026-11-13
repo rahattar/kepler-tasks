@@ -17,7 +17,8 @@ need is in the GitHub repo rahattar/kepler-tasks; attach it and clone it.
    - environment, solution and tests;
    - the full evidence set and preflight;
    - local probe rounds: 3 low and 3 xhigh subagents in sandboxes, each graded with the task's grader;
-   - calibrate until low gets at most 1 of 3, and xhigh fails at least occasionally.
+   - calibrate to the bar (Nov 13): the easiness probe solves 0 of 3 at low effort, and the difficulty probe
+     lands in its pass band of 0 to 5 of 8 at xhigh. The current start prompt is on main.
 5. Give me an instruction.md draft and a fact sheet; I write the final instruction.md myself. Check my rewrite
    against preflight.
 6. Package `<task>-YYYYMMDD.zip`. Deliver it to "/Volumes/AlexB4344665031/Projects/AIWorks/AfterQuery Kepler" if
