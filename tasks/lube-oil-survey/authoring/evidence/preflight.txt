@@ -7,6 +7,7 @@ ok    the task's name ends with the bundle folder's name, of at most three hyphe
 ok    the one artifact is /app/output/bearing.py
 ok    [metadata] carries the whole block
 ok    category "Science", a subcategory, domain engineering-sciences, field mechanical-engineering
+ok    subfield is a short phrase, at most 120 characters (it is 103)
 ok    keywords and tags are the same list
 ok    agent: 28800 s as the user agent; verifier: 600 s, separate, no network
 ok    difficulty_explanation is in task.toml and word for word in the README under ## Difficulty
@@ -71,4 +72,4 @@ ok    live: the same with one value nan is not
 ok    live: the same with every power loss 1.6 per cent high is not
 ok    live: a program that writes the true table and is still running at the limit is not accepted, and its table is not opened
 ok    live: the reference on the cut-down site is accepted and places one order of the site's allowance
-73 checks, 0 failed: the bundle is clean
+74 checks, 0 failed: the bundle is clean

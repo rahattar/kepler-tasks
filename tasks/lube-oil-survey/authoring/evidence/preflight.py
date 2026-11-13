@@ -112,6 +112,8 @@ def main():
     check('category "Science", a subcategory, domain engineering-sciences, field mechanical-engineering',
           meta.get("category") == "Science" and bool(meta.get("subcategory")) and meta.get("domain") == "engineering-sciences"
           and meta.get("field") == "mechanical-engineering")
+    check("subfield is a short phrase, at most 120 characters (it is %d)" % len(meta.get("subfield", "")),
+          0 < len(meta.get("subfield", "")) <= 120)
     check("keywords and tags are the same list", toml["task"].get("keywords") == meta.get("tags"))
     check("agent: 28800 s as the user agent; verifier: 600 s, separate, no network",
           toml["agent"] == {"timeout_sec": 28800.0, "user": "agent"} and toml["verifier"]["timeout_sec"] == 600.0

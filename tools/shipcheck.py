@@ -265,6 +265,10 @@ for f in sorted(os.listdir(ev)) if os.path.isdir(ev) else []:
         if info.get("authoring/evidence/" + f, newest) < newest - 120:
             stale.append(f)
 chk(not failing, "no committed study reports a failure%s" % ("" if not failing else ": %s" % failing))
+# Structure rejection, lube-oil-survey 20261113: [metadata] subfield over 120 characters.
+import tomllib as _toml
+_sub = _toml.load(open(os.path.join(d, "task.toml"), "rb")).get("metadata", {}).get("subfield", "")
+chk(0 < len(_sub) <= 120, "[metadata] subfield is at most 120 characters (%d)" % len(_sub))
 # Oracle failure, journal-bearing-survey 20261113: the verifier ran the program as another user, and test.sh's
 # umask 077 made the scratch package unreadable to it. Every local run had called pytest directly, under the
 # shell's umask. Where a verifier changes user, a committed study has to run tests/test.sh itself.

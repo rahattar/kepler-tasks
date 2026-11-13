@@ -467,3 +467,7 @@ description, tags, subfield and instruction opening with the oil identification,
 known when written whether that clears the gate.
 - **Rule.** Push every bundle to the repo before it is submitted, so the other session can see it. Two sessions
   built on one subject on the same day without knowing.
+
+## Structure rejection, Nov 13 (lube-oil-survey 20261113): subfield too long
+"filing-subfield-too-long: [metadata] subfield is 154 characters, max 120." The rename had lengthened it.
+preflight and `tools/shipcheck.py` now check the length.
