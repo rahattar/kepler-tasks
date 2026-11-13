@@ -1,0 +1,11 @@
+point,speed_rpm,p_man_bar,t_ivc_K,t_wall_K,record
+P01,900,1.50,360,432,records/p01.npy
+P02,900,2.21,353,443,records/p02.npy
+P03,1400,0.99,343,427,records/p03.npy
+P04,1400,2.20,353,440,records/p04.npy
+P05,2000,1.03,367,422,records/p05.npy
+P06,2000,1.52,347,442,records/p06.npy
+P07,2000,2.21,356,431,records/p07.npy
+P08,2600,1.02,344,422,records/p08.npy
+P09,2600,1.48,351,435,records/p09.npy
+P10,2600,2.17,341,445,records/p10.npy

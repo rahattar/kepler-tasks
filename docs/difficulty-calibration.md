@@ -840,3 +840,39 @@ tenth of shipping size. Three probes on `model: "opus"` at low effort: **3 of 3 
   There a survey becomes a resistance by division; here it becomes a slip through the very relation the wear
   breaks. Ask what the calibration has to compute, not what the reference happens to compute.
 - **Small first paid:** an hour to build, two minutes to a measured no.
+
+
+## Engine indicating, five bare cores of a timed program on shifted hidden data (Nov 13)
+
+`cores/engine-indicating-v0` to `-v4`, bundle `tasks/engine-indicating-analysis`,
+`docs/design-note-engine-indicating.md`. A program reduces cylinder pressure records to an indicating
+standard; in five of six hidden cells the encoder's index or the transducer's gain, or both, are not what
+the package gives. Probes on `model: "opus"` (claude-opus-5-5):
+
+| core | what changed | low | xhigh |
+|---|---|---|---|
+| v0 | index error; motored points in the table | 1 of 3 | |
+| v1 | fired points only; an `encoder_index` entry in the package | 3 of 3 | |
+| v2 | the entry removed; examples 0.02 degrees out | 1 of 3 | |
+| v3 | examples exact; a second condition (gain) that passes for the first | 0 of 3 | 1 of 3 |
+| v4 | v3 plus a polytropic exponent column | 0 of 6 | 3 of 6 |
+
+- **An output row that can come out impossible is a signpost.** v0's motored rows gave positive work and a
+  peak after top dead centre in the pending package. All three low runs read their own output and found it.
+- **A field the calculation never uses is a signpost** (v1), as journal-bearing v2 found for a column.
+- **A sound example must be exactly sound.** A tenth of a band of the condition in an example with results
+  is a signature with feedback; one low run fitted it (v2).
+- **With nothing pointing, low effort does not examine a package that has no results.** v3 and the finished
+  bundle: 0 of 6, all "the standard as written", in 3 to 7 minutes.
+- **Two conditions with one signature hold the careful runs too.** The first explanation (index) fits the
+  gain cell at every point and cylinder and so confirms itself. One xhigh run in three separated them.
+- **A diagnostic result column is a clean xhigh lever.** v4's exponent is constant on a sound cell and off on
+  the pending ones. Low: three of six remarked on it, none got it right. xhigh: 1 of 3 became 3 of 6.
+- **Runs question what "the result to the standard" means.** Three wrote that it might be the records as
+  given. The standard has to say what its symbols are, in physical terms, without saying the records differ.
+- **Round built-in values read as planted** (1.600 degrees, 1.0600). Use values that are not round.
+- **Do not ask a probe why it checked something.** Two follow-up questions were stopped by the model's
+  safeguards (`reasoning_extraction`). Read the report and the files it left.
+- **An Agent call can run in the foreground whatever `run_in_background` says** and then blocks for the whole
+  probe. Start probes last in a turn.
+- **As in journal bearing, the time limit separated no run.** Every probe vectorised.

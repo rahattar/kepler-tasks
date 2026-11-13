@@ -1,0 +1,10 @@
+tests/test_indicate.py run by `python -m pytest` from tests/, the program given through INDICATE_PROGRAM.
+pytest-json-ctrf is not installed on this machine: the report is written by authoring/evidence/ctrf_standin.py,
+which writes the same summary block
+
+the reference, solution/indicate.py                      pytest exit status 0, report of one test passed: yes   as expected
+the records taken as the indicating system has them      pytest exit status 1, report of one test passed: no   as expected
+the misfit put down to the index alone                   pytest exit status 1, report of one test passed: no   as expected
+the second solution, slow_indicate.py, at the limit      pytest exit status 1, report of one test passed: no   as expected
+
+4 programs, 0 unexpected

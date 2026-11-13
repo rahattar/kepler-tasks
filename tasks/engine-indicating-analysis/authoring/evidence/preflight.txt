@@ -1,0 +1,94 @@
+ok   the bundle holds README.md, instruction.md, task.toml, authoring, environment, solution, tests and nothing else
+ok   no caches, dotfiles or zips
+ok   no all-uppercase names but README.md and Dockerfile
+ok   every text file is ASCII
+ok   no decoding module or call in any Python file
+ok   the instruction's last paragraph is the closing sentence
+ok   the instruction has no heading
+ok   the instruction has no grading words
+ok   the instruction has no first or second person outside the closing sentence
+ok   the instruction gives the limit in the announcement's words, with the checker's 4 s
+ok   the instruction names one limit and it is the checker's
+ok   the instruction gives the header the checker reads
+ok   the instruction names /app/data/docs/is2_indicating.md and it exists
+ok   the instruction names /app/data/docs/cell_package.md and it exists
+ok   the instruction names /app/data/examples/cell_03 and it exists
+ok   the instruction names /app/data/examples/cell_08 and it exists
+ok   the instruction names /app/data/pending/cell_11 and it exists
+ok   the instruction names /app/data/pending/cell_13 and it exists
+ok   the instruction names /app/output/indicate.py and it exists
+ok   the instruction's figure for imep_bar is the checker's band
+ok   the instruction's figure for pmax_bar is the checker's band
+ok   the instruction's figure for q_gross_J is the checker's band
+ok   the instruction's figure for apmax_deg is the checker's band
+ok   the three angles share one band
+ok   IS-2 section 9 gives the same four figures
+ok   the instruction states the largest package
+ok   no agent-visible text names an index, a gain, an error or a check
+ok   cell_03: engine.json holds the documented fields only
+ok   cell_08: engine.json holds the documented fields only
+ok   cell_11: engine.json holds the documented fields only
+ok   cell_13: engine.json holds the documented fields only
+ok   task name is <prefix>/engine-indicating-analysis, three words
+ok   the name's prefix appears nowhere but task.toml's name line
+ok   the artifact is /app/output/indicate.py
+ok   agent: 28800 s, user agent
+ok   verifier: 600 s, separate, no network
+ok   domain and field
+ok   category "Science" and a subcategory
+ok   [metadata] carries the full block
+ok   keywords equal tags
+ok   difficulty_explanation is the README's section word for word
+ok   solution_explanation is the README's section word for word
+ok   verification_explanation is the README's section word for word
+ok   the difficulty text says synthetic and realistic and never routine
+ok   the difficulty text carries no agent-performance figures
+ok   no package is larger than the 20,000 cycles the instruction states (largest 18000)
+ok   tests/Dockerfile has `RUN mkdir -p /app/output` on a line of its own
+ok   tests/Dockerfile has `COPY . /tests/` on a line of its own
+ok   tests/Dockerfile has `WORKDIR /tests` on a line of its own
+ok   tests/Dockerfile has `ENV PYTHONUNBUFFERED=1` on a line of its own
+ok   verifier pin numpy==2.1.3, also spelt in tests/Dockerfile
+ok   verifier pin scipy==1.14.1, also spelt in tests/Dockerfile
+ok   verifier pin pandas==2.2.3, also spelt in tests/Dockerfile
+ok   verifier pin pytest==8.4.1, also spelt in tests/Dockerfile
+ok   verifier pin pytest-json-ctrf==0.3.5, also spelt in tests/Dockerfile
+ok   tests/test.sh has `mkdir -p /logs/verifier`
+ok   tests/test.sh has `--ctrf=/logs/verifier/ctrf.json`
+ok   tests/test.sh has `-p no:cacheprovider`
+ok   every reward write is the literal write at the start of a line; 0 is written first, 1 in one place
+ok   the limit is a timeout on the wait for the run, in tests/
+ok   a run over the limit ends the assessment: no table is read and no later cell is run
+ok   runs are held to one CPU with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1
+ok   the program runs as nobody and /tests is root's alone
+ok   the agent image: the pins, the user agent, ends as root
+ok   the pending packages carry no results
+ok   nothing sealed sits under environment/
+ok   all 130 data files listed in manifest.json are present with the listed SHA-256
+ok   manifest.json gives each cell's role, index and gain as the generator has them
+ok   regenerate.txt is there and reports no failure
+ok   design_rules.txt is there and reports no failure
+ok   reference_run.txt is there and reports no failure
+ok   route_run.txt is there and reports no failure
+ok   slow_run.txt is there and reports no failure
+ok   null_run.txt is there and reports no failure
+ok   seed_screen.txt is there and reports no failure
+ok   verifier_checks.txt is there and reports no failure
+ok   verifier_run.txt is there and reports no failure
+ok   regenerate: every shipped data file is what the generator writes
+ok   design rules: all hold
+ok   reference: accepted; its slowest run is over 1 s and the limit is 2 to 3.5 times it (1.3 s, 3.0 times)
+ok   reference: accepted on the six cells and on both examples
+ok   every band is at least twice the widest departure of a sound method (reference 0.37, second solution 0.49, sound variations 0.44 of a band)
+ok   seed screen: the reference is accepted on 20 of 20 seeds (widest 0.82 of a band)
+ok   the second solution, correct and slow, is stopped at the limit on the first cell and not accepted
+ok   the second solution would need at least 3 times the limit on every cell (12 to 24 times)
+ok   routes: none accepted; sound variations: all accepted
+ok   every cell with a condition stops at least 3 routes (cell_02 4, cell_05 4, cell_06 5, cell_09 5, cell_14 4)
+ok   the nearest route misses by at least 1.5 bands (4.3)
+ok   programs without physics get no row right
+ok   verifier checks: none unexpected
+ok   the whole verifier: the reference passes, three others do not
+ok   every decimal or three-digit figure in README.md occurs in the evidence, the documents or the code
+
+preflight clean

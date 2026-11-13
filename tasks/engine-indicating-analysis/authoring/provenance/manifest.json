@@ -1,0 +1,724 @@
+{
+ "cells": [
+  {
+   "cell": "cell_03",
+   "role": "example",
+   "index_deg": 0.0,
+   "gain": 1.0,
+   "wall_heat_factor": 1.03,
+   "cylinders": 4,
+   "ignition": "spark",
+   "engine": {
+    "bore_mm": 82.0,
+    "stroke_mm": 90.0,
+    "conrod_mm": 145.0,
+    "compression_ratio": 10.5,
+    "ivc_deg": -140.0,
+    "evo_deg": 130.0
+   },
+   "cycles_per_point": 150,
+   "files": {
+    "environment/data/examples/cell_03/engine.json": {
+     "bytes": 189,
+     "sha256": "475b9bc8c4143b32ed93c91fe94a8bc49865b4d2f0ae4ce12ff14eaeb573abb0"
+    },
+    "environment/data/examples/cell_03/expected.csv": {
+     "bytes": 2200,
+     "sha256": "fff4b83c8f8cf48be253912e67d51bcbaf30251ad717c5597610fda6685a2326"
+    },
+    "environment/data/examples/cell_03/points.csv": {
+     "bytes": 430,
+     "sha256": "aa8ec57db37a9045e83a82025ce12b796b8549c786c5c22b87ea4f4afb5e68e3"
+    },
+    "environment/data/examples/cell_03/records/p01.npy": {
+     "bytes": 864128,
+     "sha256": "0ba4b352f5d3aec39b6f4928768370c2d25a86cbfe5f4081f66f6d72969b8989"
+    },
+    "environment/data/examples/cell_03/records/p02.npy": {
+     "bytes": 864128,
+     "sha256": "5418465096963d1c74eb49dca44a04513fad92d0f5b96e7883f9dfa4d72dc516"
+    },
+    "environment/data/examples/cell_03/records/p03.npy": {
+     "bytes": 864128,
+     "sha256": "1f73fd77bd50cb18b8df8ac8ab1c065fd25ff12f5420e6faec11d4fa28151920"
+    },
+    "environment/data/examples/cell_03/records/p04.npy": {
+     "bytes": 864128,
+     "sha256": "6468d699688aafaa30e284f0abdfb672a6d07ea048fbe8e235c1ac12bf67521a"
+    },
+    "environment/data/examples/cell_03/records/p05.npy": {
+     "bytes": 864128,
+     "sha256": "10c5bf14c4c052a33f66c947fb34ad0b9cc63ac92e24835a4a93896fbffb08d8"
+    },
+    "environment/data/examples/cell_03/records/p06.npy": {
+     "bytes": 864128,
+     "sha256": "5fd3ba6b3031c761c8ff22d291fb01124acb817834dc14217b26b844206760eb"
+    },
+    "environment/data/examples/cell_03/records/p07.npy": {
+     "bytes": 864128,
+     "sha256": "b7619bafcceca52d18fc94f09f32c16216d80518b6457bb95f18c58fd3d0169e"
+    },
+    "environment/data/examples/cell_03/records/p08.npy": {
+     "bytes": 864128,
+     "sha256": "38cb4d830e0fcb2ba77d349eea791f38ccfa5cba79f6255f63f073a5dcf1388b"
+    },
+    "environment/data/examples/cell_03/records/p09.npy": {
+     "bytes": 864128,
+     "sha256": "34b0bb74ba45d8bc083f9092c63a61bcaaa3d07f206e13b428218c2a83a46973"
+    },
+    "environment/data/examples/cell_03/records/p10.npy": {
+     "bytes": 864128,
+     "sha256": "df496b7f1d320536b8998a089ac61eaef505b75f47d8dfb09c47495f6e63afc1"
+    }
+   }
+  },
+  {
+   "cell": "cell_08",
+   "role": "example",
+   "index_deg": 0.0,
+   "gain": 1.0,
+   "wall_heat_factor": 0.96,
+   "cylinders": 4,
+   "ignition": "spark",
+   "engine": {
+    "bore_mm": 76.0,
+    "stroke_mm": 84.0,
+    "conrod_mm": 138.0,
+    "compression_ratio": 10.0,
+    "ivc_deg": -136.0,
+    "evo_deg": 128.0
+   },
+   "cycles_per_point": 150,
+   "files": {
+    "environment/data/examples/cell_08/engine.json": {
+     "bytes": 189,
+     "sha256": "13cc46e50e7dc5cb341c6ac5cefd2457159b1ec8f8e2e15f6126e43ed796b5b1"
+    },
+    "environment/data/examples/cell_08/expected.csv": {
+     "bytes": 2239,
+     "sha256": "d3212d3994e7d5c0456a2d2f90688a2d1b10c5892f33a4f732f8ebc83372f355"
+    },
+    "environment/data/examples/cell_08/points.csv": {
+     "bytes": 430,
+     "sha256": "92999e171f33e37dca0849ed69719b776091777486c08349886657ae86e11068"
+    },
+    "environment/data/examples/cell_08/records/p01.npy": {
+     "bytes": 864128,
+     "sha256": "3372799bec56596361a44a8ed0824af9f7941542e1dafef3f969bbf2d59bdbcb"
+    },
+    "environment/data/examples/cell_08/records/p02.npy": {
+     "bytes": 864128,
+     "sha256": "87e7b5801cb4ced71633288a42b2a31a2792e379114b2249bdd2e3833220750b"
+    },
+    "environment/data/examples/cell_08/records/p03.npy": {
+     "bytes": 864128,
+     "sha256": "935ca4ea4bdc10125df3d37cedf2b8c18bfedd612433669b4411604cfa902c9a"
+    },
+    "environment/data/examples/cell_08/records/p04.npy": {
+     "bytes": 864128,
+     "sha256": "a1ac62e17ee62db49341e5771574f7044163a815b91b592ab597a7e95a782fca"
+    },
+    "environment/data/examples/cell_08/records/p05.npy": {
+     "bytes": 864128,
+     "sha256": "af3f9d66c1bd0908944a91be1cfbcdaef6a6b6ab164ebe6c3a1854a6aff3a84e"
+    },
+    "environment/data/examples/cell_08/records/p06.npy": {
+     "bytes": 864128,
+     "sha256": "2125642bf941b1166050d9fd8655f1550432b650aed3207562425a94243da6c5"
+    },
+    "environment/data/examples/cell_08/records/p07.npy": {
+     "bytes": 864128,
+     "sha256": "70808772c56413bd43ff242e24aa204e5b32462b2e127ca9c2c724bf960e059a"
+    },
+    "environment/data/examples/cell_08/records/p08.npy": {
+     "bytes": 864128,
+     "sha256": "9812cbeb9552241070787ed16b588f51c04381af5b1d4489f5abb5dfb6aa2133"
+    },
+    "environment/data/examples/cell_08/records/p09.npy": {
+     "bytes": 864128,
+     "sha256": "928abd0c1a0251e9ccda2d8c8a2b39d04d45a0b11acf821006ad4239abea5b79"
+    },
+    "environment/data/examples/cell_08/records/p10.npy": {
+     "bytes": 864128,
+     "sha256": "7359c1ab29e79c277210a0c23dd030d769a8655847f8ea26f19128df5d779916"
+    }
+   }
+  },
+  {
+   "cell": "cell_11",
+   "role": "pending",
+   "index_deg": -1.57,
+   "gain": 1.0,
+   "wall_heat_factor": 1.05,
+   "cylinders": 6,
+   "ignition": "spark",
+   "engine": {
+    "bore_mm": 86.0,
+    "stroke_mm": 86.0,
+    "conrod_mm": 143.0,
+    "compression_ratio": 11.0,
+    "ivc_deg": -138.0,
+    "evo_deg": 130.0
+   },
+   "cycles_per_point": 300,
+   "files": {
+    "environment/data/pending/cell_11/engine.json": {
+     "bytes": 189,
+     "sha256": "701b0cacb8d8e3a639663caaf6431bda8f821d1279df1c586496b7f09cf3471b"
+    },
+    "environment/data/pending/cell_11/points.csv": {
+     "bytes": 430,
+     "sha256": "9278d739af0791822565700181c8df5586e79fdca6f6d61cdf5698dbe4c9d99d"
+    },
+    "environment/data/pending/cell_11/records/p01.npy": {
+     "bytes": 2592128,
+     "sha256": "00276b0a278a33231ff5e280373019c2118b3de68e307bd907d0a96b5259fa19"
+    },
+    "environment/data/pending/cell_11/records/p02.npy": {
+     "bytes": 2592128,
+     "sha256": "6e0ac26149a0b94a71c83579afc49f9cdbcdf5f9c09eb0062c2cff04534f8728"
+    },
+    "environment/data/pending/cell_11/records/p03.npy": {
+     "bytes": 2592128,
+     "sha256": "db74b81bd9432bb7ac8141315002a421bba1b84867cb47101b309fb0d471b95d"
+    },
+    "environment/data/pending/cell_11/records/p04.npy": {
+     "bytes": 2592128,
+     "sha256": "67fcc6d8caf301cc17ed733a225d96ae07b6a571cda4f92de0b93035b80edeec"
+    },
+    "environment/data/pending/cell_11/records/p05.npy": {
+     "bytes": 2592128,
+     "sha256": "58d03eb341b23509ce3bcbe401ead633d128f8f4f6db066ed8a26ace816716eb"
+    },
+    "environment/data/pending/cell_11/records/p06.npy": {
+     "bytes": 2592128,
+     "sha256": "daca6d7be82ea3a87802db546c840cd192fa5b0193e9a6456312e4c432c35562"
+    },
+    "environment/data/pending/cell_11/records/p07.npy": {
+     "bytes": 2592128,
+     "sha256": "e75b002cdc4b01675aa52f2c49dc4eb2bff0c5bde921d28b90914efe153d81ca"
+    },
+    "environment/data/pending/cell_11/records/p08.npy": {
+     "bytes": 2592128,
+     "sha256": "1ff5b133f94e72d33243762fe3f1d519d04f2d982aad7cb2f4d82cc9da0493c9"
+    },
+    "environment/data/pending/cell_11/records/p09.npy": {
+     "bytes": 2592128,
+     "sha256": "dd2bd5a47657c04458a41213123a2fe9cac4dd141f1de3c6cc154f035f04f3c2"
+    },
+    "environment/data/pending/cell_11/records/p10.npy": {
+     "bytes": 2592128,
+     "sha256": "672e9365410f6a30ab8570fd04d18048329897d010a576da0404e877021912f4"
+    },
+    "authoring/provenance/pending_results/cell_11.csv": {
+     "bytes": 3286,
+     "sha256": "65916fff5db8114e1c85d4a3f32fd4f9a2dcc6df2cb95369e909ad580a258c23"
+    }
+   }
+  },
+  {
+   "cell": "cell_13",
+   "role": "pending",
+   "index_deg": 0.0,
+   "gain": 1.063,
+   "wall_heat_factor": 0.97,
+   "cylinders": 4,
+   "ignition": "spark",
+   "engine": {
+    "bore_mm": 80.0,
+    "stroke_mm": 84.0,
+    "conrod_mm": 136.0,
+    "compression_ratio": 10.8,
+    "ivc_deg": -137.0,
+    "evo_deg": 129.0
+   },
+   "cycles_per_point": 300,
+   "files": {
+    "environment/data/pending/cell_13/engine.json": {
+     "bytes": 189,
+     "sha256": "035d596e3a5ffc21e6f0e8618cfd098708a567bc4e05e14df15c305dca3b6d10"
+    },
+    "environment/data/pending/cell_13/points.csv": {
+     "bytes": 430,
+     "sha256": "c87a6cad12bbb37696dc59ea2ebfad5ff6411163d95018b152e8acaafbb1d98b"
+    },
+    "environment/data/pending/cell_13/records/p01.npy": {
+     "bytes": 1728128,
+     "sha256": "5ad2787bf2365c9772778b1a015204a35d812c9cb4e7a89c04f402699a5ce1a8"
+    },
+    "environment/data/pending/cell_13/records/p02.npy": {
+     "bytes": 1728128,
+     "sha256": "1c5a91cd00c1a4d74d5a4cbfa685c068fdd230d8daff1d891ae97ab4fd2ad37a"
+    },
+    "environment/data/pending/cell_13/records/p03.npy": {
+     "bytes": 1728128,
+     "sha256": "7a7d8543b2d244b701eaecea7c5adb770d95d4c12e76315b2f25325dece96409"
+    },
+    "environment/data/pending/cell_13/records/p04.npy": {
+     "bytes": 1728128,
+     "sha256": "9caa3d5cf272abdfb5038220866dd07e2b95a0c4fe25305ecaad1e9091299636"
+    },
+    "environment/data/pending/cell_13/records/p05.npy": {
+     "bytes": 1728128,
+     "sha256": "925a0237cdff82b194bfdbeb19a8550709f70e5cc759226cc17a69b37d5d9f41"
+    },
+    "environment/data/pending/cell_13/records/p06.npy": {
+     "bytes": 1728128,
+     "sha256": "2e9dffd53791bace60654057b6b00c4bba58a58c3cd0c1470ff72bb0c1840a85"
+    },
+    "environment/data/pending/cell_13/records/p07.npy": {
+     "bytes": 1728128,
+     "sha256": "323bfcb9a094fda5a14cb66d4773c86001e20e08c15502702ebd5991e73f044c"
+    },
+    "environment/data/pending/cell_13/records/p08.npy": {
+     "bytes": 1728128,
+     "sha256": "c30a968c415a5f49de8cf1585ae0e9a5a818bb07bb1c1e72fd02e8e89b63b49f"
+    },
+    "environment/data/pending/cell_13/records/p09.npy": {
+     "bytes": 1728128,
+     "sha256": "ce63bb1375647ee4e7d4243b7190604d985d106ce6e42c6a68708566e68267d8"
+    },
+    "environment/data/pending/cell_13/records/p10.npy": {
+     "bytes": 1728128,
+     "sha256": "578ab2c5121b69fbbc88df5a14e0734a43071789a93e40f2555ea68307b5443a"
+    },
+    "authoring/provenance/pending_results/cell_13.csv": {
+     "bytes": 2197,
+     "sha256": "aec71f236c718e093c9344dc9e80b16c2bba926eeecded7fd6589495d1666f07"
+    }
+   }
+  },
+  {
+   "cell": "cell_02",
+   "role": "hidden",
+   "index_deg": 2.23,
+   "gain": 1.0,
+   "wall_heat_factor": 0.94,
+   "cylinders": 4,
+   "ignition": "compression",
+   "engine": {
+    "bore_mm": 84.0,
+    "stroke_mm": 90.0,
+    "conrod_mm": 145.0,
+    "compression_ratio": 16.5,
+    "ivc_deg": -145.0,
+    "evo_deg": 125.0
+   },
+   "cycles_per_point": 300,
+   "files": {
+    "tests/cells/cell_02/engine.json": {
+     "bytes": 189,
+     "sha256": "5ed79fcdd16045b420cbfa8b573accbe77c6b581418e80ece40bfb3a2ea70c64"
+    },
+    "tests/cells/cell_02/points.csv": {
+     "bytes": 430,
+     "sha256": "74886215fa4c22169815ac3149a0ea22c4fa405056c06070934be135a9217627"
+    },
+    "tests/cells/cell_02/records/p01.npy": {
+     "bytes": 1728128,
+     "sha256": "2675d0f1e69889c73a2f80ddd3d11a6e343c8051a504f4bfe4a7d29a31c3dfb6"
+    },
+    "tests/cells/cell_02/records/p02.npy": {
+     "bytes": 1728128,
+     "sha256": "7d786cd2ec2142e6d6296ede95999e577047ce232ab795bc2b2ac56baef9d4c5"
+    },
+    "tests/cells/cell_02/records/p03.npy": {
+     "bytes": 1728128,
+     "sha256": "67419c770be6154a5eb4ebf3aa20cf128af21254ae7036e3fcf93ccc0fb10b50"
+    },
+    "tests/cells/cell_02/records/p04.npy": {
+     "bytes": 1728128,
+     "sha256": "782978268abc8beb015fa382e50176ec83f7f938aa41ba798358b11ca579f008"
+    },
+    "tests/cells/cell_02/records/p05.npy": {
+     "bytes": 1728128,
+     "sha256": "de5176296895c9946da0c7870cd3914a9afa1f88890097d3fb4fc0405e77f65e"
+    },
+    "tests/cells/cell_02/records/p06.npy": {
+     "bytes": 1728128,
+     "sha256": "619e4b7d125678773f233e74d2197947bd87f6d83cc551e8acc9b6cd4fee2869"
+    },
+    "tests/cells/cell_02/records/p07.npy": {
+     "bytes": 1728128,
+     "sha256": "82a7c1942be7e3c41d7393a2784686f5593eb97af44013ec34bf993951dfbb3d"
+    },
+    "tests/cells/cell_02/records/p08.npy": {
+     "bytes": 1728128,
+     "sha256": "74ab780aff5e0854f7efbb50021f2d32a520e534970b1f7bb52938ed3c8794a5"
+    },
+    "tests/cells/cell_02/records/p09.npy": {
+     "bytes": 1728128,
+     "sha256": "d24a45374c887d5800914c5f5691b8d429483de56e3f8f9d61742ef59c7bbd1b"
+    },
+    "tests/cells/cell_02/records/p10.npy": {
+     "bytes": 1728128,
+     "sha256": "1b0af36043a4f7a036e51ac6f0f6d279d2e353946b232e12cde2e931f7949e3c"
+    },
+    "tests/sealed/results/cell_02.csv": {
+     "bytes": 2218,
+     "sha256": "fff4c637fa9fa78dfd656e6e72c51baaeb34a389f51b1c3763410eff13cc4c52"
+    }
+   }
+  },
+  {
+   "cell": "cell_05",
+   "role": "hidden",
+   "index_deg": 0.0,
+   "gain": 0.947,
+   "wall_heat_factor": 1.07,
+   "cylinders": 4,
+   "ignition": "compression",
+   "engine": {
+    "bore_mm": 130.0,
+    "stroke_mm": 150.0,
+    "conrod_mm": 250.0,
+    "compression_ratio": 17.5,
+    "ivc_deg": -150.0,
+    "evo_deg": 120.0
+   },
+   "cycles_per_point": 300,
+   "files": {
+    "tests/cells/cell_05/engine.json": {
+     "bytes": 191,
+     "sha256": "aeb4d9746cf9e08dd3074eefa5c7651843a19f48202d331f870e5bed0c49657d"
+    },
+    "tests/cells/cell_05/points.csv": {
+     "bytes": 427,
+     "sha256": "d8495612c1bedc6f16d8793ffd4a50a12dea2c0011024c9ad956bc16783cafec"
+    },
+    "tests/cells/cell_05/records/p01.npy": {
+     "bytes": 1728128,
+     "sha256": "a1bce376a721e3a61722ead842cd72bd5a457c0753b92eeaf80c93c69ed013d4"
+    },
+    "tests/cells/cell_05/records/p02.npy": {
+     "bytes": 1728128,
+     "sha256": "54c81247417a8ed93d0da984e9017af4b01dee44a31db72f5fa700d1f44537e1"
+    },
+    "tests/cells/cell_05/records/p03.npy": {
+     "bytes": 1728128,
+     "sha256": "ca33ffd3bdc80b458edf6aa43db5d541c3f072caf8bb0c7e6405518a9dbfb0a0"
+    },
+    "tests/cells/cell_05/records/p04.npy": {
+     "bytes": 1728128,
+     "sha256": "547a5945e932fd3f4b16a9cc35f8e372268a1fa22bd0ebabeea901b491279df5"
+    },
+    "tests/cells/cell_05/records/p05.npy": {
+     "bytes": 1728128,
+     "sha256": "9006d303c0af124028196efa0417e20a44149ecc0eefde56a01dd62702b891d4"
+    },
+    "tests/cells/cell_05/records/p06.npy": {
+     "bytes": 1728128,
+     "sha256": "dde006718bc2a7965d0db7efec2f2e318850e0fb7c1ad53d70fa69d52977234c"
+    },
+    "tests/cells/cell_05/records/p07.npy": {
+     "bytes": 1728128,
+     "sha256": "444870af596c6cee72dec5ceec16d01b2bb4c1cefaea9fc58b4e09126657e482"
+    },
+    "tests/cells/cell_05/records/p08.npy": {
+     "bytes": 1728128,
+     "sha256": "2ab2e8590dc96fb426b88a6065b358bd2b1452c6538c572dd1e3a8bb337f6b84"
+    },
+    "tests/cells/cell_05/records/p09.npy": {
+     "bytes": 1728128,
+     "sha256": "468d2c351ee991f6b83c2faab485f956d9ba9544d7e10d4656d1653996c4b585"
+    },
+    "tests/cells/cell_05/records/p10.npy": {
+     "bytes": 1728128,
+     "sha256": "badd09a181aa4fbd478968a71537e56b88dee2811852de6c050a769c6191612d"
+    },
+    "tests/sealed/results/cell_05.csv": {
+     "bytes": 2239,
+     "sha256": "a1fac20d951737ed5e2575dac4cc599aa622351ebb354c5ed8611ab4f92f05c0"
+    }
+   }
+  },
+  {
+   "cell": "cell_06",
+   "role": "hidden",
+   "index_deg": 1.34,
+   "gain": 1.052,
+   "wall_heat_factor": 1.02,
+   "cylinders": 6,
+   "ignition": "spark",
+   "engine": {
+    "bore_mm": 105.0,
+    "stroke_mm": 125.0,
+    "conrod_mm": 210.0,
+    "compression_ratio": 12.5,
+    "ivc_deg": -145.0,
+    "evo_deg": 125.0
+   },
+   "cycles_per_point": 300,
+   "files": {
+    "tests/cells/cell_06/engine.json": {
+     "bytes": 191,
+     "sha256": "eb2597ed1b36228de676beb2ef8aca7a1aba1485c21d182b2a5dd305e55c8034"
+    },
+    "tests/cells/cell_06/points.csv": {
+     "bytes": 430,
+     "sha256": "2cfe87fd7f96b0ea42a81655ccebc8041084f7bd988c1b4ee81583cfe770dba1"
+    },
+    "tests/cells/cell_06/records/p01.npy": {
+     "bytes": 2592128,
+     "sha256": "b8535e7f4b7ef967a3fc393d4ce7e4b057addf91c9a9ea967f5c7a8d68c86046"
+    },
+    "tests/cells/cell_06/records/p02.npy": {
+     "bytes": 2592128,
+     "sha256": "a623afcb4e6ce33afc6ec80a1526cd5be1f4fc4c23e358a13d908b74a5c9f1f7"
+    },
+    "tests/cells/cell_06/records/p03.npy": {
+     "bytes": 2592128,
+     "sha256": "e7e8d5d6a08d53dbbf9f2504f71a0abffc4117f7388fe18683ff9519a0a6a097"
+    },
+    "tests/cells/cell_06/records/p04.npy": {
+     "bytes": 2592128,
+     "sha256": "1df296c07883750480a24637d6e9b3227305a5c30cb6f57c49386470e3704ebe"
+    },
+    "tests/cells/cell_06/records/p05.npy": {
+     "bytes": 2592128,
+     "sha256": "00240d46df5a4dc58803452750f741b58f71a2a82ace6b051460b5b34eeaf3a9"
+    },
+    "tests/cells/cell_06/records/p06.npy": {
+     "bytes": 2592128,
+     "sha256": "6c82a42703aabd2705ab77d97af7b77c13625ee0449311751bc622ab6b0631bd"
+    },
+    "tests/cells/cell_06/records/p07.npy": {
+     "bytes": 2592128,
+     "sha256": "105aef56f6ffd50cbb7bc2fa2df6af894d0d0c03a9a77e33f269a8c8f0e75adb"
+    },
+    "tests/cells/cell_06/records/p08.npy": {
+     "bytes": 2592128,
+     "sha256": "30dc42352b8c3d11f13e5a0377d0b5e0e4f0c17348441e6a35c48257baa4f144"
+    },
+    "tests/cells/cell_06/records/p09.npy": {
+     "bytes": 2592128,
+     "sha256": "06f9e95cb4f5dd772757b496f6e0b3e74caf95e3ae16722d34f2186ebb61245b"
+    },
+    "tests/cells/cell_06/records/p10.npy": {
+     "bytes": 2592128,
+     "sha256": "15a1950aa448adf96c0bb3dc59c237e4ea9bca1c11d7efc4f77b7eb8b39bd4c9"
+    },
+    "tests/sealed/results/cell_06.csv": {
+     "bytes": 3350,
+     "sha256": "753ae3f26120184c73551ee5a1a4536de8e25150504ceac758c94c2f0e0726ae"
+    }
+   }
+  },
+  {
+   "cell": "cell_09",
+   "role": "hidden",
+   "index_deg": -2.41,
+   "gain": 0.958,
+   "wall_heat_factor": 0.93,
+   "cylinders": 3,
+   "ignition": "spark",
+   "engine": {
+    "bore_mm": 74.0,
+    "stroke_mm": 80.0,
+    "conrod_mm": 132.0,
+    "compression_ratio": 11.5,
+    "ivc_deg": -135.0,
+    "evo_deg": 128.0
+   },
+   "cycles_per_point": 300,
+   "files": {
+    "tests/cells/cell_09/engine.json": {
+     "bytes": 189,
+     "sha256": "ba567a1679533750b322a3ef010bbdf74b4953a9a6b3a253edc290b1947f32ca"
+    },
+    "tests/cells/cell_09/points.csv": {
+     "bytes": 430,
+     "sha256": "c6c4262ce8e8ccff798b1f894f8e72238b7de101899de1676ca73ddf5453b5c9"
+    },
+    "tests/cells/cell_09/records/p01.npy": {
+     "bytes": 1296128,
+     "sha256": "9e08b47b9677721963baaa9f312f69b023452960e882d24bfecdd4d6709efede"
+    },
+    "tests/cells/cell_09/records/p02.npy": {
+     "bytes": 1296128,
+     "sha256": "4efc882945b41c134baab67501694dbcd4e2b723c7ef9302bae88aad5e42cada"
+    },
+    "tests/cells/cell_09/records/p03.npy": {
+     "bytes": 1296128,
+     "sha256": "14e86540e674cf83aaf050e5b86f468b5ea8a13f065daf3367c8197ea5f05dbe"
+    },
+    "tests/cells/cell_09/records/p04.npy": {
+     "bytes": 1296128,
+     "sha256": "11b3e6bd9f339ab53a80e47869cc76544c9380657b1cf90ec00d074582b77ee0"
+    },
+    "tests/cells/cell_09/records/p05.npy": {
+     "bytes": 1296128,
+     "sha256": "caa3d7a23b939974395d55470c94770f9e9280bdc6afbb923f42bd20bfc1b36c"
+    },
+    "tests/cells/cell_09/records/p06.npy": {
+     "bytes": 1296128,
+     "sha256": "3b24118e7d59d9499032189991cf732656372ffb874716d3425b4b085fd9699e"
+    },
+    "tests/cells/cell_09/records/p07.npy": {
+     "bytes": 1296128,
+     "sha256": "c597641d09637168e1c2772d6d9001fb53d160e6a9564670e674b36913820288"
+    },
+    "tests/cells/cell_09/records/p08.npy": {
+     "bytes": 1296128,
+     "sha256": "31e9147e358119d12ba173e14c5c03eab80b23b923e922c40ee8b33d92c6df02"
+    },
+    "tests/cells/cell_09/records/p09.npy": {
+     "bytes": 1296128,
+     "sha256": "c9ab26cd02cb85176145ee665d4f2a75f93569d00434b185af909e6d43f98d78"
+    },
+    "tests/cells/cell_09/records/p10.npy": {
+     "bytes": 1296128,
+     "sha256": "2f18f1bebfa31e07d07e1e2b209d46b0ed9bafb7133106428c0cb58efaa2a81e"
+    },
+    "tests/sealed/results/cell_09.csv": {
+     "bytes": 1699,
+     "sha256": "275f12ea21a551fffdf5c8f14e1d66a09b6e0040ff8a4d0876d9086b17948a79"
+    }
+   }
+  },
+  {
+   "cell": "cell_12",
+   "role": "hidden",
+   "index_deg": 0.0,
+   "gain": 1.0,
+   "wall_heat_factor": 0.99,
+   "cylinders": 4,
+   "ignition": "spark",
+   "engine": {
+    "bore_mm": 79.0,
+    "stroke_mm": 88.0,
+    "conrod_mm": 140.0,
+    "compression_ratio": 9.6,
+    "ivc_deg": -139.0,
+    "evo_deg": 131.0
+   },
+   "cycles_per_point": 300,
+   "files": {
+    "tests/cells/cell_12/engine.json": {
+     "bytes": 188,
+     "sha256": "0a4daf35217ff72263be8bfd8fc36e81c19dc20dc802d80beeb782bc6f13503d"
+    },
+    "tests/cells/cell_12/points.csv": {
+     "bytes": 430,
+     "sha256": "06f6c16b143d2847929876b82f6bb233d52982076864c01e143740adc816068f"
+    },
+    "tests/cells/cell_12/records/p01.npy": {
+     "bytes": 1728128,
+     "sha256": "694f89f7d1db5f24d31d7f8de4aa84c01e48b1019394dc6e4087c58097ceae42"
+    },
+    "tests/cells/cell_12/records/p02.npy": {
+     "bytes": 1728128,
+     "sha256": "2d5774a46673b5c3fa12c904e242899d3451bd95baf32ed0d1f1f235d5b4c1fa"
+    },
+    "tests/cells/cell_12/records/p03.npy": {
+     "bytes": 1728128,
+     "sha256": "8aa0170303922bbb6e9888ee06354e49ad68c770ef2d97ad9e803fbf1750aa6d"
+    },
+    "tests/cells/cell_12/records/p04.npy": {
+     "bytes": 1728128,
+     "sha256": "1980641f7b8c52ef3f5366a0f6fcf6e7ffe7ba977f3200245f0c4390e7395f8c"
+    },
+    "tests/cells/cell_12/records/p05.npy": {
+     "bytes": 1728128,
+     "sha256": "fdf4aab87240bc823ea92064d34389e061c35d43550058a414d81ba253ad6b43"
+    },
+    "tests/cells/cell_12/records/p06.npy": {
+     "bytes": 1728128,
+     "sha256": "f082359135673dcbdbbf59d355dc9d90e45d497b0e2d6a3b40895bc54bd8541c"
+    },
+    "tests/cells/cell_12/records/p07.npy": {
+     "bytes": 1728128,
+     "sha256": "56a68dcce0871e2a41ec546109bc4bf7e9076b849c07ddc681dcae6e76daeba3"
+    },
+    "tests/cells/cell_12/records/p08.npy": {
+     "bytes": 1728128,
+     "sha256": "21fdcd1e6700120e97e2f19d6eeb093b5d4458f8d6a75d5346e8966aba889cc6"
+    },
+    "tests/cells/cell_12/records/p09.npy": {
+     "bytes": 1728128,
+     "sha256": "13b85fef46859553871809f7a78e0f1f6569ea757ab21b291381a4896efb6e5f"
+    },
+    "tests/cells/cell_12/records/p10.npy": {
+     "bytes": 1728128,
+     "sha256": "be6058551a118c41885bdadab1d1876894edd1d2938c5b8c5abe9571482c5c60"
+    },
+    "tests/sealed/results/cell_12.csv": {
+     "bytes": 2223,
+     "sha256": "fce0feab6a91146dc2da0e1f74dafab99c27bca56e8eb43dbf8dc6fe270758ee"
+    }
+   }
+  },
+  {
+   "cell": "cell_14",
+   "role": "hidden",
+   "index_deg": 0.0,
+   "gain": 1.071,
+   "wall_heat_factor": 1.06,
+   "cylinders": 4,
+   "ignition": "compression",
+   "engine": {
+    "bore_mm": 96.0,
+    "stroke_mm": 104.0,
+    "conrod_mm": 165.0,
+    "compression_ratio": 15.5,
+    "ivc_deg": -146.0,
+    "evo_deg": 124.0
+   },
+   "cycles_per_point": 300,
+   "files": {
+    "tests/cells/cell_14/engine.json": {
+     "bytes": 190,
+     "sha256": "cf4433cd0a02ebbb48d139dd90b9f01ff7e279060da501682833be4b28dc29e1"
+    },
+    "tests/cells/cell_14/points.csv": {
+     "bytes": 428,
+     "sha256": "6cbf5a8643d32d1fa9388627b9ae50f8150bd6f29e99a17317f2d6a907d4acf0"
+    },
+    "tests/cells/cell_14/records/p01.npy": {
+     "bytes": 1728128,
+     "sha256": "fd123dbc1a1ad95930b55c29f3e90a4104f45a1a523033e6989ef293400b9696"
+    },
+    "tests/cells/cell_14/records/p02.npy": {
+     "bytes": 1728128,
+     "sha256": "cdf98d9217a7330bd0a138d6872021f96aca8c906e5217eecdca148f3d4d2847"
+    },
+    "tests/cells/cell_14/records/p03.npy": {
+     "bytes": 1728128,
+     "sha256": "8f5cc8f63e5f1faaec8bf2652768071b86b2ec1f65733cdf219ef4343b537225"
+    },
+    "tests/cells/cell_14/records/p04.npy": {
+     "bytes": 1728128,
+     "sha256": "bb0f1673263af9b78a4f3bd006e3ee9f845249c75878bb3ff3b4dace67423692"
+    },
+    "tests/cells/cell_14/records/p05.npy": {
+     "bytes": 1728128,
+     "sha256": "12291de56959989358009ff77017ea645402c57fd37012a38f80b52c16d6c53f"
+    },
+    "tests/cells/cell_14/records/p06.npy": {
+     "bytes": 1728128,
+     "sha256": "f44e60b461a426a9b114c0118a41f3645c9c567d45579f5efce3cade68682208"
+    },
+    "tests/cells/cell_14/records/p07.npy": {
+     "bytes": 1728128,
+     "sha256": "58576687d2ded0fad761627803d76724355950cd4d6cf6435799d2f029ccbe06"
+    },
+    "tests/cells/cell_14/records/p08.npy": {
+     "bytes": 1728128,
+     "sha256": "b61d89d8e4176da6bf7118276bbd7e3cdab302e080af6e091c8cfad42a119ea5"
+    },
+    "tests/cells/cell_14/records/p09.npy": {
+     "bytes": 1728128,
+     "sha256": "52bf493a4c4d95b024d378f5f10ec0f07a9422824fa483433fee08378ac8ff2b"
+    },
+    "tests/cells/cell_14/records/p10.npy": {
+     "bytes": 1728128,
+     "sha256": "9b6b4e6f31ea986476ffda724ab6e2ecf461bd94f939c499f1ab36a4ce9d4458"
+    },
+    "tests/sealed/results/cell_14.csv": {
+     "bytes": 2223,
+     "sha256": "d528b0e65cf4750d5e56df2499419c44efe1bddffe7ce5670422d695a0fa54c8"
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+solution/indicate.py through tests/check_program.py, limit 4 s a run
+
+cell_02   1.07 s  every row within its bands  (widest departure, in bands: imep 0.30, pmax 0.16, apmax 0.15, ca10 0.15, ca50 0.10, q 0.18)
+cell_05   1.02 s  every row within its bands  (widest departure, in bands: imep 0.36, pmax 0.18, apmax 0.18, ca10 0.17, ca50 0.18, q 0.20)
+cell_06   1.32 s  every row within its bands  (widest departure, in bands: imep 0.15, pmax 0.12, apmax 0.09, ca10 0.20, ca50 0.12, q 0.10)
+cell_09   0.92 s  every row within its bands  (widest departure, in bands: imep 0.29, pmax 0.20, apmax 0.23, ca10 0.23, ca50 0.27, q 0.17)
+cell_12   1.02 s  every row within its bands  (widest departure, in bands: imep 0.03, pmax 0.03, apmax 0.01, ca10 0.08, ca50 0.04, q 0.04)
+cell_14   1.07 s  every row within its bands  (widest departure, in bands: imep 0.37, pmax 0.21, apmax 0.19, ca10 0.16, ca50 0.13, q 0.19)
+accepted
+
+rows in all: 250
+widest departure at any row of any cell: 0.37 of its band
+runs take 0.9 to 1.3 s; the limit of 4 s is 3.0 times the slowest
+
+the two example packages, against their expected.csv
+cell_03   0.57 s  every row within its bands  (widest departure, in bands: imep 0.21, pmax 0.16, apmax 0.14, ca10 0.25, ca50 0.18, q 0.13)
+cell_08   0.62 s  every row within its bands  (widest departure, in bands: imep 0.05, pmax 0.04, apmax 0.07, ca10 0.05, ca50 0.06, q 0.05)
+accepted
+
+what it finds in the packages (written by the program to stderr)
+examples cell_03: index error -0.045 degrees, transducer gain 1.0016
+examples cell_08: index error 0.011 degrees, transducer gain 0.9997
+pending cell_11: index error -1.633 degrees, transducer gain 1.0022
+pending cell_13: index error 0.026 degrees, transducer gain 1.0621

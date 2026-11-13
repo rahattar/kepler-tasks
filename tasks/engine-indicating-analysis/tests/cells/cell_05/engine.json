@@ -1,0 +1,11 @@
+{
+ "cell": "cell_05",
+ "cylinders": 4,
+ "bore_mm": 130.0,
+ "stroke_mm": 150.0,
+ "conrod_mm": 250.0,
+ "compression_ratio": 17.5,
+ "ivc_deg": -150.0,
+ "evo_deg": 120.0,
+ "bar_per_count": 0.05
+}

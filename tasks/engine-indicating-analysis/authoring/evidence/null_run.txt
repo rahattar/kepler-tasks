@@ -1,0 +1,4 @@
+mean     not accepted; rows with all six values in band: 0 of 250
+nearest  not accepted; rows with all six values in band: 0 of 250
+
+2 programs, 0 accepted; most rows right: 0 of 250

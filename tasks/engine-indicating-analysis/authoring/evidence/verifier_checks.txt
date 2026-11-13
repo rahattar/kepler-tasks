@@ -1,0 +1,91 @@
+Programs judged by tests/check_program.py on cell_09 made with 4 cycles a point (30 rows).
+
+Tables that must be refused.
+
+  nothing written                                                                not accepted: no table was written ( as expected
+  a directory where the table belongs                                            not accepted: what was written is no as expected
+  a symbolic link to a file holding the true table                               not accepted: no table was written ( as expected
+  an empty file                                                                  not accepted: the table is empty   as expected
+  the header alone                                                               not accepted: 30 rows are missing, t as expected
+  the true rows without the header                                               not accepted: the header is not poin as expected
+  header misspelt (imep_Bar)                                                     not accepted: the header is not poin as expected
+  header with a blank after a comma                                              not accepted: the header is not poin as expected
+  header in quotes                                                               not accepted: the header is not poin as expected
+  a column added                                                                 not accepted: the header is not poin as expected
+  the column q_gross_J left out                                                  not accepted: the header is not poin as expected
+  one row of seven fields                                                        not accepted: line 2 has 7 fields  as expected
+  one row left out                                                               not accepted: 1 rows are missing, th as expected
+  one row given twice                                                            not accepted: line 32: point 'P01',  as expected
+  a row for a point the package does not have                                    not accepted: line 32: point 'P99',  as expected
+  a point's name in lower case                                                   not accepted: line 2: point 'p01', c as expected
+  cylinder 0                                                                     not accepted: line 2: point 'P01', c as expected
+  cylinder written 1.0                                                           not accepted: line 2: cylinder '1.0' as expected
+  a value left empty                                                             not accepted: line 5: imep_bar is '' as expected
+  a value n/a                                                                    not accepted: line 5: imep_bar is 'n as expected
+  a value nan                                                                    not accepted: line 5: imep_bar is 'n as expected
+  a value inf                                                                    not accepted: line 5: imep_bar is 'i as expected
+  a value with its unit (bar)                                                    not accepted: line 5: imep_bar is '8 as expected
+  a value with a decimal comma                                                   not accepted: line 5 has 9 fields  as expected
+  a value with a digit separator                                                 not accepted: line 5: imep_bar is '1 as expected
+  a value in hexadecimal                                                         not accepted: line 5: imep_bar is '0 as expected
+  bytes that are not text                                                        not accepted: the table is not text as expected
+  a table over the size cap                                                      not accepted: the table is larger th as expected
+  the true table, then exit status 3                                             not accepted: in time, exit status 3 as expected
+
+The true table written in ways the task statement leaves open: all must be accepted.
+
+  as the sealed results have it                                                  accepted                           as expected
+  CRLF line ends                                                                 accepted                           as expected
+  no line end after the last row                                                 accepted                           as expected
+  empty lines between rows and at the top                                        accepted                           as expected
+  the rows in reverse order                                                      accepted                           as expected
+  blanks round every field of the rows                                           accepted                           as expected
+  every field of the rows in quotes                                              accepted                           as expected
+  a plus sign on positive values                                                 accepted                           as expected
+  exponent form                                                                  accepted                           as expected
+  ten decimals                                                                   accepted                           as expected
+  cylinders written 01, 02, 03                                                   accepted                           as expected
+
+Bands. One quantity moved at every row, then at one row only.
+
+  imep_bar moved by 0.9 of its band at every row                                 accepted                           as expected
+  imep_bar moved by 1.1 of its band at every row                                 not accepted                       as expected
+  pmax_bar moved by 0.9 of its band at every row                                 accepted                           as expected
+  pmax_bar moved by 1.1 of its band at every row                                 not accepted                       as expected
+  apmax_deg moved by 0.9 of its band at every row                                accepted                           as expected
+  apmax_deg moved by 1.1 of its band at every row                                not accepted                       as expected
+  ca10_deg moved by 0.9 of its band at every row                                 accepted                           as expected
+  ca10_deg moved by 1.1 of its band at every row                                 not accepted                       as expected
+  ca50_deg moved by 0.9 of its band at every row                                 accepted                           as expected
+  ca50_deg moved by 1.1 of its band at every row                                 not accepted                       as expected
+  q_gross_J moved by 0.9 of its band at every row                                accepted                           as expected
+  q_gross_J moved by 1.1 of its band at every row                                not accepted                       as expected
+  imep_bar 3 per cent high at one row of one cell                                not accepted                       as expected
+
+The limit, set to 2 s for these cases.
+
+  writes the true table, then sleeps                                             not accepted; still running after 2 s as expected
+  writes the true table, ignores SIGTERM and spins                               not accepted; still running after 2 s as expected
+  two cells to run, over the limit on the first                                  not accepted; cells run: 1         as expected
+  exits in time, leaves a child in a session of its own                          accepted; child killed             as expected
+
+What a run can see and do.
+
+  the run's directory holds indicate.py and nothing else                         accepted                           as expected
+  the program runs as the user nobody                                            accepted                           as expected
+  a directory of root's with mode 700 cannot be listed by the program            accepted                           as expected
+  the package cannot be written to                                               accepted                           as expected
+  one CPU, OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1                          accepted                           as expected
+
+The reward: tests/test.sh as it stands, `python -m pytest` replaced by a stand-in.
+
+  pytest ends 0, the report counts one test, passed                              reward 1                           as expected
+  pytest ends 1, the report counts one test, failed                              reward 0                           as expected
+  pytest ends 1 with a report of a pass                                          reward 0                           as expected
+  pytest ends 0, the report counts two tests, both passed                        reward 0                           as expected
+  pytest ends 0, the one test skipped                                            reward 0                           as expected
+  pytest ends 0 and leaves no report                                             reward 0                           as expected
+  pytest ends 0 and the report is not JSON                                       reward 0                           as expected
+  no indicate.py delivered, pytest would end 0 with a pass                       reward 0                           as expected
+
+70 cases, 0 unexpected

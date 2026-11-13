@@ -1,0 +1,13 @@
+Work only inside PROBE. Do not read, list or open anything outside PROBE. Everything needed is under PROBE/app.
+
+The test cells of an engine group record cylinder pressure on every engine they run, and each session is calculated to the group's standard IS-2, `PROBE/app/data/docs/is2_indicating.md`: for every operating point and cylinder the gross indicated mean effective pressure, the peak pressure and its angle, the angles of 10 and 50 per cent burned and the gross heat released. A cell sends a session in as a package, in the format of `PROBE/app/data/docs/cell_package.md`.
+
+Write `PROBE/app/output/indicate.py`, the program that makes this calculation for one package. It is run as `python3 indicate.py PACKAGE_DIR OUT_CSV` and writes `OUT_CSV` with the header `point,cylinder,imep_bar,pmax_bar,apmax_deg,ca10_deg,ca50_deg,q_gross_J` and one row for every point of the package's `points.csv` and every cylinder, the values as decimal numbers in the units the header names.
+
+Two packages with their results to IS-2 are in `PROBE/app/data/examples/cell_03` and `PROBE/app/data/examples/cell_08`, and a package without results is in `PROBE/app/data/pending/cell_11`.
+
+The program is then run on the packages of six other cells, in the same format. Every engine and operating point is within the scope of IS-2 section 1, and a package holds up to 6 cylinders and 20,000 cycles. Each run of indicate.py must finish within 5 seconds on 1 CPU. For every point and cylinder of every package, the mean effective pressure must be within 1.5 per cent of the result to IS-2 or within 0.03 bar where that is more, the peak pressure within 1 per cent, the heat released within 2.5 per cent, and the angle of peak pressure and the two burn angles each within 0.25 degrees.
+
+Each run takes place in a scratch directory holding a copy of `indicate.py` alone, so the program cannot read any other file, and must end with exit status 0. Python 3 with numpy, scipy and pandas is available.
+
+This machine is shared with other jobs, so judge the program's speed by its CPU time (user plus system, as `time` reports it), not by the wall clock. Write any scratch files under PROBE/app/work. At the end, report what was done, how it was checked and how long a run takes.
