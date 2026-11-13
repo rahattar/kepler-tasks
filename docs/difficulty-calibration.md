@@ -600,3 +600,17 @@ Two bare cores on one subject (a wet-pipe sprinkler system's demand), both solve
 - **The one thing that bit:** a fault sitting on the only readings that carry the information, so that it has
   to be undone and cannot be discarded. One hidden system of eight had it; two of three low runs handled it.
 
+
+## Journal bearing v4: the program has to spend a budget, and the alignment mechanism holds (Nov 12)
+
+`cores/journal-bearing-v4/RESULT.md`. A site package of 14 to 24 bearings on shared oil systems; the program
+places one laboratory order while it runs; in five of six hidden sites one listed system is two charges, visible
+only in earlier analyses, and the allowance is the listed count plus one. Six probes on `model: "opus"`:
+low 0 of 3, xhigh 0 of 3, all six failing the same five sites by 112 to 482 points each.
+
+- **What v0 to v3 lacked is a decision the solver cannot test.** Its own test packages carry its own reading of
+  the register, so the wrong program passes everything it can run, including both examples.
+- **A budget one above the legible count is not noticed as a question.** Four programs left the extra sample
+  unused or spent it where it told them nothing.
+- **Zero at xhigh is inside the Nov 11 ask (0 to 5 of 8) and outside the older one (1 to 7).** Three runs wrote a
+  check for a machine registered on the wrong system, so the idea is in reach; none generalised it.
