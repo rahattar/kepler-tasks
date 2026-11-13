@@ -1,0 +1,7 @@
+acid_plant      1.0 s cpu     0 of 1610 rows out (0 of the 0 above 0.3 t)  ran  worst/band {'deflection_mm': 0.02, 'edge_stress_MPa': 0.04}
+boiler_annex    1.6 s cpu     0 of 2250 rows out (0 of the 661 above 0.3 t)  ran  worst/band {'deflection_mm': 0.04, 'edge_stress_MPa': 0.04}
+filter_house    2.2 s cpu     0 of 2147 rows out (0 of the 1054 above 0.3 t)  ran  worst/band {'deflection_mm': 0.04, 'edge_stress_MPa': 0.04}
+kiln_line       1.5 s cpu     0 of 1985 rows out (0 of the 908 above 0.3 t)  ran  worst/band {'deflection_mm': 0.04, 'edge_stress_MPa': 0.04}
+paint_line      2.1 s cpu     0 of 1827 rows out (0 of the 921 above 0.3 t)  ran  worst/band {'deflection_mm': 0.04, 'edge_stress_MPa': 0.04}
+press_shop      1.5 s cpu     0 of 1692 rows out (0 of the 428 above 0.3 t)  ran  worst/band {'deflection_mm': 0.04, 'edge_stress_MPa': 0.04}
+ACCEPTED

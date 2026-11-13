@@ -1,0 +1,13 @@
+Work only inside PROBE. Do not read, list or open anything outside PROBE. Everything you need is under PROBE/app.
+
+The flat walls of a plant's tanks, casings and ducts are checked by calculating every wall panel at every pressure condition on record to the plant's standard PS-4, `PROBE/app/data/docs/ps4_flat_panels.md`: the deflection at the centre of the panel and the stress at the middle of its long edge. A unit sends its records in as a package, in the format of `PROBE/app/data/docs/unit_package.md`.
+
+Write `PROBE/app/output/panels.py`, the program that makes this calculation for one package. It is run as `python3 panels.py PACKAGE_DIR OUT_CSV` and writes OUT_CSV with the header `row,deflection_mm,edge_stress_MPa` and one row for every row of the package's `conditions.csv`, the values as decimal numbers in the units the header names.
+
+Two packages with their results to PS-4 are in `PROBE/app/data/examples/brine_plant` and `PROBE/app/data/examples/mill_house`, and a package without results is in `PROBE/app/data/pending/dryer_hall`.
+
+The program will then be run on the packages of six other units, in the same format. Every panel and condition is within the scope of PS-4 section 1, and a package holds up to 3,000 rows. Each run of panels.py must finish within LIMIT seconds on 1 CPU. For every row of every package, the deflection and the edge stress must each be within 1.5 per cent of the result to PS-4.
+
+Each run takes place in a scratch directory holding a copy of panels.py alone, so the program cannot read any other file you leave. Python 3 with numpy and scipy is available.
+
+This machine is shared with other jobs, so judge your program's speed by its CPU time (user plus system, as `time` reports it), not by the wall clock. Write any scratch files under PROBE/app/work. When you are done, report what you did, how you checked it and how long a run takes.

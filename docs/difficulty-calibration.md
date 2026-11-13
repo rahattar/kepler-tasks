@@ -635,3 +635,32 @@ one above the register's count. The examples with results are unchanged.
   test the wrong program fails at once (v2: a witness with feedback is solved 3 of 3).
 - **Check a core against the tips before probing it, not while building on it.** v4 was probed for six runs
   on a design the playbook already ruled out.
+
+
+## Tank panel deflection v0: a model's validity limit is not a lever (Nov 13)
+
+`cores/tank-panel-deflection-v0/RESULT.md`. A timed program on shifted hidden data: centre deflection and edge
+stress of flat wall panels to a standard that states the physical situation and no method. Small-deflection
+plate theory is right on both examples with results and wrong on the sheet walls of five of six hidden units
+(deflection up to 4 thicknesses). The regime was in the visible data twice: a package without results, and a
+drift of up to 0.5 per cent on the example results, inside the 1.5 per cent band. Three probes on
+`model: "opus"` at low effort: **3 of 3 solved, in 13, 18 and 29 minutes**, worst error 0.01 to 0.08 of the band.
+
+- **The solver did not hold the assumption the design counted on.** None of the three wrote the small-deflection
+  program. Each chose the large-deflection model before running anything, from the standard's sentence that
+  the edges do not move in the plane of the wall.
+- **Fairness writes the giveaway.** The answer depends on the in-plane edge condition, so the standard has to
+  state it; stated, it selects the model. This is the Nov 10 ceiling again, now for the choice of model and
+  not only for a correction.
+- **A package without results is read, at low effort, in the first minutes.** All three worked out the pending
+  package's regime (a dimensionless load of 1,560 against 1.5 in the examples) before writing the solver. A
+  visible instance that any physical quantity exposes is not a quiet one. journal-bearing v5 rests on a pending
+  package of this kind and has not been probed.
+- **A model with nothing to check against in its own regime was implemented right three times in three.** The
+  small-deflection limit and a refinement study were validation enough. All three wrote the reference's method.
+- **Do not count on a canonical validity check being skipped.** Deflection against thickness, a cut-on
+  frequency, a Biot number, a footprint against a width: the four other ideas proposed with this one lean on
+  the same lever and were not built.
+- v1 looked for a wrong answer that validates itself: a bowed panel whose symmetric equilibrium is unstable.
+  The window is under 5 per cent of the load (`cores/tank-panel-deflection-v1/RESULT.md`); not built.
+- Cost: about 50 minutes to build the core, 30 to probe it.
