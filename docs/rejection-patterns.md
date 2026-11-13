@@ -444,3 +444,11 @@ around it but not the claim. meta.py read the study's best count (1 of 10) and n
   over, test.sh in the verifier's image with no network). The sandbox has no Docker; Alex's Mac does.
 - A verifier time of a second or two on an oracle that should take minutes means the program never started
   its work: look at permissions and at what the program needs before its first computation.
+
+## Oracle failure again, Nov 13 (journal-bearing-survey 20261113b): every run pinned to one CPU
+Oracle 0 0 0, verifier 70 s each, after the same zip gave reward 1 in 58 s in Docker on the Mac. Read as:
+the 60 s limit plus start-up, so the first site timed out. The checker pinned itself to the highest-numbered
+CPU it was allowed. Intake runs the three oracle trials side by side on one host, where every container sees
+the same CPUs, so all three shared one core. Removed the pinning in 20261113c; single-threading comes from
+OMP_NUM_THREADS and OPENBLAS_NUM_THREADS alone. Not confirmed on the platform when written.
+- **Rule.** Never set CPU affinity in a verifier. A local run of one trial cannot show this; three at once can.

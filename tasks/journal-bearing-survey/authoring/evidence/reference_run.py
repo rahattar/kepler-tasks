@@ -12,7 +12,7 @@ LIMIT = grade_program.RUN_LIMIT_S
 
 
 def main():
-    print("solution/bearing.py run by tests/grade_program.py: as nobody, on one CPU, %d s allowed for a run" % LIMIT)
+    print("solution/bearing.py run by tests/grade_program.py: as nobody, one thread to a library, %d s allowed for a run" % LIMIT)
     print()
     print("The six sites")
     outcome = common.assess(common.REFERENCE)

@@ -82,14 +82,14 @@ solution/bearing.py is the reference; solution/solve.sh puts it at /app/output/b
 6. **The points.** All points of a bearing state are solved from the table at once: a Newton iteration on eccentricity, attitude and film temperature, with the Walther viscosity and the heat balance inside it. The friction comes from the Couette term in closed form and the moment of the film's resultant.
 7. **What the table cannot settle.** A point off the table's edge, or whose film is not laminar, is solved directly on the same banded lands with the same three unknowns, on 144 by 16 nodes and on 192 by 20 above an eccentricity of 0.75.
 
-**On the shipped sites** (authoring/evidence/reference_run.txt, run by the checker as the verifier runs it) the reference is accepted: 13860 points at six sites, the largest error at any of them 0.09 of its band, runs of 12.4 to 17.3 s, so the limit of 60 s is 3.5 times the slowest run. It is accepted on both example sites as well, and on the pending package it orders 5 samples, K-114-DE, K-120-DE, M-123-DE, G-125-DE, C-139-DE: two of them from the console LO-2.
+**On the shipped sites** (authoring/evidence/reference_run.txt, run by the checker as the verifier runs it) the reference is accepted: 13860 points at six sites, the largest error at any of them 0.09 of its band, runs of 11.7 to 17.0 s, so the limit of 60 s is 3.5 times the slowest run. It is accepted on both example sites as well, and on the pending package it orders 5 samples, K-114-DE, K-120-DE, M-123-DE, G-125-DE, C-139-DE: two of them from the console LO-2.
 
 **authoring/evidence/naive_bearing.py** is a second solution, written apart from the reference and sharing no code with it. It joins machines into charges through a graph, with a threshold of 2 per cent, and solves the film as one sparse system over the whole bearing on 144 by 16 nodes, grooves included, with the journal position found inside a bracketing search on the film temperature, one point at a time. On the six sites cut down to every 40th point (349 points) it places the same orders as the reference and is accepted, and its widest departure from the sealed results is 0.07 of a band (authoring/evidence/naive_run.txt).
 """
 verification_explanation = """
 The deliverable is a program, /app/output/bearing.py. The verifier does not read anything the agent's run left behind: tests/grade_program.py, run by the one pytest test in tests/test_program.py, runs the program on six site packages it has not seen and compares what each run writes with sealed results.
 
-**A run.** For each site, a scratch directory holds a copy of bearing.py alone and a read-only copy of the package. The program is started there as `python3 bearing.py PACKAGE_DIR OUT_CSV`, as the user nobody, held to one CPU, with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1, in a process group of its own, with no network.
+**A run.** For each site, a scratch directory holds a copy of bearing.py alone and a read-only copy of the package. The program is started there as `python3 bearing.py PACKAGE_DIR OUT_CSV`, as the user nobody, with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1, in a process group of its own, with no network. The run is single-threaded by those settings and is not tied to a particular CPU, because trials that run side by side on one host would then share it.
 
 **The limit.** Each run has 60 seconds from start to exit, the same figure as the task statement's sentence "Each run of bearing.py must finish within 60 seconds on 1 CPU." (preflight compares the two). It is enforced by a timeout on the wait for the process, in tests/grade_program.py. A run that is still going at 60 s ends the assessment: its process group and every process of nobody are killed, nothing it wrote is opened, no later site is run, and the program is not accepted. There is no share of sites or points that lets such a run through.
 
@@ -130,9 +130,9 @@ authoring/provenance/design_rules.py recomputes the design rules from the genera
 - every bearing and operating point of every package is within the scope of LS-3 section 1;
 - the laboratory's book for every site answers for every bearing of the site and holds the package's allowance.
 
-Every study below runs complete programs through tests/grade_program.py as the verifier does: as nobody, on one CPU, with the laboratory answering through the verifier's `labsample`.
+Every study below runs complete programs through tests/grade_program.py as the verifier does: as nobody, with one thread to a numerical library, with the laboratory answering through the verifier's `labsample`.
 
-**A correct program that is not fast** (naive_run.txt). The second solution is accepted on the cut-down sites, where the limit is set aside, at 0.34 s a point. At that rate the sites as they are, of 2090 to 2420 points, would take 711 to 824 s a run, 12 to 14 times the limit. Run on them at the limit, it is stopped: sites run 1 of 6, the run on canal_works was still going after 60 s, not accepted.
+**A correct program that is not fast** (naive_run.txt). The second solution is accepted on the cut-down sites, where the limit is set aside, at 0.34 s a point. At that rate the sites as they are, of 2090 to 2420 points, would take 718 to 831 s a run, 12 to 14 times the limit. Run on them at the limit, it is stopped: sites run 1 of 6, the run on canal_works was still going after 60 s, not accepted.
 
 **Programs written to the visible results** (register_run.txt, made from the reference by authoring/evidence/variants.py, one change each):
 | program | the two example sites | sites with points out of band | points out at each of those |

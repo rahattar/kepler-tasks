@@ -8,9 +8,10 @@ One site at a time, in the order of their names:
      read-only copy of the site's six files.
   2. The laboratory opens for that site (Desk): it holds the site's book from lab/sealed and takes one order,
      by the rule of lab/lab.py, through the `labsample` command on the PATH.
-  3. The program is started in `run/` as `python3 bearing.py PACKAGE_DIR OUT_CSV`, as the user nobody, on one
-     CPU, with the numerical libraries held to one thread, in a process group of its own. It is given
-     RUN_LIMIT_S seconds from start to exit.
+  3. The program is started in `run/` as `python3 bearing.py PACKAGE_DIR OUT_CSV`, as the user nobody, with
+     the numerical libraries held to one thread, in a process group of its own. It is given RUN_LIMIT_S
+     seconds from start to exit. It is not tied to a particular CPU: trials that run side by side on one
+     host would all be tied to the same one.
   4. When it exits or the time is up, its process group and every process of nobody are killed.
   5. A run that is still going at the limit ends the whole assessment there: nothing it wrote is opened, no
      later site is run, and the program is not accepted.
@@ -146,16 +147,6 @@ class Desk:
         self._door.close()
         if os.path.lexists(self.where):
             os.unlink(self.where)
-
-
-def one_cpu():
-    """Holds this process, and so everything it starts from here on, to a single CPU. Where the platform
-    does not let a process choose its CPUs the runs go ahead, still with one thread to a library."""
-    try:
-        allowed = sorted(os.sched_getaffinity(0))
-        os.sched_setaffinity(0, {allowed[-1]})
-    except (AttributeError, OSError):
-        pass
 
 
 def sweep(started, unprivileged):
@@ -335,7 +326,6 @@ def assess(program, sites=None, truths=None, books=None, limit=RUN_LIMIT_S, desk
     if unprivileged and shutil.which("setpriv") is None:
         outcome.stopped = "the program cannot be run as an unprivileged user here, so it is not run at all"
         return outcome
-    one_cpu()
     names = sorted(name for name in os.listdir(sites) if os.path.isdir(os.path.join(sites, name)))
     sound = bool(names)
     for name in names:

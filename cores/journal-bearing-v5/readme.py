@@ -131,7 +131,7 @@ SOLUTION = """solution/bearing.py is the reference; solution/solve.sh puts it at
 
 VERIFICATION = """The deliverable is a program, /app/output/bearing.py. The verifier does not read anything the agent's run left behind: tests/grade_program.py, run by the one pytest test in tests/test_program.py, runs the program on six site packages it has not seen and compares what each run writes with sealed results.
 
-**A run.** For each site, a scratch directory holds a copy of bearing.py alone and a read-only copy of the package. The program is started there as `python3 bearing.py PACKAGE_DIR OUT_CSV`, as the user nobody, held to one CPU, with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1, in a process group of its own, with no network.
+**A run.** For each site, a scratch directory holds a copy of bearing.py alone and a read-only copy of the package. The program is started there as `python3 bearing.py PACKAGE_DIR OUT_CSV`, as the user nobody, with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1, in a process group of its own, with no network. The run is single-threaded by those settings and is not tied to a particular CPU, because trials that run side by side on one host would then share it.
 
 **The limit.** Each run has 60 seconds from start to exit, the same figure as the task statement's sentence "Each run of bearing.py must finish within 60 seconds on 1 CPU." (preflight compares the two). It is enforced by a timeout on the wait for the process, in tests/grade_program.py. A run that is still going at 60 s ends the assessment: its process group and every process of nobody are killed, nothing it wrote is opened, no later site is run, and the program is not accepted. There is no share of sites or points that lets such a run through.
 
@@ -154,7 +154,7 @@ It is built in authoring/provenance/sites.py: the `SITES` table gives each site'
 authoring/provenance/design_rules.py recomputes the design rules from the generator's description of each site and the shipped files (authoring/evidence/design_rules.txt; {n_rules} of {n_rules} hold):
 {rule_list}
 
-Every study below runs complete programs through tests/grade_program.py as the verifier does: as nobody, on one CPU, with the laboratory answering through the verifier's `labsample`.
+Every study below runs complete programs through tests/grade_program.py as the verifier does: as nobody, with one thread to a numerical library, with the laboratory answering through the verifier's `labsample`.
 
 **A correct program that is not fast** (naive_run.txt). The second solution is accepted on the cut-down sites, where the limit is set aside, at {n_rate} s a point. At that rate the sites as they are, of {n_lo} to {n_hi} points, would take {n_slo} to {n_shi} s a run, {n_xlo} to {n_xhi} times the limit. Run on them at the limit, it is stopped: sites run {n_stop0}, {n_stop1}, not accepted.
 
@@ -189,7 +189,7 @@ The timed re-run.
 - The reference takes {r_lo} to {r_hi} s a run; the limit is {ratio} times the slowest.
 - A correct program that is not fast times out: authoring/evidence/naive_bearing.py, authoring/evidence/naive_run.txt.
 - A run over the limit ends the assessment and nothing it wrote is read: authoring/evidence/verifier_checks.txt, "The limit".
-- Threads: OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1 in both images and in the environment of each run, which is also held to one CPU."""
+- Threads: OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1 in both images and in the environment of each run. Runs are not tied to one CPU: the first submission did that, and three oracle trials side by side on one host shared a core and ran over the limit."""
 
 rise = grab(span, r"film (\d+\.\d to \d+\.\d) K above the inlet")
 vals = dict(span=span, slope=slope, rise=rise, same=same, step=step, gap_old=gap_old, times=times, mixed=mixed,

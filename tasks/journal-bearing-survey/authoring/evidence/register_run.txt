@@ -2,51 +2,51 @@ Programs made from the reference by variants.py, run by tests/grade_program.py
 
 register: one sample for each listed system that was renewed
   the two example sites: accepted
-    east_works    16.1 s     0 of 2640 points out of band  largest error 0.09 of its band  order: B-182-DE P-192-DE C-199-DE B-217-DE M-218-DE
-    north_works   16.6 s     0 of 1540 points out of band  largest error 0.08 of its band  order: G-185-DE C-196-DE G-210-DE
+    east_works    17.1 s     0 of 2640 points out of band  largest error 0.09 of its band  order: B-182-DE P-192-DE C-199-DE B-217-DE M-218-DE
+    north_works   16.7 s     0 of 1540 points out of band  largest error 0.08 of its band  order: G-185-DE C-196-DE G-210-DE
   the six sites: not accepted, 5 of 6 sites with points out of band
-    canal_works   16.7 s   293 of 2420 points out of band  largest error 12.24 of its band  order: G-151-DE C-160-DE P-165-DE P-173-DE M-189-DE
+    canal_works   16.8 s   293 of 2420 points out of band  largest error 12.24 of its band  order: G-151-DE C-160-DE P-165-DE P-173-DE M-189-DE
       allowance 6, samples ordered 5; worst G-158-DE-064 power_kW: 1.8434 against 1.5575
-    quay_site     12.7 s   315 of 2420 points out of band  largest error 5.71 of its band  order: G-124-DE M-133-DE G-140-DE G-152-DE M-161-DE C-162-DE
+    quay_site     12.6 s   315 of 2420 points out of band  largest error 5.71 of its band  order: G-124-DE M-133-DE G-140-DE G-152-DE M-161-DE C-162-DE
       allowance 7, samples ordered 6; worst P-139-DE-097 power_kW: 1.9413 against 2.1233
-    ridge_plant   16.2 s   262 of 2310 points out of band  largest error 12.42 of its band  order: B-135-DE K-138-DE M-149-DE M-165-DE G-168-DE
+    ridge_plant   16.5 s   262 of 2310 points out of band  largest error 12.42 of its band  order: B-135-DE K-138-DE M-149-DE M-165-DE G-168-DE
       allowance 6, samples ordered 5; worst G-154-DE-039 power_kW: 1.7329 against 1.4608
-    south_yard    16.8 s     0 of 2090 points out of band  largest error 0.07 of its band  order: M-173-DE G-180-DE G-189-DE C-207-DE G-209-DE
-    tank_farm     17.1 s   223 of 2310 points out of band  largest error 7.41 of its band  order: G-145-DE K-154-DE K-162-DE G-176-DE P-181-DE G-185-DE
+    south_yard    16.7 s     0 of 2090 points out of band  largest error 0.07 of its band  order: M-173-DE G-180-DE G-189-DE C-207-DE G-209-DE
+    tank_farm     16.3 s   223 of 2310 points out of band  largest error 7.41 of its band  order: G-145-DE K-154-DE K-162-DE G-176-DE P-181-DE G-185-DE
       allowance 7, samples ordered 6; worst M-160-DE-005 power_kW: 0.9184 against 1.0332
-    upper_mill    16.3 s   243 of 2310 points out of band  largest error 5.64 of its band  order: K-172-DE M-177-DE G-179-DE B-184-DE K-200-DE M-203-DE
+    upper_mill    16.6 s   243 of 2310 points out of band  largest error 5.64 of its band  order: K-172-DE M-177-DE G-179-DE B-184-DE K-200-DE M-203-DE
       allowance 7, samples ordered 6; worst G-188-DE-007 power_kW: 1.3951 against 1.2862
 
 register_spare: the same, the rest of the allowance on unsampled machines, a machine that disagrees keeps its own figures
   the two example sites: accepted
-    east_works    16.3 s     0 of 2640 points out of band  largest error 0.09 of its band  order: B-182-DE P-192-DE C-199-DE B-217-DE M-218-DE
-    north_works   16.4 s     0 of 1540 points out of band  largest error 0.08 of its band  order: G-185-DE C-196-DE G-210-DE
+    east_works    16.9 s     0 of 2640 points out of band  largest error 0.09 of its band  order: B-182-DE P-192-DE C-199-DE B-217-DE M-218-DE
+    north_works   16.8 s     0 of 1540 points out of band  largest error 0.08 of its band  order: G-185-DE C-196-DE G-210-DE
   the six sites: not accepted, 5 of 6 sites with points out of band
-    canal_works   16.4 s   293 of 2420 points out of band  largest error 12.24 of its band  order: G-151-DE C-160-DE P-165-DE P-173-DE M-189-DE B-154-DE
+    canal_works   17.2 s   293 of 2420 points out of band  largest error 12.24 of its band  order: G-151-DE C-160-DE P-165-DE P-173-DE M-189-DE B-154-DE
       allowance 6, samples ordered 6; worst G-158-DE-064 power_kW: 1.8434 against 1.5575
-    quay_site     12.2 s   315 of 2420 points out of band  largest error 5.71 of its band  order: G-124-DE M-133-DE G-140-DE G-152-DE M-161-DE C-162-DE M-125-DE
+    quay_site     13.0 s   315 of 2420 points out of band  largest error 5.71 of its band  order: G-124-DE M-133-DE G-140-DE G-152-DE M-161-DE C-162-DE M-125-DE
       allowance 7, samples ordered 7; worst P-139-DE-097 power_kW: 1.9413 against 2.1233
-    ridge_plant   15.7 s   262 of 2310 points out of band  largest error 12.42 of its band  order: B-135-DE K-138-DE M-149-DE M-165-DE G-168-DE M-137-DE
+    ridge_plant   17.3 s   262 of 2310 points out of band  largest error 12.42 of its band  order: B-135-DE K-138-DE M-149-DE M-165-DE G-168-DE M-137-DE
       allowance 6, samples ordered 6; worst G-154-DE-039 power_kW: 1.7329 against 1.4608
-    south_yard    16.2 s     0 of 2090 points out of band  largest error 0.07 of its band  order: M-173-DE G-180-DE G-189-DE C-207-DE G-209-DE
-    tank_farm     16.8 s   223 of 2310 points out of band  largest error 7.41 of its band  order: G-145-DE K-154-DE K-162-DE G-176-DE P-181-DE G-185-DE K-146-DE
+    south_yard    17.4 s     0 of 2090 points out of band  largest error 0.07 of its band  order: M-173-DE G-180-DE G-189-DE C-207-DE G-209-DE
+    tank_farm     17.0 s   223 of 2310 points out of band  largest error 7.41 of its band  order: G-145-DE K-154-DE K-162-DE G-176-DE P-181-DE G-185-DE K-146-DE
       allowance 7, samples ordered 7; worst M-160-DE-005 power_kW: 0.9184 against 1.0332
-    upper_mill    17.0 s   243 of 2310 points out of band  largest error 5.64 of its band  order: K-172-DE M-177-DE G-179-DE B-184-DE K-200-DE M-203-DE M-174-DE
+    upper_mill    17.1 s   243 of 2310 points out of band  largest error 5.64 of its band  order: K-172-DE M-177-DE G-179-DE B-184-DE K-200-DE M-203-DE M-174-DE
       allowance 7, samples ordered 7; worst G-188-DE-007 power_kW: 1.3951 against 1.2862
 
 on_file_only: charges sorted by analysis for the oil on file, the order still one sample for each listed system
   the two example sites: accepted
-    east_works    16.1 s     0 of 2640 points out of band  largest error 0.09 of its band  order: B-182-DE P-192-DE C-199-DE B-217-DE M-218-DE
-    north_works   16.4 s     0 of 1540 points out of band  largest error 0.08 of its band  order: G-185-DE C-196-DE G-210-DE
+    east_works    16.9 s     0 of 2640 points out of band  largest error 0.09 of its band  order: B-182-DE P-192-DE C-199-DE B-217-DE M-218-DE
+    north_works   17.2 s     0 of 1540 points out of band  largest error 0.08 of its band  order: G-185-DE C-196-DE G-210-DE
   the six sites: not accepted, 5 of 6 sites with points out of band
-    canal_works   16.6 s   142 of 2420 points out of band  largest error 12.24 of its band  order: G-151-DE C-160-DE P-165-DE P-173-DE M-189-DE
+    canal_works   17.2 s   142 of 2420 points out of band  largest error 12.24 of its band  order: G-151-DE C-160-DE P-165-DE P-173-DE M-189-DE
       allowance 6, samples ordered 5; worst G-158-DE-064 power_kW: 1.8434 against 1.5575
-    quay_site     12.3 s   151 of 2420 points out of band  largest error 5.71 of its band  order: G-124-DE M-133-DE G-140-DE G-152-DE M-161-DE C-162-DE
+    quay_site     13.1 s   151 of 2420 points out of band  largest error 5.71 of its band  order: G-124-DE M-133-DE G-140-DE G-152-DE M-161-DE C-162-DE
       allowance 7, samples ordered 6; worst P-139-DE-097 power_kW: 1.9413 against 2.1233
-    ridge_plant   15.6 s    68 of 2310 points out of band  largest error 12.42 of its band  order: B-135-DE K-138-DE M-149-DE M-165-DE G-168-DE
+    ridge_plant   17.5 s    68 of 2310 points out of band  largest error 12.42 of its band  order: B-135-DE K-138-DE M-149-DE M-165-DE G-168-DE
       allowance 6, samples ordered 5; worst G-154-DE-039 power_kW: 1.7329 against 1.4608
-    south_yard    16.2 s     0 of 2090 points out of band  largest error 0.07 of its band  order: M-173-DE G-180-DE G-189-DE C-207-DE G-209-DE
-    tank_farm     17.1 s    72 of 2310 points out of band  largest error 7.41 of its band  order: G-145-DE K-154-DE K-162-DE G-176-DE P-181-DE G-185-DE
+    south_yard    17.8 s     0 of 2090 points out of band  largest error 0.07 of its band  order: M-173-DE G-180-DE G-189-DE C-207-DE G-209-DE
+    tank_farm     16.9 s    72 of 2310 points out of band  largest error 7.41 of its band  order: G-145-DE K-154-DE K-162-DE G-176-DE P-181-DE G-185-DE
       allowance 7, samples ordered 6; worst M-160-DE-005 power_kW: 0.9184 against 1.0332
-    upper_mill    16.4 s    72 of 2310 points out of band  largest error 5.64 of its band  order: K-172-DE M-177-DE G-179-DE B-184-DE K-200-DE M-203-DE
+    upper_mill    17.7 s    72 of 2310 points out of band  largest error 5.64 of its band  order: K-172-DE M-177-DE G-179-DE B-184-DE K-200-DE M-203-DE
       allowance 7, samples ordered 6; worst G-188-DE-007 power_kW: 1.3951 against 1.2862

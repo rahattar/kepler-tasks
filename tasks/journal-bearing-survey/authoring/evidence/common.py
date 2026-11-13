@@ -2,7 +2,7 @@
 
 Every script here judges a program with tests/grade_program.py itself, the way the verifier does: the program
 is run on the site packages as the user nobody (when the script is root, as it is in the verifier's image),
-on one CPU, with the laboratory answering through tests/lab/labsample.
+with one thread to a numerical library, the laboratory answering through tests/lab/labsample.
 """
 import atexit
 import csv

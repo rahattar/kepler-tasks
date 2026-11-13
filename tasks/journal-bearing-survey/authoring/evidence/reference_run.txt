@@ -1,21 +1,21 @@
-solution/bearing.py run by tests/grade_program.py: as nobody, on one CPU, 60 s allowed for a run
+solution/bearing.py run by tests/grade_program.py: as nobody, one thread to a library, 60 s allowed for a run
 
 The six sites
-canal_works   17.2 s     0 of 2420 points out of band  largest error 0.09 of its band  order: G-151-DE G-158-DE C-160-DE P-165-DE P-173-DE M-189-DE
-quay_site     12.4 s     0 of 2420 points out of band  largest error 0.08 of its band  order: G-124-DE M-133-DE P-139-DE G-140-DE G-152-DE M-161-DE C-162-DE
-ridge_plant   17.3 s     0 of 2310 points out of band  largest error 0.09 of its band  order: B-135-DE K-138-DE M-149-DE G-154-DE M-165-DE G-168-DE
-south_yard    16.7 s     0 of 2090 points out of band  largest error 0.07 of its band  order: M-173-DE G-180-DE G-189-DE C-207-DE G-209-DE
-tank_farm     16.7 s     0 of 2310 points out of band  largest error 0.09 of its band  order: G-145-DE K-154-DE M-160-DE K-162-DE G-176-DE P-181-DE G-185-DE
-upper_mill    16.9 s     0 of 2310 points out of band  largest error 0.09 of its band  order: K-172-DE M-177-DE G-179-DE B-184-DE G-188-DE K-200-DE M-203-DE
+canal_works   16.9 s     0 of 2420 points out of band  largest error 0.09 of its band  order: G-151-DE G-158-DE C-160-DE P-165-DE P-173-DE M-189-DE
+quay_site     11.7 s     0 of 2420 points out of band  largest error 0.08 of its band  order: G-124-DE M-133-DE P-139-DE G-140-DE G-152-DE M-161-DE C-162-DE
+ridge_plant   15.9 s     0 of 2310 points out of band  largest error 0.09 of its band  order: B-135-DE K-138-DE M-149-DE G-154-DE M-165-DE G-168-DE
+south_yard    16.4 s     0 of 2090 points out of band  largest error 0.07 of its band  order: M-173-DE G-180-DE G-189-DE C-207-DE G-209-DE
+tank_farm     17.0 s     0 of 2310 points out of band  largest error 0.09 of its band  order: G-145-DE K-154-DE M-160-DE K-162-DE G-176-DE P-181-DE G-185-DE
+upper_mill    16.7 s     0 of 2310 points out of band  largest error 0.09 of its band  order: K-172-DE M-177-DE G-179-DE B-184-DE G-188-DE K-200-DE M-203-DE
 accepted
-runs take 12.4 to 17.3 s; the limit of 60 s is 3.5 times the slowest run
+runs take 11.7 to 17.0 s; the limit of 60 s is 3.5 times the slowest run
 largest error at any point of any site: 0.09 of its band
 points in all: 13860
 
 The two example sites, expected.csv taken as the truth
-east_works    16.4 s     0 of 2640 points out of band  largest error 0.09 of its band  order: B-182-DE P-192-DE C-199-DE B-217-DE M-218-DE
+east_works    15.7 s     0 of 2640 points out of band  largest error 0.09 of its band  order: B-182-DE P-192-DE C-199-DE B-217-DE M-218-DE
 north_works   16.7 s     0 of 1540 points out of band  largest error 0.08 of its band  order: G-185-DE C-196-DE G-210-DE
 accepted
 
 The pending package
-west_quarry   13.9 s  finished, 1650 rows  order: K-114-DE K-120-DE M-123-DE G-125-DE C-139-DE
+west_quarry   13.0 s  finished, 1650 rows  order: K-114-DE K-120-DE M-123-DE G-125-DE C-139-DE

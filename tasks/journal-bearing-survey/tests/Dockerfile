@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir pytest==8.4.1 pytest-json-ctrf==0.3.5
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
-# A run is timed on one CPU with one thread to a numerical library, as it was where the program was written.
+# A run is timed with one thread to a numerical library, as it was where the program was written.
 ENV OMP_NUM_THREADS=1
 ENV OPENBLAS_NUM_THREADS=1
 ENV MKL_NUM_THREADS=1

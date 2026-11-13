@@ -17,7 +17,7 @@ EVERY = 40
 
 
 def main():
-    print("authoring/evidence/naive_bearing.py run by tests/grade_program.py: as nobody, on one CPU")
+    print("authoring/evidence/naive_bearing.py run by tests/grade_program.py: as nobody, one thread to a library")
     print()
     print("The six sites with every %dth operating point kept, 3 600 s allowed for a run" % EVERY)
     root, sites, truths = common.staged(common.HIDDEN, every=EVERY)
