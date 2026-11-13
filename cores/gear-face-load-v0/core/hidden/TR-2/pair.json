@@ -1,0 +1,28 @@
+{
+ "pair": "TR-2",
+ "face_width_mm": 100.0,
+ "ratio": 3.2,
+ "mesh_stiffness_N_mm_um": 14.0,
+ "Z_MPa_sqrt": 58.0,
+ "reference_C": 40.0,
+ "thermal_um_per_K": 0.22,
+ "pinion": {
+  "base_diameter_mm": 112.8,
+  "pitch_diameter_mm": 120.0,
+  "body_diameter_mm": 100.0,
+  "mounting": "straddle",
+  "bearing_span_mm": 260.0,
+  "datum_to_bearing_mm": 80.0,
+  "working_flank": "L",
+  "teeth": 21
+ },
+ "wheel": {
+  "working_flank": "R",
+  "teeth": 67
+ },
+ "pattern_check": {
+  "force_N": 4000.0,
+  "from_mm": 21.0,
+  "to_mm": 93.0
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "TR-1": {
+  "shift": "pinion charts exchanged; torques that close the whole face (examples leave it open)",
+  "exchanged": "pinion"
+ },
+ "TR-2": {
+  "shift": "the wheel's charts exchanged (pending: the pinion's); end relief at the datum end",
+  "exchanged": "wheel"
+ },
+ "TR-3": {
+  "shift": "sound; a slender pinion body",
+  "exchanged": null
+ },
+ "TR-4": {
+  "shift": "pinion charts exchanged on an overhung pinion (pending: straddle mounted)",
+  "exchanged": "pinion"
+ },
+ "TR-5": {
+  "shift": "the wheel's charts exchanged; the widest face and the highest torques",
+  "exchanged": "wheel"
+ },
+ "TR-6": {
+  "shift": "sound; oil temperatures to 82 C",
+  "exchanged": null
+ }
+}
