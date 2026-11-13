@@ -16,8 +16,8 @@
  },
  "SR04": {
   "limit": "lead-in",
-  "p_base_psi": 26.2111,
-  "q_avail_gpm": 438.867
+  "p_base_psi": 25.6256,
+  "q_avail_gpm": 459.009
  },
  "SR05": {
   "limit": "city-main",

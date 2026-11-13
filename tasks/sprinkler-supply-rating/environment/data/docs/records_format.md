@@ -21,18 +21,17 @@ One row for each riser.
 
 ## main_drain_log.csv
 
-The monthly round. The tester goes from riser to riser, and at each one reads the supply gauge, opens the main
-drain fully, reads the gauge again once it is steady, and closes the drain. The order of the round changes from
-month to month.
+The monthly round. The tester goes from riser to riser, and at each one opens the main drain fully, reads the
+supply gauge once it is steady, and closes the drain. The order of the round changes from month to month.
 
-- `riser`, `date`, `time`: the riser and when its residual was read
+- `riser`, `date`, `time`: the riser and when its gauge was read
 - `gauge_serial`: the serial of the gauge read
-- `static_psi`: the supply gauge before the drain was opened
 - `residual_psi`: the supply gauge with the drain fully open
 
 ## utility_pressure.csv
 
-The utility's record of transmitter PT-0, one reading every 30 minutes.
+The utility's record of transmitter PT-0, one reading every 30 minutes. No reading of the record was taken while
+the site was drawing water for a test.
 
 - `timestamp`, `pressure_psi`
 
@@ -49,14 +48,13 @@ flowing and then with the flow hydrant's outlets discharging.
 
 ## yard_flow_tests.csv
 
-The site's yearly flow tests of its own hydrants: a hydrant is flowed, and the pressures are read on the supply
-gauge of a riser that is not flowing. For a wall hydrant the gauge read is that of the riser whose lead-in the
-hydrant stands on.
+The site's flow tests of its own hydrants, each spring and autumn: a hydrant is flowed, and the pressure is read
+on the supply gauge of a riser that is not flowing. For a wall hydrant the gauge read is that of the riser whose
+lead-in the hydrant stands on.
 
 - `date`, `time`
 - `flow_hydrant`, `outlets_flowing`, `pitot_psi`: as above
 - `gauge_riser`: the riser whose supply gauge was read
-- `static_psi`: that gauge before the hydrant was opened
 - `residual_psi`: that gauge with the hydrant flowing
 
 ## maintenance_log.csv

@@ -10,7 +10,7 @@ pressure. Each is to be rated under FP-12.
   fully open.
 
 The records run from 2023-01-01 to 2026-09-30: the monthly round's log, the utility's record of the main's pressure at
-the connection, the utility's flow tests of the main, the site's yearly flow test of the yard main, the
+the connection, the utility's flow tests of the main, the site's flow tests of its own hydrants, the
 maintenance log and the gauge certificates.
 
 The folder `example` holds the records of SR00, a riser of building E, for 2022, the year before that building

@@ -19,6 +19,7 @@ The contractor connects hoses and a flow meter to the riser's test header, which
 and sets the flow named in the plan, between 300 and 1000 gpm. Nothing else flows on the site. The test is
 run on 2026-10-08.
 
-The report gives the flow on the contractor's meter, the riser's supply gauge before the header was opened and
-with the flow steady, the gauge's serial, and the reading of the utility's transmitter PT-0 at the same minute.
-The meter is good to about 0.3 per cent. The report is written to `/app/flowtest/`.
+The report gives, all with the flow steady: the flow on the contractor's meter; the riser's supply gauge and its
+serial; the contractor's own test gauge on the lead-in's flange tapping, just before the riser's control valve,
+already referred to the site datum; and the reading of the utility's transmitter PT-0. The meter is good to about
+0.3 per cent and the contractor's gauge repeats as the site's do. The report is written to `/app/flowtest/`.

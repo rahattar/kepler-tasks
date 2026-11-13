@@ -27,9 +27,7 @@ taken as standing at one pressure.
 
 The connection has one double check assembly, two spring-loaded checks in series between two isolating valves.
 The maker's figures for the assembly as new are an opening differential of **4.0 psi** and a flow coefficient
-**Cv 950** (gpm at 1 psi). It passes water towards the site only: it opens when the main's pressure exceeds
-the yard's by the opening differential, closes when the flow stops, and while it is closed it holds the pressure
-on its outlet.
+**Cv 950** (gpm at 1 psi). It passes water towards the site only.
 
 ## Lead-in check valves
 
@@ -38,8 +36,7 @@ on its outlet.
 | LC-6 | 6 | 1.5 | 2100 |
 | LC-8 | 8 | 1.5 | 3900 |
 
-A lead-in check is a single spring-loaded check where the lead-in enters the building. Like the backflow preventer
-it closes when the flow stops and holds the pressure on its outlet.
+A lead-in check is a single spring-loaded check where the lead-in enters the building.
 
 ## Control valves
 

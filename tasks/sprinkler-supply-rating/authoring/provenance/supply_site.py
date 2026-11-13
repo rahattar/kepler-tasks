@@ -46,13 +46,14 @@ RISERS = [
          check=None, gauge_ft=4.5, gauges=[("G-1407", None)], drain=[("2 in. angle", None)], q_d=1250,
          placard_psi=55),
     dict(id="SR02", building="A", material="CI", size="6", length_ft=220, laid=1978, C_audit=82.0, aging=0.6,
-         check=None, gauge_ft=5.0, gauges=[("G-1411", None)], drain=[("2 in. angle", None)], q_d=900,
+         check=None, gauge_ft=5.0, gauge_ft_true=11.0, gauges=[("G-1411", None)], drain=[("2 in. angle", None)],
+         q_d=900,
          placard_psi=51),
     dict(id="SR03", building="B", material="DI-CL", size="6", length_ft=280, laid=2001, C_audit=140.0, aging=0.0,
          check=None, gauge_ft=4.0, gauges=[("G-1420", None)], drain=[("2 in. angle", None)], q_d=950,
          placard_psi=53, valve=[(dt.datetime(2024, 11, 19, 11, 0), 250.0)]),
-    dict(id="SR04", building="B", material="CI", size="6", length_ft=350, laid=1974, C_audit=74.0, aging=5.5,
-         check="LC-6", h_c=1.6, gauge_ft=5.5, gauges=[("G-1423", None)], drain=[("2 in. angle", None)], q_d=850,
+    dict(id="SR04", building="B", material="CI", size="6", length_ft=385, laid=1974, C_audit=74.0, aging=5.5,
+         check=None, gauge_ft=5.5, gauges=[("G-1423", None)], drain=[("2 in. angle", None)], q_d=850,
          placard_psi=50),
     dict(id="SR05", building="C", material="DI-CL", size="6", length_ft=300, laid=2009, C_audit=140.0, aging=0.0,
          check="LC-6", h_c=3.1, gauge_ft=4.5, gauges=[("G-1431", None)], drain=[("2 in. angle", None)], q_d=1080,
@@ -82,6 +83,8 @@ UNSUPERVISED = ("SR01", "SR02", "SR03", "SR06", "SR10")
 WALL_HYDRANT = {"SR06": ("WH-6", 430.0)}
 FLOW_TEST_AT = dt.datetime(2026, 10, 8, 10, 20)          # when the contractor's flow test is run
 FLOW_TEST_RANGE = (300.0, 1000.0)                         # gpm the test header can be set to
+# the riser whose supply gauge is read at each yard hydrant test, in turn (none of them has a lead-in check)
+YARD_GAUGE_RISERS = ("SR07", "SR02", "SR01", "SR08")
 
 # the example riser: sound records throughout
 EXAMPLE = dict(id="SR00", building="E", material="DI-CL", size="6", length_ft=220, laid=2010, C_audit=140.0,
@@ -127,7 +130,8 @@ def riser_state(r, t):
     if "swab" in r and t < r["swab"][0]:
         # before its swab the lead-in stood at swab[1] on the day of the swab and fell by swab[2] a year
         C = r["swab"][1] + r["swab"][2] * (r["swab"][0] - t).total_seconds() / (365.25 * 86400)
-    s = dict(material=r["material"], size=r["size"], length_ft=r["length_ft"], gauge_ft=r["gauge_ft"],
+    s = dict(material=r["material"], size=r["size"], length_ft=r["length_ft"],
+             gauge_ft=r.get("gauge_ft_true", r["gauge_ft"]),
              C=C, drain=at(r["drain"], t),
              valve_cv=P.VALVE_OPEN_CV[r["size"]], check=bool(r["check"]), h_c=r.get("h_c", 0.0),
              gauge=at(r["gauges"], t))
@@ -225,12 +229,15 @@ def simulate(risers=RISERS, tag="site", first=LOG_START, last=LOG_END, main=None
         events.append((dt.datetime(d.year, d.month, d.day, hh, mm), "round", k))
         k += 1
         y, m = (y, m + 1) if m < 12 else (y + 1, 1)
+    n_yard = 0
     for yr in range(first.year, last.year + 1):
-        when = dt.datetime(yr, 9, 24, 10, 15)
-        while when.weekday() >= 5:
-            when += dt.timedelta(days=1)
-        if first <= when.date() <= last:
-            events.append((when, "yard", yr))
+        for month in (3, 9):
+            when = dt.datetime(yr, month, 24, 10, 15)
+            while when.weekday() >= 5:
+                when += dt.timedelta(days=1)
+            if first <= when.date() <= last:
+                events.append((when, "yard", n_yard))
+                n_yard += 1
     if first <= OVERHAUL.date() <= last:
         events.append((OVERHAUL, "overhaul", None))
     events.sort(key=lambda e: e[0])
@@ -243,6 +250,8 @@ def simulate(risers=RISERS, tag="site", first=LOG_START, last=LOG_END, main=None
             order = risers[(payload * 3) % len(risers):] + risers[:(payload * 3) % len(risers)]
             t = when
             for r in order:
+                if t.minute % 30 in (27, 28, 29, 0, 1, 2, 3):
+                    t = t + dt.timedelta(minutes=7)
                 site, rs = site_state(t), riser_state(r, t)
                 serial = rs["gauge"]
                 held = main.held(last_flow, t - dt.timedelta(minutes=2))
@@ -261,7 +270,8 @@ def simulate(risers=RISERS, tag="site", first=LOG_START, last=LOG_END, main=None
             # one 2-1/2 in. outlet of yard hydrant YH-2, residual on the supply gauge of a riser that is not flowing
             t = when
             site = site_state(t)
-            r = [x for x in risers if x["id"] in ("SR07", "SR00")][0]
+            want = YARD_GAUGE_RISERS[payload % len(YARD_GAUGE_RISERS)]
+            r = ([x for x in risers if x["id"] == "SR00"] or [x for x in risers if x["id"] == want])[0]
             rs = riser_state(r, t)
             held = main.held(last_flow, t - dt.timedelta(minutes=5))
             static = reading(P.held_static(site, rs, held), rs["gauge"], rng)
@@ -285,7 +295,7 @@ def simulate(risers=RISERS, tag="site", first=LOG_START, last=LOG_END, main=None
             # then each wall hydrant: its flow runs down the lead-in as far as its tee, and the riser's own supply
             # gauge, beyond the tee with nothing flowing past it, stands at the pressure of the tee
             for r in risers:
-                if r["id"] not in WALL_HYDRANT:
+                if r["id"] not in WALL_HYDRANT or when.month != 9:
                     continue
                 hyd, at_ft = WALL_HYDRANT[r["id"]]
                 t = t + dt.timedelta(minutes=rng.randint(35, 50))
@@ -342,20 +352,21 @@ def simulate(risers=RISERS, tag="site", first=LOG_START, last=LOG_END, main=None
 # ---------------------------------------------------------------------------------------------- the ordered test
 def flow_test(riser_id, flow_gpm, seed, main=None):
     """The contractor's flow test: the riser's test header, above its alarm valve, set to flow_gpm on the
-    contractor's meter, with the riser's supply gauge and the utility's transmitter read. Returns the readings."""
+    contractor's meter. Read with the flow steady: the riser's supply gauge, the contractor's own gauge on the
+    lead-in's flange just before the control valve (referred to the datum), and the utility's transmitter, which
+    stands on the main and so shows the main drawn down by the test's flow."""
     main = main or Main()
     rng = random.Random("flowtest/%s/%d/%d" % (riser_id, round(flow_gpm), seed))
     r = [x for x in RISERS if x["id"] == riser_id][0]
     t = FLOW_TEST_AT
     site, rs = site_state(t), riser_state(r, t)
     S = main.at(t)
-    held = main.held(t - dt.timedelta(days=7), t - dt.timedelta(minutes=5))
-    _loss, _yard, p_base = P.budget(site, rs, S, flow_gpm, flow_gpm)
+    loss, _yard, p_base = P.budget(site, rs, S, flow_gpm, flow_gpm)
     return dict(riser=riser_id, date=t.strftime("%Y-%m-%d"), time=t.strftime("%H:%M"),
                 flow_gpm=round(flow_gpm * (1 + rng.gauss(0.0, 0.003)), 0), gauge_serial=rs["gauge"],
-                static_psi=reading(P.held_static(site, rs, held), rs["gauge"], rng),
                 residual_psi=reading(p_base - P.PSI_PER_FT * rs["gauge_ft"], rs["gauge"], rng),
-                transmitter_psi=round(S + P.PSI_PER_FT * PIT_BELOW_FT + rng.gauss(0.0, 0.05), 2))
+                flange_psi=round(p_base + loss["valve"] + rng.gauss(0.0, READ_SD), 1),
+                transmitter_psi=round(S - loss["city-main"] + P.PSI_PER_FT * PIT_BELOW_FT + rng.gauss(0.0, 0.05), 2))
 
 
 # ---------------------------------------------------------------------------------------------- the rating
@@ -394,5 +405,6 @@ if __name__ == "__main__":
         print("utility", u["time"].date(), u["flow_hydrant"], u["outlets"], u["static_psi"], u["residual_psi"],
               u["pitot_psi"], "Q %.0f" % u["true_flow"])
     for yt in sim["yard_tests"]:
-        print("yard", yt["time"].date(), yt["pitot_psi"], yt["static_psi"], yt["residual_psi"], "Q %.0f" % yt["true_flow"])
+        print("yard", yt["time"].date(), yt["flow_hydrant"], yt["residual_riser"], yt["pitot_psi"], yt["residual_psi"],
+              "Q %.0f" % yt["true_flow"])
 

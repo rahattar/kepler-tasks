@@ -130,9 +130,7 @@ taken as standing at one pressure.
 
 The connection has one double check assembly, two spring-loaded checks in series between two isolating valves.
 The maker's figures for the assembly as new are an opening differential of **%(hb).1f psi** and a flow coefficient
-**Cv %(cvb).0f** (gpm at 1 psi). It passes water towards the site only: it opens when the main's pressure exceeds
-the yard's by the opening differential, closes when the flow stops, and while it is closed it holds the pressure
-on its outlet.
+**Cv %(cvb).0f** (gpm at 1 psi). It passes water towards the site only.
 
 ## Lead-in check valves
 
@@ -141,8 +139,7 @@ on its outlet.
 | LC-6 | 6 | %(lc6).1f | %(cv6).0f |
 | LC-8 | 8 | %(lc8).1f | %(cv8).0f |
 
-A lead-in check is a single spring-loaded check where the lead-in enters the building. Like the backflow preventer
-it closes when the flow stops and holds the pressure on its outlet.
+A lead-in check is a single spring-loaded check where the lead-in enters the building.
 
 ## Control valves
 
@@ -224,18 +221,17 @@ One row for each riser.
 
 ## main_drain_log.csv
 
-The monthly round. The tester goes from riser to riser, and at each one reads the supply gauge, opens the main
-drain fully, reads the gauge again once it is steady, and closes the drain. The order of the round changes from
-month to month.
+The monthly round. The tester goes from riser to riser, and at each one opens the main drain fully, reads the
+supply gauge once it is steady, and closes the drain. The order of the round changes from month to month.
 
-- `riser`, `date`, `time`: the riser and when its residual was read
+- `riser`, `date`, `time`: the riser and when its gauge was read
 - `gauge_serial`: the serial of the gauge read
-- `static_psi`: the supply gauge before the drain was opened
 - `residual_psi`: the supply gauge with the drain fully open
 
 ## utility_pressure.csv
 
-The utility's record of transmitter PT-0, one reading every 30 minutes.
+The utility's record of transmitter PT-0, one reading every 30 minutes. No reading of the record was taken while
+the site was drawing water for a test.
 
 - `timestamp`, `pressure_psi`
 
@@ -252,14 +248,13 @@ flowing and then with the flow hydrant's outlets discharging.
 
 ## yard_flow_tests.csv
 
-The site's yearly flow tests of its own hydrants: a hydrant is flowed, and the pressures are read on the supply
-gauge of a riser that is not flowing. For a wall hydrant the gauge read is that of the riser whose lead-in the
-hydrant stands on.
+The site's flow tests of its own hydrants, each spring and autumn: a hydrant is flowed, and the pressure is read
+on the supply gauge of a riser that is not flowing. For a wall hydrant the gauge read is that of the riser whose
+lead-in the hydrant stands on.
 
 - `date`, `time`
 - `flow_hydrant`, `outlets_flowing`, `pitot_psi`: as above
 - `gauge_riser`: the riser whose supply gauge was read
-- `static_psi`: that gauge before the hydrant was opened
 - `residual_psi`: that gauge with the hydrant flowing
 
 ## maintenance_log.csv
@@ -285,7 +280,7 @@ pressure. Each is to be rated under FP-12.
   fully open.
 
 The records run from %(l0)s to %(l1)s: the monthly round's log, the utility's record of the main's pressure at
-the connection, the utility's flow tests of the main, the site's yearly flow test of the yard main, the
+the connection, the utility's flow tests of the main, the site's flow tests of its own hydrants, the
 maintenance log and the gauge certificates.
 
 The folder `example` holds the records of SR00, a riser of building E, for 2022, the year before that building
@@ -316,9 +311,10 @@ The contractor connects hoses and a flow meter to the riser's test header, which
 and sets the flow named in the plan, between %(lo).0f and %(hi).0f gpm. Nothing else flows on the site. The test is
 run on %(day)s.
 
-The report gives the flow on the contractor's meter, the riser's supply gauge before the header was opened and
-with the flow steady, the gauge's serial, and the reading of the utility's transmitter PT-0 at the same minute.
-The meter is good to about 0.3 per cent. The report is written to `/app/flowtest/`.
+The report gives, all with the flow steady: the flow on the contractor's meter; the riser's supply gauge and its
+serial; the contractor's own test gauge on the lead-in's flange tapping, just before the riser's control valve,
+already referred to the site datum; and the reading of the utility's transmitter PT-0. The meter is good to about
+0.3 per cent and the contractor's gauge repeats as the site's do. The report is written to `/app/flowtest/`.
 """ % dict(lo=S.FLOW_TEST_RANGE[0], hi=S.FLOW_TEST_RANGE[1], day=S.FLOW_TEST_AT.strftime("%Y-%m-%d"))
 
 

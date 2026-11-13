@@ -8,12 +8,14 @@ The budget of FP-12 is identified element by element and then evaluated at the r
 1. The city main's static S at any moment comes from the utility's record, referred to the site datum.
 2. Gauge readings are corrected by the certificate of the gauge that was on the riser that day (register and
    maintenance log). A serial in the round's log that disagrees is kept only if the readings break at it.
-3. With nothing flowing the backflow preventer holds the yard at the highest the main has stood since the last
-   flow, less its opening differential h_b. So h_b (and a lead-in check's h_c) come from the statics of tests that
-   follow another test of the same round closely, against the main's highest pressure in between; the first
-   static of a round, held since the round before, is not used.
-4. B comes from the utility's flow tests (pitot flow with the hydrant's outlet coefficient and the number of
-   outlets open), Cv_b from the yard flow tests, each for the assembly before and after its overhaul.
+3. B comes from the utility's flow tests (pitot flow with the hydrant's outlet coefficient and the number of
+   outlets open).
+4. The backflow preventer's loss is h_b + (Q/Cv_b)^2, a line in Q^2. Two flows fix it for each era, before and
+   after the overhaul: the drain tests of the risers whose own loss is known (ductile iron, no check, the valve
+   certainly open) near 400 gpm, and the yard hydrant tests near 1 200 gpm. A yard test that sits off the line
+   its era's other tests draw says the gauge it was read on stands off the yard main by that much, and the same
+   constant then belongs to every reading of that gauge. What a ductile lead-in with a check leaves over, and
+   which does not move with the flow, is its check's opening differential.
 5. Each main drain test then gives the riser's own flow-dependent loss at the drain's flow: the main's static at
    that minute, less the residual, less every other element at that flow. Lined ductile iron is C 140, so what
    is left over on such a lead-in is its control valve; cast iron's C is fitted against time and read at the
@@ -46,7 +48,6 @@ OUTLET_C = {"H-41": 0.90, "H-42": 0.90, "H-43": 0.80, "YH-1": 0.90, "YH-2": 0.90
 DRAIN_K = {"2 in. angle": 52.0, "1-1/2 in. globe": 36.0}
 VALVE_OPEN = {"6": 5200.0, "8": 9800.0}
 CHECK_CV = {"6": 2100.0, "8": 3900.0}
-FOLLOW_MIN = 90                    # a static is usable when another test of the round ended this recently
 C_NEW_CAST_IRON = 100.0
 TEST_FLOW = 1000.0                 # the highest flow the test header can be set to
 
@@ -175,27 +176,89 @@ class Audit:
             t = stamp(r["date"], r["time"])
             rid = r["riser"]
             z, h = self.zero(rid, t, r["gauge_serial"]), self.height(rid)
-            out.append(dict(riser=rid, t=t, static=float(r["static_psi"]) - z + h,
-                            resid_gauge=float(r["residual_psi"]) - z, resid=float(r["residual_psi"]) - z + h))
+            out.append(dict(riser=rid, t=t, resid_gauge=float(r["residual_psi"]) - z,
+                            resid=float(r["residual_psi"]) - z + h))
         out.sort(key=lambda x: x["t"])
         return out
 
-    # ---- opening differentials, from the statics that follow another test closely
-    def usable_statics(self, tests):
-        for prev, cur in zip(tests, tests[1:]):
-            gap = (cur["t"] - prev["t"]).total_seconds() / 60.0
-            if 0 < gap <= FOLLOW_MIN:
-                yield cur, self.main.highest(prev["t"], cur["t"])
+    # ---- the connection: h_b and Cv_b of each era from two flows, and the gauges the yard tests contradict
+    def known_riser_tests(self, tests, B):
+        """(era, flow^2, loss across the backflow preventer) from the drain tests of risers whose own loss is
+        known: ductile iron, no check, and the valve certainly open (supervised, or locked and not yet worked on)."""
+        pts = []
+        for x in tests:
+            r = self.reg[x["riser"]]
+            if r["lead_in_material"] != "DI-CL" or r["lead_in_check"]:
+                continue
+            if self.locked(x["riser"]) and self.work[x["riser"]] and x["t"] >= min(self.work[x["riser"]]):
+                continue
+            size = r["lead_in_size_in"]
+            q = self.drain_k(x["riser"], x["t"]) * math.sqrt(x["resid_gauge"])
+            own = k_lead(float(r["lead_in_equiv_length_ft"]), 140.0, "DI-CL", size) * q ** HW + (q / VALVE_OPEN[size]) ** 2
+            pts.append((self.era(x["t"]), q ** 2, self.static_main(x["t"]) - x["resid"] - own - B * (q / 1000.0) ** HW))
+        return pts
 
-    def opening(self, tests):
-        held = {}
-        for cur, S_high in self.usable_statics(tests):
-            held.setdefault((cur["riser"], self.era(cur["t"])), []).append(S_high - cur["static"])
-        plain = [rid for rid in self.reg if not self.reg[rid]["lead_in_check"]]
-        h_b = [float(np.mean([v for rid in plain for v in held.get((rid, e), [])])) for e in (0, 1)]
-        h_c = {rid: float(np.mean([v - h_b[e] for e in (0, 1) for v in held.get((rid, e), [])]))
-               for rid in self.reg if self.reg[rid]["lead_in_check"]}
-        return h_b, h_c
+    def yard_points(self, B):
+        """(era, flow^2, loss across the backflow preventer as the gauge riser's gauge puts it, gauge riser)."""
+        on_lead_in = {r["wall_hydrant"] for r in self.reg.values() if r.get("wall_hydrant")}
+        pts = []
+        for y in self.d["yard"]:
+            if y["flow_hydrant"] in on_lead_in:
+                continue                               # a wall hydrant's test takes in its lead-in's loss
+            t = stamp(y["date"], y["time"])
+            rid = y["gauge_riser"]
+            Q = self.hydrant_flow(y["flow_hydrant"], y["outlets_flowing"], y["pitot_psi"])
+            p_yard = float(y["residual_psi"]) - self.zero(rid, t, None) + self.height(rid)
+            pts.append((self.era(t), Q ** 2, self.static_main(t) - p_yard - B * (Q / 1000.0) ** HW, rid))
+        return pts
+
+    GAUGE_OFF = 0.8          # psi: a gauge riser whose yard tests sit this far off the line is itself off
+
+    def common_path(self, tests, B):
+        """h_b and Cv_b for each era, and for each riser the constant by which its gauge stands off the yard main
+        (zero unless its yard tests say otherwise). The loss across the assembly is h_b + flow^2 / Cv_b^2, a line
+        in flow^2: the known risers' drain tests fix it near 400 gpm and the yard tests near 1 200. A yard test
+        that sits off the line its era's other tests draw is a statement about the gauge it was read on."""
+        known, yard = self.known_riser_tests(tests, B), self.yard_points(B)
+        suspect = set()
+        while True:
+            fit = {}
+            for e in (0, 1):
+                x = [p[1] for p in known if p[0] == e] + [p[1] for p in yard if p[0] == e and p[3] not in suspect]
+                y = [p[2] for p in known if p[0] == e] + [p[2] for p in yard if p[0] == e and p[3] not in suspect]
+                slope, h = np.polyfit(x, y, 1)
+                fit[e] = (float(h), float(slope))
+            off = {}
+            for e, x, y, rid in yard:
+                off.setdefault(rid, []).append(y - (fit[e][0] + fit[e][1] * x))
+            worst = max((rid for rid in off if rid not in suspect), key=lambda rid: abs(np.mean(off[rid])), default=None)
+            if worst is None or abs(np.mean(off[worst])) < self.GAUGE_OFF:
+                break
+            suspect.add(worst)
+        h_b = [fit[0][0], fit[1][0]]
+        Cv_b = [1.0 / math.sqrt(fit[0][1]), 1.0 / math.sqrt(fit[1][1])]
+        const = {rid: (float(np.mean(off[rid])) if rid in suspect else 0.0) for rid in self.reg}
+        return h_b, Cv_b, const
+
+    def check_openings(self, tests, B, h_b, Cv_b):
+        """h_c of each lead-in check: what a ductile lead-in's drain tests leave over, which does not move with
+        the flow."""
+        h_c = {}
+        for rid, r in self.reg.items():
+            if not r["lead_in_check"]:
+                continue
+            size = r["lead_in_size_in"]
+            left = []
+            for x in tests:
+                if x["riser"] != rid:
+                    continue
+                e = self.era(x["t"])
+                q = self.drain_k(rid, x["t"]) * math.sqrt(x["resid_gauge"])
+                left.append(self.static_main(x["t"]) - x["resid"] - B * (q / 1000.0) ** HW - h_b[e] - (q / Cv_b[e]) ** 2
+                            - k_lead(float(r["lead_in_equiv_length_ft"]), 140.0, "DI-CL", size) * q ** HW
+                            - (q / VALVE_OPEN[size]) ** 2 - (q / CHECK_CV[size]) ** 2)
+            h_c[rid] = float(np.mean(left))
+        return h_c
 
     # ---- the city main
     def main_B(self):
@@ -204,21 +267,6 @@ class Audit:
             Q = self.hydrant_flow(u["flow_hydrant"], u["outlets_flowing"], u["pitot_psi"])
             Bs.append((float(u["static_psi"]) - float(u["residual_psi"])) / (Q / 1000.0) ** HW)
         return float(np.mean(Bs))
-
-    # ---- the backflow preventer's flow coefficient, before and after the overhaul
-    def bfp_cv(self, B, h_b, h_c):
-        inv = {0: [], 1: []}
-        on_lead_in = {r["wall_hydrant"] for r in self.reg.values() if r.get("wall_hydrant")}
-        for y in self.d["yard"]:
-            if y["flow_hydrant"] in on_lead_in:
-                continue                               # a wall hydrant's test takes in its lead-in's loss
-            t = stamp(y["date"], y["time"])
-            rid = y["gauge_riser"]
-            Q = self.hydrant_flow(y["flow_hydrant"], y["outlets_flowing"], y["pitot_psi"])
-            p_yard = float(y["residual_psi"]) - self.zero(rid, t, None) + self.height(rid) + h_c.get(rid, 0.0)
-            left = self.static_main(t) - p_yard - B * (Q / 1000.0) ** HW - h_b[self.era(t)]
-            inv[self.era(t)].append(left / Q ** 2)
-        return [1.0 / math.sqrt(np.mean(inv[e])) if inv[e] else float("nan") for e in (0, 1)]
 
     # ---- one riser's own flow-dependent loss at each of its tests
     def own_series(self, rid, tests, B, h_b, Cv_b, h_c):
@@ -258,7 +306,7 @@ class Audit:
             t = stamp(y["date"], y["time"])
             e = self.era(t)
             Q = self.hydrant_flow(y["flow_hydrant"], y["outlets_flowing"], y["pitot_psi"])
-            tee = float(y["residual_psi"]) - self.zero(rid, t, None) + self.height(rid)
+            tee = float(y["residual_psi"]) - self.zero(rid, t, None) + self.height(rid) + self.const.get(rid, 0.0)
             loss = self.static_main(t) - tee - B * (Q / 1000.0) ** HW - h_b[e] - (Q / Cv_b[e]) ** 2
             k = loss / Q ** HW
             Cs.append((4.52 * float(r["wall_hydrant_at_equiv_ft"]) / (k * PIPE_ID[(material, size)] ** 4.87)) ** (1 / HW))
@@ -338,22 +386,21 @@ class Audit:
         return float(np.mean(C_each[seg])), cv_open, "open"
 
     def split_by_test(self, rid, rows, site):
-        """Friction and valve from two flows: the main drain tests since the work and the ordered flow test."""
+        """Valve and lead-in from the ordered flow test: the fall from the flange gauge to the supply gauge is the
+        valve's loss, and the fall from the main to the flange, less the backflow preventer's, is the lead-in's.
+        The transmitter stands on the main, so with the test flowing it already shows the main drawn down."""
         B, h_b, Cv_b = site
         r, rep = self.reg[rid], self.report
         size, material, L = r["lead_in_size_in"], r["lead_in_material"], float(r["lead_in_equiv_length_ft"])
         t = stamp(rep["date"], rep["time"])
         q2 = float(rep["flow_gpm"])
-        S = float(rep["transmitter_psi"]) - PSI_FT * PIT_BELOW_FT
-        p2 = float(rep["residual_psi"]) - self.zero(rid, t, rep["gauge_serial"]) + self.height(rid)
-        own2 = S - p2 - B * (q2 / 1000.0) ** HW - h_b[1] - (q2 / Cv_b[1]) ** 2
-        q1 = float(np.mean([q for _when, q, _o in rows]))
-        own1 = float(np.mean([o for _when, _q, o in rows]))
-        A = np.array([[q1 ** HW, q1 ** 2], [q2 ** HW, q2 ** 2]])
-        k, v = np.linalg.solve(A, np.array([own1, own2]))
-        v = max(v, 1.0 / VALVE_OPEN[size] ** 2)
+        main_now = float(rep["transmitter_psi"]) - PSI_FT * PIT_BELOW_FT
+        p2 = (float(rep["residual_psi"]) - self.zero(rid, t, rep["gauge_serial"]) + self.height(rid)
+              + self.const.get(rid, 0.0))
+        flange = float(rep["flange_psi"])
+        v = max(max(flange - p2, 0.0) / q2 ** 2, 1.0 / VALVE_OPEN[size] ** 2)
+        k = max(main_now - flange - h_b[1] - (q2 / Cv_b[1]) ** 2, 1e-6) / q2 ** HW
         k = max(k, 4.52 * L / (C_NEW_CAST_IRON ** HW * PIPE_ID[(material, size)] ** 4.87))
-        v = max((own2 - k * q2 ** HW) / q2 ** 2, 1.0 / VALVE_OPEN[size] ** 2)
         C = (4.52 * L / (k * PIPE_ID[(material, size)] ** 4.87)) ** (1 / HW)
         return float(C), 1.0 / math.sqrt(v)
 
@@ -369,9 +416,11 @@ class Audit:
     # ---- the budget at the reference condition
     def rate(self):
         tests = self.tests()
-        h_b, h_c = self.opening(tests)
         B = self.main_B()
-        Cv_b = self.bfp_cv(B, h_b, h_c)
+        h_b, Cv_b, self.const = self.common_path(tests, B)
+        for x in tests:
+            x["resid"] += self.const[x["riser"]]
+        h_c = self.check_openings(tests, B, h_b, Cv_b)
         S_ref = self.reference_static()
         out = {}
         for rid, r in self.reg.items():
@@ -407,7 +456,8 @@ class Audit:
                 q, _Q = self.flows(qd)
                 other = p_base + kl * q ** HW + (q / cv_valve) ** 2 - k_new * q ** HW - v * q ** 2
                 out[rid]["open_by"] = abs(other - p_base) / p_base
-        out["_site"] = dict(S_ref=S_ref, B=B, h_b=h_b, Cv_b=Cv_b, h_c=h_c)
+        out["_site"] = dict(S_ref=S_ref, B=B, h_b=h_b, Cv_b=Cv_b, h_c=h_c,
+                            gauges_off={k: round(v, 2) for k, v in self.const.items() if v})
         return out
 
 
@@ -457,9 +507,9 @@ def main(argv):
     res = rate(data, report)
     write(res, path)
     site = res["_site"]
-    print("S_ref %.2f  B %.3f  h_b %.2f -> %.2f  Cv_b %.0f -> %.0f  h_c %s" % (
+    print("S_ref %.2f  B %.3f  h_b %.2f -> %.2f  Cv_b %.0f -> %.0f  h_c %s  gauges off %s" % (
         site["S_ref"], site["B"], site["h_b"][0], site["h_b"][1], site["Cv_b"][0], site["Cv_b"][1],
-        {k: round(v, 2) for k, v in site["h_c"].items()}), file=sys.stderr)
+        {k: round(v, 2) for k, v in site["h_c"].items()}, site["gauges_off"]), file=sys.stderr)
 
 
 if __name__ == "__main__":

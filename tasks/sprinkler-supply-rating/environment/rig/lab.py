@@ -71,10 +71,10 @@ def submit():
         f.write("# Flow test report\n\n"
                 "- riser: %(riser)s\n- date and time: %(date)s %(time)s\n"
                 "- flow on the contractor's meter: %(flow_gpm).0f gpm\n"
-                "- supply gauge: %(gauge_serial)s\n"
-                "- supply gauge before the header was opened: %(static_psi).1f psi\n"
-                "- supply gauge with the flow steady: %(residual_psi).1f psi\n"
-                "- transmitter PT-0 at the same minute: %(transmitter_psi).2f psi\n" % rep)
+                "- supply gauge %(gauge_serial)s, flow steady: %(residual_psi).1f psi\n"
+                "- contractor's gauge on the lead-in flange before the control valve, at the site datum, "
+                "flow steady: %(flange_psi).1f psi\n"
+                "- transmitter PT-0, flow steady: %(transmitter_psi).2f psi\n" % rep)
     print("Order placed: riser %s at %.0f gpm. Report written to %s" % (riser, flow, REPORT_DIR))
     return 0
 

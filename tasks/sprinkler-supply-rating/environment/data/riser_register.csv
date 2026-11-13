@@ -2,7 +2,7 @@ riser,building,lead_in_material,lead_in_size_in,lead_in_equiv_length_ft,laid,lea
 SR01,A,DI-CL,8,310,2004,,,,lock,2 in. angle,G-1407,4.5,1250,55
 SR02,A,CI,6,220,1978,,,,lock,2 in. angle,G-1411,5.0,900,51
 SR03,B,DI-CL,6,280,2001,,,,lock,2 in. angle,G-1420,4.0,950,53
-SR04,B,CI,6,350,1974,LC-6,,,switch,2 in. angle,G-1423,5.5,850,50
+SR04,B,CI,6,385,1974,,,,switch,2 in. angle,G-1423,5.5,850,50
 SR05,C,DI-CL,6,300,2009,LC-6,,,switch,2 in. angle,G-1431,4.5,1080,47
 SR06,C,CI,8,520,1971,,WH-6,430,lock,2 in. angle,G-1436,6.0,1100,42
 SR07,C,DI-CL,6,150,2012,,,,switch,2 in. angle,G-1440,4.0,520,59

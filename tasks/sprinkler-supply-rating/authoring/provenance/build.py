@@ -43,7 +43,7 @@ REGISTER_HEADER = ["riser", "building", "lead_in_material", "lead_in_size_in", "
 
 def drain_rows(log, only=None):
     return [[x["riser"], x["time"].strftime("%Y-%m-%d"), x["time"].strftime("%H:%M"), x["gauge_serial"],
-             "%.1f" % x["static_psi"], "%.1f" % x["residual_psi"]] for x in log if only is None or x["riser"] in only]
+             "%.1f" % x["residual_psi"]] for x in log if only is None or x["riser"] in only]
 
 
 def pressure_rows(main, first, last):
@@ -84,7 +84,7 @@ def main():
     grid = sim["main"]
     write_csv(os.path.join(DATA, "riser_register.csv"), REGISTER_HEADER, register_rows(S.RISERS))
     write_csv(os.path.join(DATA, "main_drain_log.csv"),
-              ["riser", "date", "time", "gauge_serial", "static_psi", "residual_psi"], drain_rows(sim["drain_log"]))
+              ["riser", "date", "time", "gauge_serial", "residual_psi"], drain_rows(sim["drain_log"]))
     write_csv(os.path.join(DATA, "utility_pressure.csv"), ["timestamp", "pressure_psi"],
               pressure_rows(grid, S.LOG_START, S.LOG_END))
     write_csv(os.path.join(DATA, "utility_flow_tests.csv"),
@@ -94,10 +94,9 @@ def main():
                 u["flow_hydrant"], u["outlets"], "%.1f" % u["static_psi"], "%.1f" % u["residual_psi"],
                 "%.1f" % u["pitot_psi"]] for u in sim["utility_tests"]])
     write_csv(os.path.join(DATA, "yard_flow_tests.csv"),
-              ["date", "time", "flow_hydrant", "outlets_flowing", "pitot_psi", "gauge_riser", "static_psi",
-               "residual_psi"],
+              ["date", "time", "flow_hydrant", "outlets_flowing", "pitot_psi", "gauge_riser", "residual_psi"],
               [[y["time"].strftime("%Y-%m-%d"), y["time"].strftime("%H:%M"), y["flow_hydrant"], y["outlets"],
-                "%.1f" % y["pitot_psi"], y["residual_riser"], "%.1f" % y["static_psi"], "%.1f" % y["residual_psi"]]
+                "%.1f" % y["pitot_psi"], y["residual_riser"], "%.1f" % y["residual_psi"]]
                for y in sim["yard_tests"]])
     write_csv(os.path.join(DATA, "maintenance_log.csv"), ["date", "item", "work"], maintenance_rows())
     serials = sorted({g for r in S.RISERS for g, _u in r["gauges"]})
@@ -113,7 +112,7 @@ def main():
     exd = os.path.join(DATA, "example")
     write_csv(os.path.join(exd, "riser_register.csv"), REGISTER_HEADER, register_rows([S.EXAMPLE]))
     write_csv(os.path.join(exd, "main_drain_log.csv"),
-              ["riser", "date", "time", "gauge_serial", "static_psi", "residual_psi"],
+              ["riser", "date", "time", "gauge_serial", "residual_psi"],
               drain_rows(ex["drain_log"], only={"SR00"}))
     write_csv(os.path.join(exd, "utility_pressure.csv"), ["timestamp", "pressure_psi"],
               pressure_rows(grid, ex_first, ex_last))
