@@ -1,0 +1,34 @@
+{
+ "DC-1": {
+  "shift": "the aged registered group is cross main A of a grid (pending: the feed main of a tree)",
+  "register_error_pct": -15.2
+ },
+ "DC-2": {
+  "shift": "no aged registered group; an unverified valve on a grid's cross main (example: a tree's feed)",
+  "register_error_pct": 0.0
+ },
+ "DC-3": {
+  "shift": "aged feed main beside an open cross main, at a density and K-factor beyond the examples'",
+  "register_error_pct": -16.1
+ },
+ "DC-4": {
+  "shift": "no aged registered group; a ceiling sloped across the lines",
+  "register_error_pct": 0.0
+ },
+ "DC-5": {
+  "shift": "aged cross main beside an open feed main; a 60 ft riser and a weak supply",
+  "register_error_pct": -6.6
+ },
+ "DC-6": {
+  "shift": "aged feed main of a grid beside an open far cross main",
+  "register_error_pct": -9.3
+ },
+ "DC-7": {
+  "shift": "aged cross main beside an unverified valve, no group left open by the register",
+  "register_error_pct": -13.5
+ },
+ "DC-8": {
+  "shift": "aged feed main of a grid beside an open cross main; a ceiling sloped across the lines",
+  "register_error_pct": -11.2
+ }
+}

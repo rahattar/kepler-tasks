@@ -1,0 +1,10 @@
+{
+ "note": "settled by the 2025 investigation's flow tests",
+ "C": {
+  "riser": 120,
+  "feed": 120,
+  "mains": 95,
+  "lines": 78
+ },
+ "valves": {}
+}
