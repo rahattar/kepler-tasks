@@ -47,3 +47,10 @@ machine's analyses with its system's. A round of 3 low and 3 xhigh on `model: "o
 20261113 failed intake's oracle check in 2 s. The checker's scratch directories took their modes through the
 umask that test.sh sets (077), so the program could not read its package. Fixed in 20261113b; the lesson is in
 `docs/rejection-patterns.md`. Nothing the agent sees changed.
+
+## Nov 13: oracle confirmed in Docker
+
+`tools/run_oracle.sh journal-bearing-survey-20261113b.zip` on Alex's Mac: both images build, solve.sh runs as
+the agent user (examples 0 points out), test.sh gives reward 1 with the real ctrf plugin, verifier 58 s. The
+six runs took 7.4 to 10.2 s there against 12 to 27 s in the sandbox, so the 60 s limit is about 6 times the
+slowest run on that machine and 2.2 to 3.5 times here.
