@@ -1,4 +1,4 @@
-# sprinkler-demand bare core v2 (Nov 13): low effort reads the tests on file and solves it in eight minutes
+# sprinkler-demand bare core v2 (Nov 13): low effort reads the tests on file; 3 of 3 accepted in 8 to 11 minutes
 
 v2 is v0 (the program designs its one field flow test: outlet, flow, two gauges) with flow tests on file in
 every package. In the pending package without results and in six of eight hidden systems, one group the
@@ -11,8 +11,8 @@ no larger than the largest example.
 | probe | time | hidden | what it did |
 |---|---|---|---|
 | S3 | 8 min | **accepted, 8 of 8**, within 0.21% | compared the tests on file with the register, found PN-1's feed main at about C 94 against 120, treats such a group as open and designs the test for it |
-| S1 | | | |
-| S2 | | | |
+| S1 | 11 min | **accepted, 8 of 8**, within 0.28%, slowest run 12.5 s | the same: "a test on file decides it, not the register alone" |
+| S2 | 9 min | **accepted, 8 of 8**, within 1.05% | the same; starts each open C from 0.9 of its 2019 value |
 
 The screen allows 0 low-effort solves, so no xhigh probes were run.
 

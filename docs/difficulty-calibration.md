@@ -876,3 +876,25 @@ the package gives. Probes on `model: "opus"` (claude-opus-5-5):
 - **An Agent call can run in the foreground whatever `run_in_background` says** and then blocks for the whole
   probe. Start probes last in a turn.
 - **As in journal bearing, the time limit separated no run.** Every probe vectorised.
+
+## Sprinkler demand v2: a record of the same kind as the program's own measurement is read at once (Nov 13)
+
+`cores/sprinkler-demand-v2`. v0's program (it designs its one field flow test) with flow tests on file in every
+package; in the pending package and six of eight hidden systems one group the register carries a C for has
+aged, the tests on file show it, nothing lists it, and the examples with results have none. Low effort: 3 of
+3 accepted on all eight hidden systems in 8 to 11 minutes. No xhigh probes.
+
+- **The device of lube-oil-survey and ventilation-district-airflow is not enough by itself.** Same skeleton
+  (a need the records show and do not list, one order during the run, the instance in a package without
+  results), opposite result. All three probes named PN-1's feed main in their reports.
+- **What differed:** the telling record here is a flow test in the format the program's own test comes back
+  in, named in the package format. A program that must fit a flow test fits the ones on file as a matter of
+  course, and the register's figure fails that fit by 3.6 psi in 10. Where the device held, the tell was a
+  difference between quantities the program had no reason to put side by side (two machines' oil analyses,
+  two gate roads' quantities).
+- **Rule:** the visible instance has to be invisible to the program's routine use of the data. If reading the
+  record is a step any correct program takes anyway, the condition is found at low effort.
+- **A physical limit met while building:** one test with two gauges at 0.1 psi scatter cannot settle a main
+  and the branch lines of a tree within 3 per cent. A core whose own reference passes on some seeds only is
+  not fair; check the reference on several seeds before any probe.
+- With v0 and v1 this closes sprinkler hydraulics as a subject: three cores, all found at low effort.
