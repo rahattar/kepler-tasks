@@ -1,0 +1,17 @@
+python -m pytest test_program.py -q -p no:cacheprovider, in tests/, BEARING_PROGRAM naming the program
+
+the reference, solution/bearing.py                             pytest exit status 0 in 121 s
+      1 passed in 120.60s (0:02:00)
+one sample for each listed system (variants.py, register)      pytest exit status 1 in 118 s
+      AssertionError: canal_works: 293 of 2420 points out of band in 20.0 s; worst G-158-DE-064 power_kW: 1.8434 against 1.5575
+      quay_site: 315 of 2420 points out of band in 15.1 s; worst P-139-DE-097 power_kW: 1.9413 against 2.1233
+      ridge_plant: 262 of 2310 points out of band in 20.7 s; worst G-154-DE-039 power_kW: 1.7329 against 1.4608
+      south_yard: 0 of 2090 points out of band in 19.9 s
+      tank_farm: 223 of 2310 points out of band in 20.5 s; worst M-160-DE-005 power_kW: 0.9184 against 1.0332
+      upper_mill: 243 of 2310 points out of band in 20.7 s; worst G-188-DE-007 power_kW: 1.3951 against 1.2862
+      1 failed in 117.80s (0:01:57)
+the unoptimised second solution, naive_bearing.py              pytest exit status 1 in  60 s
+      stopped: the run on canal_works was still going after 60 s
+      1 failed in 60.11s (0:01:00)
+
+3 programs, 0 unexpected

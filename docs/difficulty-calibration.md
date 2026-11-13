@@ -614,3 +614,17 @@ low 0 of 3, xhigh 0 of 3, all six failing the same five sites by 112 to 482 poin
   unused or spent it where it told them nothing.
 - **Zero at xhigh is inside the Nov 11 ask (0 to 5 of 8) and outside the older one (1 to 7).** Three runs wrote a
   check for a machine registered on the wrong system, so the idea is in reach; none generalised it.
+
+
+## Journal bearing v5: the v4 condition put into the visible data, not yet probed (Nov 12)
+
+`cores/journal-bearing-v5/RESULT.md`, bundle `tasks/journal-bearing-survey`. v4 had no visible instance of
+the console that is two charges, against the first Nov 12 tip, and every probe failed alike, which is the
+tips' warning sign. v5 adds a third visible package without results that has such a console and an allowance
+one above the register's count. The examples with results are unchanged.
+
+- **v4's 0 of 6 does not carry over.** The instance changes what an attentive run can see.
+- **A package without results is the only fair place for it in this format.** With results it would be a
+  test the wrong program fails at once (v2: a witness with feedback is solved 3 of 3).
+- **Check a core against the tips before probing it, not while building on it.** v4 was probed for six runs
+  on a design the playbook already ruled out.
