@@ -86,3 +86,8 @@ failed the two districts that hold where their records stall (33 min).
 - **The limit did not bind.** Probe programs ran a district in 1.3 to 12 s against 35; the reference is the
   slow one at 8.7 to 10.5 s. The one long run was D's on the pending district, 26 s with the turn search.
 - Probe programs are in `cores/vent-fan-stall-v2/probes/full_*.py`.
+
+**Packed** as ventilation-district-airflow-20261113.zip with Alex's instruction (preflight 77 of 77, shipcheck
+clean). No Docker daemon in the session that built it: the oracle evidence is `verifier_run.txt`
+(`bash tests/test.sh` itself, reward 1), and the two Dockerfiles, reworded for the similarity gate after the
+studies, have not been built. Instruction against lube-oil-survey: 0.53 difflib, 0.095 5-gram Jaccard.

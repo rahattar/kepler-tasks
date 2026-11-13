@@ -8,6 +8,7 @@ ok    the one artifact is /app/output/airflow.py
 ok    [metadata] carries the whole block
 ok    category "Science", a subcategory, domain engineering-sciences, field mechanical-engineering
 ok    keywords and tags are the same list
+ok    subfield is a short phrase, at most 120 characters (it is 104)
 ok    agent: 28800 s as the user agent; verifier: 600 s, separate, no network
 ok    difficulty_explanation is in task.toml and word for word in the README under ## Difficulty
 ok    solution_explanation is in task.toml and word for word in the README under ## Reference solution
@@ -74,4 +75,4 @@ ok    live: every airflow 1.4 per cent high is accepted
 ok    live: every airflow 1.6 per cent high is not
 ok    live: a program that writes the sealed table and is still running at the limit is not accepted, and its table is not opened
 ok    live: the reference on the small district is accepted and places one order of the district's allowance
-76 checks, 0 failed: the bundle is clean
+77 checks, 0 failed: the bundle is clean
