@@ -1,0 +1,35 @@
+{
+ "rounds": 14,
+ "rounds_stalled": 5,
+ "points": 686,
+ "branches": 150,
+ "log_rows": 94,
+ "limbs": "...s.ssss.....",
+ "allowance": 6,
+ "attempt": 0,
+ "size": 0.6843613495737529,
+ "sd1": 0.06312,
+ "band": [
+  0.34819983425800655,
+  0.6299605249474366
+ ],
+ "altered": [
+  "P1-I-02",
+  "P1-R-03",
+  "P2-R-08",
+  "P4-I-01"
+ ],
+ "breach": "P4-X-04",
+ "close_at": "2026-03-06 22:40",
+ "edge_gap_per_cent": 0.6186348442764833,
+ "limbs_on_record": "...s.ssss.ssss",
+ "breach_leak_in_campaigns_m3_s": [
+  9.21,
+  9.36,
+  9.36
+ ],
+ "breach_resistance_booked_and_real": [
+  2130.0,
+  7.732
+ ]
+}

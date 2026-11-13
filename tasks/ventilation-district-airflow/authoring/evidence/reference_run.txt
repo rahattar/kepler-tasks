@@ -1,0 +1,31 @@
+solution/airflow.py, run by tests/judge_airflow.judge
+
+the six districts, each run limited to 35 s:
+  deep_south     10.5 s     0 of 3948 points out of band  largest error 0.17 of the band  order: P10-I-20 P6-I-13 P7-I-14 P8-I-29 P8-R-23 P9-I-30 P10-X-08 FAN-B
+  far_east       10.3 s     0 of 3948 points out of band  largest error 0.19 of the band  order: P10-R-11 P2-R-01 P2-R-03 P3-I-03 P3-R-24 P4-R-15 P6-I-06 P7-I-26 FAN-B
+  lower_levels    9.7 s     0 of 3948 points out of band  largest error 0.18 of the band  order: P10-I-22 P2-I-13 P2-R-10 P3-R-18 P7-R-28 P8-I-21 P9-I-20 P4-X-04 FAN-B
+  new_incline     8.7 s     0 of 3948 points out of band  largest error 0.22 of the band  order: P2-I-07 P4-R-03 P4-R-05 P4-R-21 P5-R-03 P5-R-04 P6-R-01
+  old_shaft       9.1 s     0 of 3570 points out of band  largest error 0.21 of the band  order: P1-I-07 P1-I-30 P1-R-26 P2-I-11 P3-R-01 P5-I-09 P5-I-18 P9-X-06
+  river_block     9.6 s     0 of 3570 points out of band  largest error 0.20 of the band  order: P2-I-04 P3-I-03 P3-I-27 P3-R-04 P4-R-06 P4-R-16 P4-R-17 P9-I-06 FAN-B
+  accepted
+  runs of 8.7 to 10.5 s; the limit of 35 s is 3.3 times the slowest
+  points: 22932 at 6 districts; largest error at any of them 0.22 of the band
+
+the three packages beside the program (the examples against their own results, the pending district
+against its sealed result, the crew answering for all three as it does where the program is checked):
+  east_decline    8.5 s     0 of 3948 points out of band  largest error 0.13 of the band  order: P1-I-22 P1-R-10 P10-R-07 P2-R-27 P4-I-13 P4-R-10 P5-R-23 P8-R-14
+  north_field     6.3 s     0 of 3570 points out of band  largest error 0.22 of the band  order: P3-R-28 P4-I-03 P4-I-18 P4-R-06 P4-R-14 P6-I-03 P6-I-22 P6-R-13 P6-R-21
+  west_reef      10.8 s     0 of 3948 points out of band  largest error 0.22 of the band  order: P1-R-12 P1-R-27 P4-R-14 P5-I-05 P5-R-09 P5-R-20 P7-I-02 P1-X-03 FAN-B
+  accepted
+
+the seven small districts:
+  deep_south      0.9 s     0 of  686 points out of band  largest error 0.19 of the band  order: P1-I-02 P1-R-03 P2-R-08 P4-I-01 P4-X-04 FAN-B
+  east_decline    0.8 s     0 of  686 points out of band  largest error 0.18 of the band  order: P3-I-06 P3-R-02 P5-I-05 P5-R-05
+  far_east        0.9 s     0 of  560 points out of band  largest error 0.16 of the band  order: P2-R-01 P2-R-03 P3-I-02 P4-I-04 FAN-B
+  new_incline     0.9 s     0 of  686 points out of band  largest error 0.21 of the band  order: P1-I-03 P3-R-01 P4-I-01 P4-R-04
+  north_field     0.6 s     0 of  560 points out of band  largest error 0.30 of the band  order: P2-R-05 P3-I-03 P3-I-05 P4-R-03
+  old_shaft       0.9 s     0 of  560 points out of band  largest error 0.16 of the band  order: P1-I-03 P1-I-07 P2-R-07 P4-R-04 P2-X-02
+  west_reef       0.8 s     0 of  560 points out of band  largest error 0.22 of the band  order: P2-I-04 P3-I-08 P4-I-04 P2-X-02 FAN-B
+  accepted
+
+reference accepted on all three sets

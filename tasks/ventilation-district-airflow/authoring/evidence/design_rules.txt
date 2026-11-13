@@ -1,0 +1,22 @@
+holds  9 districts: 2 with results beside the program, 1 without, 6 the program is run on; no name twice
+holds  no file of a district's record in a package the program is run on is a file of a package it was written beside: 0 of the register, surveys, work log, regulators, doors, catalogue sheet and log are shared (0); a fans.csv or a points.csv, which hold no record, can be the same file (4 are)
+holds  every package is the ten files of district_package.md; the two examples carry expected.csv besides, the pending package nothing
+holds  a package holds 806 to 955 branches, 1153 to 1322 log rows and 3570 to 3948 survey points; the stated most are 1000, 1500 and 4500
+holds  the sealed result of every district has one row for every survey point, in the columns point,flow_m3_s
+holds  the crew's book for every district holds the package's allowance and a reading for every branch
+holds  the airways re-supported or enlarged since their latest survey, read from the work log and the surveys, are the ones the district was built with: 6 to 9 a district
+holds  such an airway's latest survey on file gives 4.1 to 7.9 times its resistance as it is
+holds  at the two example districts the allowance is the number of airways worked on, no stopping is open and the records leave no closure open
+holds  at every district the allowance is the number of airways worked on, and one more for an open stopping, and one more for a closure the records leave open
+holds  at a stopping as built, the surveyed airflows at its intake end balance within 1.02 m3/s in every campaign (2099 stoppings, 6297 balances): the leak of a stopping as built and the accuracy of two readings
+holds  at an open stopping they miss by 5.1 to 10.1 m3/s in every one of the three campaigns (4 stoppings), 5 times the largest miss at a stopping as built
+holds  an open stopping is booked at 1721 to 3744 N s2/m8 and is at 7.1 to 8.9
+holds  of the districts the program is run on, 3 have an open stopping (deep_south, old_shaft, lower_levels), 4 a closure the records leave open (deep_south, far_east, lower_levels, river_block), and 1 neither (new_incline)
+holds  the pending district, which the program's author can read, has both: P1-X-03 open, and the closure of 2026-03-20 10:15 left open
+holds  the open stopping is not one place: west_reef P1-X-03; deep_south P10-X-08; old_shaft P9-X-06; lower_levels P4-X-04
+holds  at such a closure the resistance at which the healthy state ceases, for the district as it is and for the district as its records have it, is 0.32 to 0.60 per cent apart, and the return's first entry is built between the two
+holds  from that closure on the district and its records are in different states for the last 5 survey rounds: west_reef stalls where the records hold; deep_south holds where the records stall; far_east stalls where the records hold; lower_levels stalls where the records hold; river_block holds where the records stall
+holds  where the records leave no closure open, the district and its records are in the same state at every round
+holds  every district has a fan in stall at 9 to 28 of its 42 survey rounds, and both fans healthy at the rest
+holds  the working district stands between the resistance at which a fan stalls and the one at which it recovers: 1.20 to 1.33 and 0.75 to 0.83 times its own
+21 rules, 0 not holding

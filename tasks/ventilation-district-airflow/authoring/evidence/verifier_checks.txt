@@ -1,0 +1,79 @@
+tests/judge_airflow.py on the small district new_incline (686 points), the programs made here from its sealed result
+
+OUT_CSV that is not the table the task statement describes: all refused
+refused    nothing written  [OUT_CSV was not written as a file ([Errno 2] No such file or directory: '/tmp/district_wqwq4pfz/prog/out.csv')]
+refused    OUT_CSV is a directory  [OUT_CSV was not written as a file (not a regular file)]
+refused    OUT_CSV is a symbolic link to a file holding the true table  [OUT_CSV was not written as a file (not a regular file)]
+refused    an empty file  [OUT_CSV does not begin with the header point,flow_m3_s]
+refused    the header alone  [OUT_CSV has 0 of the package's 686 points]
+refused    no header  [OUT_CSV does not begin with the header point,flow_m3_s]
+refused    header misspelt (point,flow_m3s)  [OUT_CSV does not begin with the header point,flow_m3_s]
+refused    header in capitals  [OUT_CSV does not begin with the header point,flow_m3_s]
+refused    header padded with a blank  [OUT_CSV does not begin with the header point,flow_m3_s]
+refused    a third column  [OUT_CSV does not begin with the header point,flow_m3_s]
+refused    one column  [OUT_CSV does not begin with the header point,flow_m3_s]
+refused    a row of three fields  [a row of OUT_CSV has 3 fields]
+refused    a point left out  [OUT_CSV has 685 of the package's 686 points]
+refused    a point given twice  [OUT_CSV has the point S00004 twice]
+refused    a point the package does not have  [OUT_CSV has a row for 'S99999', which is no point of the package]
+refused    a point in lower case  [OUT_CSV has a row for 's00006', which is no point of the package]
+refused    an airflow empty  [the airflow at S00010 is not a decimal number ('')]
+refused    an airflow n/a  [the airflow at S00010 is not a decimal number ('n/a')]
+refused    an airflow nan  [the airflow at S00010 is not a decimal number ('nan')]
+refused    an airflow inf  [the airflow at S00010 is not a decimal number ('inf')]
+refused    an airflow with its unit  [the airflow at S00010 is not a decimal number ('12.5 m3/s')]
+refused    an airflow with a decimal comma  [the airflow at S00010 is not a decimal number ('12,5')]
+refused    an airflow with a digit separator  [the airflow at S00010 is not a decimal number ('1_2.5')]
+refused    an airflow in hexadecimal  [the airflow at S00010 is not a decimal number ('0x1F')]
+refused    bytes that are not UTF-8  [OUT_CSV does not read as CSV ('utf-8' codec can't decode byte 0xff in position 10437: invalid start byte)]
+refused    larger than 2000000 bytes (the true table followed by empty lines)  [OUT_CSV is larger than 2000000 bytes]
+refused    the true table, then exit status 3  [exit status 3 (nothing on stderr)]
+
+the true table in ways the task statement leaves open: all accepted
+accepted   as it is
+accepted   CRLF line ends
+accepted   no final line end
+accepted   empty lines between rows
+accepted   the rows in reverse order
+accepted   blanks round every field
+accepted   every field quoted
+accepted   plus signs
+accepted   exponent form
+accepted   fifteen decimals
+
+the bands (1.5 per cent of the sealed airflow, or 0.03 m3/s where that is more)
+accepted   every airflow 0.95 of its band high
+accepted   every airflow 0.95 of its band low
+refused    every airflow 1.05 of its band high  [686 points out of band]
+refused    one airflow 2 per cent high, the rest true  [1 points out of band]
+
+the limit, set to 3 s for these cases
+refused    writes the true table, then sleeps  [the run on new_incline was still going after 3 s]
+refused    writes the true table, ignores SIGTERM and spins  [the run on new_incline was still going after 3 s]
+refused    two districts to run, the first over the limit: the second is never started  [the run on new_incline was still going after 3 s]
+accepted   exits in time and leaves a child running in a session of its own
+           processes of nobody left after that run: 0
+
+the survey crew during a run (each program checks the crew's replies itself and writes the true table only
+if every reply is the one expected)
+accepted   an order of the whole allowance (4 branches) is answered with one row a branch
+accepted   an order of one more than the allowance is refused and is not the district's order: the next is taken
+accepted   an order naming a branch the district does not have is refused, and the next is taken
+accepted   an order naming a branch twice is refused
+accepted   a second order in the same run is refused
+accepted   an order through a copy of the package that names another district is refused
+accepted   a fan branch, a cut-through and a regulator can be named like any other branch
+refused    outside a run nothing answers: 'the crew is not available'
+
+tests/test.sh itself, run for real with `python -m pytest` replaced by a stand-in that leaves the report and
+the exit status named; the reward is what /logs/verifier/reward.txt holds afterwards
+reward 1   pytest exits 0, the report counts one test, passed
+reward 0   pytest exits 1, the report counts one test, failed
+reward 0   pytest exits 0, the report counts one test, skipped
+reward 0   pytest exits 0, the report counts two tests, passed
+reward 0   pytest exits 1, the report counts one test, passed
+reward 0   pytest exits 0 and leaves no report
+reward 0   pytest exits 0, the report is not JSON
+reward 0   no airflow.py delivered
+
+61 cases, 0 unexpected

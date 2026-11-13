@@ -1,0 +1,20 @@
+authoring/evidence/naive_airflow.py, run by tests/judge_airflow.judge
+
+the seven small districts, the limit set aside (3600 s a run):
+  deep_south     17.9 s     0 of  686 points out of band  largest error 0.17 of the band  order: P2-R-08 P1-R-03 P1-I-02 P4-I-01 P4-X-04 FAN-B
+  east_decline    2.2 s     0 of  686 points out of band  largest error 0.18 of the band  order: P3-R-02 P3-I-06 P5-I-05 P5-R-05
+  far_east       12.9 s     0 of  560 points out of band  largest error 0.16 of the band  order: P4-I-04 P2-R-03 P2-R-01 P3-I-02 FAN-B
+  new_incline     2.8 s     0 of  686 points out of band  largest error 0.21 of the band  order: P4-R-04 P3-R-01 P4-I-01 P1-I-03
+  north_field     3.2 s     0 of  560 points out of band  largest error 0.30 of the band  order: P3-I-05 P4-R-03 P3-I-03 P2-R-05
+  old_shaft       2.1 s     0 of  560 points out of band  largest error 0.16 of the band  order: P4-R-04 P1-I-07 P1-I-03 P2-R-07 P2-X-02
+  west_reef      20.9 s     0 of  560 points out of band  largest error 0.22 of the band  order: P3-I-08 P2-I-04 P4-I-04 P2-X-02 FAN-B
+  accepted
+  widest departure from the sealed results: 0.30 of the band
+  2.1 to 20.9 s a run on districts of 121 to 165 branches and 80 to 98 log rows
+
+the six districts, of 806 to 955 branches and 1153 to 1322 log rows, each run limited to 35 s:
+  deep_south    over the limit (35.0 s)
+  stopped: the run on deep_south was still going after 35 s
+  not accepted
+
+the second solution is right where it is given the time and is stopped at the limit on the first of the six

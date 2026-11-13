@@ -1,0 +1,38 @@
+{
+ "rounds": 42,
+ "rounds_stalled": 18,
+ "points": 3570,
+ "branches": 860,
+ "log_rows": 1198,
+ "limbs": "...ss.....ssssss.....sssss..ss.sss........",
+ "allowance": 8,
+ "attempt": 0,
+ "size": 0.9913190663354615,
+ "sd1": 0.0188,
+ "band": [
+  0.8182943659189159,
+  1.1801691984762297
+ ],
+ "altered": [
+  "P1-I-07",
+  "P1-I-30",
+  "P1-R-26",
+  "P2-I-11",
+  "P3-R-01",
+  "P5-I-09",
+  "P5-I-18"
+ ],
+ "breach": "P9-X-06",
+ "close_at": null,
+ "edge_gap_per_cent": null,
+ "limbs_on_record": "...ss.....ssssss.....sssss..ss.sss........",
+ "breach_leak_in_campaigns_m3_s": [
+  6.09,
+  6.16,
+  6.24
+ ],
+ "breach_resistance_booked_and_real": [
+  3744.0,
+  8.866
+ ]
+}

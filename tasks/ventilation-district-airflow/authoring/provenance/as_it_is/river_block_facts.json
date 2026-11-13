@@ -1,0 +1,30 @@
+{
+ "rounds": 42,
+ "rounds_stalled": 9,
+ "points": 3570,
+ "branches": 806,
+ "log_rows": 1153,
+ "limbs": ".......s............ss..ssss....ss........",
+ "allowance": 9,
+ "attempt": 1,
+ "size": 0.825460130554985,
+ "sd1": 0.03736,
+ "band": [
+  0.5110181864907564,
+  0.9085483644556215
+ ],
+ "altered": [
+  "P2-I-04",
+  "P3-I-03",
+  "P3-I-27",
+  "P3-R-04",
+  "P4-R-06",
+  "P4-R-16",
+  "P4-R-17",
+  "P9-I-06"
+ ],
+ "breach": null,
+ "close_at": "2026-03-20 13:05",
+ "edge_gap_per_cent": 0.43966553382960033,
+ "limbs_on_record": ".......s............ss..ssss....ss...sssss"
+}

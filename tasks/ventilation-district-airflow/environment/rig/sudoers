@@ -1,0 +1,3 @@
+# The agent may run the survey crew's program as the crew, and nothing else; none of its environment goes along.
+Defaults!/opt/crew/lab.py env_reset,!env_keep
+agent ALL=(crew) NOPASSWD: /opt/crew/lab.py

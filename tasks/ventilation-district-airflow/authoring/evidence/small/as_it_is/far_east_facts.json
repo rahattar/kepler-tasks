@@ -1,0 +1,26 @@
+{
+ "rounds": 14,
+ "rounds_stalled": 10,
+ "points": 560,
+ "branches": 121,
+ "log_rows": 80,
+ "limbs": "..s.sssss.ssss",
+ "allowance": 5,
+ "attempt": 2,
+ "size": 0.592662638908195,
+ "sd1": 0.0678,
+ "band": [
+  0.27277553543597927,
+  0.452298122348224
+ ],
+ "altered": [
+  "P2-R-01",
+  "P2-R-03",
+  "P3-I-02",
+  "P4-I-04"
+ ],
+ "breach": null,
+ "close_at": "2026-03-06 23:40",
+ "edge_gap_per_cent": 0.6756452294591144,
+ "limbs_on_record": "..s.sssss....."
+}

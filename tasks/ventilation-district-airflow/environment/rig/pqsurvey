@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+"""pqsurvey PACKAGE_DIR BRANCH [BRANCH ...]
+
+Places a district's one survey order. This wrapper runs as its caller: it reads the district's name from
+the package's district.json and passes the order to the survey crew, which runs under an account of its
+own and prints the readings.
+"""
+import json
+import os
+import sys
+
+if len(sys.argv) < 3:
+    print("usage: pqsurvey PACKAGE_DIR BRANCH [BRANCH ...]")
+    sys.exit(2)
+try:
+    with open(os.path.join(sys.argv[1], "district.json")) as handle:
+        district = str(json.load(handle)["district"])
+except (OSError, ValueError, KeyError, TypeError):
+    print("%s is not a district package: no district.json naming the district" % sys.argv[1])
+    sys.exit(2)
+os.execv("/usr/bin/sudo", ["sudo", "-n", "-u", "crew", "/opt/crew/lab.py", "pqsurvey", district] + sys.argv[2:])

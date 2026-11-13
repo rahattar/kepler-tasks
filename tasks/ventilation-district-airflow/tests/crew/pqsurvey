@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+"""pqsurvey PACKAGE_DIR BRANCH [BRANCH ...]
+
+The same command, where a program is checked. The command line, the words printed and the exit status are
+those of the wrapper the program was written against. Here the checker is the crew: the district's name is
+read from the package and the order goes to the checker's window, which answers from books only it can open.
+"""
+import json
+import os
+import socket
+import sys
+
+WINDOW = "/run/survey-crew/window"
+
+if len(sys.argv) < 3:
+    print("usage: pqsurvey PACKAGE_DIR BRANCH [BRANCH ...]")
+    sys.exit(2)
+try:
+    with open(os.path.join(sys.argv[1], "district.json")) as handle:
+        district = str(json.load(handle)["district"])
+except (OSError, ValueError, KeyError, TypeError):
+    print("%s is not a district package: no district.json naming the district" % sys.argv[1])
+    sys.exit(2)
+try:
+    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as line:
+        line.settimeout(20.0)
+        line.connect(os.environ.get("SURVEY_WINDOW") or WINDOW)
+        line.sendall(json.dumps([district] + sys.argv[2:]).encode())
+        line.shutdown(socket.SHUT_WR)
+        heard = b""
+        while True:
+            more = line.recv(65536)
+            if not more:
+                break
+            heard += more
+    status, words = json.loads(heard.decode())
+except (OSError, ValueError):
+    print("the crew is not available")
+    sys.exit(1)
+print(words)
+sys.exit(int(status))

@@ -1,0 +1,19 @@
+districts.py run into an empty directory: the nine districts, then the seven small ones
+  deep_south run attempt 1 allowance 8 altered 6 breach
+  far_east run attempt 1 allowance 9 altered 8 breach
+  new_incline run attempt 0 allowance 7 altered 7 breach
+  old_shaft run attempt 0 allowance 8 altered 7 breach
+  west_reef pending attempt 5 allowance 9 altered 7 breach
+  east_decline example attempt 0 allowance 8 altered 8 breach
+  lower_levels run attempt 10 allowance 9 altered 7 breach
+  north_field example attempt 0 allowance 9 altered 9 breach
+  river_block run attempt 1 allowance 9 altered 8 breach
+  north_field example attempt 2 allowance 4 altered 4 breach
+  east_decline example attempt 0 allowance 4 altered 4 breach
+  west_reef pending attempt 0 allowance 5 altered 3 breach
+  deep_south run attempt 0 allowance 6 altered 4 breach
+  old_shaft run attempt 5 allowance 5 altered 4 breach
+  far_east run attempt 2 allowance 5 altered 4 breach
+  new_incline run attempt 0 allowance 4 altered 4 breach
+exit statuses [0, 0, 0]; 23 minutes
+224 files, 0 different, 0 not listed
