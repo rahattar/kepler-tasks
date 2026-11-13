@@ -18,11 +18,13 @@ The budget of FP-12 is identified element by element and then evaluated at the r
    that minute, less the residual, less every other element at that flow. Lined ductile iron is C 140, so what
    is left over on such a lead-in is its control valve; cast iron's C is fitted against time and read at the
    audit date.
-6. One flow cannot tell friction (q^1.85) from a partly shut valve (q^2). A supervised valve is open by clause
-   3.4. A locked valve on ductile iron follows from the one flow; a locked valve on cast iron with a wall hydrant
-   follows once the hydrant's tests have given the lead-in's C. A locked valve on cast iron with neither is open
-   to every split between the two, and the one flow test goes to the riser whose pressure that leaves widest, at
-   the highest flow the header can be set to, where the two laws stand furthest apart.
+6. One flow cannot tell friction (q^1.85) from a partly shut valve (q^2). Every valve was open when the records
+   begin and a supervised one still is. A locked valve can have been left partly shut by a piece of logged work,
+   and the pipe says which: a loss that rises at the work is the valve, with the pipe's own trend carried past
+   it; a loss that falls is the pipe improved (a swab), and then the pipe's new C and the valve are both free
+   with one flow since. A wall hydrant's tests give C by themselves. The one flow test goes to the riser whose
+   pressure the records leave widest, at the highest flow the header can be set to, where the two laws stand
+   furthest apart.
 """
 import csv
 import datetime as dt
@@ -266,42 +268,77 @@ class Audit:
         return self.cast_iron_C(np.array(years), np.array(Cs))
 
     def attribute(self, rid, rows, site=None):
-        """(C, Cv of the control valve, how the split was settled)."""
+        """(C, Cv of the control valve, how the split was settled).
+
+        Every valve was fully open when the records begin (clause 3.4). A supervised valve still is. A locked one
+        can have been left partly shut by a piece of logged work on its riser, and the pipe tells which: a lead-in
+        only gets worse slowly, so a loss that rises at a piece of work is the valve, and one that falls is the
+        pipe improved (a swab), after which the pipe's new C is unknown and the valve may have been left partly
+        shut as well."""
         r = self.reg[rid]
         size, material, L = r["lead_in_size_in"], r["lead_in_material"], float(r["lead_in_equiv_length_ft"])
-        years = np.array([(t - AUDIT).total_seconds() / (365.25 * 86400) for t, _q, _o in rows])
+        when = np.array([t for t, _q, _o in rows])
+        years = np.array([(t - AUDIT).total_seconds() / (365.25 * 86400) for t in when])
         q = np.array([v for _t, v, _o in rows])
         own = np.array([v for _t, _q, v in rows])
         cv_open = VALVE_OPEN[size]
         d487 = PIPE_ID[(material, size)] ** 4.87
+        self.open_rows = getattr(self, "open_rows", {})
 
-        def valve_from(C):
-            """The valve's Cv from what the lead-in at C leaves over, on the tests since the last work."""
-            keep = self.since_last_work(rid, rows)
-            left = own[keep] - k_lead(L, C, material, size) * q[keep] ** HW
+        def valve_from(C, keep):
+            """The valve's Cv from what the lead-in at C leaves over on the tests kept."""
+            left = own[keep] - 4.52 * L / (C ** HW * d487) * q[keep] ** HW
             excess = left - (q[keep] / cv_open) ** 2
             se = excess.std(ddof=1) / math.sqrt(len(excess))
             if excess.mean() > max(0.3, 4 * se):
                 return 1.0 / math.sqrt(np.mean(left / q[keep] ** 2))
             return cv_open
 
-        def friction_only():
-            k = (own - (q / cv_open) ** 2) / q ** HW
-            return self.cast_iron_C(years, (4.52 * L / (k * d487)) ** (1 / HW))
-
         if material == "DI-CL":
-            return 140.0, (valve_from(140.0) if self.locked(rid) else cv_open), "ductile iron"
-        if not self.locked(rid):
-            return friction_only(), cv_open, "supervised"
+            keep = self.since_last_work(rid, rows)
+            return 140.0, (valve_from(140.0, keep) if self.locked(rid) else cv_open), "ductile iron"
+
+        # cast iron: each test read as friction alone
+        C_each = (4.52 * L / ((own - (q / cv_open) ** 2) / q ** HW * d487)) ** (1 / HW)
+        improved, shut = None, None
+        for D in sorted(self.work[rid]):
+            before, after = when < D, when >= D
+            if improved is not None:
+                before = before & (when >= improved)
+            if before.sum() < 6 or after.sum() < 2:
+                continue
+            slope, at0 = np.polyfit(years[before], C_each[before], 1)
+            scatter = (C_each[before] - (at0 + slope * years[before])).std(ddof=2)
+            step = float(np.mean(C_each[after] - (at0 + slope * years[after])))
+            bar = max(3.0, 4 * scatter / math.sqrt(after.sum()))
+            if step > bar:
+                improved, shut = D, None                   # the pipe was improved here
+            elif step < -bar:
+                shut = (D, slope, at0)                     # the loss rose here: the valve
+        seg = when >= improved if improved is not None else np.ones(len(rows), bool)
+
+        def fitted(keep):
+            return self.cast_iron_C(years[keep], C_each[keep]) if keep.sum() >= 8 else float(np.mean(C_each[keep]))
+
         C_h = self.hydrant_C(rid, *site) if site else None
         if C_h is not None:
-            return C_h, valve_from(C_h), "wall hydrant"
+            return C_h, (valve_from(C_h, self.since_last_work(rid, rows)) if self.locked(rid) else cv_open), \
+                "wall hydrant"
+        if not self.locked(rid):
+            return fitted(seg), cv_open, "supervised"
+        if improved is None:
+            if shut is None:
+                return fitted(seg), cv_open, "records"
+            D, slope, at0 = shut                           # the pipe's own trend carried past the work
+            return float(at0), valve_from(float(at0), when >= D), "records"
+        # a locked valve on a lead-in improved by the last work: C and Cv both free, one flow since
+        self.open_rows[rid] = [row for row, k in zip(rows, seg) if k]
         if self.report and self.report["riser"] == rid and site:
-            return self.split_by_test(rid, rows, site) + ("flow test",)
-        return friction_only(), cv_open, "open"
+            return self.split_by_test(rid, self.open_rows[rid], site) + ("flow test",)
+        return float(np.mean(C_each[seg])), cv_open, "open"
 
     def split_by_test(self, rid, rows, site):
-        """Friction and valve from two flows: the last year's main drain tests and the ordered flow test."""
+        """Friction and valve from two flows: the main drain tests since the work and the ordered flow test."""
         B, h_b, Cv_b = site
         r, rep = self.reg[rid], self.report
         size, material, L = r["lead_in_size_in"], r["lead_in_material"], float(r["lead_in_equiv_length_ft"])
@@ -310,13 +347,13 @@ class Audit:
         S = float(rep["transmitter_psi"]) - PSI_FT * PIT_BELOW_FT
         p2 = float(rep["residual_psi"]) - self.zero(rid, t, rep["gauge_serial"]) + self.height(rid)
         own2 = S - p2 - B * (q2 / 1000.0) ** HW - h_b[1] - (q2 / Cv_b[1]) ** 2
-        recent = [(q, o) for when, q, o in rows if (AUDIT - when).days <= 366]
-        q1 = float(np.mean([q for q, _o in recent]))
-        own1 = float(np.mean([o for _q, o in recent]))
+        q1 = float(np.mean([q for _when, q, _o in rows]))
+        own1 = float(np.mean([o for _when, _q, o in rows]))
         A = np.array([[q1 ** HW, q1 ** 2], [q2 ** HW, q2 ** 2]])
         k, v = np.linalg.solve(A, np.array([own1, own2]))
         v = max(v, 1.0 / VALVE_OPEN[size] ** 2)
-        k = max(k, 1e-9)
+        k = max(k, 4.52 * L / (C_NEW_CAST_IRON ** HW * PIPE_ID[(material, size)] ** 4.87))
+        v = max((own2 - k * q2 ** HW) / q2 ** 2, 1.0 / VALVE_OPEN[size] ** 2)
         C = (4.52 * L / (k * PIPE_ID[(material, size)] ** 4.87)) ** (1 / HW)
         return float(C), 1.0 / math.sqrt(v)
 
@@ -363,8 +400,8 @@ class Audit:
                             loss=loss, C=C, cv_valve=cv_valve, settled=settled)
             if settled == "open":
                 # the other end of what the records admit: the lead-in as new and the valve taking the rest
-                q1 = float(np.mean([q for _t, q, _o in rows]))
-                own1 = float(np.mean([o for _t, _q, o in rows]))
+                q1 = float(np.mean([q for _t, q, _o in self.open_rows[rid]]))
+                own1 = float(np.mean([o for _t, _q, o in self.open_rows[rid]]))
                 k_new = k_lead(L, C_NEW_CAST_IRON, material, size)
                 v = max((own1 - k_new * q1 ** HW) / q1 ** 2, 0.0)
                 q, _Q = self.flows(qd)

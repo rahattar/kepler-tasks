@@ -59,8 +59,12 @@ def maintenance_rows():
     rows = [(S.OVERHAUL.date(), "connection", "Backflow preventer overhauled: both checks stripped, springs and "
              "seats renewed, isolating valves operated. Returned to service the same afternoon.")]
     for r in S.RISERS:
+        if "swab" in r:
+            rows.append((r["swab"][0].date(), r["id"], "Lead-in swabbed and flushed from the yard main to the "
+                         "riser. Riser shut for the work."))
         for when, _cv in r.get("valve", []):
-            rows.append((when.date(), r["id"], "Control valve gland repacked; valve exercised."))
+            if "swab" not in r:
+                rows.append((when.date(), r["id"], "Control valve gland repacked; valve exercised."))
         for i, (serial, until) in enumerate(r["gauges"][:-1]):
             rows.append((until.date(), r["id"], "Supply gauge %s found with a cracked lens and replaced by %s."
                          % (serial, r["gauges"][i + 1][0])))

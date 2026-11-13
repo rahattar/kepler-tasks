@@ -46,7 +46,7 @@
  },
  "SR10": {
   "limit": "valve",
-  "p_base_psi": 21.8198,
-  "q_avail_gpm": 604.191
+  "p_base_psi": 22.4486,
+  "q_avail_gpm": 609.339
  }
 }

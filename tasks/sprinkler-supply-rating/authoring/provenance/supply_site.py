@@ -51,7 +51,7 @@ RISERS = [
     dict(id="SR03", building="B", material="DI-CL", size="6", length_ft=280, laid=2001, C_audit=140.0, aging=0.0,
          check=None, gauge_ft=4.0, gauges=[("G-1420", None)], drain=[("2 in. angle", None)], q_d=950,
          placard_psi=53, valve=[(dt.datetime(2024, 11, 19, 11, 0), 250.0)]),
-    dict(id="SR04", building="B", material="CI", size="6", length_ft=350, laid=1974, C_audit=74.0, aging=4.4,
+    dict(id="SR04", building="B", material="CI", size="6", length_ft=350, laid=1974, C_audit=74.0, aging=5.5,
          check="LC-6", h_c=1.6, gauge_ft=5.5, gauges=[("G-1423", None)], drain=[("2 in. angle", None)], q_d=850,
          placard_psi=50),
     dict(id="SR05", building="C", material="DI-CL", size="6", length_ft=300, laid=2009, C_audit=140.0, aging=0.0,
@@ -64,18 +64,20 @@ RISERS = [
          check=None, gauge_ft=4.0, gauges=[("G-1440", None)], drain=[("2 in. angle", None)], q_d=520,
          placard_psi=59),
     dict(id="SR08", building="D", material="CI", size="6", length_ft=270, laid=1983, C_audit=90.0, aging=0.7,
+         swab=(dt.datetime(2026, 6, 3, 9, 0), 81.0, 0.7),
          check=None, gauge_ft=5.0, gauges=[("G-1452", dt.datetime(2025, 6, 3, 10, 0)), ("G-2291", None)],
          drain=[("2 in. angle", dt.datetime(2024, 8, 20, 13, 0)), ("1-1/2 in. globe", None)], q_d=820,
          placard_psi=47),
     dict(id="SR09", building="D", material="DI-CL", size="8", length_ft=260, laid=2006, C_audit=140.0, aging=0.0,
          check="LC-8", h_c=1.4, gauge_ft=4.5, gauges=[("G-1458", None)], drain=[("2 in. angle", None)], q_d=1100,
          placard_psi=49),
-    dict(id="SR10", building="D", material="CI", size="6", length_ft=180, laid=1980, C_audit=92.0, aging=0.3,
+    dict(id="SR10", building="D", material="CI", size="6", length_ft=180, laid=1980, C_audit=95.0, aging=0.3,
+         swab=(dt.datetime(2026, 6, 2, 9, 0), 55.0, 0.5),
          check=None, gauge_ft=5.0, gauges=[("G-1463", None)], drain=[("2 in. angle", None)], q_d=1000,
-         placard_psi=46, valve=[(GRID_START, 253.0)]),
+         placard_psi=46, valve=[(dt.datetime(2026, 6, 2, 9, 0), 253.0)]),
 ]
 # control valves with no supervisory switch (chained and locked); every other valve has one
-UNSUPERVISED = ("SR01", "SR03", "SR06", "SR10")
+UNSUPERVISED = ("SR01", "SR02", "SR03", "SR06", "SR10")
 # wall hydrants on a lead-in, before the control valve: (hydrant, equivalent length from the yard main to its tee)
 WALL_HYDRANT = {"SR06": ("WH-6", 430.0)}
 FLOW_TEST_AT = dt.datetime(2026, 10, 8, 10, 20)          # when the contractor's flow test is run
@@ -101,6 +103,7 @@ NO_EFFECT = [
     (dt.date(2024, 5, 14), "SR06", "Riser shut and drained for sprinkler replacement in bay 14; refilled."),
     (dt.date(2024, 7, 30), "SR07", "Alarm gong bearing replaced."),
     (dt.date(2025, 9, 16), "SR04", "Fire department connection caps replaced."),
+    (dt.date(2025, 11, 4), "SR02", "Riser shut and drained for sprinkler replacement in bay 3; refilled."),
     (dt.date(2026, 1, 20), "SR09", "Control valve exercised and lubricated."),
     (dt.date(2026, 4, 14), "SR02", "Riser room heater replaced."),
 ]
@@ -120,8 +123,12 @@ def at(schedule, t):
 
 
 def riser_state(r, t):
+    C = r["C_audit"] + r["aging"] * years_before_audit(t)
+    if "swab" in r and t < r["swab"][0]:
+        # before its swab the lead-in stood at swab[1] on the day of the swab and fell by swab[2] a year
+        C = r["swab"][1] + r["swab"][2] * (r["swab"][0] - t).total_seconds() / (365.25 * 86400)
     s = dict(material=r["material"], size=r["size"], length_ft=r["length_ft"], gauge_ft=r["gauge_ft"],
-             C=r["C_audit"] + r["aging"] * years_before_audit(t), drain=at(r["drain"], t),
+             C=C, drain=at(r["drain"], t),
              valve_cv=P.VALVE_OPEN_CV[r["size"]], check=bool(r["check"]), h_c=r.get("h_c", 0.0),
              gauge=at(r["gauges"], t))
     for when, cv in r.get("valve", []):

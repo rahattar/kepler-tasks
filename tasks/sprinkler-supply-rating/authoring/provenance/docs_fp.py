@@ -59,7 +59,8 @@ data describe an assembly as new.
 L is the lead-in's equivalent length in ft (register), which takes in its fittings and the riser's pipework up to
 the supply gauge, and d its internal diameter in inches (site data). Cement-lined ductile iron keeps C 140 through
 its life. Unlined cast iron is C 100 when laid and loses C as it ages, at a rate that differs from one lead-in to
-the next; its C is identified from the riser's own records.
+the next. Swabbing a lead-in gives some of it back, never to more than C 100. Its C is identified from the riser's
+own records.
 
 ### 3.4 Control valve
 
@@ -67,10 +68,10 @@ the next; its C is identified from the riser's own records.
 
 A control valve fully open has the Cv of the site data, and a valve partly shut a smaller one.
 
-A supervised valve (register) is fully open: its switch reports it before it has closed far enough to count. A
-valve that is chained and locked is moved only for work on its riser, which the maintenance log records. It stands
-as the last such work left it, or, where the log records none, as it stood when the records begin, and its Cv is
-identified from the site's records.
+Every control valve stood fully open at the insurer's survey of December 2022 (audit note). A supervised valve
+(register) has stayed so: its switch reports it before it has closed far enough to count. A valve that is chained
+and locked is moved only for work on its riser, which the maintenance log records, and stands as that work left
+it.
 
 ### 3.5 Lead-in check valve
 
@@ -280,6 +281,8 @@ pressure. Each is to be rated under FP-12.
 - **Audit date:** %(audit)s.
 - **Reference quarter:** %(q0)s to %(q1)s.
 - **Risers:** SR01 to SR10, as the register.
+- **Valves:** the insurer's survey of December 2022, the last before the records begin, found every control valve
+  fully open.
 
 The records run from %(l0)s to %(l1)s: the monthly round's log, the utility's record of the main's pressure at
 the connection, the utility's flow tests of the main, the site's yearly flow test of the yard main, the
