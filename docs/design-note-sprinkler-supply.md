@@ -175,3 +175,37 @@ about 1 per cent").
 - SR10 keeps the swab and the locked valve, with its limit made robust to the split.
 - Keep: the overhaul's two eras, SR03's valve, SR04's fast ageing, the sticking check, the replaced gauge and
   drain valve, the crossed serials, the outlet coefficients.
+
+### Round 4 (Nov 13): version 5. Low 3 of 3
+
+| probe | time | order | result |
+|---|---|---|---|
+| V1 | 5.3 min | SR10 at 1 000 gpm | **accepted** |
+| V2 | 5.5 min | SR10 at 1 000 gpm | **accepted** |
+| V3 | 4.5 min | SR10 at 1 000 gpm | **accepted** |
+
+- **All three found SR02's gauge** from the two yard tests read on it ("about 2.57 psi below what every other
+  gauge implies") and carried the constant into SR02's own record. A quiet constant with a witness in a table
+  of eight rows is found at low effort: fitting the backflow preventer from the yard tests puts the two odd
+  rows in front of the solver.
+- All three read the transmitter in the test report as the main already drawn down; one got there from an
+  impossible C of 145.
+- **A fairness point V1 raised and the design must answer:** a gauge that stands 2.6 psi off and a constant
+  loss of 2.6 psi on SR02's lead-in that the register does not list (a check valve) give the same records and
+  differ by 2.7 psi in the rating. Nothing in the records excludes the second. Base-pressure met the same thing
+  (a wrong gauge against a wrong port) and settled it with a second instrument.
+
+### Where this leaves the task (16 low runs over five versions)
+
+| version | what it relied on | low |
+|---|---|---|
+| first cut | twelve layers that show in a residual or a record | 2 of 3 |
+| quiet core | one riser a clause leaves unidentified | 2 of 3 |
+| swabbed lead-in | an alternative the fit does not need, tied to a logged event | 1 of 3 (two refusals unfair) |
+| version 5 | a constant no fit shows, with a witness in the yard tests | 3 of 3 |
+
+Every refusal was one row: a mean taken on the fast-ageing lead-in (twice), a fit window that straddled a drain
+change (once), and the ill-conditioned split (twice, unfair). Nothing designed as the core has caught a probe.
+
+What has not been tried here and did work on base-pressure: several units open by degree, so that the one to
+test has to be computed and the one that looks most open is not it.
