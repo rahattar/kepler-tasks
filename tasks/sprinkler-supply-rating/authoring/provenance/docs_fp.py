@@ -65,8 +65,12 @@ the next; its C is identified from the riser's own records.
 
     d_valve = (q / Cv)^2
 
-A control valve fully open has the Cv of the site data. A control valve that is not fully open has a smaller one,
-identified from the riser's own records.
+A control valve fully open has the Cv of the site data, and a valve partly shut a smaller one.
+
+A supervised valve (register) is fully open: its switch reports it before it has closed far enough to count. A
+valve that is chained and locked is moved only for work on its riser, which the maintenance log records. It stands
+as the last such work left it, or, where the log records none, as it stood when the records begin, and its Cv is
+identified from the site's records.
 
 ### 3.5 Lead-in check valve
 
@@ -179,6 +183,10 @@ coefficient. Every outlet on the list below is 2.5 in.
 | YH-1 | yard main, building A | smooth, rounded |
 | YH-2 | yard main, building C | smooth, rounded |
 | YH-3 | yard main, building D | square, sharp |
+| WH-6 | SR06's lead-in, at the wall of building C | smooth, rounded |
+
+A wall hydrant stands on a riser's lead-in before the riser's control valve. The register gives how much of the
+lead-in's equivalent length lies between the yard main and the hydrant's tee.
 
 ## Gauges
 
@@ -206,7 +214,10 @@ One row for each riser.
 - `lead_in_equiv_length_ft`: the equivalent length L of FP-12 clause 3.3
 - `laid`: the year the lead-in was laid
 - `lead_in_check`: the model of the lead-in's check valve, empty where it has none
-- `control_valve`, `main_drain`: the valve and drain valve patterns
+- `wall_hydrant`, `wall_hydrant_at_equiv_ft`: the wall hydrant on the lead-in, if it has one, and the equivalent
+  length of lead-in from the yard main to the hydrant's tee
+- `valve_supervision`: `switch` for a control valve with a supervisory switch, `lock` for one chained and locked
+- `main_drain`: the drain valve's pattern
 - `supply_gauge_serial`, `supply_gauge_height_ft`: the gauge on the riser and its height above the site datum
 - `placard_flow_gpm`, `placard_pressure_psi`: the riser's hydraulic placard, at the base of the riser
 
@@ -240,8 +251,9 @@ flowing and then with the flow hydrant's outlets discharging.
 
 ## yard_flow_tests.csv
 
-The site's yearly flow test of the yard main: a yard hydrant is flowed, and the pressures are read on the supply
-gauge of a riser that is not flowing.
+The site's yearly flow tests of its own hydrants: a hydrant is flowed, and the pressures are read on the supply
+gauge of a riser that is not flowing. For a wall hydrant the gauge read is that of the riser whose lead-in the
+hydrant stands on.
 
 - `date`, `time`
 - `flow_hydrant`, `outlets_flowing`, `pitot_psi`: as above
@@ -279,6 +291,34 @@ was taken down. They are in the same formats and units.
            q1=S.REF_TO.strftime("%Y-%m-%d"), l0=S.LOG_START.strftime("%Y-%m-%d"), l1=S.LOG_END.strftime("%Y-%m-%d"))
 
 
+def order():
+    return """# The flow test order
+
+The audit can call on **one flow test**, ordered once, from the contractor who tests the site's hydrants.
+
+    flowtest status
+    flowtest submit < plan.json
+
+`flowtest status` reports whether the order has been placed and what was ordered. `flowtest submit` reads the
+plan on standard input and places the order. **The order can be placed only once.** It cannot be changed, extended
+or replaced afterwards, and no result is known before it is placed.
+
+The plan names one riser and one flow:
+
+    {"riser": "SR05", "flow_gpm": 600}
+
+## The test
+
+The contractor connects hoses and a flow meter to the riser's test header, which is above the riser's alarm valve,
+and sets the flow named in the plan, between %(lo).0f and %(hi).0f gpm. Nothing else flows on the site. The test is
+run on %(day)s.
+
+The report gives the flow on the contractor's meter, the riser's supply gauge before the header was opened and
+with the flow steady, the gauge's serial, and the reading of the utility's transmitter PT-0 at the same minute.
+The meter is good to about 0.3 per cent. The report is written to `/app/flowtest/`.
+""" % dict(lo=S.FLOW_TEST_RANGE[0], hi=S.FLOW_TEST_RANGE[1], day=S.FLOW_TEST_AT.strftime("%Y-%m-%d"))
+
+
 EXAMPLE_NOTE = """# About this riser
 
 SR00 served building E until the building was taken down at the end of 2022. Its records for that year are here
@@ -304,4 +344,4 @@ def certificates(serials, zero):
 
 def documents():
     return {"fp12_supply_rating.md": standard(), "site_data.md": site_data(), "records_format.md": records_format(),
-            "audit_note.md": audit_note()}
+            "audit_note.md": audit_note(), "flow_test_order.md": order()}

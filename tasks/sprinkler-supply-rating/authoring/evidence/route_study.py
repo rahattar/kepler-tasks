@@ -16,8 +16,16 @@ import routes  # noqa: E402
 DATA = os.path.join(TASK, "environment", "data")
 
 
+sys.path.insert(0, os.path.join(TASK, "authoring", "provenance"))
+import supply_site  # noqa: E402
+
+_MAIN = supply_site.Main()
+
+
 def run(cls):
-    res = cls(DATA).rate()
+    order = cls.order(DATA) if hasattr(cls, "order") else routes.reference_order(DATA)
+    report = supply_site.flow_test(order["riser"], order["flow_gpm"], supply_site.SEED, _MAIN) if order else None
+    res = cls(DATA, report).rate()
     path = os.path.join(tempfile.mkdtemp(), "rating.csv")
     routes.R.write(res, path)
     return G.score(path)

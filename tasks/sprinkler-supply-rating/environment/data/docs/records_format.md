@@ -12,7 +12,10 @@ One row for each riser.
 - `lead_in_equiv_length_ft`: the equivalent length L of FP-12 clause 3.3
 - `laid`: the year the lead-in was laid
 - `lead_in_check`: the model of the lead-in's check valve, empty where it has none
-- `control_valve`, `main_drain`: the valve and drain valve patterns
+- `wall_hydrant`, `wall_hydrant_at_equiv_ft`: the wall hydrant on the lead-in, if it has one, and the equivalent
+  length of lead-in from the yard main to the hydrant's tee
+- `valve_supervision`: `switch` for a control valve with a supervisory switch, `lock` for one chained and locked
+- `main_drain`: the drain valve's pattern
 - `supply_gauge_serial`, `supply_gauge_height_ft`: the gauge on the riser and its height above the site datum
 - `placard_flow_gpm`, `placard_pressure_psi`: the riser's hydraulic placard, at the base of the riser
 
@@ -46,8 +49,9 @@ flowing and then with the flow hydrant's outlets discharging.
 
 ## yard_flow_tests.csv
 
-The site's yearly flow test of the yard main: a yard hydrant is flowed, and the pressures are read on the supply
-gauge of a riser that is not flowing.
+The site's yearly flow tests of its own hydrants: a hydrant is flowed, and the pressures are read on the supply
+gauge of a riser that is not flowing. For a wall hydrant the gauge read is that of the riser whose lead-in the
+hydrant stands on.
 
 - `date`, `time`
 - `flow_hydrant`, `outlets_flowing`, `pitot_psi`: as above

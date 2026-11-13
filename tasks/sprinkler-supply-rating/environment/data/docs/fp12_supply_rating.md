@@ -59,8 +59,12 @@ the next; its C is identified from the riser's own records.
 
     d_valve = (q / Cv)^2
 
-A control valve fully open has the Cv of the site data. A control valve that is not fully open has a smaller one,
-identified from the riser's own records.
+A control valve fully open has the Cv of the site data, and a valve partly shut a smaller one.
+
+A supervised valve (register) is fully open: its switch reports it before it has closed far enough to count. A
+valve that is chained and locked is moved only for work on its riser, which the maintenance log records. It stands
+as the last such work left it, or, where the log records none, as it stood when the records begin, and its Cv is
+identified from the site's records.
 
 ### 3.5 Lead-in check valve
 

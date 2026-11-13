@@ -1,11 +1,11 @@
-riser,building,lead_in_material,lead_in_size_in,lead_in_equiv_length_ft,laid,lead_in_check,control_valve,main_drain,supply_gauge_serial,supply_gauge_height_ft,placard_flow_gpm,placard_pressure_psi
-SR01,A,DI-CL,8,310,2004,,OS&Y gate,2 in. angle,G-1407,4.5,1250,55
-SR02,A,CI,6,220,1978,,OS&Y gate,2 in. angle,G-1411,5.0,900,51
-SR03,B,DI-CL,6,280,2001,,OS&Y gate,2 in. angle,G-1420,4.0,950,53
-SR04,B,CI,6,350,1974,LC-6,OS&Y gate,2 in. angle,G-1423,5.5,850,50
-SR05,C,DI-CL,6,300,2009,LC-6,OS&Y gate,2 in. angle,G-1431,4.5,1080,47
-SR06,C,CI,8,520,1971,,OS&Y gate,2 in. angle,G-1436,6.0,1100,42
-SR07,C,DI-CL,6,150,2012,,OS&Y gate,2 in. angle,G-1440,4.0,520,61
-SR08,D,CI,6,270,1983,,OS&Y gate,2 in. angle,G-2291,5.0,820,47
-SR09,D,DI-CL,8,260,2006,LC-8,OS&Y gate,2 in. angle,G-1458,4.5,1100,49
-SR10,D,CI,6,215,1980,,OS&Y gate,2 in. angle,G-1463,5.0,880,52
+riser,building,lead_in_material,lead_in_size_in,lead_in_equiv_length_ft,laid,lead_in_check,wall_hydrant,wall_hydrant_at_equiv_ft,valve_supervision,main_drain,supply_gauge_serial,supply_gauge_height_ft,placard_flow_gpm,placard_pressure_psi
+SR01,A,DI-CL,8,310,2004,,,,lock,2 in. angle,G-1407,4.5,1250,55
+SR02,A,CI,6,220,1978,,,,switch,2 in. angle,G-1411,5.0,900,51
+SR03,B,DI-CL,6,280,2001,,,,lock,2 in. angle,G-1420,4.0,950,53
+SR04,B,CI,6,350,1974,LC-6,,,switch,2 in. angle,G-1423,5.5,850,50
+SR05,C,DI-CL,6,300,2009,LC-6,,,switch,2 in. angle,G-1431,4.5,1080,47
+SR06,C,CI,8,520,1971,,WH-6,430,lock,2 in. angle,G-1436,6.0,1100,42
+SR07,C,DI-CL,6,150,2012,,,,switch,2 in. angle,G-1440,4.0,520,59
+SR08,D,CI,6,270,1983,,,,switch,2 in. angle,G-2291,5.0,820,47
+SR09,D,DI-CL,8,260,2006,LC-8,,,switch,2 in. angle,G-1458,4.5,1100,49
+SR10,D,CI,6,180,1980,,,,lock,2 in. angle,G-1463,5.0,1000,46

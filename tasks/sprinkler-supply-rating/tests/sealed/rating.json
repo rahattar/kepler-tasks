@@ -1,52 +1,52 @@
 {
  "SR01": {
   "limit": "city-main",
-  "p_base_psi": 39.6987,
-  "q_avail_gpm": 618.789
+  "p_base_psi": 39.7031,
+  "q_avail_gpm": 619.018
  },
  "SR02": {
   "limit": "lead-in",
-  "p_base_psi": 36.871,
-  "q_avail_gpm": 561.774
+  "p_base_psi": 36.8754,
+  "q_avail_gpm": 561.9
  },
  "SR03": {
   "limit": "valve",
-  "p_base_psi": 28.7443,
-  "q_avail_gpm": 466.55
+  "p_base_psi": 28.7487,
+  "q_avail_gpm": 466.671
  },
  "SR04": {
   "limit": "lead-in",
-  "p_base_psi": 26.2067,
-  "q_avail_gpm": 438.767
+  "p_base_psi": 26.2111,
+  "q_avail_gpm": 438.867
  },
  "SR05": {
   "limit": "city-main",
-  "p_base_psi": 34.6603,
-  "q_avail_gpm": 710.641
+  "p_base_psi": 34.6647,
+  "q_avail_gpm": 710.794
  },
  "SR06": {
   "limit": "lead-in",
-  "p_base_psi": 28.9544,
-  "q_avail_gpm": 823.202
+  "p_base_psi": 28.9588,
+  "q_avail_gpm": 823.306
  },
  "SR07": {
   "limit": "backflow",
-  "p_base_psi": 56.2414,
-  "q_avail_gpm": 231.738
+  "p_base_psi": 56.2458,
+  "q_avail_gpm": 366.104
  },
  "SR08": {
   "limit": "lead-in",
-  "p_base_psi": 40.253,
-  "q_avail_gpm": 663.155
+  "p_base_psi": 40.2574,
+  "q_avail_gpm": 663.265
  },
  "SR09": {
   "limit": "city-main",
-  "p_base_psi": 42.7835,
-  "q_avail_gpm": 846.079
+  "p_base_psi": 42.7878,
+  "q_avail_gpm": 846.275
  },
  "SR10": {
-  "limit": "lead-in",
-  "p_base_psi": 33.8032,
-  "q_avail_gpm": 490.698
+  "limit": "valve",
+  "p_base_psi": 21.8198,
+  "q_avail_gpm": 604.191
  }
 }

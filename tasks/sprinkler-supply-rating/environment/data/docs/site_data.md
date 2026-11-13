@@ -81,6 +81,10 @@ coefficient. Every outlet on the list below is 2.5 in.
 | YH-1 | yard main, building A | smooth, rounded |
 | YH-2 | yard main, building C | smooth, rounded |
 | YH-3 | yard main, building D | square, sharp |
+| WH-6 | SR06's lead-in, at the wall of building C | smooth, rounded |
+
+A wall hydrant stands on a riser's lead-in before the riser's control valve. The register gives how much of the
+lead-in's equivalent length lies between the yard main and the hydrant's tee.
 
 ## Gauges
 

@@ -28,15 +28,17 @@ def write_csv(path, header, rows):
 def register_rows(risers):
     rows = []
     for r in risers:
+        hyd = S.WALL_HYDRANT.get(r["id"])
         rows.append([r["id"], r["building"], r["material"], r["size"], r["length_ft"], r["laid"], r["check"] or "",
-                     "OS&Y gate", r["drain"][0][0], r["gauges"][-1][0], "%.1f" % r["gauge_ft"], r["q_d"],
-                     r["placard_psi"]])
+                     hyd[0] if hyd else "", "%.0f" % hyd[1] if hyd else "",
+                     "lock" if r["id"] in S.UNSUPERVISED else "switch", r["drain"][0][0], r["gauges"][-1][0],
+                     "%.1f" % r["gauge_ft"], r["q_d"], r["placard_psi"]])
     return rows
 
 
 REGISTER_HEADER = ["riser", "building", "lead_in_material", "lead_in_size_in", "lead_in_equiv_length_ft", "laid",
-                   "lead_in_check", "control_valve", "main_drain", "supply_gauge_serial", "supply_gauge_height_ft",
-                   "placard_flow_gpm", "placard_pressure_psi"]
+                   "lead_in_check", "wall_hydrant", "wall_hydrant_at_equiv_ft", "valve_supervision", "main_drain",
+                   "supply_gauge_serial", "supply_gauge_height_ft", "placard_flow_gpm", "placard_pressure_psi"]
 
 
 def drain_rows(log, only=None):
@@ -116,6 +118,14 @@ def main():
         f.write(docs_fp.EXAMPLE_NOTE)
     with open(os.path.join(exd, "gauge_certificates.md"), "w") as f:
         f.write(docs_fp.certificates(["G-1399"], S.GAUGE_ZERO))
+
+    # the contractor's program and what it runs on
+    rig = os.path.join(TASK, "environment", "rig", "sealed")
+    os.makedirs(rig, exist_ok=True)
+    for name in ("ssphys.py", "supply_site.py"):
+        shutil.copy(os.path.join(HERE, name), os.path.join(rig, name))
+    with open(os.path.join(rig, "seed.json"), "w") as f:
+        json.dump({"seed": S.SEED}, f)
 
     exp = S.expected(grid)
     os.makedirs(SEALED, exist_ok=True)

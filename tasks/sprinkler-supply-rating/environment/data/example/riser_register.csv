@@ -1,2 +1,2 @@
-riser,building,lead_in_material,lead_in_size_in,lead_in_equiv_length_ft,laid,lead_in_check,control_valve,main_drain,supply_gauge_serial,supply_gauge_height_ft,placard_flow_gpm,placard_pressure_psi
-SR00,E,DI-CL,6,220,2010,,OS&Y gate,2 in. angle,G-1399,4.5,800,60
+riser,building,lead_in_material,lead_in_size_in,lead_in_equiv_length_ft,laid,lead_in_check,wall_hydrant,wall_hydrant_at_equiv_ft,valve_supervision,main_drain,supply_gauge_serial,supply_gauge_height_ft,placard_flow_gpm,placard_pressure_psi
+SR00,E,DI-CL,6,220,2010,,,,switch,2 in. angle,G-1399,4.5,800,60

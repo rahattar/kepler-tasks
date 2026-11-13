@@ -18,6 +18,11 @@ The budget of FP-12 is identified element by element and then evaluated at the r
    that minute, less the residual, less every other element at that flow. Lined ductile iron is C 140, so what
    is left over on such a lead-in is its control valve; cast iron's C is fitted against time and read at the
    audit date.
+6. One flow cannot tell friction (q^1.85) from a partly shut valve (q^2). A supervised valve is open by clause
+   3.4. A locked valve on ductile iron follows from the one flow; a locked valve on cast iron with a wall hydrant
+   follows once the hydrant's tests have given the lead-in's C. A locked valve on cast iron with neither is open
+   to every split between the two, and the one flow test goes to the riser whose pressure that leaves widest, at
+   the highest flow the header can be set to, where the two laws stand furthest apart.
 """
 import csv
 import datetime as dt
@@ -35,11 +40,13 @@ HOSE = 500.0
 AUDIT = dt.datetime(2026, 10, 5)
 REF_FROM, REF_TO = dt.date(2026, 7, 1), dt.date(2026, 9, 30)
 PIPE_ID = {("DI-CL", "6"): 6.16, ("DI-CL", "8"): 8.27, ("CI", "6"): 6.00, ("CI", "8"): 8.00}
-OUTLET_C = {"H-41": 0.90, "H-42": 0.90, "H-43": 0.80, "YH-1": 0.90, "YH-2": 0.90, "YH-3": 0.80}
+OUTLET_C = {"H-41": 0.90, "H-42": 0.90, "H-43": 0.80, "YH-1": 0.90, "YH-2": 0.90, "YH-3": 0.80, "WH-6": 0.90}
 DRAIN_K = {"2 in. angle": 52.0, "1-1/2 in. globe": 36.0}
 VALVE_OPEN = {"6": 5200.0, "8": 9800.0}
 CHECK_CV = {"6": 2100.0, "8": 3900.0}
 FOLLOW_MIN = 90                    # a static is usable when another test of the round ended this recently
+C_NEW_CAST_IRON = 100.0
+TEST_FLOW = 1000.0                 # the highest flow the test header can be set to
 
 
 def read_csv(path):
@@ -128,10 +135,12 @@ def at(schedule, t):
 class Audit:
     """The audit, step by step. Each step is a method so that a study can replace one and see what it costs."""
 
-    def __init__(self, data):
+    def __init__(self, data, report=None):
         self.d = load(data)
         self.main, self.reg, self.cert = self.d["main"], self.d["reg"], self.d["cert"]
         self.gauge, self.drain, self.valve_work, self.overhaul = history(self.d)
+        self.report = report                       # the contractor's flow test, once ordered
+        self.work = {rid: [m["when"] for m in self.d["maint"] if m["item"] == rid] for rid in self.reg}
 
     # ---- conventions
     def era(self, t):
@@ -197,7 +206,10 @@ class Audit:
     # ---- the backflow preventer's flow coefficient, before and after the overhaul
     def bfp_cv(self, B, h_b, h_c):
         inv = {0: [], 1: []}
+        on_lead_in = {r["wall_hydrant"] for r in self.reg.values() if r.get("wall_hydrant")}
         for y in self.d["yard"]:
+            if y["flow_hydrant"] in on_lead_in:
+                continue                               # a wall hydrant's test takes in its lead-in's loss
             t = stamp(y["date"], y["time"])
             rid = y["gauge_riser"]
             Q = self.hydrant_flow(y["flow_hydrant"], y["outlets_flowing"], y["pitot_psi"])
@@ -222,28 +234,91 @@ class Audit:
         return rows
 
     # ---- what the own loss is made of: the lead-in's C and the control valve's Cv, as they stand
-    def attribute(self, rid, rows):
+    def locked(self, rid):
+        return self.reg[rid]["valve_supervision"] == "lock"
+
+    def since_last_work(self, rid, rows):
+        """The tests since the last logged work on the riser (all of them where the log records none)."""
+        since = max(self.work[rid]) if self.work[rid] else None
+        keep = np.array([since is None or t >= since for t, _q, _o in rows])
+        return keep if keep.sum() >= 6 else np.ones(len(rows), bool)
+
+    def hydrant_C(self, rid, B, h_b, Cv_b):
+        """The lead-in's C from the flow tests of its wall hydrant, read at the audit date; None without one."""
+        r = self.reg[rid]
+        if not r.get("wall_hydrant"):
+            return None
+        size, material = r["lead_in_size_in"], r["lead_in_material"]
+        years, Cs = [], []
+        for y in self.d["yard"]:
+            if y["flow_hydrant"] != r["wall_hydrant"] or y["gauge_riser"] != rid:
+                continue
+            t = stamp(y["date"], y["time"])
+            e = self.era(t)
+            Q = self.hydrant_flow(y["flow_hydrant"], y["outlets_flowing"], y["pitot_psi"])
+            tee = float(y["residual_psi"]) - self.zero(rid, t, None) + self.height(rid)
+            loss = self.static_main(t) - tee - B * (Q / 1000.0) ** HW - h_b[e] - (Q / Cv_b[e]) ** 2
+            k = loss / Q ** HW
+            Cs.append((4.52 * float(r["wall_hydrant_at_equiv_ft"]) / (k * PIPE_ID[(material, size)] ** 4.87)) ** (1 / HW))
+            years.append((t - AUDIT).total_seconds() / (365.25 * 86400))
+        if len(Cs) < 2:
+            return float(np.mean(Cs)) if Cs else None
+        return self.cast_iron_C(np.array(years), np.array(Cs))
+
+    def attribute(self, rid, rows, site=None):
+        """(C, Cv of the control valve, how the split was settled)."""
         r = self.reg[rid]
         size, material, L = r["lead_in_size_in"], r["lead_in_material"], float(r["lead_in_equiv_length_ft"])
         years = np.array([(t - AUDIT).total_seconds() / (365.25 * 86400) for t, _q, _o in rows])
         q = np.array([v for _t, v, _o in rows])
         own = np.array([v for _t, _q, v in rows])
-        cv_valve = VALVE_OPEN[size]
+        cv_open = VALVE_OPEN[size]
+        d487 = PIPE_ID[(material, size)] ** 4.87
+
+        def valve_from(C):
+            """The valve's Cv from what the lead-in at C leaves over, on the tests since the last work."""
+            keep = self.since_last_work(rid, rows)
+            left = own[keep] - k_lead(L, C, material, size) * q[keep] ** HW
+            excess = left - (q[keep] / cv_open) ** 2
+            se = excess.std(ddof=1) / math.sqrt(len(excess))
+            if excess.mean() > max(0.3, 4 * se):
+                return 1.0 / math.sqrt(np.mean(left / q[keep] ** 2))
+            return cv_open
+
+        def friction_only():
+            k = (own - (q / cv_open) ** 2) / q ** HW
+            return self.cast_iron_C(years, (4.52 * L / (k * d487)) ** (1 / HW))
+
         if material == "DI-CL":
-            C = 140.0
-            left = own - k_lead(L, C, material, size) * q ** HW
-            since = max(self.valve_work[rid]) if self.valve_work[rid] else None
-            recent = np.array([t >= since for t, _q, _o in rows]) if since else np.ones(len(rows), bool)
-            if recent.sum() >= 6:
-                excess = left[recent] - (q[recent] / cv_valve) ** 2
-                se = excess.std(ddof=1) / math.sqrt(len(excess))
-                if excess.mean() > max(0.3, 4 * se):
-                    cv_valve = 1.0 / math.sqrt(np.mean(left[recent] / q[recent] ** 2))
-        else:
-            k = (own - (q / cv_valve) ** 2) / q ** HW
-            C_each = (4.52 * L / (k * PIPE_ID[(material, size)] ** 4.87)) ** (1 / HW)
-            C = self.cast_iron_C(years, C_each)
-        return C, cv_valve
+            return 140.0, (valve_from(140.0) if self.locked(rid) else cv_open), "ductile iron"
+        if not self.locked(rid):
+            return friction_only(), cv_open, "supervised"
+        C_h = self.hydrant_C(rid, *site) if site else None
+        if C_h is not None:
+            return C_h, valve_from(C_h), "wall hydrant"
+        if self.report and self.report["riser"] == rid and site:
+            return self.split_by_test(rid, rows, site) + ("flow test",)
+        return friction_only(), cv_open, "open"
+
+    def split_by_test(self, rid, rows, site):
+        """Friction and valve from two flows: the last year's main drain tests and the ordered flow test."""
+        B, h_b, Cv_b = site
+        r, rep = self.reg[rid], self.report
+        size, material, L = r["lead_in_size_in"], r["lead_in_material"], float(r["lead_in_equiv_length_ft"])
+        t = stamp(rep["date"], rep["time"])
+        q2 = float(rep["flow_gpm"])
+        S = float(rep["transmitter_psi"]) - PSI_FT * PIT_BELOW_FT
+        p2 = float(rep["residual_psi"]) - self.zero(rid, t, rep["gauge_serial"]) + self.height(rid)
+        own2 = S - p2 - B * (q2 / 1000.0) ** HW - h_b[1] - (q2 / Cv_b[1]) ** 2
+        recent = [(q, o) for when, q, o in rows if (AUDIT - when).days <= 366]
+        q1 = float(np.mean([q for q, _o in recent]))
+        own1 = float(np.mean([o for _q, o in recent]))
+        A = np.array([[q1 ** HW, q1 ** 2], [q2 ** HW, q2 ** 2]])
+        k, v = np.linalg.solve(A, np.array([own1, own2]))
+        v = max(v, 1.0 / VALVE_OPEN[size] ** 2)
+        k = max(k, 1e-9)
+        C = (4.52 * L / (k * PIPE_ID[(material, size)] ** 4.87)) ** (1 / HW)
+        return float(C), 1.0 / math.sqrt(v)
 
     def cast_iron_C(self, years, C_each):
         """C against the years before the audit date, read at the audit date."""
@@ -264,7 +339,8 @@ class Audit:
         out = {}
         for rid, r in self.reg.items():
             size, material, L = r["lead_in_size_in"], r["lead_in_material"], float(r["lead_in_equiv_length_ft"])
-            C, cv_valve = self.attribute(rid, self.own_series(rid, tests, B, h_b, Cv_b, h_c))
+            rows = self.own_series(rid, tests, B, h_b, Cv_b, h_c)
+            C, cv_valve, settled = self.attribute(rid, rows, (B, h_b, Cv_b))
             kl = k_lead(L, C, material, size)
 
             def base(qr):
@@ -284,13 +360,31 @@ class Audit:
                 else:
                     hi = mid
             out[rid] = dict(limit=max(loss, key=loss.get), p_base_psi=p_base, q_avail_gpm=0.5 * (lo + hi),
-                            loss=loss, C=C, cv_valve=cv_valve)
+                            loss=loss, C=C, cv_valve=cv_valve, settled=settled)
+            if settled == "open":
+                # the other end of what the records admit: the lead-in as new and the valve taking the rest
+                q1 = float(np.mean([q for _t, q, _o in rows]))
+                own1 = float(np.mean([o for _t, _q, o in rows]))
+                k_new = k_lead(L, C_NEW_CAST_IRON, material, size)
+                v = max((own1 - k_new * q1 ** HW) / q1 ** 2, 0.0)
+                q, _Q = self.flows(qd)
+                other = p_base + kl * q ** HW + (q / cv_valve) ** 2 - k_new * q ** HW - v * q ** 2
+                out[rid]["open_by"] = abs(other - p_base) / p_base
         out["_site"] = dict(S_ref=S_ref, B=B, h_b=h_b, Cv_b=Cv_b, h_c=h_c)
         return out
 
 
-def rate(data):
-    return Audit(data).rate()
+def rate(data, report=None):
+    return Audit(data, report).rate()
+
+
+def plan(data):
+    """The order: the riser the records leave widest open, at the highest flow. None when nothing is open."""
+    res = Audit(data).rate()
+    widest = max((rid for rid in res if not rid.startswith("_")), key=lambda rid: res[rid].get("open_by", 0.0))
+    if res[widest].get("open_by", 0.0) <= 0.0:
+        return None, res
+    return {"riser": widest, "flow_gpm": TEST_FLOW}, res
 
 
 def write(res, path):
@@ -303,9 +397,27 @@ def write(res, path):
 
 
 def main(argv):
-    data = argv[1] if len(argv) > 1 else "/app/data"
-    path = argv[2] if len(argv) > 2 else "/app/output/rating.csv"
-    res = rate(data)
+    """rate.py [--plan] [DATA_DIR] [OUT_CSV]. The order is placed with the command in FLOWTEST (default
+    `flowtest`) and its report read from FLOWTEST_REPORTS (default /app/flowtest)."""
+    import json
+    import subprocess
+    args = [a for a in argv[1:] if a != "--plan"]
+    data = args[0] if len(args) > 0 else "/app/data"
+    path = args[1] if len(args) > 1 else "/app/output/rating.csv"
+    order, first = plan(data)
+    for rid in sorted(k for k in first if not k.startswith("_")):
+        print("%s settled by %-12s open by %4.1f per cent" % (rid, first[rid]["settled"],
+                                                              100 * first[rid].get("open_by", 0.0)), file=sys.stderr)
+    print("order: %s" % json.dumps(order), file=sys.stderr)
+    if "--plan" in argv:
+        return
+    report = None
+    if order:
+        cmd = os.environ.get("FLOWTEST", "flowtest")
+        subprocess.run([cmd, "submit"], input=json.dumps(order), text=True, check=True)
+        with open(os.path.join(os.environ.get("FLOWTEST_REPORTS", "/app/flowtest"), "flow_test_report.json")) as f:
+            report = json.load(f)
+    res = rate(data, report)
     write(res, path)
     site = res["_site"]
     print("S_ref %.2f  B %.3f  h_b %.2f -> %.2f  Cv_b %.0f -> %.0f  h_c %s" % (
