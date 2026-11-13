@@ -654,8 +654,9 @@ drift of up to 0.5 per cent on the example results, inside the 1.5 per cent band
   not only for a correction.
 - **A package without results is read, at low effort, in the first minutes.** All three worked out the pending
   package's regime (a dimensionless load of 1,560 against 1.5 in the examples) before writing the solver. A
-  visible instance that any physical quantity exposes is not a quiet one. journal-bearing v5 rests on a pending
-  package of this kind and has not been probed.
+  visible instance that any physical quantity exposes is not a quiet one. journal-bearing v5's pending package
+  was run by three low probes the same day and not read (0 of 3): its condition sits in a register's grouping,
+  which no quantity the program computes exposes.
 - **A model with nothing to check against in its own regime was implemented right three times in three.** The
   small-deflection limit and a refinement study were validation enough. All three wrote the reference's method.
 - **Do not count on a canonical validity check being skipped.** Deflection against thickness, a cut-on
@@ -691,3 +692,36 @@ tool calls. No xhigh probes were run.
 - The cost: about two and a half hours to a measured no, most of it the audit of the sealed record
   (16 minutes a district at 1 700 branches). Probe a core at a tenth of the size first; scale decides
   timing, not who sees the condition.
+
+## Twin oil lines v0: a wrong equilibrium that validates itself is found too (Nov 13)
+
+`cores/twin-oil-lines-v0/RESULT.md`. Built on what tank-panel-deflection v0 left: a trap the solver's own
+checks cannot see. Two like pipes of heated fuel oil between common manifolds; the pressure drop of one pipe is
+not monotonic in its flow, so the even division of the flow satisfies every balance and is, at cold sites on low
+throughput, unstable. One pipe stalls, and stays stalled after the flow is raised again. The standard gives the
+single pipe in full and says of the pair only that the oil divides and both pipes have the same pressure drop.
+The even-division program is exact on both examples and is out on every stalled record of five of six hidden
+sites (698 to 1003 a site, up to 18 K and 32 per cent). Three probes on `model: "opus"` at low effort:
+**3 of 3 solved, in 7, 12 and 13.5 minutes**, with errors at the rounding of the examples.
+
+- **A stated equation is a signpost to all of its solutions.** No probe took the even division on symmetry.
+  Each solved the split, saw several roots on the package without results, and went on from there.
+- **An unstated rule is supplied when it follows from the physics.** All three discarded unstable divisions,
+  carried the pair's state from one hourly record to the next, and started a survey on the even division,
+  each calling these its own reading that the examples do not test. Only an arbitrary rule is hidden from this
+  solver, and an arbitrary rule is unfair.
+- **Stability and hysteresis are not specialist knowledge to it.** The core needed both; seven minutes.
+- **Two cores in one day say the same thing as the journal bearing cores:** in this shape, with every deciding
+  condition somewhere in the visible data, what is determinate from the documents and the data is solved at
+  low effort, whether it is a correction, the choice of model, or which of several equilibria is the real one.
+  Neither core reached xhigh probes.
+- **Three cores the same day fell the same way** (these two and vent-fan-stall v0, built by another session:
+  a stall dip in a fan table, two stable states, the log deciding; 3 of 3 in eleven minutes). The one that
+  held, journal-bearing v5 (low 0 of 3, pending package run and not read), differs in kind: its condition
+  contradicts a register, and the natural program pools the evidence away and runs clean. What separates
+  them is not how hard the physics is. A condition that follows from an equation or a table the solver
+  works with is found; one that needs the solver to doubt a record it has no physical reason to doubt is not.
+- **What has beaten this screen officially is information the solver does not have:** hvac-submittal-review
+  0 of 3 and the vav and chill-bench 1 of 3 (a budget that has to cover classes nobody lists), and a fault
+  absent from the visible data (turbine-tool-repair), which the Nov 12 tips now rule out.
+- Cost: about 75 minutes to build, 15 to probe; the three probes used about 250k tokens.

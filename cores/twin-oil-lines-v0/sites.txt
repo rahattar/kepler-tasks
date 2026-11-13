@@ -1,0 +1,9 @@
+boiler_lane  hidden   cold  lines  9 records 2320  uneven  698
+canal_basin  hidden   cold  lines  9 records 2312  uneven 1003
+east_depot   example  warm  lines  9 records 2242  uneven    0
+kiln_road    hidden   cold  lines  9 records 2486  uneven  933
+north_quay   example  warm  lines  9 records 2343  uneven    0
+south_wharf  hidden   cold  lines  9 records 2345  uneven  772
+tank_row     hidden   cold  lines  9 records 2251  uneven  967
+upper_yard   hidden   warm  lines  9 records 2308  uneven    0
+west_jetty   pending  cold  lines  9 records 2378  uneven  736

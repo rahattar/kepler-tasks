@@ -1,0 +1,7 @@
+boiler_lane     7.8 s cpu     0 of 2320 records out (0 of the 698 with one pipe stalled)  ran  worst/band {'dp_kPa': 0.0, 't_out_C': 0.0}
+canal_basin     9.7 s cpu     0 of 2312 records out (0 of the 1003 with one pipe stalled)  ran  worst/band {'dp_kPa': 0.0, 't_out_C': 0.0}
+kiln_road       8.7 s cpu     0 of 2486 records out (0 of the 933 with one pipe stalled)  ran  worst/band {'dp_kPa': 0.0, 't_out_C': 0.0}
+south_wharf     7.8 s cpu     0 of 2345 records out (0 of the 772 with one pipe stalled)  ran  worst/band {'dp_kPa': 0.0, 't_out_C': 0.0}
+tank_row       10.0 s cpu     0 of 2251 records out (0 of the 967 with one pipe stalled)  ran  worst/band {'dp_kPa': 0.0, 't_out_C': 0.0}
+upper_yard      3.3 s cpu     0 of 2308 records out (0 of the 0 with one pipe stalled)  ran  worst/band {'dp_kPa': 0.0, 't_out_C': 0.0}
+ACCEPTED
