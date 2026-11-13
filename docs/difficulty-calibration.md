@@ -818,3 +818,25 @@ examples, a 35 s limit against a reference of 8.7 to 10.5 s.
   were spent on changes (checksum module, alteration size, the edge test) that the small set would have shown.
 - Cost: about five hours from the v2 result to a clean preflight, most of it generation (25 to 45 minutes a
   pass on two CPUs) and the regeneration check (23 minutes).
+
+## Conveyor drive v0: a record that can wear, measured twice over in every survey, is found in two minutes (Nov 13)
+
+`cores/conveyor-drive-v0/RESULT.md`. Multi-drive belt conveyors through a feed log; the drive register holds
+each pulley's diameter as lagged, the lagging of eight hidden drives has worn 0.9 to 1.9 per cent, and with a
+rated slip of 3 per cent that moves every share on the flight by 9 to 40 per cent of rated power. Built at a
+tenth of shipping size. Three probes on `model: "opus"` at low effort: **3 of 3 accepted, 2.1 to 2.2 minutes,
+6 to 8 tool calls**, each naming worn lagging.
+
+- **Two conditions for a contradicted record to hold, both needed.** (1) Nothing in the documents gives the
+  record a physical reason to drift: "measured when the pulley was lagged" is accurate, necessary, and was
+  quoted back by all three. (2) The evidence is not joined to anything the program calibrates or computes by
+  an equation the standard states. Here a survey gives belt speed, shaft speed and power, the calibration
+  needs two of them, and BC-3 ties the third to them through the diameter.
+- **A survey state is a full instance of the model, and low effort fits the model to it.** Two of three wrote
+  one least-squares fit of the standard's equations to the campaigns, weighted by the stated accuracies, with
+  the diameter free. Count the measurements in a survey against the unknowns it is for: any surplus is a test.
+- **The audit named the route and I read it wrongly.** It showed the hand formulas quiet and the re-solved
+  survey loud, and I took the loud route for an extra step that only xhigh takes, on the ventilation result.
+  There a survey becomes a resistance by division; here it becomes a slip through the very relation the wear
+  breaks. Ask what the calibration has to compute, not what the reference happens to compute.
+- **Small first paid:** an hour to build, two minutes to a measured no.

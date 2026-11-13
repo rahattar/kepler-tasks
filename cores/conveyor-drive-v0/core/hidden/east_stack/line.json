@@ -1,0 +1,10 @@
+{
+ "line": "east_stack",
+ "step_s": 5.0,
+ "interval_steps": 180,
+ "flights": [
+  "ES-1",
+  "ES-2",
+  "ES-3"
+ ]
+}

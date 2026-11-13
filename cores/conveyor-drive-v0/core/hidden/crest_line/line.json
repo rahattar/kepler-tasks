@@ -1,0 +1,11 @@
+{
+ "line": "crest_line",
+ "step_s": 5.0,
+ "interval_steps": 180,
+ "flights": [
+  "CL-1",
+  "CL-2",
+  "CL-3",
+  "CL-4"
+ ]
+}

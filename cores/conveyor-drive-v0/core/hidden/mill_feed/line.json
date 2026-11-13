@@ -1,0 +1,10 @@
+{
+ "line": "mill_feed",
+ "step_s": 5.0,
+ "interval_steps": 180,
+ "flights": [
+  "MF-1",
+  "MF-2",
+  "MF-3"
+ ]
+}

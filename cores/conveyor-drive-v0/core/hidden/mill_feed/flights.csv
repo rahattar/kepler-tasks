@@ -1,0 +1,4 @@
+flight,belt_kg_m,idlers_carry_kg_m,idlers_return_kg_m,secondary_factor,belt_stiffness_MN,take_up_tension_kN
+MF-1,34.9,23.0,8.5,1.048,160,60
+MF-2,35.6,20.7,7.9,1.044,107,203
+MF-3,41.0,24.4,7.5,1.062,108,189

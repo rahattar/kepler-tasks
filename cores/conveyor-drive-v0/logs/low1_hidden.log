@@ -1,0 +1,7 @@
+crest_line     4.9 s  rows out    0 of  960   worst, in bands: mean 0.04 max/min 0.04 traction 0.02
+delta_tip      3.7 s  rows out    0 of  672   worst, in bands: mean 0.06 max/min 0.06 traction 0.04
+east_stack     3.7 s  rows out    0 of  576   worst, in bands: mean 0.02 max/min 0.02 traction 0.02
+long_reach     5.2 s  rows out    0 of  864   worst, in bands: mean 0.04 max/min 0.04 traction 0.04
+mill_feed      3.5 s  rows out    0 of  480   worst, in bands: mean 0.03 max/min 0.03 traction 0.02
+valley_run     3.3 s  rows out    0 of  576   worst, in bands: mean 0.02 max/min 0.02 traction 0.02
+ACCEPTED

@@ -1,0 +1,10 @@
+{
+ "line": "ridge_haul",
+ "step_s": 5.0,
+ "interval_steps": 180,
+ "flights": [
+  "RH-1",
+  "RH-2",
+  "RH-3"
+ ]
+}

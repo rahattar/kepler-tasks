@@ -1,0 +1,25 @@
+crest_line     0.2 s  rows out  384 of  960   worst, in bands: mean 4.92 max/min 4.94 traction 6.05
+      CL-1 head1  96 of  96 out   mean 4.91 max/min 4.91 traction 5.36
+      CL-1 head2  96 of  96 out   mean 4.92 max/min 4.94 traction 6.05
+      CL-2 head1  96 of  96 out   mean 3.56 max/min 3.71 traction 4.49
+      CL-2 head2  96 of  96 out   mean 3.70 max/min 3.68 traction 4.01
+delta_tip      0.2 s  rows out  288 of  672   worst, in bands: mean 10.47 max/min 10.47 traction 90.75
+      DT-1 head1  96 of  96 out   mean 5.90 max/min 5.90 traction 3.97
+      DT-1 head2  96 of  96 out   mean 4.70 max/min 4.70 traction 4.47
+      DT-1 tail   96 of  96 out   mean 10.47 max/min 10.47 traction 90.75
+east_stack     0.2 s  rows out    0 of  576   worst, in bands: mean 0.02 max/min 0.03 traction 0.04
+long_reach     0.2 s  rows out  576 of  864   worst, in bands: mean 7.93 max/min 7.95 traction 22.46
+      LR-1 head1  96 of  96 out   mean 3.79 max/min 3.84 traction 1.46
+      LR-1 head2  96 of  96 out   mean 4.25 max/min 4.31 traction 3.02
+      LR-1 tail   96 of  96 out   mean 7.93 max/min 7.95 traction 22.46
+      LR-3 head1  96 of  96 out   mean 3.34 max/min 3.37 traction 3.88
+      LR-3 head2  96 of  96 out   mean 5.63 max/min 5.62 traction 5.24
+      LR-3 tail   96 of  96 out   mean 2.24 max/min 2.25 traction 5.84
+mill_feed      0.2 s  rows out  192 of  480   worst, in bands: mean 6.38 max/min 6.38 traction 6.50
+      MF-3 head1  96 of  96 out   mean 6.38 max/min 6.38 traction 6.50
+      MF-3 head2  96 of  96 out   mean 6.31 max/min 6.31 traction 6.31
+valley_run     0.2 s  rows out  288 of  576   worst, in bands: mean 8.58 max/min 8.59 traction 20.22
+      VR-3 head1  96 of  96 out   mean 4.86 max/min 4.82 traction 2.86
+      VR-3 head2  96 of  96 out   mean 3.99 max/min 3.96 traction 3.07
+      VR-3 tail   96 of  96 out   mean 8.58 max/min 8.59 traction 20.22
+NOT ACCEPTED

@@ -1,0 +1,4 @@
+flight,belt_kg_m,idlers_carry_kg_m,idlers_return_kg_m,secondary_factor,belt_stiffness_MN,take_up_tension_kN
+VR-1,36.0,15.9,7.1,1.086,153,54
+VR-2,44.9,19.9,9.9,1.046,160,188
+VR-3,41.2,17.1,9.1,1.08,103,283

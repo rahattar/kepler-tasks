@@ -1,0 +1,4 @@
+quarry_line    0.2 s  rows out    0 of  672   worst, in bands: mean 0.05 max/min 0.05 traction 0.03
+ridge_haul     0.2 s  rows out    0 of  576   worst, in bands: mean 0.03 max/min 0.03 traction 0.05
+pit_incline    0.2 s  rows out    0 of  672   worst, in bands: mean 0.06 max/min 0.06 traction 0.03
+ACCEPTED

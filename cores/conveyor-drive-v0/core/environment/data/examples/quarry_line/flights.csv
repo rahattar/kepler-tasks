@@ -1,0 +1,4 @@
+flight,belt_kg_m,idlers_carry_kg_m,idlers_return_kg_m,secondary_factor,belt_stiffness_MN,take_up_tension_kN
+QL-1,31.9,17.8,7.2,1.089,172,161
+QL-2,47.1,15.8,9.9,1.046,129,154
+QL-3,38.5,17.6,6.9,1.077,125,76

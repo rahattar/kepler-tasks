@@ -1,0 +1,6 @@
+flight,drive,rated_kW,gear_ratio,pulley_diameter_mm,efficiency
+MF-1,head1,220,23.047,1397.6,0.934
+MF-2,head1,1260,19.794,1402.5,0.937
+MF-2,head2,1260,19.730,1398.2,0.946
+MF-3,head1,1360,20.604,1401.1,0.920
+MF-3,head2,1360,14.710,1001.9,0.941

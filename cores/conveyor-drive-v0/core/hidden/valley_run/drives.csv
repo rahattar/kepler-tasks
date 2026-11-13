@@ -1,0 +1,7 @@
+flight,drive,rated_kW,gear_ratio,pulley_diameter_mm,efficiency
+VR-1,head1,380,20.272,1401.9,0.929
+VR-2,head1,1450,14.907,998.1,0.936
+VR-2,head2,1450,18.647,1250.0,0.927
+VR-3,head1,1220,14.248,1000.6,0.924
+VR-3,head2,1220,15.613,1099.5,0.939
+VR-3,tail,1220,14.242,1002.5,0.941

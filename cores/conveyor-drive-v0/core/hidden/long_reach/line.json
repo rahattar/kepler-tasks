@@ -1,0 +1,11 @@
+{
+ "line": "long_reach",
+ "step_s": 5.0,
+ "interval_steps": 180,
+ "flights": [
+  "LR-1",
+  "LR-2",
+  "LR-3",
+  "LR-4"
+ ]
+}

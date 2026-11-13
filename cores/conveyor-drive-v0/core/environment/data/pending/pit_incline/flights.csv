@@ -1,0 +1,4 @@
+flight,belt_kg_m,idlers_carry_kg_m,idlers_return_kg_m,secondary_factor,belt_stiffness_MN,take_up_tension_kN
+PI-1,43.9,23.0,6.1,1.06,132,87
+PI-2,42.1,22.1,6.3,1.051,111,154
+PI-3,44.7,16.2,8.5,1.051,167,76

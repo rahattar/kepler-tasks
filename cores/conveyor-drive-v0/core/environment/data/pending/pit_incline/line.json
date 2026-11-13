@@ -1,0 +1,10 @@
+{
+ "line": "pit_incline",
+ "step_s": 5.0,
+ "interval_steps": 180,
+ "flights": [
+  "PI-1",
+  "PI-2",
+  "PI-3"
+ ]
+}

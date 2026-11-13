@@ -1,0 +1,10 @@
+{
+ "line": "valley_run",
+ "step_s": 5.0,
+ "interval_steps": 180,
+ "flights": [
+  "VR-1",
+  "VR-2",
+  "VR-3"
+ ]
+}

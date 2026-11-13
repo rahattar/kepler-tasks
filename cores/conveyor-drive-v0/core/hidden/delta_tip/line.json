@@ -1,0 +1,10 @@
+{
+ "line": "delta_tip",
+ "step_s": 5.0,
+ "interval_steps": 180,
+ "flights": [
+  "DT-1",
+  "DT-2",
+  "DT-3"
+ ]
+}

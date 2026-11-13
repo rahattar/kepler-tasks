@@ -1,0 +1,7 @@
+flight,drive,rated_kW,gear_ratio,pulley_diameter_mm,efficiency
+ES-1,head1,770,19.759,1397.2,0.943
+ES-1,head2,770,19.801,1399.1,0.937
+ES-1,tail,770,17.682,1250.3,0.930
+ES-2,head1,660,18.211,1100.4,0.943
+ES-2,head2,660,18.142,1098.9,0.920
+ES-3,head1,940,19.237,1251.2,0.948

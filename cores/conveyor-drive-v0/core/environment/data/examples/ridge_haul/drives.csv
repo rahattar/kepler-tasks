@@ -1,0 +1,7 @@
+flight,drive,rated_kW,gear_ratio,pulley_diameter_mm,efficiency
+RH-1,head1,1960,21.231,1248.0,0.924
+RH-2,head1,800,15.629,1102.6,0.932
+RH-2,head2,800,15.593,1098.7,0.928
+RH-3,head1,770,18.222,1098.4,0.939
+RH-3,head2,770,18.291,1100.9,0.934
+RH-3,tail,770,18.286,1102.2,0.937

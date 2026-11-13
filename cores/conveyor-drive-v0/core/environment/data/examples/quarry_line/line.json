@@ -1,0 +1,10 @@
+{
+ "line": "quarry_line",
+ "step_s": 5.0,
+ "interval_steps": 180,
+ "flights": [
+  "QL-1",
+  "QL-2",
+  "QL-3"
+ ]
+}
