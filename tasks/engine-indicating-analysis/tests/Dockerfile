@@ -13,7 +13,7 @@ FROM python:3.11-slim
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
-# One thread to a numerical library, so that a run's time is the time of one CPU.
+# One thread to a numerical library, so that a run's time does not depend on how many CPUs the host has.
 ENV OMP_NUM_THREADS=1
 ENV OPENBLAS_NUM_THREADS=1
 ENV MKL_NUM_THREADS=1

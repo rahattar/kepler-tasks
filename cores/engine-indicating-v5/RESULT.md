@@ -12,6 +12,10 @@ was built.
 - **Limit 4 s**, not v3's 5: the reference takes 0.9 to 1.6 s a cell alone on the machine, and 5 s came out
   at 3.9 times the slowest run on a quiet one.
 - **Record files are `records/p01.npy`**, lower case: shipcheck refuses an all-uppercase file name.
+- **After the journal bearing oracle failures of the same day:** the checker sets no CPU affinity, the
+  whole-verifier study runs `bash tests/test.sh` itself (reward 1 for the reference under its umask 077), and
+  the instruction states the reader's cap on OUT_CSV (2 MiB) and that it is an ordinary file, not a link.
+- **Subfield** 117 characters (limit 120).
 
 ## Probes on the finished bundle (opus = claude-opus-5-5), at the 5 s limit and the first draft's wording
 
@@ -31,5 +35,5 @@ No xhigh run on the bundle; v3's 1 of 3 and v4's 3 of 6 stand for it.
 
 - `brief.txt` what the probes were given; `readme.py` writes README.md and task.toml from the evidence;
   `run_evidence.sh` regenerates every study in order (about 25 minutes, the seed screen 14 of them).
-- The instruction draft was reworded after the probes to bring it away from journal-bearing-survey's
-  (ratio 0.70 to 0.46, 5-gram Jaccard 0.25 to 0.05). Same facts; not re-probed.
+- The instruction draft was reworded after the probes to bring it away from journal-bearing-survey's, now
+  lube-oil-survey (difflib ratio 0.70 to 0.43). Same facts, plus the cap; not re-probed.

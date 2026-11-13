@@ -36,6 +36,7 @@ ok   agent: 28800 s, user agent
 ok   verifier: 600 s, separate, no network
 ok   domain and field
 ok   category "Science" and a subcategory
+ok   subfield is at most 120 characters (117)
 ok   [metadata] carries the full block
 ok   keywords equal tags
 ok   difficulty_explanation is the README's section word for word
@@ -59,7 +60,10 @@ ok   tests/test.sh has `-p no:cacheprovider`
 ok   every reward write is the literal write at the start of a line; 0 is written first, 1 in one place
 ok   the limit is a timeout on the wait for the run, in tests/
 ok   a run over the limit ends the assessment: no table is read and no later cell is run
-ok   runs are held to one CPU with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1
+ok   runs have OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1
+ok   the verifier sets no CPU affinity (several verifiers may share a host)
+ok   the instruction states the reader's cap on OUT_CSV, and it is the checker's (2097152 bytes)
+ok   the instruction says OUT_CSV is an ordinary file, not a link, as the reader requires
 ok   the program runs as nobody and /tests is root's alone
 ok   the agent image: the pins, the user agent, ends as root
 ok   the pending packages carry no results
@@ -77,18 +81,19 @@ ok   verifier_checks.txt is there and reports no failure
 ok   verifier_run.txt is there and reports no failure
 ok   regenerate: every shipped data file is what the generator writes
 ok   design rules: all hold
-ok   reference: accepted; its slowest run is over 1 s and the limit is 2 to 3.5 times it (1.3 s, 3.0 times)
+ok   reference: accepted; its slowest run is over 1 s and the limit is 2 to 3.5 times it (1.4 s, 2.8 times)
 ok   reference: accepted on the six cells and on both examples
 ok   every band is at least twice the widest departure of a sound method (reference 0.37, second solution 0.49, sound variations 0.44 of a band)
 ok   seed screen: the reference is accepted on 20 of 20 seeds (widest 0.82 of a band)
 ok   the second solution, correct and slow, is stopped at the limit on the first cell and not accepted
-ok   the second solution would need at least 3 times the limit on every cell (12 to 24 times)
+ok   the second solution would need at least 3 times the limit on every cell (16 to 33 times)
 ok   routes: none accepted; sound variations: all accepted
 ok   every cell with a condition stops at least 3 routes (cell_02 4, cell_05 4, cell_06 5, cell_09 5, cell_14 4)
 ok   the nearest route misses by at least 1.5 bands (4.3)
 ok   programs without physics get no row right
 ok   verifier checks: none unexpected
 ok   the whole verifier: the reference passes, three others do not
+ok   the whole-verifier study runs bash tests/test.sh itself, and the reference reaches reward 1 through it
 ok   every decimal or three-digit figure in README.md occurs in the evidence, the documents or the code
 
 preflight clean

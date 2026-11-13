@@ -159,6 +159,7 @@ check(toml.get("verifier", {}).get("timeout_sec") == 600.0 and toml.get("verifie
       and toml.get("verifier", {}).get("environment", {}).get("network_mode") == "no-network", "verifier: 600 s, separate, no network")
 check(meta.get("domain") == "engineering-sciences" and meta.get("field") == "mechanical-engineering", "domain and field")
 check(meta.get("category") == "Science" and bool(str(meta.get("subcategory", "")).strip()), 'category "Science" and a subcategory')
+check(0 < len(str(meta.get("subfield", ""))) <= 120, "subfield is at most 120 characters (%d)" % len(str(meta.get("subfield", ""))))
 needed = ["author_name", "author_email", "author_organization", "author_profile", "research_advisor", "referred_by",
           "conflicts_of_interest", "domain", "field", "subfield", "category", "subcategory", "tags", "expert_time_estimate_hours",
           "relevant_experience", "difficulty_explanation", "solution_explanation", "verification_explanation"]
@@ -201,8 +202,13 @@ check("started.wait(timeout=limit)" in checker and "except subprocess.TimeoutExp
 after = checker.split("except subprocess.TimeoutExpired:", 1)[1].split("\n", 2)[1]
 check("over the limit" in after and 'if ending == "over the limit":' in checker and "return report" in checker.split('if ending == "over the limit":', 1)[1][:400],
       "a run over the limit ends the assessment: no table is read and no later cell is run")
-check(all(('"%s": "1"' % v) in checker for v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS")) and "sched_setaffinity" in checker,
-      "runs are held to one CPU with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1")
+check(all(('"%s": "1"' % v) in checker for v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS")),
+      "runs have OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1")
+check("setaffinity" not in checker and "taskset" not in checker + tsh, "the verifier sets no CPU affinity (several verifiers may share a host)")
+m = re.search(r"at most (\d+) MiB \(([\d,]+) bytes\)", ins)
+check(bool(m) and int(m.group(1)) * 1024 * 1024 == check_program.TABLE_BYTES == int(m.group(2).replace(",", "")),
+      "the instruction states the reader's cap on OUT_CSV, and it is the checker's (%d bytes)" % check_program.TABLE_BYTES)
+check("O_NOFOLLOW" in checker and "ordinary file, not a link" in ins, "the instruction says OUT_CSV is an ordinary file, not a link, as the reader requires")
 check("setpriv" in checker and "chmod -R u=rwX,go= /tests" in tdock, "the program runs as nobody and /tests is root's alone")
 edock = read("environment", "Dockerfile")
 check("numpy==2.1.3 scipy==1.14.1 pandas==2.2.3" in edock and "useradd" in edock and "agent" in edock
@@ -270,9 +276,11 @@ check(bool(least) and min(least) >= 1.5, "the nearest route misses by at least 1
 check(re.search(r"2 programs, 0 accepted; most rows right: 0 of 250", texts["null_run"]) is not None, "programs without physics get no row right")
 check(re.search(r"\n(\d+) cases, 0 unexpected", texts["verifier_checks"]) is not None, "verifier checks: none unexpected")
 check(re.search(r"\n4 programs, 0 unexpected", texts["verifier_run"]) is not None, "the whole verifier: the reference passes, three others do not")
+check("bash tests/test.sh" in texts["verifier_run"] and re.search(r"the reference, solution/indicate\.py\s+reward 1\b", texts["verifier_run"]) is not None,
+      "the whole-verifier study runs bash tests/test.sh itself, and the reference reaches reward 1 through it")
 
 # 9. every figure the README quotes is in the evidence, the documents, the generator or the checker
-corpus = " ".join(texts.values()) + visible + read("authoring", "provenance", "cells.py") + checker + read("tests", "requirements.txt")
+corpus = " ".join(texts.values()) + visible + read("authoring", "provenance", "cells.py") + checker + read("tests", "requirements.txt") + tsh
 corpus += " ".join(read("authoring", "evidence", f) for f in ("slow_indicate.py", "variants.py")) + read("solution", "indicate.py")
 quoted = set(re.findall(r"(?<![\w.])\d+\.\d+|(?<![\w.,])\d{3,}(?:,\d{3})?(?![\w.])", readme.replace("SHA-256", "")))
 missing = sorted(q for q in quoted if q not in corpus and q.replace(",", "") not in corpus)

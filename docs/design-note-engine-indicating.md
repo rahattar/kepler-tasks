@@ -39,8 +39,8 @@ the cycles of a point, with index and gain settled once for a cell from the mean
 times over. The cores were probed at 5 s; an accepted probe program runs in 0.4 to 0.5 s. As in journal bearing, the
 limit separates no probe run: every run vectorised. It is there because the ask requires it.
 
-**Verifier.** Each run as nobody, one CPU, in a directory of its own; a run over the limit ends the
-assessment. Bands are IS-2 section 9's: 2 per cent on mean effective pressure, 1 on peak pressure, 3 on heat
+**Verifier.** Each run as nobody, one thread to a library and no CPU affinity, in a directory of its own; a
+run over the limit ends the assessment. `bash tests/test.sh` itself gives the reference reward 1. Bands are IS-2 section 9's: 2 per cent on mean effective pressure, 1 on peak pressure, 3 on heat
 released, 0.3 degrees on angles. The truth is the sealed cylinder model on the true pressure, never a run of
 the reference.
 

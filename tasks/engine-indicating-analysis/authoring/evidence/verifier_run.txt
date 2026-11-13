@@ -1,10 +1,36 @@
-tests/test_indicate.py run by `python -m pytest` from tests/, the program given through INDICATE_PROGRAM.
-pytest-json-ctrf is not installed on this machine: the report is written by authoring/evidence/ctrf_standin.py,
-which writes the same summary block
+bash tests/test.sh, unchanged, with each program in turn at /app/output/indicate.py; reward read from /logs/verifier/reward.txt
+the ctrf report is written by authoring/evidence/ctrf_standin.py: pytest-json-ctrf is not installed on this machine
 
-the reference, solution/indicate.py                      pytest exit status 0, report of one test passed: yes   as expected
-the records taken as the indicating system has them      pytest exit status 1, report of one test passed: no   as expected
-the misfit put down to the index alone                   pytest exit status 1, report of one test passed: no   as expected
-the second solution, slow_indicate.py, at the limit      pytest exit status 1, report of one test passed: no   as expected
+the reference, solution/indicate.py                  reward 1 in 7 s   as expected
+    cell_02   1.02 s  every row within its bands  (widest departure, in bands: imep 0.30, pmax 0.16, apmax 0.15, ca10 0.15, ca50 0.10, q 0.18)
+    cell_05   1.07 s  every row within its bands  (widest departure, in bands: imep 0.36, pmax 0.18, apmax 0.18, ca10 0.17, ca50 0.18, q 0.20)
+    cell_06   1.37 s  every row within its bands  (widest departure, in bands: imep 0.15, pmax 0.12, apmax 0.09, ca10 0.20, ca50 0.12, q 0.10)
+    cell_09   0.87 s  every row within its bands  (widest departure, in bands: imep 0.29, pmax 0.20, apmax 0.23, ca10 0.23, ca50 0.27, q 0.17)
+    cell_12   0.97 s  every row within its bands  (widest departure, in bands: imep 0.03, pmax 0.03, apmax 0.01, ca10 0.08, ca50 0.04, q 0.04)
+    cell_14   1.07 s  every row within its bands  (widest departure, in bands: imep 0.37, pmax 0.21, apmax 0.19, ca10 0.16, ca50 0.13, q 0.19)
+    accepted
+
+the records taken as the indicating system has them  reward 0 in 6 s   as expected
+    cell_02   0.87 s  40 of 40 rows out of band  (widest departure, in bands: imep 12.75, pmax 0.01, apmax 7.47, ca10 9.64, ca50 8.40, q 7.79)
+    cell_05   0.87 s  40 of 40 rows out of band  (widest departure, in bands: imep 2.65, pmax 5.21, apmax 0.04, ca10 4.25, ca50 2.60, q 2.33)
+    cell_06   1.22 s  60 of 60 rows out of band  (widest departure, in bands: imep 1.53, pmax 5.14, apmax 4.46, ca10 8.92, ca50 8.42, q 1.28)
+    cell_09   0.67 s  30 of 30 rows out of band  (widest departure, in bands: imep 5.55, pmax 4.14, apmax 8.07, ca10 12.82, ca50 12.95, q 0.97)
+    cell_12   0.82 s  every row within its bands  (widest departure, in bands: imep 0.00, pmax 0.01, apmax 0.03, ca10 0.07, ca50 0.02, q 0.02)
+    cell_14   0.92 s  40 of 40 rows out of band  (widest departure, in bands: imep 3.55, pmax 6.98, apmax 0.03, ca10 6.68, ca50 3.29, q 3.20)
+    not accepted
+
+the misfit put down to the index alone               reward 0 in 6 s   as expected
+    cell_02   0.97 s  every row within its bands  (widest departure, in bands: imep 0.04, pmax 0.01, apmax 0.04, ca10 0.11, ca50 0.05, q 0.05)
+    cell_05   0.97 s  40 of 40 rows out of band  (widest departure, in bands: imep 9.39, pmax 5.21, apmax 3.95, ca10 4.49, ca50 2.62, q 6.13)
+    cell_06   1.42 s  60 of 60 rows out of band  (widest departure, in bands: imep 6.17, pmax 5.14, apmax 3.92, ca10 4.00, ca50 3.62, q 3.51)
+    cell_09   0.72 s  30 of 30 rows out of band  (widest departure, in bands: imep 5.69, pmax 4.14, apmax 3.73, ca10 5.25, ca50 6.84, q 4.26)
+    cell_12   0.82 s  every row within its bands  (widest departure, in bands: imep 0.01, pmax 0.01, apmax 0.04, ca10 0.07, ca50 0.03, q 0.02)
+    cell_14   0.87 s  40 of 40 rows out of band  (widest departure, in bands: imep 11.97, pmax 6.98, apmax 4.93, ca10 5.85, ca50 3.76, q 6.17)
+    not accepted
+
+the second solution, slow_indicate.py                reward 0 in 4 s   as expected
+    cell_02   4.00 s  still running after 4 s
+    the run on cell_02 was still going after 4 s; the cells after it were not run
+    not accepted
 
 4 programs, 0 unexpected

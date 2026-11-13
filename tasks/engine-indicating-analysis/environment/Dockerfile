@@ -12,7 +12,7 @@ FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1
 
-# A run of the program is timed on one CPU with one thread to a numerical library. The same setting here
+# A run of the program is timed with one thread to a numerical library. The same setting here
 # means a time measured while writing the program is the time that counts.
 ENV OMP_NUM_THREADS=1
 ENV OPENBLAS_NUM_THREADS=1

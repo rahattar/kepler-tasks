@@ -2,7 +2,7 @@
 
 Every study here judges a complete program with tests/check_program.py, as the verifier does: the program is
 copied alone into a scratch directory, run on a copy of each cell's package as the user nobody (when the
-script is root, as it is in the verifier's image) on one CPU, and its table read and held to the bands by the
+script is root, as it is in the verifier's image) with one thread to a library, and its table read and held to the bands by the
 checker's own reader. No study compares numbers of its own.
 """
 import atexit

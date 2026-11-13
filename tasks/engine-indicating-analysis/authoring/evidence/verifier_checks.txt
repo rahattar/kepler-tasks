@@ -75,7 +75,7 @@ What a run can see and do.
   the program runs as the user nobody                                            accepted                           as expected
   a directory of root's with mode 700 cannot be listed by the program            accepted                           as expected
   the package cannot be written to                                               accepted                           as expected
-  one CPU, OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1                          accepted                           as expected
+  OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1 in the run's environment          accepted                           as expected
 
 The reward: tests/test.sh as it stands, `python -m pytest` replaced by a stand-in.
 

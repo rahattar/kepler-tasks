@@ -194,10 +194,9 @@ def the_runs(cells_dir, results_dir, truth_text):
     spoil = writer(payload, before="try:\n    open(os.path.join(sys.argv[1], 'points.csv'), 'a').write('x')\n    sys.exit(7)\nexcept OSError:\n    pass")
     report, said = verdict(spoil, cells_dir, results_dir)
     show("the package cannot be written to", said, report["accepted"])
-    threads = writer(payload, before="if os.environ.get('OMP_NUM_THREADS') != '1' or os.environ.get('OPENBLAS_NUM_THREADS') != '1'"
-                                     " or len(os.sched_getaffinity(0)) != 1:\n    sys.exit(7)")
+    threads = writer(payload, before="if os.environ.get('OMP_NUM_THREADS') != '1' or os.environ.get('OPENBLAS_NUM_THREADS') != '1':\n    sys.exit(7)")
     report, said = verdict(threads, cells_dir, results_dir)
-    show("one CPU, OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1", said, report["accepted"])
+    show("OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1 in the run's environment", said, report["accepted"])
 
 
 STAND_IN = '''#!/bin/bash

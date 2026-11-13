@@ -1,63 +1,90 @@
-"""The whole verifier, as pytest, in a process of its own, on three programs.
+"""The verifier from end to end: `bash tests/test.sh` as it stands, on four programs, and the reward it leaves.
 
-    python3 verifier_run.py > verifier_run.txt
+    python3 verifier_run.py > verifier_run.txt        as root
 
-tests/test_indicate.py is run by `python -m pytest` from the tests folder, with the program given through
-INDICATE_PROGRAM: the reference, the program that takes the records as the indicating system has them, and
-the second solution at the limit. Exit status 0 means the one test passed.
+For each program the file is put at /app/output/indicate.py, tests/test.sh is run with nothing changed (its
+umask, pytest, the checker starting the program as the user nobody, one_passed.py) and /logs/verifier/reward.txt
+is read afterwards, with the checker's notes on each cell. This is the path the reward takes in the verifier's
+image; a study that calls pytest or the checker directly does not go through test.sh's umask.
+
+pytest has to be installed. Where the pytest-json-ctrf plugin is not, pytest is given ctrf_standin.py through
+PYTEST_PLUGINS, and the first line printed says so. /app/output and /logs/verifier are made if they are not
+there, and whatever this script made is removed at the end.
 """
+import importlib.util
+import json
 import os
+import shutil
 import subprocess
 import sys
-import tempfile
+import time
 
 import common
 import variants
 
+PLACE = "/app/output/indicate.py"
+LOGS = "/logs/verifier"
 
-def plugin_installed():
+
+def one(program):
+    """(what reward.txt holds after test.sh, seconds, the checker's notes or None)."""
+    shutil.copyfile(program, PLACE)
+    os.chmod(PLACE, 0o644)
+    env = dict(os.environ)
+    if importlib.util.find_spec("pytest_jsonctrf") is None:
+        env["PYTEST_PLUGINS"] = "ctrf_standin"
+        env["PYTHONPATH"] = common.HERE + os.pathsep + env.get("PYTHONPATH", "")
+    began = time.time()
+    subprocess.run(["bash", os.path.join(common.TESTS, "test.sh")], env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    took = time.time() - began
     try:
-        import pytest_jsonctrf  # noqa: F401
-        return True
-    except ImportError:
-        return False
-
-
-def pytest_on(path):
-    """(pytest's exit status, whether the report it left counts one test, passed)."""
-    with tempfile.TemporaryDirectory() as box:
-        env = dict(os.environ, INDICATE_PROGRAM=path, INDICATE_NOTES=os.path.join(box, "cells.json"),
-                   PYTHONDONTWRITEBYTECODE="1")
-        command = [sys.executable, "-m", "pytest", "test_indicate.py", "-q", "-p", "no:cacheprovider",
-                   "--ctrf=%s" % os.path.join(box, "ctrf.json")]
-        if not plugin_installed():
-            env["PYTHONPATH"] = common.HERE + os.pathsep + env.get("PYTHONPATH", "")
-            command[3:3] = ["-p", "ctrf_standin"]
-        ran = subprocess.run(command, cwd=common.TESTS, env=env, capture_output=True, text=True)
-        counted = subprocess.run([sys.executable, os.path.join(common.TESTS, "one_passed.py"),
-                                  os.path.join(box, "ctrf.json")]).returncode == 0
-    return ran.returncode, counted
+        with open(os.path.join(LOGS, "reward.txt")) as handle:
+            reward = handle.read()
+    except OSError:
+        reward = "none written"
+    try:
+        with open(os.path.join(LOGS, "cells.json")) as handle:
+            notes = json.load(handle)
+    except (OSError, ValueError):
+        notes = None
+    return reward, took, notes
 
 
 def main():
-    slow = common.SOLUTION.replace("solution/indicate.py", "authoring/evidence/slow_indicate.py")
-    cases = [("the reference, solution/indicate.py", common.SOLUTION, 0),
-             ("the records taken as the indicating system has them", common.program(variants.made(variants.ROUTES[0][2])), 1),
-             ("the misfit put down to the index alone", common.program(variants.made(variants.ROUTES[1][2])), 1),
-             ("the second solution, slow_indicate.py, at the limit", slow, 1)]
-    ok = True
-    print("tests/test_indicate.py run by `python -m pytest` from tests/, the program given through INDICATE_PROGRAM.")
-    print("pytest-json-ctrf %s\n" % ("is installed: the report is the plugin's" if plugin_installed() else
-          "is not installed on this machine: the report is written by authoring/evidence/ctrf_standin.py,\n"
-          "which writes the same summary block"))
-    for what, path, want in cases:
-        status, counted = pytest_on(path)
-        good = status == want and counted == (want == 0)
-        ok = ok and good
-        print("%-56s pytest exit status %d, report of one test passed: %s   %s" % (
-            what, status, "yes" if counted else "no", "as expected" if good else "UNEXPECTED"))
-    print("\n%d programs, %s" % (len(cases), "0 unexpected" if ok else "PROBLEM"))
-    return 0 if ok else 1
+    if os.geteuid() != 0:
+        print("this study has to be run as root, as test.sh is; nothing was run")
+        return 1
+    made = [d for d in ("/app", "/logs") if not os.path.exists(d)]
+    os.makedirs(os.path.dirname(PLACE), exist_ok=True)
+    os.makedirs(LOGS, exist_ok=True)
+    slow = os.path.join(common.HERE, "slow_indicate.py")
+    programs = [("the reference, solution/indicate.py", common.SOLUTION, "1"),
+                ("the records taken as the indicating system has them", common.program(variants.made(variants.ROUTES[0][2])), "0"),
+                ("the misfit put down to the index alone", common.program(variants.made(variants.ROUTES[1][2])), "0"),
+                ("the second solution, slow_indicate.py", slow, "0")]
+    plugin = importlib.util.find_spec("pytest_jsonctrf") is not None
+    print("bash tests/test.sh, unchanged, with each program in turn at %s; reward read from %s/reward.txt" % (PLACE, LOGS))
+    print("the ctrf report is written by %s" % ("pytest-json-ctrf" if plugin else
+          "authoring/evidence/ctrf_standin.py: pytest-json-ctrf is not installed on this machine"))
+    unexpected = 0
+    try:
+        for what, path, want in programs:
+            reward, took, notes = one(path)
+            unexpected += reward != want
+            print("\n%-52s reward %s in %.0f s   %s" % (what, reward, took, "as expected" if reward == want else "UNEXPECTED"))
+            if notes is None:
+                print("    the checker left no notes")
+            else:
+                for line in common.check_program.account(notes).splitlines():
+                    print("    " + line)
+    finally:
+        for left in (PLACE, os.path.join(LOGS, "reward.txt"), os.path.join(LOGS, "ctrf.json"), os.path.join(LOGS, "cells.json")):
+            if os.path.exists(left):
+                os.unlink(left)
+        for d in made:
+            shutil.rmtree(d, ignore_errors=True)
+    print("\n%d programs, %s" % (len(programs), "0 unexpected" if not unexpected else "PROBLEM"))
+    return 1 if unexpected else 0
 
 
 if __name__ == "__main__":

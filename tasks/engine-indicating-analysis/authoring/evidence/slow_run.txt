@@ -1,17 +1,17 @@
 1. on the six cells with 75 cycles a point, the limit set aside
 
-cell_02  15.97 s  every row within its bands  (widest departure, in bands: imep 0.42, pmax 0.26, apmax 0.19, ca10 0.40, ca50 0.32, q 0.28)
-cell_05  16.82 s  every row within its bands  (widest departure, in bands: imep 0.49, pmax 0.26, apmax 0.20, ca10 0.29, ca50 0.23, q 0.33)
-cell_06  24.25 s  every row within its bands  (widest departure, in bands: imep 0.11, pmax 0.10, apmax 0.06, ca10 0.22, ca50 0.12, q 0.12)
-cell_09  12.21 s  every row within its bands  (widest departure, in bands: imep 0.06, pmax 0.03, apmax 0.05, ca10 0.22, ca50 0.10, q 0.05)
-cell_12  16.02 s  every row within its bands  (widest departure, in bands: imep 0.02, pmax 0.01, apmax 0.03, ca10 0.13, ca50 0.04, q 0.04)
-cell_14  16.28 s  every row within its bands  (widest departure, in bands: imep 0.41, pmax 0.27, apmax 0.22, ca10 0.28, ca50 0.22, q 0.28)
+cell_02  21.39 s  every row within its bands  (widest departure, in bands: imep 0.42, pmax 0.26, apmax 0.19, ca10 0.40, ca50 0.32, q 0.28)
+cell_05  22.79 s  every row within its bands  (widest departure, in bands: imep 0.49, pmax 0.26, apmax 0.20, ca10 0.29, ca50 0.23, q 0.33)
+cell_06  32.77 s  every row within its bands  (widest departure, in bands: imep 0.11, pmax 0.10, apmax 0.06, ca10 0.22, ca50 0.12, q 0.12)
+cell_09  16.37 s  every row within its bands  (widest departure, in bands: imep 0.06, pmax 0.03, apmax 0.05, ca10 0.22, ca50 0.10, q 0.05)
+cell_12  21.94 s  every row within its bands  (widest departure, in bands: imep 0.02, pmax 0.01, apmax 0.03, ca10 0.13, ca50 0.04, q 0.04)
+cell_14  21.84 s  every row within its bands  (widest departure, in bands: imep 0.41, pmax 0.27, apmax 0.22, ca10 0.28, ca50 0.22, q 0.28)
 accepted
 
 widest departure from the sealed results: 0.49 of a band, so every band is at least 2.0 times the widest departure of a separately written, correct program
 
-2. 18750 cycles in 102 s: 0.0054 s a cycle
-the shipped cells, of 9000 to 18000 cycles, would take 49 to 98 s a run, 12 to 24 times the limit of 4 s
+2. 18750 cycles in 137 s: 0.0073 s a cycle
+the shipped cells, of 9000 to 18000 cycles, would take 66 to 132 s a run, 16 to 33 times the limit of 4 s
 
 3. on the shipped cells at the limit
 

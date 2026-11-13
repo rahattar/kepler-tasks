@@ -10,8 +10,9 @@ How one run goes
   - a fresh scratch directory gets two folders: `run`, holding a copy of indicate.py and nothing else, and
     `session`, a read-only copy of the cell's package;
   - the program is started in `run` as `python3 indicate.py SESSION_DIR OUT_CSV`, under the user nobody when
-    this checker is root, on the one CPU the checker has pinned itself to, with OMP_NUM_THREADS=1 and
-    OPENBLAS_NUM_THREADS=1, as the leader of a session of its own;
+    this checker is root, with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1 so that a numerical library
+    keeps to one thread, as the leader of a session of its own; no CPU is pinned, since several verifiers
+    may share a host;
   - it has RUN_LIMIT_S seconds, by subprocess's timeout on the wait for it;
   - a run that is still going when the time is up ends the assessment: its whole session is killed, the table
     it may have written is never opened, the cells after it are not run, and the program is not accepted;
@@ -47,7 +48,7 @@ BANDS = {
     "ca50_deg": ("units", 0.3),
     "q_gross_J": ("share", 0.03),
 }
-TABLE_BYTES = 2 * 1024 * 1024         # a table of 6 cylinders by 40 points is about 15 kB
+TABLE_BYTES = 2 * 1024 * 1024         # the statement's 2 MiB; a table of 6 cylinders by 40 points is about 15 kB
 NUMBER = re.compile(r"[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?")
 WHOLE = re.compile(r"\d+")
 NOBODY_UID = 65534
@@ -55,15 +56,6 @@ NOBODY_UID = 65534
 
 class NotTheTable(Exception):
     """What a run wrote is not the table the task statement describes."""
-
-
-def pin_to_one_cpu():
-    """The checker keeps to one CPU, and the runs it starts inherit that."""
-    try:
-        cpus = sorted(os.sched_getaffinity(0))
-        os.sched_setaffinity(0, {cpus[0]})
-    except (AttributeError, OSError):
-        pass
 
 
 def session_of(cell_dir):
@@ -232,7 +224,6 @@ def assess(program, cells_dir=None, results_dir=None, limit=RUN_LIMIT_S, as_nobo
     results_dir = results_dir or os.path.join(BASE, "sealed", "results")
     if as_nobody is None:
         as_nobody = os.geteuid() == 0 and shutil.which("setpriv") is not None
-    pin_to_one_cpu()
     report = {"accepted": False, "stopped": "", "cells": {}}
     names = sorted(name for name in os.listdir(cells_dir) if os.path.isdir(os.path.join(cells_dir, name)))
     if not names:

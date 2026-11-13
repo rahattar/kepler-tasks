@@ -136,13 +136,13 @@ stop_rows = "; ".join("%s (%s) %s of %s" % s for s in stops)
 
 VERIFICATION = f"""The deliverable is a program, /app/output/indicate.py. The verifier reads nothing the agent's own runs left behind: tests/check_program.py, run by the one pytest test in tests/test_indicate.py, runs the program on six cell packages it has not seen and holds what each run writes to sealed results.
 
-**A run.** For each cell a scratch directory gets a folder holding a copy of indicate.py alone and a read-only copy of the package. The program is started there as `python3 indicate.py PACKAGE_DIR OUT_CSV`, as the user nobody, on one CPU, with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1, as the leader of a session of its own, with no network.
+**A run.** For each cell a scratch directory gets a folder holding a copy of indicate.py alone and a read-only copy of the package. The program is started there as `python3 indicate.py PACKAGE_DIR OUT_CSV`, as the user nobody, with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1, as the leader of a session of its own, with no network. The checker sets no CPU affinity: several verifiers may share a host, and one thread to a numerical library is what keeps a run to one CPU's work.
 
 **The limit.** Each run has {LIMIT} seconds from start to exit, the figure of the task statement's sentence "Each run of indicate.py must finish within {LIMIT} seconds on 1 CPU." (preflight compares the two). It is a timeout on the wait for the process, in tests/check_program.py. A run still going at {LIMIT} s ends the assessment: its session and every process of nobody are killed, the table it may have written is never opened, no later cell is run, and the program is not accepted. No share of cells or rows lets such a run through.
 
 **Acceptance.** Every run must end in time with exit status 0, every OUT_CSV must be the table the statement describes, and for every point and cylinder of every cell the mean effective pressure must be within {b_imep} per cent of the sealed result, the peak pressure within {b_pmax} per cent, the heat released within {b_q} per cent, and the angle of peak pressure and the two burn angles within {b_ang} degrees. These are the figures of the statement and of IS-2 section 9. One pytest test carries the reward. tests/test.sh writes 0 first and writes 1 only when pytest ends with status 0 and tests/one_passed.py finds that the ctrf report counts exactly 1 test, passed.
 
-**The reader** holds the table to the statement and no further. The header must be exactly the one given; there must be one row for every point and cylinder of the package and none for anything else; each value must be a finite decimal number. Row order, line ends, a final terminator, empty lines, quoting and blanks round a field are not stated and are not judged.
+**The reader** holds the table to the statement and no further. The file must be an ordinary file, not a link, of at most 2 MiB, as the statement says; the header must be exactly the one given; there must be one row for every point and cylinder of the package and none for anything else; each value must be a finite decimal number. Row order, line ends, a final terminator, empty lines, quoting and blanks round a field are not stated and are not judged.
 
 **The truth** is the sealed definition authoring/provenance/cylinder.py: `simulate` gives the pressure of every cycle from the closed charge's energy equation, and `results` applies IS-2 to that pressure at its true crank angle and true level, on a grid five times finer than a record. It never sees a record, an encoder or a transducer, and it is never a run of the reference. authoring/provenance/cells.py makes each cell's records from the same pressure, through that cell's encoder mark and transducer gain. authoring/provenance/regenerate.py makes the ten cells again and finds all {n_files} shipped data files the same byte for byte (authoring/evidence/regenerate.txt); authoring/provenance/manifest.json lists them with their SHA-256.
 
@@ -158,7 +158,7 @@ It is built in authoring/provenance/cells.py: the `CELLS` table gives each cell'
 authoring/provenance/design_rules.py recomputes the design rules from the generator's table and the shipped files (authoring/evidence/design_rules.txt; {n_rules} of {n_rules} hold):
 """ + "\n".join("- %s;" % h for h in held)[:-1] + f""".
 
-Every study below runs complete programs through tests/check_program.py as the verifier does: as nobody, on one CPU, each run in a directory of its own.
+Every study below runs complete programs through tests/check_program.py as the verifier does: as nobody, with one thread to a library, each run in a directory of its own.
 
 **A correct program that is not fast** (slow_run.txt). The second solution is accepted on the cells with {s_cut} cycles a point, where the limit is set aside, at {s_rate} s a cycle ({s_cycles} cycles in {s_secs} s). At that rate the shipped cells, of {s_clo} to {s_chi} cycles, would take {s_tlo} to {s_thi} s a run, {s_xlo} to {s_xhi} times the limit. Run on them at the limit, it is stopped on the first cell: cells run 1 of 6, the run on cell_02 was still going after {LIMIT} s, not accepted.
 
@@ -177,10 +177,10 @@ How many of these routes each cell stops: {stop_rows}. Where only the transducer
 - Tables accepted: the true table with CRLF line ends, no final terminator, empty lines, the rows reversed, padded or quoted fields, plus signs, exponent form, ten decimals, and cylinders written 01, 02, 03.
 - Bands: each quantity moved by 0.9 of its band at every row is accepted and by 1.1 is not; one row of one cell with its mean effective pressure 3 per cent high is enough to refuse the program.
 - The limit, set to 2 s for the purpose: a program that writes the true table and then sleeps, or ignores SIGTERM and spins, is over the limit and not accepted, and its table is not opened; with two cells to run the second is never started; a program that exits in time and leaves a child running in a session of its own is accepted and the child is killed.
-- A run: its directory holds indicate.py and nothing else; it is the user nobody; it cannot list a directory of root's; it cannot write to the package; it has one CPU and one thread to a library.
+- A run: its directory holds indicate.py and nothing else; it is the user nobody; it cannot list a directory of root's; it cannot write to the package; its environment has OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1.
 - The reward script, run for real with pytest replaced by a stand-in: the reward is 1 only when pytest ends 0 and the report counts one test, passed, and is 0 for a failed or skipped test, two tests, a failing exit with a passing report, no report, a report that is not JSON, and no indicate.py delivered.
 
-**The whole verifier** (verifier_run.txt). pytest on tests/test_indicate.py in a process of its own ends 0 for the reference and 1 for the program that takes the records as the system has them, for the program that corrects the angle alone and for the second solution at the limit.{" On the machine the evidence was made on pytest-json-ctrf was not installed, so the report there was written by authoring/evidence/ctrf_standin.py, which writes the same summary block; the verifier's image installs the plugin itself." if standin else ""}
+**The whole verifier** (verifier_run.txt). `bash tests/test.sh` itself, unchanged, with each program in turn at /app/output/indicate.py and the reward read from /logs/verifier/reward.txt afterwards: 1 for the reference, 0 for the program that takes the records as the system has them, 0 for the program that corrects the angle alone and 0 for the second solution, which is stopped at the limit on the first cell. test.sh sets umask 077, so the checker sets the mode of everything the user nobody has to reach outright and leaves none of it to the umask.{" On the machine the evidence was made on pytest-json-ctrf was not installed, so the report there was written by authoring/evidence/ctrf_standin.py, which writes the same summary block; the verifier's image installs the plugin itself." if standin else ""}
 
 The agent works as a separate user that can write only to /app/output. /app/data is read-only and root-owned. The verifier runs in a separate container without network; /tests and /logs/verifier are readable by root alone, and the program runs there as nobody."""
 
@@ -200,7 +200,7 @@ The timed re-run.
 - The reference takes {r_lo} to {r_hi} s a run; the limit is {r_ratio} times the slowest.
 - A correct program that is not fast times out: authoring/evidence/slow_indicate.py, authoring/evidence/slow_run.txt.
 - A run over the limit ends the assessment and nothing it wrote is read: authoring/evidence/verifier_checks.txt, "The limit".
-- Threads: OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1 in both images and in the environment of each run, which is also held to one CPU.
+- Threads: OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1 in both images and in the environment of each run. No CPU affinity is set.
 """
 
 readme = f"""# engine-indicating-analysis
@@ -253,7 +253,7 @@ referred_by = ""
 conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only textbook engine thermodynamics (the first law for the closed charge of a reciprocating engine, slider-crank kinematics, a temperature- and composition-dependent ratio of specific heats, Hohenberg's wall heat transfer correlation and Wiebe burn profiles) on synthetic test cells with synthetic records. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
 domain = "engineering-sciences"
 field = "mechanical-engineering"
-subfield = "internal combustion engines: cylinder pressure indicating, heat release analysis and the thermodynamic identification of crank angle phasing and transducer sensitivity"
+subfield = "engine cylinder pressure indicating: heat release analysis and thermodynamic determination of TDC and transducer gain"
 category = "Science"
 subcategory = "Mechanical & Aerospace Engineering"
 tags = [
