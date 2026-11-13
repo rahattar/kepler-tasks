@@ -106,3 +106,34 @@ The sprinkler analogue of base-pressure's mechanism A:
   hydrant).
 - One contractor's flow test, ordered once: a riser and a flow up to 1 000 gpm. It only splits the two laws at a
   high flow.
+
+### The quiet core as first built (Nov 12 night): low effort 2 of 3, every probe ordered the target
+
+| probe | time | order | result |
+|---|---|---|---|
+| Q1 | 2.9 min | SR10 at 1 000 gpm | 9 of 10 rows; SR04 6.5 per cent high (averaged the fast-ageing lead-in) |
+| Q2 | 3.0 min | SR10 at 1 000 gpm | **accepted** |
+| Q3 | 3.0 min | SR10 at 1 000 gpm | **accepted** |
+
+Each gave the same reason in a sentence: SR10 is cast iron with a locked valve and no hydrant, so its C and its
+valve both have to be found and one flow cannot split them. None was drawn by SR03's step or by SR06.
+
+**Why it was free.** The open riser is a category, not a number. Clause 3.4 says a locked valve's Cv is
+identified from the records; one flow against two unknowns is an exact degeneracy that needs no computing to see;
+and the register sorts the risers into the category by two columns. In base-pressure the open chamber was open
+only by degree: its plain budget was fully identified and fitted to the noise, an extra mechanism the fit did not
+need was admissible, and only refitting every chamber under every admissible structure showed which one moved.
+There low effort went 0 of 3 (two of the three ordered elsewhere, one having put the target's load "known to
+about 1 per cent").
+
+**What the next version has to change**
+- The plain budget must be identified and quiet on the target: no parameter the clause tells the solver to find
+  and the records cannot give. The alternative has to be something the fit does not ask for.
+- Openness by degree and by data: every candidate riser has records at more than one flow; the target's happen to
+  give no leverage (its second kind of test runs at nearly the drain's flow), so its fit returns a split with a
+  small formal error under the plain structure and a wide one under the admissible alternative.
+- A decoy that a cruder profile ranks above the target and a careful one closes (pipe condition carried across a
+  piece of work on the riser, or a second instrument).
+- An over-correction trap of the kind that caught base-pressure probes: two crossed records where one of the two
+  corrections is real and large enough to look like part of the clerical error.
+- Keep SR04's trend: it is the only layer that has caught a low probe twice (L1 and Q1 took a recent mean).
