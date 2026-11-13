@@ -1,4 +1,4 @@
-# journal-bearing bare core v4 (Nov 12): low 0 of 2, xhigh 0 of 3, every failure the designed miss
+# journal-bearing bare core v4 (Nov 12): low 0 of 3, xhigh 0 of 3, every failure the designed miss
 
 v4 keeps the film physics and the 60 s limit and makes the program spend something on each hidden package. A
 package is a site: 14 to 24 bearings on shared lube oil systems, 1 500 to 2 600 operating points. Most systems
@@ -14,11 +14,12 @@ example sites the systems are what the register says and the allowance equals th
 | one sample for each listed system (`as_listed.py`) | 5 of 5 | 223 to 293 | left one unused |
 | low 1 (opus) | 5 of 5 | 223 to 482 | left one unused; "the examples can't show which reading is meant" |
 | low 2 (opus) | 5 of 5 | 223 to 368 | left one unused; the examples matching "confirms the oil and lab-order logic" |
+| low 3 (opus) | 5 of 5 | 112 to 298 | spare on "other current charges"; moves a machine whose analyses match a different listed system |
 | xhigh 4 (opus) | 5 of 5 | 139 to 298 | spare on another machine, which "gets its own figures" if it disagrees |
 | xhigh 5 (opus) | 5 of 5 | 112 to 298 | left one unused; 1 s a site |
 | xhigh 6 (opus) | 5 of 5 | 223 to 482 | spare on the second bearing of a machine already sampled, averaged |
 
-Low 3 was still running when this was written. Every program passed both examples and the hidden site with no
+Every program passed both examples and the hidden site with no
 split, within 0.4 per cent.
 
 - **The mechanism that held on the alignment task holds inside a program.** The solver's own test packages
@@ -26,8 +27,8 @@ split, within 0.4 per cent.
   itself shows the miss, and the visible data cannot either.
 - **The miss is wide and the same in every run:** the machines of one half of the split system, both before and
   after the refill, on five sites.
-- **Two xhigh runs were one step away.** Both wrote a check that moves a machine to another listed system when
-  its analyses match that system's. Neither asked whether one listed system could hold two charges.
+- **Three runs were one step away (low 3, xhigh 4, xhigh 5).** Each wrote a check that moves a machine to another listed system when
+  its analyses match that system's. None asked whether one listed system could hold two charges.
 - **The time limit is met by every program** (1 to 40 s a site); it is not what decides.
 - **Risk:** 0 of 3 at xhigh. The Nov 11 ask allows 0 to 5 of 8. Whether a reviewer accepts an unstated split is
   the same question turbine-tool-repair's frozen sensor raised, and that passed.

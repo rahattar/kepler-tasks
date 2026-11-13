@@ -2,7 +2,8 @@
 
 Two messages received on 11 November 2026: the team announcement and an email to Alex. Both ask for Science tasks
 that meet two requirements together, and these are now the top priority for new tasks. The verbatim texts are at
-the end; the checklist below is the working form.
+the end; the checklist below is the working form. The announcement was posted again as a reminder on 13 November
+with the same requirements (see "The reminder" below), and Alex restated the bar the same day (item 3).
 
 ## Checklist for a new task of this kind
 
@@ -26,7 +27,8 @@ the end; the checklist below is the working form.
    - A solution that overfits the visible data must fail the hidden set.
    - The submission notes say what the shift is and point to where it is built (generator config, manifest,
      data files).
-3. **As always:** 0-5 of 8 on the difficulty probe, a binary reward, the usual structure checks.
+3. **The bar (Alex, 13 Nov):** 0 of 3 on the easiness probe, so no low-effort solve; a pass band of 0-5 of 8 on
+   the difficulty probe, so 6, 7 and 8 of 8 fail. As always, a binary reward and the usual structure checks.
 
 Quick self-check before submitting (from the announcement):
 - The tests run my program and don't just read a file.
@@ -38,7 +40,8 @@ Quick self-check before submitting (from the announcement):
 Note for this repo: requirement 2 is mechanism B of `docs/trap-analysis-2026-11-11.md` (a fault only in unseen
 inputs). It sits against the Nov 5 design rule in `docs/playbook.md` ("No more variants of 'a program scored on
 ~8 hidden cases'"). A timed re-run on deliberately shifted hidden data is a different verification shape from the
-untimed program tasks in the catalogue, but how the two rules fit together is Alex's call.
+untimed program tasks in the catalogue. Since the reminder of 13 Nov the playbook carries this shape as the
+stated exception to that rule: the subject, the physics and what decides a hidden case must be new.
 
 ## Further guidance (team channel, 11 Nov 11:38 PM and 12 Nov 1:23 AM)
 
@@ -118,6 +121,13 @@ Two later announcements, verbatim below. As working rules:
 > * The hidden data is deliberately shifted (not a reseed), and my notes say how
 >
 > Thanks!
+
+## The reminder (team channel, 13 Nov 2026)
+
+The announcement above was posted again, headed "Reminder again" with five warning signs and without the
+greeting sentence. The two numbered requirements, the "Also needed" line (0-5 out of 8 passes on the difficulty
+probe, a binary reward, the usual structure checks) and the quick self-check are word for word the same. Nothing
+in the checklist changes; the priority stands.
 
 ## The email (Muktahal Birring, Growth Associate, AfterQuery, to Alex)
 

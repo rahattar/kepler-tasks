@@ -1,0 +1,33 @@
+holds   9 sites: 2 with results beside them, 1 without, 6 the program is run on; no name twice
+holds   no file of a package the program is run on is a file of a package it was written beside (0 shared)
+holds   operating points in a package: 1540 to 2640 beside the program, 2090 to 2420 where it is run; the stated most is 3 000
+
+site          role     systems renewed in the register   charges renewed   allowance   listed system that is two charges
+north_works   example                    3                               3           3   none
+east_works    example                    5                               5           5   none
+west_quarry   pending                    4                               5           5   LO-2 (ISO VG 46): K-120 K-122 and M-123
+quay_site     hidden                     6                               7           7   LO-2 (ISO VG 68): M-133 B-137 and P-139
+ridge_plant   hidden                     5                               6           6   LO-3 (ISO VG 46): M-149 M-153 and G-154
+canal_works   hidden                     5                               6           6   LO-1 (ISO VG 46): G-151 B-154 and G-158
+upper_mill    hidden                     6                               7           7   LO-4 (ISO VG 32): B-184 M-185 and G-188
+south_yard    hidden                     5                               5           5   none
+tank_farm     hidden                     6                               7           7   LO-2 (ISO VG 46): K-154 M-158 and M-160
+
+holds   at every site the allowance is the number of charges that were renewed
+holds   at the two example sites every listed system is one charge, and the allowance is the register's count
+holds   5 of the 6 sites the program is run on have one listed console that is two charges, both renewed, and an allowance one above the register's count; the sixth (south_yard) has none
+holds   the pending site, which the program's author can read, has such a console too: LO-2, allowance 5 against 4 systems renewed in the register
+holds   the console that is two charges is not one place: west_quarry LO-2 of ISO VG 46; quay_site LO-2 of ISO VG 68; ridge_plant LO-3 of ISO VG 46; canal_works LO-1 of ISO VG 46; upper_mill LO-4 of ISO VG 32; tank_farm LO-2 of ISO VG 46
+holds   two samples of one charge in one sample round differ by at most 0.67 per cent in viscosity at 40 C (the laboratory repeats within 0.5; the figures are given to 0.1 mm2/s)
+holds   a charge's analysis moves by at most 0.92 per cent from one sample round to the next
+holds   in a console that is two charges, the two differ by 9.4 to 12.1 per cent in every one of the four sample rounds (24 rounds over 6 consoles)
+holds   the smallest of those differences is 14 times the largest difference between two samples of one charge
+holds   the two new charges of such a console differ by 10.2 to 24.9 per cent in viscosity at 40 C
+holds   taken as one system, its oil on file is the mean of two oils, 4.6 to 5.7 per cent from either
+holds   the machine on the second charge has 110 to 220 operating points at a site, 68 to 151 of them after the renewal
+holds   results at the six sites: film thickness 18.2 to 110.7 um, attitude 31 to 77 degrees, power loss 0.35 to 8.45 kW, peak pressure 1.0 to 7.2 MPa, film 1.1 to 17.9 K above the inlet
+holds   the oils' viscosity falls by 2.7 to 4.7 per cent for each K between 45 and 75 C
+holds   every bearing and operating point of every package is within the scope of LS-3 section 1
+holds   the laboratory's book for every site answers for every bearing of the site and holds the package's allowance
+
+19 rules, 0 not holding

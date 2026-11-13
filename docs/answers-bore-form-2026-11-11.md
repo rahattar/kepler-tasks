@@ -1,6 +1,6 @@
 # Answers on bore-form-acceptance (20261111c, commit 3de1906), Nov 11
 
-> **Corrected the same evening; see `docs/trap-analysis-2026-11-11.md`, section 8.** Three statements below no
+> **Corrected the same evening; see `docs/trap-analysis-2026-11-11.md`, section 8.** Four statements below no
 > longer hold:
 > - Question 4, "Official 1 of 3 passes": true in October. On Nov 11 the screen allowed 0 solves (flare-load-study
 >   3 of 3 and base-pressure-diagnosis 1 of 3 were both rejected).
@@ -8,6 +8,8 @@
 >   0 of 3 locally and 0 of 3 officially on Oct 15.
 > - Question 4, the local probe counts: they were taken on the session's earlier model. Fable 5.2 solves the same
 >   bundle at low effort. Probe on the screen's model before reading any count.
+> - Question 4, "0 of 3 isn't the bar" and "Only official 8 of 8 fails": the bar as of Nov 13 is 0 of 3 on the
+>   easiness probe and a pass band of 0 to 5 of 8 on the difficulty probe, so 6, 7 and 8 of 8 all fail.
 
 ## Where the evidence comes from
 - **Seen by me:**

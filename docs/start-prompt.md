@@ -8,18 +8,26 @@ need is in the GitHub repo rahattar/kepler-tasks; attach it and clone it.
    rules are standing rules; follow them exactly.
 2. Use tasks/impeller-shrink-fits as the template for the bundle layout, the sealed definition, the lab wrapper,
    the grader, the evidence scripts and preflight. Skim the README.md of the other tasks only as far as you need
-   to stay clear of their subjects, deliverable shapes and verification.
-3. Propose 5 new task ideas in mechanical engineering, each clearly different from every catalogue entry in
-   subject AND deliverable shape and verification. For each give the trap layers (aim for 12-15, several
-   data-only). Wait for me to pick one.
+   to stay clear of their subjects, deliverable shapes and verification. For a timed program task, tasks/journal-bearing-survey
+   is the complete example: a per-run limit in tests/ and in instruction.md, pinned threads, a timeout failing
+   the task, the naive version shown timing out, the hidden shift in a manifest.
+3. Propose 5 new task ideas in mechanical engineering. AfterQuery's top priority (Nov 11, repeated Nov 13) is the
+   kind in docs/afterquery-asks-2026-11-11.md, so propose that kind first: the tests re-run the agent's program
+   on hidden inputs under a per-run time limit stated in instruction.md, and the hidden data is deliberately
+   shifted from the visible data. Each idea must differ from every catalogue entry in subject and physics, and
+   in what decides a hidden case. For each give the trap layers (aim for 12-15, several data-only), the shift,
+   and why a naive but correct program times out. Wait for me to pick one.
 4. Then build it end to end:
    - the generator, sealed definition and tune checks;
    - environment, solution and tests;
    - the full evidence set and preflight;
    - local probe rounds: 3 low and 3 xhigh subagents in sandboxes, with the model forced to the official
      screen's, each graded with the task's grader;
-   - calibrate until low effort solves 0 of 3, every run failing the same way, and xhigh fails at least
-     occasionally. Probe the bare core this way before building the evidence set.
+   - calibrate to the bar: the easiness probe solves 0 of 3 at low effort, and the difficulty probe lands in
+     its pass band of 0 to 5 of 8 at xhigh. If every probe fails the same check with the same wrong answer,
+     read their reasoning for something hidden or unclear before calling it difficulty. Probe the bare core
+     this way before building the evidence set;
+   - for a timed task, run the self-check in docs/afterquery-asks-2026-11-11.md before packaging.
 5. Give me an instruction.md draft and a fact sheet; I write the final instruction.md myself. Check my rewrite
    against preflight.
 6. Package `<task>-YYYYMMDD.zip`. Deliver it to "/Volumes/AlexB4344665031/Projects/AIWorks/AfterQuery Kepler" if

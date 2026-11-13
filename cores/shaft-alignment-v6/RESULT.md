@@ -42,7 +42,8 @@ times the tolerance on the same pumps in every run; nothing is fitted, so no res
 
 **Not established.**
 - 0 of 6 bounds the low-effort solve rate below about 0.39 at 95 per cent. 0 of 12 would bound it below 0.22.
-- 1 of 3 at xhigh is one run. The difficulty screen wants 1 to 7 of 8.
+- 1 of 3 at xhigh is one run. The difficulty probe's pass band is 0 to 5 of 8 (the bar as of Nov 13; this line
+  read 1 to 7 of 8).
 - None of this has met the official screen.
 - Probe 1 of v6 reported listing `/var/tmp` by mistake. The bare sandbox keeps the rig there in the open; the
   container will not.

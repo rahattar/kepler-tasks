@@ -1,0 +1,14 @@
+authoring/provenance/sites.py run again, its output compared with the shipped files byte for byte
+
+east_works    8 files, 8 the same
+north_works   8 files, 8 the same
+west_quarry   7 files, 7 the same
+canal_works   8 files, 8 the same
+quay_site     8 files, 8 the same
+ridge_plant   8 files, 8 the same
+south_yard    8 files, 8 the same
+tank_farm     8 files, 8 the same
+upper_mill    8 files, 8 the same
+
+files the generator writes that are not shipped: 0
+71 files, 0 different

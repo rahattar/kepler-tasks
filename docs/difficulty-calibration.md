@@ -1,5 +1,9 @@
 # Difficulty calibration lessons (from Alex's Kepler tasks, Oct-Nov 2026)
 
+**The bar these lessons are read against (Alex, Nov 13):** easiness probe, 0 of 3 solved at low effort;
+difficulty probe, pass band 0 to 5 of 8 at xhigh. The sections below were written as the bar moved, and say so
+where they were written against an older one.
+
 ## What makes official xhigh fail
 - Official xhigh fails on rare coverage slips spread over many independent layers, not on hard modelling.
   pump-wear-assessment: about 10 layers went 8 of 8 officially; about 13 layers went 7 of 8.
@@ -231,6 +235,9 @@ Two consequences for the next build:
 **The profile that resulted is the one to aim for anyway**: 1 of 3 at low effort, 3 of 3 at xhigh. The task
 rewards care and correct reasoning rather than luck, and the two xhigh reports read like competent engineering
 work. A task that no run solves is not better calibrated, it is just unsolved.
+
+*Superseded. The bar as of Nov 13 is 0 of 3 at low effort and 0 to 5 of 8 at xhigh, so this profile is now on
+the wrong side of both probes, and 0 of 8 is inside the band (`docs/playbook.md`, Calibration targets).*
 
 ## The proxy was wrong (Nov 11)
 
@@ -600,3 +607,31 @@ Two bare cores on one subject (a wet-pipe sprinkler system's demand), both solve
 - **The one thing that bit:** a fault sitting on the only readings that carry the information, so that it has
   to be undone and cannot be discarded. One hidden system of eight had it; two of three low runs handled it.
 
+
+## Journal bearing v4: the program has to spend a budget, and the alignment mechanism holds (Nov 12)
+
+`cores/journal-bearing-v4/RESULT.md`. A site package of 14 to 24 bearings on shared oil systems; the program
+places one laboratory order while it runs; in five of six hidden sites one listed system is two charges, visible
+only in earlier analyses, and the allowance is the listed count plus one. Six probes on `model: "opus"`:
+low 0 of 3, xhigh 0 of 3, all six failing the same five sites by 112 to 482 points each.
+
+- **What v0 to v3 lacked is a decision the solver cannot test.** Its own test packages carry its own reading of
+  the register, so the wrong program passes everything it can run, including both examples.
+- **A budget one above the legible count is not noticed as a question.** Four programs left the extra sample
+  unused or spent it where it told them nothing.
+- **Zero at xhigh is inside the Nov 11 ask (0 to 5 of 8) and outside the older one (1 to 7).** Three runs wrote a
+  check for a machine registered on the wrong system, so the idea is in reach; none generalised it.
+
+
+## Journal bearing v5: the v4 condition put into the visible data, not yet probed (Nov 12)
+
+`cores/journal-bearing-v5/RESULT.md`, bundle `tasks/journal-bearing-survey`. v4 had no visible instance of
+the console that is two charges, against the first Nov 12 tip, and every probe failed alike, which is the
+tips' warning sign. v5 adds a third visible package without results that has such a console and an allowance
+one above the register's count. The examples with results are unchanged.
+
+- **v4's 0 of 6 does not carry over.** The instance changes what an attentive run can see.
+- **A package without results is the only fair place for it in this format.** With results it would be a
+  test the wrong program fails at once (v2: a witness with feedback is solved 3 of 3).
+- **Check a core against the tips before probing it, not while building on it.** v4 was probed for six runs
+  on a design the playbook already ruled out.

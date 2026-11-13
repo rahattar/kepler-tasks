@@ -31,6 +31,9 @@ differs from v7 except the output format clause (exactly three decimal places).
 **Known risks at the gates.**
 - Easiness allows 0 of 3. At a low-effort rate of 1 in 6 that passes about 58 per cent of the time; at the
   pooled 2 in 18, about 70.
+- Difficulty passes at 0 to 5 of 8 (the bar as of Nov 13). At an xhigh rate of 3 in 6 that is met about 86 per
+  cent of the time. v7 was chosen over v6 against the older 1 to 7 of 8; on today's band v6's xhigh rate of 1
+  in 6 would not have counted against it.
 - A quality reviewer may ask where the transfer of one pump's measured ratio to its group is stated. It is not
   stated, by design: stating the groups is v0, which low effort solved 3 of 3 in 80 seconds. The README argues
   it from the survey (a fixed fraction by model) and the budget; three of six xhigh runs made the argument

@@ -1,5 +1,8 @@
 # What survived the low-effort screen, and what did not (Nov 11, evening)
 
+> **Bar as of Nov 13:** easiness probe 0 of 3; difficulty probe pass band 0 to 5 of 8. Sections 5 and 6 were
+> written against 1 to 7 of 8 at xhigh and are corrected in place.
+
 Written to answer one question for a redesign: which traps on record stopped a low-effort run, how each worked,
 and which of them still work against today's gate. It covers bore-form-acceptance in full, then every other task
 with official low-effort evidence, then everything that failed, then advice.
@@ -418,7 +421,7 @@ Three mechanisms have stopped low-effort runs for a reason other than a slip.
 | why effort helps | sorting into classes before spending | it does not | testing one instrument against another |
 | irreversible | yes: a spent visit is gone | yes: one program, unseen cases | no: nothing is spent |
 | size of a miss | 13 to 25 per cent against 3 to 10 | 0.62 against 0.3 per cent | up to 12 um against 1.2 |
-| status at today's gate | 0 of 3 once; 1 of 3 twice, which would now fail; not rerun since the bar moved | too strong: 0 of 8 | open; solved by Fable 5.2 at low effort |
+| status at today's gate | 0 of 3 once; 1 of 3 twice, which would now fail; not rerun since the bar moved | 0 of 8: inside the band of 0 to 5, reviewed on the same rubric | open; solved by Fable 5.2 at low effort |
 | similarity cost | high: more than ten catalogue tasks use a budget | high: more than ten deliver a program | low |
 
 Four properties are shared by all three and by none of the levers in section 4:
@@ -442,7 +445,9 @@ in three, so one of them leaves a task at 2 of 3 solved.
   p = 0.1, 0.51 at 0.2, 0.30 at one in three.
 - Three local probes cannot show p is small: 0 of 3 only bounds p below 0.63 at 95 per cent, and 0 of 9 below
   0.28.
-- The same task must be solved 1 to 7 times in 8 at xhigh. 0 of 8 was accepted once and is not to be counted on.
+- The same task must land in the difficulty band at xhigh: 0 to 5 solves in 8 (the bar as of Nov 13; this line
+  read 1 to 7). 0 of 8 is inside the band and is reviewed on the same rubric, so it has to be hard for a reason
+  the science gives.
 - So do not aim for "low effort usually slips". Aim for a low-effort failure that is structural: every run fails
   the same way, by a wide margin, for a reason you can name before probing. Then look for that in the probes, not
   for the count.
@@ -461,7 +466,8 @@ in three, so one of them leaves a task at 2 of 3 solved.
   - every fallback for an uncovered class missing by at least 1.3 times the band;
   - charged before the result, and not refillable.
 - **Kind B needs a cue and a way to pass.** The fault must be standard practice for the trade and cued by a
-  document's wording, or it is unfair; and some careful run must catch it, or the task goes 0 of 8.
+  document's wording, or it is unfair; and some careful run must catch it, or the task goes 0 of 8 and has to
+  stand on the rubric alone.
 - **Check similarity first.** Budgeted services and hidden-case programs are the two most used shapes in the
   catalogue.
 
