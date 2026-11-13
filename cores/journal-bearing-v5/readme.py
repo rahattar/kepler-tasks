@@ -171,7 +171,7 @@ With one sample for each listed system the points out of band are {reg_sites}. T
 - The laboratory during a run: an order over the allowance, an order naming a bearing the site does not have and an order through a package naming another site are refused and do not count as the site's order; the order after them is taken; a second order is refused; outside a run nothing answers.
 - The reward script, run for real with pytest replaced by a stand-in: the reward is 1 only when pytest exits 0 and the report counts one test, passed, and is 0 for a failed or skipped test, two tests, a failing exit with a passing report, no report, a report that is not JSON, and no bearing.py delivered.
 
-**The whole verifier** (verifier_run.txt). pytest on tests/test_program.py in a process of its own exits 0 for the reference and 1 for the program that samples by the register and for the second solution at the limit.
+**The whole verifier** (verifier_run.txt). tests/test.sh itself, run as it stands with each program in turn at /app/output/bearing.py, under the umask it sets, with the checker running the program as nobody: the reward is 1 for the reference and 0 for the program that samples by the register and for the second solution at the limit. Where that study was run the pytest-json-ctrf plugin was not installed, and authoring/evidence/ctrf_standin.py wrote the report in its place; the verifier's image installs the plugin itself.
 
 The agent works as a separate user that can write only to /app/output. /app/data is read-only and root-owned, and the verifier's image carries the same /app/data at the same path. The verifier runs in a separate container without network; /tests and /logs/verifier are readable by root alone, and the program runs there as nobody."""
 

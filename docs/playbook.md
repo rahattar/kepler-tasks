@@ -119,7 +119,9 @@ Sciences). Follow this exactly unless Alex says otherwise.
   disagree, keep the rule and put the question to Alex.
 - Every intake rule that has bounced a bundle is a preflight check: the metadata block, category "Science",
   non-empty subcategory, the three explanations, the 28800 s agent timeout, the instruction's closing sentence.
-- The reference run end to end from the unzipped bundle, through the pytest verifier.
+- The reference run end to end from the unzipped bundle, through `tests/test.sh` itself and not pytest alone,
+  with the reward file read afterwards (journal-bearing-survey, Nov 13: test.sh's umask 077 broke a checker
+  that every direct pytest run passed). On a machine with Docker, `tools/run_oracle.sh <zip>`.
 - When a check in preflight has to be rewritten to let a change through, stop: that is the check doing its job.
 
 ## The verifier's reader is the instruction's formatting contract, literally

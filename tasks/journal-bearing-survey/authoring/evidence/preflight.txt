@@ -59,7 +59,9 @@ ok    every band is at least twice the widest departure of the separately writte
 ok    register_run.txt: each program written to the examples is accepted on them and not on the six sites
 ok    design_rules.txt: every rule holds
 ok    verifier_checks.txt and verifier_run.txt end with nothing unexpected
+ok    verifier_run.txt is tests/test.sh itself: reward 1 for the reference, 0 for the other two
 ok    every figure in the README is in a study, the statement, the standard, the generator or the checker
+ok    test.sh sets umask 077, and these live runs are made under it
 ok    live: the true table of a cut-down site is accepted
 ok    live: the same with CRLF line ends and the rows reversed is accepted
 ok    live: the same with a capitalised header is not
@@ -68,4 +70,4 @@ ok    live: the same with one value nan is not
 ok    live: the same with every power loss 1.6 per cent high is not
 ok    live: a program that writes the true table and is still running at the limit is not accepted, and its table is not opened
 ok    live: the reference on the cut-down site is accepted and places one order of the site's allowance
-70 checks, 0 failed: the bundle is clean
+72 checks, 0 failed: the bundle is clean

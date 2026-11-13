@@ -293,6 +293,9 @@ def main():
     check("verifier_checks.txt and verifier_run.txt end with nothing unexpected",
           bool(re.search(r"\n\d+ cases, 0 unexpected", out["verifier_checks"]))
           and "3 programs, 0 unexpected" in out["verifier_run"])
+    check("verifier_run.txt is tests/test.sh itself: reward 1 for the reference, 0 for the other two",
+          out["verifier_run"].startswith("bash tests/test.sh") and len(re.findall(r"reward 1 in", out["verifier_run"])) == 1
+          and len(re.findall(r"reward 0 in", out["verifier_run"])) == 2)
 
     # every figure the README quotes is in a study, the statement, the data's generator or the checker
     corpus = ins + text("task.toml").split("[metadata]")[0] + "".join(out.values())
@@ -311,7 +314,10 @@ def main():
     check("every figure in the README is in a study, the statement, the standard, the generator or the checker",
           not loose, ", ".join(loose[:12]))
 
-    # ---- the checker, live, on small programs
+    # ---- the checker, live, on small programs, under the umask tests/test.sh sets: nothing the checker makes
+    # for the program may depend on it
+    os.umask(0o077)
+    check("test.sh sets umask 077, and these live runs are made under it", "\numask 077\n" in sh)
     root, sites, truths = common.staged(["south_yard"], every=60)
     atexit.register(shutil.rmtree, root, True)
     truth = common.rows_of(os.path.join(truths, "south_yard.csv"))

@@ -1,21 +1,26 @@
 #!/bin/bash
-# Puts the reference program where the task asks for it, then runs it once on the three packages in /app/data
-# as a check that it works where it was put: the two examples against their results, the pending package for
-# its laboratory order.
+# Puts the reference program where the task asks for it. That is the whole of the solution.
+#
+# It then tries the program once where it was put, on the three packages in /app/data: the two examples
+# against their results, the pending package for its laboratory order. The trial only reports; whatever it
+# finds, the program delivered is solution/bearing.py.
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
 mkdir -p /app/output
 cp "$here/bearing.py" /app/output/bearing.py
+echo "bearing.py is at /app/output/bearing.py"
 
-scratch="$(mktemp -d)"
-cd "$scratch"
-cp /app/output/bearing.py bearing.py
-for package in /app/data/examples/north_works /app/data/examples/east_works /app/data/pending/west_quarry; do
-    site="$(basename "$package")"
-    python3 bearing.py "$package" "$scratch/$site.csv"
-    echo "$site: $(($(wc -l < "$scratch/$site.csv") - 1)) points"
-done
-python3 - "$scratch" <<'PY'
+trial() {
+    local scratch site package
+    scratch="$(mktemp -d)"
+    cd "$scratch"
+    cp /app/output/bearing.py bearing.py
+    for package in /app/data/examples/north_works /app/data/examples/east_works /app/data/pending/west_quarry; do
+        site="$(basename "$package")"
+        python3 bearing.py "$package" "$scratch/$site.csv" || return 1
+        echo "$site: $(($(wc -l < "$scratch/$site.csv") - 1)) points"
+    done
+    python3 - "$scratch" <<'PY'
 import csv, sys
 bands = {"h_min_um": 0.015, "power_kW": 0.015, "p_max_MPa": 0.015, "attitude_deg": 1.0, "t_eff_C": 0.5}
 for site in ("north_works", "east_works"):
@@ -32,4 +37,11 @@ for site in ("north_works", "east_works"):
                 break
     print("%s: %d of %d points out of band" % (site, out, len(want)))
 PY
-rm -rf "$scratch"
+    local checked=$?
+    rm -rf "$scratch"
+    return $checked
+}
+
+if ! (trial); then
+    echo "the trial run did not complete; bearing.py is in place all the same"
+fi

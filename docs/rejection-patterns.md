@@ -423,3 +423,24 @@ around it but not the claim. meta.py read the study's best count (1 of 10) and n
 - When a design changes, grep the generator for absolute words (none, no, every, all, never, single) and check each
   against the study it names before the zip goes out.
 - One null hit on one chamber is the floor the playbook allows; it has to be stated as what it is, not denied.
+
+## Oracle failure, Nov 13 (journal-bearing-survey 20261113)
+"Reference solution (oracle): expected 1 on every attempt, 0 0 0; verifier 2 s." Ours, not the platform's.
+
+- `tests/test.sh` sets `umask 077`. The checker made the program's scratch package with `os.mkdir(path, 0o755)`
+  and the laboratory's socket directory with `os.makedirs(..., mode=0o755)`. Both modes are cut by the umask, so
+  under test.sh they came out 700 and the program, which runs as nobody, could not open `site.json`. Six runs
+  of a fraction of a second each: the 2 s is the signature.
+- Every local run had gone round it. The studies called the checker from Python, the "whole verifier" study
+  called pytest directly, and the reward-script cases ran test.sh with pytest stood in. Nothing ran the
+  reference through test.sh, because the ctrf plugin is not installed in the sandbox.
+- Fixed in the checker by setting every mode outright with `os.chmod`, never through a `mode=` argument.
+- **Rules.** A verifier that runs the program as another user sets the mode of everything that user must
+  reach, explicitly. The whole-verifier study runs `bash tests/test.sh` itself on the reference and reads the
+  reward file; where the ctrf plugin is missing a stand-in plugin writes the report (`ctrf_standin.py`).
+  preflight makes its live runs under umask 077. `tools/shipcheck.py` refuses a bundle whose verifier changes
+  user unless a committed study shows test.sh itself reaching reward 1.
+- `tools/run_oracle.sh <zip>` runs the oracle in Docker (solve.sh in the agent's image, the artifact carried
+  over, test.sh in the verifier's image with no network). The sandbox has no Docker; Alex's Mac does.
+- A verifier time of a second or two on an oracle that should take minutes means the program never started
+  its work: look at permissions and at what the program needs before its first computation.

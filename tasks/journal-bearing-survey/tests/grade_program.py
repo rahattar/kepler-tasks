@@ -127,7 +127,8 @@ class Desk:
                 pass                                   # answered, gets no analysis; the desk stays open
 
     def __enter__(self):
-        os.makedirs(os.path.dirname(self.where), mode=0o755, exist_ok=True)
+        os.makedirs(os.path.dirname(self.where), exist_ok=True)
+        os.chmod(os.path.dirname(self.where), 0o755)       # set outright: the umask may be 077
         if os.path.lexists(self.where):
             os.unlink(self.where)
         self._door = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -205,10 +206,13 @@ def run_site(program, package, desk, limit, unprivileged, tools=None):
     box = tempfile.mkdtemp(prefix="survey_")
     started = None
     try:
-        os.chmod(box, 0o755)
         work, copy = os.path.join(box, "run"), os.path.join(box, "package")
         os.mkdir(work)
-        os.mkdir(copy, 0o755)
+        os.mkdir(copy)
+        # Modes are set outright, never left to the umask: test.sh runs this under umask 077, and the program,
+        # which is another user, has to reach its package and its run directory all the same.
+        os.chmod(box, 0o755)
+        os.chmod(copy, 0o755)
         try:
             plain_copy(program, os.path.join(work, "bearing.py"))
         except OSError as problem:

@@ -26,7 +26,7 @@ to spare, and its analyses on file show why.
 | what was run through the bundle's checker | examples | hidden sites with points out |
 |---|---|---|
 | reference (`solution/bearing.py`), 13 to 27 s a site from one run to the next on the shared sandbox | accepted | 0 of 6 |
-| second solution (`naive_bearing.py`), 0.46 s a point | | right on cut-down sites; over 60 s on the first full site |
+| second solution (`naive_bearing.py`), 0.34 to 0.46 s a point | | right on cut-down sites; over 60 s on the first full site |
 | one sample for each listed system | accepted | 5 of 6, 223 to 315 points each |
 | the same, spare spent on unsampled machines | accepted | 5 of 6, 223 to 315 |
 | charges sorted for the oil on file, order by the register | accepted | 5 of 6, 68 to 151 |
@@ -41,3 +41,9 @@ machine's analyses with its system's. A round of 3 low and 3 xhigh on `model: "o
 - low 1 or more of 3: too visible; the next step is a pending package whose console differs by less, or
   whose allowance has no spare (a kept console), not a return to v4;
 - 0 of 6 again with nobody opening the pending package: the instance is fair but unread; say so in the notes.
+
+## Nov 13: oracle failure and fix
+
+20261113 failed intake's oracle check in 2 s. The checker's scratch directories took their modes through the
+umask that test.sh sets (077), so the program could not read its package. Fixed in 20261113b; the lesson is in
+`docs/rejection-patterns.md`. Nothing the agent sees changed.

@@ -265,6 +265,17 @@ for f in sorted(os.listdir(ev)) if os.path.isdir(ev) else []:
         if info.get("authoring/evidence/" + f, newest) < newest - 120:
             stale.append(f)
 chk(not failing, "no committed study reports a failure%s" % ("" if not failing else ": %s" % failing))
+# Oracle failure, journal-bearing-survey 20261113: the verifier ran the program as another user, and test.sh's
+# umask 077 made the scratch package unreadable to it. Every local run had called pytest directly, under the
+# shell's umask. Where a verifier changes user, a committed study has to run tests/test.sh itself.
+changes_user = [f for f in os.listdir(os.path.join(d, "tests")) if f.endswith(".py")
+                and re.search(r"setpriv|os\.setuid|setresuid", open(os.path.join(d, "tests", f)).read())]
+if changes_user:
+    ran = [f for f in sorted(os.listdir(ev)) if f.endswith(".txt")
+           and re.search(r"bash tests/test\.sh", open(os.path.join(ev, f), errors="replace").read())
+           and re.search(r"reward 1\b", open(os.path.join(ev, f), errors="replace").read())] if os.path.isdir(ev) else []
+    chk(bool(ran), "the verifier changes user (%s), and a committed study runs tests/test.sh itself to reward 1%s"
+        % (", ".join(changes_user), "" if ran else ": none does"))
 chk(not stale, "no committed study is older than the code it describes%s" % ("" if not stale else ": %s" % stale[:6]))
 
 print("\n6. the instruction names every agent-visible document by its absolute path")
