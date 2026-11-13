@@ -1,0 +1,851 @@
+{
+ "field": "pike_bend",
+ "role": "hidden",
+ "damping_per_s": 0.35,
+ "liquid_density_kg_m3": 945.0,
+ "wells": [
+  {
+   "well": "PB-01",
+   "kind": "plain",
+   "L": 1500.0,
+   "plunger": 38.1,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     22.2,
+     729.0
+    ],
+    [
+     "steel",
+     19.1,
+     771.0
+    ]
+   ],
+   "anchor": 1474.0,
+   "holds": true,
+   "p_th": 460000.0,
+   "p_i": 2680000.0,
+   "unit": "B",
+   "lam": 0.24,
+   "found_stroke": 3.05,
+   "found_spm": 5.3,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.030536307811184053,
+   "Fo": 13317.328703249374,
+   "found_S": 2.8044359322757066
+  },
+  {
+   "well": "PB-02",
+   "kind": "plain",
+   "L": 1975.0,
+   "plunger": 44.5,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     616.0
+    ],
+    [
+     "steel",
+     22.2,
+     629.0
+    ],
+    [
+     "steel",
+     19.1,
+     730.0
+    ]
+   ],
+   "anchor": 1934.0,
+   "holds": true,
+   "p_th": 760000.0,
+   "p_i": 2710000.0,
+   "unit": "B",
+   "lam": 0.12,
+   "found_stroke": 3.66,
+   "found_spm": 5.8,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.06715324629450915,
+   "Fo": 25433.394222733743,
+   "found_S": 3.2066981427130092
+  },
+  {
+   "well": "PB-03",
+   "kind": "loose",
+   "L": 2650.0,
+   "plunger": 44.5,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     765.0
+    ],
+    [
+     "steel",
+     22.2,
+     827.0
+    ],
+    [
+     "steel",
+     19.1,
+     1058.0
+    ]
+   ],
+   "anchor": 2611.0,
+   "holds": false,
+   "p_th": 950000.0,
+   "p_i": 1200000.0,
+   "unit": "C",
+   "lam": 0.28,
+   "found_stroke": 3.05,
+   "found_spm": 7.9,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.25808404308598354,
+   "Fo": 37806.332464782296,
+   "found_S": 1.664190117692716
+  },
+  {
+   "well": "PB-04",
+   "kind": "plain",
+   "L": 1765.0,
+   "plunger": 44.5,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     22.2,
+     726.0
+    ],
+    [
+     "steel",
+     19.1,
+     1039.0
+    ]
+   ],
+   "anchor": 1728.0,
+   "holds": true,
+   "p_th": 1310000.0,
+   "p_i": 2590000.0,
+   "unit": "B",
+   "lam": 0.14,
+   "found_stroke": 2.44,
+   "found_spm": 8.0,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.08749530146059994,
+   "Fo": 23448.649220096584,
+   "found_S": 2.027829688525105
+  },
+  {
+   "well": "PB-05",
+   "kind": "plain",
+   "L": 1635.0,
+   "plunger": 50.8,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     470.0
+    ],
+    [
+     "steel",
+     22.2,
+     568.0
+    ],
+    [
+     "steel",
+     19.1,
+     597.0
+    ]
+   ],
+   "anchor": 1610.0,
+   "holds": true,
+   "p_th": 1340000.0,
+   "p_i": 3070000.0,
+   "unit": "B",
+   "lam": 0.21,
+   "found_stroke": 3.05,
+   "found_spm": 8.1,
+   "q_in": 0.0004025033908880386,
+   "found_fill": 0.5519170888872957,
+   "stretch_frac": 0.07609452518165336,
+   "Fo": 27204.1308968446,
+   "found_S": 2.6652909691095203
+  },
+  {
+   "well": "PB-06",
+   "kind": "plain",
+   "L": 1680.0,
+   "plunger": 50.8,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     470.0
+    ],
+    [
+     "steel",
+     22.2,
+     578.0
+    ],
+    [
+     "steel",
+     19.1,
+     632.0
+    ]
+   ],
+   "anchor": 1649.0,
+   "holds": true,
+   "p_th": 440000.0,
+   "p_i": 1220000.0,
+   "unit": "B",
+   "lam": 0.19,
+   "found_stroke": 3.66,
+   "found_spm": 5.8,
+   "q_in": 0.0004445345742801116,
+   "found_fill": 0.7410270117966268,
+   "stretch_frac": 0.07078855099401545,
+   "Fo": 29974.86372068663,
+   "found_S": 3.061804494651081
+  },
+  {
+   "well": "PB-07",
+   "kind": "loose",
+   "L": 2860.0,
+   "plunger": 44.5,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     897.0
+    ],
+    [
+     "steel",
+     22.2,
+     972.0
+    ],
+    [
+     "steel",
+     19.1,
+     991.0
+    ]
+   ],
+   "anchor": 2824.0,
+   "holds": false,
+   "p_th": 520000.0,
+   "p_i": 840000.0,
+   "unit": "C",
+   "lam": 0.28,
+   "found_stroke": 4.88,
+   "found_spm": 7.9,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.14733741423367366,
+   "Fo": 40724.248295260135,
+   "found_S": 3.38890765935815
+  },
+  {
+   "well": "PB-08",
+   "kind": "high",
+   "L": 1585.0,
+   "plunger": 38.1,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     22.2,
+     693.0
+    ],
+    [
+     "steel",
+     19.1,
+     892.0
+    ]
+   ],
+   "anchor": 1101.0,
+   "holds": true,
+   "p_th": 840000.0,
+   "p_i": 1880000.0,
+   "unit": "B",
+   "lam": 0.17,
+   "found_stroke": 2.44,
+   "found_spm": 6.0,
+   "q_in": 0.00015670980035816572,
+   "found_fill": 0.6589754842717452,
+   "stretch_frac": 0.05076065600041747,
+   "Fo": 15560.709238729243,
+   "found_S": 2.0858691776459994
+  },
+  {
+   "well": "PB-09",
+   "kind": "plain",
+   "L": 1445.0,
+   "plunger": 38.1,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     22.2,
+     671.0
+    ],
+    [
+     "steel",
+     19.1,
+     774.0
+    ]
+   ],
+   "anchor": 1409.0,
+   "holds": true,
+   "p_th": 1160000.0,
+   "p_i": 2340000.0,
+   "unit": "B",
+   "lam": 0.14,
+   "found_stroke": 3.66,
+   "found_spm": 6.4,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.02475988105174381,
+   "Fo": 13921.918677088335,
+   "found_S": 3.4831490173526847
+  },
+  {
+   "well": "PB-10",
+   "kind": "loose",
+   "L": 2340.0,
+   "plunger": 44.5,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     785.0
+    ],
+    [
+     "steel",
+     22.2,
+     749.0
+    ],
+    [
+     "steel",
+     19.1,
+     806.0
+    ]
+   ],
+   "anchor": 2321.0,
+   "holds": false,
+   "p_th": 430000.0,
+   "p_i": 1120000.0,
+   "unit": "C",
+   "lam": 0.24,
+   "found_stroke": 3.05,
+   "found_spm": 5.5,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.17009454387070033,
+   "Fo": 32653.894878071984,
+   "found_S": 1.9258130888412648
+  },
+  {
+   "well": "PB-11",
+   "kind": "plain",
+   "L": 1775.0,
+   "plunger": 38.1,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     22.2,
+     791.0
+    ],
+    [
+     "steel",
+     19.1,
+     984.0
+    ]
+   ],
+   "anchor": 1749.0,
+   "holds": true,
+   "p_th": 980000.0,
+   "p_i": 3270000.0,
+   "unit": "B",
+   "lam": 0.27,
+   "found_stroke": 3.66,
+   "found_spm": 5.5,
+   "q_in": 0.0002604473111537249,
+   "found_fill": 0.7465936253345282,
+   "stretch_frac": 0.03729759409463628,
+   "Fo": 16143.049911537433,
+   "found_S": 3.3379846012998495
+  },
+  {
+   "well": "PB-12",
+   "kind": "loose",
+   "L": 2380.0,
+   "plunger": 44.5,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     727.0
+    ],
+    [
+     "steel",
+     22.2,
+     811.0
+    ],
+    [
+     "steel",
+     19.1,
+     842.0
+    ]
+   ],
+   "anchor": 2347.0,
+   "holds": false,
+   "p_th": 1060000.0,
+   "p_i": 2750000.0,
+   "unit": "C",
+   "lam": 0.22,
+   "found_stroke": 4.27,
+   "found_spm": 5.7,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.10140000479902621,
+   "Fo": 31675.14078603135,
+   "found_S": 3.1872138552434977
+  },
+  {
+   "well": "PB-13",
+   "kind": "bare",
+   "L": 1240.0,
+   "plunger": 50.8,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     368.0
+    ],
+    [
+     "steel",
+     22.2,
+     401.0
+    ],
+    [
+     "steel",
+     19.1,
+     471.0
+    ]
+   ],
+   "anchor": null,
+   "holds": true,
+   "p_th": 470000.0,
+   "p_i": 1960000.0,
+   "unit": "B",
+   "lam": 0.27,
+   "found_stroke": 2.74,
+   "found_spm": 6.0,
+   "q_in": 0.00027982523814910665,
+   "found_fill": 0.584464300952182,
+   "stretch_frac": 0.046307598079139645,
+   "Fo": 20271.202536950237,
+   "found_S": 2.362172376334784
+  },
+  {
+   "well": "PB-14",
+   "kind": "bare",
+   "L": 1215.0,
+   "plunger": 44.5,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     22.2,
+     509.0
+    ],
+    [
+     "steel",
+     19.1,
+     706.0
+    ]
+   ],
+   "anchor": null,
+   "holds": true,
+   "p_th": 550000.0,
+   "p_i": 1640000.0,
+   "unit": "B",
+   "lam": 0.23,
+   "found_stroke": 2.44,
+   "found_spm": 5.9,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.039314722314642024,
+   "Fo": 15816.857276456036,
+   "found_S": 2.0955350560048576
+  },
+  {
+   "well": "PB-15",
+   "kind": "plain",
+   "L": 1240.0,
+   "plunger": 57.2,
+   "tubing": "88.9",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     336.0
+    ],
+    [
+     "steel",
+     22.2,
+     429.0
+    ],
+    [
+     "steel",
+     19.1,
+     475.0
+    ]
+   ],
+   "anchor": 1200.0,
+   "holds": true,
+   "p_th": 730000.0,
+   "p_i": 2250000.0,
+   "unit": "B",
+   "lam": 0.11,
+   "found_stroke": 2.74,
+   "found_spm": 8.0,
+   "q_in": 0.0005924356187110628,
+   "found_fill": 0.7218905498120322,
+   "stretch_frac": 0.040430330859197186,
+   "Fo": 25623.561369538576,
+   "found_S": 2.3952405168246855
+  },
+  {
+   "well": "PB-16",
+   "kind": "fibre",
+   "L": 1720.0,
+   "plunger": 50.8,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "fibreglass",
+     31.8,
+     1049.0
+    ],
+    [
+     "steel",
+     25.4,
+     671.0
+    ]
+   ],
+   "anchor": 1676.0,
+   "holds": true,
+   "p_th": 520000.0,
+   "p_i": 3310000.0,
+   "unit": "C",
+   "lam": 0.16,
+   "found_stroke": 4.27,
+   "found_spm": 7.4,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.05089665998489494,
+   "Fo": 26652.263947206342,
+   "found_S": 3.8612412616028733
+  },
+  {
+   "well": "PB-17",
+   "kind": "loose",
+   "L": 2670.0,
+   "plunger": 38.1,
+   "tubing": "60.3",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     734.0
+    ],
+    [
+     "steel",
+     22.2,
+     909.0
+    ],
+    [
+     "steel",
+     19.1,
+     1027.0
+    ]
+   ],
+   "anchor": 2640.0,
+   "holds": false,
+   "p_th": 660000.0,
+   "p_i": 740000.0,
+   "unit": "C",
+   "lam": 0.13,
+   "found_stroke": 4.27,
+   "found_spm": 6.8,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.14156259558355383,
+   "Fo": 28118.8246129501,
+   "found_S": 3.1684424154079487
+  },
+  {
+   "well": "PB-18",
+   "kind": "plain",
+   "L": 2210.0,
+   "plunger": 31.8,
+   "tubing": "60.3",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     729.0
+    ],
+    [
+     "steel",
+     22.2,
+     777.0
+    ],
+    [
+     "steel",
+     19.1,
+     704.0
+    ]
+   ],
+   "anchor": 2168.0,
+   "holds": true,
+   "p_th": 1450000.0,
+   "p_i": 2380000.0,
+   "unit": "C",
+   "lam": 0.12,
+   "found_stroke": 4.27,
+   "found_spm": 7.9,
+   "q_in": 0.00024494716766647583,
+   "found_fill": 0.5696529533741529,
+   "stretch_frac": 0.04925926628214882,
+   "Fo": 15527.67358030496,
+   "found_S": 4.111895855532175
+  },
+  {
+   "well": "PB-19",
+   "kind": "plain",
+   "L": 2500.0,
+   "plunger": 44.5,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     842.0
+    ],
+    [
+     "steel",
+     22.2,
+     862.0
+    ],
+    [
+     "steel",
+     19.1,
+     796.0
+    ]
+   ],
+   "anchor": 2482.0,
+   "holds": true,
+   "p_th": 1090000.0,
+   "p_i": 3090000.0,
+   "unit": "C",
+   "lam": 0.28,
+   "found_stroke": 3.66,
+   "found_spm": 8.2,
+   "q_in": 0.00034357818476764095,
+   "found_fill": 0.5106359958682962,
+   "stretch_frac": 0.12526916491040588,
+   "Fo": 32922.59438806181,
+   "found_S": 3.1654951290432707
+  },
+  {
+   "well": "PB-20",
+   "kind": "fibre",
+   "L": 2070.0,
+   "plunger": 38.1,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "fibreglass",
+     31.8,
+     1111.0
+    ],
+    [
+     "steel",
+     25.4,
+     959.0
+    ]
+   ],
+   "anchor": 2029.0,
+   "holds": true,
+   "p_th": 740000.0,
+   "p_i": 2650000.0,
+   "unit": "C",
+   "lam": 0.18,
+   "found_stroke": 4.27,
+   "found_spm": 8.2,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.043683210784708694,
+   "Fo": 19693.1235432296,
+   "found_S": 4.000590211482206
+  },
+  {
+   "well": "PB-21",
+   "kind": "plain",
+   "L": 2635.0,
+   "plunger": 44.5,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     749.0
+    ],
+    [
+     "steel",
+     22.2,
+     900.0
+    ],
+    [
+     "steel",
+     19.1,
+     986.0
+    ]
+   ],
+   "anchor": 2620.0,
+   "holds": true,
+   "p_th": 450000.0,
+   "p_i": 2040000.0,
+   "unit": "C",
+   "lam": 0.23,
+   "found_stroke": 4.88,
+   "found_spm": 5.5,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.10107814235978244,
+   "Fo": 35506.051966386265,
+   "found_S": 3.968070882874828
+  },
+  {
+   "well": "PB-22",
+   "kind": "fibre",
+   "L": 1960.0,
+   "plunger": 50.8,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "fibreglass",
+     31.8,
+     1204.0
+    ],
+    [
+     "steel",
+     25.4,
+     756.0
+    ]
+   ],
+   "anchor": 1940.0,
+   "holds": true,
+   "p_th": 800000.0,
+   "p_i": 680000.0,
+   "unit": "C",
+   "lam": 0.22,
+   "found_stroke": 4.88,
+   "found_spm": 5.7,
+   "q_in": null,
+   "found_fill": 1.0,
+   "stretch_frac": 0.07659798263523959,
+   "Fo": 37058.30915468276,
+   "found_S": 4.065163420054868
+  },
+  {
+   "well": "PB-23",
+   "kind": "high",
+   "L": 1655.0,
+   "plunger": 50.8,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     542.0
+    ],
+    [
+     "steel",
+     22.2,
+     519.0
+    ],
+    [
+     "steel",
+     19.1,
+     594.0
+    ]
+   ],
+   "anchor": 1151.0,
+   "holds": true,
+   "p_th": 670000.0,
+   "p_i": 980000.0,
+   "unit": "B",
+   "lam": 0.16,
+   "found_stroke": 2.44,
+   "found_spm": 6.8,
+   "q_in": 0.00033736736679369024,
+   "found_fill": 0.8095079049403308,
+   "stretch_frac": 0.120684579129665,
+   "Fo": 30457.89355735018,
+   "found_S": 1.8142912627898355
+  },
+  {
+   "well": "PB-24",
+   "kind": "plain",
+   "L": 1615.0,
+   "plunger": 50.8,
+   "tubing": "73.0",
+   "sections": [
+    [
+     "steel",
+     25.4,
+     445.0
+    ],
+    [
+     "steel",
+     22.2,
+     487.0
+    ],
+    [
+     "steel",
+     19.1,
+     683.0
+    ]
+   ],
+   "anchor": 1571.0,
+   "holds": true,
+   "p_th": 880000.0,
+   "p_i": 3140000.0,
+   "unit": "B",
+   "lam": 0.22,
+   "found_stroke": 2.74,
+   "found_spm": 6.6,
+   "q_in": 0.00030860498028617236,
+   "found_fill": 0.6014480990711863,
+   "stretch_frac": 0.0765926649345566,
+   "Fo": 25754.24686192611,
+   "found_S": 2.301414170059491
+  }
+ ]
+}

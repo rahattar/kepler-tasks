@@ -1,0 +1,5 @@
+{
+ "field": "cedar_point",
+ "damping_per_s": 0.3,
+ "liquid_density_kg_m3": 900.0
+}

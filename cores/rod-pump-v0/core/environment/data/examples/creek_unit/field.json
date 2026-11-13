@@ -1,0 +1,5 @@
+{
+ "field": "creek_unit",
+ "damping_per_s": 0.33,
+ "liquid_density_kg_m3": 1004.0
+}

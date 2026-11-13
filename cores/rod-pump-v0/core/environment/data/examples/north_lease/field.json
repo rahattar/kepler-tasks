@@ -1,0 +1,5 @@
+{
+ "field": "north_lease",
+ "damping_per_s": 0.29,
+ "liquid_density_kg_m3": 955.0
+}

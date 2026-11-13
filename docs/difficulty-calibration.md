@@ -725,3 +725,35 @@ sites (698 to 1003 a site, up to 18 K and 32 per cent). Three probes on `model: 
   0 of 3 and the vav and chill-bench 1 of 3 (a budget that has to cover classes nobody lists), and a fault
   absent from the visible data (turbine-tool-repair), which the Nov 12 tips now rule out.
 - Cost: about 75 minutes to build, 15 to probe; the three probes used about 250k tokens.
+
+## Rod pump v0: a contradicted record is found when the program's own fit is against the measurement that shows it (Nov 13)
+
+`cores/rod-pump-v0/RESULT.md`. A timed program on shifted hidden data: plunger stroke, liquid and polished rod
+loads of rod-pumped wells at every setting of a table, from two dynamometer cards a well, to a standard that
+states the wave equation, the pump and the tubing in full. The decider was of journal-bearing v5's kind, a
+record contradicted in numbers only: the well file gives an anchor depth, and in 19 hidden wells (two in the
+package without results) the anchor does not hold, so the tubing stretches over its whole length and the stroke
+is 6.5 to 26 per cent short. Three probes on `model: "opus"` at low effort: **1 of 3 accepted in 25 minutes, 2
+of 3 right on every loose anchor** (the second lost one well to a fitted supply), the third trusted the file.
+No xhigh probes were run.
+
+- **A contradicted record holds only where nothing the program computes is compared with a measurement the
+  contradiction moves.** The card is such a measurement, and fitting it is the natural way to the fluid load.
+  Both runs that fitted or sloped the card found the anchors: "cards fit to 0.3 kN instead of 4 kN". In
+  journal-bearing v5 the wrong program pools the analyses and never compares them with anything.
+- **Audit the wrong program on the visible instance by every route, not only the reference's.** The reference
+  here inverts the card and fits nothing, so its as-registered variant ran clean and looked quiet. A
+  least-squares route does not. Before probing, run the wrong program the way a solver might write it and
+  print what it would print: residuals by unit, convergence, bounds.
+- **A sentence that has to say where a quantity ends lists the alternatives.** "The anchor where an anchor
+  holds the tubing, the wellhead where none does" became two candidates a well in one program.
+- **A subject whose diagnosis is a measured curve has no quiet place for a condition.** Whatever is downhole
+  shows in the card; what the card cannot show, nothing else in a package shows.
+- **Physics and limit were no obstacle, again.** String, pump with gas, card analysis and a batched solver in
+  25 to 30 minutes at 13 to 21 s a field, against a reference of 10 to 20 s and a 45 s limit.
+- **A probe that passes is a second solution for free.** Two probe programs written two ways agree with the
+  sealed results within 0.62 of a band, so the sealed simulation, generator, reference and grader are sound
+  and reusable.
+- **Probes find gaps in the standard:** one reported that the gas law did not say absolute or gauge.
+- Cost: about three and a half hours to build (sealed simulation, a reference on the string's modes after a
+  kernel method failed to converge, nine fields at 40 minutes of generation), 25 to 54 minutes to probe.

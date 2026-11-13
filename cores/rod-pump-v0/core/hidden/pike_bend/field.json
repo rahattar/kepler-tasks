@@ -1,0 +1,5 @@
+{
+ "field": "pike_bend",
+ "damping_per_s": 0.35,
+ "liquid_density_kg_m3": 945.0
+}
