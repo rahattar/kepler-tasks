@@ -1,0 +1,20 @@
+{
+ "rounds": 42,
+ "rounds_stalled": 0,
+ "limb_changes": 0,
+ "twin_configurations": 0,
+ "distinct_round_configurations": 42,
+ "configurations_with_two_states": 0,
+ "points": 3948,
+ "branches": 1855,
+ "log_rows": 1264,
+ "meshes": 622,
+ "changes_followed_in_steps": 29,
+ "limbs": "..........................................",
+ "changes": [],
+ "fan_flow_healthy": [
+  136.59809300684321,
+  147.84290704566268
+ ],
+ "fan_flow_stalled_min": 136.59809300684321
+}

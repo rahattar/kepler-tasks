@@ -664,3 +664,30 @@ drift of up to 0.5 per cent on the example results, inside the 1.5 per cent band
 - v1 looked for a wrong answer that validates itself: a bowed panel whose symmetric equilibrium is unstable.
   The window is under 5 per cent of the load (`cores/tank-panel-deflection-v1/RESULT.md`); not built.
 - Cost: about 50 minutes to build the core, 30 to probe it.
+
+## Vent fan stall v0: a physical condition that marks a table, found by low effort in eleven minutes (Nov 13)
+
+`cores/vent-fan-stall-v0/RESULT.md`. A timed program on shifted hidden data: airflow at every survey point of a
+ventilation district with two axial fans in parallel. The catalogue characteristic has a stall dip, so over a
+band of district resistance two states are stable and the log decides which one holds. Examples with results
+sit clear of the band, the pending package and the hidden districts in it. No sentence says a district can
+have two states. Three probes on `model: "opus"` at low effort: 3 of 3 accepted, 10.9 to 12.1 minutes, 14 to 23
+tool calls. No xhigh probes were run.
+
+- **Physics that leaves a mark in a table is read off the table.** All three named the stall dip, the two
+  states and the history, and one sentence of circumstance (changes are gradual) was enough to settle how a
+  state is carried. An unstated physical mechanism is not a lever on the screen's model when anything
+  tabulated shows it.
+- **A visible instance must cost a wrong program nothing to run.** The pending package made a plain solver
+  fail to converge or return a fan on a rising limb. The journal bearing's pending console does neither. An
+  instance that answers back is a test with feedback, whether or not it has results.
+- **One stable state at each graded point is not enough for an example with results: it needs one root.** A
+  root-finder found a stalled solution in an example whose every round has a single stable state, and the
+  example's results told the run.
+- **Following a log entry by entry is the default program.** When a state costs milliseconds every run
+  solves all of them in order and warm, so a decider that is history is half given by the natural code.
+- **A sealed truth can be checked by the probes themselves.** Three programs written three ways reproduced it
+  at every point through ten changes of limb. Fair and determinate is not hard.
+- The cost: about two and a half hours to a measured no, most of it the audit of the sealed record
+  (16 minutes a district at 1 700 branches). Probe a core at a tenth of the size first; scale decides
+  timing, not who sees the condition.

@@ -1,0 +1,81 @@
+{
+ "rounds": 42,
+ "rounds_stalled": 14,
+ "limb_changes": 10,
+ "twin_configurations": 0,
+ "distinct_round_configurations": 42,
+ "configurations_with_two_states": 42,
+ "points": 3570,
+ "branches": 1670,
+ "log_rows": 1364,
+ "meshes": 560,
+ "changes_followed_in_steps": 29,
+ "limbs": "......s.....sss........sss.sss..ssss......",
+ "changes": [
+  [
+   "2026-03-04 22:35",
+   "SD-2",
+   "closed",
+   "RL"
+  ],
+  [
+   "2026-03-05 12:50",
+   "AL-1",
+   "open",
+   "RR"
+  ],
+  [
+   "2026-03-07 22:20",
+   "SD-2",
+   "closed",
+   "RL"
+  ],
+  [
+   "2026-03-09 10:30",
+   "AL-1",
+   "open",
+   "RR"
+  ],
+  [
+   "2026-03-13 10:35",
+   "SD-2",
+   "closed",
+   "RL"
+  ],
+  [
+   "2026-03-15 01:15",
+   "AL-1",
+   "open",
+   "RR"
+  ],
+  [
+   "2026-03-15 12:50",
+   "SD-1",
+   "closed",
+   "RL"
+  ],
+  [
+   "2026-03-17 00:45",
+   "AL-1",
+   "open",
+   "RR"
+  ],
+  [
+   "2026-03-18 00:20",
+   "SD-2",
+   "closed",
+   "RL"
+  ],
+  [
+   "2026-03-19 22:35",
+   "AL-1",
+   "open",
+   "RR"
+  ]
+ ],
+ "fan_flow_healthy": [
+  149.08071522326833,
+  193.047588905402
+ ],
+ "fan_flow_stalled_min": 85.38171030614741
+}
