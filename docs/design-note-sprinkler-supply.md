@@ -137,3 +137,41 @@ about 1 per cent").
 - An over-correction trap of the kind that caught base-pressure probes: two crossed records where one of the two
   corrections is real and large enough to look like part of the clerical error.
 - Keep SR04's trend: it is the only layer that has caught a low probe twice (L1 and Q1 took a recent mean).
+
+### Round 3 (Nov 13): the swabbed lead-in. Low 1 of 3; every probe again ordered the target
+
+| probe | time | order | result |
+|---|---|---|---|
+| Z1 | 4.0 min | SR10 at 1 000 gpm | 9 of 10 rows; SR10's limit named lead-in |
+| Z2 | 4.5 min | SR10 at 1 000 gpm | 9 of 10 rows; SR10's limit named lead-in |
+| Z3 | 3.7 min | SR10 at 1 000 gpm | **accepted** |
+
+- All three volunteered the alternative: the swab changed C, the riser was shut for it, the valve is locked, one
+  flow since. A clause plus a logged event is read and applied at low effort, however quiet the fit.
+- **The two refusals are a flaw of the design, not difficulty.** Splitting q^1.85 from q^2 with two flows is
+  ill-conditioned: 0.1 psi on the mean of the four drain tests since the swab moves each share by about 4 psi at
+  the placard flow. The pressure and the flow are safe (the test is at the placard flow); the name of the limit
+  is a coin toss. Any next version must make SR10's limit robust to the split.
+- Twelve low runs so far on this task, four refused, each on a single row: a recent mean on the fast-ageing
+  lead-in (two), and the split (two).
+
+### What stops a low probe, from four rounds here and the base-pressure rounds
+
+- Not a layer that shows in a residual; not an open unit that a clause and a record point to.
+- A constant that a fit absorbs quietly, with one physical witness elsewhere in the records. Statics make every
+  gauge self-calibrating (each probe compared statics with the main's held pressure), so with statics in the log
+  no gauge constant can be quiet. **Without them, a constant on a cast iron riser's gauge is absorbed into its C,
+  plausibly, and scaled five-fold at the reference condition.**
+
+### Version 5 (planned)
+
+- The round's log carries the residual only. h_b and Cv_b then come from two flows: the ductile, check-free
+  risers' drain tests (their own loss is known) and the yard hydrant tests. Checks only on ductile lead-ins.
+- Yard hydrant tests twice a year, the gauge read on a different riser each time.
+- **The quiet fault:** SR02's gauge stands 6 ft above its registered height. Its drain record fits with C about
+  58 (true 82), inside the site's range, and puts its pressure about 38 per cent low. The only witnesses are the
+  yard tests read on SR02's gauge, which sit 2.6 psi from where the fleet puts the yard main. Averaging the yard
+  tests spoils Cv_b for every riser; dropping the odd ones as outliers leaves SR02 wrong.
+- SR10 keeps the swab and the locked valve, with its limit made robust to the split.
+- Keep: the overhaul's two eras, SR03's valve, SR04's fast ageing, the sticking check, the replaced gauge and
+  drain valve, the crossed serials, the outlet coefficients.
