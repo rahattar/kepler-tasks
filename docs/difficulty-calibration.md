@@ -757,3 +757,35 @@ No xhigh probes were run.
 - **Probes find gaps in the standard:** one reported that the gas law did not say absolute or gauge.
 - Cost: about three and a half hours to build (sealed simulation, a reference on the string's modes after a
   kernel method failed to converge, nine fields at 40 minutes of generation), 25 to 54 minutes to probe.
+
+## Vent fan stall v1 and v2: where a wrong program can ask, the condition is found by comparison (Nov 13)
+
+`cores/vent-fan-stall-v1/RESULT.md`, `cores/vent-fan-stall-v2/RESULT.md`. v0's district with stall moved into
+the examples, and two things the records do not say put in the pending and hidden districts: a stopping that
+passes 10 to 13 m3/s against half a m3/s booked, legible only as the two gate-road quantities at its ends
+failing to balance in every survey campaign; and a last bulkhead closure built between the stall point of the
+district as it is and as its records have it, so only a reading of a fan says which way it went. One survey
+order a run, the allowance one more a condition than the airways worked on. Small districts (121 to 165
+branches), a 30 s limit against 1 to 3 s.
+
+| core | low | xhigh |
+|---|---|---|
+| v1: the crew answers for the examples and the pending district | 0 of 3 | at least 2 of 3 in 41 min |
+| v2: the crew answers for the examples only | 0 of 3 | 1 of 3 (28, 30 and 15 min) |
+
+- **An oracle on the pending instance is a results table by another name.** In v1 both xhigh passes built the
+  program that follows the records, ran it on the pending district and compared its end state with what the
+  crew reads there now: a panel entry 10 m3/s out, a fan on the other limb. Remove the crew from the pending
+  district and two of three xhigh probes stop at the same place the low probes do. The rule that a visible
+  instance must offer a wrong program nothing to check against covers every channel, tools included.
+- **Low effort does not ask what a spare allowance is for.** Six low probes over v1 and v2 saw that the pending
+  district has two places more than it has altered airways. Three said so in their reports. None looked for a
+  use. Two xhigh probes spent the spare places on a reading of the present state "as a check", found it agreed
+  in the examples, and shipped a program that reads the disagreement in a hidden district and does nothing.
+- **The pass came from a conservation law, unprompted.** The one xhigh pass of v2 balanced every campaign at
+  the ends of every stopping before writing the solver. Nothing in the documents says a record can be wrong;
+  VS-4 says what a resistance is and what a campaign measures. That is the fair route and it exists.
+- **A legible need has to cost something in the examples.** Two low probes switched their survey order off and
+  the examples still passed (0.71 of the band). Size the alteration so that a run without the order is out.
+- **Check the reference at the shipping size before anything is frozen.** The reference's search for the
+  change that turned the outcome looked back over ten large changes; ten times the log, it stopped short.

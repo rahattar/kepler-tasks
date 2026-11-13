@@ -57,3 +57,22 @@ its resistance follows from the campaigns to well inside the band.
   None balanced a campaign at a node, none asked what the other two were for, none read a fan.
 - All three ran the pending package and reported that it runs cleanly.
 - Their misses are the `legible` program's, district for district.
+
+## xhigh (opus, the same sandboxes): at least 2 of 3 accepted everywhere, too easy
+
+| probe | time | tool calls | examples | pending | hidden | what the crew's log shows |
+|---|---|---|---|---|---|---|
+| D | over 65 min, not finished when v2 started | - | accepted (12:30 copy) | out | 3 of 4 out | the altered airways only, as the low probes |
+| E | 41 min | 79 | accepted | accepted | 4 of 4 accepted | main intake and the panel entries surveyed on west_reef, then the stopping |
+| F | 41 min | 89 | accepted | accepted | 4 of 4 accepted | spare branches spent on the fans first, then P2-X-02 |
+
+- E and F did not start from the campaigns. Both built the legible program, ran it on the pending district
+  and compared what it calculates with what the crew reads there now. The crew answers for the pending
+  district in the sandbox, so a program that is wrong about it can see that it is wrong, and where: the
+  panel-entry quantity off by 10 m3/s, a fan on the other limb. From there the node balance and the fan
+  reading are an hour's work.
+- So the pending district was not a place where the conditions merely show. It was a place where a wrong
+  program is told so, the same fault as v0's examples with results, one step removed.
+- v2 takes that away: where the program is written the crew answers only for the two example districts, which
+  have neither condition. The pending district's campaigns still carry the imbalance and its log still ends
+  at the close call; nothing answers back.

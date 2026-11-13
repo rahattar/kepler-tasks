@@ -9,6 +9,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FILES = ("district.json", "branches.csv", "regulators.csv", "doors.csv", "fans.csv", "fan_curves.csv", "log.csv", "points.csv",
          "surveys.csv", "work_log.csv")
 LAB = os.path.join(HERE, "core", "environment", "rig", "lab.py")
+HERE = os.environ.get("VF_ROOT", HERE)          # another set of districts laid out the same way
 
 def cases(visible):
     if not visible:
