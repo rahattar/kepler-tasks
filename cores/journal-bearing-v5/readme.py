@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Assemble tasks/journal-bearing-survey/README.md. Every figure is lifted from an evidence file, the statement
+"""Assemble tasks/lube-oil-survey/README.md. Every figure is lifted from an evidence file, the statement
 or the generator, so the README cannot drift from the logs. Kept outside the bundle; run after the evidence is
 regenerated, then tools/sync_explanations.py."""
 import re
 
-T = "/home/claude/kepler-tasks/tasks/journal-bearing-survey"
+T = "/home/claude/kepler-tasks/tasks/lube-oil-survey"
 EV = T + "/authoring/evidence/"
 
 
@@ -200,7 +200,7 @@ vals = dict(span=span, slope=slope, rise=rise, same=same, step=step, gap_old=gap
             n_slo=n_slo, n_shi=n_shi, n_stop0=n_stop[0], n_stop1=n_stop[1], reg_table=reg_table, reg_sites=reg_sites,
             n_cases=n_cases)
 
-readme = """# journal-bearing-survey
+readme = """# lube-oil-survey
 
 {description}
 

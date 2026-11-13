@@ -100,8 +100,8 @@ def main():
     meta = toml.get("metadata", {})
     task = os.path.basename(ROOT)
     check("the task's name ends with the bundle folder's name, of at most three hyphenated words",
-          toml["task"]["name"].split("/")[-1] == "journal-bearing-survey"
-          and (task == "journal-bearing-survey" or not task.startswith("journal")))
+          toml["task"]["name"].split("/")[-1] == "lube-oil-survey"
+          and (task == "lube-oil-survey" or not task.startswith("lube")))
     check("the one artifact is /app/output/bearing.py", toml.get("artifacts") == ["/app/output/bearing.py"])
     wanted = ("author_name", "author_email", "author_organization", "author_profile", "research_advisor",
               "referred_by", "conflicts_of_interest", "domain", "field", "subfield", "category", "subcategory", "tags",

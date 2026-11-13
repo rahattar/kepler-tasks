@@ -1,6 +1,6 @@
 # journal-bearing v5 (Nov 12): v4 with the condition in the visible data. Built as a bundle, not probed.
 
-v5 is `tasks/journal-bearing-survey`. It is v4 with three changes, made while the bundle was built:
+v5 is `tasks/lube-oil-survey`. It is v4 with three changes, made while the bundle was built:
 
 1. **A third visible package, `/app/data/pending/west_quarry`, without results.** Its console LO-2 is two
    charges: K-120 and K-122 analyse at 44.0 to 44.6 mm2/s, M-123 at 39.3 to 39.9 in the same four rounds, and

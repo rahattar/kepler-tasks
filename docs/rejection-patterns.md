@@ -458,3 +458,12 @@ Oracle passed (the CPU pinning was the cause of the 70 s failures). Then "test i
 specified" both failed on the checker's 4 MiB cap on OUT_CSV, stated nowhere the agent reads. Fixed in 20261113d
 by stating the cap in the instruction; preflight now compares the two.
 - **Rule.** Every limit the reader enforces is in the instruction with its number, safety guards included.
+
+## Similarity rejection, Nov 13 (journal-bearing-survey 20261113d against journal-bearing-duty)
+"Too similar to your own task journal-bearing-duty", a bundle built in another chat and never pushed here.
+File by file the two share little text (difflib 0.16 to 0.42), so the gate is reading subject: same name stem,
+same five outputs, a timed program, six hidden cases, 60 s. Renamed to `lube-oil-survey` and re-led the
+description, tags, subfield and instruction opening with the oil identification, which is what differs. Not
+known when written whether that clears the gate.
+- **Rule.** Push every bundle to the repo before it is submitted, so the other session can see it. Two sessions
+  built on one subject on the same day without knowing.

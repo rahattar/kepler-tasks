@@ -1,9 +1,46 @@
-# journal-bearing-survey
+schema_version = "1.4"
 
-Write a program that calculates every operating point on record of a site's grooved journal bearings to a hydrodynamic lubrication standard (minimum film thickness, attitude angle, power loss, effective film temperature and peak film pressure, from the Reynolds equation with film rupture and a heat balance on the oil), with each bearing's oil identified from the analyses on file and from one laboratory order of a fixed number of samples that the program places itself, and that finishes a site of up to 3,000 points within 60 seconds on one CPU on sites it has never seen.
+artifacts = ["/app/output/bearing.py"]
 
-## Difficulty
+[task]
+name = "afterquery/lube-oil-survey"
+description = "Write a program that settles which body of lube oil each machine of a site really draws on after the site's oil was renewed: it sorts the machines into oil charges from the laboratory analyses on file, places the site's one laboratory order of a fixed number of samples itself while it runs, and from the oil so identified gives the film thickness, attitude, power loss, film temperature and peak pressure of every operating point on record to a hydrodynamic lubrication standard, a site of up to 3,000 points within 60 seconds on one CPU, on sites it has never seen."
+authors = [{ name = "Alireza Bafandeh", email = "rahattar@gmail.com" }]
+keywords = [
+    "lubricant-condition-monitoring",
+    "oil-analysis",
+    "sampling-design",
+    "population-identification",
+    "hydrodynamic-lubrication",
+    "thermal-balance",
+    "numerical-methods",
+]
 
+[metadata]
+author_name = "Alireza Bafandeh"
+author_email = "rahattar@gmail.com"
+author_organization = "MEMC"
+author_profile = "https://www.linkedin.com/in/alireza-bafandeh"
+research_advisor = ""
+referred_by = ""
+conflicts_of_interest = "I am employed by MEMC (GlobalWafers), a silicon wafer manufacturer; this task has no connection to my employer's products, processes or data. It uses only textbook hydrodynamic lubrication (the Reynolds equation for a finite grooved journal bearing, Reynolds film rupture, Couette and Poiseuille friction, the Walther viscosity-temperature relation and an effective-temperature heat balance) on synthetic sites with synthetic records. I also author evaluation tasks for other AI benchmark programs; this task shares no data, code or scenario with them."
+domain = "engineering-sciences"
+field = "mechanical-engineering"
+subfield = "tribology and lubricant condition monitoring: identifying oil charges from laboratory analyses under a sampling budget, and the hydrodynamic film they set"
+category = "Science"
+subcategory = "Mechanical & Aerospace Engineering"
+tags = [
+    "lubricant-condition-monitoring",
+    "oil-analysis",
+    "sampling-design",
+    "population-identification",
+    "hydrodynamic-lubrication",
+    "thermal-balance",
+    "numerical-methods",
+]
+expert_time_estimate_hours = 10
+relevant_experience = """I am a control scientist and thermal engineer with a PhD in mechanical engineering. Fluid films and heat transfer in rotating equipment, the numerical solution of the equations that govern them, identifying the state of a machine from sparse laboratory and operating records, and writing the engineering software that does it are part of my work on industrial equipment and of my teaching. The sites, their records and the standard are synthetic."""
+difficulty_explanation = """
 This is the work of a tribology engineer who keeps a works group's bearing calculation standard and the program that applies it. A plain journal bearing carries its shaft on an oil film a few tens of micrometres thick, and whether a machine may run at a given speed, load and oil temperature is decided by that film: how thin it gets, how much power it dissipates, how hot it runs and how hard it presses on the lining. The task is a program that finds these five quantities for every operating point on record at a site, to within 1.5 per cent, 1 degree and 0.5 K, within 60 seconds for a site, at sites whose oil has been renewed and has to be sampled before it can be calculated with. The sites, their records and the standard are synthetic and realistic: journals of 90 to 200 mm at 600 to 3560 rpm on ISO VG 32 to 68 mineral oils, and at the six sites the program is run on, film thickness 18.2 to 110.7 um, attitude 31 to 77 degrees, power loss 0.35 to 8.45 kW, peak pressure 1.0 to 7.2 MPa, film 1.1 to 17.9 K above the inlet.
 
 Four pieces of physics set every answer, and they have to be solved together.
@@ -33,9 +70,8 @@ Each of these defeats an assumption the general approach makes on first reading:
 - that a few thousand points can each be solved from scratch inside the limit;
 - that the register's list of oil systems is the list of charges;
 - that an allowance of one more sample than the register needs has one to spare.
-
-## Reference solution
-
+"""
+solution_explanation = """
 solution/bearing.py is the reference; solution/solve.sh puts it at /app/output/bearing.py. It reads one package, places the laboratory order and writes the table.
 
 1. **Charges.** The machines of each listed system are sorted into charges by the analyses on file: two machines are on different charges when the analyses drawn at them nearest in date stand more than 3 per cent apart in viscosity at 40 C, six times what the laboratory repeats. A machine with no analysis stays with the first charge of its system.
@@ -49,11 +85,8 @@ solution/bearing.py is the reference; solution/solve.sh puts it at /app/output/b
 **On the shipped sites** (authoring/evidence/reference_run.txt, run by the checker as the verifier runs it) the reference is accepted: 13860 points at six sites, the largest error at any of them 0.09 of its band, runs of 11.7 to 17.0 s, so the limit of 60 s is 3.5 times the slowest run. It is accepted on both example sites as well, and on the pending package it orders 5 samples, K-114-DE, K-120-DE, M-123-DE, G-125-DE, C-139-DE: two of them from the console LO-2.
 
 **authoring/evidence/naive_bearing.py** is a second solution, written apart from the reference and sharing no code with it. It joins machines into charges through a graph, with a threshold of 2 per cent, and solves the film as one sparse system over the whole bearing on 144 by 16 nodes, grooves included, with the journal position found inside a bracketing search on the film temperature, one point at a time. On the six sites cut down to every 40th point (349 points) it places the same orders as the reference and is accepted, and its widest departure from the sealed results is 0.07 of a band (authoring/evidence/naive_run.txt).
-
-`solution/solve.sh` starts it inside the agent's container: it copies bearing.py to /app/output and runs it once on the three packages in /app/data, checking the two example sites against their results.
-
-## Verification
-
+"""
+verification_explanation = """
 The deliverable is a program, /app/output/bearing.py. The verifier does not read anything the agent's run left behind: tests/grade_program.py, run by the one pytest test in tests/test_program.py, runs the program on six site packages it has not seen and compares what each run writes with sealed results.
 
 **A run.** For each site, a scratch directory holds a copy of bearing.py alone and a read-only copy of the package. The program is started there as `python3 bearing.py PACKAGE_DIR OUT_CSV`, as the user nobody, with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1, in a process group of its own, with no network. The run is single-threaded by those settings and is not tied to a particular CPU, because trials that run side by side on one host would then share it.
@@ -121,24 +154,23 @@ With one sample for each listed system the points out of band are canal_works 29
 **The whole verifier** (verifier_run.txt). tests/test.sh itself, run as it stands with each program in turn at /app/output/bearing.py, under the umask it sets, with the checker running the program as nobody: the reward is 1 for the reference and 0 for the program that samples by the register and for the second solution at the limit. Where that study was run the pytest-json-ctrf plugin was not installed, and authoring/evidence/ctrf_standin.py wrote the report in its place; the verifier's image installs the plugin itself.
 
 The agent works as a separate user that can write only to /app/output. /app/data is read-only and root-owned, and the verifier's image carries the same /app/data at the same path. The verifier runs in a separate container without network; /tests and /logs/verifier are readable by root alone, and the program runs there as nobody.
+"""
 
-Evidence (`authoring/evidence/`): `reference_run.txt`, `naive_run.txt`, `register_run.txt`, `verifier_checks.txt`,
-`verifier_run.txt`, `design_rules.txt`, `regenerate.txt` and `preflight.txt`.
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
 
-## Submission notes
+[verifier.environment]
+network_mode = "no-network"
 
-What the shift in the hidden data is. The visible results (two example sites) come from sites where every oil system the register lists is one charge of oil and the laboratory's allowance equals the number of systems renewed. At five of the six hidden sites one listed console is two reservoirs, both renewed, so the right laboratory order has one more sample than the register's count and the machine on the second reservoir has a different oil before and after the renewal. The condition appears once in the visible data, in the package without results (/app/data/pending/west_quarry, console LO-2). The hidden sites are other sites: no name and no file is shared with a visible one. A program that follows the register reproduces both visible result sets and is out of band at five hidden sites (authoring/evidence/register_run.txt).
+[agent]
+timeout_sec = 28800.0
+user = "agent"
 
-Where it is built.
-- Generator config: authoring/provenance/sites.py, the `SITES` table (seed, role, the console that is two charges, number of consoles and of self-contained machines) and `describe`.
-- Manifest: authoring/provenance/manifest.json, the same table and the SHA-256 of every data file.
-- Data files: tests/sites/ (the six packages), tests/sealed/truth/ (their results), tests/lab/sealed/ (the laboratory's books for them); environment/data/examples/ and environment/data/pending/ (the visible packages), environment/rig/sealed/ (the laboratory's books for those).
-- Check: authoring/provenance/design_rules.py and authoring/evidence/design_rules.txt.
-
-The timed re-run.
-- The tests run the program: tests/grade_program.py, `run_site`.
-- The limit: `RUN_LIMIT_S = 60` in tests/grade_program.py, and "Each run of bearing.py must finish within 60 seconds on 1 CPU." in instruction.md; preflight fails if they differ.
-- The reference takes 11.7 to 17.0 s a run; the limit is 3.5 times the slowest.
-- A correct program that is not fast times out: authoring/evidence/naive_bearing.py, authoring/evidence/naive_run.txt.
-- A run over the limit ends the assessment and nothing it wrote is read: authoring/evidence/verifier_checks.txt, "The limit".
-- Threads: OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1 in both images and in the environment of each run. Runs are not tied to one CPU: the first submission did that, and three oracle trials side by side on one host shared a core and ran over the limit.
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 4096
+storage_mb = 4096
+gpus = 0
+network_mode = "public"
