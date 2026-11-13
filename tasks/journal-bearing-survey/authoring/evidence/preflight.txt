@@ -21,6 +21,7 @@ ok    the statement assigns no role and speaks to no one
 ok    the statement has no grading words
 ok    the statement gives the limit in the required sentence, and it is the checker's: 60 s
 ok    the checker enforces that limit with a timeout on the run and treats TimeoutExpired as the end of the assessment
+ok    the statement gives the checker's cap on the size of OUT_CSV: 4194304 bytes
 ok    the statement's header is the checker's
 ok    the statement's bands are the checker's: 1.5 per cent, 1 degree, 0.5 K
 ok    the statement names the command and how the program is run
@@ -70,4 +71,4 @@ ok    live: the same with one value nan is not
 ok    live: the same with every power loss 1.6 per cent high is not
 ok    live: a program that writes the true table and is still running at the limit is not accepted, and its table is not opened
 ok    live: the reference on the cut-down site is accepted and places one order of the site's allowance
-72 checks, 0 failed: the bundle is clean
+73 checks, 0 failed: the bundle is clean

@@ -452,3 +452,9 @@ CPU it was allowed. Intake runs the three oracle trials side by side on one host
 the same CPUs, so all three shared one core. Removed the pinning in 20261113c; single-threading comes from
 OMP_NUM_THREADS and OPENBLAS_NUM_THREADS alone. Not confirmed on the platform when written.
 - **Rule.** Never set CPU affinity in a verifier. A local run of one trial cannot show this; three at once can.
+
+## Quality rejection, Nov 13 (journal-bearing-survey 20261113c): an output size cap the statement did not give
+Oracle passed (the CPU pinning was the cause of the 70 s failures). Then "test instruction alignment" and "well
+specified" both failed on the checker's 4 MiB cap on OUT_CSV, stated nowhere the agent reads. Fixed in 20261113d
+by stating the cap in the instruction; preflight now compares the two.
+- **Rule.** Every limit the reader enforces is in the instruction with its number, safety guards included.

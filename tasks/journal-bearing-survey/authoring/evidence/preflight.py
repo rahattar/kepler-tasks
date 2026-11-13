@@ -149,6 +149,8 @@ def main():
           "assessment", "started.wait(timeout=limit)" in text("tests", "grade_program.py")
           and "except subprocess.TimeoutExpired" in text("tests", "grade_program.py")
           and "def assess(program, sites=None, truths=None, books=None, limit=RUN_LIMIT_S" in text("tests", "grade_program.py"))
+    check("the statement gives the checker's cap on the size of OUT_CSV: %d bytes" % grade_program.OUTPUT_CAP,
+          "no larger than %d bytes" % grade_program.OUTPUT_CAP in ins)
     check("the statement's header is the checker's", "`" + ",".join(grade_program.COLUMNS) + "`" in ins)
     bands = {name: band for name, _, band in grade_program.BANDS}
     check("the statement's bands are the checker's: 1.5 per cent, 1 degree, 0.5 K",
