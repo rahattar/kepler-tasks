@@ -1,6 +1,6 @@
 # Task catalogue
 
-Latest bundle of every task Alex has built for AfterQuery Kepler, unpacked from the zip named in each folder's `.source_zip`. Every new task must differ from all of these in subject AND in deliverable shape and verification.
+Latest bundle of every task Alex has built for AfterQuery Kepler, unpacked from the zip named in each folder's `.source_zip`. Every new task must differ from all of these in subject AND in deliverable shape and verification; the timed re-run on shifted hidden data that AfterQuery asks for is the stated exception on shape (`docs/playbook.md`, Design rules).
 
 | Task | Source zip | Description |
 |---|---|---|

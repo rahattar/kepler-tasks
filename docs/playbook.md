@@ -23,6 +23,8 @@ Sciences). Follow this exactly unless Alex says otherwise.
     the requirement as a physical condition with its number where an agent-visible document gives one
     (shaft-alignment-moves, Nov 11);
   - every input file named by absolute path;
+  - for a timed task, the per-run limit in the announcement's words, "Each run of <program> must finish within N
+    seconds on 1 CPU.", with the same N as `tests/`;
   - no hint at any trap or mechanism;
   - the last paragraph exactly: "You have 28800 seconds to complete this task. Do not cheat by using online
     solutions or hints specific to this task."
@@ -63,12 +65,13 @@ Sciences). Follow this exactly unless Alex says otherwise.
   in a root- or lab-owned 700 directory, reached only through a sudo wrapper that validates arguments and enforces
   the booking.
 
-## Current intake priority (AfterQuery, Nov 11)
-- Top priority: Science tasks whose tests re-run the agent's program on hidden inputs under a per-run time limit
-  stated in instruction.md (about 2-3x the reference's runtime, so a naive correct version times out; a timeout
-  fails the task), on hidden data deliberately shifted from the visible data (new regime, injected faults,
-  out-of-range values, unseen categories, edge cases; not a reseed), and 0-5 of 8 on the difficulty probe.
-  Full checklist and the verbatim messages: `docs/afterquery-asks-2026-11-11.md`.
+## Current intake priority (AfterQuery, Nov 11; sent again as a reminder Nov 13)
+- Top priority, and the kind to propose and build first: Science tasks whose tests re-run the agent's program on
+  hidden inputs under a per-run time limit stated in instruction.md (about 2-3x the reference's runtime, so a
+  naive correct version times out; a timeout fails the task), on hidden data deliberately shifted from the
+  visible data (new regime, injected faults, out-of-range values, unseen categories, edge cases; not a reseed),
+  and 0-5 of 8 on the difficulty probe. Full checklist, the self-check to run before packaging and the verbatim
+  messages: `docs/afterquery-asks-2026-11-11.md`.
 - Nov 11-12 tips (same doc): every deciding fault or condition shows at least once in the visible data; docs and
   labels unambiguous; a correct standard method passes; the tolerance is checked by an independent solution; all
   probes failing the same check the same way means something is hidden or unclear; 0 of 8 is reviewed on the same
@@ -76,9 +79,14 @@ Sciences). Follow this exactly unless Alex says otherwise.
 
 ## Design rules (Alex's standing rule, Nov 5)
 - Give no hints in the prompt or the files. Hide the trap in the analysis layer: the general approach must look
-  right at first glance, and only checking the files or very fine, non-obvious details exposes it.
+  right at first glance, and only checking the files or very fine, non-obvious details exposes it. This holds
+  inside the tips above: unhinted is not hidden. Whatever decides a result shows at least once in the visible
+  data, and every document and label means one thing.
 - Each new task must differ from the whole catalogue (`docs/catalogue.md`) in subject AND in deliverable shape and
-  verification. No more variants of "a program scored on ~8 hidden cases".
+  verification. No more variants of "a program scored on ~8 hidden cases". The intake priority above is the
+  exception AfterQuery asks for (Nov 11, repeated Nov 13): a program re-run under a stated time limit on
+  deliberately shifted hidden data is the wanted shape. There the subject, the physics and what decides a
+  hidden case must be new.
 - Stay in mechanical engineering. The deliverable must be a measured or inferred engineering result.
 - Aim for 12-15 independent layers, several of them data-only (`docs/difficulty-calibration.md`).
 
@@ -93,6 +101,9 @@ Sciences). Follow this exactly unless Alex says otherwise.
 - **verifier_checks:** malformed and edge-case outputs, built from the current reference at run time. None may be
   UNEXPECTED.
 - **reference_run:** the reference run through the real lab program.
+- **For a timed task, also:** the naive but correct version run through the verifier and timing out; the
+  reference's runtime beside the limit (the limit is about 2-3x of it); what the hidden-data shift is and where
+  it is built, in the README as well, for the submission notes.
 - **preflight:** all of the rules above, checked mechanically. Rerun every evidence script and preflight after any
   change.
 
@@ -142,13 +153,17 @@ Sciences). Follow this exactly unless Alex says otherwise.
   documents are missing it.
 
 ## Calibration targets
-- Easiness: 3 low-effort runs, at most 1 solved. 1 of 3 has passed (vav-airflow-calibration Oct 19,
-  chill-bench-commissioning); 2 of 3 has failed (cooler-fouling-assessment). As of Nov 11 the screen runs
-  claude-opus-5-5 at low effort and states allowed 0 solves (flare-load-study 20261111e, 3 of 3, rejected).
-  Treat 0 of 3 as the bar until a 1 of 3 is seen to pass again.
-- Difficulty: 8 official xhigh runs. 7 of 8 has passed (vav-airflow-calibration, superheater-tube-life)
-  and 0 of 8 has passed once (turbine-tool-repair); 8 of 8 fails as too easy
-  (impeller-shrink-fits, Nov 9). Aim for 2 to 6 so that one draw either way does not decide it.
+- **The bar (Alex, Nov 13): easiness probe 0 of 3; difficulty probe pass band 0 to 5 of 8.**
+- Easiness: 3 low-effort runs on claude-opus-5-5, none solved. Any solve is a rejection: flare-load-study
+  20261111e (3 of 3) and an earlier base-pressure-diagnosis bundle (1 of 3) on Nov 11, cooler-fouling-assessment
+  (2 of 3) on Nov 9. The 1 of 3 passes of October (vav-airflow-calibration, chill-bench-commissioning) are
+  history, not a precedent.
+- Difficulty: 8 official xhigh runs, 0 to 5 solved. 6, 7 and 8 of 8 are outside the band: impeller-shrink-fits
+  failed at 8 of 8 (Nov 9), base-pressure-diagnosis at 8 of 8 (Nov 10) and again at 6 of 8 (20261111b, Nov 11).
+  The 7 of 8 passes of October (vav-airflow-calibration, superheater-tube-life) are history, not a precedent.
+  0 of 8 is inside the band (turbine-tool-repair) and is reviewed on the same rubric as any other count. At an
+  xhigh solve rate of 1 in 3 the band is met 98 per cent of the time; at 1 in 2, 86 per cent; at 2 in 3, 53 per
+  cent.
 - Locally, run probe subagents (general-purpose, effort xhigh, and low for easiness) in sandboxes built by
   `tools/mkprobe.sh`, with the brief in `tools/brief.txt`. Probes must not read anything outside their sandbox.
   **Force the probe's model to the screen's** (`model: "opus"` on the Agent call): a probe on the session's own
@@ -157,8 +172,8 @@ Sciences). Follow this exactly unless Alex says otherwise.
   Grade each with the task's own grader.
 - The local rig is not calibrated, and it has been wrong in both directions (chill-bench 12: local low 1/3,
   official 3/3; chill-bench 16: local 2/3, official 1/3). Do not assume official runs are weaker: local xhigh
-  3/3 on impeller-shrink-fits came true as official 8/8. Treat local xhigh 3/3 as a warning, not a pass;
-  superheater-tube-life went local xhigh 2/2 and official 7/8, so it is not a verdict either.
+  3/3 on impeller-shrink-fits came true as official 8/8. Treat local xhigh 3/3 as too easy;
+  superheater-tube-life went local xhigh 2/2 and official 7/8, which is outside today's band.
 
 ## Packaging and delivery
 - Zip in the cloud: `zip -qr -X <task>-YYYYMMDD.zip README.md instruction.md task.toml authoring environment solution tests`.

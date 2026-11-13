@@ -41,11 +41,14 @@ Against v6 (low 1 of 12, xhigh 1 of 6):
 
 What the rates would mean at the gates, if they held:
 
-| | low rate | easiness passes (0 of 3) | xhigh rate | difficulty sees 1 to 7 of 8 |
+| | low rate | easiness passes (0 of 3) | xhigh rate | difficulty sees 0 to 5 of 8 |
 |---|---|---|---|---|
-| v6 | 1 of 12 | 77 per cent | 1 of 6 | 77 per cent |
-| v7 | 1 of 6 | 58 per cent | 3 of 6 | 99 per cent |
-| v7, low pooled with v6 | 2 of 18 | 70 per cent | 3 of 6 | 99 per cent |
+| v6 | 1 of 12 | 77 per cent | 1 of 6 | over 99 per cent |
+| v7 | 1 of 6 | 58 per cent | 3 of 6 | 86 per cent |
+| v7, low pooled with v6 | 2 of 18 | 70 per cent | 3 of 6 | 86 per cent |
+
+The last column is recomputed for the bar as of Nov 13 (pass band 0 to 5 of 8). It read "1 to 7 of 8" with 77,
+99 and 99 per cent when this was written; on today's band v6's xhigh rate of 1 in 6 is no longer a cost.
 
 **Not established.** The low-effort rate of v7 on its own. 1 of 6 bounds it below about 0.58 at 95 per cent,
 which is not good enough to build on; six more low-effort runs would show whether it sits with v6 or above it.

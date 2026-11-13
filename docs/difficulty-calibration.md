@@ -1,5 +1,9 @@
 # Difficulty calibration lessons (from Alex's Kepler tasks, Oct-Nov 2026)
 
+**The bar these lessons are read against (Alex, Nov 13):** easiness probe, 0 of 3 solved at low effort;
+difficulty probe, pass band 0 to 5 of 8 at xhigh. The sections below were written as the bar moved, and say so
+where they were written against an older one.
+
 ## What makes official xhigh fail
 - Official xhigh fails on rare coverage slips spread over many independent layers, not on hard modelling.
   pump-wear-assessment: about 10 layers went 8 of 8 officially; about 13 layers went 7 of 8.
@@ -231,6 +235,9 @@ Two consequences for the next build:
 **The profile that resulted is the one to aim for anyway**: 1 of 3 at low effort, 3 of 3 at xhigh. The task
 rewards care and correct reasoning rather than luck, and the two xhigh reports read like competent engineering
 work. A task that no run solves is not better calibrated, it is just unsolved.
+
+*Superseded. The bar as of Nov 13 is 0 of 3 at low effort and 0 to 5 of 8 at xhigh, so this profile is now on
+the wrong side of both probes, and 0 of 8 is inside the band (`docs/playbook.md`, Calibration targets).*
 
 ## The proxy was wrong (Nov 11)
 
