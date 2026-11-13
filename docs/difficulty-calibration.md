@@ -789,3 +789,32 @@ branches), a 30 s limit against 1 to 3 s.
   the examples still passed (0.71 of the band). Size the alteration so that a run without the order is out.
 - **Check the reference at the shipping size before anything is frozen.** The reference's search for the
   change that turned the outcome looked back over ten large changes; ten times the log, it stopped short.
+
+## ventilation-district-airflow, the bundle at shipping size: low 0 of 3, xhigh 1 of 3 (Nov 13)
+
+`docs/design-note-ventilation-district.md`. Core v2 at seven times the size (806 to 955 branches, 1153 to
+1322 log rows), the altered airways resized so that a run without the survey order is out of band on the
+examples, a 35 s limit against a reference of 8.7 to 10.5 s.
+
+| probe | effort | time | examples | six districts | order |
+|---|---|---|---|---|---|
+| A, B, C | low | 3 to 7 min | accepted | 5 of 6 out, as the `worked_on` variant | the airways worked on |
+| D | xhigh | over 65 min | accepted | accepted, largest error 0.14 of the band | airways, the open stopping, FAN-B |
+| E | xhigh | 25 min | accepted | 5 of 6 out | the airways worked on |
+| F | xhigh | 33 min | accepted | 2 of 6 out (the closures that hold where the records stall) | airways, the open stopping, FAN-A as a check |
+
+- **The core's rates carried over to the bundle unchanged**: 0 of 3 and 1 of 3 at both sizes. Size and the
+  limit added nothing and took nothing away; three low-effort programs ran a district in 5 to 12 s.
+- **Two of three xhigh probes balanced the campaigns at the stoppings' nodes** (one in v2), unprompted. The
+  open stopping is the easier of the two conditions. The open closure is what holds: reading a fan is cheap,
+  acting on a reading that contradicts the calculation is the step only the passes took.
+- **A design that sits between records and truth invites a toss.** Averaging the campaigns moved F's district
+  towards the real one and its four open closures split two and two.
+- **A stall fold is not the peak.** With unequal blade settings a fan passes its peak against a load line
+  steeper than its rising limb and sits there with no jump and no hysteresis; thirteen draws of thirteen were
+  refused at one district before the cause was read off the fans' limbs at the closure. Print the state at
+  the event before changing seeds.
+- **Generate at the shipping size once, late, and from the bundle's own generator.** Three full generations
+  were spent on changes (checksum module, alteration size, the edge test) that the small set would have shown.
+- Cost: about five hours from the v2 result to a clean preflight, most of it generation (25 to 45 minutes a
+  pass on two CPUs) and the regeneration check (23 minutes).

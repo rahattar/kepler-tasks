@@ -67,7 +67,21 @@ No CPU affinity. The crew counts an order against the process that placed it.
 |---|---|---|
 | core v1, small, crew answers for pending | 0 of 3 | at least 2 of 3 |
 | core v2, small, crew answers for examples only | 0 of 3 | 1 of 3 |
-| the bundle | 0 of 3 | three probes running when this was written |
+| the bundle | 0 of 3 (3 to 7 min) | 1 of 3 |
 
 Every low probe, core and bundle, surveyed the airways worked on and nothing else, and failed the five
 districts that have a condition exactly as the `worked_on` variant does.
+
+The bundle's xhigh probes: D accepted on all six and on the three visible districts (stoppings balanced at
+their nodes, the fan behind the longer ducting read and the turn found; its program was complete after 50
+minutes and it was still testing at 65); E surveyed the airways worked on only (25 min); F found the open
+stopping from the node balances and spent the last place on a fan, but used the reading as a check, and
+failed the two districts that hold where their records stall (33 min).
+
+- **Averaging the campaigns is a coin, not a route.** F averaged the three surveys of an unaltered airway
+  (VS-4 says the latest is used). That puts its district between the records' and the real one, and it went
+  the right way at two of the four open closures and the wrong way at two. The closure is built between the
+  two edges, so anything that moves the records towards the district makes the outcome a toss.
+- **The limit did not bind.** Probe programs ran a district in 1.3 to 12 s against 35; the reference is the
+  slow one at 8.7 to 10.5 s. The one long run was D's on the pending district, 26 s with the turn search.
+- Probe programs are in `cores/vent-fan-stall-v2/probes/full_*.py`.
