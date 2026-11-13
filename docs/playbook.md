@@ -125,11 +125,13 @@ Sciences). Follow this exactly unless Alex says otherwise.
   documents are missing it.
 
 ## Calibration targets
-- Easiness: 3 low-effort runs, at most 1 solved. 1 of 3 has passed (vav-airflow-calibration Oct 19,
-  chill-bench-commissioning); 2 of 3 has failed (cooler-fouling-assessment).
-- Difficulty: 8 official xhigh runs. 7 of 8 has passed (vav-airflow-calibration, superheater-tube-life)
-  and 0 of 8 has passed once (turbine-tool-repair); 8 of 8 fails as too easy
-  (impeller-shrink-fits, Nov 9). Aim for 2 to 6 so that one draw either way does not decide it.
+- **The bar (Alex, Nov 13): easiness probe 0 of 3; difficulty probe pass band 0 to 5 of 8.** This branch's
+  playbook is an old copy; the current one, with the timed-task priority, is `docs/playbook.md` on main.
+- Easiness: 3 low-effort runs on claude-opus-5-5, none solved. The 1 of 3 passes of October
+  (vav-airflow-calibration, chill-bench-commissioning) are history, not a precedent.
+- Difficulty: 8 official xhigh runs, 0 to 5 solved; 6, 7 and 8 of 8 fail. The 7 of 8 passes of October
+  (vav-airflow-calibration, superheater-tube-life) are history, not a precedent; 0 of 8 is inside the band
+  (turbine-tool-repair) and is reviewed on the same rubric.
 - Locally, run probe subagents (general-purpose, effort xhigh, and low for easiness) in sandboxes built by
   `tools/mkprobe.sh`, with the brief in `tools/brief.txt`. Probes must not read anything outside their sandbox.
   Grade each with the task's own grader.

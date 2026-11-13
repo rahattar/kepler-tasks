@@ -232,6 +232,9 @@ Two consequences for the next build:
 rewards care and correct reasoning rather than luck, and the two xhigh reports read like competent engineering
 work. A task that no run solves is not better calibrated, it is just unsolved.
 
+*Superseded. The bar as of Nov 13 is 0 of 3 at low effort and 0 to 5 of 8 at xhigh, so this profile is now on
+the wrong side of both probes, and 0 of 8 is inside the band (`docs/playbook.md` on main).*
+
 ## The proxy was wrong (Nov 11)
 
 flare-load-study went to screening with local probes reading 1 of 3 at low effort. The screen solved it **3 of 3,

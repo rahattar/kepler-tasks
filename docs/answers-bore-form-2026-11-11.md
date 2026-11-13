@@ -1,5 +1,8 @@
 # Answers on bore-form-acceptance (20261111c, commit 3de1906), Nov 11
 
+> **Corrected on main.** Question 4's "0 of 3 isn't the bar" and "Only official 8 of 8 fails" no longer hold:
+> the bar as of Nov 13 is 0 of 3 on the easiness probe and a pass band of 0 to 5 of 8 on the difficulty probe.
+
 ## Where the evidence comes from
 - **Seen by me:**
   - impeller-shrink-fits 20261109b: the review text, with security and verification-explanation blocking and the
