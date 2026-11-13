@@ -54,3 +54,22 @@ umask that test.sh sets (077), so the program could not read its package. Fixed 
 the agent user (examples 0 points out), test.sh gives reward 1 with the real ctrf plugin, verifier 58 s. The
 six runs took 7.4 to 10.2 s there against 12 to 27 s in the sandbox, so the 60 s limit is about 6 times the
 slowest run on that machine and 2.2 to 3.5 times here.
+
+## Low-effort probes on the bundle (Nov 13, sprinkler session): 0 of 3, the pending package run and not read
+
+Three probes on `model: "opus"`, low effort, on the bundle's agent-visible data (docs, both examples, the
+pending package) with the bundle's instruction as the brief; graded on the six hidden sites at 60 s.
+
+| probe | time | hidden sites with points out | points out on each | order |
+|---|---|---|---|---|
+| J1 | 55 min | 5 of 6 | 223 to 482 | one bearing for each listed system, spare unused; 39 to 52 s a site |
+| J2 | 72 min | 5 of 6 | 228 to 315 | the same; 48 to 53 s a site |
+| J3 | 31 min | 5 of 6 (and 1 point at south_yard) | 223 to 315 | the same; under 1 s a site from an embedded table |
+
+- **All three passed both examples and failed the same five sites the same way.** None is the reference's order.
+- **All three ran the pending package and reported only that it "runs cleanly".** None compared its allowance
+  with its listed systems or its analyses machine by machine.
+- **This is 0 of 3 on the easiness bar, and it is also the tips' warning sign** (every probe failing the same
+  check with the same wrong answer). The instance is visible and was not read. Whether it is readable is what
+  the xhigh round has to show: at least one xhigh run should find it from the pending package.
+- J1 and J2 run close to the limit (up to 53 s of 60).
