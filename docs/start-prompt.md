@@ -8,9 +8,9 @@ need is in the GitHub repo rahattar/kepler-tasks; attach it and clone it.
    rules are standing rules; follow them exactly.
 2. Use tasks/impeller-shrink-fits as the template for the bundle layout, the sealed definition, the lab wrapper,
    the grader, the evidence scripts and preflight. Skim the README.md of the other tasks only as far as you need
-   to stay clear of their subjects, deliverable shapes and verification. For a timed program task, the bare
-   cores cores/journal-bearing-v4 and cores/sprinkler-demand-v1 show the harness: a per-run limit, pinned
-   threads, a timeout failing the run.
+   to stay clear of their subjects, deliverable shapes and verification. For a timed program task, tasks/journal-bearing-survey
+   is the complete example: a per-run limit in tests/ and in instruction.md, pinned threads, a timeout failing
+   the task, the naive version shown timing out, the hidden shift in a manifest.
 3. Propose 5 new task ideas in mechanical engineering. AfterQuery's top priority (Nov 11, repeated Nov 13) is the
    kind in docs/afterquery-asks-2026-11-11.md, so propose that kind first: the tests re-run the agent's program
    on hidden inputs under a per-run time limit stated in instruction.md, and the hidden data is deliberately

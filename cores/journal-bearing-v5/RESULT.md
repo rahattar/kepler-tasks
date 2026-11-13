@@ -36,7 +36,8 @@ to spare, and its analyses on file show why.
 No probe has seen v5. The open question is how many runs look at the pending package closely enough to ask
 why its allowance is 5. Expect more than v4's zero; three v4 runs already wrote a check that compares a
 machine's analyses with its system's. A round of 3 low and 3 xhigh on `model: "opus"` settles it:
-- low 0 of 3 and xhigh 1 to 3 of 3: ship as built;
+- low 0 of 3 and xhigh 1 or 2 of 3: ship as built. xhigh 3 of 3 is the too-easy pattern against the bar as of
+  Nov 13 (easiness 0 of 3, difficulty band 0 to 5 of 8): harden before shipping;
 - low 1 or more of 3: too visible; the next step is a pending package whose console differs by less, or
   whose allowance has no spare (a kept console), not a return to v4;
 - 0 of 6 again with nobody opening the pending package: the instance is fair but unread; say so in the notes.
