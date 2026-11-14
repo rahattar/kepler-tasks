@@ -28,7 +28,7 @@ import sys
 
 import numpy as np
 
-STEPS = 50                                     # along a pipe
+STEPS = 30                                     # along a pipe
 _low = np.geomspace(2e-4, 0.30, 26)
 SHARES = np.concatenate([_low, np.linspace(0.32, 0.68, 19), (1 - _low)[::-1]])     # of a pair's oil in pipe A
 DROPS_APART = 0.06                             # ln of the ratio of two pressure drops that 4.1 says are one
@@ -65,7 +65,7 @@ def march(flow, bore, length, uo, t_in, t_amb, oil, steps=STEPS):
             ratio = nu_b / viscosity(A, B, tw)
             film = film0 * ratio ** 0.14
             again = (film * tb + uo * t_amb) / (film + uo)
-            settled = np.max(np.abs(again - tw)) < 1e-7
+            settled = np.max(np.abs(again - tw)) < 1e-4        # K
             tw = again
             if settled:
                 break

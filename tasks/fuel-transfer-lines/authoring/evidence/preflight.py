@@ -231,7 +231,13 @@ bad = [s for s, t in txt.items() if re.search(r"(?<!0 )UNEXPECTED|PROBLEM|BROKEN
 check(not bad, "no study reports anything unexpected%s" % ("" if not bad else ": %s" % bad))
 check("reference: accepted on all three sets" in txt["reference_run"], "reference_run.txt: accepted on the six sites, on the three packages beside the program and on the small sites")
 cpu = [float(x) for x in re.findall(r"CPU time of a run: [\d.]+ to ([\d.]+) s; the limit", txt["reference_run"])]
-check(cpu and 2.0 <= rerun.LIMIT_S / cpu[0] <= 3.5, "the limit is between 2 and 3.5 times the reference's longest run (%s s of CPU)" % (cpu[0] if cpu else "?"))
+speed = re.search(r"^platform factor ([\d.]+)$", read("authoring", "evidence", "platform_speed.txt"), re.M) if os.path.exists(os.path.join(EVIDENCE, "platform_speed.txt")) else None
+factor = float(speed.group(1)) if speed else 0.0
+check(cpu and factor >= 1.0 and 2.0 <= rerun.LIMIT_S / (factor * cpu[0]) <= 3.5,
+      "the limit is between 2 and 3.5 times the reference's longest run at the platform's speed (%s s of CPU here, times %s from platform_speed.txt)" % (cpu[0] if cpu else "?", factor))
+fast = [float(x) for x in re.findall(r"fast form: CPU time of a run: [\d.]+ to ([\d.]+) s; largest error", txt["second_run"])]
+check(fast and factor >= 1.0 and max(fast) * factor < rerun.LIMIT_S,
+      "the second solution made fast is inside the limit at the platform's speed too (its slowest run %s s here)" % (max(fast) if fast else "?"))
 check("second solution: as expected" in txt["second_run"],
       "second_run.txt: the second solution as first written is right on small sites and stopped at the limit on the six; made fast, it is accepted on every set inside the limit")
 w = re.search(r"widest departure of the second solution from the sealed results, either form, any set: ([\d.]+) of the band", txt["second_run"])

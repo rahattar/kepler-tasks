@@ -1,0 +1,16 @@
+How fast intake's machines run this bundle, from the oracle of fuel-transfer-lines-20261114 (Harbor 0.21.0,
+three oracle trials side by side, Nov 14). The checker's account of the first trial, as the ctrf report gives it:
+
+  boiler_lane: 0 of 1249 records out of band, largest error 0.24 of the band, 39.3 s on the clock and 39.1 s of CPU
+  canal_basin: over the limit
+  stopped: the run on canal_basin used up its 40 s, on the clock or in CPU time
+
+The same program on the same site in this sandbox (reference_run.txt of that zip): 13.4 s on the clock and 12.9 s
+of CPU. The clock and the CPU agree on the platform, so the trials did not wait for each other: its CPUs are
+slower. The CPU figure on the platform is 39.1 / 12.9 = 3.03 times the sandbox's.
+
+platform factor 3.03
+
+preflight.py holds the limit against the reference's and the second solution's slowest runs here, times this
+factor: the limit is to be 2 to 3.5 times the reference's slowest run on the platform, and the second solution
+made fast has to be inside it there too.

@@ -18,5 +18,5 @@ sites.py run into an empty directory: the nine sites at full size, then at the s
   south_wharf draw 0: FL-115-A reading 3 moves 0.007 K, drawn again
   south_wharf  run      lines 6 pipes 10 records 268  allowance 4 (recovered 2)  records with a pipe under 0.3: 114  | F
   upper_yard   run      lines 6 pipes 10 records 242  allowance 3 (recovered 2)  records with a pipe under 0.3: 88  | FL
-exit statuses [0, 0, 0, 0], 64 minutes
+exit statuses [0, 0, 0, 0], 70 minutes
 162 files listed, 0 made differently, 0 made and not listed

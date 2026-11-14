@@ -33,9 +33,9 @@ import sys
 import numpy as np
 
 LN10 = np.log(10.0)
-RK_STEPS = 16
-NEWTON = 4                                     # steps for the wall temperature
-LADDER = np.concatenate([np.geomspace(3e-4, 0.24, 22), np.linspace(0.26, 0.74, 25), 1.0 - np.geomspace(0.24, 3e-4, 22)])
+RK_STEPS = 8
+NEWTON = 3                                     # steps for the wall temperature
+LADDER = np.concatenate([np.geomspace(3e-4, 0.24, 16), np.linspace(0.27, 0.73, 17), 1.0 - np.geomspace(0.24, 3e-4, 16)])
 
 
 class Oil:

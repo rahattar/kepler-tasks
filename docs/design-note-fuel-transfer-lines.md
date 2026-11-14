@@ -55,10 +55,14 @@ bore is solved from one reading and dp goes as D^-4. At 1.5 per cent that is 0.6
 playbook's factor of two; at 2.5 per cent it is 0.40. Every wrong route was out by 8 to 26 bands at 1.5 per
 cent and stays out.
 
-**The timed half.** 40 s a run on one CPU; the reference 11.6 to 14.8 s of CPU. The second solution as first
-written (scipy solve_ivp and brentq, one case at a time) takes 100 s for a small site of 250 records and is
-stopped at the limit; made fast it runs a site in 15.8 to 17.9 s. The limit does not separate probes: their
-programs run a site in 2.6 to 14.6 s.
+**The timed half.** 40 s a run on one CPU. Intake's machines run 3.03 times slower than the sandbox, clock and
+CPU alike: the first submission (20261114) failed its oracle on that, the reference at 12.9 s here taking 39.1 s
+there and the next site over the limit (`authoring/evidence/platform_speed.txt`). In 20261114b the reference
+runs a site in 4.1 to 6.1 s here (30 stations, wall temperature to 1e-4 K), at most 18.5 s there, and the
+fast second solution in 4.9 to 7.1 s, at most 21.5 s there. The second solution as first written (scipy
+solve_ivp and brentq, one case at a time) takes 82 to 89 s for a small site of 250 records and is stopped at
+the limit. Probe programs ran a site in 2.6 to 15 s here, 8 to 45 s there, so the limit may now decide a slow
+but correct program on the platform.
 
 **Verifier.** The program runs as nobody (subprocess user=, group=, extra_groups=[]). The crew is a desk
 directory the checker serves between looks at the clock: the verifier's `heatsurvey` leaves the order under

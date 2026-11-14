@@ -81,6 +81,13 @@ def run(program, which="six", limit=None, only=None):
                        desk=os.path.join(room(), "desk"), path_first=tools)
 
 
+def platform_factor():
+    """How many times this sandbox's CPU time a run takes on intake's machines (platform_speed.txt)."""
+    import re
+    with open(os.path.join(EVIDENCE, "platform_speed.txt")) as handle:
+        return float(re.search(r"^platform factor ([\d.]+)$", handle.read(), re.M).group(1))
+
+
 def written(text, name="program.py"):
     """A program given as text, as a file a study can hand to `run`."""
     path = os.path.join(room(), name)

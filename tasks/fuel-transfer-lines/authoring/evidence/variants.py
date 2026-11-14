@@ -31,7 +31,7 @@ NO_ORDER = {
     "no_order": ("the reference with no survey order placed", [(ORDER, "    order = []\n")]),
 }
 SOUND = {
-    "finer_steps": ("120 steps along a pipe for 50", [("STEPS = 50  ", "STEPS = 120 ")]),
+    "finer_steps": ("120 steps along a pipe for 30, and the wall temperature to 1e-7 K for 1e-4", [("STEPS = 30  ", "STEPS = 120 "), ("< 1e-4        # K", "< 1e-7        # K")]),
     "other_thresholds": ("a pair's drops apart by 3 per cent for 6, a coefficient moved by 8 per cent for 5",
                          [("DROPS_APART = 0.06  ", "DROPS_APART = 0.03  "), ("COEFFICIENT_MOVED = 0.05  ", "COEFFICIENT_MOVED = 0.08  ")]),
     "order_reversed": ("the same pipes ordered in the opposite sequence",

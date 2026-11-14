@@ -570,3 +570,19 @@ task's words outside the data. The README-duplication and schema advisories are 
   shows the zip's file name. The gate compares a bundle with whatever each entry holds, under that entry's name.
 - 23:51: that entry is approved. ventilation-district-airflow 20261113b is accepted, under impeller-shrink-fits's
   name. Nothing to resubmit; the repo's folder is back at b.
+
+## Oracle failure, Nov 14 (fuel-transfer-lines 20261114): intake's CPUs are three times slower than the sandbox
+Oracle 0 0 0, verifier 79 s each. The ctrf report gave the checker's account: boiler_lane accepted at 39.3 s on
+the clock and 39.1 s of CPU, canal_basin over the 40 s limit, judging stopped. The same program took 12.9 s of
+CPU on boiler_lane in the sandbox. Clock and CPU agreed on the platform, so this was not three trials sharing a
+core (journal-bearing, Nov 13); the cores are slower, by 3.03 (`tasks/fuel-transfer-lines/authoring/evidence/
+platform_speed.txt`). The limit was 2.7 times the reference's slowest run measured here, so 0.9 times there.
+ventilation-district-airflow passed at 35 s with a reference of 8.7 to 10.5 s here: 1.1 to 1.3 times there.
+Fixed in 20261114b: the reference to 30 stations and its wall temperature to 1e-4 K (4.2 to 6.0 s here, same
+largest error), the fast second solution to 8 Runge-Kutta steps, 3 Newton steps and 49 rungs (5.4 to 6.7 s),
+the limit kept at 40 s.
+- **Rule.** Calibrate a time limit at the platform's speed: the sandbox's CPU time times 3. The limit is 2 to
+  3.5 times the reference's slowest run there, and the fast independent solution is inside it there. preflight
+  reads the factor from the bundle's `platform_speed.txt`.
+- **Rule.** When an oracle fails, ask for the ctrf report first: the test's assertion text carries the
+  checker's own account, site by site, with clock and CPU. It told cause and fix apart in one read.

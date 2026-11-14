@@ -32,13 +32,16 @@ for which, title in (("small", "the nine small sites"), ("beside", "the two exam
                      ("six", "the six sites")):
     fast[which] = common.run(common.SECOND, which)
     out.account("%s, limit %d s" % (title, common.LIMIT), fast[which])
-    out.say("  CPU time of a run: %.1f to %.1f s; largest error at any record: %.2f of the band"
+    out.say("  fast form: CPU time of a run: %.1f to %.1f s; largest error at any record: %.2f of the band"
             % (common.cpu_range(fast[which]) + (common.largest_error(fast[which]),)))
     out.say()
 widest = max(common.largest_error(v) for v in list(fast.values()) + [plain_small])
+factor = common.platform_factor()
+out.say("at the platform's speed (platform_speed.txt, %.2f times this sandbox's CPU time) the fast form's slowest run on the six is %.1f s against the limit of %d s"
+        % (factor, factor * common.cpu_range(fast["six"])[1], common.LIMIT))
 out.say("widest departure of the second solution from the sealed results, either form, any set: %.2f of the band" % widest)
 ok = (plain_small["accepted"] and not plain_six["accepted"] and "used up" in plain_six["stopped"] and len(plain_six["sites"]) == 1
-      and all(v["accepted"] for v in fast.values()))
+      and all(v["accepted"] for v in fast.values()) and factor * common.cpu_range(fast["six"])[1] < common.LIMIT)
 out.say("plain form: %s on the small sites; on the six, %s" % ("accepted" if plain_small["accepted"] else "NOT accepted",
                                                               plain_six["stopped"] or "not stopped"))
 out.say("fast form: %s" % ("accepted on all three sets inside the limit" if all(v["accepted"] for v in fast.values()) else "NOT accepted somewhere"))
