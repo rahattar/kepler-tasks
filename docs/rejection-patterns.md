@@ -556,3 +556,5 @@ task's words outside the data. The README-duplication and schema advisories are 
   dictionary keys included, not only its prose.
 - Alex's call at 22:37: reword and resubmit rather than hold. 20261113d is c with the task description and
   two sentences of the README reworded; nothing the agent sees, no code and no study changed.
+- 20261113d refused at once with the same words. Rewording does not move this gate (third time, after
+  lube-oil-survey twice). What changed between b (passed) and c (refused) is not in our bundle: the pool did.
