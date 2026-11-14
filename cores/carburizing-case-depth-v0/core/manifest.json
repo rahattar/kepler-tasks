@@ -1,0 +1,32 @@
+{
+ "CX-1": {
+  "shift": "drift from 30 per cent of the record, to 0.22 %C (pending: from 55 per cent, to 0.15)",
+  "onset": 0.3,
+  "max_drift": 0.22
+ },
+ "CX-2": {
+  "shift": "clean; cycles at 945 to 970 C (examples to 940)",
+  "onset": null,
+  "max_drift": 0
+ },
+ "CX-3": {
+  "shift": "late, slow drift; a grade the examples do not have",
+  "onset": 0.7,
+  "max_drift": 0.12
+ },
+ "CX-4": {
+  "shift": "drift; nearly half the loads thin sections carburized from both sides",
+  "onset": 0.45,
+  "max_drift": 0.18
+ },
+ "CX-5": {
+  "shift": "clean; long boosts of 5 to 9 h (examples 2 to 6)",
+  "onset": null,
+  "max_drift": 0
+ },
+ "CX-6": {
+  "shift": "early, fast drift",
+  "onset": 0.15,
+  "max_drift": 0.2
+ }
+}
