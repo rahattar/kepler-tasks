@@ -110,3 +110,8 @@ every study rerun: the reference 8.3 to 10.5 s, fast_airflow.py 5.9 to 8.1 s, na
 
 **Held (Nov 13, 22:19).** The similarity gate named impeller-shrink-fits for 20261113c. Held unchanged on
 Alex's call; resubmit c only if impeller-shrink-fits fails or is rejected.
+
+**Approved (Nov 13).** 20261113b was approved. It had gone into the impeller-shrink-fits entry on the platform
+by mistake, which is also why c and d were refused as too similar to impeller-shrink-fits: they were being
+compared with b. `tasks/ventilation-district-airflow/` is back at b (commit 8aaac75), file for file the zip
+the platform holds; c (limit 30 s) and d (reworded) stay in the history and are not to be submitted.

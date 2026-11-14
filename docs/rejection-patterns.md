@@ -568,3 +568,5 @@ task's words outside the data. The README-duplication and schema advisories are 
   b. Not a similarity problem; the upload went into the wrong entry.
 - **Rule.** Before uploading, check which task entry the upload is going into, and after it, that the entry
   shows the zip's file name. The gate compares a bundle with whatever each entry holds, under that entry's name.
+- 23:51: that entry is approved. ventilation-district-airflow 20261113b is accepted, under impeller-shrink-fits's
+  name. Nothing to resubmit; the repo's folder is back at b.

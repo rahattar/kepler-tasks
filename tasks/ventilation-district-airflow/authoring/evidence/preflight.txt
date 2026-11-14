@@ -20,7 +20,7 @@ ok    the statement ends with a blank line and the closing sentence
 ok    the statement has no heading
 ok    the statement assigns no role and speaks to no one
 ok    the statement has no grading words
-ok    the statement gives the limit in the required sentence, and it is the checker's: 30 s
+ok    the statement gives the limit in the required sentence, and it is the checker's: 35 s
 ok    the checker enforces that limit on the wall clock of the run, and a run over it ends the judging
 ok    the checker sets no CPU affinity
 ok    the checker holds a run to 1 CPU by its CPU time: the program's and every process's it starts count against the same limit as the wall clock
