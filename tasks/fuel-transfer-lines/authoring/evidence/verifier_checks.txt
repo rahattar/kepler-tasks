@@ -1,0 +1,80 @@
+tables that are the sealed result in another dress: accepted
+ok         the sealed table as it is: accepted
+ok         CRLF line ends: accepted
+ok         no line end after the last row: accepted
+ok         an empty line after every row: accepted
+ok         rows in the opposite order: accepted
+ok         spaces around the values of a row: accepted
+ok         every field of a row in quotes: accepted
+ok         a plus sign on every number: accepted
+ok         exponent form: accepted
+ok         fifteen decimals: accepted
+
+tables the task statement does not describe: refused
+ok         no OUT_CSV written: refused (OUT_CSV was not written as a file ([Errno 2] No such file or directory: '/tmp/site_run_353i5x2x/work/out.csv'))
+ok         a directory where OUT_CSV should be: refused (OUT_CSV was not written as a file (not a regular file))
+ok         a symbolic link to a file holding the sealed table: refused (OUT_CSV was not written as a file (not a regular file))
+ok         bytes that are not text: refused (OUT_CSV cannot be read as CSV ('utf-8' codec can't decode byte 0xff in position 11408: invalid start byte))
+ok         the sealed table followed by padding to more than 1000000 bytes: refused (OUT_CSV is larger than 1000000 bytes)
+ok         no header: refused (the first row of OUT_CSV is not the header record,dp_kPa,t_out_C)
+ok         a header with one name misspelt: refused (the first row of OUT_CSV is not the header record,dp_kPa,t_out_C)
+ok         the header in capitals: refused (the first row of OUT_CSV is not the header record,dp_kPa,t_out_C)
+ok         the header with spaces around its names: refused (the first row of OUT_CSV is not the header record,dp_kPa,t_out_C)
+ok         a fourth column: refused (the first row of OUT_CSV is not the header record,dp_kPa,t_out_C)
+ok         the temperature column left out: refused (the first row of OUT_CSV is not the header record,dp_kPa,t_out_C)
+ok         one record left out: refused (OUT_CSV has 244 of the package's 245 records)
+ok         one record given twice: refused (OUT_CSV has the record FL-111/00 twice)
+ok         a record that is not of the package: refused (OUT_CSV has a row for 'FL-999/00', which is not a record of the package)
+ok         one pressure drop empty: refused (dp_kPa of FL-111/03 is not a decimal number (''))
+ok         one pressure drop a word: refused (dp_kPa of FL-111/03 is not a decimal number ('low'))
+ok         one pressure drop nan: refused (dp_kPa of FL-111/03 is not a decimal number ('nan'))
+ok         one pressure drop inf: refused (dp_kPa of FL-111/03 is not a decimal number ('inf'))
+ok         one pressure drop followed by its unit: refused (dp_kPa of FL-111/03 is not a decimal number ('56.03194744408633 kPa'))
+ok         one pressure drop with a decimal comma: refused (dp_kPa of FL-111/03 is not a decimal number ('56,03194744408633'))
+ok         one pressure drop with a digit separator: refused (dp_kPa of FL-111/03 is not a decimal number ('1_0.5'))
+ok         one pressure drop in hexadecimal: refused (dp_kPa of FL-111/03 is not a decimal number ('0x1F'))
+ok         the sealed table, then exit status 3: refused (exit status 3 (nothing on stderr))
+
+the band: 2.5 per cent of the pressure drop, 0.5 K of the outlet temperature
+ok         every pressure drop 2.4 per cent high: accepted
+ok         every pressure drop 2.4 per cent low: accepted
+ok         every pressure drop 2.6 per cent high: refused (245 records out of band)
+ok         every pressure drop 2.6 per cent low: refused (245 records out of band)
+ok         every outlet temperature 0.45 K high: accepted
+ok         every outlet temperature 0.45 K low: accepted
+ok         every outlet temperature 0.55 K high: refused (245 records out of band)
+ok         every outlet temperature 0.55 K low: refused (245 records out of band)
+ok         one pressure drop 3 per cent high among true ones: refused (1 records out of band)
+ok         one outlet temperature 0.6 K low among true ones: refused (1 records out of band)
+
+the limit, set to 3 s for these cases
+ok         writes the sealed table, sleeps 1 s and exits: accepted
+ok         writes the sealed table and sleeps on: over the limit, the table not opened: refused (the run on kiln_road used up its 3 s, on the clock or in CPU time)
+ok         writes the sealed table, ignores SIGTERM and spins: refused (the run on kiln_road used up its 3 s, on the clock or in CPU time)
+ok         over the limit on the first of two sites: the second is never started: refused (the run on kiln_road used up its 3 s, on the clock or in CPU time)
+ok         two processes it starts each burn 1.2 s of CPU and end before it writes the table, limit 10 s: accepted, and their CPU time is counted: accepted
+ok         writes the sealed table and keeps two processes it starts busy, limit 3 s: over the limit: refused (the run on kiln_road used up its 3 s, on the clock or in CPU time)
+ok         writes the sealed table and leaves a process behind in a session of its own: accepted
+ok         the process left behind is gone after the run
+
+the survey crew during a run (each program writes the sealed table only if the crew behaved as stated)
+ok         an order of the whole allowance is answered: status 0, the header and one row a pipe, in the order asked: accepted
+ok         an order of one pipe over the allowance is refused whole, and the order after it is still taken: accepted
+ok         an order naming a pipe twice is refused: accepted
+ok         an order naming a pipe the site does not have is refused: accepted
+ok         a second order in the same run is refused, the first having been answered: accepted
+ok         an order through a copy of the package that names another site is refused: accepted
+ok         heatsurvey with no pipe prints its usage and ends with status 2: accepted
+ok         the package cannot be written to by the program: accepted
+
+tests/test.sh, run for real with pytest replaced by a stand-in
+ok         pytest exits 0 and the report is one test, passed: reward 1
+ok         pytest exits 0 and the report is two tests, both passed: reward 0
+ok         pytest exits 1 with a report of one test, passed: reward 0
+ok         pytest exits 0 and the report is one test, failed: reward 0
+ok         pytest exits 0 and the report is one test, skipped: reward 0
+ok         pytest exits 0 and leaves no report: reward 0
+ok         pytest exits 0 and the report is not JSON: reward 0
+ok         no lines.py was delivered: reward 0
+
+67 cases, 0 UNEXPECTED

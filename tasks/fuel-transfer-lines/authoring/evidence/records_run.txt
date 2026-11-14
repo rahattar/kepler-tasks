@@ -1,0 +1,136 @@
+programs that reproduce the examples and leave something out
+
+covering_jobs_only: surveys the pipes whose covering was worked on since the last campaign, and nothing else
+  the two examples
+  east_depot: 0 of 1274 records out of band, largest error 0.18 of the band, 12.7 s on the clock and 12.4 s of CPU, surveyed FL-111-A FL-327-B FL-414-A FL-420-A
+  north_quay: 0 of 1273 records out of band, largest error 0.11 of the band, 12.1 s on the clock and 11.6 s of CPU, surveyed FL-216-A FL-218-A FL-226-A FL-420-A
+  accepted
+  the six sites
+  boiler_lane: 0 of 1249 records out of band, largest error 0.24 of the band, 13.3 s on the clock and 12.3 s of CPU, surveyed FL-115-B FL-220-A FL-226-B FL-420-B
+  canal_basin: 90 of 1243 records out of band (FL-216, FL-422), largest error 19.92 of the band, 12.7 s on the clock and 12.2 s of CPU, surveyed FL-113-B FL-121-A FL-125-B FL-214-A
+  kiln_road: 44 of 1285 records out of band (FL-224), largest error 15.38 of the band, 13.2 s on the clock and 12.2 s of CPU, surveyed FL-117-A FL-121-A FL-222-B FL-418-A
+  south_wharf: 84 of 1259 records out of band (FL-119, FL-218), largest error 19.14 of the band, 12.7 s on the clock and 11.5 s of CPU, surveyed FL-115-A FL-224-A FL-325-A FL-420-B
+  tank_row: 38 of 1250 records out of band (FL-214), largest error 8.38 of the band, 11.6 s on the clock and 11.2 s of CPU, surveyed FL-113-B FL-125-A FL-222-B FL-414-B
+  upper_yard: 39 of 1240 records out of band (FL-226), largest error 15.28 of the band, 13.4 s on the clock and 13.1 s of CPU, surveyed FL-212-B FL-218-A FL-325-B
+  not accepted
+  sites with records out of band: 5 of 6 (canal_basin 90, kiln_road 44, south_wharf 84, tank_row 38, upper_yard 39)
+
+no_division_check: as the reference, but never compares a pair's surveyed division with one pressure drop
+  the two examples
+  east_depot: 0 of 1274 records out of band, largest error 0.18 of the band, 13.2 s on the clock and 12.4 s of CPU, surveyed FL-111-A FL-327-B FL-414-A FL-420-A
+  north_quay: 0 of 1273 records out of band, largest error 0.11 of the band, 11.6 s on the clock and 11.3 s of CPU, surveyed FL-216-A FL-218-A FL-226-A FL-420-A
+  accepted
+  the six sites
+  boiler_lane: 0 of 1249 records out of band, largest error 0.24 of the band, 13.3 s on the clock and 12.9 s of CPU, surveyed FL-115-B FL-220-A FL-226-B FL-420-B
+  canal_basin: 47 of 1243 records out of band (FL-216), largest error 19.92 of the band, 12.8 s on the clock and 12.3 s of CPU, surveyed FL-113-B FL-121-A FL-125-B FL-214-A FL-422-A
+  kiln_road: 0 of 1285 records out of band, largest error 0.23 of the band, 12.6 s on the clock and 12.3 s of CPU, surveyed FL-117-A FL-121-A FL-222-B FL-418-A FL-224-B
+  south_wharf: 44 of 1259 records out of band (FL-119), largest error 19.14 of the band, 12.6 s on the clock and 11.5 s of CPU, surveyed FL-115-A FL-224-A FL-325-A FL-420-B FL-218-A
+  tank_row: 0 of 1250 records out of band, largest error 0.10 of the band, 10.8 s on the clock and 10.4 s of CPU, surveyed FL-113-B FL-125-A FL-222-B FL-414-B FL-214-B
+  upper_yard: 39 of 1240 records out of band (FL-226), largest error 15.28 of the band, 13.1 s on the clock and 12.7 s of CPU, surveyed FL-212-B FL-218-A FL-325-B
+  not accepted
+  sites with records out of band: 3 of 6 (canal_basin 47, south_wharf 44, upper_yard 39)
+
+no_trend_check: as the reference, but never compares a pipe's coefficient from campaign to campaign
+  the two examples
+  east_depot: 0 of 1274 records out of band, largest error 0.18 of the band, 12.5 s on the clock and 12.0 s of CPU, surveyed FL-111-A FL-327-B FL-414-A FL-420-A
+  north_quay: 0 of 1273 records out of band, largest error 0.11 of the band, 12.3 s on the clock and 11.6 s of CPU, surveyed FL-216-A FL-218-A FL-226-A FL-420-A
+  accepted
+  the six sites
+  boiler_lane: 0 of 1249 records out of band, largest error 0.24 of the band, 12.8 s on the clock and 12.3 s of CPU, surveyed FL-115-B FL-220-A FL-226-B FL-420-B
+  canal_basin: 43 of 1243 records out of band (FL-422), largest error 6.92 of the band, 14.8 s on the clock and 14.0 s of CPU, surveyed FL-113-B FL-121-A FL-125-B FL-214-A FL-216-B
+  kiln_road: 44 of 1285 records out of band (FL-224), largest error 15.38 of the band, 12.9 s on the clock and 12.4 s of CPU, surveyed FL-117-A FL-121-A FL-222-B FL-418-A
+  south_wharf: 40 of 1259 records out of band (FL-218), largest error 11.37 of the band, 13.8 s on the clock and 13.0 s of CPU, surveyed FL-115-A FL-224-A FL-325-A FL-420-B FL-119-A
+  tank_row: 38 of 1250 records out of band (FL-214), largest error 8.38 of the band, 11.9 s on the clock and 11.2 s of CPU, surveyed FL-113-B FL-125-A FL-222-B FL-414-B
+  upper_yard: 0 of 1240 records out of band, largest error 0.20 of the band, 14.3 s on the clock and 13.9 s of CPU, surveyed FL-212-B FL-218-A FL-325-B FL-226-B
+  not accepted
+  sites with records out of band: 4 of 6 (canal_basin 43, kiln_road 44, south_wharf 40, tank_row 38)
+
+bore_of_the_register: finds the narrower pipe and surveys it, then takes a coefficient from the new reading with the bore of the register
+  the two examples
+  east_depot: 0 of 1274 records out of band, largest error 0.18 of the band, 12.6 s on the clock and 11.8 s of CPU, surveyed FL-111-A FL-327-B FL-414-A FL-420-A
+  north_quay: 0 of 1273 records out of band, largest error 0.11 of the band, 11.7 s on the clock and 11.1 s of CPU, surveyed FL-216-A FL-218-A FL-226-A FL-420-A
+  accepted
+  the six sites
+  boiler_lane: 0 of 1249 records out of band, largest error 0.24 of the band, 12.4 s on the clock and 12.0 s of CPU, surveyed FL-115-B FL-220-A FL-226-B FL-420-B
+  canal_basin: 47 of 1243 records out of band (FL-216), largest error 18.49 of the band, 12.6 s on the clock and 12.3 s of CPU, surveyed FL-113-B FL-121-A FL-125-B FL-214-A FL-216-B FL-422-A
+  kiln_road: 0 of 1285 records out of band, largest error 0.23 of the band, 12.6 s on the clock and 12.2 s of CPU, surveyed FL-117-A FL-121-A FL-222-B FL-418-A FL-224-B
+  south_wharf: 44 of 1259 records out of band (FL-119), largest error 18.58 of the band, 12.2 s on the clock and 11.8 s of CPU, surveyed FL-115-A FL-224-A FL-325-A FL-420-B FL-119-A FL-218-A
+  tank_row: 0 of 1250 records out of band, largest error 0.10 of the band, 11.5 s on the clock and 11.0 s of CPU, surveyed FL-113-B FL-125-A FL-222-B FL-414-B FL-214-B
+  upper_yard: 39 of 1240 records out of band (FL-226), largest error 14.97 of the band, 14.2 s on the clock and 13.4 s of CPU, surveyed FL-212-B FL-218-A FL-325-B FL-226-B
+  not accepted
+  sites with records out of band: 3 of 6 (canal_basin 47, south_wharf 44, upper_yard 39)
+
+bore_from_the_file: finds the narrower pipe and does not survey it: its bore from the last campaign on file
+  the two examples
+  east_depot: 0 of 1274 records out of band, largest error 0.18 of the band, 12.9 s on the clock and 12.1 s of CPU, surveyed FL-111-A FL-327-B FL-414-A FL-420-A
+  north_quay: 0 of 1273 records out of band, largest error 0.11 of the band, 11.1 s on the clock and 10.9 s of CPU, surveyed FL-216-A FL-218-A FL-226-A FL-420-A
+  accepted
+  the six sites
+  boiler_lane: 0 of 1249 records out of band, largest error 0.24 of the band, 12.7 s on the clock and 12.0 s of CPU, surveyed FL-115-B FL-220-A FL-226-B FL-420-B
+  canal_basin: 35 of 1243 records out of band (FL-216), largest error 15.44 of the band, 14.6 s on the clock and 14.2 s of CPU, surveyed FL-113-B FL-121-A FL-125-B FL-214-A FL-422-A
+  kiln_road: 0 of 1285 records out of band, largest error 0.23 of the band, 13.1 s on the clock and 12.5 s of CPU, surveyed FL-117-A FL-121-A FL-222-B FL-418-A FL-224-B
+  south_wharf: 34 of 1259 records out of band (FL-119), largest error 13.01 of the band, 13.5 s on the clock and 12.9 s of CPU, surveyed FL-115-A FL-224-A FL-325-A FL-420-B FL-218-A
+  tank_row: 0 of 1250 records out of band, largest error 0.10 of the band, 11.2 s on the clock and 10.6 s of CPU, surveyed FL-113-B FL-125-A FL-222-B FL-414-B FL-214-B
+  upper_yard: 39 of 1240 records out of band (FL-226), largest error 6.01 of the band, 15.2 s on the clock and 14.0 s of CPU, surveyed FL-212-B FL-218-A FL-325-B
+  not accepted
+  sites with records out of band: 3 of 6 (canal_basin 35, south_wharf 34, upper_yard 39)
+
+no survey order at all
+  the two examples
+  east_depot: 165 of 1274 records out of band (FL-111, FL-327, FL-414, FL-420), largest error 40.91 of the band, 12.1 s on the clock and 11.8 s of CPU, no survey order
+  north_quay: 176 of 1273 records out of band (FL-216, FL-218, FL-226, FL-420), largest error 24.60 of the band, 11.6 s on the clock and 10.7 s of CPU, no survey order
+  not accepted
+  the six sites
+  boiler_lane: 163 of 1249 records out of band (FL-115, FL-220, FL-226, FL-420), largest error 48.14 of the band, 12.1 s on the clock and 11.6 s of CPU, no survey order
+  canal_basin: 242 of 1243 records out of band (FL-113, FL-121, FL-125, FL-214, FL-216, FL-422), largest error 30.08 of the band, 14.6 s on the clock and 13.9 s of CPU, no survey order
+  kiln_road: 210 of 1285 records out of band (FL-117, FL-121, FL-222, FL-224, FL-418), largest error 33.57 of the band, 13.3 s on the clock and 12.4 s of CPU, no survey order
+  south_wharf: 245 of 1259 records out of band (FL-115, FL-119, FL-218, FL-224, FL-325, FL-420), largest error 28.78 of the band, 13.8 s on the clock and 13.3 s of CPU, no survey order
+  tank_row: 206 of 1250 records out of band (FL-113, FL-125, FL-214, FL-222, FL-414), largest error 25.72 of the band, 11.5 s on the clock and 10.7 s of CPU, no survey order
+  upper_yard: 160 of 1240 records out of band (FL-212, FL-218, FL-226, FL-325), largest error 45.95 of the band, 13.9 s on the clock and 13.5 s of CPU, no survey order
+  not accepted
+
+sound variations of the reference
+
+finer_steps: 120 steps along a pipe for 50
+  the two examples
+  east_depot: 0 of 1274 records out of band, largest error 0.18 of the band, 29.5 s on the clock and 28.6 s of CPU, surveyed FL-111-A FL-327-B FL-414-A FL-420-A
+  north_quay: 0 of 1273 records out of band, largest error 0.11 of the band, 26.8 s on the clock and 26.0 s of CPU, surveyed FL-216-A FL-218-A FL-226-A FL-420-A
+  accepted
+  the six sites
+  boiler_lane: 0 of 1249 records out of band, largest error 0.23 of the band, 30.4 s on the clock and 29.0 s of CPU, surveyed FL-115-B FL-220-A FL-226-B FL-420-B
+  canal_basin: 0 of 1243 records out of band, largest error 0.40 of the band, 34.0 s on the clock and 33.2 s of CPU, surveyed FL-113-B FL-121-A FL-125-B FL-214-A FL-216-B FL-422-A
+  kiln_road: 0 of 1285 records out of band, largest error 0.23 of the band, 31.1 s on the clock and 29.4 s of CPU, surveyed FL-117-A FL-121-A FL-222-B FL-418-A FL-224-B
+  south_wharf: 0 of 1259 records out of band, largest error 0.13 of the band, 32.2 s on the clock and 31.2 s of CPU, surveyed FL-115-A FL-224-A FL-325-A FL-420-B FL-119-A FL-218-A
+  tank_row: 0 of 1250 records out of band, largest error 0.10 of the band, 26.0 s on the clock and 25.5 s of CPU, surveyed FL-113-B FL-125-A FL-222-B FL-414-B FL-214-B
+  upper_yard: 0 of 1240 records out of band, largest error 0.20 of the band, 35.8 s on the clock and 33.5 s of CPU, surveyed FL-212-B FL-218-A FL-325-B FL-226-B
+  accepted
+
+other_thresholds: a pair's drops apart by 3 per cent for 6, a coefficient moved by 8 per cent for 5
+  the two examples
+  east_depot: 0 of 1274 records out of band, largest error 0.18 of the band, 12.6 s on the clock and 12.2 s of CPU, surveyed FL-111-A FL-327-B FL-414-A FL-420-A
+  north_quay: 0 of 1273 records out of band, largest error 0.11 of the band, 12.0 s on the clock and 11.3 s of CPU, surveyed FL-216-A FL-218-A FL-226-A FL-420-A
+  accepted
+  the six sites
+  boiler_lane: 0 of 1249 records out of band, largest error 0.24 of the band, 12.9 s on the clock and 12.2 s of CPU, surveyed FL-115-B FL-220-A FL-226-B FL-420-B
+  canal_basin: 0 of 1243 records out of band, largest error 0.40 of the band, 15.4 s on the clock and 14.3 s of CPU, surveyed FL-113-B FL-121-A FL-125-B FL-214-A FL-216-B FL-422-A
+  kiln_road: 0 of 1285 records out of band, largest error 0.23 of the band, 14.2 s on the clock and 12.7 s of CPU, surveyed FL-117-A FL-121-A FL-222-B FL-418-A FL-224-B
+  south_wharf: 0 of 1259 records out of band, largest error 0.13 of the band, 13.5 s on the clock and 13.2 s of CPU, surveyed FL-115-A FL-224-A FL-325-A FL-420-B FL-119-A FL-218-A
+  tank_row: 0 of 1250 records out of band, largest error 0.10 of the band, 12.0 s on the clock and 11.0 s of CPU, surveyed FL-113-B FL-125-A FL-222-B FL-414-B FL-214-B
+  upper_yard: 0 of 1240 records out of band, largest error 0.20 of the band, 16.0 s on the clock and 15.3 s of CPU, surveyed FL-212-B FL-218-A FL-325-B FL-226-B
+  accepted
+
+order_reversed: the same pipes ordered in the opposite sequence
+  the two examples
+  east_depot: 0 of 1274 records out of band, largest error 0.18 of the band, 13.0 s on the clock and 11.8 s of CPU, surveyed FL-420-A FL-414-A FL-327-B FL-111-A
+  north_quay: 0 of 1273 records out of band, largest error 0.11 of the band, 12.2 s on the clock and 11.2 s of CPU, surveyed FL-420-A FL-226-A FL-218-A FL-216-A
+  accepted
+  the six sites
+  boiler_lane: 0 of 1249 records out of band, largest error 0.24 of the band, 13.1 s on the clock and 12.5 s of CPU, surveyed FL-420-B FL-226-B FL-220-A FL-115-B
+  canal_basin: 0 of 1243 records out of band, largest error 0.40 of the band, 16.1 s on the clock and 15.6 s of CPU, surveyed FL-422-A FL-216-B FL-214-A FL-125-B FL-121-A FL-113-B
+  kiln_road: 0 of 1285 records out of band, largest error 0.23 of the band, 13.2 s on the clock and 12.4 s of CPU, surveyed FL-224-B FL-418-A FL-222-B FL-121-A FL-117-A
+  south_wharf: 0 of 1259 records out of band, largest error 0.13 of the band, 13.3 s on the clock and 13.0 s of CPU, surveyed FL-218-A FL-119-A FL-420-B FL-325-A FL-224-A FL-115-A
+  tank_row: 0 of 1250 records out of band, largest error 0.10 of the band, 11.2 s on the clock and 10.8 s of CPU, surveyed FL-214-B FL-414-B FL-222-B FL-125-A FL-113-B
+  upper_yard: 0 of 1240 records out of band, largest error 0.20 of the band, 15.8 s on the clock and 15.2 s of CPU, surveyed FL-226-B FL-325-B FL-218-A FL-212-B
+  accepted
+
+records: every program ends as it should

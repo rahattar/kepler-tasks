@@ -1126,3 +1126,33 @@ line, frozen over short pieces, with the recursion run in C by `scipy.signal.lfi
   thermal fatigue v0 (3 of 3), torsional passage v0 (3 of 3). Every core that held low effort at 0 of 3 left
   its deciding condition unstated, which review rejects. Whether the bar can be met with everything stated is
   an open question, worth putting to AfterQuery before more cores are built.
+
+## fuel-transfer-lines, the bundle on twin oil lines v2: low 0 of 3, xhigh 1 of 3 (Nov 13)
+
+`docs/design-note-fuel-transfer-lines.md`. Core v2's data byte for byte, with TS-2 4.2 and 4.3 stating how a
+pair's division is carried from record to record and how a run opens (the ventilation-district-airflow
+rejection), the pressure-drop band widened from 1.5 to 2.5 per cent, and a 40 s limit.
+
+| probe | effort | time | six sites | what it did |
+|---|---|---|---|---|
+| BL1, BL3 | low | 10 min | 5 of 6 out, as `covering_jobs_only` | the re-covered pipes |
+| BL2 | low | 10 min | 4 of 6 out (the narrowed line) | the re-covered pipes and both conditioned pipes as drifting coverings |
+| BX2 | xhigh | 65 min | accepted, 0.28 of the band | solved the narrowed bore from the pair's division |
+| BX1, BX3 | xhigh | 39, 76 min | 3 of 6 out (the narrowed line) | both conditioned pipes; the narrowed one re-derived with the register's bore |
+
+- **Stating the pair's rule cost nothing.** Every probe, low and xhigh, implemented 4.2 directly and none
+  spent time finding the history. Same result as ventilation 20261113b.
+- **A low run looked at the campaigns for the first time on this data** (BL2): it ordered both conditioned
+  pipes as drifting coverings. Low effort is 0 of 6 on v2 data, but the trend check is no longer xhigh-only.
+- **Over six xhigh runs the miss is one step**, from a pipe found to a quantity of the register changed: every
+  run ordered both pipes, two of six solved the bore. Read the failing runs' reports before calling it fair:
+  BX1 and BX3 did not argue for the register's bore, they never asked what D was.
+- **Check the band against the condition's own measurement, not the sound lines.** dp goes as D^-4, so a bore
+  solved from one reading carries the reading's error four times over: both independent solutions were 1 per
+  cent off on one narrowed line, 0.66 of a 1.5 per cent band. The sound lines had said 0.3.
+- **A reading the inside film controls cannot be inverted.** One small site had a covering whose coefficient
+  moved the outlet temperature 0.007 K for a factor of 1.21; the reference ran to its bracket. Generate with
+  an identifiability check (here: at least 0.15 K for that factor), and state it as a design rule.
+- **The machine is the clock.** With two generators and three probes on two CPUs a 14.5 s CPU run took 41.7 s
+  on the clock, over a 40 s limit held on both. Run the timed studies one at a time against at most the
+  regeneration.

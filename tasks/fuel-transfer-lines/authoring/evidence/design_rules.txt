@@ -1,0 +1,25 @@
+design rules of fuel-transfer-lines, from the files as shipped
+
+holds   9 sites: 2 examples with results (east_depot, north_quay), 1 pending without (west_jetty), 6 the program is run on (boiler_lane, canal_basin, kiln_road, south_wharf, tank_row, upper_yard); no name twice
+holds   no lines, surveys, work log or records file of a site the program is run on is a file of a site it is written beside
+holds   each of the six is the six files of a package and nothing else
+holds   the examples carry expected.csv, the pending site does not
+holds   a package holds 30 lines, 50 to 50 pipes and 1240 to 1285 records; site_package.md gives at most 60 pipes and 1500 records
+holds   every survey on file, every pipe as the crew reads it now and every record is laminar in every pipe (TS-2 section 1): the largest Reynolds number is 1550
+holds   the pipes whose covering was renewed or repaired after the last campaign, read from the work log, are the site's recovered pipes
+holds   a renewed or repaired covering has 0.42 to 0.74 times the coefficient of its last survey
+holds   the allowance is the recovered pipes, one more for a narrowing pipe and one more for a declining covering; the examples have neither
+holds   every reading on file and every reading the crew gives moves its pipe's outlet temperature by 0.206 K or more for a coefficient 1.1 times higher rather than 1.1 times lower (sites.py SEEN_K: 0.15), against a reading accuracy of 0.02 K
+holds   the crew's book for every site holds the package's allowance and a reading for every pipe
+holds   at a sound pair the two pressure drops at the flows read, with the register's bore, are within 0.010 in ln in every campaign (176 pairs)
+holds   at a pair with a narrowing pipe they are 0.142 to 0.185 apart in ln in every campaign
+holds   a narrowing pipe has lost 11.2 to 12.3 per cent of its bore as it stands now
+holds   with no covering job between the last two campaigns, a pipe's coefficient on file moves by at most 0.022 in ln (427 pipes, narrowing ones apart)
+holds   a declining covering's coefficient moves by 0.163 to 0.210 in ln between the last two campaigns, and stands 1.47 to 1.62 times its last survey now
+holds   the narrowing pipe is not one place: canal_basin FL-216-B; south_wharf FL-119-A; upper_yard FL-226-B; west_jetty FL-212-A
+holds   the declining covering is not one place: canal_basin FL-422-A; kiln_road FL-224-B; south_wharf FL-218-A; tank_row FL-214-B; west_jetty FL-224-A
+holds   175 of 180 pairs have a pipe carrying less than 0.3 of the oil at some record, and every site has 18 or more such pairs
+holds   at 173 to 357 records a site a pair has more than one division that satisfies TS-2 4.1; at 115 to 286 of them the pair is held on a collapsed division while one between 0.3 and 0.7 also exists
+holds   every pair's run of records opens at a flow at which one division only satisfies TS-2 4.1 (4.3)
+
+21 of 21 rules hold

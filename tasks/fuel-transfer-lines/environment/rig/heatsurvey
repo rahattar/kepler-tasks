@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+"""heatsurvey PACKAGE_DIR PIPE [PIPE ...]
+
+Carries a package's one survey order to the survey crew and prints what the crew answers. The site's name
+is read here, as the caller, so that the package may lie anywhere the caller can read; the crew itself
+works under the account `surveyor` and is reached by one sudo rule.
+"""
+import json
+import os
+import sys
+
+words = sys.argv[1:]
+if len(words) < 2:
+    print("usage: heatsurvey PACKAGE_DIR PIPE [PIPE ...]")
+    sys.exit(2)
+try:
+    with open(os.path.join(words[0], "site.json")) as handle:
+        site = json.load(handle)["site"]
+    if not isinstance(site, str):
+        raise TypeError
+except (OSError, ValueError, KeyError, TypeError):
+    print("%s is not a site package: it has no site.json that names the site" % words[0])
+    sys.exit(2)
+os.execv("/usr/bin/sudo", ["sudo", "-n", "-u", "surveyor", "/opt/surveyors/lab.py", "heatsurvey", "site=" + site] + words[1:])

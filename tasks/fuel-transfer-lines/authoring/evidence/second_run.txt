@@ -1,0 +1,50 @@
+authoring/evidence/plain_lines.py: the second solution as first written
+
+three small sites, the limit lifted to 1800 s
+  kiln_road: 0 of 245 records out of band, largest error 0.21 of the band, 103.1 s on the clock and 100.4 s of CPU, surveyed FL-121-B FL-117-B
+  upper_yard: 0 of 242 records out of band, largest error 0.07 of the band, 102.3 s on the clock and 100.3 s of CPU, surveyed FL-111-B FL-121-B FL-115-B
+  west_jetty: 0 of 236 records out of band, largest error 0.17 of the band, 106.5 s on the clock and 102.2 s of CPU, surveyed FL-111-B FL-113-A FL-121-B FL-115-A
+  accepted
+  CPU time of a run: 100.3 to 102.2 s; largest error at any record: 0.21 of the band
+
+the six sites, limit 40 s
+  boiler_lane: over the limit
+  stopped: the run on boiler_lane used up its 40 s, on the clock or in CPU time
+  not accepted
+
+authoring/evidence/second_lines.py: the same method made fast
+
+the nine small sites, limit 40 s
+  boiler_lane: 0 of 260 records out of band, largest error 0.11 of the band, 10.5 s on the clock and 9.9 s of CPU, surveyed FL-117-B
+  canal_basin: 0 of 244 records out of band, largest error 0.06 of the band, 12.8 s on the clock and 11.9 s of CPU, surveyed FL-113-A FL-119-B FL-115-A
+  east_depot: 0 of 264 records out of band, largest error 0.08 of the band, 10.2 s on the clock and 9.4 s of CPU, surveyed FL-115-A
+  kiln_road: 0 of 245 records out of band, largest error 0.21 of the band, 10.8 s on the clock and 10.1 s of CPU, surveyed FL-121-B FL-117-B
+  north_quay: 0 of 251 records out of band, largest error 0.13 of the band, 11.4 s on the clock and 10.4 s of CPU, surveyed FL-115-A
+  south_wharf: 0 of 268 records out of band, largest error 0.30 of the band, 13.7 s on the clock and 12.9 s of CPU, surveyed FL-119-A FL-121-A FL-113-A FL-117-A
+  tank_row: 0 of 250 records out of band, largest error 0.10 of the band, 13.5 s on the clock and 12.9 s of CPU, surveyed FL-111-A FL-119-A FL-115-B
+  upper_yard: 0 of 242 records out of band, largest error 0.07 of the band, 12.1 s on the clock and 10.8 s of CPU, surveyed FL-111-B FL-121-B FL-115-B
+  west_jetty: 0 of 236 records out of band, largest error 0.17 of the band, 12.7 s on the clock and 12.4 s of CPU, surveyed FL-111-B FL-113-A FL-121-B FL-115-A
+  accepted
+  CPU time of a run: 9.4 to 12.9 s; largest error at any record: 0.30 of the band
+
+the two examples and the pending site, the crew answering for all three, limit 40 s
+  east_depot: 0 of 1274 records out of band, largest error 0.18 of the band, 16.7 s on the clock and 15.3 s of CPU, surveyed FL-111-A FL-327-B FL-414-A FL-420-A
+  north_quay: 0 of 1273 records out of band, largest error 0.11 of the band, 17.2 s on the clock and 15.7 s of CPU, surveyed FL-216-A FL-218-A FL-226-A FL-420-A
+  west_jetty: 0 of 1258 records out of band, largest error 0.12 of the band, 17.8 s on the clock and 17.3 s of CPU, surveyed FL-113-B FL-220-A FL-422-A FL-424-A FL-212-A FL-224-A
+  accepted
+  CPU time of a run: 15.3 to 17.3 s; largest error at any record: 0.18 of the band
+
+the six sites, limit 40 s
+  boiler_lane: 0 of 1249 records out of band, largest error 0.23 of the band, 17.3 s on the clock and 16.2 s of CPU, surveyed FL-115-B FL-220-A FL-226-B FL-420-B
+  canal_basin: 0 of 1243 records out of band, largest error 0.40 of the band, 18.6 s on the clock and 17.7 s of CPU, surveyed FL-113-B FL-121-A FL-125-B FL-214-A FL-216-B FL-422-A
+  kiln_road: 0 of 1285 records out of band, largest error 0.24 of the band, 17.4 s on the clock and 17.0 s of CPU, surveyed FL-117-A FL-121-A FL-222-B FL-418-A FL-224-B
+  south_wharf: 0 of 1259 records out of band, largest error 0.13 of the band, 19.8 s on the clock and 17.9 s of CPU, surveyed FL-115-A FL-224-A FL-325-A FL-420-B FL-119-A FL-218-A
+  tank_row: 0 of 1250 records out of band, largest error 0.10 of the band, 16.8 s on the clock and 15.8 s of CPU, surveyed FL-113-B FL-125-A FL-222-B FL-414-B FL-214-B
+  upper_yard: 0 of 1240 records out of band, largest error 0.20 of the band, 18.3 s on the clock and 17.6 s of CPU, surveyed FL-212-B FL-218-A FL-325-B FL-226-B
+  accepted
+  CPU time of a run: 15.8 to 17.9 s; largest error at any record: 0.40 of the band
+
+widest departure of the second solution from the sealed results, either form, any set: 0.40 of the band
+plain form: accepted on the small sites; on the six, the run on boiler_lane used up its 40 s, on the clock or in CPU time
+fast form: accepted on all three sets inside the limit
+second solution: as expected

@@ -1,0 +1,2 @@
+# The one thing the account agent may do as surveyor: place a survey order.
+agent ALL=(surveyor) NOPASSWD: /opt/surveyors/lab.py heatsurvey *
