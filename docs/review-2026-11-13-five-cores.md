@@ -58,10 +58,9 @@ sprinkler core said anything, and it was the one solved fastest and most complet
   read and implemented, which is the shape `difficulty-calibration.md` already calls read in one pass.
 - **The time limit added nothing.** Every probe program in every core ran inside its limit, most at or below the
   reference's time; the nearest any came was 62 per cent of it (sprinkler v2, 12.5 s of 20). The limits were set
-  at 2 to 3 times our reference and checked
-  against our own plain-loop strawman, never against what a competent solver writes. AfterQuery asks for a limit
-  that a correct but unoptimised solution misses. Ours were met with room to spare by the first program each
-  probe wrote.
+  at 2 to 3 times our reference and checked against our own plain-loop strawman, never against what a competent
+  solver writes. AfterQuery asks for a limit that a correct but unoptimised solution misses. Ours were met with
+  room to spare by the first program each probe wrote.
 - **So every bit of difficulty sat on the trap.** That is a single point of failure: found, and the task is easy;
   not found, and the task is unfair.
 
