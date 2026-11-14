@@ -1229,3 +1229,16 @@ easiness probe: claude-opus-5-5 low, 3 of 3 solved in 7 to 10 minutes.
 - **A single condition is found at low effort once it is visible**, as the review of Nov 13 says. Ventilation,
   approved at 3 of 8, had two independent conditions and an allowance two above the work log.
 - **1D nonlinear conduction is not a hard part.** First program inside the limit in every run (8 to 16 s of 50).
+
+## Two pre-mortems before any build: fractional mount damping and steady EHL film thickness (Nov 14)
+
+`cores/gear-film-premortem`. The design gate's test run on two ideas before building either.
+- **Fractional damping in a mount:** Newmark with the Grunwald-Letnikov sum at 1 ms is 1.2 to 1.4 per cent
+  from exact, and a one-second memory changes nothing. The first program a competent engineer writes passes.
+- **Steady isothermal EHL at heavy load:** uniform meshes are 23 to 45 per cent low at M 420 to 664, so the
+  numerics are genuinely hard; but Dowson-Higginson is within 0.7 to 3.2 per cent of the converged film at M 33 to
+  420. A published fit to the stated equations turns the stated problem into a resolution contest: failing the
+  fit needs a band near 2 per cent, where sound coarse numerics fail too.
+- **Rule.** Before building on "the numerics are hard", check whether a published correlation of the same
+  equations lands inside the band. If it does, the task needs physics the correlation does not cover.
+- **Cost:** about an hour each, against a day per built core.
