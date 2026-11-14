@@ -1318,3 +1318,14 @@ as running, and a charge changing since its last analysis. Low 3 of 3 accepted i
   (per tank, per bar) is found at low effort however much physics stands between the record and the residual.
 - **What has held needs a coupled solve to show the residual** (a network that does not balance, a pair's flow
   split), not a check item by item. Close the oil-charge family: five quench and bearing versions show it.
+## Hot piping nozzle loads from a hanger survey: pre-mortem, not built (Nov 14)
+
+`cores/piping-nozzle-premortem/RESULT.md`. A prototype 3D main steam line with springs, a rod and guides with
+gaps. Each mechanism that moves the turbine nozzle loads by more than a band (a locked hanger, a guide that
+never engages) moves the survey by 20 to 170 times its accuracy. Each that the survey shows weakly (wrong
+spring rate, cold load off by 15 per cent) moves the loads by a band or less. A least-squares fit of unknown
+hanger forces to the hot survey recovers the loads inside the band without identifying anything.
+- **Rule.** Where the deliverable and the evidence are linear in the same unknowns, a condition big enough to
+  matter is plain in the evidence. Before building, check that the deliverable is more sensitive to the
+  condition than the evidence is (an extrapolation past a nonlinearity, damage that compounds a small error).
+- **Cost:** about an hour, with a prototype that would have been the generator's core.
