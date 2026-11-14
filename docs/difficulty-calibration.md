@@ -1070,3 +1070,40 @@ load short, all three found the drift in 4 to 7 minutes.
   brief said nobody reviews the results.
 - What held elsewhere today (lube oil, ventilation, twin oil lines, hoist rope) puts the witness in data the
   program must use anyway, and the act in an order or a correction the program makes for its own reasons.
+
+## rope-bending-damage, the bundle at shipping size: the core's wording matters as much as its data (Nov 13 night)
+
+`tasks/rope-bending-damage`, `docs/design-note-rope-bending.md`, probe programs and reports in
+`cores/hoist-rope-v1/bundle-probes`. hoist-rope v1 at shipping size: stations 1 m apart, about 90,000
+movements a crane, a 4 s limit against a sweep reference of 1.2 to 1.4 s.
+
+| documents | low | xhigh |
+|---|---|---|
+| the bundle's first wording | 0 of 3 | 3 of 3 |
+| core v1's wording put back (shipped) | | 1 of 3 |
+
+- **Wording added while building the bundle took xhigh from 1 of 3 to 3 of 3.** I had written the survey file
+  up as "copied from the survey sheets", `station_m` as "the station as the survey sheet gives it", d as "the
+  diameter of the element itself", and "An element is a piece of the rope, not a place on the crane". Every
+  sentence was accurate, and each described a record as a copy or a definition as a correction. All three
+  passing reports put MH-5 in those words: sheets "written from", "numbered from", "read from" the wrong end.
+  With core v1's wording back, on the same data, 1 of 3.
+- **Freeze the agent-visible text of a core that is at the bar.** Changing it for the bundle is a new core and
+  needs probing again. A phrase that says a field is what a record "gives" invites the hypothesis that the
+  record is wrong; describe what the field is meant to hold, as the core did.
+- **A combination of two visible conditions held a run that had both of them right.** xhigh6 separated MH-1
+  (turned) from MH-5 (surveyed from the dead end) and failed only DS-5, first surveyed from the dead end and
+  later turned. The second mirror of such a rope puts the sheet back in its first order.
+- **Low effort optimises unprompted.** With "within 4 seconds on 1 CPU" stated, all three low runs counted the
+  bendings by running sums and a series in ln S in two to four minutes; nine probe programs ran in 0.7 to
+  1.7 s. The limit stopped brute force over movements and stations (the cores' own method, 6.9 to 16.1 s) and
+  separated no probe. As in every timed task so far, it is there because the ask requires it.
+- **A fixed wear law is not needed to date a turn.** Even with each rope's own constants and each element's
+  own gain, two xhigh runs dated MH-1's turn to within half a day by fitting wear to damage. The day decides no
+  result (0.70 of a band at either edge of the gap), so this cost nothing.
+- **Two verifier studies at once corrupt each other.** The bench counts the CPU time of, and kills, every
+  process of nobody, which is right inside the verifier's container. Grading a probe while the seed screen ran
+  killed a run (status -9) and added the other bench's CPU to it. Run one bench at a time on a machine.
+- **Make the reference the fast method and keep brute force as evidence.** With the brute-force reference the
+  limit was 25 times the fast second solution and the plain loops only 2 times over; with a sweep reference
+  the limit is 2.9 times the reference, brute force 1.7 to 4.0 times over, plain loops 21 times.

@@ -20,3 +20,17 @@ The first documents had added, against core v1: "copied from the survey sheets",
 the survey sheet gives it", "d is the diameter of the element itself", and "An element is a piece of the rope,
 not a place on the crane". Round 2 puts core v1's wording back (one sentence kept: the result's stations are
 numbered along the rope from the drum anchorage) and probes xhigh three times on the same data.
+
+Round 2, core v1's wording back in both documents (the bundle as it now stands). Same data, same instruction.
+
+| probe | effort | time | six works | how |
+|---|---|---|---|---|
+| xhigh4 | xhigh | about 40 min | accepted | wear against damage under each reading; dated the turn by the fit |
+| xhigh5 | xhigh | about 40 min | not accepted, as every mirror a turn | called both melt_hall mirrors turns; "a single survey recorded from the wrong end" tested only as a one-off |
+| xhigh6 | xhigh | about 40 min | not accepted, DS-5 alone (98 of 116 out) | separated MH-1 and MH-5 rightly; missed the rope first surveyed from the dead end and later turned |
+
+The session's server restarted about 30 minutes into round 2; the three probes were resumed from their
+transcripts and finished. Programs ran in 0.8 to 1.0 s.
+
+Bundle as it stands: low 0 of 3 (round 1, on documents that gave more away), xhigh 1 of 3. Core v1 on nearly
+the same wording: xhigh 1 of 3. Two of six careful runs over the two.
