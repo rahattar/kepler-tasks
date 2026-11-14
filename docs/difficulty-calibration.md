@@ -1216,3 +1216,16 @@ the third out on 8 records of one line. Unstated: low 0 of 6, xhigh 2 of 6.
 - **Read the other sessions' notes before acting on a rule, and again before concluding from it.** The gate
   reached main at 23:04 and was corrected at 23:59; this probe was run, and very nearly a bundle dropped,
   on the reading in between.
+
+
+## quench-oil-survey 20261113b: one condition with its instance answered for, low 3 of 3 (Nov 14)
+
+`cores/quench-oil-v0/RESULT.md`. The journal bearing v5 mechanism (a listed oil system that is two charges,
+allowance one above the register, a pending package with the instance) on oil quenching of bars. Official
+easiness probe: claude-opus-5-5 low, 3 of 3 solved in 7 to 10 minutes.
+- **A visible instance that the agent's laboratory answers for is a worked example.** Every run ordered every
+  tank of the pending package by shell and saw the second charge's new oil. Let the agent's laboratory answer
+  for the examples only (ventilation v2: xhigh 2 of 3 to 1 of 3).
+- **A single condition is found at low effort once it is visible**, as the review of Nov 13 says. Ventilation,
+  approved at 3 of 8, had two independent conditions and an allowance two above the work log.
+- **1D nonlinear conduction is not a hard part.** First program inside the limit in every run (8 to 16 s of 50).

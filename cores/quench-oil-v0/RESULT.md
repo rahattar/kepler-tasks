@@ -30,3 +30,16 @@ test.sh itself gives reward 1 for the reference from the unzipped zip. Docker no
 Not probed. The other session's low-effort round on the bearing version (0 of 3, pending package unread) is the
 nearest evidence; the mechanism is the same, the physics is easier to get right at low effort than the film
 was, so expect the same or slightly more solves.
+
+## Nov 14: official easiness probe, low 3 of 3 solved (bundle 20261113b)
+
+claude-opus-5-5 at low effort solved all three in 7 to 10 minutes; the review passed every check on each.
+- **All three found the divided system from the pending package.** QT-124's analyses stand 10 to 12 per cent
+  from its listed mates against a stated 0.5 per cent repeatability, and the allowance is one above the register.
+- **The agent's laboratory confirmed it for them.** Each run placed shell orders on all three visible packages
+  (each shell order is a run of its own) and saw QT-124's new oil apart from QS-2's. The review judged that
+  permitted. Ventilation v2 lost an xhigh solve when its crew stopped answering for the pending district.
+- **The physics was no obstacle.** Batched implicit finite volumes with adaptive steps, written first time and
+  checked against the examples; one run first missed by 2 per cent on the cooling rate and refined. Runs took
+  8 to 16 s a site against 50 s.
+- **One condition, one trap.** Found, the task is easy, as the Nov 13 review says of every single-trap core.
