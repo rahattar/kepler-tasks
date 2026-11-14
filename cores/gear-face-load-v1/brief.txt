@@ -1,0 +1,11 @@
+Work only inside PROBE. Do not read, list or open anything outside PROBE. Everything you need is under PROBE/app.
+
+A gear works calculates how the load spreads along the face of each spur gear pair in service to its standard GF-4, `PROBE/app/data/docs/gf4_face_load.md`: at every point of the pair's duty record, the face load factor and the contact stress where the load is heaviest. Write the program that does this for a pair, `PROBE/app/output/faceload.py`.
+
+The program is run as `python3 faceload.py PACKAGE_DIR OUT_CSV`. PACKAGE_DIR is one pair's package in the format of `PROBE/app/data/docs/package_format.md`. It writes OUT_CSV with the header `point,k_face,sigma_H_MPa` and one row for every point of the package's `duty.csv`. Two packages with their results to GF-4 are in `PROBE/app/data/examples`, and a package without results is in `PROBE/app/data/pending/GB-P`.
+
+The program will be run on the packages of six other pairs, in the same format, each with a duty record of 100,000 points like the examples'. Each run of faceload.py must finish within 10 seconds on 1 CPU. For every point of every package the face load factor and the contact stress must each be within 1.5 per cent of the result to GF-4.
+
+Each run takes place in a scratch directory holding a copy of faceload.py and of the package alone, so the program cannot read any other file you leave. Python 3 with numpy and scipy is available.
+
+This machine is shared with other jobs, so judge your program's speed by its CPU time (user plus system, as `time` reports it), not by the wall clock. Write any scratch files under PROBE/app/work. When you are done, report what you did, how you checked it and how long a run takes.

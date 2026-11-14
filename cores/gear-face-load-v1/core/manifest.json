@@ -1,0 +1,68 @@
+{
+ "TR-1": {
+  "shift": "pinion charts exchanged; torques to 9000 N m (examples to 5200)",
+  "exchanged": "pinion",
+  "k_face": [
+   1.031,
+   1.27
+  ],
+  "partial": 0,
+  "named_err_pct_median": 17.1,
+  "named_out_share": 0.99
+ },
+ "TR-2": {
+  "shift": "the wheel's charts exchanged (pending: the pinion's)",
+  "exchanged": "wheel",
+  "k_face": [
+   1.028,
+   1.485
+  ],
+  "partial": 2026,
+  "named_err_pct_median": 7.3,
+  "named_out_share": 0.93
+ },
+ "TR-3": {
+  "shift": "sound; the pinion pitted on its working flank",
+  "exchanged": null,
+  "k_face": [
+   1.038,
+   1.381
+  ],
+  "partial": 1992,
+  "named_err_pct_median": 0.0,
+  "named_out_share": 0.0
+ },
+ "TR-4": {
+  "shift": "pinion charts exchanged on an overhung pinion (pending: straddle mounted)",
+  "exchanged": "pinion",
+  "k_face": [
+   1.081,
+   1.503
+  ],
+  "partial": 0,
+  "named_err_pct_median": 12.8,
+  "named_out_share": 0.97
+ },
+ "TR-5": {
+  "shift": "the wheel's charts exchanged; a 120 mm face",
+  "exchanged": "wheel",
+  "k_face": [
+   1.056,
+   1.353
+  ],
+  "partial": 0,
+  "named_err_pct_median": 10.7,
+  "named_out_share": 0.96
+ },
+ "TR-6": {
+  "shift": "sound and unpitted; oil to 84 C (examples to 74)",
+  "exchanged": null,
+  "k_face": [
+   1.026,
+   1.373
+  ],
+  "partial": 167,
+  "named_err_pct_median": 0.0,
+  "named_out_share": 0.0
+ }
+}
