@@ -14,7 +14,7 @@ good enough to ship at 3 per cent bands. It was built only to show a fast method
 | probe | time | hidden | method |
 |---|---|---|---|
 | low 1 | 19 min | accepted, widest 0.11 of a band | exact linear propagation in windows of up to 1 s, every step of a window in one array operation; the stiffening iterated to convergence in each window around a matched linear stiffness; windows halved when they do not settle |
-| low 2 | 17 min | accepted, widest 0.14 | (report not read; program graded) |
+| low 2 | 34 min | accepted, widest 0.14 | linear modes stepped exactly with filtering routines at 0.4 ms; the stiffening and heating iterated in windows of about 2 s, split when they do not converge |
 | low 3 | 15 min | accepted, widest 0.42 | the linear line solved exactly mode by mode on a 0.25 ms grid; the stiffening and the heating in a Python loop on a 2 ms step, fed back through the modes |
 
 Low 3 of 3, all more accurate than the reference, 1.0 to 2.5 s a set. Each wrote its own brute-force simulator
@@ -27,3 +27,9 @@ A nonlinearity at the fast time scale did not keep a Python loop in the way. Low
 exactly propagated linear part and a nonlinear correction on a coarser step or iterated within windows, and
 validated the split against its own slow simulator. Making stepping costly does not make a task hard for this
 model; it writes the fast method and the check in a quarter of an hour.
+
+Low 2 raised a real gap in the standard: with a coupling that stiffens this much, a set started near the
+coupling's resonance can have two steady responses, and TS-4 does not say which one the sequence starts in.
+The truth starts from rest, which lands on the one reached from small vibration. A shipped version would have
+to state that, or keep starting speeds out of the bistable band.
+
