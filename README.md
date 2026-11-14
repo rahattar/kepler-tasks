@@ -2,7 +2,10 @@
 
 Alex's AfterQuery Kepler task bundles (Harbor format, mechanical engineering) and the working method behind them.
 
-- `docs/playbook.md`: how tasks are built, packaged and delivered. Read this first.
+- `docs/playbook.md`: how tasks are built, packaged and delivered. Read this first, its design gate before
+  anything else.
+- `docs/review-2026-11-13-five-cores.md`: why five cores of Nov 13 could not have been accepted (a deciding
+  condition kept out of the words, nothing hard beside it) and what the design gate takes from that.
 - `docs/afterquery-asks-2026-11-11.md`: what AfterQuery wants now. Top priority (Nov 11, repeated Nov 13): tests
   that re-run the agent's program under a stated per-run time limit on deliberately shifted hidden data. The bar
   (Nov 13): easiness probe 0 of 3, difficulty probe pass band 0-5 of 8.

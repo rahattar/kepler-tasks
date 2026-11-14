@@ -1,7 +1,9 @@
 # Difficulty calibration lessons (from Alex's Kepler tasks, Oct-Nov 2026)
 
 **The bar these lessons are read against (Alex, Nov 13):** easiness probe, 0 of 3 solved at low effort;
-difficulty probe, pass band 0 to 5 of 8 at xhigh. The sections below were written as the bar moved, and say so
+difficulty probe, pass band 0 to 5 of 8 at xhigh. **And the gate since the evening of Nov 13:** every condition
+that decides a hidden case is stated in the documents (`docs/playbook.md`, design gate). Rates measured on cores
+whose condition was unstated do not carry over; `docs/review-2026-11-13-five-cores.md` reads five of them. The sections below were written as the bar moved, and say so
 where they were written against an older one.
 
 ## What makes official xhigh fail

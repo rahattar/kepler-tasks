@@ -80,18 +80,46 @@ Sciences). Follow this exactly unless Alex says otherwise.
   probes failing the same check the same way means something is hidden or unclear; 0 of 8 is reviewed on the same
   rubric, and the difficulty must come from the science.
 
+## Design gate: before anything is built (review of Nov 13, `docs/review-2026-11-13-five-cores.md`)
+- **Read what the other sessions recorded first.** Every entry added to `docs/rejection-patterns.md` and
+  `docs/difficulty-calibration.md` since the last read (`git log -p --since=<last read> -- docs/`). Two cores on
+  Nov 13 were built after the rejection that ruled their design out had reached main.
+- **State every condition that decides a hidden case.** An agent-visible document says what may differ from what
+  the package gives and the criterion that settles it; the method may be left open. A condition kept out of the
+  words fails "well specified" and "test instruction alignment" (engine-indicating, Nov 13), whatever the probes
+  say. This is the Oct 18 rule again: every source the solver might trust and the grader does not is signalled.
+- **Then ask whether the stated version is still hard.** Write the pre-mortem: what does a careful engineer holding
+  those documents do in the first ten minutes, and does it pass? If it does, do not build. Stating the condition
+  took engine-indicating from 0 of 6 to 2 of 3 at low effort; the five cores of Nov 13 evening had no hard part
+  beside their hidden condition.
+- **Difficulty that survives being stated** (none of it measured yet on the matched model unless noted):
+  confounded identification with several stated mechanisms that the obvious evidence does not separate
+  (base-pressure, accepted); a plant or simulator that answers back; numerics that are hard to get right across a
+  documented envelope; compute that binds against what a competent solver writes.
+- **No single-trap design.** One deciding condition makes every failure the same failure, the pattern the Nov 12
+  tip calls hidden or unclear. Several independent layers, so the routes that fail fail differently.
+- **A time limit is calibrated against probe programs, not against our own plain loop.** In every timed core of
+  Nov 13 the first program each probe wrote ran inside the limit (at most 62 per cent of it). If that happens the
+  limit is not difficulty; make the workload or the method demand real.
+- **Write each task's brief and documents fresh.** The Nov 13 cores shared 71 to 95 per cent of their brief text;
+  the similarity gate has rejected on archetype alone.
+
 ## Design rules (Alex's standing rule, Nov 5)
-- Give no hints in the prompt or the files. Hide the trap in the analysis layer: the general approach must look
-  right at first glance, and only checking the files or very fine, non-obvious details exposes it. This holds
-  inside the tips above: unhinted is not hidden. Whatever decides a result shows at least once in the visible
-  data, and every document and label means one thing.
+- Give no hints in the prompt or the files: no hint of the method, the route or where to look. No hint is not no
+  statement. Every condition that decides a hidden case is stated as a requirement (design gate above); what is
+  left to the solver is how to meet it. The old wording ("hide the trap in the analysis layer") is retired for
+  program tasks with hidden cases: the quality review rejects a deciding condition kept out of the words. In a
+  one-shot task graded on data the solver holds (base-pressure), faults in that data may still be found by
+  inference, with the mechanisms they belong to named in the standard. Whatever decides a result shows at least
+  once in the visible data, and every document and label means one thing.
 - Each new task must differ from the whole catalogue (`docs/catalogue.md`) in subject AND in deliverable shape and
   verification. No more variants of "a program scored on ~8 hidden cases". The intake priority above is the
   exception AfterQuery asks for (Nov 11, repeated Nov 13): a program re-run under a stated time limit on
   deliberately shifted hidden data is the wanted shape. There the subject, the physics and what decides a
   hidden case must be new.
 - Stay in mechanical engineering. The deliverable must be a measured or inferred engineering result.
-- Aim for 12-15 independent layers, several of them data-only (`docs/difficulty-calibration.md`).
+- Aim for 12-15 independent layers (`docs/difficulty-calibration.md`). Data-only layers belong to one-shot tasks
+  on visible data; in a program task every layer that decides a hidden case is stated (design gate).
 
 ## Evidence set (authoring/evidence) that every task ships
 - **Provenance:** a generator; the sealed definition; a tune/check script for the design rules; a seed screen.
