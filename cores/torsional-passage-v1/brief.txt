@@ -1,0 +1,13 @@
+Work only inside PROBE. Do not read, list or open anything outside PROBE. Everything needed is under PROBE/app.
+
+A generating set's shaft line, from the engine through its flywheel and a highly flexible rubber coupling to the generator, is taken through a sequence of speed changes on the test bed. TS-4 in `PROBE/app/data/docs/ts4_torsional.md` defines what is worked out for each run of the sequence: the peak torques in the crankshaft, the coupling and the generator shaft, and the temperature of the coupling's rubber at the end of the run. Each set arrives as a package in the format described by `PROBE/app/data/docs/set_package.md`.
+
+Write `PROBE/app/output/peaks.py` to process one set with `python3 peaks.py SET_DIR OUT_CSV`. The output must be an ordinary file, not a link, and at most 2 MiB (2,097,152 bytes). Use the exact header `run,crankshaft_kNm,coupling_kNm,generator_shaft_kNm,rubber_C`, followed by one row for every run in the set's `runs.csv`. Write the values as decimal numbers in the units named by the header.
+
+Four sets are available. `PROBE/app/data/examples/set_03` and `PROBE/app/data/examples/set_08` each include `expected.csv` with that sequence's TS-4 results. `PROBE/app/data/pending/set_11` and `PROBE/app/data/pending/set_13` are sets without results.
+
+The same program is later used once on each of six other sets. Their packages use the same format, and every set is within the scope of TS-4 section 1. For every run, each peak torque must be within 3 per cent of the result to TS-4 and the rubber temperature within 1 K. Each run of peaks.py must finish within 6 seconds on 1 CPU.
+
+For each run, a scratch directory contains a copy of `peaks.py` alone. The process runs as an unprivileged user without network access, the set is read-only, and the program must exit with status 0. Python 3 with numpy, scipy and pandas is available, and nothing else: the machine it runs on has no compiler.
+
+This machine is shared with other jobs, so judge the program's speed by its CPU time (user plus system, as `time` reports it), not by the wall clock. Write any scratch files under PROBE/app/work. At the end, report what was done, how it was checked and how long a run takes.

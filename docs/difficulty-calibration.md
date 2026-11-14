@@ -1190,3 +1190,13 @@ eight (specification, discoverability, verifier, boundary, no exploit, meaningfu
   two examples by repeated shell orders; the review judged it permitted because `lab.py` says each shell order
   is a run of its own and the examples have neither condition.
 - **Local opus xhigh 1 of 3 came true as 3 of 8** on another model.
+
+## Torsional passage v1: a fast-scale nonlinearity is split off and iterated (Nov 14)
+
+`cores/torsional-passage-v1`. v0 with a coupling that stiffens with twist, so the recursion is no longer a
+linear filter. Low effort: 3 of 3 accepted in 15 to 19 minutes, all more accurate than the reference: exact
+propagation of the linear line with the nonlinear torque iterated in windows, or carried on a coarse step and
+fed back through the modes. Each probe also wrote a brute-force simulator and checked against it.
+- **Compute is not a lever on this model when the physics is stated.** Every structure tried tonight (a
+  linear recursion, a nonlinear one, a sequence that cannot be batched) was met inside the limit by the first
+  program a low-effort run wrote. Subject closed for the night.
