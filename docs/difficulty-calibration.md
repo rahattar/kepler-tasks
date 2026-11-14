@@ -898,3 +898,23 @@ aged, the tests on file show it, nothing lists it, and the examples with results
   and the branch lines of a tree within 3 per cent. A core whose own reference passes on some seeds only is
   not fair; check the reference on several seeds before any probe.
 - With v0 and v1 this closes sprinkler hydraulics as a subject: three cores, all found at low effort.
+
+## Gear face load v0: a calibration with one unknown and two readings shows the condition on a package without results (Nov 13)
+
+`cores/gear-face-load-v0`. A timed program for the load along a spur gear pair's face; the mounting
+misalignment is the value that reproduces a contact pattern on file; on the pending pair and four of six
+hidden pairs one gear's lead charts carry the flank names exchanged. Low effort: 2 of 3 accepted in 3.5 and
+4 minutes; the third checked its fit on the examples only and failed the designed way.
+
+- **Count the readings a calibration takes against its unknowns before building.** The pattern has two edges
+  and the misalignment is one number. The misfit (3 mm against 0.25 mm on a sound pair) appears in a step
+  every correct program takes, whether or not the package has results. This is the conveyor-drive lesson; I
+  read it and discounted it because the instance sat in a package without results.
+- **"Low effort does not examine a package without results" is true only of things the routine calculation
+  does not report.** A fit reports its own misfit.
+- **A condition with a short list of alternatives is repaired as soon as it is noticed.** Two gears, two
+  flanks: three more fits. Prefer a condition whose repair needs a physical argument or a measurement.
+- **Shapes reused across packages are a signpost.** Both solving probes noted that the pending pinion's L
+  charts look like an example's R charts.
+- **Check that every part of the model can decide a result.** A mesh cycle with two tooth pairs sharing load
+  was built and dropped: the heaviest load is always in single pair contact.

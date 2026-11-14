@@ -12,9 +12,9 @@ with results are sound. 40 s of CPU a run, 20 000 duty points a pair, 1.5 per ce
 |---|---|---|---|
 | G2 | 3.5 min | **accepted, 6 of 6**, worst 0.38 of the band, 4 to 5 s a pair | fitted m_0 to both edges, saw GB-P miss by 3.2 mm as named and fit with the pinion's other flank; falls back to the best-fitting flanks whenever the named ones miss |
 | G3 | 4 min | **accepted, 6 of 6**, worst 0.25 of the band, 20 s a pair | found m_0 from each edge separately and compared the two; the same fallback |
-| G1 | | | |
+| G1 | 7 min | not accepted: the four exchanged pairs out, 5.3 to 12.4 bands; 1.5 s a pair | checked the pattern fit on the two examples only; ran GB-P and did not look at its fit |
 
-The screen allows 0 low-effort solves; no xhigh probes.
+Low effort: 2 of 3 solved. The screen allows 0, so no xhigh probes were run.
 
 ## Reading
 
