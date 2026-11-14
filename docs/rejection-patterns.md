@@ -563,3 +563,8 @@ task's words outside the data. The README-duplication and schema advisories are 
   `tasks/` sits at (0.003 to 0.009), where lube-oil-survey and quench-oil-survey, never named, are at 0.074 and
   0.075. Text cannot be what the gate reads. A file Alex had saved as `upload_1.zip` was ventilation 20261113b,
   which fits b having been uploaded into impeller-shrink-fits's entry; not confirmed when written.
+- Confirmed 23:50: the file the platform shows Alex under impeller-shrink-fits is ventilation 20261113b
+  (md5 5896fc82..., task.toml name afterquery/ventilation-district-airflow). c and d were compared with our own
+  b. Not a similarity problem; the upload went into the wrong entry.
+- **Rule.** Before uploading, check which task entry the upload is going into, and after it, that the entry
+  shows the zip's file name. The gate compares a bundle with whatever each entry holds, under that entry's name.
