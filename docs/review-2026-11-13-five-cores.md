@@ -4,6 +4,16 @@ Cores: `sprinkler-demand-v2`, `gear-face-load-v0`, `gear-face-load-v1`, `header-
 `carburizing-case-depth-v0`. Written from the cores' own briefs, standards and generators, the 21 probe reports
 (18 low, 3 xhigh) and `docs/rejection-patterns.md`, not from the RESULT summaries.
 
+> **Correction, 00:05 Nov 14.** Ventilation-district-airflow 20261113b was approved (official difficulty 3 of 8)
+> with its two deciding conditions not stated in words. The review accepted them because they are "identifiable
+> from public evidence rather than author-only conventions": a residual of 9.8 to 10.1 m3/s against a
+> 0.3 per cent reading, and an allowance two above the work log. What it rejects is narrower than section 1 says:
+> a rule that decides the truth and that no evidence settles (ventilation 20261113: the fans' opening state and
+> state selection), or a convention only the author knows (engine-indicating: a package whose angle and scale
+> are labelled as crank angle and pressure but are not). Read section 1 with that line. Sections 2 to 5 stand:
+> the five cores were found at low effort, had no hard part beside their condition, and the time limit decided
+> nothing (ventilation's did not either; the reviewer needed the fast second solution, not a binding limit).
+
 ## Verdict
 
 All five were built in one paradigm: a timed program whose hidden cases are decided by a fault in the records

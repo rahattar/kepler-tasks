@@ -84,10 +84,15 @@ Sciences). Follow this exactly unless Alex says otherwise.
 - **Read what the other sessions recorded first.** Every entry added to `docs/rejection-patterns.md` and
   `docs/difficulty-calibration.md` since the last read (`git log -p --since=<last read> -- docs/`). Two cores on
   Nov 13 were built after the rejection that ruled their design out had reached main.
-- **State every condition that decides a hidden case.** An agent-visible document says what may differ from what
-  the package gives and the criterion that settles it; the method may be left open. A condition kept out of the
-  words fails "well specified" and "test instruction alignment" (engine-indicating, Nov 13), whatever the probes
-  say. This is the Oct 18 rule again: every source the solver might trust and the grader does not is signalled.
+- **State every rule and convention that decides a hidden case and that no evidence settles.** Initial states,
+  selection between solutions, naming and sign conventions, what a field holds: an agent-visible document says
+  them, and every label means exactly what it says. Kept out of the words, such a rule fails "well specified" and
+  "test instruction alignment" (engine-indicating; ventilation 20261113, the fans' opening state). A physical
+  condition (a stopping left open, a narrowed pipe) may be left for the solver to find only where public
+  evidence identifies it unambiguously, a residual well outside the stated accuracy: ventilation 20261113b was
+  approved on that ("identifiable from public evidence rather than author-only conventions"). The Oct 18 rule
+  still holds: a source the solver might trust and the grader does not is either signalled or shown wrong by
+  such evidence.
 - **Then ask whether the stated version is still hard.** Write the pre-mortem: what does a careful engineer holding
   those documents do in the first ten minutes, and does it pass? If it does, do not build. Stating the condition
   took engine-indicating from 0 of 6 to 2 of 3 at low effort; the five cores of Nov 13 evening had no hard part
@@ -106,20 +111,19 @@ Sciences). Follow this exactly unless Alex says otherwise.
 
 ## Design rules (Alex's standing rule, Nov 5)
 - Give no hints in the prompt or the files: no hint of the method, the route or where to look. No hint is not no
-  statement. Every condition that decides a hidden case is stated as a requirement (design gate above); what is
-  left to the solver is how to meet it. The old wording ("hide the trap in the analysis layer") is retired for
-  program tasks with hidden cases: the quality review rejects a deciding condition kept out of the words. In a
-  one-shot task graded on data the solver holds (base-pressure), faults in that data may still be found by
-  inference, with the mechanisms they belong to named in the standard. Whatever decides a result shows at least
-  once in the visible data, and every document and label means one thing.
+  statement: every rule and convention that decides a hidden case and that no evidence settles is stated (design
+  gate above). A physical condition may stay unstated only where public evidence identifies it unambiguously
+  (ventilation 20261113b, approved). Whatever decides a result shows at least once in the visible data, and every
+  document and label means one thing.
 - Each new task must differ from the whole catalogue (`docs/catalogue.md`) in subject AND in deliverable shape and
   verification. No more variants of "a program scored on ~8 hidden cases". The intake priority above is the
   exception AfterQuery asks for (Nov 11, repeated Nov 13): a program re-run under a stated time limit on
   deliberately shifted hidden data is the wanted shape. There the subject, the physics and what decides a
   hidden case must be new.
 - Stay in mechanical engineering. The deliverable must be a measured or inferred engineering result.
-- Aim for 12-15 independent layers (`docs/difficulty-calibration.md`). Data-only layers belong to one-shot tasks
-  on visible data; in a program task every layer that decides a hidden case is stated (design gate).
+- Aim for 12-15 independent layers (`docs/difficulty-calibration.md`). A data-only layer must be identifiable from
+  public evidence; a rule or convention that decides a case is stated (design gate). Two or more independent
+  conditions make the failures diverse (ventilation: three failure modes in five failing official runs).
 
 ## Evidence set (authoring/evidence) that every task ships
 - **Provenance:** a generator; the sealed definition; a tune/check script for the design rules; a seed screen.
