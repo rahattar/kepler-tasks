@@ -1012,3 +1012,14 @@ added to the brief (results used unreviewed): low 1 of 3 solved in 2.5 minutes, 
   is the neutral way, and it costs the difficulty: it is itself the prompt to examine the package.
 - **Physical evidence in the visible package plus two alternatives is found at low effort as soon as the task
   says to act.** Prefer a deciding condition whose resolution is a quantity to estimate, not a choice to make.
+
+## Engine indicating v6: stating the condition removes the difficulty (Nov 13 evening)
+
+After the quality rejection of v5 for an unstated condition, IS-2 was given a section that names the index
+and the gain, their ranges, and the compression-stroke criterion that settles them (method left open).
+Low effort: 2 of 3 accepted on every hidden cell, the third out on one cell. Before stating it: 0 of 6.
+`cores/engine-indicating-v6/RESULT.md`.
+- **A stated identification problem with a stated criterion is not hard at low effort.** A few parameters
+  fitted to a residual the documents define comes out right in ten minutes, noise included.
+- **Taken with the rejection, the condition cannot be both unstated and fair.** For a task to meet the bar, the
+  hard part has to remain once everything that decides a case is written down. Probe that version first.
