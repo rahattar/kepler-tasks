@@ -52,7 +52,7 @@ survey the program has to order before it sees any result.
   first sizing (0.5 to 0.75 times) the examples passed with no order placed.
 - Checksums by hashlib: the zip checker refuses zlib in code.
 
-**The timed half.** Limit 35 s a run on one CPU; reference 8.7 to 10.5 s (3.3 times the slowest). The
+**The timed half.** Limit 30 s a run on one CPU (35 s until 20261113c); reference 8.3 to 10.5 s (2.9 times the slowest). The
 second solution, dense and from scratch at every entry, is right on the small districts and stopped at the
 limit on the first of the six. The limit does not separate probes: three low-effort programs ran a district
 in 5 to 12 s.
@@ -101,3 +101,9 @@ the second solution with sparse warm-started solves and the fans carried by the 
 is accepted on all sixteen districts in 4.9 to 7.5 s a run, which also shows the rule decides the truth. Three
 low probes on the new documents: 0 of 3, each the `worked_on` miss; they used the stated rule directly. No
 xhigh probes on 20261113b.
+
+**20261113c.** The platform refused 20261113b as "this exact bundle" already submitted; its review had come
+back word for word the first one, figures the bundle no longer held included, so it was most likely not a
+review of b. The limit was brought to 30 s, inside the ask's "about 2-3x" of the reference (2.9 times), with
+every study rerun: the reference 8.3 to 10.5 s, fast_airflow.py 5.9 to 8.1 s, naive_airflow.py stopped at
+30 s on the first of the six.

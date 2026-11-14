@@ -46,7 +46,7 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(BASE, "crew"))
 import lab  # noqa: E402  (the crew's rule, the same file the program was written against)
 
-LIMIT_S = 35                                  # seconds for each run of airflow.py, as the task statement has it
+LIMIT_S = 30                                  # seconds for each run of airflow.py, as the task statement has it
 HEADER = ["point", "flow_m3_s"]
 BAND_SHARE = 0.015                            # of the sealed flow
 BAND_FLOOR = 0.03                             # m3/s, where that is more

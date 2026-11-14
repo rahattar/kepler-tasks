@@ -3,55 +3,55 @@ programs made from the reference by variants.py, one change each, run by tests/j
 worked_on: the airways worked on since their last survey, and nothing else
   the two examples: accepted
   deep_south      7.9 s   7.8 s CPU  1019 of 3948 points out of band  largest error 32.13 of the band  order: P10-I-20 P6-I-13 P7-I-14 P8-I-29 P8-R-23 P9-I-30
-  far_east        7.2 s   7.1 s CPU   470 of 3948 points out of band  largest error 69.83 of the band  order: P10-R-11 P2-R-01 P2-R-03 P3-I-03 P3-R-24 P4-R-15 P6-I-06 P7-I-26
-  lower_levels    7.5 s   7.4 s CPU   399 of 3948 points out of band  largest error 9.01 of the band  order: P10-I-22 P2-I-13 P2-R-10 P3-R-18 P7-R-28 P8-I-21 P9-I-20
-  new_incline     9.1 s   9.0 s CPU     0 of 3948 points out of band  largest error 0.22 of the band  order: P2-I-07 P4-R-03 P4-R-05 P4-R-21 P5-R-03 P5-R-04 P6-R-01
-  old_shaft       8.7 s   8.6 s CPU   889 of 3570 points out of band  largest error 7.61 of the band  order: P1-I-07 P1-I-30 P1-R-26 P2-I-11 P3-R-01 P5-I-09 P5-I-18
-  river_block     6.3 s   6.2 s CPU   425 of 3570 points out of band  largest error 31.82 of the band  order: P2-I-04 P3-I-03 P3-I-27 P3-R-04 P4-R-06 P4-R-16 P4-R-17 P9-I-06
+  far_east        7.4 s   7.3 s CPU   470 of 3948 points out of band  largest error 69.83 of the band  order: P10-R-11 P2-R-01 P2-R-03 P3-I-03 P3-R-24 P4-R-15 P6-I-06 P7-I-26
+  lower_levels    7.8 s   7.8 s CPU   399 of 3948 points out of band  largest error 9.01 of the band  order: P10-I-22 P2-I-13 P2-R-10 P3-R-18 P7-R-28 P8-I-21 P9-I-20
+  new_incline     9.2 s   9.1 s CPU     0 of 3948 points out of band  largest error 0.22 of the band  order: P2-I-07 P4-R-03 P4-R-05 P4-R-21 P5-R-03 P5-R-04 P6-R-01
+  old_shaft       9.6 s   9.6 s CPU   889 of 3570 points out of band  largest error 7.61 of the band  order: P1-I-07 P1-I-30 P1-R-26 P2-I-11 P3-R-01 P5-I-09 P5-I-18
+  river_block     7.0 s   6.9 s CPU   425 of 3570 points out of band  largest error 31.82 of the band  order: P2-I-04 P3-I-03 P3-I-27 P3-R-04 P4-R-06 P4-R-16 P4-R-17 P9-I-06
   not accepted
   districts with points out of band: 5 of 6; points out at each: deep_south 1019, far_east 470, lower_levels 399, new_incline 0, old_shaft 889, river_block 425
 
 no_fan: the open stopping found and surveyed, no fan read
   the two examples: accepted
-  deep_south      8.1 s   8.0 s CPU   470 of 3948 points out of band  largest error 32.11 of the band  order: P10-I-20 P6-I-13 P7-I-14 P8-I-29 P8-R-23 P9-I-30 P10-X-08
-  far_east        7.9 s   7.8 s CPU   470 of 3948 points out of band  largest error 69.83 of the band  order: P10-R-11 P2-R-01 P2-R-03 P3-I-03 P3-R-24 P4-R-15 P6-I-06 P7-I-26
-  lower_levels    7.6 s   7.5 s CPU   470 of 3948 points out of band  largest error 61.77 of the band  order: P10-I-22 P2-I-13 P2-R-10 P3-R-18 P7-R-28 P8-I-21 P9-I-20 P4-X-04
-  new_incline     8.7 s   8.6 s CPU     0 of 3948 points out of band  largest error 0.22 of the band  order: P2-I-07 P4-R-03 P4-R-05 P4-R-21 P5-R-03 P5-R-04 P6-R-01
-  old_shaft       8.3 s   8.2 s CPU     0 of 3570 points out of band  largest error 0.21 of the band  order: P1-I-07 P1-I-30 P1-R-26 P2-I-11 P3-R-01 P5-I-09 P5-I-18 P9-X-06
-  river_block     6.2 s   6.1 s CPU   425 of 3570 points out of band  largest error 31.82 of the band  order: P2-I-04 P3-I-03 P3-I-27 P3-R-04 P4-R-06 P4-R-16 P4-R-17 P9-I-06
+  deep_south      7.6 s   7.5 s CPU   470 of 3948 points out of band  largest error 32.11 of the band  order: P10-I-20 P6-I-13 P7-I-14 P8-I-29 P8-R-23 P9-I-30 P10-X-08
+  far_east        7.6 s   7.5 s CPU   470 of 3948 points out of band  largest error 69.83 of the band  order: P10-R-11 P2-R-01 P2-R-03 P3-I-03 P3-R-24 P4-R-15 P6-I-06 P7-I-26
+  lower_levels    7.9 s   7.8 s CPU   470 of 3948 points out of band  largest error 61.77 of the band  order: P10-I-22 P2-I-13 P2-R-10 P3-R-18 P7-R-28 P8-I-21 P9-I-20 P4-X-04
+  new_incline     9.2 s   9.2 s CPU     0 of 3948 points out of band  largest error 0.22 of the band  order: P2-I-07 P4-R-03 P4-R-05 P4-R-21 P5-R-03 P5-R-04 P6-R-01
+  old_shaft       9.1 s   9.0 s CPU     0 of 3570 points out of band  largest error 0.21 of the band  order: P1-I-07 P1-I-30 P1-R-26 P2-I-11 P3-R-01 P5-I-09 P5-I-18 P9-X-06
+  river_block     6.8 s   6.7 s CPU   425 of 3570 points out of band  largest error 31.82 of the band  order: P2-I-04 P3-I-03 P3-I-27 P3-R-04 P4-R-06 P4-R-16 P4-R-17 P9-I-06
   not accepted
   districts with points out of band: 4 of 6; points out at each: deep_south 470, far_east 470, lower_levels 470, new_incline 0, old_shaft 0, river_block 425
 
 as_booked: a fan read with what is left of the allowance, every stopping as booked
   the two examples: accepted
-  deep_south      9.6 s   9.5 s CPU   628 of 3948 points out of band  largest error 6.32 of the band  order: P10-I-20 P6-I-13 P7-I-14 P8-I-29 P8-R-23 P9-I-30 FAN-B
-  far_east       10.0 s   9.9 s CPU     0 of 3948 points out of band  largest error 0.19 of the band  order: P10-R-11 P2-R-01 P2-R-03 P3-I-03 P3-R-24 P4-R-15 P6-I-06 P7-I-26 FAN-B
-  lower_levels    7.3 s   7.2 s CPU   399 of 3948 points out of band  largest error 9.01 of the band  order: P10-I-22 P2-I-13 P2-R-10 P3-R-18 P7-R-28 P8-I-21 P9-I-20 FAN-B
-  new_incline     8.7 s   8.6 s CPU     0 of 3948 points out of band  largest error 0.22 of the band  order: P2-I-07 P4-R-03 P4-R-05 P4-R-21 P5-R-03 P5-R-04 P6-R-01
-  old_shaft       8.7 s   8.6 s CPU   889 of 3570 points out of band  largest error 7.61 of the band  order: P1-I-07 P1-I-30 P1-R-26 P2-I-11 P3-R-01 P5-I-09 P5-I-18 FAN-B
-  river_block     8.0 s   7.9 s CPU     0 of 3570 points out of band  largest error 0.20 of the band  order: P2-I-04 P3-I-03 P3-I-27 P3-R-04 P4-R-06 P4-R-16 P4-R-17 P9-I-06 FAN-B
+  deep_south     10.3 s  10.1 s CPU   628 of 3948 points out of band  largest error 6.32 of the band  order: P10-I-20 P6-I-13 P7-I-14 P8-I-29 P8-R-23 P9-I-30 FAN-B
+  far_east       11.8 s  11.6 s CPU     0 of 3948 points out of band  largest error 0.19 of the band  order: P10-R-11 P2-R-01 P2-R-03 P3-I-03 P3-R-24 P4-R-15 P6-I-06 P7-I-26 FAN-B
+  lower_levels    7.7 s   7.6 s CPU   399 of 3948 points out of band  largest error 9.01 of the band  order: P10-I-22 P2-I-13 P2-R-10 P3-R-18 P7-R-28 P8-I-21 P9-I-20 FAN-B
+  new_incline     9.8 s   9.7 s CPU     0 of 3948 points out of band  largest error 0.22 of the band  order: P2-I-07 P4-R-03 P4-R-05 P4-R-21 P5-R-03 P5-R-04 P6-R-01
+  old_shaft       8.8 s   8.7 s CPU   889 of 3570 points out of band  largest error 7.61 of the band  order: P1-I-07 P1-I-30 P1-R-26 P2-I-11 P3-R-01 P5-I-09 P5-I-18 FAN-B
+  river_block     8.3 s   8.2 s CPU     0 of 3570 points out of band  largest error 0.20 of the band  order: P2-I-04 P3-I-03 P3-I-27 P3-R-04 P4-R-06 P4-R-16 P4-R-17 P9-I-06 FAN-B
   not accepted
   districts with points out of band: 3 of 6; points out at each: deep_south 628, far_east 0, lower_levels 399, new_incline 0, old_shaft 889, river_block 0
 
 worked_out: the open stopping's resistance worked out from the campaigns, not surveyed
   the two examples: accepted
-  deep_south      9.9 s   9.7 s CPU     0 of 3948 points out of band  largest error 0.18 of the band  order: P10-I-20 P6-I-13 P7-I-14 P8-I-29 P8-R-23 P9-I-30 FAN-B
+  deep_south     11.0 s  10.8 s CPU     0 of 3948 points out of band  largest error 0.18 of the band  order: P10-I-20 P6-I-13 P7-I-14 P8-I-29 P8-R-23 P9-I-30 FAN-B
   far_east       10.9 s  10.8 s CPU     0 of 3948 points out of band  largest error 0.19 of the band  order: P10-R-11 P2-R-01 P2-R-03 P3-I-03 P3-R-24 P4-R-15 P6-I-06 P7-I-26 FAN-B
-  lower_levels    9.9 s   9.8 s CPU     0 of 3948 points out of band  largest error 0.18 of the band  order: P10-I-22 P2-I-13 P2-R-10 P3-R-18 P7-R-28 P8-I-21 P9-I-20 FAN-B
-  new_incline     8.8 s   8.7 s CPU     0 of 3948 points out of band  largest error 0.22 of the band  order: P2-I-07 P4-R-03 P4-R-05 P4-R-21 P5-R-03 P5-R-04 P6-R-01
-  old_shaft       8.4 s   8.3 s CPU     0 of 3570 points out of band  largest error 0.21 of the band  order: P1-I-07 P1-I-30 P1-R-26 P2-I-11 P3-R-01 P5-I-09 P5-I-18 FAN-B
-  river_block     8.6 s   8.4 s CPU     0 of 3570 points out of band  largest error 0.20 of the band  order: P2-I-04 P3-I-03 P3-I-27 P3-R-04 P4-R-06 P4-R-16 P4-R-17 P9-I-06 FAN-B
+  lower_levels   10.5 s  10.3 s CPU     0 of 3948 points out of band  largest error 0.18 of the band  order: P10-I-22 P2-I-13 P2-R-10 P3-R-18 P7-R-28 P8-I-21 P9-I-20 FAN-B
+  new_incline     9.7 s   9.5 s CPU     0 of 3948 points out of band  largest error 0.22 of the band  order: P2-I-07 P4-R-03 P4-R-05 P4-R-21 P5-R-03 P5-R-04 P6-R-01
+  old_shaft       8.6 s   8.5 s CPU     0 of 3570 points out of band  largest error 0.21 of the band  order: P1-I-07 P1-I-30 P1-R-26 P2-I-11 P3-R-01 P5-I-09 P5-I-18 FAN-B
+  river_block     8.7 s   8.6 s CPU     0 of 3570 points out of band  largest error 0.20 of the band  order: P2-I-04 P3-I-03 P3-I-27 P3-R-04 P4-R-06 P4-R-16 P4-R-17 P9-I-06 FAN-B
   accepted
   districts with points out of band: 0 of 6; points out at each: deep_south 0, far_east 0, lower_levels 0, new_incline 0, old_shaft 0, river_block 0
 
 no_order: no survey order placed: every airway from its latest survey on file, no fan read
   the two examples: not accepted (points out of band: east_decline 1192, north_field 1772)
-  deep_south      7.4 s   7.3 s CPU   776 of 3948 points out of band  largest error 32.13 of the band  order: none
-  far_east        7.6 s   7.4 s CPU  2073 of 3948 points out of band  largest error 8.13 of the band  order: none
-  lower_levels    7.6 s   7.5 s CPU   439 of 3948 points out of band  largest error 4.35 of the band  order: none
-  new_incline     8.1 s   8.0 s CPU  2633 of 3948 points out of band  largest error 11.14 of the band  order: none
-  old_shaft       8.0 s   7.9 s CPU  2322 of 3570 points out of band  largest error 8.08 of the band  order: none
-  river_block     6.0 s   5.9 s CPU  2633 of 3570 points out of band  largest error 32.04 of the band  order: none
+  deep_south      7.6 s   7.6 s CPU   776 of 3948 points out of band  largest error 32.13 of the band  order: none
+  far_east        7.8 s   7.8 s CPU  2073 of 3948 points out of band  largest error 8.13 of the band  order: none
+  lower_levels    7.9 s   7.8 s CPU   439 of 3948 points out of band  largest error 4.35 of the band  order: none
+  new_incline     8.4 s   8.3 s CPU  2633 of 3948 points out of band  largest error 11.14 of the band  order: none
+  old_shaft       8.7 s   8.6 s CPU  2322 of 3570 points out of band  largest error 8.08 of the band  order: none
+  river_block     6.7 s   6.6 s CPU  2633 of 3570 points out of band  largest error 32.04 of the band  order: none
   not accepted
   districts with points out of band: 6 of 6; points out at each: deep_south 776, far_east 2073, lower_levels 439, new_incline 2633, old_shaft 2322, river_block 2633
 

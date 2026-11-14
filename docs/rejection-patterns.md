@@ -530,3 +530,8 @@ advisory (name prefix, metadata fields) came too and is not acted on (see the bo
   condition shows only in data and never in words): expect the same two failures. Probe rates measured with
   the condition unstated do not carry over once it is stated; re-probe after stating it.
 
+## Resubmission refused, Nov 13 (ventilation-district-airflow 20261113b)
+20261113b came back with the first review's text word for word, figures
+  the bundle no longer held included; uploading b again was refused as "this exact bundle" already submitted.
+  The review attached to a bundle is not always a review of it: compare its figures with the bundle before
+  acting on it. A refused resubmission needs a changed bundle and a new letter (here 20261113c: limit 30 s).

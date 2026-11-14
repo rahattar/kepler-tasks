@@ -4,7 +4,7 @@ A district arrives as a package in the format described by `/app/data/docs/distr
 
 Three packages are provided. `/app/data/examples/north_field` and `/app/data/examples/east_decline` include results prepared to VS-4, while `/app/data/pending/west_reef` does not.
 
-The same program is later used on six other districts. Their packages have the same format, each district is within the scope of VS-4 section 1, and the survey crew is available for those runs. At every survey point, the reported airflow must be within 1.5 per cent of the result to VS-4, or within 0.03 m3/s where that gives the larger allowance. Each run of airflow.py must finish within 35 seconds on 1 CPU.
+The same program is later used on six other districts. Their packages have the same format, each district is within the scope of VS-4 section 1, and the survey crew is available for those runs. At every survey point, the reported airflow must be within 1.5 per cent of the result to VS-4, or within 0.03 m3/s where that gives the larger allowance. Each run of airflow.py must finish within 30 seconds on 1 CPU.
 
 Runs take place one after another in a scratch directory containing a copy of `airflow.py` alone. The process runs as an unprivileged user without network access, with the package read-only, and must exit with status 0. `/app/data` remains readable at the same path. Python 3 with numpy, scipy and pandas is available.
 
