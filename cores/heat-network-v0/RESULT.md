@@ -12,7 +12,7 @@ sealed results).
 |---|---|---|---|---|---|
 | A | low | 7 min | accepted, worst 0.0005 of the band | 6.1 s | numpy parcel arrays for every pipe at once, Newton from the last step; built a 936-pipe test package |
 | B | low | 10 min | accepted | 5.0 s | active-set valve loop, parcels at either end; built a 936-pipe test package |
-| C | low | under 10 min | accepted | 4.6 s | the same shape |
+| C | low | 16 min | accepted (final program too) | 4.6 s | trees eliminated exactly, only the looped core to the solver; built a 936-pipe test, and one with 60 extra loops (8.5 s) |
 
 - **A stated numerical scheme is implemented first time.** All three read HN-3, wrote the parcels with the heat
   loss kept exact, the mirrored pressures, the valve limit and the step order, and matched both examples to

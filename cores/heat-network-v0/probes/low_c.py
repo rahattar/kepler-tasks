@@ -62,20 +62,92 @@ def main(pkg, out):
             (Tn_r if nw == 'return' else Tn_s)[nidx[name]] = T
 
     # ---------- hydraulics: unknown h = p_s - p_r at nodes ----------
-    free = np.array([i for i in range(N) if i != pl])
-    fpos = -np.ones(N, int)
-    fpos[free] = np.arange(len(free))
-    NF = len(free)
     g2 = 1.0 / np.sqrt(2.0 * R)
-    # sparse pattern
-    rows = np.concatenate([pu, pv, pu, pv])
-    cols = np.concatenate([pu, pv, pv, pu])
-    sgn = np.concatenate([np.ones(P), np.ones(P), -np.ones(P), -np.ones(P)])
-    keep = (fpos[rows] >= 0) & (fpos[cols] >= 0)
-    hr = fpos[rows[keep]]; hc = fpos[cols[keep]]; hs = sgn[keep]
-    allr = np.concatenate([hr, np.arange(NF)])
-    allc = np.concatenate([hc, np.arange(NF)])
-    sub_free = fpos[sn]
+    isfree = np.ones(N, bool); isfree[pl] = False
+    fmask = isfree.astype(float)
+
+    # leaf peeling order for the Newton linear systems (tree parts eliminated exactly)
+    adj = [[] for _ in range(N)]
+    for e in range(P):
+        a_, b_ = pu[e], pv[e]
+        if a_ != pl and b_ != pl and a_ != b_:
+            adj[a_].append((b_, e)); adj[b_].append((a_, e))
+    removed = np.zeros(N, bool); removed[pl] = True
+    deg = np.array([len(x) for x in adj])
+    rounds = []
+    while True:
+        cand = [i for i in range(N) if not removed[i] and deg[i] <= 1]
+        cs = set(cand)
+        nodes_r, edges_r, par_r = [], [], []
+        taken = set()
+        for i in cand:
+            nb = [(j, e) for j, e in adj[i] if not removed[j]]
+            if not nb:
+                nodes_r.append(i); edges_r.append(-1); par_r.append(pl); taken.add(i)
+            else:
+                j, e = nb[0]
+                if j in taken or (j in cs and j < i and deg[j] <= 1 and j not in taken and False):
+                    continue
+                if j in cs and j in taken:
+                    continue
+                if j in cs and j not in taken and j < i:
+                    continue
+                nodes_r.append(i); edges_r.append(e); par_r.append(j); taken.add(i)
+        # drop nodes whose parent is also taken this round
+        sel = [(i, e, j) for i, e, j in zip(nodes_r, edges_r, par_r) if j not in taken]
+        if not sel:
+            break
+        for i, e, j in sel:
+            removed[i] = True
+            if e >= 0:
+                deg[j] -= 1
+        ni = np.array([x[0] for x in sel]); ei = np.array([x[1] for x in sel]); pj = np.array([x[2] for x in sel])
+        rounds.append((ni, np.maximum(ei, 0), pj, ei >= 0))
+    core = np.nonzero(~removed)[0]
+    NC = len(core)
+    cpos = -np.ones(N, int); cpos[core] = np.arange(NC)
+    ce = np.array([e for e in range(P) if cpos[pu[e]] >= 0 and cpos[pv[e]] >= 0 and pu[e] != pv[e]], dtype=int)
+    cu = cpos[pu[ce]] if NC else np.zeros(0, int)
+    cv = cpos[pv[ce]] if NC else np.zeros(0, int)
+    use_dense = NC <= 250
+    if NC and not use_dense:
+        allr = np.concatenate([cu, cv, cu, cv, np.arange(NC)])
+        allc = np.concatenate([cu, cv, cv, cu, np.arange(NC)])
+        S0 = sp.csc_matrix((np.ones(len(allr)), (allr, allc)), shape=(NC, NC))
+        S0.sum_duplicates(); S0.sort_indices()
+        c_ind, c_ptr = S0.indices.copy(), S0.indptr.copy()
+        pos = np.array([c_ptr[c] + np.searchsorted(c_ind[c_ptr[c]:c_ptr[c + 1]], r) for r, c in zip(allr, allc)], dtype=np.int64)
+        nnz = len(c_ind)
+
+    def linsolve(dd, dsub, rhs):
+        # solve H x = rhs on free nodes; H = Laplacian(dd) + diag(dsub); x[pl] = 0
+        A = np.bincount(pu, dd, N) + np.bincount(pv, dd, N) + dsub
+        r = rhs * fmask
+        for ni, ei, pj, has in rounds:
+            a = A[ni]
+            b = np.where(has, dd[ei], 0.0)
+            A -= np.bincount(pj, b * b / a, N)
+            r += np.bincount(pj, b * r[ni] / a, N)
+        x = np.zeros(N)
+        if NC:
+            de = dd[ce]
+            if use_dense:
+                M = np.zeros((NC, NC))
+                np.add.at(M, (cu, cv), -de)
+                np.add.at(M, (cv, cu), -de)
+                M[np.arange(NC), np.arange(NC)] += A[core]
+                x[core] = np.linalg.solve(M, r[core])
+            else:
+                val = np.concatenate([-de, -de, -de, -de, A[core]])
+                # off-diagonals: (cu,cv),(cv,cu) negative; the (cu,cu),(cv,cv) slots unused -> zero
+                val[:len(de)] = 0.0; val[len(de):2 * len(de)] = 0.0
+                Hm = sp.csc_matrix((np.bincount(pos, val, nnz), c_ind, c_ptr), shape=(NC, NC))
+                x[core] = splu(Hm, permc_spec='MMD_AT_PLUS_A', options=dict(SymmetricMode=True)).solve(r[core])
+        x[pl] = 0.0
+        for ni, ei, pj, has in reversed(rounds):
+            b = np.where(has, dd[ei], 0.0)
+            x[ni] = (r[ni] + b * x[pj]) / A[ni]
+        return x
 
     def flows(h, mw):
         d = h[pu] - h[pv]
@@ -85,61 +157,38 @@ def main(pkg, out):
         ms = np.minimum(mw, K * np.sqrt(hp))
         return d, ad, m, hp, ms
 
-    def _unused(h, mw):
-        d, ad, m, hp, ms = flows(h, mw)
-        e = np.sum((2.0 / 3.0) * g2 * ad ** 1.5)
-        hs_ = (mw / K) ** 2
-        lo = hp <= hs_
-        es = np.where(lo, (2.0 / 3.0) * K * hp ** 1.5,
-                      (2.0 / 3.0) * K * hs_ ** 1.5 + mw * (hp - hs_))
-        return e + es.sum()
-
-    S0 = sp.csc_matrix((np.ones(len(allr)), (allr, allc)), shape=(NF, NF))
-    S0.sum_duplicates(); S0.sort_indices()
-    c_ind, c_ptr = S0.indices.copy(), S0.indptr.copy()
-    pos = np.array([c_ptr[c] + np.searchsorted(c_ind[c_ptr[c]:c_ptr[c + 1]], r) for r, c in zip(allr, allc)], dtype=np.int64)
-    nnz = len(c_ind)
-    LU = [None]
+    def grad(m, ms):
+        g = np.bincount(pu, m, N) - np.bincount(pv, m, N) + np.bincount(sn, ms, N)
+        g[pl] = 0.0
+        return g
 
     def solve(h, mw, dp):
         h = h.copy()
         h[pl] = dp
         rprev = None
-        refac = LU[0] is None
         for it in range(200):
             d, ad, m, hp, ms = flows(h, mw)
-            # gradient = outflow - inflow + draw
-            gr = np.bincount(pu, m, N) - np.bincount(pv, m, N) + np.bincount(sn, ms, N)
-            gF = gr[free]
+            gF = grad(m, ms)
             rn = np.max(np.abs(gF))
             tot = max(1.0, ms.sum())
             if rn < 1e-11 * tot or (rn < 1e-8 * tot and rprev is not None and rn > 0.5 * rprev):
                 break
-            if rprev is not None and rn > 0.1 * rprev:
-                refac = True
             rprev = rn
             dd = 0.5 * g2 / np.sqrt(np.maximum(ad, 1e-9))
             sat = K * np.sqrt(hp) >= mw
             hsub = np.where((hp > 0) & ~sat, 0.5 * K / np.sqrt(np.maximum(hp, 1e-12)), 0.0)
-            diag = np.zeros(N)
-            diag += np.bincount(sn, hsub, N)
-            dsub = diag[free]
-            val = np.concatenate([np.concatenate([dd, dd, dd, dd])[keep] * hs, dsub])
-            if refac or it >= 150:
-                Hm = sp.csc_matrix((np.bincount(pos, val, nnz), c_ind, c_ptr), shape=(NF, NF))
-                LU[0] = splu(Hm, permc_spec='MMD_AT_PLUS_A', options=dict(SymmetricMode=True))
-                refac = False
-            step = LU[0].solve(-gF)
+            dsub = np.bincount(sn, hsub, N)
+            step = linsolve(dd, dsub, -gF)
             d0 = gF @ step
             if not d0 < 0:
-                step = -gF / np.maximum(np.concatenate([np.bincount(pu, dd, N) + np.bincount(pv, dd, N)])[free] + dsub, 1e-30)
+                step = -gF / np.maximum(np.bincount(pu, dd, N) + np.bincount(pv, dd, N) + dsub, 1e-30)
+                step[pl] = 0.0
                 d0 = gF @ step
 
             def dphi(a):
-                hn = h.copy(); hn[free] += a * step
+                hn = h + a * step
                 _, _, m2, _, ms2 = flows(hn, mw)
-                g = (np.bincount(pu, m2, N) - np.bincount(pv, m2, N) + np.bincount(sn, ms2, N))[free]
-                return g @ step, hn
+                return grad(m2, ms2) @ step, hn
             d1, hn = dphi(1.0)
             if d1 > 0.5 * abs(d0):
                 lo_a, hi_a, dlo, dhi = 0.0, 1.0, d0, d1
