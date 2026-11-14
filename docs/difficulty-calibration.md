@@ -1053,3 +1053,18 @@ Low effort: 3 of 3 accepted in 10 to 21 minutes, every layer implemented as writ
   test generator.
 - **For a design to meet the bar with everything stated,** low effort must fail at something it was told
   exactly how to do. Neither v6 nor v7 found that. Subject closed by Alex, Nov 13.
+
+## Carburizing case depth v0: an unused column plus a calibration date plus "nobody reviews" is a checklist (Nov 13)
+
+`cores/carburizing-case-depth-v0`. A timed program for case depth over a furnace's record; the oxygen probe
+drifts from an unrecorded date and only the enrichment gas shows it. Low effort: 1 of 3 accepted, a second one
+load short, all three found the drift in 4 to 7 minutes.
+
+- **Every field in a package is read, and every field the standard does not use is asked why it is there.** A
+  calibration date names the instrument to doubt; a column described as the controller's response to that
+  instrument is the test. Together with the brief's instruction to act, that is the whole diagnosis handed over.
+- **The fairness sentence and an unused witness cannot be in the same task** without the condition being found
+  at low effort: today's runs (gear v1b, header v0, carburizing v0) all read the pending package as soon as the
+  brief said nobody reviews the results.
+- What held elsewhere today (lube oil, ventilation, twin oil lines, hoist rope) puts the witness in data the
+  program must use anyway, and the act in an order or a correction the program makes for its own reasons.
