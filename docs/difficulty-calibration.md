@@ -1261,7 +1261,7 @@ three having built a maximum-size package from the pending one to time themselve
 back stresses in a 24-layer Bree wall, irregular plant histories of up to 10,000 states a line, a 15 s limit.
 The chosen hard part was numerical: the usual backward-Euler return mapping is 5 to 9 per cent off with one
 step a ramp and still out of band at 8 substeps, while the exact exponential update is right in one or two.
-Low effort: 2 of 2 accepted in 16 and 20 minutes (third pending when written), both with the exponential
+Low effort: 3 of 3 accepted in 16, 20 and 49 minutes, all with the exponential
 update, the lines vectorised together, elastic ramps skipped and substeps budgeted against their own CPU.
 - **A textbook integration scheme is not a numerical difficulty for this model.** The exact update of an
   Armstrong-Frederick back stress under flow of one sign is in the textbooks, and low effort wrote it first.

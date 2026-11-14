@@ -1,4 +1,4 @@
-# pipe-ratchet-v0: low effort solves it (Nov 14)
+# pipe-ratchet-v0: low 3 of 3 accepted (Nov 14)
 
 A timed program for the ratchet strain of pressurised pipe walls to a stated standard, PW-5: a 24-layer wall
 in the hoop direction held by equilibrium, Chaboche kinematic hardening (three back stresses) with Voce
@@ -17,12 +17,13 @@ greatest ratchet strain.
 | backward Euler, one step a ramp (`wrong/be_one.py`) | out on 16 of 18 lines, up to 9.6 bands | out, up to 8.2 bands |
 | backward Euler, 8 substeps | over the limit | over or out |
 | exact laws, one line after another | accepted, 9 to 11 s | accepted |
+| low 1 (49 min) | accepted, widest 0.26 band, 7.5 to 8 s | |
 | low 2 (20 min) | accepted, widest 0.11 band, 9 to 10 s | |
 | low 3 (16 min) | accepted, widest 0.15 band, 9 s | |
 
-Both solving runs wrote the exact exponential update of the back stresses for a fixed flow direction,
+All three wrote the exact exponential update of the back stresses for a fixed flow direction,
 carried the lines together, skipped elastic ramps, substepped the plastic part of a ramp, and budgeted their
-substeps against their own CPU time. Both built harsher works of their own at the stated maximum to test
+substeps against their own CPU time. All three built harsher works of their own at the stated maximum to test
 it. Their programs are more accurate than the reference.
 
 Not at the bar. The pre-mortem was right that a low run that knows the exponential update passes; it did not
