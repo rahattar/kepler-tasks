@@ -1,0 +1,7 @@
+coil_yard      0.4 s  stations out   0 of 123 | CY-1 0/19 worst 0.00; CY-2 0/13 worst 0.00; CY-3 0/30 worst 0.00; CY-4 0/28 worst 0.00; CY-5 0/33 worst 0.00
+die_store      0.6 s  stations out   0 of 160 | DS-1 0/15 worst 0.00; DS-2 0/29 worst 0.18; DS-3 0/22 worst 0.00; DS-4 0/18 worst 0.00; DS-5 0/17 worst 0.00; DS-6 0/59 worst 0.00
+ladle_aisle    0.7 s  stations out  26 of 221 | LA-1 0/39 worst 0.00; LA-2 0/41 worst 0.00; LA-3 0/57 worst 0.00; LA-4 0/29 worst 0.16; LA-5 26/29 worst 15.04; LA-6 0/26 worst 0.18
+press_line     0.5 s  stations out  18 of 168 | PL-1 0/44 worst 0.22; PL-2 0/15 worst 0.00; PL-3 0/12 worst 0.00; PL-4 0/38 worst 0.00; PL-5 18/26 worst 13.10; PL-6 0/33 worst 0.00
+roll_store     0.5 s  stations out   6 of 154 | RS-1 0/15 worst 0.00; RS-2 0/33 worst 0.21; RS-3 0/33 worst 0.00; RS-4 0/19 worst 0.00; RS-5 0/44 worst 0.00; RS-6 6/10 worst 12.05
+scrap_bay      0.7 s  stations out  80 of 251 | SB-1 0/37 worst 0.00; SB-2 0/72 worst 0.21; SB-3 48/54 worst 7.83; SB-4 32/37 worst 11.31; SB-5 0/23 worst 0.00; SB-6 0/28 worst 0.00
+NOT ACCEPTED

@@ -924,3 +924,43 @@ hidden pairs one gear's lead charts carry the flank names exchanged. Low effort:
   the `worked_on` miss on five of six districts, in 3 to 6 minutes. All three implemented the stated rule
   directly (a fan held on its falling part, crossing at the end of it) instead of finding stall in the results.
   Stating the mechanism that every probe found anyway costs nothing at the easiness gate.
+
+## Hoist rope v0 and v1: a mirrored survey with two causes holds two careful runs in three (Nov 13)
+
+`cores/hoist-rope-v0`, `cores/hoist-rope-v1`. A timed program for the bending damage along a crane's hoist
+rope, from the movement log and the rope surveys, to a company standard. Probes on `model: "opus"`.
+
+| core | conditions | low | xhigh |
+|---|---|---|---|
+| v0 | some ropes turned end for end at an unrecorded time; the next survey mirrors the one before | 0 of 3 | 3 of 3 |
+| v1 | v0, and on other ropes the stations are counted from the dead end from one survey on: the same mirror, but the rope never moved | 0 of 3 | 1 of 3 |
+
+- **One data-only condition, plain in the package without results, is found by every careful run.** v0: three
+  xhigh runs of three found the mirrored survey and followed the element (27 to 43 minutes). A diameter that
+  rises by half a millimetre between two surveys is seen by anyone who looks at the surveys at all.
+- **Low effort does look, sometimes.** One v1 low run laid each interval's wear against its bendings as a first
+  look, found both mirrors in four minutes and called both turns. On v0 it would have passed; v0's 0 of 3 was
+  three draws, not a rate.
+- **The second condition has to share the first one's signature and differ in its consequence, and the first
+  explanation has to fit the signature exactly.** A turn and a change of the end a survey starts from give the
+  same mirrored survey. The turn explains the mirror perfectly and is the textbook event, so two xhigh runs
+  of three took it for both ropes and spent the rest of their time dating the turn and testing against
+  synthetic packages that held turns only. This is the engine-indicating lesson (index and gain) again, in a
+  different subject.
+- **What separates them must be a physical argument, not a third fit.** Bendings fall where the reeving puts
+  them, so after a turn the rope goes on thinning at the listed places and after a change of end at the
+  mirrored ones. The one passing run and the reference both used it. The correct handling of the second
+  condition is to do almost nothing, which no program arrives at by adding corrections.
+- **A run validates against data it generates itself, and that data carries its own assumption.** Both failing
+  xhigh runs reported hundreds of synthetic ropes within tolerance. Their generators could not contain the
+  condition they had not thought of.
+- **A survey must not be a function of the result.** v0's diameters were a fixed law of the damage, the same
+  for every rope. All three xhigh runs fitted the law and dated the turn to a day; the last survey alone
+  would have given the damage along a rope, turned or not. v1 gives every rope its own constants and every
+  element its own gain.
+- **Noise in the log is read as a clue.** v0's first build had movements slightly out of time order and
+  sheaves stopping exactly on a station; two of three low reports dwelt on the 1 per cent this cost on the
+  examples. A sound example must be exactly sound, down to the order of its rows.
+- **A subagent survives an environment restart.** One xhigh probe reported 43 minutes in, after the session's
+  container had restarted; its sandbox under /tmp was intact.
+- As in every timed core so far, the limit separated no run.

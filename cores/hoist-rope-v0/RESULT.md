@@ -11,7 +11,7 @@ five or six cranes and about 80,000 to 97,000 movements a works, 30 s limit, run
 | reference (`ref_ropes.py`: each survey laid against the one before, as listed and mirrored; turn at mid interval) | exact | accepted, 0.14 band | accepted, worst 0.44 band |
 | as listed (`as_listed.py`) | exact | MH-1 24 of 29 out | every turned rope out, 10 to 28 stations, 5 to 13 bands |
 | low 1, 2, 3 (1 to 3 min) | accepted | MH-1 24 of 29 out | not accepted, as the as-listed program |
-| xhigh 1 (cut off by an environment restart at about 40 min; its program as left) | exact | accepted | accepted, worst 0.05 band |
+| xhigh 1 (43 min) | exact | accepted | accepted, worst 0.05 band |
 | xhigh 2 (33 min) | exact | accepted | accepted, worst 0.08 band |
 | xhigh 3 (27 min) | exact | accepted | accepted, worst 0.04 band |
 
