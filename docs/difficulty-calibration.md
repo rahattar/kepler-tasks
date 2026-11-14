@@ -1381,3 +1381,17 @@ and customer nodes unprompted, named both of the pending network's conditions wi
   A limit set at two to three times my own reference is set against the wrong program.
 - Cost: about four hours, two of them generation (each network 1 to 5 minutes; the weak-reading retries and an
   isolated PRS node cost two regenerations).
+
+## heat-network v2: a campaign node balance with every term listed is found at low effort, low 2 of 3 (Nov 14)
+
+`cores/heat-network-v2/RESULT.md`. Resistances only from three hydraulic campaigns; a substation registered at
+the wrong node and a bypass leaking open, each shown only by the node balance of those campaigns. Low 2 of 3
+accepted in 5 to 9 minutes (the third in band everywhere but over the 15 s limit on two networks); all three
+found both conditions on the pending network.
+- **The balance is a direct comparison when the package logs every pipe's flow and every substation's.** Every
+  run summed the campaign flows at each node before writing its solver. gas-network-linepack v0 held at low
+  because its residual needed the campaigns joined to a meter record; here one bincount shows it.
+- **Naming the mechanism in the documents names the check**: a bypass law in the scope and a bypass column
+  "closed, as fitted" told every run what to look for.
+- Close the heat-network family at three versions: a stated scheme (v0), outputs set beside records (v1) and a
+  listed balance (v2) all fall at low effort.
