@@ -1,0 +1,271 @@
+{
+ "dunlin": {
+  "where": "hidden",
+  "nodes": 312,
+  "mains": 355,
+  "governors": 154,
+  "allowance": 7,
+  "worked_on": [
+   "M038",
+   "M302",
+   "M144",
+   "M083",
+   "M023",
+   "M355"
+  ],
+  "passing_valve": null,
+  "valve_since_campaign": null,
+  "valve_flow_now": null,
+  "low_meter": "MT-9264",
+  "meter_ratio": 0.86,
+  "caps": [
+   38135,
+   41282
+  ],
+  "sets": [
+   6.0,
+   6.0
+  ],
+  "pmin": 3.046
+ },
+ "kestrel": {
+  "where": "examples",
+  "nodes": 240,
+  "mains": 270,
+  "governors": 122,
+  "allowance": 5,
+  "worked_on": [
+   "M035",
+   "M009",
+   "M217",
+   "M107",
+   "M270"
+  ],
+  "passing_valve": null,
+  "valve_since_campaign": null,
+  "valve_flow_now": null,
+  "low_meter": null,
+  "meter_ratio": null,
+  "caps": [
+   31163,
+   50076
+  ],
+  "sets": [
+   6.0,
+   6.0
+  ],
+  "pmin": 3.55
+ },
+ "heron": {
+  "where": "examples",
+  "nodes": 265,
+  "mains": 290,
+  "governors": 140,
+  "allowance": 6,
+  "worked_on": [
+   "M015",
+   "M037",
+   "M050",
+   "M016",
+   "M116",
+   "M290"
+  ],
+  "passing_valve": null,
+  "valve_since_campaign": null,
+  "valve_flow_now": null,
+  "low_meter": null,
+  "meter_ratio": null,
+  "caps": [
+   50852,
+   35672
+  ],
+  "sets": [
+   6.5,
+   6.5
+  ],
+  "pmin": 2.521
+ },
+ "plover": {
+  "where": "pending",
+  "nodes": 233,
+  "mains": 256,
+  "governors": 118,
+  "allowance": 7,
+  "worked_on": [
+   "M097",
+   "M101",
+   "M161",
+   "M137",
+   "M256"
+  ],
+  "passing_valve": "BV-2",
+  "valve_since_campaign": 1,
+  "valve_flow_now": 1086.8,
+  "low_meter": "MT-5200",
+  "meter_ratio": 0.82,
+  "caps": [
+   51430,
+   42003
+  ],
+  "sets": [
+   6.2,
+   6.2
+  ],
+  "pmin": 3.357
+ },
+ "merlin": {
+  "where": "hidden",
+  "nodes": 368,
+  "mains": 425,
+  "governors": 184,
+  "allowance": 7,
+  "worked_on": [
+   "M383",
+   "M388",
+   "M075",
+   "M056",
+   "M083",
+   "M425"
+  ],
+  "passing_valve": "BV-3",
+  "valve_since_campaign": 2,
+  "valve_flow_now": -1125.7,
+  "low_meter": null,
+  "meter_ratio": null,
+  "caps": [
+   67172,
+   61864
+  ],
+  "sets": [
+   6.4,
+   6.1
+  ],
+  "pmin": 2.404
+ },
+ "osprey": {
+  "where": "hidden",
+  "nodes": 337,
+  "mains": 380,
+  "governors": 167,
+  "allowance": 9,
+  "worked_on": [
+   "M153",
+   "M254",
+   "M042",
+   "M102",
+   "M211",
+   "M293",
+   "M013",
+   "M379",
+   "M380"
+  ],
+  "passing_valve": null,
+  "valve_since_campaign": null,
+  "valve_flow_now": null,
+  "low_meter": null,
+  "meter_ratio": null,
+  "caps": [
+   38542,
+   37901,
+   38676
+  ],
+  "sets": [
+   6.2,
+   6.2,
+   6.0
+  ],
+  "pmin": 2.29
+ },
+ "curlew": {
+  "where": "hidden",
+  "nodes": 414,
+  "mains": 471,
+  "governors": 206,
+  "allowance": 10,
+  "worked_on": [
+   "M142",
+   "M128",
+   "M417",
+   "M442",
+   "M033",
+   "M084",
+   "M470",
+   "M471"
+  ],
+  "passing_valve": "BV-3",
+  "valve_since_campaign": 1,
+  "valve_flow_now": 1222.3,
+  "low_meter": "MT-4043",
+  "meter_ratio": 0.8,
+  "caps": [
+   32030,
+   26786,
+   39360
+  ],
+  "sets": [
+   6.5,
+   6.3,
+   6.0
+  ],
+  "pmin": 3.01
+ },
+ "siskin": {
+  "where": "hidden",
+  "nodes": 449,
+  "mains": 505,
+  "governors": 234,
+  "allowance": 9,
+  "worked_on": [
+   "M370",
+   "M283",
+   "M455",
+   "M115",
+   "M489",
+   "M395",
+   "M505"
+  ],
+  "passing_valve": "BV-2",
+  "valve_since_campaign": 1,
+  "valve_flow_now": -1418.5,
+  "low_meter": "MT-8388",
+  "meter_ratio": 0.84,
+  "caps": [
+   69152,
+   77462
+  ],
+  "sets": [
+   6.5,
+   6.5
+  ],
+  "pmin": 3.185
+ },
+ "teal": {
+  "where": "hidden",
+  "nodes": 319,
+  "mains": 359,
+  "governors": 165,
+  "allowance": 7,
+  "worked_on": [
+   "M090",
+   "M278",
+   "M305",
+   "M025",
+   "M358",
+   "M359"
+  ],
+  "passing_valve": "BV-4",
+  "valve_since_campaign": 2,
+  "valve_flow_now": 1007.8,
+  "low_meter": null,
+  "meter_ratio": null,
+  "caps": [
+   33494,
+   46750
+  ],
+  "sets": [
+   6.0,
+   5.8
+  ],
+  "pmin": 3.392
+ }
+}

@@ -1356,3 +1356,28 @@ up by a conductivity refit to noise yet leaves that forecast 1.4 K out. Each wro
 - **Rule.** A study records sha256 digests of what it judged and preflight compares digests, never file
   times. A preflight's last line ends "N failed". Run shipcheck on the zip before any delivery; `unzip`
   restores times and so hides the first cause.
+
+## gas-network-linepack v0: two residuals of one balance are one trap, low 0 of 3, xhigh 3 of 3 (Nov 14)
+
+`cores/gas-network-linepack-v0/RESULT.md`. The ventilation recipe on an intermediate-pressure gas network: the
+design-day minimum at every governor, a transient with linepack and PRSs at capacity for hours, mains' K from
+survey campaigns, an in-run order with an allowance above the work log. Two conditions unstated, each shown only
+by conservation on the campaigns that give the resistances (the kind heat-network v1 says holds): a boundary
+valve booked closed that passes (misclosure 4 to 100 times the stated bound at its node) and a customer meter
+registering 80 to 86 per cent (7 to 10 times, joining the campaigns to the meter record). Probes on
+`model: "opus"`: **low 0 of 3** (2 to 9 minutes; every run wrote the stated method exactly and spent the spare
+places proving meters by size), **xhigh 3 of 3** (26 to 30 minutes; every run balanced the campaigns at the valve
+and customer nodes unprompted, named both of the pending network's conditions with their sizes, ordered them).
+- **Two conditions that one check finds are one condition.** Low effort: neither; xhigh: both, every time. The
+  ventilation district held in the band because its second condition was of another kind (a fan state the
+  records leave open), not because a residual of the campaign balance is hard to find: three of three xhigh
+  runs found two of them here.
+- **A misclosure beyond a stated worst-case bound needs no judgement.** With the accuracies stated, a node off
+  by 4 times its bound is a contradiction the moment it is computed. The only obstacle is deciding to compute
+  it, which xhigh does and low does not: that is the low/xhigh split, not a difficulty band.
+- **The spare allowance has a default use.** Every low run filled it with meter provings by largest flow; that
+  proves the low meter only when it is the largest (curlew, siskin), and those networks failed on the valve.
+- **The limit did not bind**: probe programs 1.0 to 5.0 s against 10 s, my reference the slowest at 2.9 to 3.9 s.
+  A limit set at two to three times my own reference is set against the wrong program.
+- Cost: about four hours, two of them generation (each network 1 to 5 minutes; the weak-reading retries and an
+  isolated PRS node cost two regenerations).

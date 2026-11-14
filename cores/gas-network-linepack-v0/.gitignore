@@ -1,0 +1,10 @@
+__pycache__/
+core/data/examples/
+core/data/pending/
+core/hidden/
+core/pending_truth_*.csv
+core/manifest.json.lock
+crew/books/
+crew/dev/
+crew/run
+crew/state_dev/
