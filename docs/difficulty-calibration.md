@@ -1329,3 +1329,13 @@ hanger forces to the hot survey recovers the loads inside the band without ident
   matter is plain in the evidence. Before building, check that the deliverable is more sensitive to the
   condition than the evidence is (an extrapolation past a nonlinearity, damage that compounds a small error).
 - **Cost:** about an hour, with a prototype that would have been the generator's core.
+
+## heat-network v1: a record the model itself predicts is checked at low effort (Nov 14)
+
+`cores/heat-network-v1/RESULT.md`. A fouled substation (heat meter over the first day: 18 per cent more water than
+the model) and a throttled pipe (pressure survey: 44 kPa below what the laid resistances give). Low 1 of 3
+accepted, and all three found both conditions in 10 to 27 minutes; the two misses were refits slightly off.
+- **"Model residual" is not enough.** Each run ran its model on the survey's flows and on the meter day, because
+  the package handed it a measurement of something the model computes. A residual holds when it comes from a
+  law applied to inputs the method consumes (ventilation: conservation on the campaigns that give the
+  resistances), not from the method's output set beside a record.
