@@ -27,12 +27,12 @@ def main():
             print("    " + common.line(name, entry))
         shutil.rmtree(root)
         outcome = common.assess(program)
-        failed = [name for name, entry in outcome.sites.items() if entry.get("points_out_of_band", 1)]
+        failed = [name for name, entry in outcome.sites.items() if entry.get("loads_out_of_band", 1)]
         print("  the six sites: %s, %d of %d sites with loads out of band" % (
             "accepted" if outcome.accepted else "not accepted", len(failed), len(outcome.sites)))
         for name, entry in outcome.sites.items():
             print("    " + common.line(name, entry))
-            if entry.get("points_out_of_band"):
+            if entry.get("loads_out_of_band"):
                 with open(os.path.join(common.SITES, name, "site.json")) as handle:
                     allowance = json.load(handle)["lab_samples"]
                 print("      allowance %d, samples ordered %d; worst %s" % (

@@ -2,6 +2,7 @@ ok    the bundle's root holds README.md, instruction.md, task.toml, authoring, e
 ok    no cache, bytecode or dotfile anywhere
 ok    no all-uppercase file or folder name but README.md and Dockerfile
 ok    every file is ASCII
+ok    no word or identifier of the task this one was carried over from is left
 ok    no encoded strings or decoders in any program
 ok    the task's name ends with the bundle folder's name, of at most three hyphenated words
 ok    the one artifact is /app/output/quench.py
@@ -73,4 +74,4 @@ ok    live: the same with one value nan is not
 ok    live: the same with every core cooling time 1.6 per cent high is not
 ok    live: a program that writes the true table and is still running at the limit is not accepted, and its table is not opened
 ok    live: the reference on the cut-down site is accepted and places one order of the site's allowance
-75 checks, 0 failed: the bundle is clean
+76 checks, 0 failed: the bundle is clean

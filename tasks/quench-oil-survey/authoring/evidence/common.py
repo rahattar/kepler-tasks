@@ -63,13 +63,13 @@ def staged(names, every=1, keep=None):
     os.makedirs(truths)
     for name in names:
         shutil.copytree(os.path.join(SITES, name), os.path.join(sites, name))
-        points = rows_of(os.path.join(SITES, name, "loads.csv"))
+        loads = rows_of(os.path.join(SITES, name, "loads.csv"))
         if keep is not None:
-            kept = [p for p in points if keep(p)]
+            kept = [p for p in loads if keep(p)]
         else:
-            kept = points[::every]
+            kept = loads[::every]
         with open(os.path.join(sites, name, "loads.csv"), "w", newline="") as handle:
-            out = csv.DictWriter(handle, list(points[0]))
+            out = csv.DictWriter(handle, list(loads[0]))
             out.writeheader()
             out.writerows(kept)
         wanted = {p["load"] for p in kept}
@@ -105,5 +105,5 @@ def line(name, entry):
         return "%-12s refused: %s" % (name, entry["refused"])
     worst = max(entry["largest_error_over_band"].values())
     return "%-12s %5.1f s  %4d of %4d loads out of band  largest error %.2f of its band  order: %s" % (
-        name, entry["seconds"], entry["points_out_of_band"], entry["points"], worst,
+        name, entry["seconds"], entry["loads_out_of_band"], entry["loads"], worst,
         " ".join(entry["laboratory_order"] or ["none"]))

@@ -1,6 +1,6 @@
 """The whole verifier, tests/test.sh itself, on three programs.
 
-    python3 verifier_run.py > verifier_run.txt        (as root, on a machine set up as tests/Dockerfile sets one up)
+    python3 verifier_run.py > verifier_run.txt        (as root, on a computer set up as tests/Dockerfile sets one up)
 
 Each program in turn is put at /app/output/quench.py and `bash tests/test.sh` is run as it stands: its umask,
 pytest, the checker running the program as nobody, read_report.py, the reward. What is printed is the reward

@@ -4,65 +4,65 @@
   "north_works": {
    "seed": 11,
    "role": "example",
-   "console_that_is_two_charges": null,
-   "consoles": 3,
-   "self_contained_machines": 1
+   "central_system_that_is_two_charges": null,
+   "central_systems": 3,
+   "tanks_with_their_own_oil": 1
   },
   "east_works": {
    "seed": 12,
    "role": "example",
-   "console_that_is_two_charges": null,
-   "consoles": 4,
-   "self_contained_machines": 2
+   "central_system_that_is_two_charges": null,
+   "central_systems": 4,
+   "tanks_with_their_own_oil": 2
   },
   "west_quarry": {
    "seed": 31,
    "role": "pending",
-   "console_that_is_two_charges": "LO-2",
-   "consoles": 4,
-   "self_contained_machines": 1
+   "central_system_that_is_two_charges": "QS-2",
+   "central_systems": 4,
+   "tanks_with_their_own_oil": 1
   },
   "quay_site": {
    "seed": 37,
    "role": "hidden",
-   "console_that_is_two_charges": "LO-2",
-   "consoles": 5,
-   "self_contained_machines": 2
+   "central_system_that_is_two_charges": "QS-2",
+   "central_systems": 5,
+   "tanks_with_their_own_oil": 2
   },
   "ridge_plant": {
    "seed": 22,
    "role": "hidden",
-   "console_that_is_two_charges": "LO-3",
-   "consoles": 4,
-   "self_contained_machines": 2
+   "central_system_that_is_two_charges": "QS-3",
+   "central_systems": 4,
+   "tanks_with_their_own_oil": 2
   },
   "canal_works": {
    "seed": 23,
    "role": "hidden",
-   "console_that_is_two_charges": "LO-1",
-   "consoles": 5,
-   "self_contained_machines": 1
+   "central_system_that_is_two_charges": "QS-1",
+   "central_systems": 5,
+   "tanks_with_their_own_oil": 1
   },
   "upper_mill": {
    "seed": 44,
    "role": "hidden",
-   "console_that_is_two_charges": "LO-4",
-   "consoles": 5,
-   "self_contained_machines": 2
+   "central_system_that_is_two_charges": "QS-4",
+   "central_systems": 5,
+   "tanks_with_their_own_oil": 2
   },
   "south_yard": {
    "seed": 25,
    "role": "hidden",
-   "console_that_is_two_charges": null,
-   "consoles": 4,
-   "self_contained_machines": 2
+   "central_system_that_is_two_charges": null,
+   "central_systems": 4,
+   "tanks_with_their_own_oil": 2
   },
   "tank_farm": {
    "seed": 41,
    "role": "hidden",
-   "console_that_is_two_charges": "LO-2",
-   "consoles": 4,
-   "self_contained_machines": 3
+   "central_system_that_is_two_charges": "QS-2",
+   "central_systems": 4,
+   "tanks_with_their_own_oil": 3
   }
  },
  "files": {

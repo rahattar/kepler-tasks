@@ -90,6 +90,15 @@ def main():
         except UnicodeDecodeError:
             not_ascii.append(name)
     check("every file is ASCII", not not_ascii, ", ".join(not_ascii[:3]))
+    # The verifier, laboratory and studies were carried over from a journal bearing task. A review found its
+    # identifiers left in the manifest; none of that task's words may be left anywhere in this one.
+    stale = re.compile(r"(?i)\b(console|consoles|machines?|bearings?|journal|viscosity|nu40|nu100|rho15|lubricat\w*|"
+                       r"ls-?3|self_contained\w*|points?|attitude|h_min|p_max|t_eff|power_kw)\b|\bLO-\d")
+    left = ["%s: %s" % (n, m.group(0)) for n in everything
+            if not n.startswith(("tests/sites/", "tests/sealed/", "tests/app_data/", "environment/data/examples/",
+                                 "environment/data/pending/")) and n != "authoring/evidence/preflight.py"
+            for m in [stale.search(text(n))] if m]
+    check("no word or identifier of the task this one was carried over from is left", not left, "; ".join(left[:4]))
     coded = [n for n in everything if n.endswith(".py") and n != "authoring/evidence/preflight.py"
              and re.search(r"\b(b64decode|b64encode|rot13|unhexlify|fromhex|decompress)\b", text(n))]
     check("no encoded strings or decoders in any program", not coded, ", ".join(coded))
@@ -206,9 +215,9 @@ def main():
           all(sorted(os.listdir(os.path.join(common.SITES, n))) == sorted(grade_program.PACKAGE) for n in common.HIDDEN))
     covered = True
     for name in common.HIDDEN:
-        points = {p["load"] for p in common.rows_of(os.path.join(common.SITES, name, "loads.csv"))}
+        loads = {p["load"] for p in common.rows_of(os.path.join(common.SITES, name, "loads.csv"))}
         truth = common.rows_of(os.path.join(common.TRUTHS, name + ".csv"))
-        covered &= points == {r["load"] for r in truth} and len(truth) == len(points) and list(truth[0]) == grade_program.COLUMNS
+        covered &= loads == {r["load"] for r in truth} and len(truth) == len(loads) and list(truth[0]) == grade_program.COLUMNS
     check("the sealed results have one row for every load of each of the six, in the statement's columns", covered)
     check("no site's name, and no results, anywhere in the agent's image but its own three",
           not [n for n in everything if n.startswith("environment/") and any(h in n or h in text(n) for h in hidden_names)
@@ -348,7 +357,7 @@ def main():
     entry = late.sites["south_yard"]
     check("live: a program that writes the true table and is still running at the limit is not accepted, and its "
           "table is not opened", not late.accepted and entry["run"] == "over the limit"
-          and "points_out_of_band" not in entry and "refused" not in entry and bool(late.stopped))
+          and "loads_out_of_band" not in entry and "refused" not in entry and bool(late.stopped))
     brief = common.assess(common.REFERENCE, sites=sites, truths=truths)
     check("live: the reference on the cut-down site is accepted and places one order of the site's allowance",
           brief.accepted and len(brief.sites["south_yard"]["laboratory_order"]) == 5)

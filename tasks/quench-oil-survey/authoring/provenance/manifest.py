@@ -26,9 +26,10 @@ def main():
                 path = os.path.join(base, name)
                 with open(path, "rb") as handle:
                     files[os.path.relpath(path, BUNDLE)] = hashlib.sha256(handle.read()).hexdigest()
-    table = {name: dict(seed=seed, role=role, console_that_is_two_charges=None if split is None else "LO-%d" % (split + 1),
-                        consoles=consoles, self_contained_machines=alone)
-             for name, (seed, role, split, consoles, alone) in sites.SITES.items()}
+    table = {name: dict(seed=seed, role=role,
+                        central_system_that_is_two_charges=None if split is None else "QS-%d" % (split + 1),
+                        central_systems=central, tanks_with_their_own_oil=single)
+             for name, (seed, role, split, central, single) in sites.SITES.items()}
     with open(os.path.join(HERE, "manifest.json"), "w") as handle:
         json.dump(dict(generator="authoring/provenance/sites.py", sites=table, files=files), handle, indent=1)
         handle.write("\n")

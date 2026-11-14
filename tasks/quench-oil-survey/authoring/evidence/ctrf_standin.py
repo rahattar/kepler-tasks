@@ -1,4 +1,4 @@
-"""A stand-in for the pytest-json-ctrf plugin, for a machine that has pytest but not the plugin.
+"""A stand-in for the pytest-json-ctrf plugin, for a computer that has pytest but not the plugin.
 
 verifier_run.py loads it only when the plugin itself cannot be imported. It takes the same `--ctrf=PATH`
 option and writes the same summary block (tests, passed, failed, skipped, pending, other), which is all that

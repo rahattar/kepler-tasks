@@ -42,7 +42,7 @@ in the sample at 40 C, and the analysis reports three figures:
 From them, with the probe constant K = 14 200 J/(m2 K):
 
 - h_p = K CR_max / (T_CRmax - 40)   and   h_300 = K CR_300 / 260,   both in W/(m2 K).
-- h(T_s) is linear in T_s between these points and constant outside them:
+- h(T_s) is linear in T_s between the values tabulated and constant outside them:
 
 | T_s, C | 100 and below | 300 | T_CRmax | T_CRmax + 120 and above |
 |---|---|---|---|---|

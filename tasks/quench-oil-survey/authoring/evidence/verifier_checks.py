@@ -149,7 +149,7 @@ def the_limit(sites, truths, good, two_sites, two_truths):
     print("\nThe limit, set to 3 s for these runs. Every program first writes the true table.\n")
     slow = judged(writes(good, then="time.sleep(30)\n"), sites, truths, limit=3)
     entry = slow.sites[SITE]
-    opened = "points_out_of_band" in entry or "refused" in entry
+    opened = "loads_out_of_band" in entry or "refused" in entry
     show("then sleeps for 30 s", "%s; table %s; %s" % (entry["run"], "opened" if opened else "not opened",
          "accepted" if slow.accepted else "not accepted"), entry["run"] == "over the limit" and not opened and not slow.accepted)
     deaf = judged(writes(good, then="import signal\nsignal.signal(signal.SIGTERM, signal.SIG_IGN)\nwhile True:\n    pass\n"),

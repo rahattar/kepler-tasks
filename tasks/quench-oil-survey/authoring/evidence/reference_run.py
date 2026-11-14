@@ -24,7 +24,7 @@ def main():
     print("runs take %.1f to %.1f s; the limit of %d s is %.1f times the slowest run" % (
         min(times), max(times), LIMIT, LIMIT / max(times)))
     print("largest error at any load of any site: %.2f of its band" % worst)
-    print("loads in all: %d" % sum(entry["points"] for entry in outcome.sites.values()))
+    print("loads in all: %d" % sum(entry["loads"] for entry in outcome.sites.values()))
     print()
     print("The two example sites, expected.csv taken as the truth")
     root, sites, truths, books = common.visible_as_sites()

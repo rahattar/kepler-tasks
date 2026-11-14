@@ -256,8 +256,8 @@ def run_site(program, package, desk, limit, unprivileged, tools=None):
         shutil.rmtree(box, ignore_errors=True)
 
 
-def read_table(raw, points):
-    """{point: {quantity: value}} from what a run wrote, or Refused."""
+def read_table(raw, loads):
+    """{load: {quantity: value}} from what a run wrote, or Refused."""
     if isinstance(raw, Refused):
         raise raw
     if len(raw) > OUTPUT_CAP:
@@ -272,32 +272,32 @@ def read_table(raw, points):
     for row in rows[1:]:
         if len(row) != len(COLUMNS):
             raise Refused("a row of OUT_CSV has %d fields, not %d" % (len(row), len(COLUMNS)))
-        point = row[0].strip()                        # blanks round a field are not judged
-        if point not in points:
-            raise Refused("OUT_CSV has a row for %r, which is not a load of the package" % point[:60])
-        if point in table:
-            raise Refused("OUT_CSV has two rows for the load %s" % point)
+        load = row[0].strip()                        # blanks round a field are not judged
+        if load not in loads:
+            raise Refused("OUT_CSV has a row for %r, which is not a load of the package" % load[:60])
+        if load in table:
+            raise Refused("OUT_CSV has two rows for the load %s" % load)
         values = {}
         for name, text in zip(COLUMNS[1:], row[1:]):
             if not DECIMAL.match(text.strip()):
-                raise Refused("%s of the load %s is not a decimal number: %r" % (name, point, text[:40]))
+                raise Refused("%s of the load %s is not a decimal number: %r" % (name, load, text[:40]))
             value = float(text)
             if not math.isfinite(value):
-                raise Refused("%s of the load %s is not finite" % (name, point))
+                raise Refused("%s of the load %s is not finite" % (name, load))
             values[name] = value
-        table[point] = values
-    if len(table) != len(points):
-        raise Refused("OUT_CSV has rows for %d of the package's %d loads" % (len(table), len(points)))
+        table[load] = values
+    if len(table) != len(loads):
+        raise Refused("OUT_CSV has rows for %d of the package's %d loads" % (len(table), len(loads)))
     return table
 
 
 def compare(table, truth):
     """(loads with any quantity out of band, {quantity: largest error as a multiple of its band}, the worst)."""
     out, largest, worst = 0, {name: 0.0 for name, _, _ in BANDS}, None
-    for point, true in truth.items():
+    for load, true in truth.items():
         missed = False
         for name, measure, band in BANDS:
-            error = abs(table[point][name] - true[name])
+            error = abs(table[load][name] - true[name])
             if measure == "of the true value":
                 error /= abs(true[name])
             share = error / band
@@ -306,7 +306,7 @@ def compare(table, truth):
             if error > band:
                 missed = True
                 if worst is None or share > worst[0]:
-                    worst = (share, point, name, table[point][name], true[name])
+                    worst = (share, load, name, table[load][name], true[name])
         out += missed
     return out, largest, worst
 
@@ -332,7 +332,7 @@ def assess(program, sites=None, truths=None, books=None, limit=RUN_LIMIT_S, desk
         truth = results_of(os.path.join(truths, name + ".csv"))
         desk = Desk(name, lab.book_of(books, name), desk_at)
         ended, seconds, raw = run_site(program, os.path.join(sites, name), desk, limit, unprivileged, tools)
-        entry = {"run": ended, "seconds": round(seconds, 1), "points": len(truth), "laboratory_order": desk.order}
+        entry = {"run": ended, "seconds": round(seconds, 1), "loads": len(truth), "laboratory_order": desk.order}
         outcome.sites[name] = entry
         if ended == "over the limit":
             outcome.stopped = "the run on %s was still going after %d s" % (name, limit)
@@ -347,7 +347,7 @@ def assess(program, sites=None, truths=None, books=None, limit=RUN_LIMIT_S, desk
             sound = False
             continue
         out, largest, worst = compare(table, truth)
-        entry["points_out_of_band"] = out
+        entry["loads_out_of_band"] = out
         entry["largest_error_over_band"] = {key: round(value, 3) for key, value in largest.items()}
         if worst is not None:
             entry["worst"] = "%s %s: %.6g against %.6g" % (worst[1], worst[2], worst[3], worst[4])
@@ -365,7 +365,7 @@ def explain(outcome):
             lines.append("%s: %s" % (name, entry["refused"]))
         else:
             lines.append("%s: %d of %d loads out of band in %.1f s%s" % (
-                name, entry["points_out_of_band"], entry["points"], entry["seconds"],
+                name, entry["loads_out_of_band"], entry["loads"], entry["seconds"],
                 "; worst " + entry["worst"] if "worst" in entry else ""))
     if outcome.stopped:
         lines.append("stopped: " + outcome.stopped)

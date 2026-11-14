@@ -26,11 +26,11 @@ def main():
     for name, entry in thin.sites.items():
         print(common.line(name, entry))
     print("accepted" if thin.accepted else "NOT ACCEPTED")
-    points = sum(entry["points"] for entry in thin.sites.values())
+    loads = sum(entry["loads"] for entry in thin.sites.values())
     seconds = sum(entry["seconds"] for entry in thin.sites.values())
-    rate = seconds / points
+    rate = seconds / loads
     widest = max(max(entry["largest_error_over_band"].values()) for entry in thin.sites.values())
-    print("%d loads in %.0f s: %.2f s a load" % (points, seconds, rate))
+    print("%d loads in %.0f s: %.2f s a load" % (loads, seconds, rate))
     print("its widest departure from the sealed results at any of those loads is %.2f of a band, so every band "
           "is at least %.0f times the widest departure of a separately written solution" % (widest, 1.0 / widest))
     full = {name: len(common.rows_of(os.path.join(common.SITES, name, "loads.csv"))) for name in common.HIDDEN}

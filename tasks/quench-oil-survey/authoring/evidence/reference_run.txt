@@ -1,21 +1,21 @@
 solution/quench.py run by tests/grade_program.py: as nobody, one thread to a library, 50 s allowed for a run
 
 The six sites
-canal_works   18.6 s     0 of 2250 loads out of band  largest error 0.17 of its band  order: QT-151 QT-159 QT-164 QT-173 QT-177 QT-191
-quay_site     18.3 s     0 of 2400 loads out of band  largest error 0.17 of its band  order: QT-124 QT-135 QT-142 QT-144 QT-151 QT-172 QT-177
-ridge_plant   11.7 s     0 of 1800 loads out of band  largest error 0.13 of its band  order: QT-135 QT-142 QT-146 QT-150 QT-162 QT-165
-south_yard    14.0 s     0 of 1800 loads out of band  largest error 0.17 of its band  order: QT-173 QT-178 QT-191 QT-207 QT-212
-tank_farm     11.2 s     0 of 1800 loads out of band  largest error 0.14 of its band  order: QT-172 QT-181 QT-188 QT-189 QT-201 QT-202 QT-206
-upper_mill    12.9 s     0 of 2100 loads out of band  largest error 0.14 of its band  order: QT-174 QT-178 QT-181 QT-190 QT-199 QT-211 QT-212
+canal_works   17.4 s     0 of 2250 loads out of band  largest error 0.17 of its band  order: QT-151 QT-159 QT-164 QT-173 QT-177 QT-191
+quay_site     17.0 s     0 of 2400 loads out of band  largest error 0.17 of its band  order: QT-124 QT-135 QT-142 QT-144 QT-151 QT-172 QT-177
+ridge_plant   11.6 s     0 of 1800 loads out of band  largest error 0.13 of its band  order: QT-135 QT-142 QT-146 QT-150 QT-162 QT-165
+south_yard    14.9 s     0 of 1800 loads out of band  largest error 0.17 of its band  order: QT-173 QT-178 QT-191 QT-207 QT-212
+tank_farm     11.7 s     0 of 1800 loads out of band  largest error 0.14 of its band  order: QT-172 QT-181 QT-188 QT-189 QT-201 QT-202 QT-206
+upper_mill    13.0 s     0 of 2100 loads out of band  largest error 0.14 of its band  order: QT-174 QT-178 QT-181 QT-190 QT-199 QT-211 QT-212
 accepted
-runs take 11.2 to 18.6 s; the limit of 50 s is 2.7 times the slowest run
+runs take 11.6 to 17.4 s; the limit of 50 s is 2.9 times the slowest run
 largest error at any load of any site: 0.17 of its band
 loads in all: 12150
 
 The two example sites, expected.csv taken as the truth
-east_works    14.9 s     0 of 1950 loads out of band  largest error 0.17 of its band  order: QT-182 QT-190 QT-204 QT-214 QT-215
+east_works    15.1 s     0 of 1950 loads out of band  largest error 0.17 of its band  order: QT-182 QT-190 QT-204 QT-214 QT-215
 north_works   11.2 s     0 of 1500 loads out of band  largest error 0.16 of its band  order: QT-185 QT-197 QT-209
 accepted
 
 The pending package
-west_quarry   11.8 s  finished, 1500 rows  order: QT-114 QT-118 QT-124 QT-126 QT-138
+west_quarry   11.7 s  finished, 1500 rows  order: QT-114 QT-118 QT-124 QT-126 QT-138

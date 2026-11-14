@@ -546,3 +546,11 @@ from a lab under a fixed booking, with records (inspection report, work log) tha
 impeller-shrink-fits failed the difficulty gate on Nov 9 (8 of 8 solved), so either its status changed today
 or the gate is not deterministic. Alex: hold. ventilation-district-airflow-20261113c is kept unchanged
 and is resubmitted only if impeller-shrink-fits fails or is rejected.
+## Quality rejection, Nov 13 (quench-oil-survey 20261113): identifiers left from the task it was carried over from
+"typos: manifest.py emits stale identifiers console_that_is_two_charges, consoles, self_contained_machines and
+LO-*", from the journal bearing bundle the verifier and studies were copied from. Also renamed in 20261113b:
+`point`/`points` variables and the `points`, `points_out_of_band` keys of the checker's findings (now `load`,
+`loads`, `loads_out_of_band`), and two uses of "machine" for a computer. preflight now fails on any of the old
+task's words outside the data. The README-duplication and schema advisories are the usual ones and were left.
+- **Rule.** A bundle carried over from another is grepped for the old task's whole vocabulary, identifiers and
+  dictionary keys included, not only its prose.
