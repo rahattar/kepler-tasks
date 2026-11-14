@@ -1307,3 +1307,14 @@ boilers.
   low effort looking, once the evidence could be seen with the stated formulas.
 - **Low effort seeds the examples with faults to test its detectors**, so a combination that is only in the
   hidden set (both conditions on one boiler, lignite) is not a barrier.
+
+
+## Quench oil v2: test bars as the only evidence, low 3 of 3 (Nov 14)
+
+`cores/quench-oil-v2/RESULT.md`. The v1 conditions moved out of the analyses and into monthly test bars that
+must be run through HT-5 to compare (mixed diameters, varying bath): a stopped agitator the register records
+as running, and a charge changing since its last analysis. Low 3 of 3 accepted in 13 to 19 minutes.
+- **Measured results in the package are the first thing every run fits its model to.** A residual per item
+  (per tank, per bar) is found at low effort however much physics stands between the record and the residual.
+- **What has held needs a coupled solve to show the residual** (a network that does not balance, a pair's flow
+  split), not a check item by item. Close the oil-charge family: five quench and bearing versions show it.
