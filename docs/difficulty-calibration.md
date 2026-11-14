@@ -1270,3 +1270,16 @@ update, the lines vectorised together, elastic ramps skipped and substeps budget
 - **The fifth fully stated design of Nov 13 and 14 solved at low effort**, after engine indicating v6 and v7,
   header thermal fatigue and torsional passage. The open question stands: whether the bar can be met with
   everything stated, which is worth putting to AfterQuery before another core is built.
+
+## Quench oil v1: two numeric conditions, both found by every run (Nov 14)
+
+`cores/quench-oil-v1/RESULT.md`. v0 plus a kept charge that is changing (stated ageing bound, linear-in-time
+rule stated) and a laboratory that answers for the examples only. Low 1 of 3, xhigh 3 of 3; all six found
+both conditions on the pending package.
+- **A condition read as a direct comparison in one file is found at any effort**, however many there are.
+  Two such conditions in place of one changed nothing at low effort (8 to 19 minutes to find both).
+- **What holds (ventilation, fuel-transfer-lines) shows only as a model residual**: a node balance that does
+  not close, a pair's division that does not fit the bore. Put the evidence where a run must compute the
+  physics to see it.
+- **A sensitive output sorts solvers by convergence, not by insight**: low 2 found everything and missed by
+  1.46 bands on the cooling rate through 700 C.
