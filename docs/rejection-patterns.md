@@ -535,3 +535,13 @@ advisory (name prefix, metadata fields) came too and is not acted on (see the bo
   the bundle no longer held included; uploading b again was refused as "this exact bundle" already submitted.
   The review attached to a bundle is not always a review of it: compare its figures with the bundle before
   acting on it. A refused resubmission needs a changed bundle and a new letter (here 20261113c: limit 30 s).
+
+## Similarity rejection, Nov 13 (ventilation-district-airflow 20261113c against impeller-shrink-fits)
+"Too similar to your own task impeller-shrink-fits, which is still in validation or review, or already
+approved." 20261113 and 20261113b passed the similarity gate earlier the same day and reached quality review;
+c differs from b only in the limit (35 to 30 s) and the figures quoted. Text against impeller-shrink-fits is
+low everywhere (difflib 0.05 to 0.42, 5-gram Jaccard at most 0.04; test.sh 0.42, the instruction 0.27). What
+the two share is the archetype, not the subject: a program or answer that decides which measurements to buy
+from a lab under a fixed booking, with records (inspection report, work log) that do not say everything.
+impeller-shrink-fits failed the difficulty gate on Nov 9 (8 of 8 solved), so either its status changed today
+or the gate is not deterministic. Held for Alex: is impeller-shrink-fits live again?
