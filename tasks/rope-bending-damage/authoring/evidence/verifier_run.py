@@ -3,7 +3,7 @@
     python3 verifier_run.py > verifier_run.txt        as root
 
 Each program in turn is put at /app/output/ropes.py; `bash tests/test.sh` is run as it stands (its umask, pytest
-on test_ropes.py, the bench starting the program as nobody, tally.py); then /logs/verifier/reward.txt is read,
+on test_ropes.py, the bench starting the program as nobody, rope_bench.py --one-passed on the report); then /logs/verifier/reward.txt is read,
 and the bench's notes from /logs/verifier/trials.json. This is the way the reward comes about in the verifier's
 image, which a study that calls the bench directly does not go through.
 

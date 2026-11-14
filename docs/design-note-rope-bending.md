@@ -28,8 +28,8 @@ The bundle is v1's design at shipping size, with the reference made fast and the
 
 **The timed half.** Limit 4 s a run on one CPU, held on the clock and on CPU time of the process tree. The
 reference counts bendings by a sweep (sorted meeting heights, bisection, difference arrays, a five-term series
-in ln S for the per-station exponent): 1.2 to 1.4 s, 2.9 times under the limit. Brute force over movements and
-stations in numpy, the core's own method, takes 6.9 to 16.1 s; plain loops 85 to 90 s. Stations are 1 m apart
+in ln S for the per-station exponent): 0.9 to 1.2 s, the limit 3.4 times the slowest. Brute force over movements and
+stations in numpy, the core's own method, takes 6.2 to 14.0 s; plain loops 86 to 91 s. Stations are 1 m apart
 (2.5 m and 5 m in the cores) so that brute force is clearly out.
 
 **What must not be changed without re-probing.**

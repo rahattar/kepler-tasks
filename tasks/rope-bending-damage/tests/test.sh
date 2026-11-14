@@ -1,42 +1,33 @@
 #!/bin/bash
-# Writes the reward for the ropes.py at /app/output: the single character 0 or 1 in /logs/verifier/reward.txt.
+# Verdict on the delivered program, as /logs/verifier/reward.txt: a single 0 or 1.
 #
-# 0 is written before anything else happens. It becomes 1 only if three things are all true afterwards:
-#   a) there is a file /app/output/ropes.py;
-#   b) pytest, with the one test of test_ropes.py, came back with status 0. That test has rope_bench.py run
-#      the program on each of the six works, every run inside the time limit; one run over the limit, one
-#      wrong row or one unreadable sheet fails it;
-#   c) the report pytest wrote says one test was run and that one passed (tally.py). A report that is missing,
-#      broken or counts anything else leaves the 0.
-# Nothing that the program writes while it runs can reach the reward: it runs as nobody, and the folder the
-# reward is in is root's and closed.
-umask 077
+# A zero is put down before anything runs. The one replaces it only after a chain of three, each needing the
+# last: ropes.py exists at /app/output; pytest on test_ropes.py exits cleanly, meaning rope_bench.py ran the
+# program on all six hidden works within LIMIT_S and found no station of any rope outside its band; and
+# rope_bench.py --one-passed finds the ctrf report to hold exactly one test, a passing one. Whatever breaks the
+# chain leaves the zero. The program runs as nobody, for whom the reward's folder is shut.
+#
+# Left behind for whoever reads the logs:
+#   reward.txt    the verdict above
+#   ctrf.json     pytest's report on its one test
+#   trials.json   the bench's notes, works by works in the order tried: seconds on the clock and of CPU, how
+#                 the run ended, and for a sheet that could be read, rows out and the widest departure of
+#                 each rope in bands; a run stopped at the limit is the last entry
 mkdir -p /logs/verifier
+umask 077
 echo -n "0" > /logs/verifier/reward.txt
-
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+pushd "$(dirname -- "$(readlink -f -- "$0")")" > /dev/null || exit 0
 report=/logs/verifier/ctrf.json
-rm -f "$report" /logs/verifier/trials.json
-
-verdict=0
-if [ ! -f /app/output/ropes.py ]; then
-    echo "test.sh: no /app/output/ropes.py" >&2
-elif ! (cd "$here" && python -m pytest test_ropes.py -p no:cacheprovider -q --ctrf=/logs/verifier/ctrf.json); then
-    echo "test.sh: pytest did not end with status 0" >&2
-elif ! python "$here/tally.py" "$report"; then
-    echo "test.sh: the report is not one test, passed" >&2
-else
-    verdict=1
-fi
-
-chown root:root /logs/verifier
-chmod 0700 /logs/verifier
-rm -f /logs/verifier/reward.txt
-if [ "$verdict" -eq 1 ]; then
+for stale in "$report" /logs/verifier/trials.json; do rm -f "$stale"; done
+outcome=refused
+test -f /app/output/ropes.py \
+  && python -m pytest --ctrf=/logs/verifier/ctrf.json -p no:cacheprovider --quiet test_ropes.py \
+  && python rope_bench.py --one-passed "$report" \
+  && outcome=accepted
+case "$outcome" in
+  accepted)
 echo -n "1" > /logs/verifier/reward.txt
-fi
-if [ "$verdict" -ne 1 ]; then
-echo -n "0" > /logs/verifier/reward.txt
-fi
-echo "test.sh: reward $verdict" >&2
+    ;;
+esac
+echo "test.sh: the delivered program is $outcome" >&2
 exit 0

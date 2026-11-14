@@ -281,7 +281,7 @@ rule(re.search(r"\n5 programs, 0 unexpected", texts["verifier_run"]) is not None
      and re.search(r"the reference, solution/ropes\.py\s+reward 1\b", texts["verifier_run"]) is not None,
      "test.sh itself: reward 1 for the reference and the second solution, 0 for the other three")
 studied = os.path.getmtime(os.path.join(EVIDENCE, "verifier_run.txt"))
-newer = [f for f in ("tests/rope_bench.py", "tests/test.sh", "tests/test_ropes.py", "tests/tally.py", "solution/ropes.py")
+newer = [f for f in ("tests/rope_bench.py", "tests/test.sh", "tests/test_ropes.py", "tests/Dockerfile", "solution/ropes.py")
          if os.path.getmtime(os.path.join(BUNDLE, f)) > studied]
 rule(not newer, "no verifier file or the reference has changed since verifier_run.txt%s" % ("" if not newer else ": " + ", ".join(newer)))
 

@@ -1,32 +1,31 @@
 #!/bin/bash
-# Delivers the reference ropes.py to /app/output and shows it at work on the three works under /app/data, run
-# the way it will be run: from an empty directory that holds a copy of the program and nothing else. For the
-# two works that come with expected.csv, the sheet is laid against it rope by rope.
+# Puts solution/ropes.py at /app/output/ropes.py, then tries it the way it will be tried: on each works under
+# /app/data, from a directory of its own that holds a copy of the program and nothing else. For a works with
+# expected.csv, prints how far the sheet is from it, rope by rope, as a share of the rope's greatest damage.
 set -euo pipefail
-here="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
-mkdir -p /app/output
-cp "$here/ropes.py" /app/output/ropes.py
-chmod 644 /app/output/ropes.py
+source_dir="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
+install -D -m 644 "$source_dir/ropes.py" /app/output/ropes.py
 
-for works in /app/data/examples/* /app/data/pending/*; do
-    bench="$(mktemp -d)"
-    cp /app/output/ropes.py "$bench/ropes.py"
-    SECONDS=0
-    (cd "$bench" && python3 ropes.py "$works" "$bench/damage.csv")
-    echo "$(basename "$works"): $(($(wc -l < "$bench/damage.csv") - 1)) stations, about ${SECONDS} s"
-    if [ -f "$works/expected.csv" ]; then
-        python3 - "$bench/damage.csv" "$works/expected.csv" <<'PY'
-import csv, sys
-got = {r["row"]: float(r["damage"]) for r in csv.DictReader(open(sys.argv[1]))}
-want = {r["row"]: float(r["damage"]) for r in csv.DictReader(open(sys.argv[2]))}
-top = {}
-for row, value in want.items():
-    rope = row.rsplit("-", 1)[0]
-    top[rope] = max(top.get(rope, 0.0), value)
-for rope in sorted(top):
-    worst = max(abs(got[row] - value) for row, value in want.items() if row.rsplit("-", 1)[0] == rope)
-    print("    %s: greatest damage %.4f, largest difference from expected.csv %.2f per cent of it" % (rope, top[rope], 100 * worst / top[rope]))
+python3 - <<'PY'
+import csv, glob, os, shutil, subprocess, tempfile, time
+
+for works in sorted(glob.glob("/app/data/examples/*") + glob.glob("/app/data/pending/*")):
+    scratch = tempfile.mkdtemp()
+    shutil.copy("/app/output/ropes.py", scratch)
+    began = time.process_time(); clock = time.time()
+    subprocess.run(["python3", "ropes.py", works, os.path.join(scratch, "damage.csv")], cwd=scratch, check=True)
+    with open(os.path.join(scratch, "damage.csv")) as handle:
+        sheet = {r["row"]: float(r["damage"]) for r in csv.DictReader(handle)}
+    print("%s: %d stations in %.1f s" % (os.path.basename(works), len(sheet), time.time() - clock))
+    expected = os.path.join(works, "expected.csv")
+    if os.path.exists(expected):
+        with open(expected) as handle:
+            want = {r["row"]: float(r["damage"]) for r in csv.DictReader(handle)}
+        ropes = sorted({row.rsplit("-", 1)[0] for row in want})
+        for rope in ropes:
+            mine = {row: v for row, v in want.items() if row.rsplit("-", 1)[0] == rope}
+            top = max(mine.values())
+            gap = max(abs(sheet[row] - v) for row, v in mine.items())
+            print("    %s: greatest damage %.4f, sheet off by at most %.2f per cent of it" % (rope, top, 100 * gap / top))
+    shutil.rmtree(scratch)
 PY
-    fi
-    rm -rf "$bench"
-done

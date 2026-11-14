@@ -71,7 +71,7 @@ ok          the package holds its four files                           accepted
 ok          one thread to a numerical library                          accepted
 ok          the sealed results cannot be read                          accepted
 ok          no affinity is set: every CPU of the machine may be used   accepted
-ok          a program that is a link to a program                      refused: no program file at /tmp/link-ca7hrts1/ropes.py
+ok          a program that is a link to a program                      refused: no program file at /tmp/link-mbf433a7/ropes.py
 
 the reward script: tests/test.sh as it stands, `python -m pytest` stood in for
 

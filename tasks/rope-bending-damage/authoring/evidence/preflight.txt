@@ -112,15 +112,15 @@ ok     verifier_run.txt is there and reports no failure
 ok     regenerate: every shipped data file is what the generator writes
 ok     design rules: all hold (24/24)
 ok     design rules: both conditions are identified by public evidence well outside the stated accuracy
-ok     the limit is 2 to 3.5 times the reference's slowest run (2.9)
+ok     the limit is 2 to 3.5 times the reference's slowest run (3.4)
 ok     the reference is accepted on the six works and on the three visible ones
 ok     seed screen: accepted on 20 of 20 seeds, widest 0.48 of the band
 ok     the band is at least twice the widest departure of any sound program (0.48) and of the second solution (0.15)
 ok     every sound variation, and a turn at either edge of its gap, is accepted
 ok     routes: none accepted, every works stops at least three
 ok     the route nearest to right misses by at least 1.5 bands (2.9)
-ok     the second solution in plain loops would need at least 3 times the limit (21.2)
-ok     brute force needs at least 1.5 times the limit on every works (1.7)
+ok     the second solution in plain loops would need at least 3 times the limit (21.4)
+ok     brute force needs at least 1.5 times the limit on every works (1.6)
 ok     the fast second solution is accepted; plain loops and brute force are stopped on the first works
 ok     no program without the calculation gets a rope wholly right
 ok     verifier checks: none unexpected
@@ -130,6 +130,6 @@ ok     every decimal figure in README.md occurs in a study, a document or the co
 
 a live run
 
-ok     the reference, through the bench under umask 077: coil_yard 1.0 s; die_store 1.1 s; ladle_aisle 1.1 s; press_line 1.1 s; roll_store 1.1 s; scrap_bay 1.2 s
+ok     the reference, through the bench under umask 077: coil_yard 1.0 s; die_store 1.0 s; ladle_aisle 1.1 s; press_line 1.1 s; roll_store 1.0 s; scrap_bay 1.1 s
 
 113 rules, 113 hold

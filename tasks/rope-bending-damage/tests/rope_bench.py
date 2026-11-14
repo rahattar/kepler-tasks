@@ -1,33 +1,29 @@
-"""Tries a delivered ropes.py on the six works under works/ and says whether it is accepted.
+"""The rope bench: puts a delivered ropes.py to work on six works it has never seen, and decides on it.
 
-    python3 rope_bench.py /app/output/ropes.py        prints the account; exit status 0 only when accepted
+    python3 rope_bench.py PROGRAM               works the program on tests/works; status 0 if it is accepted
+    python3 rope_bench.py --one-passed REPORT   status 0 if pytest's ctrf REPORT counts one test, passed
 
-Only the program file is taken from its author. Every sheet judged here is written by a run this module starts,
-on a works the author has not had, and is held against the sealed damages in sealed/results/.
+What the bench takes from the program's author is the program file and nothing else. For each works it lays
+out a fresh trial box, starts the program in it, watches the clock and the CPU, and, if the run ends in time
+and cleanly, reads the damage sheet the run wrote and lays it against the sealed damages of sealed/results.
 
-One trial, of one works
-  1. staging: a new directory with three parts, all with their modes set outright, because test.sh works under
-     umask 077 and the program is another user:
-       bench/    a copy of ropes.py and nothing else; the program's working directory;
-       works/    a copy of the package, every file read-only;
-       sheet/    empty; OUT_CSV is sheet/damage.csv.
-  2. the run: `python3 ropes.py WORKS_DIR OUT_CSV`, as the user nobody whenever this module is root, in a
-     session of its own, with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1, no standard input, its output
-     discarded. No CPU affinity is set.
-  3. the limit, LIMIT_S seconds on 1 CPU, is held twice: the run is over it when LIMIT_S seconds have gone by
-     since it was started, and also when the CPU time, user plus system, of the program and of every process
-     it has started reaches LIMIT_S. A single process on one CPU meets both together; a program that spreads
-     its work over several processes or CPUs meets the second first.
-  4. a run that is over the limit ends everything: the run's processes are killed, its sheet is not opened,
-     the works after it are not tried, and the program is not accepted.
-  5. a run that ends inside the limit must have exit status 0. Its sheet is read by `read_sheet`, which holds
-     it to what the task statement says of OUT_CSV, and every row is held to the accuracy the statement gives:
-     within SHARE of the greatest sealed damage of the row's rope.
+The trial box (modes set one by one with os.chmod, since test.sh runs under umask 077 and the program runs as
+another user):
+    bench/   ropes.py, copied from the delivered file, alone; the run's working directory
+    works/   the package, every file read-only
+    sheet/   empty at the start; OUT_CSV is sheet/damage.csv
 
-The program is accepted when every trial ends inside the limit with status 0, a sheet that reads, and no row
-out. No share of rows, ropes or works stands in for the rest.
+The run is `python3 ropes.py WORKS_DIR OUT_CSV`, in a session of its own, as the user nobody when the bench is
+root, with OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1, no standard input, its output thrown away, and no CPU
+affinity. It has LIMIT_S seconds, and is out of time as soon as either the clock since its start or the CPU
+time (user and system) of every process it started reaches LIMIT_S. A run out of time is killed with all it
+started, its sheet is never opened, no later works is tried, and the program is not accepted.
+
+The program is accepted only if every works is run in time with exit status 0, and every row of every sheet
+is within SHARE of the greatest sealed damage of its rope.
 """
 import csv
+import json
 import math
 import os
 import re
@@ -40,193 +36,176 @@ import tempfile
 import time
 
 sys.dont_write_bytecode = True
-HERE = os.path.dirname(os.path.abspath(__file__))
+TESTS = os.path.dirname(os.path.abspath(__file__))
 
-LIMIT_S = 4                     # seconds, of the clock and of CPU; the task statement's "within 4 seconds on 1 CPU"
-SHARE = 0.08                    # a row is right within this share of the greatest damage of its rope
+LIMIT_S = 4                     # the statement's "within 4 seconds on 1 CPU", on the clock and on CPU
+SHARE = 0.08                    # the statement's 8 per cent of the greatest damage of the rope
 SHEET_HEADER = "row,damage"
-SHEET_CAP = 1024 * 1024         # bytes; the statement's 1 MiB. The largest sheet of the six is about 9 kB
-UNPRIVILEGED = 65534            # nobody
-DECIMAL = re.compile(r"[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?\Z")
-TICK = os.sysconf("SC_CLK_TCK")
+SHEET_CAP = 1 << 20             # 1 MiB; the largest true sheet of the six is about 25 kB
+NOBODY = 65534
+NUMBER = re.compile(r"[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?")
+HZ = os.sysconf("SC_CLK_TCK")
+ONE_PASSED = (("tests", 1), ("passed", 1), ("failed", 0), ("skipped", 0), ("pending", 0), ("other", 0))
 
 
 class Unreadable(Exception):
-    """OUT_CSV is not the sheet the task statement describes."""
+    """The file at OUT_CSV is not the damage sheet the statement asks for."""
 
 
-# ----------------------------------------------------------------------------------------------- the sheet
+def rope_of(row):
+    """FB-1-017 -> FB-1"""
+    return row.rsplit("-", 1)[0]
+
 
 def sealed_sheet(path):
-    """{row: damage} of a sealed result."""
     with open(path, newline="") as handle:
-        return {line["row"]: float(line["damage"]) for line in csv.DictReader(handle)}
+        return {entry["row"]: float(entry["damage"]) for entry in csv.DictReader(handle)}
 
 
 def read_sheet(path, rows):
-    """{row: damage} from the file at path, for exactly the rows given, or Unreadable.
+    """The damages a run wrote, {row: damage}, for exactly the given rows; Unreadable otherwise.
 
-    What the statement says, and so what is held: an ordinary file, not a link; no more than SHEET_CAP bytes;
-    the header `row,damage`; one row for every station of every crane; each damage a decimal number.
-    What it does not say, and so what is left alone: the order of the rows, the line ends, a last line end,
-    empty lines, quotes round a field, blanks round a field, how many digits.
-    """
+    Held to what the statement says: an ordinary file, not a link, of at most SHEET_CAP bytes, beginning with the
+    header row,damage, then one row of two fields for each station of the works and for nothing else, every
+    damage a finite decimal number. Not held to anything it leaves open: order, line ends, blank lines, quotes,
+    blanks round a field, digits."""
     try:
-        handle = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
-    except OSError as trouble:
-        raise Unreadable("no sheet at OUT_CSV (%s)" % (trouble.strerror or trouble))
-    try:
-        if not stat.S_ISREG(os.fstat(handle).st_mode):
-            raise Unreadable("OUT_CSV is not an ordinary file")
-        if os.fstat(handle).st_size > SHEET_CAP:
-            raise Unreadable("OUT_CSV is larger than %d bytes" % SHEET_CAP)
-        blob = b""
-        while len(blob) <= SHEET_CAP:
-            piece = os.read(handle, 65536)
-            if not piece:
-                break
-            blob += piece
-    finally:
-        os.close(handle)
-    if len(blob) > SHEET_CAP:
+        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    except OSError as why:
+        raise Unreadable("no sheet at OUT_CSV (%s)" % (why.strerror or why))
+    facts = os.fstat(fd)
+    if not stat.S_ISREG(facts.st_mode):
+        os.close(fd)
+        raise Unreadable("OUT_CSV is not an ordinary file")
+    with os.fdopen(fd, "rb") as handle:
+        blob = handle.read(SHEET_CAP + 1)
+    if len(blob) > SHEET_CAP or facts.st_size > SHEET_CAP:
         raise Unreadable("OUT_CSV is larger than %d bytes" % SHEET_CAP)
-    try:
-        text = blob.decode("ascii")
-    except UnicodeDecodeError:
+    if any(byte > 127 for byte in blob):
         raise Unreadable("OUT_CSV is not plain text")
-    lines = [line for line in text.splitlines() if line.strip()]
+    lines = [line for line in blob.decode("ascii").splitlines() if line.strip()]
     if not lines:
         raise Unreadable("OUT_CSV is empty")
     if lines[0] != SHEET_HEADER:
         raise Unreadable("the first line is not %s" % SHEET_HEADER)
-    found = {}
-    for at, fields in enumerate(csv.reader(lines[1:]), start=2):
+    damages = {}
+    for number, fields in zip(range(2, len(lines) + 1), csv.reader(lines[1:])):
         if len(fields) != 2:
-            raise Unreadable("line %d has %d fields, not 2" % (at, len(fields)))
-        name, value = fields[0].strip(), fields[1].strip()
-        if name not in rows:
-            raise Unreadable("line %d: %r is not a station of this works" % (at, name))
-        if name in found:
-            raise Unreadable("line %d: %s is given a second time" % (at, name))
-        if not DECIMAL.match(value):
-            raise Unreadable("line %d: %r is not a decimal number" % (at, value))
-        number = float(value)
-        if not math.isfinite(number):
-            raise Unreadable("line %d: the damage is not finite" % at)
-        found[name] = number
-    if len(found) != len(rows):
-        absent = sorted(set(rows) - set(found))
-        raise Unreadable("%d stations have no row, %s the first" % (len(absent), absent[0]))
-    return found
-
-
-def rope_of(row):
-    return row.rsplit("-", 1)[0]
+            raise Unreadable("line %d has %d fields, not 2" % (number, len(fields)))
+        row, text = (field.strip() for field in fields)
+        if row not in rows:
+            raise Unreadable("line %d: %r is not a station of this works" % (number, row))
+        if row in damages:
+            raise Unreadable("line %d: %s is given a second time" % (number, row))
+        if NUMBER.fullmatch(text) is None:
+            raise Unreadable("line %d: %r is not a decimal number" % (number, text))
+        if not math.isfinite(float(text)):
+            raise Unreadable("line %d: the damage is not finite" % number)
+        damages[row] = float(text)
+    missing = sorted(set(rows) - set(damages))
+    if missing:
+        raise Unreadable("%d stations have no row, %s the first" % (len(missing), missing[0]))
+    return damages
 
 
 def hold(sheet, sealed):
-    """(rows out, widest departure in bands, {rope: (rows out, rows, widest)})."""
+    """Lays a sheet against the sealed damages: (rows out, widest departure in bands, per rope facts)."""
     greatest = {}
-    for row, damage in sealed.items():
-        greatest[rope_of(row)] = max(greatest.get(rope_of(row), 0.0), damage)
-    by_rope, out, widest = {}, 0, 0.0
-    for row, damage in sealed.items():
-        rope = rope_of(row)
-        depart = abs(sheet[row] - damage) / (SHARE * greatest[rope])
-        miss = not depart <= 1.0
-        was = by_rope.get(rope, (0, 0, 0.0))
-        by_rope[rope] = (was[0] + miss, was[1] + 1, max(was[2], depart))
-        out += miss
-        widest = max(widest, depart)
-    return out, widest, by_rope
+    for row, value in sealed.items():
+        greatest[rope_of(row)] = max(greatest.get(rope_of(row), 0.0), value)
+    ropes = {rope: [0, 0, 0.0] for rope in greatest}
+    for row, value in sealed.items():
+        facts = ropes[rope_of(row)]
+        bands = abs(sheet[row] - value) / (SHARE * greatest[rope_of(row)])
+        facts[0] += not bands <= 1.0
+        facts[1] += 1
+        facts[2] = max(facts[2], bands)
+    out = sum(facts[0] for facts in ropes.values())
+    widest = max(facts[2] for facts in ropes.values())
+    return out, widest, {rope: tuple(facts) for rope, facts in ropes.items()}
 
 
-# ------------------------------------------------------------------------------------------------- the run
+class TrialBox:
+    """The directory one run of the program lives in, and the run itself."""
 
-def staged(program, package):
-    """The three parts of a trial's directory: (root, bench, works, OUT_CSV)."""
-    root = tempfile.mkdtemp(prefix="trial-")
-    bench, works, sheet = (os.path.join(root, part) for part in ("bench", "works", "sheet"))
-    for folder in (bench, works, sheet):
-        os.mkdir(folder)
-    source = os.open(program, os.O_RDONLY | os.O_NOFOLLOW)
-    with os.fdopen(source, "rb") as given:
-        if not stat.S_ISREG(os.fstat(given.fileno()).st_mode):
-            raise OSError("the program is not an ordinary file")
-        with open(os.path.join(bench, "ropes.py"), "wb") as copy:
-            shutil.copyfileobj(given, copy)
-    for name in sorted(os.listdir(package)):
-        if os.path.isfile(os.path.join(package, name)):
-            shutil.copyfile(os.path.join(package, name), os.path.join(works, name))
-            os.chmod(os.path.join(works, name), 0o444)
-    os.chmod(os.path.join(bench, "ropes.py"), 0o644)
-    os.chmod(root, 0o755)
-    os.chmod(works, 0o555)
-    os.chmod(bench, 0o755)
-    os.chmod(sheet, 0o755)
-    return root, bench, works, os.path.join(sheet, "damage.csv")
+    def __init__(self, program, package):
+        self.root = tempfile.mkdtemp(prefix="trial-")
+        self.bench, self.works, self.sheets = (os.path.join(self.root, name) for name in ("bench", "works", "sheet"))
+        self.out_csv = os.path.join(self.sheets, "damage.csv")
+        for folder in (self.bench, self.works, self.sheets):
+            os.mkdir(folder)
+        fd = os.open(program, os.O_RDONLY | os.O_NOFOLLOW)
+        with os.fdopen(fd, "rb") as source:
+            if not stat.S_ISREG(os.fstat(source.fileno()).st_mode):
+                raise OSError("the program is not an ordinary file")
+            with open(os.path.join(self.bench, "ropes.py"), "wb") as copy:
+                shutil.copyfileobj(source, copy)
+        for name in sorted(os.listdir(package)):
+            if os.path.isfile(os.path.join(package, name)):
+                shutil.copyfile(os.path.join(package, name), os.path.join(self.works, name))
+                os.chmod(os.path.join(self.works, name), 0o444)
+        os.chmod(os.path.join(self.bench, "ropes.py"), 0o644)
+        for folder, mode in ((self.root, 0o755), (self.works, 0o555), (self.bench, 0o755), (self.sheets, 0o755)):
+            os.chmod(folder, mode)
+
+    def start(self, lowered):
+        command = [sys.executable, "ropes.py", self.works, self.out_csv]
+        if lowered:
+            os.chown(self.bench, NOBODY, NOBODY)
+            os.chown(self.sheets, NOBODY, NOBODY)
+            command = ["setpriv", "--reuid", str(NOBODY), "--regid", str(NOBODY), "--clear-groups"] + command
+        surroundings = {"PATH": os.environ.get("PATH", "/usr/local/bin:/usr/bin:/bin"), "HOME": self.bench,
+                        "TMPDIR": self.sheets, "LANG": "C.UTF-8", "PYTHONDONTWRITEBYTECODE": "1",
+                        "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"}
+        return subprocess.Popen(command, cwd=self.bench, env=surroundings, stdin=subprocess.DEVNULL,
+                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+
+    def clear(self):
+        shutil.rmtree(self.root, ignore_errors=True)
 
 
 def processes(leader, lowered):
-    """pid -> CPU seconds so far, for the processes of a run: every process of nobody when the run is nobody's,
-    else every process of the run's session."""
-    seen = {}
+    """{pid: CPU seconds} for the live processes of a run: all of nobody's when the run is nobody's, otherwise
+    those of the run's session."""
+    found = {}
     for entry in os.listdir("/proc"):
         if not entry.isdigit():
             continue
         try:
-            if lowered and os.stat("/proc/" + entry).st_uid != UNPRIVILEGED:
+            if lowered and os.stat("/proc/" + entry).st_uid != NOBODY:
                 continue
             with open("/proc/%s/stat" % entry) as handle:
-                tail = handle.read().rsplit(")", 1)[1].split()
+                after_name = handle.read().rsplit(")", 1)[1].split()
         except (OSError, IndexError):
             continue
-        # after the name: state, ppid, pgrp, session, ... utime and stime are the 12th and 13th of these
-        if not lowered and int(tail[3]) != leader:
+        state, session, user, system = after_name[0], int(after_name[3]), int(after_name[11]), int(after_name[12])
+        if state == "Z" or (not lowered and session != leader):
             continue
-        if tail[0] == "Z":
-            continue
-        seen[int(entry)] = (int(tail[11]) + int(tail[12])) / TICK
-    return seen
+        found[int(entry)] = (user + system) / HZ
+    return found
 
 
-def sweep(leader, lowered):
-    """Kills whatever a run still has going."""
+def stop_all(leader, lowered):
+    """Kills the run's session and anything of the run's that has left it."""
     for _ in range(50):
-        alive = processes(leader, lowered)
-        alive.pop(os.getpid(), None)
-        try:
-            os.killpg(leader, signal.SIGKILL)
-        except OSError:
-            pass
-        for pid in alive:
+        left = processes(leader, lowered)
+        left.pop(os.getpid(), None)
+        for victim in [-leader] + list(left):
             try:
-                os.kill(pid, signal.SIGKILL)
+                os.kill(victim, signal.SIGKILL)
             except OSError:
                 pass
-        if not alive:
+        if not left:
             return
         time.sleep(0.04)
 
 
-def trial(program, package, limit, lowered):
-    """One run. (ending, seconds, CPU seconds, staging root, OUT_CSV); ending is "over" or the exit status."""
-    root, bench, works, out_csv = staged(program, package)
-    command = [sys.executable, "ropes.py", works, out_csv]
-    if lowered:
-        for folder in (bench, os.path.dirname(out_csv)):
-            os.chown(folder, UNPRIVILEGED, UNPRIVILEGED)
-        command = ["setpriv", "--reuid", str(UNPRIVILEGED), "--regid", str(UNPRIVILEGED), "--clear-groups"] + command
-    surroundings = {"PATH": os.environ.get("PATH", "/usr/local/bin:/usr/bin:/bin"), "HOME": bench,
-                    "TMPDIR": os.path.dirname(out_csv), "LANG": "C.UTF-8", "PYTHONDONTWRITEBYTECODE": "1",
-                    "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"}
+def watch(child, limit, lowered):
+    """Waits for a run, or ends it at the limit. (ending, seconds, CPU seconds); ending is "over" or the exit
+    status. The CPU seconds are the larger of what /proc showed while it ran and the kernel's count at its end."""
     started = time.monotonic()
-    child = subprocess.Popen(command, cwd=bench, env=surroundings, stdin=subprocess.DEVNULL,
-                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
-    most = {}                       # pid -> the most CPU seen for it
-    ending, usage = None, None
+    most, usage, ending = {}, None, None
     while ending is None:
-        # reaped with wait4 and not by Popen, for the kernel's own count of the CPU time when it ends
         pid, status, used = os.wait4(child.pid, os.WNOHANG)
         if pid:
             ending, usage = os.waitstatus_to_exitcode(status), used
@@ -240,38 +219,37 @@ def trial(program, package, limit, lowered):
     seconds = time.monotonic() - started
     for one, cpu in processes(child.pid, lowered).items():
         most[one] = max(most.get(one, 0.0), cpu)
-    sweep(child.pid, lowered)
+    stop_all(child.pid, lowered)
     if usage is None:
-        _, _, usage = os.wait4(child.pid, 0)
-    child.returncode = 0            # reaped above; tells Popen there is nothing left to wait for
+        usage = os.wait4(child.pid, 0)[2]
+    child.returncode = 0                # already reaped by wait4
     cpu = max(sum(most.values()), usage.ru_utime + usage.ru_stime)
-    if ending != "over" and cpu >= limit:
+    if cpu >= limit:
         ending = "over"
-    return ending, seconds, cpu, root, out_csv
+    return ending, seconds, cpu
 
-
-# ------------------------------------------------------------------------------------------- the whole lot
 
 def judge(program, works_dir=None, sealed_dir=None, limit=LIMIT_S, lowered=None):
-    """{"accepted": bool, "halted": str, "trials": [one dict a works tried]}"""
-    works_dir = works_dir or os.path.join(HERE, "works")
-    sealed_dir = sealed_dir or os.path.join(HERE, "sealed", "results")
+    """{"accepted": bool, "halted": reason the judging stopped early or "", "trials": one note a works}"""
+    works_dir = works_dir or os.path.join(TESTS, "works")
+    sealed_dir = sealed_dir or os.path.join(TESTS, "sealed", "results")
     if lowered is None:
         lowered = os.geteuid() == 0 and shutil.which("setpriv") is not None
     verdict = {"accepted": False, "halted": "", "trials": []}
-    names = sorted(name for name in os.listdir(works_dir) if os.path.isdir(os.path.join(works_dir, name)))
-    if not names:
+    every = sorted(name for name in os.listdir(works_dir) if os.path.isdir(os.path.join(works_dir, name)))
+    if not every:
         verdict["halted"] = "no works to try the program on"
         return verdict
-    if not os.path.isfile(program) or os.path.islink(program):
+    if os.path.islink(program) or not os.path.isfile(program):
         verdict["halted"] = "no program file at %s" % program
         return verdict
     clean = True
-    for name in names:
-        ending, seconds, cpu, root, out_csv = trial(program, os.path.join(works_dir, name), limit, lowered)
-        note = {"works": name, "seconds": round(seconds, 2), "cpu_seconds": round(cpu, 2)}
-        verdict["trials"].append(note)
+    for name in every:
+        box = TrialBox(program, os.path.join(works_dir, name))
         try:
+            ending, seconds, cpu = watch(box.start(lowered), limit, lowered)
+            note = {"works": name, "seconds": round(seconds, 2), "cpu_seconds": round(cpu, 2)}
+            verdict["trials"].append(note)
             if ending == "over":
                 note["outcome"] = "over the limit of %d s" % limit
                 verdict["halted"] = "the run on %s reached %d s, of the clock or of CPU; nothing after it was tried" % (name, limit)
@@ -282,42 +260,66 @@ def judge(program, works_dir=None, sealed_dir=None, limit=LIMIT_S, lowered=None)
                 continue
             sealed = sealed_sheet(os.path.join(sealed_dir, name + ".csv"))
             try:
-                sheet = read_sheet(out_csv, sealed)
+                sheet = read_sheet(box.out_csv, sealed)
             except Unreadable as why:
                 note["outcome"] = str(why)
                 clean = False
                 continue
-            out, widest, by_rope = hold(sheet, sealed)
+            out, widest, ropes = hold(sheet, sealed)
             note.update(rows=len(sealed), rows_out=out, widest=round(widest, 3),
-                        ropes={rope: {"rows_out": a, "rows": b, "widest": round(c, 3)} for rope, (a, b, c) in sorted(by_rope.items())})
-            note["outcome"] = "every row right" if out == 0 else "%d of %d rows out" % (out, len(sealed))
-            clean = clean and out == 0
+                        ropes={rope: {"rows_out": a, "rows": b, "widest": round(c, 3)} for rope, (a, b, c) in sorted(ropes.items())})
+            note["outcome"] = "every row right" if not out else "%d of %d rows out" % (out, len(sealed))
+            clean = clean and not out
         finally:
-            shutil.rmtree(root, ignore_errors=True)
+            box.clear()
     verdict["accepted"] = clean
     return verdict
 
 
 def account(verdict):
-    """The verdict in lines a person reads."""
-    lines = []
+    """The verdict as lines for a person."""
+    told = []
     for note in verdict["trials"]:
         line = "%-12s %5.1f s, %5.1f s of CPU: %s" % (note["works"], note["seconds"], note["cpu_seconds"], note["outcome"])
         if "ropes" in note:
             line += "; widest departure %.2f of the band" % note["widest"]
-            missed = ["%s %d/%d" % (rope, facts["rows_out"], facts["rows"]) for rope, facts in note["ropes"].items() if facts["rows_out"]]
-            if missed:
-                line += " (" + ", ".join(missed) + ")"
-        lines.append(line)
+            missed = ["%s %d/%d" % (rope, f["rows_out"], f["rows"]) for rope, f in note["ropes"].items() if f["rows_out"]]
+            line += " (%s)" % ", ".join(missed) if missed else ""
+        told.append(line)
     if verdict["halted"]:
-        lines.append(verdict["halted"])
-    lines.append("ACCEPTED" if verdict["accepted"] else "NOT ACCEPTED")
-    return "\n".join(lines)
+        told.append(verdict["halted"])
+    told.append("ACCEPTED" if verdict["accepted"] else "NOT ACCEPTED")
+    return "\n".join(told)
+
+
+def delivered_verdict():
+    """pytest's question, answered: (accepted, account) for the delivered program, with the verdict kept for a
+    person reading the logs at ROPES_NOTES, which nothing reads back. ROPES_PROGRAM and ROPES_NOTES move the two
+    paths for the studies in authoring/evidence; the verifier sets neither."""
+    verdict = judge(os.environ.get("ROPES_PROGRAM", "/app/output/ropes.py"))
+    try:
+        with open(os.environ.get("ROPES_NOTES", "/logs/verifier/trials.json"), "w") as notes:
+            notes.write(json.dumps(verdict, indent=1, sort_keys=True))
+    except OSError:
+        pass
+    return verdict["accepted"], account(verdict)
+
+
+def one_passed(report):
+    """True only for a ctrf report whose summary counts exactly one test, and that one passed."""
+    try:
+        with open(report, encoding="utf-8") as handle:
+            summary = json.load(handle)["results"]["summary"]
+        return all(int(summary.get(kind, 0)) == count for kind, count in ONE_PASSED)
+    except Exception:
+        return False
 
 
 if __name__ == "__main__":
+    if len(sys.argv) == 3 and sys.argv[1] == "--one-passed":
+        sys.exit(0 if one_passed(sys.argv[2]) else 3)
     if len(sys.argv) != 2:
-        sys.exit("usage: python3 rope_bench.py PROGRAM")
+        sys.exit(__doc__)
     result = judge(sys.argv[1])
     print(account(result))
     sys.exit(0 if result["accepted"] else 1)
