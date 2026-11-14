@@ -1,0 +1,13 @@
+Work only inside PROBE/app. Do not read, list or open anything outside PROBE/app, except by running the `heatsurvey` command as described.
+
+A terminal's heated fuel oil lines are checked by calculating every hourly record of every line to the terminal standard TS-2, `PROBE/app/data/docs/ts2_oil_lines.md`: the pressure drop between the line's manifolds and the temperature of the oil leaving it. A site sends its records in as a package, in the format of `PROBE/app/data/docs/site_package.md`.
+
+Write `PROBE/app/output/lines.py`, the program that makes this calculation for one package. It is run as `python3 lines.py PACKAGE_DIR OUT_CSV` and writes OUT_CSV with the header `record,dp_kPa,t_out_C` and one row for every row of the package's `records.csv`, the values as decimal numbers in the units the header names. While it runs, the program may place the one survey order that `PROBE/app/data/docs/site_package.md` describes, with the `heatsurvey` command, which is on the PATH when the program is run and is at `PROBE/app/heatsurvey` here.
+
+Two packages with their results to TS-2 are in `PROBE/app/data/examples/north_quay` and `PROBE/app/data/examples/east_depot`, and a package without results is in `PROBE/app/data/pending/west_jetty`.
+
+The program will be run on the packages of six other sites, in the same format. Every line and record is within the scope of TS-2 section 1. Each run of lines.py must finish within LIMIT seconds on 1 CPU. For every record of every package, the pressure drop must be within 1.5 per cent of the result to TS-2 and the outlet temperature within 0.5 K.
+
+Each run takes place in a scratch directory holding a copy of lines.py alone, so the program cannot read any other file you leave. Python 3 with numpy and scipy is available.
+
+This machine is shared with other jobs, so judge your program's speed by its CPU time (user plus system, as `time` reports it), not by the wall clock. Write any scratch files under PROBE/app/work. When you are done, report what you did, how you checked it and how long a run takes.

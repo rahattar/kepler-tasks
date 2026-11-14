@@ -964,3 +964,36 @@ rope, from the movement log and the rope surveys, to a company standard. Probes 
 - **A subagent survives an environment restart.** One xhigh probe reported 43 minutes in, after the session's
   container had restarted; its sandbox under /tmp was intact.
 - As in every timed core so far, the limit separated no run.
+
+## Twin oil lines v1 and v2: a register's bore against a surveyed division, low 0 of 6, xhigh 1 of 6 (Nov 13)
+
+`cores/twin-oil-lines-v1`, `-v2`. v0's physics (heated fuel oil in single pipes and pairs, a pair's division
+with its stall and history) with the stall moved into the examples, where v0 showed every solver finds it,
+and the vent-fan-stall v2 mechanism put on top: coefficients from heat-loss surveys on file, one survey order
+a run, re-covered pipes as the legible need, and two conditions the records hold in numbers only. One pipe of
+a pair has lost bore to deposit (its pair's surveyed division does not fit equal pressure drop with the bores
+as laid); one covering is declining (its coefficient rises campaign by campaign with no work logged).
+
+| core | low | xhigh | what the xhigh misses were |
+|---|---|---|---|
+| v1: 5.1 "the bore and the length of a pipe are those of the lines register" | 0 of 3 | 0 of 3 | two runs found the narrowed pipe and kept the register bore, citing 5.1 |
+| v2: 5.1 "the lines register records the bore and the length each pipe was laid with" | 0 of 3 | 1 of 3 | two runs ordered the pipe, re-derived a coefficient with the register bore |
+
+- **The mechanism transfers.** A third subject with the same shape (a record wrong with no physical reason to
+  doubt it, an in-run order that costs something in the examples, the pending instance silent) gives the same
+  rates as the journal bearing and the ventilation district: low 0 of 3 with the designed miss, xhigh 1 of 3.
+- **Say what a register records, never that a quantity "is" the register's.** One prescriptive sentence turned
+  two correct findings into two misses in v1. That is the standard prescribing the wrong record, not difficulty,
+  and it would have been read as unclear wording on review.
+- **A consistency check on repeated measurements with a stated accuracy is made by every xhigh run and by no
+  low run.** The declining covering: xhigh 6 of 6, low 0 of 6. Alone it separates the efforts and does not
+  hold at xhigh.
+- **What holds at xhigh is acting on a measurement against the register.** In v2 every xhigh run ordered the
+  narrowing pipe, because a heat balance read with the wrong bore drifts too. Only the run that asked what D
+  is, and solved the bore from the pair's division, was accepted. Finding the pipe is not the step; changing a
+  quantity the register states is.
+- **A scope defect hides in the generator's fallbacks.** v1 had 30 survey runs over Re 2000 and a generator
+  that stalled on lines it could not draw laminar. v2 redraws a line until its survey rating and its records
+  are in scope and asserts it.
+- The limit does not bind (probe programs 1.4 to 9.6 s a site against 60). Cost: v1 low 308k and xhigh 778k
+  tokens, v2 low 339k and xhigh 903k.
