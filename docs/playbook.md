@@ -10,6 +10,8 @@ Sciences). Follow this exactly unless Alex says otherwise.
   Then Claude checks his rewrite against preflight.
 - Alex prefers maximum conciseness, ASCII-only text and natural prose. He handles decisions; don't ask him what a
   sensible default answers.
+- **Never propose putting a question to AfterQuery** (Alex, Nov 14: "Once for all, 2 is not an option"). When a
+  line of designs keeps failing, change the design; do not offer to ask the platform or its reviewers.
 
 ## Hard rules
 - **Bundle contents:** `README.md`, `instruction.md`, `task.toml`, `authoring/`, `environment/`, `solution/`,
