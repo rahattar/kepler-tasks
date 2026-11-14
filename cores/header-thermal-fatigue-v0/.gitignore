@@ -1,0 +1,5 @@
+__pycache__/
+core/data/examples/
+core/data/pending/
+core/hidden/
+core/debug/

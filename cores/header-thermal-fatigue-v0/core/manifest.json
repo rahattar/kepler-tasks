@@ -1,0 +1,26 @@
+{
+ "HX-1": {
+  "shift": "a 70 s thermowell (pending: 45 s)",
+  "tau_s": 70.0
+ },
+ "HX-2": {
+  "shift": "bare tip; quenches more than twice as frequent",
+  "tau_s": 0.8
+ },
+ "HX-3": {
+  "shift": "a 110 s thermowell on an 80 mm wall (examples 45 to 55 mm)",
+  "tau_s": 110.0
+ },
+ "HX-4": {
+  "shift": "a 28 s thermowell; hot restarts dominate",
+  "tau_s": 28.0
+ },
+ "HX-5": {
+  "shift": "bare tip; 565 C, 180 bar (examples to 540 C, 170 bar)",
+  "tau_s": 0.8
+ },
+ "HX-6": {
+  "shift": "a 55 s thermowell; frequent quenches",
+  "tau_s": 55.0
+ }
+}

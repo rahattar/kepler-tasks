@@ -1,0 +1,10 @@
+#!/bin/bash
+# mk.sh PROBE_DIR : a probe sandbox with the agent-visible data only (builds the data first if it is missing)
+set -e
+HERE=$(cd "$(dirname "$0")" && pwd)
+[ -d "$HERE/core/hidden" ] || (cd "$HERE" && python3 gen.py)
+P=$1
+rm -rf "$P"; mkdir -p "$P/app/output" "$P/app/work"
+cp -r "$HERE/core/data" "$P/app/data"
+sed "s#PROBE#$P#g" "$HERE/brief.txt" > "$P/brief.txt"
+echo "$P ready"
