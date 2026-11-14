@@ -1,0 +1,7 @@
+crane,falls,upper_block_height_m,block_mass_t,reeving_efficiency,rope_construction,rope_length_m
+PL-1,8,24.6,2.57,0.973,8x36,220
+PL-2,6,23.7,0.88,0.956,8x36,170
+PL-3,6,14.3,2.66,0.951,8x36,114
+PL-4,4,15.9,1.28,0.946,6x36,86
+PL-5,6,25.7,1.56,0.954,8x36,178
+PL-6,8,35.8,1.05,0.944,8x36,308

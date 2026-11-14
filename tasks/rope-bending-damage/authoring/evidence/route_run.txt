@@ -1,0 +1,45 @@
+as_written: RS-4 on the surveys as written: damage summed at each station, no survey laid against another
+    the two examples: accepted
+    the pending works: MH-1 114/142 rows out
+    the six works: not accepted; works with rows out: 5 of 6 (DS-5 100/116, LA-5 176/224, PL-5 144/178, RS-6 94/128, SB-3 184/222, SB-4 66/80)
+    its widest departure at the works it misses least: 4.1 bands
+
+all_turns: every survey that mirrors the one before is taken for a rope turned end for end
+    the two examples: accepted
+    the pending works: MH-5 82/112 rows out
+    the six works: not accepted; works with rows out: 5 of 6 (DS-2 62/90, DS-5 98/116, LA-4 66/88, LA-6 64/86, PL-1 182/220, RS-2 130/174, SB-2 250/348)
+    its widest departure at the works it misses least: 3.6 bands
+
+all_from_other_end: every survey that mirrors the one before is taken for a survey started from the other end; no rope is followed
+    the two examples: accepted
+    the pending works: MH-1 114/142 rows out
+    the six works: not accepted; works with rows out: 5 of 6 (DS-5 100/116, LA-5 176/224, PL-5 144/178, RS-6 94/128, SB-3 184/222, SB-4 66/80)
+    its widest departure at the works it misses least: 4.1 bands
+
+places_from_dead_end: a sheave's place on the rope, a + p (H - h), is taken as x, which is measured from the drum anchorage
+    the two examples: not accepted (FB-1 84/102, FB-2 134/152, FB-3 92/104, FB-4 100/128, FB-5 86/114, PS-1 72/86, PS-2 72/82, PS-3 176/224, PS-4 146/188, PS-5 110/134)
+    the pending works: MH-1 66/142, MH-2 96/118, MH-3 176/212, MH-4 150/182, MH-5 88/112 rows out
+    the six works: not accepted; works with rows out: 6 of 6 (CY-1 82/94, CY-2 112/130, CY-3 76/112, CY-4 288/340, CY-5 92/128, CY-6 136/168, DS-1 110/128, DS-2 76/90, DS-3 140/162, DS-4 140/156, DS-5 96/116, DS-6 124/156, LA-1 282/362, LA-2 84/114, LA-3 226/270, LA-4 72/88, LA-5 78/224, LA-6 66/86, PL-1 184/220, PL-2 134/170, PL-3 100/114, PL-4 62/86, PL-6 260/308, RS-1 62/74, RS-2 132/174, RS-3 124/150, RS-4 234/272, RS-5 198/236, SB-1 149/182, SB-2 302/348, SB-5 122/152, SB-6 220/274)
+    its widest departure at the works it misses least: 9.7 bands
+
+no_block_mass: the tension is reckoned from the hook load alone
+    the two examples: not accepted (FB-1 48/102, FB-2 72/152, FB-3 46/104, FB-4 68/128, FB-5 75/114, PS-1 56/86, PS-2 40/82, PS-3 109/224, PS-4 79/188, PS-5 63/134)
+    the pending works: MH-1 98/142, MH-2 62/118, MH-3 102/212, MH-4 103/182, MH-5 67/112 rows out
+    the six works: not accepted; works with rows out: 6 of 6 (CY-1 49/94, CY-2 76/130, CY-3 42/112, CY-4 199/340, CY-5 63/128, CY-6 81/168, DS-1 67/128, DS-2 45/90, DS-3 75/162, DS-4 94/156, DS-5 84/116, DS-6 80/156, LA-1 195/362, LA-2 54/114, LA-3 157/270, LA-4 42/88, LA-5 132/224, LA-6 54/86, PL-1 103/220, PL-2 72/170, PL-3 64/114, PL-4 41/86, PL-5 134/178, PL-6 135/308, RS-1 34/74, RS-2 93/174, RS-3 76/150, RS-4 135/272, RS-5 117/236, RS-6 98/128, SB-1 107/182, SB-2 172/348, SB-3 188/222, SB-4 60/80, SB-5 90/152, SB-6 153/274)
+    its widest departure at the works it misses least: 2.9 bands
+
+drum_as_sheave: a bending over the drum is counted like a bending over a sheave
+    the two examples: not accepted (FB-1 39/102, FB-2 82/152, FB-3 50/104, FB-4 65/128, FB-5 53/114, PS-1 42/86, PS-2 35/82, PS-3 112/224, PS-4 97/188, PS-5 68/134)
+    the pending works: MH-1 61/142, MH-2 68/118, MH-3 103/212, MH-4 88/182, MH-5 38/112 rows out
+    the six works: not accepted; works with rows out: 6 of 6 (CY-1 48/94, CY-2 65/130, CY-3 43/112, CY-4 177/340, CY-5 71/128, CY-6 107/168, DS-1 59/128, DS-2 52/90, DS-3 63/162, DS-4 90/156, DS-5 77/116, DS-6 95/156, LA-1 179/362, LA-2 52/114, LA-3 153/270, LA-4 44/88, LA-5 105/224, LA-6 39/86, PL-1 57/220, PL-2 83/170, PL-3 53/114, PL-4 34/86, PL-5 124/178, PL-6 171/308, RS-1 35/74, RS-2 107/174, RS-3 74/150, RS-5 112/236, RS-6 94/128, SB-1 75/182, SB-3 122/222, SB-4 52/80, SB-5 71/152, SB-6 137/274)
+    its widest departure at the works it misses least: 4.4 bands
+
+how many of the 6 routes each works stops
+    roll_store   6 (as_written, all_turns, all_from_other_end, places_from_dead_end, no_block_mass, drum_as_sheave)
+    press_line   6 (as_written, all_turns, all_from_other_end, places_from_dead_end, no_block_mass, drum_as_sheave)
+    coil_yard    3 (places_from_dead_end, no_block_mass, drum_as_sheave)
+    ladle_aisle  6 (as_written, all_turns, all_from_other_end, places_from_dead_end, no_block_mass, drum_as_sheave)
+    die_store    6 (as_written, all_turns, all_from_other_end, places_from_dead_end, no_block_mass, drum_as_sheave)
+    scrap_bay    6 (as_written, all_turns, all_from_other_end, places_from_dead_end, no_block_mass, drum_as_sheave)
+
+6 routes, 0 accepted on the six works; works that stop fewer than three routes: none

@@ -1,0 +1,89 @@
+sheets that are not the sheet of the statement
+
+ok          nothing written                                            refused: no sheet at OUT_CSV (No such file or directory)
+ok          a directory at OUT_CSV                                     refused: OUT_CSV is not an ordinary file
+ok          a link to the true sheet at OUT_CSV                        refused: no sheet at OUT_CSV (Too many levels of symbolic links)
+ok          a named pipe at OUT_CSV                                    refused: OUT_CSV is not an ordinary file
+ok          an empty file                                              refused: OUT_CSV is empty
+ok          the header alone                                           refused: 840 stations have no row, CY-1-001 the first
+ok          no header                                                  refused: the first line is not row,damage
+ok          header Row,Damage                                          refused: the first line is not row,damage
+ok          header with a blank before it                              refused: the first line is not row,damage
+ok          header in quotes                                           refused: the first line is not row,damage
+ok          header row,damage,note and a third field                   refused: the first line is not row,damage
+ok          a third field in one row                                   refused: line 2 has 3 fields, not 2
+ok          a row of one field                                         refused: line 842 has 1 fields, not 2
+ok          a row left out                                             refused: 1 stations have no row, CY-6-096 the first
+ok          a row given twice                                          refused: line 842: CY-1-001 is given a second time
+ok          a row for a station the rope has not                       refused: line 842: 'CY-1-999' is not a station of this works
+ok          row names in lower case                                    refused: line 2: 'cy-1-001' is not a station of this works
+ok          station numbers without their zeros                        refused: line 2: 'CY-1-1' is not a station of this works
+ok          a damage left empty                                        refused: line 2: '' is not a decimal number
+ok          a damage of n/a                                            refused: line 2: 'n/a' is not a decimal number
+ok          a damage of nan                                            refused: line 2: 'nan' is not a decimal number
+ok          a damage of inf                                            refused: line 2: 'inf' is not a decimal number
+ok          a damage with a per cent sign                              refused: line 2: '12%' is not a decimal number
+ok          a damage with a decimal comma, quoted                      refused: line 2: '0,12' is not a decimal number
+ok          a damage in hexadecimal                                    refused: line 2: '0x1p-3' is not a decimal number
+ok          a damage of 1e999                                          refused: line 2: the damage is not finite
+ok          a damage of --0.1                                          refused: line 2: '--0.1' is not a decimal number
+ok          a sheet of more than 1 MiB                                 refused: OUT_CSV is larger than 1048576 bytes
+ok          a sheet in UTF-16                                          refused: OUT_CSV is not plain text
+ok          the true sheet, exit status 3                              refused: ended with status 3
+ok          the true sheet, killed by its own signal                   refused: ended with status -9
+
+the true sheet written in ways the statement leaves open
+
+ok          as it is                                                   accepted
+ok          CRLF line ends                                             accepted
+ok          no line end after the last row                             accepted
+ok          empty lines between rows                                   accepted
+ok          rows in reverse order                                      accepted
+ok          every field in quotes                                      accepted
+ok          blanks round the fields                                    accepted
+ok          a plus sign before each damage                             accepted
+ok          exponent form                                              accepted
+ok          twelve decimals                                            accepted
+
+the band: 0.08 of the greatest damage of the rope
+
+ok          every row 0.9 of the band high                             accepted
+ok          every row 0.9 of the band low                              accepted
+ok          every row 1.1 of the band high                             refused: 840 of 840 rows out
+ok          every row 1.1 of the band low                              refused: 840 of 840 rows out
+ok          one row of one rope 1.2 of the band high                   refused: 1 of 840 rows out
+
+the limit, set to 3 s for the purpose; two works, coil_yard first
+
+ok          the true sheet, then asleep for 30 s                       refused: over the limit of 3 s | the run on coil_yard reached 3 s, of the clock or of CPU; nothing after it was tried
+ok          the true sheet, then spinning with SIGTERM ignored         refused: over the limit of 3 s | the run on coil_yard reached 3 s, of the clock or of CPU; nothing after it was tried
+ok          four processes spinning 1.5 s each, done in 1.5 s          refused: over the limit of 3 s | the run on coil_yard reached 3 s, of the clock or of CPU; nothing after it was tried
+ok          four processes spinning 1.5 s each, never waited for       refused: over the limit of 3 s | the run on coil_yard reached 3 s, of the clock or of CPU; nothing after it was tried
+ok          done in time, a child left asleep in a session of its own  accepted
+ok          one process, 1 s of work on each works                     accepted
+
+the run: each program writes the true sheet only if what it tests is so
+
+ok          the working directory holds ropes.py and nothing else      accepted
+ok          the user is nobody                                         accepted
+ok          the package cannot be written to                           accepted
+ok          the package holds its four files                           accepted
+ok          one thread to a numerical library                          accepted
+ok          the sealed results cannot be read                          accepted
+ok          no affinity is set: every CPU of the machine may be used   accepted
+ok          a program that is a link to a program                      refused: no program file at /tmp/link-ca7hrts1/ropes.py
+
+the reward script: tests/test.sh as it stands, `python -m pytest` stood in for
+
+ok          pytest ends 0, the report counts one test, passed          reward 1
+ok          pytest ends 0, the report counts two tests, both passed    reward 0
+ok          pytest ends 0, one test, failed                            reward 0
+ok          pytest ends 0, one test, skipped                           reward 0
+ok          pytest ends 0, no test at all                              reward 0
+ok          pytest ends 1, the report counts one test, passed          reward 0
+ok          pytest ends 0, no report                                   reward 0
+ok          pytest ends 0, the report is not JSON                      reward 0
+ok          pytest ends 0, the report has no summary                   reward 0
+ok          no ropes.py delivered, pytest would end 0 with one test passed reward 0
+
+70 cases, 0 unexpected

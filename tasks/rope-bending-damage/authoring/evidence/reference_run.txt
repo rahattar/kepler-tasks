@@ -1,0 +1,18 @@
+solution/ropes.py on the six works, limit 4 s
+
+coil_yard      1.2 s,   1.1 s of CPU: every row right; widest departure 0.00 of the band
+die_store      1.2 s,   1.2 s of CPU: every row right; widest departure 0.07 of the band
+ladle_aisle    1.3 s,   1.3 s of CPU: every row right; widest departure 0.01 of the band
+press_line     1.3 s,   1.3 s of CPU: every row right; widest departure 0.03 of the band
+roll_store     1.2 s,   1.2 s of CPU: every row right; widest departure 0.08 of the band
+scrap_bay      1.4 s,   1.3 s of CPU: every row right; widest departure 0.15 of the band
+ACCEPTED
+
+slowest run 1.4 s; the limit of 4 s is 2.9 times that
+
+on the visible works (the examples against expected.csv, the pending works against its sealed result)
+
+forge_bay      1.0 s,   1.0 s of CPU: every row right; widest departure 0.00 of the band
+melt_hall      1.1 s,   1.1 s of CPU: every row right; widest departure 0.27 of the band
+plate_shop     0.9 s,   0.9 s of CPU: every row right; widest departure 0.00 of the band
+ACCEPTED

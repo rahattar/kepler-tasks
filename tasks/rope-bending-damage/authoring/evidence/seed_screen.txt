@@ -1,0 +1,22 @@
+seed 5301: accepted, widest departure 0.15 of the band
+seed 5302: accepted, widest departure 0.17 of the band
+seed 5303: accepted, widest departure 0.16 of the band
+seed 5304: accepted, widest departure 0.20 of the band
+seed 5305: accepted, widest departure 0.48 of the band
+seed 5306: accepted, widest departure 0.25 of the band
+seed 5307: accepted, widest departure 0.26 of the band
+seed 5308: accepted, widest departure 0.26 of the band
+seed 5309: accepted, widest departure 0.21 of the band
+seed 5310: accepted, widest departure 0.36 of the band
+seed 5311: accepted, widest departure 0.20 of the band
+seed 5312: accepted, widest departure 0.18 of the band
+seed 5313: accepted, widest departure 0.24 of the band
+seed 5314: accepted, widest departure 0.35 of the band
+seed 5315: accepted, widest departure 0.24 of the band
+seed 5316: accepted, widest departure 0.20 of the band
+seed 5317: accepted, widest departure 0.28 of the band
+seed 5318: accepted, widest departure 0.30 of the band
+seed 5319: accepted, widest departure 0.28 of the band
+seed 5320: accepted, widest departure 0.18 of the band
+
+20 seeds, 20 accepted; widest departure on any seed 0.48 of the band

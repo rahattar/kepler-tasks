@@ -1,0 +1,7 @@
+crane,falls,upper_block_height_m,block_mass_t,reeving_efficiency,rope_construction,rope_length_m
+DS-1,6,17.3,0.77,0.97,8x36,128
+DS-2,4,18.1,1.15,0.94,6x36,90
+DS-3,8,17.0,1.41,0.931,6x36,162
+DS-4,6,21.1,1.18,0.962,6x36,156
+DS-5,6,15.3,2.03,0.973,6x36,116
+DS-6,4,32.8,0.45,0.948,8x36,156

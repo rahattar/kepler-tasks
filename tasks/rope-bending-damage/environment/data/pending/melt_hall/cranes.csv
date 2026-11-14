@@ -1,0 +1,6 @@
+crane,falls,upper_block_height_m,block_mass_t,reeving_efficiency,rope_construction,rope_length_m
+MH-1,6,19.6,1.35,0.967,8x36,142
+MH-2,4,23.5,1.25,0.936,6x36,118
+MH-3,8,23.0,0.9,0.969,8x36,212
+MH-4,6,26.5,1.26,0.975,6x36,182
+MH-5,4,20.3,0.68,0.955,6x36,112

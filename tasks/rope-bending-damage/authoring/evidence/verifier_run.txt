@@ -1,0 +1,45 @@
+bash tests/test.sh, unchanged, with each program in turn at /app/output/ropes.py; the reward read from /logs/verifier/reward.txt
+the ctrf report is written by authoring/evidence/ctrf_standin.py: pytest-json-ctrf is not installed on this machine
+
+the reference, solution/ropes.py                     reward 1 in 9 s   as expected
+    coil_yard      1.3 s,   1.2 s of CPU: every row right; widest departure 0.00 of the band
+    die_store      1.3 s,   1.2 s of CPU: every row right; widest departure 0.07 of the band
+    ladle_aisle    1.3 s,   1.2 s of CPU: every row right; widest departure 0.01 of the band
+    press_line     1.3 s,   1.3 s of CPU: every row right; widest departure 0.03 of the band
+    roll_store     1.3 s,   1.2 s of CPU: every row right; widest departure 0.08 of the band
+    scrap_bay      1.6 s,   1.5 s of CPU: every row right; widest departure 0.15 of the band
+    ACCEPTED
+
+the second solution made fast, quick_ropes.py        reward 1 in 6 s   as expected
+    coil_yard      0.8 s,   0.8 s of CPU: every row right; widest departure 0.00 of the band
+    die_store      0.8 s,   0.8 s of CPU: every row right; widest departure 0.07 of the band
+    ladle_aisle    0.9 s,   0.9 s of CPU: every row right; widest departure 0.01 of the band
+    press_line     0.8 s,   0.8 s of CPU: every row right; widest departure 0.03 of the band
+    roll_store     0.9 s,   0.9 s of CPU: every row right; widest departure 0.08 of the band
+    scrap_bay      0.8 s,   0.8 s of CPU: every row right; widest departure 0.15 of the band
+    ACCEPTED
+
+RS-4 on the surveys as written                       reward 0 in 8 s   as expected
+    coil_yard      1.2 s,   1.2 s of CPU: every row right; widest departure 0.00 of the band
+    die_store      1.3 s,   1.3 s of CPU: 100 of 808 rows out; widest departure 6.47 of the band (DS-5 100/116)
+    ladle_aisle    1.2 s,   1.1 s of CPU: 176 of 1144 rows out; widest departure 4.08 of the band (LA-5 176/224)
+    press_line     1.3 s,   1.3 s of CPU: 144 of 1076 rows out; widest departure 6.66 of the band (PL-5 144/178)
+    roll_store     1.2 s,   1.2 s of CPU: 94 of 1034 rows out; widest departure 8.88 of the band (RS-6 94/128)
+    scrap_bay      1.3 s,   1.2 s of CPU: 250 of 1258 rows out; widest departure 9.82 of the band (SB-3 184/222, SB-4 66/80)
+    NOT ACCEPTED
+
+every mirrored survey taken for a turned rope        reward 0 in 9 s   as expected
+    coil_yard      1.3 s,   1.3 s of CPU: every row right; widest departure 0.00 of the band
+    die_store      1.4 s,   1.4 s of CPU: 160 of 808 rows out; widest departure 3.63 of the band (DS-2 62/90, DS-5 98/116)
+    ladle_aisle    1.5 s,   1.4 s of CPU: 130 of 1144 rows out; widest departure 5.27 of the band (LA-4 66/88, LA-6 64/86)
+    press_line     1.3 s,   1.3 s of CPU: 182 of 1076 rows out; widest departure 5.58 of the band (PL-1 182/220)
+    roll_store     1.2 s,   1.2 s of CPU: 130 of 1034 rows out; widest departure 5.32 of the band (RS-2 130/174)
+    scrap_bay      1.5 s,   1.4 s of CPU: 250 of 1258 rows out; widest departure 3.81 of the band (SB-2 250/348)
+    NOT ACCEPTED
+
+the second solution in plain loops, plain_ropes.py   reward 0 in 5 s   as expected
+    coil_yard      4.0 s,   3.8 s of CPU: over the limit of 4 s
+    the run on coil_yard reached 4 s, of the clock or of CPU; nothing after it was tried
+    NOT ACCEPTED
+
+5 programs, 0 unexpected

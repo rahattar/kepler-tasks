@@ -1,0 +1,11 @@
+forge_bay    example  5 files, all as generated
+plate_shop   example  5 files, all as generated
+melt_hall    pending  5 files, all as generated
+roll_store   hidden   5 files, all as generated
+press_line   hidden   5 files, all as generated
+coil_yard    hidden   5 files, all as generated
+ladle_aisle  hidden   5 files, all as generated
+die_store    hidden   5 files, all as generated
+scrap_bay    hidden   5 files, all as generated
+
+45 files compared, 0 differ

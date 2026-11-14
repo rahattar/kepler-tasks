@@ -1,0 +1,130 @@
+the bundle
+
+ok     the bundle holds README.md, instruction.md, task.toml, authoring, environment, solution and tests, and nothing else
+ok     no caches, dotfiles, logs or zips
+ok     no all-uppercase names but README.md and Dockerfile
+ok     every path is plain ASCII letters, digits, dots, hyphens and underscores
+ok     every file is ASCII
+ok     no Python file imports an encoding or packing module or decodes a string
+ok     the task's name has at most three hyphenated words
+
+the instruction
+
+ok     its last paragraph is the closing sentence, exactly
+ok     it has no heading
+ok     it has no grading word
+ok     it has no first or second person before the closing sentence
+ok     it gives no role
+ok     it says "Each run of ropes.py must finish within 4 seconds on 1 CPU.", with the bench's LIMIT_S
+ok     it names one time limit, the bench's
+ok     it gives the header the reader holds, `row,damage`
+ok     its accuracy, 8 per cent of the rope's greatest damage, is the bench's SHARE and the generator's BAND
+ok     the size cap it states is the reader's, 1048576 bytes
+ok     it says OUT_CSV is an ordinary file, not a link, which the reader requires
+ok     it states the largest package as design_rules.py holds the six works to (6 cranes, 600,000 movements, 400 m)
+ok     every /app path it names is shipped, and it names /app/output/ropes.py
+ok     it names /app/data/examples/forge_bay by its absolute path
+ok     it names /app/data/examples/plate_shop by its absolute path
+ok     it names /app/data/pending/melt_hall by its absolute path
+ok     it names /app/data/docs/rs4_rope_bending.md by its absolute path
+ok     it names /app/data/docs/works_package.md by its absolute path
+ok     it says "python3 ropes.py WORKS_DIR OUT_CSV", as the bench runs the program
+ok     it says "exit status has to be 0", as the bench runs the program
+ok     it says "only `ropes.py` has been copied", as the bench runs the program
+ok     it says "unprivileged", as the bench runs the program
+ok     it says "no network", as the bench runs the program
+ok     it says "cannot be written to", as the bench runs the program
+ok     it says "numpy, scipy and pandas", as the bench runs the program
+ok     no text the agent reads speaks of turning, mirroring, reversing, errors or checks
+
+task.toml and the README
+
+ok     the name is <prefix>/rope-bending-damage, with the prefix every task of the repository uses
+ok     the name's prefix appears nowhere but task.toml's name line
+ok     the artifact is /app/output/ropes.py
+ok     agent: 28800 s, as the user agent
+ok     verifier: 600 s, a separate environment, no network
+ok     domain engineering-sciences, field mechanical-engineering
+ok     category Science, and a subcategory
+ok     the subfield is 1 to 120 characters (91)
+ok     [metadata] carries the whole block
+ok     keywords are the tags
+ok     difficulty_explanation is the README's section, word for word
+ok     solution_explanation is the README's section, word for word
+ok     verification_explanation is the README's section, word for word
+ok     the difficulty text says the data are synthetic and realistic, and never calls the work routine
+ok     the README carries no agent-performance figures
+ok     the README's submission notes say what the hidden shift is and where it is built
+
+the verifier
+
+ok     tests/Dockerfile has `RUN mkdir -p /app/output` on a line of its own
+ok     tests/Dockerfile has `COPY . /tests/` on a line of its own
+ok     tests/Dockerfile has `WORKDIR /tests` on a line of its own
+ok     tests/Dockerfile has `ENV PYTHONUNBUFFERED=1`
+ok     tests/Dockerfile pins numpy==2.1.3
+ok     tests/Dockerfile pins scipy==1.14.1
+ok     tests/Dockerfile pins pandas==2.2.3
+ok     tests/Dockerfile pins pytest==8.4.1
+ok     tests/Dockerfile pins pytest-json-ctrf==0.3.5
+ok     tests/test.sh has `echo -n "0" > /logs/verifier/reward.txt`
+ok     tests/test.sh has `echo -n "1" > /logs/verifier/reward.txt`
+ok     tests/test.sh has `mkdir -p /logs/verifier`
+ok     tests/test.sh has `--ctrf=/logs/verifier/ctrf.json`
+ok     tests/test.sh has `-p no:cacheprovider`
+ok     every write of reward.txt in test.sh is one of the two literals, alone on its line
+ok     test.sh writes the 0 before it runs anything
+ok     the bench holds the limit on the clock and on the CPU time of every process of the run
+ok     a run over the limit ends the judging at once, unread, and the program is not accepted
+ok     no TimeoutExpired is caught anywhere in the bench
+ok     a run has OMP_NUM_THREADS=1 and OPENBLAS_NUM_THREADS=1
+ok     no CPU affinity is set
+ok     the program runs as nobody; /tests and /logs/verifier are root's alone
+ok     every mode the program depends on is set with os.chmod, never through a mode= argument
+ok     test.sh works under umask 077
+ok     the agent's image: the same pins, the user agent owning /app/output, one thread to a library
+ok     pytest finds one test
+
+the data
+
+ok     no pending works carries results
+ok     nothing sealed sits under environment/
+ok     all 45 files manifest.json lists are there with its SHA-256 (0 not)
+ok     manifest.json's table of works is the generator's
+ok     tests/works holds the six works and tests/sealed/results their six results
+
+the studies
+
+ok     regenerate.txt is there and reports no failure
+ok     design_rules.txt is there and reports no failure
+ok     reference_run.txt is there and reports no failure
+ok     seed_screen.txt is there and reports no failure
+ok     route_run.txt is there and reports no failure
+ok     spread_run.txt is there and reports no failure
+ok     second_run.txt is there and reports no failure
+ok     null_run.txt is there and reports no failure
+ok     verifier_checks.txt is there and reports no failure
+ok     verifier_run.txt is there and reports no failure
+ok     regenerate: every shipped data file is what the generator writes
+ok     design rules: all hold (23/23)
+ok     the limit is 2 to 3.5 times the reference's slowest run (2.9)
+ok     the reference is accepted on the six works and on the three visible ones
+ok     seed screen: accepted on 20 of 20 seeds, widest 0.48 of the band
+ok     the band is at least twice the widest departure of any sound program (0.48) and of the second solution (0.15)
+ok     every sound variation, and a turn at either edge of its gap, is accepted
+ok     routes: none accepted, every works stops at least three
+ok     the route nearest to right misses by at least 1.5 bands (2.9)
+ok     the second solution in plain loops would need at least 3 times the limit (21.2)
+ok     brute force needs at least 1.5 times the limit on every works (1.7)
+ok     the fast second solution is accepted; plain loops and brute force are stopped on the first works
+ok     no program without the calculation gets a rope wholly right
+ok     verifier checks: none unexpected
+ok     test.sh itself: reward 1 for the reference and the second solution, 0 for the other three
+ok     no verifier file or the reference has changed since verifier_run.txt
+ok     every decimal figure in README.md occurs in a study, a document or the code
+
+a live run
+
+ok     the reference, through the bench under umask 077: coil_yard 1.1 s; die_store 1.1 s; ladle_aisle 1.2 s; press_line 1.2 s; roll_store 1.2 s; scrap_bay 1.3 s
+
+108 rules, 108 hold

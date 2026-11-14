@@ -1,0 +1,7 @@
+crane,falls,upper_block_height_m,block_mass_t,reeving_efficiency,rope_construction,rope_length_m
+SB-1,8,18.8,3.86,0.952,6x36,182
+SB-2,8,40.7,3.25,0.965,8x36,348
+SB-3,6,33.2,2.35,0.945,8x36,222
+SB-4,4,13.6,0.54,0.95,6x36,80
+SB-5,6,21.4,1.18,0.963,8x36,152
+SB-6,6,41.4,2.02,0.97,8x36,274

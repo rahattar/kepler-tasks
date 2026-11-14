@@ -1,0 +1,7 @@
+crane,falls,upper_block_height_m,block_mass_t,reeving_efficiency,rope_construction,rope_length_m
+RS-1,4,13.3,0.84,0.958,8x36,74
+RS-2,4,38.2,0.99,0.945,8x36,174
+RS-3,6,20.4,1.54,0.975,6x36,150
+RS-4,8,30.6,1.3,0.964,6x36,272
+RS-5,8,25.6,1.32,0.931,8x36,236
+RS-6,4,26.6,1.3,0.942,6x36,128

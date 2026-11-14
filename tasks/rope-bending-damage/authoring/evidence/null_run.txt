@@ -1,0 +1,9 @@
+the examples: 1314 stations, mean damage 0.0631; thinning law: damage = 14.2 (loss - 0.0104)^1.53
+
+nothing       not accepted; rows right: 1076 of 6292; ropes with every row right: 0 of 36
+flat          not accepted; rows right: 879 of 6292; ropes with every row right: 0 of 36
+shape         not accepted; rows right: 2487 of 6292; ropes with every row right: 0 of 36
+thinning      not accepted; rows right: 2329 of 6292; ropes with every row right: 0 of 36
+thinning_fit  not accepted; rows right: 3264 of 6292; ropes with every row right: 0 of 36
+
+5 programs, 0 accepted; most ropes wholly right: 0 of 36

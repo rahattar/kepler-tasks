@@ -1,0 +1,30 @@
+sound variations
+
+turn_at_a_third        a turn is put a third of the way into its gap between two surveys
+    the six works: accepted, widest 0.16 of the band; the visible works: accepted, widest 0.41
+turn_at_two_thirds     a turn is put two thirds of the way into its gap
+    the six works: accepted, widest 0.30 of the band; the visible works: accepted, widest 0.10
+mirror_by_correlation  a survey is taken to mirror the one before when it correlates better with it end for end than as written
+    the six works: accepted, widest 0.15 of the band; the visible works: accepted, widest 0.27
+mirror_strict          a survey is taken to mirror the one before only when end for end fits four times better
+    the six works: accepted, widest 0.15 of the band; the visible works: accepted, widest 0.27
+end_by_first_survey    the bendings that settle which end a run of surveys was counted from are reckoned with the first survey's diameters
+    the six works: accepted, widest 0.15 of the band; the visible works: accepted, widest 0.27
+elements_not_diameters elements are followed for their bendings, but each diameter is read at the station as written (the thinning moves N by a few per cent only)
+    the six works: accepted, widest 0.21 of the band; the visible works: accepted, widest 0.31
+nominal_diameter       the diameter as new is used in N for every bending; the surveys serve only to settle the rope
+    the six works: accepted, widest 0.48 of the band; the visible works: accepted, widest 0.41
+longer_series          eight terms of the power series in ln S in place of five
+    the six works: accepted, widest 0.15 of the band; the visible works: accepted, widest 0.27
+
+the reference itself: widest 0.27 of the band
+widest departure of a sound program: 0.48 of the band; the band is 2.1 times that
+
+the day of a turn, at its two edges
+
+turn_at_start          a turn is put at the first moment of its gap
+    the six works: accepted, widest 0.41 of the band; the visible works: accepted, widest 0.70
+turn_at_end            a turn is put at the last moment of its gap
+    the six works: accepted, widest 0.61 of the band; the visible works: accepted, widest 0.20
+
+10 programs, 0 not accepted somewhere

@@ -1,0 +1,1242 @@
+{
+ "band": 0.08,
+ "station_spacing_m": 1.0,
+ "log_days": 300.0,
+ "works": [
+  {
+   "works": "forge_bay",
+   "role": "example",
+   "seed": 51,
+   "turned": 0,
+   "dead_end": 0,
+   "both": 0,
+   "eight": 1,
+   "tall": 0,
+   "survey_days": [
+    0.0,
+    16.51,
+    31.4,
+    46.66,
+    64.09,
+    80.9,
+    94.4,
+    111.0,
+    125.79,
+    143.65,
+    157.45,
+    172.28,
+    189.89,
+    205.6,
+    222.13,
+    237.97,
+    251.88,
+    264.86,
+    278.06,
+    292.63
+   ],
+   "movements": 463922,
+   "rows": 600,
+   "cranes": [
+    {
+     "crane": "FB-1",
+     "falls": 6,
+     "upper_block_height_m": 12.9,
+     "rope_length_m": 102.0,
+     "rope_diameter_mm": 16.0,
+     "construction": "6x36",
+     "stations": 102,
+     "movements": 104072,
+     "greatest_damage": 0.1481,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "FB-2",
+     "falls": 8,
+     "upper_block_height_m": 15.8,
+     "rope_length_m": 152.0,
+     "rope_diameter_mm": 18.0,
+     "construction": "8x36",
+     "stations": 152,
+     "movements": 94504,
+     "greatest_damage": 0.2002,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "FB-3",
+     "falls": 6,
+     "upper_block_height_m": 13.3,
+     "rope_length_m": 104.0,
+     "rope_diameter_mm": 22.0,
+     "construction": "6x36",
+     "stations": 104,
+     "movements": 79915,
+     "greatest_damage": 0.1356,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "FB-4",
+     "falls": 4,
+     "upper_block_height_m": 26.1,
+     "rope_length_m": 128.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "8x36",
+     "stations": 128,
+     "movements": 95846,
+     "greatest_damage": 0.1105,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "FB-5",
+     "falls": 4,
+     "upper_block_height_m": 22.1,
+     "rope_length_m": 114.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "8x36",
+     "stations": 114,
+     "movements": 89585,
+     "greatest_damage": 0.091,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    }
+   ],
+   "files": {
+    "environment/data/examples/forge_bay/cranes.csv": {
+     "bytes": 256,
+     "sha256": "c6958567fd498639e2970f15cf93279854f99e8c0ace103563c7a9c11031feca"
+    },
+    "environment/data/examples/forge_bay/expected.csv": {
+     "bytes": 10211,
+     "sha256": "9392bc4b385a4a9ed20609791b59cd937ab33f92f4a433eaa1132a21cd59898b"
+    },
+    "environment/data/examples/forge_bay/movements.csv": {
+     "bytes": 13584594,
+     "sha256": "62ec27ab28ab6dccc2c282539bb7fb109d3cb00c2b4b995ff98cd68cfebbaaf5"
+    },
+    "environment/data/examples/forge_bay/sheaves.csv": {
+     "bytes": 738,
+     "sha256": "a95705ad8e90b8fb5acc3cb55c43b33df57ccb5c58fe0742652e64ddb6e26fc7"
+    },
+    "environment/data/examples/forge_bay/surveys.csv": {
+     "bytes": 284232,
+     "sha256": "2e3888fb85346cfeff96164e105a407666b375d2f0ddfd5e605c0faf430cafc1"
+    }
+   }
+  },
+  {
+   "works": "plate_shop",
+   "role": "example",
+   "seed": 52,
+   "turned": 0,
+   "dead_end": 0,
+   "both": 0,
+   "eight": 1,
+   "tall": 0,
+   "survey_days": [
+    0.0,
+    13.97,
+    31.59,
+    48.95,
+    64.11,
+    77.42,
+    90.53,
+    108.34,
+    121.38,
+    136.62,
+    151.45,
+    168.13,
+    181.2,
+    196.5,
+    213.68,
+    228.52,
+    245.26,
+    260.8,
+    274.47,
+    291.19
+   ],
+   "movements": 428041,
+   "rows": 714,
+   "cranes": [
+    {
+     "crane": "PS-1",
+     "falls": 4,
+     "upper_block_height_m": 15.8,
+     "rope_length_m": 86.0,
+     "rope_diameter_mm": 24.0,
+     "construction": "8x36",
+     "stations": 86,
+     "movements": 80147,
+     "greatest_damage": 0.1298,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "PS-2",
+     "falls": 4,
+     "upper_block_height_m": 13.4,
+     "rope_length_m": 82.0,
+     "rope_diameter_mm": 24.0,
+     "construction": "8x36",
+     "stations": 82,
+     "movements": 92797,
+     "greatest_damage": 0.0865,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "PS-3",
+     "falls": 8,
+     "upper_block_height_m": 24.4,
+     "rope_length_m": 224.0,
+     "rope_diameter_mm": 16.0,
+     "construction": "6x36",
+     "stations": 224,
+     "movements": 80621,
+     "greatest_damage": 0.1868,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "PS-4",
+     "falls": 6,
+     "upper_block_height_m": 26.7,
+     "rope_length_m": 188.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "6x36",
+     "stations": 188,
+     "movements": 92647,
+     "greatest_damage": 0.1478,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "PS-5",
+     "falls": 6,
+     "upper_block_height_m": 18.5,
+     "rope_length_m": 134.0,
+     "rope_diameter_mm": 18.0,
+     "construction": "8x36",
+     "stations": 134,
+     "movements": 81829,
+     "greatest_damage": 0.1412,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    }
+   ],
+   "files": {
+    "environment/data/examples/plate_shop/cranes.csv": {
+     "bytes": 255,
+     "sha256": "8e80b64844aa3f09aacfc7f7d442e39bcaea3df19883a636de311b9be240dce5"
+    },
+    "environment/data/examples/plate_shop/expected.csv": {
+     "bytes": 12149,
+     "sha256": "0870530360b2998f7432c1282c4724ab26548ac947a8889c339fe0d5814d3542"
+    },
+    "environment/data/examples/plate_shop/movements.csv": {
+     "bytes": 12599807,
+     "sha256": "7d78b08a0d40d89f3717eee4cd98ce38e1db1dd9daec7efbc8cda4edb9eb94b5"
+    },
+    "environment/data/examples/plate_shop/sheaves.csv": {
+     "bytes": 739,
+     "sha256": "874a83aab1c1dbd9930a0637210593e5a99871a53ea9c7fbc23c2e3442abc738"
+    },
+    "environment/data/examples/plate_shop/surveys.csv": {
+     "bytes": 340960,
+     "sha256": "ef54d5c292ddd5c217c43a9585117f7a215ad2e43679026b585eca9437708263"
+    }
+   }
+  },
+  {
+   "works": "melt_hall",
+   "role": "pending",
+   "seed": 53,
+   "turned": 1,
+   "dead_end": 1,
+   "both": 0,
+   "eight": 1,
+   "tall": 0,
+   "survey_days": [
+    0.0,
+    16.3,
+    34.19,
+    50.88,
+    65.1,
+    79.37,
+    95.19,
+    111.16,
+    124.81,
+    141.57,
+    158.93,
+    175.3,
+    188.41,
+    205.3,
+    219.95,
+    233.07,
+    245.87,
+    262.15,
+    279.48
+   ],
+   "movements": 476373,
+   "rows": 766,
+   "cranes": [
+    {
+     "crane": "MH-1",
+     "falls": 6,
+     "upper_block_height_m": 19.6,
+     "rope_length_m": 142.0,
+     "rope_diameter_mm": 20.0,
+     "construction": "8x36",
+     "stations": 142,
+     "movements": 88522,
+     "greatest_damage": 0.1409,
+     "rope": "turned",
+     "turn_day": 138.08,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "MH-2",
+     "falls": 4,
+     "upper_block_height_m": 23.5,
+     "rope_length_m": 118.0,
+     "rope_diameter_mm": 24.0,
+     "construction": "6x36",
+     "stations": 118,
+     "movements": 99548,
+     "greatest_damage": 0.1742,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "MH-3",
+     "falls": 8,
+     "upper_block_height_m": 23.0,
+     "rope_length_m": 212.0,
+     "rope_diameter_mm": 16.0,
+     "construction": "8x36",
+     "stations": 212,
+     "movements": 95765,
+     "greatest_damage": 0.192,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "MH-4",
+     "falls": 6,
+     "upper_block_height_m": 26.5,
+     "rope_length_m": 182.0,
+     "rope_diameter_mm": 18.0,
+     "construction": "6x36",
+     "stations": 182,
+     "movements": 97434,
+     "greatest_damage": 0.2119,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "MH-5",
+     "falls": 4,
+     "upper_block_height_m": 20.3,
+     "rope_length_m": 112.0,
+     "rope_diameter_mm": 16.0,
+     "construction": "6x36",
+     "stations": 112,
+     "movements": 95104,
+     "greatest_damage": 0.1596,
+     "rope": "dead_end",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": 175.3
+    }
+   ],
+   "files": {
+    "environment/data/pending/melt_hall/cranes.csv": {
+     "bytes": 256,
+     "sha256": "4ac7cb9fff58eefb2bd65f7f0b7b224118bcae7783caedb563fd8c5309aaf7a8"
+    },
+    "environment/data/pending/melt_hall/movements.csv": {
+     "bytes": 14066367,
+     "sha256": "9062bc10190cd3f24e8ebfc7b09653c935ba9c57efcd7d122ab0004efeb1fba2"
+    },
+    "environment/data/pending/melt_hall/sheaves.csv": {
+     "bytes": 739,
+     "sha256": "17fe2e35bf7a84784cbd03833af4f544d1add0a6c1cded95beab44e265aa9320"
+    },
+    "environment/data/pending/melt_hall/surveys.csv": {
+     "bytes": 347304,
+     "sha256": "9b4c99d6ee950854e6474275a100217bbdc99880882b9f80796242ffd30cba27"
+    },
+    "authoring/provenance/pending_results/melt_hall.csv": {
+     "bytes": 13033,
+     "sha256": "0b750bea8fc1cd91a18f7d0a68a0b5f07e9b4b2ac004bd31c720d75364746470"
+    }
+   }
+  },
+  {
+   "works": "roll_store",
+   "role": "hidden",
+   "seed": 61,
+   "turned": 1,
+   "dead_end": 1,
+   "both": 0,
+   "eight": 2,
+   "tall": 2,
+   "survey_days": [
+    0.0,
+    16.17,
+    32.02,
+    47.7,
+    63.81,
+    77.75,
+    92.87,
+    105.97,
+    123.04,
+    135.84,
+    148.66,
+    166.23,
+    183.97,
+    201.14,
+    217.43,
+    230.94,
+    248.36,
+    263.69,
+    280.03,
+    292.85
+   ],
+   "movements": 542963,
+   "rows": 1034,
+   "cranes": [
+    {
+     "crane": "RS-1",
+     "falls": 4,
+     "upper_block_height_m": 13.3,
+     "rope_length_m": 74.0,
+     "rope_diameter_mm": 20.0,
+     "construction": "8x36",
+     "stations": 74,
+     "movements": 98168,
+     "greatest_damage": 0.1681,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "RS-2",
+     "falls": 4,
+     "upper_block_height_m": 38.2,
+     "rope_length_m": 174.0,
+     "rope_diameter_mm": 22.0,
+     "construction": "8x36",
+     "stations": 174,
+     "movements": 101844,
+     "greatest_damage": 0.1397,
+     "rope": "dead_end",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": 166.23
+    },
+    {
+     "crane": "RS-3",
+     "falls": 6,
+     "upper_block_height_m": 20.4,
+     "rope_length_m": 150.0,
+     "rope_diameter_mm": 22.0,
+     "construction": "6x36",
+     "stations": 150,
+     "movements": 75634,
+     "greatest_damage": 0.1354,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "RS-4",
+     "falls": 8,
+     "upper_block_height_m": 30.6,
+     "rope_length_m": 272.0,
+     "rope_diameter_mm": 16.0,
+     "construction": "6x36",
+     "stations": 272,
+     "movements": 84706,
+     "greatest_damage": 0.3728,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "RS-5",
+     "falls": 8,
+     "upper_block_height_m": 25.6,
+     "rope_length_m": 236.0,
+     "rope_diameter_mm": 20.0,
+     "construction": "8x36",
+     "stations": 236,
+     "movements": 81656,
+     "greatest_damage": 0.1452,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "RS-6",
+     "falls": 4,
+     "upper_block_height_m": 26.6,
+     "rope_length_m": 128.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "6x36",
+     "stations": 128,
+     "movements": 100955,
+     "greatest_damage": 0.1433,
+     "rope": "turned",
+     "turn_day": 156.09,
+     "surveyed_from_dead_end_since_day": null
+    }
+   ],
+   "files": {
+    "tests/works/roll_store/cranes.csv": {
+     "bytes": 286,
+     "sha256": "a31dad6451fdae868d2f115ffcbed4e8fc0afbdf1ff52d51cdbe3481f70b83f3"
+    },
+    "tests/works/roll_store/movements.csv": {
+     "bytes": 16084329,
+     "sha256": "2609a7c16dc3b60975703b319f4bed9cca7bb11454bcc3bb1ec911dd4eb1ee54"
+    },
+    "tests/works/roll_store/sheaves.csv": {
+     "bytes": 884,
+     "sha256": "2ee608ccfd732665e07ba615c435419da50e1a0c5624e3343da517163e4be688"
+    },
+    "tests/works/roll_store/surveys.csv": {
+     "bytes": 496080,
+     "sha256": "a4e40d6ac58a7e7b5fe1d38cea86d89440c8f297622669f96f0530eab29be604"
+    },
+    "tests/sealed/results/roll_store.csv": {
+     "bytes": 17589,
+     "sha256": "f1eda40a77e7852b8cf536e8f752ec88f67afa97f05481d3bcfcca2ef444c0b1"
+    }
+   }
+  },
+  {
+   "works": "press_line",
+   "role": "hidden",
+   "seed": 62,
+   "turned": 1,
+   "dead_end": 1,
+   "both": 0,
+   "eight": 2,
+   "tall": 1,
+   "survey_days": [
+    0.0,
+    12.81,
+    26.63,
+    40.93,
+    54.25,
+    69.23,
+    85.22,
+    100.17,
+    117.2,
+    133.21,
+    150.34,
+    164.71,
+    180.59,
+    193.43,
+    206.71,
+    222.34,
+    238.28,
+    253.25,
+    266.95,
+    283.33
+   ],
+   "movements": 533813,
+   "rows": 1076,
+   "cranes": [
+    {
+     "crane": "PL-1",
+     "falls": 8,
+     "upper_block_height_m": 24.6,
+     "rope_length_m": 220.0,
+     "rope_diameter_mm": 24.0,
+     "construction": "8x36",
+     "stations": 220,
+     "movements": 85404,
+     "greatest_damage": 0.3025,
+     "rope": "dead_end",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": 180.59
+    },
+    {
+     "crane": "PL-2",
+     "falls": 6,
+     "upper_block_height_m": 23.7,
+     "rope_length_m": 170.0,
+     "rope_diameter_mm": 18.0,
+     "construction": "8x36",
+     "stations": 170,
+     "movements": 79775,
+     "greatest_damage": 0.1085,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "PL-3",
+     "falls": 6,
+     "upper_block_height_m": 14.3,
+     "rope_length_m": 114.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "8x36",
+     "stations": 114,
+     "movements": 89665,
+     "greatest_damage": 0.1358,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "PL-4",
+     "falls": 4,
+     "upper_block_height_m": 15.9,
+     "rope_length_m": 86.0,
+     "rope_diameter_mm": 24.0,
+     "construction": "6x36",
+     "stations": 86,
+     "movements": 94399,
+     "greatest_damage": 0.1204,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "PL-5",
+     "falls": 6,
+     "upper_block_height_m": 25.7,
+     "rope_length_m": 178.0,
+     "rope_diameter_mm": 22.0,
+     "construction": "8x36",
+     "stations": 178,
+     "movements": 99148,
+     "greatest_damage": 0.0855,
+     "rope": "turned",
+     "turn_day": 156.89,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "PL-6",
+     "falls": 8,
+     "upper_block_height_m": 35.8,
+     "rope_length_m": 308.0,
+     "rope_diameter_mm": 16.0,
+     "construction": "8x36",
+     "stations": 308,
+     "movements": 85422,
+     "greatest_damage": 0.1814,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    }
+   ],
+   "files": {
+    "tests/works/press_line/cranes.csv": {
+     "bytes": 288,
+     "sha256": "479f7b6dc6fb364ac57f129d98a4da2342bf3bf3c97b1b9d3c271000241097b5"
+    },
+    "tests/works/press_line/movements.csv": {
+     "bytes": 15766838,
+     "sha256": "c77b02b8bc349f28afa51541aece0428759675a04209f904f47909b3eaeac9b2"
+    },
+    "tests/works/press_line/sheaves.csv": {
+     "bytes": 982,
+     "sha256": "ca413cb9eca73a519198308b29d05b82bf52b0cb576239f7582c989f090fa722"
+    },
+    "tests/works/press_line/surveys.csv": {
+     "bytes": 516504,
+     "sha256": "9543fe2b9dad564021a5a362f7550c1ca1461cdaa8f1fbf9c031601c1b2c67b7"
+    },
+    "tests/sealed/results/press_line.csv": {
+     "bytes": 18303,
+     "sha256": "1a3f1df3c6c456d22ca1b75172b3be74d0263bb96179f233e4dc950d5cb50922"
+    }
+   }
+  },
+  {
+   "works": "coil_yard",
+   "role": "hidden",
+   "seed": 63,
+   "turned": 0,
+   "dead_end": 0,
+   "both": 0,
+   "eight": 1,
+   "tall": 2,
+   "survey_days": [
+    0.0,
+    14.85,
+    32.7,
+    47.97,
+    63.21,
+    76.85,
+    91.5,
+    105.94,
+    120.32,
+    135.65,
+    148.76,
+    165.51,
+    180.2,
+    194.89,
+    212.12,
+    225.56,
+    240.95,
+    255.06,
+    267.89,
+    285.7
+   ],
+   "movements": 549545,
+   "rows": 972,
+   "cranes": [
+    {
+     "crane": "CY-1",
+     "falls": 4,
+     "upper_block_height_m": 18.2,
+     "rope_length_m": 94.0,
+     "rope_diameter_mm": 18.0,
+     "construction": "6x36",
+     "stations": 94,
+     "movements": 101698,
+     "greatest_damage": 0.1462,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "CY-2",
+     "falls": 6,
+     "upper_block_height_m": 17.5,
+     "rope_length_m": 130.0,
+     "rope_diameter_mm": 20.0,
+     "construction": "8x36",
+     "stations": 130,
+     "movements": 88882,
+     "greatest_damage": 0.1351,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "CY-3",
+     "falls": 4,
+     "upper_block_height_m": 22.1,
+     "rope_length_m": 112.0,
+     "rope_diameter_mm": 20.0,
+     "construction": "8x36",
+     "stations": 112,
+     "movements": 88602,
+     "greatest_damage": 0.0866,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "CY-4",
+     "falls": 8,
+     "upper_block_height_m": 39.7,
+     "rope_length_m": 340.0,
+     "rope_diameter_mm": 16.0,
+     "construction": "6x36",
+     "stations": 340,
+     "movements": 102757,
+     "greatest_damage": 0.3432,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "CY-5",
+     "falls": 4,
+     "upper_block_height_m": 24.9,
+     "rope_length_m": 128.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "6x36",
+     "stations": 128,
+     "movements": 79454,
+     "greatest_damage": 0.1342,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "CY-6",
+     "falls": 4,
+     "upper_block_height_m": 34.9,
+     "rope_length_m": 168.0,
+     "rope_diameter_mm": 18.0,
+     "construction": "8x36",
+     "stations": 168,
+     "movements": 88152,
+     "greatest_damage": 0.1598,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    }
+   ],
+   "files": {
+    "tests/works/coil_yard/cranes.csv": {
+     "bytes": 287,
+     "sha256": "e448e0efaa1d3b4411fe2d9f8866267fff27110520cbb69248bcdf1cc77538bc"
+    },
+    "tests/works/coil_yard/movements.csv": {
+     "bytes": 16215488,
+     "sha256": "04a0a3ba889dd8b7b2b7af94afc094c67b2f44fb1c6866ff11bfa310a139b650"
+    },
+    "tests/works/coil_yard/sheaves.csv": {
+     "bytes": 790,
+     "sha256": "6ae6ba10599fe1ab7bf91e1da9783592e7bc21d83e581c8aa1f3bd5f47f5799f"
+    },
+    "tests/works/coil_yard/surveys.csv": {
+     "bytes": 465176,
+     "sha256": "54d32c35a5a5656c29c52e0b55934f7f596348abb8ef5c8fc5d5474ba4985c97"
+    },
+    "tests/sealed/results/coil_yard.csv": {
+     "bytes": 16535,
+     "sha256": "5403ff7d9c8aa7d444735d38f3628854be1adc187b01e4e1e3412ce556ce40a2"
+    }
+   }
+  },
+  {
+   "works": "ladle_aisle",
+   "role": "hidden",
+   "seed": 64,
+   "turned": 1,
+   "dead_end": 2,
+   "both": 0,
+   "eight": 3,
+   "tall": 2,
+   "survey_days": [
+    0.0,
+    15.59,
+    31.9,
+    44.84,
+    62.53,
+    78.14,
+    93.47,
+    110.25,
+    126.52,
+    142.16,
+    157.81,
+    174.6,
+    191.61,
+    204.46,
+    221.79,
+    234.65,
+    249.87,
+    262.85,
+    279.96,
+    293.91
+   ],
+   "movements": 517935,
+   "rows": 1144,
+   "cranes": [
+    {
+     "crane": "LA-1",
+     "falls": 8,
+     "upper_block_height_m": 41.5,
+     "rope_length_m": 362.0,
+     "rope_diameter_mm": 20.0,
+     "construction": "8x36",
+     "stations": 362,
+     "movements": 99642,
+     "greatest_damage": 0.1718,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "LA-2",
+     "falls": 4,
+     "upper_block_height_m": 23.9,
+     "rope_length_m": 114.0,
+     "rope_diameter_mm": 22.0,
+     "construction": "6x36",
+     "stations": 114,
+     "movements": 74471,
+     "greatest_damage": 0.0952,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "LA-3",
+     "falls": 8,
+     "upper_block_height_m": 31.1,
+     "rope_length_m": 270.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "6x36",
+     "stations": 270,
+     "movements": 85082,
+     "greatest_damage": 0.2243,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "LA-4",
+     "falls": 4,
+     "upper_block_height_m": 16.3,
+     "rope_length_m": 88.0,
+     "rope_diameter_mm": 18.0,
+     "construction": "8x36",
+     "stations": 88,
+     "movements": 85648,
+     "greatest_damage": 0.1032,
+     "rope": "dead_end",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": 126.52
+    },
+    {
+     "crane": "LA-5",
+     "falls": 8,
+     "upper_block_height_m": 24.9,
+     "rope_length_m": 224.0,
+     "rope_diameter_mm": 20.0,
+     "construction": "8x36",
+     "stations": 224,
+     "movements": 75731,
+     "greatest_damage": 0.1177,
+     "rope": "turned",
+     "turn_day": 182.78,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "LA-6",
+     "falls": 4,
+     "upper_block_height_m": 15.7,
+     "rope_length_m": 86.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "6x36",
+     "stations": 86,
+     "movements": 97361,
+     "greatest_damage": 0.1403,
+     "rope": "dead_end",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": 157.81
+    }
+   ],
+   "files": {
+    "tests/works/ladle_aisle/cranes.csv": {
+     "bytes": 286,
+     "sha256": "6d8d468177bef1b0a3fbfd1130362d7cf1a6a9862cd923efc2428428f8ec4adf"
+    },
+    "tests/works/ladle_aisle/movements.csv": {
+     "bytes": 15366551,
+     "sha256": "2d8b84479427ee2cb239a99ef05c3f8840fac8cd5f163731c13110b59002f7ec"
+    },
+    "tests/works/ladle_aisle/sheaves.csv": {
+     "bytes": 932,
+     "sha256": "41700720e8ddda4077d0a62419e510bc81da305244a91ce03f5f308434b4d74c"
+    },
+    "tests/works/ladle_aisle/surveys.csv": {
+     "bytes": 550200,
+     "sha256": "29de0e2a33e6d6f830ea9df255f9a3ce7097989af93c0fa38cbd4e05cd14c2eb"
+    },
+    "tests/sealed/results/ladle_aisle.csv": {
+     "bytes": 19459,
+     "sha256": "ffafe91c4be9818dbff31ef5d2ca7a3925676ae50e5b774ff41a7bf11832fffe"
+    }
+   }
+  },
+  {
+   "works": "die_store",
+   "role": "hidden",
+   "seed": 65,
+   "turned": 0,
+   "dead_end": 1,
+   "both": 1,
+   "eight": 1,
+   "tall": 1,
+   "survey_days": [
+    0.0,
+    13.45,
+    26.21,
+    40.54,
+    53.38,
+    70.99,
+    86.27,
+    100.92,
+    118.07,
+    134.04,
+    149.26,
+    166.68,
+    181.27,
+    196.86,
+    214.75,
+    228.3,
+    243.79,
+    258.83,
+    273.81,
+    290.51
+   ],
+   "movements": 524786,
+   "rows": 808,
+   "cranes": [
+    {
+     "crane": "DS-1",
+     "falls": 6,
+     "upper_block_height_m": 17.3,
+     "rope_length_m": 128.0,
+     "rope_diameter_mm": 16.0,
+     "construction": "8x36",
+     "stations": 128,
+     "movements": 90396,
+     "greatest_damage": 0.0881,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "DS-2",
+     "falls": 4,
+     "upper_block_height_m": 18.1,
+     "rope_length_m": 90.0,
+     "rope_diameter_mm": 22.0,
+     "construction": "6x36",
+     "stations": 90,
+     "movements": 95667,
+     "greatest_damage": 0.1417,
+     "rope": "dead_end",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": 134.04
+    },
+    {
+     "crane": "DS-3",
+     "falls": 8,
+     "upper_block_height_m": 17.0,
+     "rope_length_m": 162.0,
+     "rope_diameter_mm": 20.0,
+     "construction": "6x36",
+     "stations": 162,
+     "movements": 87637,
+     "greatest_damage": 0.1393,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "DS-4",
+     "falls": 6,
+     "upper_block_height_m": 21.1,
+     "rope_length_m": 156.0,
+     "rope_diameter_mm": 18.0,
+     "construction": "6x36",
+     "stations": 156,
+     "movements": 76828,
+     "greatest_damage": 0.1236,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "DS-5",
+     "falls": 6,
+     "upper_block_height_m": 15.3,
+     "rope_length_m": 116.0,
+     "rope_diameter_mm": 24.0,
+     "construction": "6x36",
+     "stations": 116,
+     "movements": 85423,
+     "greatest_damage": 0.0915,
+     "rope": "both",
+     "turn_day": 191.37,
+     "surveyed_from_dead_end_since_day": 100.92
+    },
+    {
+     "crane": "DS-6",
+     "falls": 4,
+     "upper_block_height_m": 32.8,
+     "rope_length_m": 156.0,
+     "rope_diameter_mm": 16.0,
+     "construction": "8x36",
+     "stations": 156,
+     "movements": 88835,
+     "greatest_damage": 0.0951,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    }
+   ],
+   "files": {
+    "tests/works/die_store/cranes.csv": {
+     "bytes": 286,
+     "sha256": "925d33d7e32a1cbd8446273df669b0da5f8773437c679cf8f98b001c36a73b16"
+    },
+    "tests/works/die_store/movements.csv": {
+     "bytes": 15402407,
+     "sha256": "78807c4a3b130f41a8efc62ad7420a401db9b37978e0968d4c1f3686717f7c7c"
+    },
+    "tests/works/die_store/sheaves.csv": {
+     "bytes": 884,
+     "sha256": "439c728ecf9d2b8e05dbfee2ae1736192b2643903af0feae0f448d08887d7346"
+    },
+    "tests/works/die_store/surveys.csv": {
+     "bytes": 384568,
+     "sha256": "b60203974cf544e00e642e532473f6efb3d08de4b7d433fa7a689637225cc15e"
+    },
+    "tests/sealed/results/die_store.csv": {
+     "bytes": 13747,
+     "sha256": "79608ec5e6e5d1d63c2d6c2e3c053c048ebe1ca3525b2d1c0cbcc9d38522aff0"
+    }
+   }
+  },
+  {
+   "works": "scrap_bay",
+   "role": "hidden",
+   "seed": 66,
+   "turned": 2,
+   "dead_end": 1,
+   "both": 0,
+   "eight": 2,
+   "tall": 3,
+   "survey_days": [
+    0.0,
+    16.82,
+    32.27,
+    45.69,
+    62.19,
+    76.09,
+    90.52,
+    103.97,
+    117.99,
+    133.13,
+    147.2,
+    161.18,
+    177.21,
+    192.82,
+    206.01,
+    222.16,
+    239.74,
+    255.91,
+    272.5,
+    286.39
+   ],
+   "movements": 534359,
+   "rows": 1258,
+   "cranes": [
+    {
+     "crane": "SB-1",
+     "falls": 8,
+     "upper_block_height_m": 18.8,
+     "rope_length_m": 182.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "6x36",
+     "stations": 182,
+     "movements": 76219,
+     "greatest_damage": 0.1425,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "SB-2",
+     "falls": 8,
+     "upper_block_height_m": 40.7,
+     "rope_length_m": 348.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "8x36",
+     "stations": 348,
+     "movements": 95983,
+     "greatest_damage": 0.4922,
+     "rope": "dead_end",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": 117.99
+    },
+    {
+     "crane": "SB-3",
+     "falls": 6,
+     "upper_block_height_m": 33.2,
+     "rope_length_m": 222.0,
+     "rope_diameter_mm": 26.0,
+     "construction": "8x36",
+     "stations": 222,
+     "movements": 81368,
+     "greatest_damage": 0.1445,
+     "rope": "turned",
+     "turn_day": 152.08,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "SB-4",
+     "falls": 4,
+     "upper_block_height_m": 13.6,
+     "rope_length_m": 80.0,
+     "rope_diameter_mm": 16.0,
+     "construction": "6x36",
+     "stations": 80,
+     "movements": 98093,
+     "greatest_damage": 0.083,
+     "rope": "turned",
+     "turn_day": 154.26,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "SB-5",
+     "falls": 6,
+     "upper_block_height_m": 21.4,
+     "rope_length_m": 152.0,
+     "rope_diameter_mm": 18.0,
+     "construction": "8x36",
+     "stations": 152,
+     "movements": 93888,
+     "greatest_damage": 0.1729,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    },
+    {
+     "crane": "SB-6",
+     "falls": 6,
+     "upper_block_height_m": 41.4,
+     "rope_length_m": 274.0,
+     "rope_diameter_mm": 24.0,
+     "construction": "8x36",
+     "stations": 274,
+     "movements": 88808,
+     "greatest_damage": 0.1802,
+     "rope": "sound",
+     "turn_day": null,
+     "surveyed_from_dead_end_since_day": null
+    }
+   ],
+   "files": {
+    "tests/works/scrap_bay/cranes.csv": {
+     "bytes": 286,
+     "sha256": "d3adcbd1694c4df0acf8a862dfce1426268e903c159af3cf34367e9fcee09e43"
+    },
+    "tests/works/scrap_bay/movements.csv": {
+     "bytes": 15804638,
+     "sha256": "c236943fa6ffe0f311d63bd53bf6bdbcefa7f2271a2dc5c8f74d08b24260b793"
+    },
+    "tests/works/scrap_bay/sheaves.csv": {
+     "bytes": 982,
+     "sha256": "b87e51c32c16d246a88681e2d81f671f28f3fd491bf759d361370342d97d773b"
+    },
+    "tests/works/scrap_bay/surveys.csv": {
+     "bytes": 606168,
+     "sha256": "534b356c20d011ef3a66bd1ba961eee259c4eef24d5a6f94e5550253772affb7"
+    },
+    "tests/sealed/results/scrap_bay.csv": {
+     "bytes": 21397,
+     "sha256": "120c8c19416663f94ebc5a137e78bd1e543acd132617393faa7546d5bdd46b40"
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+- 9 works: 2 that go out with their results, 1 that goes out without, 6 the program is run on; no name twice
+- forge_bay carries expected.csv
+- plate_shop carries expected.csv
+- melt_hall carries its four record files and no results
+- no file of a works the program is run on is a file of a visible works (0 shared of 24)
+- a works the program is run on has 6 cranes, 517935 to 549545 movements and ropes of up to 362 m; the statement's most is 6 cranes, 600000 movements, 400 m
+- a visible works has 5 cranes and 428041 to 476373 movements
+- in the two examples no rope was turned and every survey was counted from the drum anchorage
+- the pending works has one rope of each kind: MH-1 turned on day 138.08; MH-5 surveyed from the dead end from day 175.30 on
+- the six works: 5 ropes turned (RS-6, PL-5, LA-5, SB-3, SB-4), 6 surveyed from the dead end (RS-2, PL-1, LA-4, LA-6, DS-2, SB-2), 1 both, first surveyed from the dead end and later turned (DS-5), 24 sound
+- one of the six works is sound throughout: coil_yard
+- ropes turned, surveyed from the dead end, both, by works: roll_store 1, 1, 0; press_line 1, 1, 0; coil_yard 0, 0, 0; ladle_aisle 1, 2, 0; die_store 0, 1, 1; scrap_bay 2, 1, 0; the pending works has 1, 1, 0
+- every turned rope, visible or not: read as if it had never been turned, at least 66 of its stations are more than a band out
+- every rope surveyed from the dead end: read as a rope turned in the gap before that survey, at least 62 of its stations are more than a band out
+- the mean of the two readings is no way out: at least 44 stations of every such rope are still more than a band out
+- the day of a turn does not decide: with the turn put at the first or at the last moment of its gap, no station of any turned rope is more than 0.70 of a band out
+- a mirrored survey is plain: across it some station's diameter rises by at least 0.32 mm, against 0.05 mm at most between any two other surveys (the gauge repeats to about 0.02 mm)
+- laid end for end on the survey before, a mirrored survey leaves at most 0.05 of the squared difference it leaves as written; any other survey from the third on leaves at least 2.33 times as much
+- visible: upper block at 12.9 to 26.7 m, ropes of 82 to 224 m with 82 to 224 stations, 4 to 8 falls, greatest damage of a rope 0.086 to 0.212
+- the six works: upper block at 13.3 to 41.5 m, ropes of 74 to 362 m with 74 to 362 stations, 4 to 8 falls, greatest damage of a rope 0.083 to 0.492
+- 11 cranes of the six works have the upper block above every visible crane's, and 8 have a longer rope than any visible one
+- two surveys of a rope are 12.8 to 17.9 days apart
+- no rope was turned within 3.5 days of a survey
+
+23 rules, 23 hold
