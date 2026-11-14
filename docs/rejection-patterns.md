@@ -558,3 +558,8 @@ task's words outside the data. The README-duplication and schema advisories are 
   two sentences of the README reworded; nothing the agent sees, no code and no study changed.
 - 20261113d refused at once with the same words. Rewording does not move this gate (third time, after
   lube-oil-survey twice). What changed between b (passed) and c (refused) is not in our bundle: the pool did.
+- Alex's copy of impeller-shrink-fits (20261109b, md5 987242a3...) is the repo's 20261109c but for two evidence
+  files. Whole-bundle 5-gram Jaccard against ventilation 20261113d: 0.009, the floor every unrelated task in
+  `tasks/` sits at (0.003 to 0.009), where lube-oil-survey and quench-oil-survey, never named, are at 0.074 and
+  0.075. Text cannot be what the gate reads. A file Alex had saved as `upload_1.zip` was ventilation 20261113b,
+  which fits b having been uploaded into impeller-shrink-fits's entry; not confirmed when written.
