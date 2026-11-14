@@ -107,3 +107,6 @@ back word for word the first one, figures the bundle no longer held included, so
 review of b. The limit was brought to 30 s, inside the ask's "about 2-3x" of the reference (2.9 times), with
 every study rerun: the reference 8.3 to 10.5 s, fast_airflow.py 5.9 to 8.1 s, naive_airflow.py stopped at
 30 s on the first of the six.
+
+**Held (Nov 13, 22:19).** The similarity gate named impeller-shrink-fits for 20261113c. Held unchanged on
+Alex's call; resubmit c only if impeller-shrink-fits fails or is rejected.

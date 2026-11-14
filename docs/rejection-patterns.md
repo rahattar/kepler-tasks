@@ -544,4 +544,5 @@ low everywhere (difflib 0.05 to 0.42, 5-gram Jaccard at most 0.04; test.sh 0.42,
 the two share is the archetype, not the subject: a program or answer that decides which measurements to buy
 from a lab under a fixed booking, with records (inspection report, work log) that do not say everything.
 impeller-shrink-fits failed the difficulty gate on Nov 9 (8 of 8 solved), so either its status changed today
-or the gate is not deterministic. Held for Alex: is impeller-shrink-fits live again?
+or the gate is not deterministic. Alex: hold. ventilation-district-airflow-20261113c is kept unchanged
+and is resubmitted only if impeller-shrink-fits fails or is rejected.
