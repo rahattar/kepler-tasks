@@ -471,3 +471,11 @@ known when written whether that clears the gate.
 ## Structure rejection, Nov 13 (lube-oil-survey 20261113): subfield too long
 "filing-subfield-too-long: [metadata] subfield is 154 characters, max 120." The rename had lengthened it.
 preflight and `tools/shipcheck.py` now check the length.
+
+## Similarity block held after a rename, Nov 13 (lube-oil-survey against journal-bearing-duty)
+Renaming the task and re-leading its description, tags, subfield and instruction did not clear the gate. It
+reads what the program computes, not how the task is described. `lube-oil-survey` is held: resubmit it only if
+`journal-bearing-duty` fails. The mechanism was rebuilt on another physics as `quench-oil-survey`
+(`cores/quench-oil-v0/RESULT.md`).
+- **Rule.** One subject per account at a time. When the gate names one of our own tasks, change the physics or
+  hold; do not spend a submission on wording.

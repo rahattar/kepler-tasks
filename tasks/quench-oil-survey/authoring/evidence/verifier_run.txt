@@ -1,0 +1,21 @@
+bash tests/test.sh, the program under test at /app/output/quench.py; the ctrf report written by ctrf_standin.py, the plugin not being installed here
+
+the reference, solution/quench.py                              reward 1 in  91 s
+      canal_works   18.0 s     0 of 2250 loads out of band  largest error 0.17 of its band  order: QT-151 QT-159 QT-164 QT-173 QT-177 QT-191
+      quay_site     18.4 s     0 of 2400 loads out of band  largest error 0.17 of its band  order: QT-124 QT-135 QT-142 QT-144 QT-151 QT-172 QT-177
+      ridge_plant   11.8 s     0 of 1800 loads out of band  largest error 0.13 of its band  order: QT-135 QT-142 QT-146 QT-150 QT-162 QT-165
+      south_yard    15.5 s     0 of 1800 loads out of band  largest error 0.17 of its band  order: QT-173 QT-178 QT-191 QT-207 QT-212
+      tank_farm     12.2 s     0 of 1800 loads out of band  largest error 0.14 of its band  order: QT-172 QT-181 QT-188 QT-189 QT-201 QT-202 QT-206
+      upper_mill    13.8 s     0 of 2100 loads out of band  largest error 0.14 of its band  order: QT-174 QT-178 QT-181 QT-190 QT-199 QT-211 QT-212
+one sample for each listed system (variants.py, register)      reward 0 in  91 s
+      canal_works   19.2 s   251 of 2250 loads out of band  largest error 37.27 of its band  order: QT-151 QT-164 QT-173 QT-177 QT-191
+      quay_site     18.5 s   254 of 2400 loads out of band  largest error 37.07 of its band  order: QT-124 QT-135 QT-144 QT-151 QT-172 QT-177
+      ridge_plant   11.8 s   270 of 1800 loads out of band  largest error 18.41 of its band  order: QT-135 QT-142 QT-146 QT-162 QT-165
+      south_yard    14.7 s     0 of 1800 loads out of band  largest error 0.17 of its band  order: QT-173 QT-178 QT-191 QT-207 QT-212
+      tank_farm     12.0 s   252 of 1800 loads out of band  largest error 20.55 of its band  order: QT-172 QT-181 QT-189 QT-201 QT-202 QT-206
+      upper_mill    13.7 s   245 of 2100 loads out of band  largest error 28.33 of its band  order: QT-174 QT-178 QT-181 QT-190 QT-211 QT-212
+the unoptimised second solution, naive_quench.py               reward 0 in  50 s
+      canal_works  over the limit
+      stopped: the run on canal_works was still going after 50 s
+
+3 programs, 0 unexpected

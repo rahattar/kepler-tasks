@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+"""labsample PACKAGE_DIR TANK [TANK ...]
+
+Places a site's one laboratory order where a program is checked. The command line, what is printed and the
+exit status are those of the wrapper the program was written against. Here the laboratory is the checker: this
+wrapper reads the site's name from the package's site.json and passes the order to the checker's desk, which
+holds the books and gives the laboratory's reply.
+"""
+import json
+import os
+import socket
+import sys
+
+DESK = "/run/oil-lab/desk"
+USAGE = "usage: labsample PACKAGE_DIR TANK [TANK ...]"
+
+
+def main(argv):
+    if len(argv) < 2:
+        print(USAGE)
+        return 2
+    try:
+        with open(os.path.join(argv[0], "site.json")) as handle:
+            site = str(json.load(handle)["site"])
+    except (OSError, ValueError, KeyError, TypeError):
+        print("%s is not a site package: no site.json naming the site" % argv[0])
+        return 2
+    try:
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as line:
+            line.settimeout(20.0)
+            line.connect(DESK)
+            line.sendall(json.dumps([site] + argv[1:]).encode() + b"\n")
+            line.shutdown(socket.SHUT_WR)
+            reply = b""
+            while True:
+                part = line.recv(65536)
+                if not part:
+                    break
+                reply += part
+        status, text = json.loads(reply.decode())
+    except (OSError, ValueError):
+        print("the laboratory is not available")
+        return 1
+    print(text)
+    return int(status)
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

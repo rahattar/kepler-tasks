@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+"""labsample PACKAGE_DIR TANK [TANK ...]
+
+Places a site's one laboratory order. This wrapper runs as whoever calls it: it reads the site's name from the
+package's site.json and hands the order to the laboratory, which runs as its own user and prints the analyses.
+"""
+import json
+import os
+import sys
+
+USAGE = "usage: labsample PACKAGE_DIR TANK [TANK ...]"
+
+
+def main(argv):
+    if len(argv) < 2:
+        print(USAGE)
+        return 2
+    try:
+        with open(os.path.join(argv[0], "site.json")) as handle:
+            site = str(json.load(handle)["site"])
+    except (OSError, ValueError, KeyError, TypeError):
+        print("%s is not a site package: no site.json naming the site" % argv[0])
+        return 2
+    os.execv("/usr/bin/sudo", ["sudo", "-n", "-u", "lab", "/opt/lab/lab.py", site] + argv[1:])
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

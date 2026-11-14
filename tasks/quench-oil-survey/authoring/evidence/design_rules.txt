@@ -1,0 +1,33 @@
+holds   9 sites: 2 with results beside them, 1 without, 6 the program is run on; no name twice
+holds   no file of a package the program is run on is a file of a package it was written beside (0 shared)
+holds   loads in a package: 1500 to 1950 beside the program, 1800 to 2400 where it is run; the stated most is 3 000
+
+site          role     systems renewed in the register   charges renewed   allowance   central system that is two charges
+north_works   example                    3                               3           3   none
+east_works    example                    5                               5           5   none
+west_quarry   pending                    4                               5           5   QS-2 (Type M): QT-118 QT-119 and QT-124
+quay_site     hidden                     6                               7           7   QS-2 (Type S): QT-135 QT-138 and QT-142
+ridge_plant   hidden                     5                               6           6   QS-3 (Type M): QT-146 QT-147 and QT-150
+canal_works   hidden                     5                               6           6   QS-1 (Type M): QT-151 QT-156 and QT-159
+upper_mill    hidden                     6                               7           7   QS-4 (Type F): QT-190 QT-195 and QT-199
+south_yard    hidden                     5                               5           5   none
+tank_farm     hidden                     6                               7           7   QS-2 (Type F): QT-181 QT-184 and QT-188
+
+holds   at every site the allowance is the number of charges that were renewed
+holds   at the two example sites every listed system is one charge, and the allowance is the register's count
+holds   5 of the 6 sites the program is run on have one central system that is two charges, both renewed, and an allowance one above the register's count; the sixth (south_yard) has none
+holds   the pending site, which the program's author can read, has such a system too: QS-2, allowance 5 against 4 systems renewed in the register
+holds   the system that is two charges is not one place: west_quarry QS-2 of Type M; quay_site QS-2 of Type S; ridge_plant QS-3 of Type M; canal_works QS-1 of Type M; upper_mill QS-4 of Type F; tank_farm QS-2 of Type F
+holds   two samples of one charge in one sample round differ by at most 0.33 per cent in maximum cooling rate (the laboratory repeats within 0.5; the figures are given to 0.1 K/s)
+holds   a charge's analysis moves by at most 0.68 per cent from one sample round to the next
+holds   in a system that is two charges, the two differ by 10.1 to 12.0 per cent in every one of the four sample rounds (24 rounds over 6 systems)
+holds   the smallest of those differences is 31 times the largest difference between two samples of one charge
+holds   the two new charges of such a system differ by 8.5 to 20.8 per cent in maximum cooling rate
+holds   taken as one system, its oil on file is the mean of two oils, 4.8 to 5.6 per cent from either
+holds   the tank on the second charge has 150 loads at a site, 87 to 102 of them after the renewal
+holds   results at the six sites: centre from 800 to 500 C in 12.6 to 148.7 s, centre cooling rate through 700 C 2.6 to 35.2 K/s, largest centre to surface difference 102 to 409 K, surface at 321 to 444 C when the centre reaches 500 C, centre at 150 C after 74 to 1007 s
+holds   the oils' peak heat transfer coefficient is 1624 to 2708 W/m2K
+holds   every load of every package is within the scope of HT-5 section 1: bars of 20 to 100 mm, furnace at 830 to 880 C, bath at 50 to 80 C
+holds   the laboratory's book for every site answers for every tank of the site and holds the package's allowance
+
+19 rules, 0 not holding

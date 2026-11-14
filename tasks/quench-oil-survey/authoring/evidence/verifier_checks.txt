@@ -1,0 +1,81 @@
+Checks of the verifier, run as root: programs run as nobody.
+
+Tables. south_yard cut down to 45 loads; every table below is its true results, altered as described.
+
+  nothing written                                                                not accepted
+  OUT_CSV made as a directory                                                    not accepted
+  OUT_CSV made as a symbolic link to another file holding the true table         not accepted
+  an empty file                                                                  not accepted
+  the header and no rows                                                         not accepted
+  no header                                                                      not accepted
+  the header with t85_core_s spelt t85core_s                                     not accepted
+  the header in capitals                                                         not accepted
+  the header with a blank after each comma                                       not accepted
+  a seventh column                                                               not accepted
+  the cooling rate column left out                                               not accepted
+  one row of five fields                                                         not accepted
+  one load left out                                                              not accepted
+  one load given twice                                                           not accepted
+  a row for a load the package does not have                                     not accepted
+  the loads in lower case                                                        not accepted
+  one value empty                                                                not accepted
+  one value written n/a                                                          not accepted
+  one value nan                                                                  not accepted
+  one value inf                                                                  not accepted
+  one value with its unit, as 12.5 K/s                                           not accepted
+  one value with a decimal comma                                                 not accepted
+  one value with a digit separator, as 1_0                                       not accepted
+  bytes that are not UTF-8                                                       not accepted
+  a table padded to more than 4194304 bytes                                      not accepted
+  the true table, then exit status 3                                             not accepted
+  core cooling time 1.6 per cent high at every load                              not accepted
+  core cooling rate 1.6 per cent low at every load                               not accepted
+  largest temperature difference 1.6 per cent low at every load                  not accepted
+  surface temperature 3.2 K high at every load                                   not accepted
+  time to 150 C 1.6 per cent high at every load                                  not accepted
+  one load of the site with its core cooling time 2 per cent high, the rest true not accepted
+
+  the true table as it stands                                                    accepted
+  CRLF line ends                                                                 accepted
+  no terminator after the last row                                               accepted
+  an empty line after every row                                                  accepted
+  the rows in reverse order                                                      accepted
+  a blank either side of every field                                             accepted
+  every field in double quotes                                                   accepted
+  a plus sign before every value                                                 accepted
+  every value in exponent form                                                   accepted
+  core cooling time 1.4 per cent high at every load                              accepted
+  core cooling rate 1.4 per cent low at every load                               accepted
+  largest temperature difference 1.4 per cent low at every load                  accepted
+  surface temperature 2.8 K high at every load                                   accepted
+  time to 150 C 1.4 per cent high at every load                                  accepted
+
+The limit, set to 3 s for these runs. Every program first writes the true table.
+
+  then sleeps for 30 s                                                           over the limit; table not opened; not accepted
+  then ignores SIGTERM and spins                                                 over the limit after 3.0 s; not accepted
+  then sleeps for 30 s, with two sites to run                                    1 of 2 sites run; stopped: the run on canal_works was still going after 3 s
+  then leaves a child in a session of its own asleep for 600 s and exits 0       accepted; 0 processes of nobody left
+
+The laboratory, open for south_yard as it is during that site's run; orders placed as nobody through tests/lab/labsample.
+
+  an order of one tank more than the allowance of 5                              status 1: the laboratory analyses at most 5 samples for this package
+  an order naming a tank the site does not have                                  status 1: no tank QT-999 on this site
+  an order through a package that names another site                             status 1: the laboratory holds nothing for a site of that name
+  after those three, an order of two tanks                                       status 0: sampled_at,cr_max_K_s,t_crmax_C,cr_300_K_s and 2 rows
+  a second order in the same run                                                 status 1: an order was already placed for this package in this run; the laboratory takes one
+  an order when no run is under way                                              status 1: the laboratory is not available
+
+The reward. tests/test.sh run as it stands, with `python -m pytest` replaced by a stand-in.
+
+  pytest exits 0; the report counts one test, passed                             reward 1
+  pytest exits 0; the report counts one test, failed                             reward 0
+  pytest exits 0; the report counts two tests, both passed                       reward 0
+  pytest exits 0; the report counts one test, skipped                            reward 0
+  pytest exits 1; the report counts one test, passed                             reward 0
+  pytest exits 0 and leaves no report                                            reward 0
+  pytest exits 0; the report is not JSON                                         reward 0
+  pytest exits 5, no test collected, no report                                   reward 0
+  no quench.py delivered; pytest, were it run, would exit 0 and report one test, passed reward 0
+
+65 cases, 0 unexpected

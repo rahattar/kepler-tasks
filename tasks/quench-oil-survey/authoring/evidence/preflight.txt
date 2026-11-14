@@ -1,0 +1,76 @@
+ok    the bundle's root holds README.md, instruction.md, task.toml, authoring, environment, solution, tests and nothing else
+ok    no cache, bytecode or dotfile anywhere
+ok    no all-uppercase file or folder name but README.md and Dockerfile
+ok    every file is ASCII
+ok    no encoded strings or decoders in any program
+ok    the task's name ends with the bundle folder's name, of at most three hyphenated words
+ok    the one artifact is /app/output/quench.py
+ok    [metadata] carries the whole block
+ok    category "Science", a subcategory, domain engineering-sciences, field mechanical-engineering
+ok    subfield is a short phrase, at most 120 characters (it is 98)
+ok    keywords and tags are the same list
+ok    agent: 28800 s as the user agent; verifier: 600 s, separate, no network
+ok    difficulty_explanation is in task.toml and word for word in the README under ## Difficulty
+ok    solution_explanation is in task.toml and word for word in the README under ## Reference solution
+ok    verification_explanation is in task.toml and word for word in the README under ## Verification
+ok    the difficulty text says the data is synthetic and realistic and names a research analogue
+ok    the difficulty text does not call the work routine and gives no solve counts
+ok    the README's notes say what the shift in the data is and where it is built
+ok    the statement ends with a blank line and the closing sentence
+ok    the statement has no heading
+ok    the statement assigns no role and speaks to no one
+ok    the statement has no grading words
+ok    the statement gives the limit in the required sentence, and it is the checker's: 50 s
+ok    the checker enforces that limit with a timeout on the run and treats TimeoutExpired as the end of the assessment
+ok    the statement gives the checker's cap on the size of OUT_CSV: 4194304 bytes
+ok    the statement's header is the checker's
+ok    the statement's bands are the checker's: 1.5 per cent, and 3 K on the surface temperature
+ok    the statement names the command and how the program is run
+ok    every path the statement names is in the image's data
+ok    the statement names both documents and all three packages by absolute path
+ok    no package the program is run on has more than the 3,000 loads the statement gives (most: 2400)
+ok    nothing the program's author can read uses the authoring vocabulary
+ok    the example packages carry results and the pending package none
+ok    the verifier's copy of /app/data is the image's, file for file
+ok    the laboratory is one program: tests/lab/lab.py is environment/rig/lab.py
+ok    the verifier's labsample looks for the laboratory where the checker opens it
+ok    both labsample wrappers print the same usage and the same words for a package without site.json
+ok    six sites to run on, three beside the program, no name in both
+ok    each of the six is the six files of a package and nothing else
+ok    the sealed results have one row for every load of each of the six, in the statement's columns
+ok    no site's name, and no results, anywhere in the agent's image but its own three
+ok    the laboratory holds a book for each site, with the package's allowance and an analysis for every tank
+ok    the manifest lists every data file with its SHA-256, and every one matches (71 files)
+ok    regenerate.txt records the generator making every one of those files again, byte for byte
+ok    tests/Dockerfile has the lines intake reads as text
+ok    tests/Dockerfile pins pytest 8.4.1, pytest-json-ctrf 0.3.5, numpy 2.1.3, scipy 1.14.1, pandas 2.2.3
+ok    the agent's image pins the same numpy, scipy and pandas
+ok    threads are held to one in both images and in the run's own environment
+ok    the verifier's image closes /tests and /logs/verifier to every account but root
+ok    the agent's image: users agent and lab, one sudo rule checked by visudo, books only lab can read, and it ends as root
+ok    test.sh writes the reward only as the two literal lines, the 0 first
+ok    test.sh runs the one pytest file with the report and cache flags intake looks for, then read_report.py
+ok    the verifier's test is one test
+ok    solution/solve.sh puts solution/quench.py at /app/output/quench.py
+ok    every study's output is committed
+ok    no study reports anything unexpected
+ok    reference_run.txt: accepted on the six sites and on both example sites
+ok    the limit is between 2 and 3.5 times the reference's slowest run, and that run takes more than a second
+ok    naive_run.txt: the unoptimised solution is right on the cut-down sites and over the limit on the sites as they are
+ok    every band is at least twice the widest departure of the separately written solution
+ok    register_run.txt: each program written to the examples is accepted on them and not on the six sites
+ok    design_rules.txt: every rule holds
+ok    convergence.txt: the sealed definition stands within a tenth of a band of a much finer solution
+ok    verifier_checks.txt and verifier_run.txt end with nothing unexpected
+ok    verifier_run.txt is tests/test.sh itself: reward 1 for the reference, 0 for the other two
+ok    every figure in the README is in a study, the statement, the standard, the generator or the checker
+ok    test.sh sets umask 077, and these live runs are made under it
+ok    live: the true table of a cut-down site is accepted
+ok    live: the same with CRLF line ends and the rows reversed is accepted
+ok    live: the same with a capitalised header is not
+ok    live: the same with one load left out is not
+ok    live: the same with one value nan is not
+ok    live: the same with every core cooling time 1.6 per cent high is not
+ok    live: a program that writes the true table and is still running at the limit is not accepted, and its table is not opened
+ok    live: the reference on the cut-down site is accepted and places one order of the site's allowance
+75 checks, 0 failed: the bundle is clean

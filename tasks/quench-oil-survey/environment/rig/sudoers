@@ -1,0 +1,3 @@
+# The one thing the agent may do as the laboratory: run its program, with none of the agent's environment.
+Defaults!/opt/lab/lab.py env_reset,!env_keep
+agent ALL=(lab) NOPASSWD: /opt/lab/lab.py

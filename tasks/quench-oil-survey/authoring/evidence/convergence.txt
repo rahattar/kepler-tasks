@@ -1,0 +1,7 @@
+32 loads, the sealed definition as sites.py calls it against 200 intervals and steps a quarter as long
+  t85_core_s       largest difference 0.053 per cent
+  cr700_core_K_s   largest difference 0.080 per cent
+  dT_max_K         largest difference 0.022 per cent
+  ts_core500_C     largest difference 0.007 K
+  t150_core_s      largest difference 0.010 per cent
+largest of the four relative differences: 0.080 per cent, which is 0.05 of the 1.5 per cent band
