@@ -554,3 +554,5 @@ LO-*", from the journal bearing bundle the verifier and studies were copied from
 task's words outside the data. The README-duplication and schema advisories are the usual ones and were left.
 - **Rule.** A bundle carried over from another is grepped for the old task's whole vocabulary, identifiers and
   dictionary keys included, not only its prose.
+- Alex's call at 22:37: reword and resubmit rather than hold. 20261113d is c with the task description and
+  two sentences of the README reworded; nothing the agent sees, no code and no study changed.
