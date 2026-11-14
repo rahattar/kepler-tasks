@@ -1112,3 +1112,17 @@ movements a crane, a 4 s limit against a sweep reference of 1.2 to 1.4 s.
   minutes: each applied the criterion as written and placed the turn within its gap. The difficulty was in
   not knowing the second cause, which the review rules out. Held; the subject has no hard part that survives
   being stated (the compute is met by every probe, and the physics is read in one pass).
+
+## Torsional passage v0: a linear recursion is vectorised by lfilter (Nov 13 night)
+
+`cores/torsional-passage-v0`. Genset shaft lines through speed sequences, a coupling that softens as it
+heats, every condition stated; the design rested on direct time integration being too slow (millions of
+steps a set). Low effort: 3 of 3 accepted in about two minutes each, every one by exact discretisation of the
+line, frozen over short pieces, with the recursion run in C by `scipy.signal.lfilter`.
+- **A time limit does not separate methods on linear dynamics.** Any linear system with known forcing steps
+  at C speed through `lfilter` (or a matrix-exponential recursion on decoupled modes). Only a recursion that
+  cannot be written as a linear filter, nonlinear at the fast time scale, keeps a Python loop in the way.
+- **Fully stated designs, today, all went the same way:** engine indicating v6 (2 of 3), v7 (3 of 3), header
+  thermal fatigue v0 (3 of 3), torsional passage v0 (3 of 3). Every core that held low effort at 0 of 3 left
+  its deciding condition unstated, which review rejects. Whether the bar can be met with everything stated is
+  an open question, worth putting to AfterQuery before more cores are built.

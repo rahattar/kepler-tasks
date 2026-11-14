@@ -25,6 +25,20 @@ condition is left unstated. The hard part is computing the stated physics within
 | the steady response at each instant's speed | 6 of 6 | crankshaft 4 to 10 bands |
 | direct time integration, correct | times out | about 210 s a set against 6 |
 
-## Probes
+## Probes (opus = claude-opus-5-5), graded by `check_program.py`, limit 6 s
 
-(pending)
+| probe | time | hidden | method |
+|---|---|---|---|
+| low 1 | 2 min | accepted, widest 0.07 of a band | exact discretisation in pieces of 0.1 s, stiffness frozen per piece |
+| low 2 | 2 min | accepted, widest 0.07 | exact discretisation, decoupled modes, the recursion run by `scipy.signal.lfilter` |
+| low 3 | 2 min | accepted, widest 0.03 | 0.1 ms steps, temperature every 0.25 s, the same vectorised recursion |
+
+Low 3 of 3, faster and more accurate than the reference. xhigh not run.
+
+## What it shows
+
+The premise was that step-by-step integration cannot be vectorised, so a correct direct method would time
+out. For a linear system it can: with the coefficients frozen over a piece, the exact discrete recursion of
+each mode is a first-order linear filter, and `scipy.signal.lfilter` runs it in C at millions of steps a
+second. All three probes found that at once. A time limit cannot separate methods for linear (or piecewise
+linear) dynamics with known forcing.
