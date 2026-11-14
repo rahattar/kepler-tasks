@@ -115,3 +115,5 @@ Alex's call; resubmit c only if impeller-shrink-fits fails or is rejected.
 by mistake, which is also why c and d were refused as too similar to impeller-shrink-fits: they were being
 compared with b. `tasks/ventilation-district-airflow/` is back at b (commit 8aaac75), file for file the zip
 the platform holds; c (limit 30 s) and d (reworded) stay in the history and are not to be submitted.
+
+Official difficulty run: 3 of 8 solved (model openai/kimi-k3.1-pro); breakdown in `docs/difficulty-calibration.md`.

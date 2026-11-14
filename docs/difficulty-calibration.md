@@ -1156,3 +1156,37 @@ rejection), the pressure-drop band widened from 1.5 to 2.5 per cent, and a 40 s 
 - **The machine is the clock.** With two generators and three probes on two CPUs a 14.5 s CPU run took 41.7 s
   on the clock, over a 40 s limit held on both. Run the timed studies one at a time against at most the
   regeneration.
+
+## ventilation-district-airflow 20261113b: approved, official 3 of 8 (Nov 13)
+
+The official difficulty run (model `openai/kimi-k3.1-pro`, 8 runs, 28800 s each) solved 3 of 8. Local
+prediction on `model: "opus"` was xhigh 1 of 3, low 0 of 3. Every check of the trial review passed on all
+eight (specification, discoverability, verifier, boundary, no exploit, meaningful difficulty).
+
+| run | time | result | what it did |
+|---|---|---|---|
+| DAYuKjH | 46 min | solved, worst 0.141 of the band | node balances at the stoppings, fan reading, the turn found |
+| M7g6bZc | 71 min | solved, 0.141 | the same, with a 1,236-line solver and synthetic regression tests |
+| PiHCffY | 69 min | solved, 0.141 | the same, the turn found by sensitivity and close-call replay |
+| Csv8yE5 | 69 min | 3 of 6 out | fan reading and the turn, stoppings as booked |
+| EAVnXHv | 33 min | 3 of 6 out | the same; called the spare allowance "plain slack" |
+| MFG9Lcy | 32 min | 4 of 6 out | spare places on repeat airway surveys; no fan, no stopping |
+| MWJ2S7t | 29 min | 5 of 6 out | the airways worked on only, the `worked_on` variant to the point |
+| vsUzwWi | 43 min | 5 of 6 out | the same |
+
+- **Three failure modes, not one.** The five failures split by which condition they missed: the stopping
+  alone (2), both (3, one of them spending the spare places on repeat airway surveys). The two conditions
+  being independent is what made the failures diverse; the review's "meaningful difficulty" passed on each.
+- **The passes were long and thorough; the failures stopped early.** Passes took 46 to 71 minutes, the four
+  pure failures 29 to 43. Every run stopped voluntarily with more than seven hours left.
+- **Both conditions were stated as public evidence, not as words.** The review accepted that: "the two
+  hidden-data mechanisms are not stated outright, but they are identifiable from public evidence rather than
+  author-only conventions" (a residual of 9.8 to 10.1 m3/s against a 0.3 per cent reading, and an allowance two
+  above the work log). What it would not accept, in 20261113, was a rule that decided the truth unstated (the
+  fans' opening state and state selection).
+- **The time limit decided nothing.** Official runs took 0.8 to 6.3 s against 35. The fast second solution was
+  what the reviewer needed, not a limit that binds.
+- **Development orders on the examples were allowed.** Five runs dumped crew readings for every branch of the
+  two examples by repeated shell orders; the review judged it permitted because `lab.py` says each shell order
+  is a run of its own and the examples have neither condition.
+- **Local opus xhigh 1 of 3 came true as 3 of 8** on another model.
