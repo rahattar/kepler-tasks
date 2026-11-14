@@ -1038,3 +1038,18 @@ outer-surface thermocouple shows it. Low effort: 3 of 3 accepted in 4 to 10 minu
 - **A one-parameter estimate with a clean signature is no barrier once the residual is seen**: one lag fitted
   all 24 events to the noise, and every probe ruled out the alternatives (thickness, diffusivity, a delay).
 - The time limit separated nothing again: modal or closed-form solutions are the first thing low effort writes.
+
+## Engine indicating v7: six stated layers, low 3 of 3 (Nov 13 night)
+
+IS-2 issue 5 states six layers: converter-range spikes, a shared encoder index, a gain and a thermal-shock
+coefficient per transducer (fitted together on a compression and an expansion stretch), misfires left out,
+and the peak taken on a stated filter for knock. Each layer, left out, decides one to five hidden cells.
+Low effort: 3 of 3 accepted in 10 to 21 minutes, every layer implemented as written. `cores/engine-indicating-v7/`.
+- **Stated layers are not slips for this model.** "Official xhigh fails on rare coverage slips spread over
+  many layers" (top of this file) was measured on older models and on layers that were partly data-only.
+  When every layer is a written rule, low-effort Opus 5.5 implements all of them.
+- **Stated ranges let the solver make its own answered cases.** All three built synthetic packages from the
+  examples with known index, gains and shock, and tested their fits on them. A range in the standard is a
+  test generator.
+- **For a design to meet the bar with everything stated,** low effort must fail at something it was told
+  exactly how to do. None of v6 or v7 found that; this subject is closed.

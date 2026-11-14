@@ -20,6 +20,23 @@ cell.
 
 `build.py` makes cells (`python3 build.py OUT CYCLES CELL...`); `grade.py` grades a program on a tree.
 
-## Probes
+## Probes (opus = claude-opus-5-5), graded with the bundle's checker on the core data
 
-(pending)
+| probe | time | hidden | what it did |
+|---|---|---|---|
+| low 1 | 21 min | accepted, widest 0.39 of a band | every layer; fit from three starting indices; filter in the frequency domain; numpy only |
+| low 2 | 17 min | accepted, widest 0.61 | every layer; its own least-squares solver; filter as one matrix product; numpy only |
+| low 3 | 10 min | accepted, widest 0.43 | every layer; refits when the misfire set changes; filter by FFT; numpy only |
+
+Low 3 of 3. xhigh not run.
+
+All three implemented the six layers as written, recovered the pending packages' index, gains and shock
+coefficients to the values the generator used, and checked themselves on synthetic packages built from the
+examples with known conditions. All three were faster than the reference (0.4 to 0.7 s a cell), having
+dropped scipy to save its import time.
+
+## What it shows
+
+More stated layers did not slow low effort down enough to matter: six layers took 10 to 21 minutes against
+v6's one fit in 7 to 11. With the whole standard written down, each layer is a paragraph to implement, and
+the stated ranges let a solver build its own test packages, which all three did.
