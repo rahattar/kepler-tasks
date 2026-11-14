@@ -37,3 +37,7 @@ No xhigh run on the bundle; v3's 1 of 3 and v4's 3 of 6 stand for it.
   `run_evidence.sh` regenerates every study in order (about 25 minutes, the seed screen 14 of them).
 - The instruction draft was reworded after the probes to bring it away from journal-bearing-survey's, now
   lube-oil-survey (difflib ratio 0.70 to 0.43). Same facts, plus the cap; not re-probed.
+- **Shipped instruction** is Alex's rewrite of the draft (Nov 13 evening): preflight clean, shipcheck clean,
+  reward 1 for the reference through `bash tests/test.sh` from the unzipped bundle. It says "up to 6 cylinders
+  and 20,000 cycles" without "counting every cylinder"; the largest hidden package has 18,000 in all, so either
+  reading covers it. Not probed in this wording.
