@@ -1107,3 +1107,8 @@ movements a crane, a 4 s limit against a sweep reference of 1.2 to 1.4 s.
 - **Make the reference the fast method and keep brute force as evidence.** With the brute-force reference the
   limit was 25 times the fast second solution and the plain loops only 2 times over; with a sweep reference
   the limit is 2.9 times the reference, brute force 1.7 to 4.0 times over, plain loops 21 times.
+- **Stated, it is solved at low effort.** After the design gate reached main, RS-4 got a section 6 naming both
+  conditions and the criterion that tells them apart (where the rope goes on thinning). Low 3 of 3 in 4 to 8
+  minutes: each applied the criterion as written and placed the turn within its gap. The difficulty was in
+  not knowing the second cause, which the review rules out. Held; the subject has no hard part that survives
+  being stated (the compute is met by every probe, and the physics is read in one pass).

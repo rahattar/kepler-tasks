@@ -31,7 +31,6 @@ TASK = "rope-bending-damage"
 PROGRAM = "ropes.py"
 CLOSING = "You have 28800 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task."
 GRADING_WORDS = r"\b(grader|graders|grading|graded|verifier|verify|verified|reward|score|scored|scoring|pass|passes|passed|passing|fail|fails|failed|failing|tested|test case|test cases|partial credit)\b"
-TELLS = r"end for end|\bturn(ed|s)?\b|revers|mirror|flip|swap|\bwrong\b|\berror|mislabel|\bdisagree|\bcheck\b|other end"
 results = []
 
 
@@ -125,8 +124,10 @@ for phrase in ("python3 %s WORKS_DIR OUT_CSV" % PROGRAM, "exit status has to be 
                "cannot be written to", "numpy, scipy and pandas"):
     rule(phrase in ins, "it says \"%s\", as the bench runs the program" % phrase)
 seen_text = ins + "".join(text_of("environment", "data", "docs", d) for d in sorted(os.listdir(os.path.join(BUNDLE, "environment", "data", "docs"))))
-told = sorted(set(m.group(0).lower() for m in re.finditer(TELLS, seen_text, re.I)))
-rule(not told, "no text the agent reads speaks of turning, mirroring, reversing, errors or checks%s" % ("" if not told else ": " + ", ".join(told)))
+standard = text_of("environment", "data", "docs", "rs4_rope_bending.md")
+stated = ["turned end for end", "taken from the dead end", "the mirror image", "where the\nrope goes on thinning"]
+rule(all(phrase in standard for phrase in stated),
+     "RS-4 states both conditions that decide hidden works, the turn and the survey from the dead end, and the criterion that tells them apart")
 
 print("\ntask.toml and the README\n")
 toml = tomllib.loads(text_of("task.toml"))

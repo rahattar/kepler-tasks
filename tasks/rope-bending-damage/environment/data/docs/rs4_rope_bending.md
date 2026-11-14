@@ -53,3 +53,22 @@ d is the diameter of the element as measured at the last survey not later than t
 The damage of a rope element is the sum, over every bending it has had since the rope was put on, of w / N.
 The result is the damage of the element at each station of the rope's last survey, at the end of the log, the
 stations numbered along the rope from the drum anchorage.
+
+## 6 The rope's history
+
+Two things may have happened to a rope that its package does not record.
+
+- The rope may have been turned end for end on its crane between two surveys, on a day that is not recorded.
+  From that day the element that lies x from the drum anchorage lay L - x from it before, and every bending
+  it had before the turn it had there.
+- A survey may have been taken from the dead end and its stations written down as if from the drum anchorage.
+  The diameter it gives for station x is then that of the element at L - x. The rope has not moved.
+
+Either makes a survey the mirror image along the rope of the one before it. They are told apart by where the
+rope goes on thinning afterwards. Bendings fall where the reeving puts them, whichever way round the rope lies:
+after a turn the loss of diameter from survey to survey goes on following the bendings at the stations as the
+surveys give them, and after a survey from the dead end it follows them at the mirrored stations.
+
+The damage of section 5 is that of the rope's true history. A turn whose day is not recorded may be taken at
+any time between the two surveys: no station's damage changes by more than 6 per cent of the rope's greatest
+damage with it.

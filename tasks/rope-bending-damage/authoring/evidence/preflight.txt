@@ -35,7 +35,7 @@ ok     it says "unprivileged", as the bench runs the program
 ok     it says "no network", as the bench runs the program
 ok     it says "cannot be written to", as the bench runs the program
 ok     it says "numpy, scipy and pandas", as the bench runs the program
-ok     no text the agent reads speaks of turning, mirroring, reversing, errors or checks
+ok     RS-4 states both conditions that decide hidden works, the turn and the survey from the dead end, and the criterion that tells them apart
 
 task.toml and the README
 
@@ -125,6 +125,6 @@ ok     every decimal figure in README.md occurs in a study, a document or the co
 
 a live run
 
-ok     the reference, through the bench under umask 077: coil_yard 1.1 s; die_store 1.1 s; ladle_aisle 1.2 s; press_line 1.2 s; roll_store 1.2 s; scrap_bay 1.3 s
+ok     the reference, through the bench under umask 077: coil_yard 1.1 s; die_store 1.2 s; ladle_aisle 1.2 s; press_line 1.3 s; roll_store 1.2 s; scrap_bay 1.4 s
 
 108 rules, 108 hold

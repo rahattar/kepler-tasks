@@ -34,3 +34,19 @@ transcripts and finished. Programs ran in 0.8 to 1.0 s.
 
 Bundle as it stands: low 0 of 3 (round 1, on documents that gave more away), xhigh 1 of 3. Core v1 on nearly
 the same wording: xhigh 1 of 3. Two of six careful runs over the two.
+
+Round 3, both conditions and their criterion stated in a new RS-4 section 6 (the design gate added to the
+playbook on Nov 13, after the engine-indicating rejection named hoist-rope among the cores that would fail
+"well specified"). Same data, same instruction. round2/rs4_rope_bending.md is the standard without section 6.
+
+| probe | effort | time | six works |
+|---|---|---|---|
+| low1 | low | 4 min | accepted |
+| low2 | low | 8 min | accepted |
+| low3 | low | 5 min | accepted |
+
+Each applied section 6's criterion as written (wear between surveys against the bendings, as given and
+mirrored), placed the turn within its gap, and counted the bendings by running sums in 1.0 to 1.7 s.
+
+Verdict: unstated, low 0 of 3 and xhigh 1 of 3, but a deciding condition kept out of the words, which the
+quality review rejects; stated, low 3 of 3. Neither meets the bar. The bundle is held in its stated form.
