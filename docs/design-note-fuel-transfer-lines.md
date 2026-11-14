@@ -36,6 +36,9 @@ it, curable only by a survey the program orders before it sees any result.
 - The crew answers for the two examples only; the pending package has no results.
 - The examples' allowance equals the covering jobs. A spare place in an example is a visible test.
 - Nothing says a record can be wrong or what a spare place is for.
+- The two conditions stay unstated: they are physical, and public evidence identifies them (the corrected design
+  gate, Nov 13). Stated as TS-2 5.5 and 5.6 (core v3), low effort solved the task 2 of 3. What no evidence
+  settles, the pair's carry-over and its opening, is stated in 4.2 and 4.3 and must stay so.
 
 **What the generator has to hold to** (`authoring/provenance/sites.py`).
 - Every line laminar in every pipe at its survey rating, at the crew's reading today and at every record

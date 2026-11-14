@@ -1200,3 +1200,19 @@ fed back through the modes. Each probe also wrote a brute-force simulator and ch
 - **Compute is not a lever on this model when the physics is stated.** Every structure tried tonight (a
   linear recursion, a nonlinear one, a sequence that cannot be batched) was met inside the limit by the first
   program a low-effort run wrote. Recommended to close the subject; Alex decides.
+
+## Twin oil lines v3: both conditions stated, low 2 of 3 (Nov 14, small hours)
+
+`cores/twin-oil-lines-v3/RESULT.md`. The fuel-transfer-lines bundle with TS-2 5.5 (a bore in service can be
+less than laid; the pair's surveyed division settles it) and 5.6 (a covering can change with no work on it;
+campaigns beyond 5.4's accuracy say so), the method left open. Low effort: 2 of 3 accepted in 10 and 20 minutes,
+the third out on 8 records of one line. Unstated: low 0 of 6, xhigh 2 of 6.
+- **A third physics gives the engine-indicating v6 result.** Stated with its criterion, a data-only condition is
+  met at low effort; the surrounding machinery (a hysteretic pair, a coefficient inversion, a bore solve) does
+  not slow it.
+- **So a physical condition that public evidence identifies stays unstated**, as the corrected design gate has
+  it (ventilation 20261113b approved): what is stated is the rule no evidence settles (here the pair's
+  carry-over, 4.2 and 4.3), never the condition the evidence shows. fuel-transfer-lines ships unstated.
+- **Read the other sessions' notes before acting on a rule, and again before concluding from it.** The gate
+  reached main at 23:04 and was corrected at 23:59; this probe was run, and very nearly a bundle dropped,
+  on the reading in between.
