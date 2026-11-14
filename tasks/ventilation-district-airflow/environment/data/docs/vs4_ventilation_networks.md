@@ -7,7 +7,8 @@ and doors. It covers districts exhausted by main fans standing in parallel at on
 as incompressible at the standard density of 1.2 kg/m3, and natural ventilation pressure is left out.
 
 Every district the standard is applied to keeps each of its fans between shutoff and free delivery of its
-catalogue table at all times, and all its fans run throughout a record.
+catalogue table at all times, and all its fans run throughout a record. In no steady state of a record does a
+fan run between the lowest point of the dip in its characteristic and the peak (section 4).
 
 ## 2 The network
 A district is a set of nodes joined by branches. A branch has a direction, from its `from` node to its `to`
@@ -38,10 +39,23 @@ A fan's characteristic is the catalogue table of its model at its blade setting:
 the airflow through the fan in m3/s, from shutoff to free delivery. Between tabulated points the
 characteristic is the straight line joining them.
 
+The characteristics of the fans in these districts fall from shutoff to a dip, rise to a peak and fall again
+to free delivery. A fan runs on one of the two falling parts: beyond the peak, or short of the lowest point of
+the dip. With more than one fan against one district, the district can have more than one steady state at the
+same settings, its fans on different parts. A steady state here is one the air returns to after a small
+disturbance.
+
 ## 5 Settings
 At any time every regulator and door stands at the setting of its latest entry in the district's log.
 Regulators are wound and doors are swung by hand. A change takes a minute or more, the air follows within
 seconds, and entries are at least 10 minutes apart, so the flow in the district is steady at every moment.
+
+As the record opens, every fan runs beyond its peak. From there the flow follows the log. While a change is
+made, every fan stays on the part of its characteristic it is on, for as long as the district has a steady
+state with it there. Where a change brings a fan to the end of the part it is on, to the peak from beyond it
+or to the lowest point of the dip from short of it, that steady state ends: that fan crosses to the other
+falling part of its characteristic, every other fan stays on its part, and the district settles in the steady
+state so reached.
 
 ## 6 Results
 The result for a survey point is the airflow in its branch at its time, in m3/s, signed in the branch's

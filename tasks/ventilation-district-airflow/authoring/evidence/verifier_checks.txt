@@ -1,7 +1,7 @@
 tests/judge_airflow.py on the small district new_incline (686 points), the programs made here from its sealed result
 
 OUT_CSV that is not the table the task statement describes: all refused
-refused    nothing written  [OUT_CSV was not written as a file ([Errno 2] No such file or directory: '/tmp/district_wqwq4pfz/prog/out.csv')]
+refused    nothing written  [OUT_CSV was not written as a file ([Errno 2] No such file or directory: '/tmp/district_0i4t40l8/prog/out.csv')]
 refused    OUT_CSV is a directory  [OUT_CSV was not written as a file (not a regular file)]
 refused    OUT_CSV is a symbolic link to a file holding the true table  [OUT_CSV was not written as a file (not a regular file)]
 refused    an empty file  [OUT_CSV does not begin with the header point,flow_m3_s]
@@ -47,10 +47,14 @@ accepted   every airflow 0.95 of its band low
 refused    every airflow 1.05 of its band high  [686 points out of band]
 refused    one airflow 2 per cent high, the rest true  [1 points out of band]
 
-the limit, set to 3 s for these cases
-refused    writes the true table, then sleeps  [the run on new_incline was still going after 3 s]
-refused    writes the true table, ignores SIGTERM and spins  [the run on new_incline was still going after 3 s]
-refused    two districts to run, the first over the limit: the second is never started  [the run on new_incline was still going after 3 s]
+the limit, set to 3 s for these cases: of time, and of CPU time of the program and every process it starts
+refused    writes the true table, then sleeps  [the run on new_incline had used 3 s, of time or of CPU]
+refused    writes the true table, ignores SIGTERM and spins  [the run on new_incline had used 3 s, of time or of CPU]
+refused    two districts to run, the first over the limit: the second is never started  [the run on new_incline had used 3 s, of time or of CPU]
+accepted   spins on one CPU for 2 s of CPU time, then writes the true table
+refused    spins in two processes at once for 2 s each, 4 s of CPU in 2 s, then writes the true table  [the run on new_incline had used 3 s, of time or of CPU]
+refused    works in four threads for 2 s, each multiplying numpy matrices, which lets go of the interpreter lock, then writes the true table: the threads share the machine's CPUs and their time is counted  [the run on new_incline had used 3 s, of time or of CPU]
+refused    starts two processes in sessions of their own that spin, writes the true table and exits at 2.5 s  [the run on new_incline had used 3 s, of time or of CPU]
 accepted   exits in time and leaves a child running in a session of its own
            processes of nobody left after that run: 0
 
@@ -76,4 +80,4 @@ reward 0   pytest exits 0 and leaves no report
 reward 0   pytest exits 0, the report is not JSON
 reward 0   no airflow.py delivered
 
-61 cases, 0 unexpected
+65 cases, 0 unexpected

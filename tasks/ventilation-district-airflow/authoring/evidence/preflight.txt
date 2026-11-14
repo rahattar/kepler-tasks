@@ -21,8 +21,10 @@ ok    the statement has no heading
 ok    the statement assigns no role and speaks to no one
 ok    the statement has no grading words
 ok    the statement gives the limit in the required sentence, and it is the checker's: 35 s
-ok    the checker enforces that limit with a timeout on the run and treats TimeoutExpired as the end of the judging
+ok    the checker enforces that limit on the wall clock of the run, and a run over it ends the judging
 ok    the checker sets no CPU affinity
+ok    the checker holds a run to 1 CPU by its CPU time: the program's and every process's it starts count against the same limit as the wall clock
+ok    VS-4 states the fans' state as the record opens and how a state is carried through a change
 ok    the statement gives the checker's cap on the size of OUT_CSV: 2000000 bytes
 ok    the statement's header is the checker's
 ok    the statement's band is the checker's: 1.5 per cent, or 0.03 m3/s where that is more
@@ -59,6 +61,7 @@ ok    no study reports anything unexpected
 ok    reference_run.txt: accepted on the six districts, on the three packages beside the program and on the small districts
 ok    the limit is between 2 and 3.5 times the reference's slowest run
 ok    naive_run.txt: the second solution is right on the small districts and stopped at the limit on the six
+ok    naive_run.txt: the same method made fast, which carries the fans by VS-4's rule and integrates nothing, is accepted on the small districts, the three beside the program and the six, inside the limit
 ok    the band is at least twice the widest departure of the separately written solution
 ok    records_run.txt: each program written to the examples is accepted on them; three of the four are not accepted on the six districts and the sound variation is; with no order placed the examples are out of band
 ok    design_rules.txt: every rule holds
@@ -75,4 +78,4 @@ ok    live: every airflow 1.4 per cent high is accepted
 ok    live: every airflow 1.6 per cent high is not
 ok    live: a program that writes the sealed table and is still running at the limit is not accepted, and its table is not opened
 ok    live: the reference on the small district is accepted and places one order of the district's allowance
-77 checks, 0 failed: the bundle is clean
+80 checks, 0 failed: the bundle is clean

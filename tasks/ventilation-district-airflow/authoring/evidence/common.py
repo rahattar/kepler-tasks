@@ -23,6 +23,7 @@ AS_IT_IS = os.path.join(ROOT, "authoring", "provenance", "as_it_is")
 SMALL = os.path.join(HERE, "small")
 REFERENCE = os.path.join(ROOT, "solution", "airflow.py")
 SECOND = os.path.join(HERE, "naive_airflow.py")
+FAST = os.path.join(HERE, "fast_airflow.py")
 sys.path.insert(0, TESTS)
 import judge_airflow  # noqa: E402
 
@@ -89,8 +90,9 @@ def lines(verdict, indent="  "):
         elif "not_the_table" in note:
             out.append("%s%-13s %s" % (indent, name, note["not_the_table"]))
         else:
-            out.append("%s%-13s %5.1f s  %4d of %4d points out of band  largest error %.2f of the band  order: %s" % (
-                indent, name, note["seconds"], note["points_out_of_band"], note["points"], note["largest_error_over_band"], order))
+            out.append("%s%-13s %5.1f s %5.1f s CPU  %4d of %4d points out of band  largest error %.2f of the band  order: %s" % (
+                indent, name, note["seconds"], note["cpu_seconds"], note["points_out_of_band"], note["points"],
+                note["largest_error_over_band"], order))
     if verdict["stopped"]:
         out.append(indent + "stopped: " + verdict["stopped"])
     out.append(indent + ("accepted" if verdict["accepted"] else "not accepted"))

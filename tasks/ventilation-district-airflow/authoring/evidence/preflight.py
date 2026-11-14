@@ -155,11 +155,19 @@ def main():
     check("the statement gives the limit in the required sentence, and it is the checker's: %d s" % limit,
           LIMIT_SENTENCE % limit in ins and len(re.findall(r"within \d+ seconds", ins)) == 1)
     judge = text("tests", "judge_airflow.py")
-    check("the checker enforces that limit with a timeout on the run and treats TimeoutExpired as the end of the "
-          "judging", "child.wait(timeout=limit)" in judge and "except subprocess.TimeoutExpired" in judge
-          and "limit=LIMIT_S" in judge)
+    check("the checker enforces that limit on the wall clock of the run, and a run over it ends the judging",
+          "time.monotonic() - clock >= limit" in judge and 'return "over the limit", spent, None, used' in judge
+          and 'if ending == "over the limit":' in judge and "limit=LIMIT_S" in judge)
     check("the checker sets no CPU affinity", "taskset" not in judge and "sched_setaffinity" not in judge
           and "taskset" not in text("tests", "test.sh"))
+    check("the checker holds a run to 1 CPU by its CPU time: the program's and every process's it starts count "
+          "against the same limit as the wall clock", "class Clock" in judge and "cpu.look() >= limit" in judge
+          and "used >= limit" in judge and "os.wait4(child.pid" in judge)
+    vs4 = " ".join(text("environment", "data", "docs", "vs4_ventilation_networks.md").split())
+    check("VS-4 states the fans' state as the record opens and how a state is carried through a change",
+          "As the record opens, every fan runs beyond its peak." in vs4
+          and "that fan crosses to the other falling part of its characteristic, every other fan stays on its part" in vs4
+          and "In no steady state of a record does a fan run between the lowest point of the dip" in vs4)
     check("the statement gives the checker's cap on the size of OUT_CSV: %d bytes" % judge_airflow.MOST_BYTES,
           "no larger than %d bytes" % judge_airflow.MOST_BYTES in ins)
     check("the statement's header is the checker's", "`" + ",".join(judge_airflow.HEADER) + "`" in ins)
@@ -298,6 +306,9 @@ def main():
     check("naive_run.txt: the second solution is right on the small districts and stopped at the limit on the six",
           "\n  accepted\n" in naive and "over the limit" in naive
           and "the second solution is right where it is given the time and is stopped at the limit" in naive)
+    check("naive_run.txt: the same method made fast, which carries the fans by VS-4's rule and integrates nothing, is "
+          "accepted on the small districts, the three beside the program and the six, inside the limit",
+          "the same method made fast is accepted on all three sets, inside the limit" in naive)
     widest = re.search(r"widest departure from the sealed results: (\d\.\d+) of the band", naive)
     check("the band is at least twice the widest departure of the separately written solution",
           bool(widest) and float(widest.group(1)) <= 0.5)

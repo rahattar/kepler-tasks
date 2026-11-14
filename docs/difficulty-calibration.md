@@ -918,3 +918,9 @@ hidden pairs one gear's lead charts carry the flank names exchanged. Low effort:
   charts look like an example's R charts.
 - **Check that every part of the model can decide a result.** A mesh cycle with two tooth pairs sharing load
   was built and dropped: the heaviest load is always in single pair contact.
+
+## ventilation-district-airflow 20261113b: the fans' rule stated (Nov 13)
+- After the quality rejection: three low probes, 0 of 3, each
+  the `worked_on` miss on five of six districts, in 3 to 6 minutes. All three implemented the stated rule
+  directly (a fan held on its falling part, crossing at the end of it) instead of finding stall in the results.
+  Stating the mechanism that every probe found anyway costs nothing at the easiness gate.

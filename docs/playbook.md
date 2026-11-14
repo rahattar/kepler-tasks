@@ -24,7 +24,10 @@ Sciences). Follow this exactly unless Alex says otherwise.
     (shaft-alignment-moves, Nov 11);
   - every input file named by absolute path;
   - for a timed task, the per-run limit in the announcement's words, "Each run of <program> must finish within N
-    seconds on 1 CPU.", with the same N as `tests/`;
+    seconds on 1 CPU.", with the same N as `tests/`. The checker enforces "on 1 CPU" as the CPU time of the
+    program's whole process tree against the same N, never by affinity (ventilation-district-airflow, Nov 13);
+    the evidence for N is an independent correct method that times out and an independent method, optimised,
+    accepted inside N at full size;
   - no hint at any trap or mechanism;
   - the last paragraph exactly: "You have 28800 seconds to complete this task. Do not cheat by using online
     solutions or hints specific to this task."

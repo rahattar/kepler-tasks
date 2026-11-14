@@ -479,3 +479,33 @@ reads what the program computes, not how the task is described. `lube-oil-survey
 (`cores/quench-oil-v0/RESULT.md`).
 - **Rule.** One subject per account at a time. When the gate names one of our own tasks, change the physics or
   hold; do not spend a submission on wording.
+## Quality rejection, Nov 13 (ventilation-district-airflow 20261113): three blocking criteria
+Every other criterion passed, difficulty, anti-cheat and provenance included.
+1. **"Well specified".** VS-4 gave the network laws and said every change is gradual, but not the fans' state as
+   the record opens, nor which steady state a district goes to when healthy and stalled states coexist and the
+   one it is in ends. "A domain expert can satisfy the stated equations with a different stable history and
+   still fail." The truth was an inertial simulation; the documents described only its steady states.
+2. **"Test instruction alignment".** The same gap, and "within 35 seconds on 1 CPU" enforced as wall time
+   only, with numerical libraries held to one thread: "a multiprocessing submission can use more than one CPU
+   and still pass".
+3. **"Verification explanation quality".** The limit was calibrated by the reference passing and the
+   independent solution timing out. "No independently structured complete implementation is measured passing
+   the full-size runtime bound"; the passing variant was an ablation of the reference.
+Advisories as always (name prefix, metadata fields, README repeating task.toml): not acted on (playbook).
+
+Fixed in 20261113b. VS-4 now states that every fan runs beyond its peak as the record opens, and the rule:
+a fan stays on the part of its characteristic it is on for as long as a steady state with it there exists;
+a change that brings it to the peak from beyond, or to the lowest point of the dip from short of it, sends
+that fan to its other falling part, every other fan staying where it was. The checker counts the CPU time of
+the program and of every process it starts against the same limit as the wall clock (reaped with wait4 for the
+kernel's count, and /proc read every 0.1 s for processes never waited for). The second solution now has a fast
+form, fast_airflow.py: its own network method made sparse and warm-started, and the fans carried by the stated
+rule with no integration at all. It reproduces the sealed results on all sixteen districts inside the limit,
+which is also the proof that the rule as written decides the truth.
+- **Rule.** If the truth comes from a dynamic simulation and the documents state only steady laws, state the
+  initial condition and the selection rule in the documents, and show a solution that uses the stated rule and
+  nothing else reproducing the truth.
+- **Rule.** "On 1 CPU" is enforced as CPU time of the whole process tree, not by affinity (which the oracle
+  failure of journal-bearing-survey 20261113b rules out) and not by thread variables alone.
+- **Rule.** Evidence for a time limit is a pair: an independent correct method that times out, and the same or
+  another independent method, optimised, that is accepted inside the limit at full size.

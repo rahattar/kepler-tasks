@@ -91,3 +91,13 @@ failed the two districts that hold where their records stall (33 min).
 clean). No Docker daemon in the session that built it: the oracle evidence is `verifier_run.txt`
 (`bash tests/test.sh` itself, reward 1), and the two Dockerfiles, reworded for the similarity gate after the
 studies, have not been built. Instruction against lube-oil-survey: 0.53 difflib, 0.095 5-gram Jaccard.
+
+**Rejected and fixed (20261113b).** Quality review, three blocking criteria
+(`docs/rejection-patterns.md`): VS-4 did not state the fans' state as the record opens or which state a
+district goes to when the one it is in ends; "on 1 CPU" was enforced as wall time only; and no independent
+solution was shown passing at full size. VS-4 sections 1, 4 and 5 now state the opening state and the rule,
+without the words the preflight keeps out. The checker counts CPU time of the whole process tree. fast_airflow.py,
+the second solution with sparse warm-started solves and the fans carried by the stated rule with no integration,
+is accepted on all sixteen districts in 4.9 to 7.5 s a run, which also shows the rule decides the truth. Three
+low probes on the new documents: 0 of 3, each the `worked_on` miss; they used the stated rule directly. No
+xhigh probes on 20261113b.

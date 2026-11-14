@@ -15,5 +15,5 @@ districts.py run into an empty directory: the nine districts, then the seven sma
   old_shaft run attempt 5 allowance 5 altered 4 breach
   far_east run attempt 2 allowance 5 altered 4 breach
   new_incline run attempt 0 allowance 4 altered 4 breach
-exit statuses [0, 0, 0]; 23 minutes
+exit statuses [0, 0, 0]; 19 minutes
 224 files, 0 different, 0 not listed

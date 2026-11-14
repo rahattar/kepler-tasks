@@ -118,7 +118,7 @@ def tables():
 
 def limits(good):
     print()
-    print("the limit, set to 3 s for these cases")
+    print("the limit, set to 3 s for these cases: of time, and of CPU time of the program and every process it starts")
     over = lambda v: v["stopped"].startswith("the run on") and "points_out_of_band" not in v["districts"][DISTRICT]
     case("writes the true table, then sleeps", writes(good, "time.sleep(30)\n"), "refused", limit=3, check=over)
     case("writes the true table, ignores SIGTERM and spins",
@@ -126,6 +126,24 @@ def limits(good):
     case("two districts to run, the first over the limit: the second is never started",
          writes(good, "time.sleep(30)\n"), "refused", limit=3, only=(DISTRICT, "old_shaft"),
          check=lambda v: list(v["districts"]) == [DISTRICT])
+    spin = "def spin(seconds):\n    end = time.process_time() + seconds\n    while time.process_time() < end: pass\n"
+    case("spins on one CPU for 2 s of CPU time, then writes the true table", writes(good, spin + "spin(2.0)\n"),
+         "accepted", limit=3)
+    case("spins in two processes at once for 2 s each, 4 s of CPU in 2 s, then writes the true table",
+         program(spin + "import multiprocessing\n"
+                 "workers = [multiprocessing.Process(target=spin, args=(2.0,)) for _ in range(2)]\n"
+                 "[w.start() for w in workers]\n[w.join() for w in workers]\n"
+                 "open(sys.argv[2], 'wb').write(%r)\n" % good), "refused", limit=3, check=over)
+    case("works in four threads for 2 s, each multiplying numpy matrices, which lets go of the interpreter lock, "
+         "then writes the true table: the threads share the machine's CPUs and their time is counted",
+         program("import numpy, threading\nend = time.monotonic() + 2.0\n"
+                 "def work():\n    a = numpy.ones((200, 200))\n    while time.monotonic() < end: a @ a\n"
+                 "ts = [threading.Thread(target=work) for _ in range(4)]\n[t.start() for t in ts]\n[t.join() for t in ts]\n"
+                 "open(sys.argv[2], 'wb').write(%r)\n" % good), "refused", limit=3, check=over)
+    case("starts two processes in sessions of their own that spin, writes the true table and exits at 2.5 s",
+         writes(good, "for _ in range(2):\n"
+                "    subprocess.Popen([sys.executable, '-c', 'while True: pass'], start_new_session=True)\n"
+                "time.sleep(2.5)\n"), "refused", limit=3, check=over)
     case("exits in time and leaves a child running in a session of its own",
          writes(good, "subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(60)'], start_new_session=True)\n"),
          "accepted", limit=20)

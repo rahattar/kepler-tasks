@@ -9,11 +9,14 @@ For each district under districts/, in name order:
   - the survey crew's window opens for that district alone (Window). It holds the district's book from
     crew/books and answers one order by the rule in crew/lab.py, reached through `pqsurvey` on the PATH;
   - the program is started in `prog/` as `python3 airflow.py PACKAGE_DIR OUT_CSV` as the user nobody, in a
-    session of its own, with one thread to a numerical library, and is given LIMIT_S seconds to exit. No CPU
-    affinity is set: trials run side by side on one host would all land on the same core;
+    session of its own, with one thread to a numerical library, and is given LIMIT_S seconds on 1 CPU: the
+    run is over the limit when LIMIT_S seconds have passed, or when the CPU time, user and system, of the
+    program and of every process it starts adds up to LIMIT_S seconds (Clock). On one CPU the two are the
+    same; work spread over two CPUs spends its LIMIT_S seconds in half the time. No CPU affinity is set:
+    trials run side by side on one host would all land on the same core;
   - at exit or at the limit, the session and every other process of nobody are killed;
-  - a run still going at the limit ends the judging: its output is not opened, no later district is run and
-    the program is not accepted;
+  - a run over the limit ends the judging: its output is not opened, no later district is run and the
+    program is not accepted;
   - otherwise OUT_CSV is read (read_flows) and each flow compared with results/<district>.csv (in_band).
 
 Accepted means: every run ended in time with exit status 0, every OUT_CSV is the table the task statement
@@ -136,6 +139,38 @@ def clear_out(leader, others_too):
         time.sleep(0.05)
 
 
+class Clock:
+    """The CPU time of a run: user and system, of the program and of every process it starts.
+
+    Two counts, each of which can only fall short of the truth, and the larger is taken. Every tenth of a second
+    the processes of the run are read in /proc (all processes of nobody where the run is nobody's, else the
+    run's session), and each process's own time is kept as last seen, once for each process however long it
+    lives. At the end, the times the kernel gives for the program and every descendant it waited for. A process
+    that lived less than a tenth of a second and was never waited for is missed by both; it cannot have used
+    more than a tenth of a second.
+    """
+    TICK = os.sysconf("SC_CLK_TCK")
+
+    def __init__(self, leader, by_user):
+        self.leader, self.by_user, self.seen = leader, by_user, {}
+
+    def look(self):
+        for pid in filter(str.isdigit, os.listdir("/proc")):
+            try:
+                with open("/proc/%s/stat" % pid) as handle:
+                    line = handle.read()
+                rest = line[line.rindex(")") + 2:].split()
+                if self.by_user:
+                    if os.stat("/proc/%s" % pid).st_uid != RUNS_AS:
+                        continue
+                elif int(rest[3]) != self.leader:            # the session
+                    continue
+                self.seen[(pid, rest[19])] = (int(rest[11]) + int(rest[12])) / float(self.TICK)
+            except (OSError, ValueError, IndexError):
+                pass
+        return sum(self.seen.values())
+
+
 def bring(source, target):
     """A copy of a regular file, never through a link."""
     fd = os.open(source, os.O_RDONLY | os.O_NOFOLLOW)
@@ -148,7 +183,7 @@ def bring(source, target):
 
 
 def run_district(program, package, window, limit, lowered, path_first=None):
-    """One run. Returns (ending, seconds, bytes of OUT_CSV or a NotTheTable or None).
+    """One run. Returns (ending, seconds, bytes of OUT_CSV or a NotTheTable or None, CPU seconds).
 
     ending is "in time", "over the limit", or a sentence for a run that could not start or ended with a
     status other than 0. OUT_CSV is opened only after a run that ended in time with status 0.
@@ -164,7 +199,7 @@ def run_district(program, package, window, limit, lowered, path_first=None):
         try:
             bring(program, os.path.join(prog, "airflow.py"))
         except OSError as trouble:
-            return "airflow.py could not be read (%s)" % trouble, 0.0, None
+            return "airflow.py could not be read (%s)" % trouble, 0.0, None, 0.0
         for name in PACKAGE:
             bring(os.path.join(package, name), os.path.join(pack, name))
         if lowered:
@@ -183,28 +218,40 @@ def run_district(program, package, window, limit, lowered, path_first=None):
         clock = time.monotonic()
         child = subprocess.Popen(argv, cwd=prog, env=env, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                                  stderr=said, start_new_session=True)
-        try:
-            child.wait(timeout=limit)
-            late = False
-        except subprocess.TimeoutExpired:
-            late = True
+        cpu = Clock(child.pid, lowered)
+        late, status, kernel = False, None, 0.0
+        while True:
+            # reaped here with wait4, not by Popen, so that the kernel's count of its CPU time is had too
+            pid, status, use = os.wait4(child.pid, os.WNOHANG)
+            if pid == child.pid:
+                break
+            status = None
+            if time.monotonic() - clock >= limit or cpu.look() >= limit:
+                late = True
+                break
+            time.sleep(0.1)
         spent = time.monotonic() - clock
+        cpu.look()
         clear_out(child.pid, lowered)
-        child.wait()
-        if late:
-            return "over the limit", spent, None                # nothing it wrote is opened
+        if status is None:
+            pid, status, use = os.wait4(child.pid, 0)
+        kernel = use.ru_utime + use.ru_stime
+        child.returncode = os.waitstatus_to_exitcode(status)
+        used = max(sum(cpu.seen.values()), kernel)
+        if late or used >= limit:
+            return "over the limit", spent, None, used          # nothing it wrote is opened
         if child.returncode != 0:
             said.seek(0)
             tail = said.read()[-500:].decode("utf-8", "replace").strip().splitlines()
-            return "exit status %d (%s)" % (child.returncode, tail[-1] if tail else "nothing on stderr"), spent, None
+            return "exit status %d (%s)" % (child.returncode, tail[-1] if tail else "nothing on stderr"), spent, None, used
         try:
             if not stat.S_ISREG(os.lstat(out_csv).st_mode):
                 raise OSError("not a regular file")
             fd = os.open(out_csv, os.O_RDONLY | os.O_NOFOLLOW)
             with os.fdopen(fd, "rb") as written:
-                return "in time", spent, written.read(MOST_BYTES + 1)
+                return "in time", spent, written.read(MOST_BYTES + 1), used
         except OSError as trouble:
-            return "in time", spent, NotTheTable("OUT_CSV was not written as a file (%s)" % trouble)
+            return "in time", spent, NotTheTable("OUT_CSV was not written as a file (%s)" % trouble), used
     finally:
         if child is not None:
             clear_out(child.pid, lowered)
@@ -265,11 +312,11 @@ def judge(program, districts=None, results=None, books=None, limit=LIMIT_S, wind
     for name in names:
         sealed = sealed_flows(os.path.join(results, name + ".csv"))
         crew = Window(name, lab.book(books, name), window)
-        ending, seconds, raw = run_district(program, os.path.join(districts, name), crew, limit, lowered, path_first)
-        note = verdict["districts"][name] = {"run": ending, "seconds": round(seconds, 1), "points": len(sealed),
-                                             "survey_order": crew.placed}
+        ending, seconds, raw, cpu = run_district(program, os.path.join(districts, name), crew, limit, lowered, path_first)
+        note = verdict["districts"][name] = {"run": ending, "seconds": round(seconds, 1), "cpu_seconds": round(cpu, 1),
+                                             "points": len(sealed), "survey_order": crew.placed}
         if ending == "over the limit":
-            verdict["stopped"] = "the run on %s was still going after %d s" % (name, limit)
+            verdict["stopped"] = "the run on %s had used %d s, of time or of CPU" % (name, limit)
             return verdict
         if ending != "in time":
             clean = False

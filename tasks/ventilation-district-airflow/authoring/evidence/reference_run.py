@@ -15,7 +15,9 @@ def main():
     six = common.run(common.REFERENCE)
     print(common.lines(six))
     times = [note["seconds"] for note in six["districts"].values()]
-    print("  runs of %.1f to %.1f s; the limit of %d s is %.1f times the slowest" % (min(times), max(times), limit, limit / max(times)))
+    cpu = [note["cpu_seconds"] for note in six["districts"].values()]
+    print("  runs of %.1f to %.1f s, %.1f to %.1f s of CPU; the limit of %d s is %.1f times the slowest" % (
+        min(times), max(times), min(cpu), max(cpu), limit, limit / max(max(times), max(cpu))))
     print("  points: %d at %d districts; largest error at any of them %.2f of the band" % (
         sum(note["points"] for note in six["districts"].values()), len(six["districts"]),
         max(note.get("largest_error_over_band", 9e9) for note in six["districts"].values())))
