@@ -103,7 +103,7 @@ rule("`%s`" % rope_bench.SHEET_HEADER in ins, "it gives the header the reader ho
 m = re.search(r"within (\d+) per cent of the greatest damage of that rope", ins)
 rule(bool(m) and int(m.group(1)) / 100.0 == rope_bench.SHARE == generator.BAND,
      "its accuracy, %s per cent of the rope's greatest damage, is the bench's SHARE and the generator's BAND" % (m.group(1) if m else "?"))
-m = re.search(r"at most (\d+) MiB \(([\d,]+) bytes\)", ins)
+m = re.search(r"(?:at most|no larger than) (\d+) MiB \(([\d,]+) bytes\)", ins)
 rule(bool(m) and int(m.group(1)) * 1024 * 1024 == rope_bench.SHEET_CAP == int(m.group(2).replace(",", "")),
      "the size cap it states is the reader's, %d bytes" % rope_bench.SHEET_CAP)
 rule("an ordinary file, not a link" in ins and "O_NOFOLLOW" in text_of("tests", "rope_bench.py"),
@@ -120,9 +120,15 @@ for kind in ("examples", "pending"):
         rule("/app/data/%s/%s" % (kind, name) in ins, "it names /app/data/%s/%s by its absolute path" % (kind, name))
 for doc in sorted(os.listdir(os.path.join(BUNDLE, "environment", "data", "docs"))):
     rule("/app/data/docs/%s" % doc in ins, "it names /app/data/docs/%s by its absolute path" % doc)
-for phrase in ("python3 %s WORKS_DIR OUT_CSV" % PROGRAM, "exit status has to be 0", "only `%s` has been copied" % PROGRAM, "unprivileged", "no network",
-               "cannot be written to", "numpy, scipy and pandas"):
-    rule(phrase in ins, "it says \"%s\", as the bench runs the program" % phrase)
+# each fact of the run, in either of the wordings it has had (the author's draft, Alex's text)
+for fact, wordings in (("the command", ["python3 %s WORKS_DIR OUT_CSV" % PROGRAM]),
+                       ("exit status 0", ["exit status has to be 0", "must exit with status 0"]),
+                       ("a copy of the program alone", ["only `%s` has been copied" % PROGRAM, "containing only a copied `%s`" % PROGRAM]),
+                       ("an unprivileged user", ["unprivileged"]),
+                       ("no network", ["no network", "without network access"]),
+                       ("a package that cannot be written to", ["cannot be written to"]),
+                       ("the libraries", ["numpy, scipy and pandas"])):
+    rule(any(w in ins for w in wordings), "it states %s, as the bench runs the program" % fact)
 seen_text = ins + "".join(text_of("environment", "data", "docs", d) for d in sorted(os.listdir(os.path.join(BUNDLE, "environment", "data", "docs"))))
 standard = text_of("environment", "data", "docs", "rs4_rope_bending.md")
 package = text_of("environment", "data", "docs", "works_package.md")
@@ -280,10 +286,10 @@ rule(re.search(r"\n(\d+) cases, 0 unexpected", texts["verifier_checks"]) is not 
 rule(re.search(r"\n5 programs, 0 unexpected", texts["verifier_run"]) is not None
      and re.search(r"the reference, solution/ropes\.py\s+reward 1\b", texts["verifier_run"]) is not None,
      "test.sh itself: reward 1 for the reference and the second solution, 0 for the other three")
-studied = os.path.getmtime(os.path.join(EVIDENCE, "verifier_run.txt"))
+said = dict(re.findall(r"\njudged (\S+)\s+sha256 ([0-9a-f]{64})", texts["verifier_run"]))
 newer = [f for f in ("tests/rope_bench.py", "tests/test.sh", "tests/test_ropes.py", "tests/Dockerfile", "solution/ropes.py")
-         if os.path.getmtime(os.path.join(BUNDLE, f)) > studied]
-rule(not newer, "no verifier file or the reference has changed since verifier_run.txt%s" % ("" if not newer else ": " + ", ".join(newer)))
+         if said.get(f) != hashlib.sha256(open(os.path.join(BUNDLE, f), "rb").read()).hexdigest()]
+rule(not newer, "no verifier file or the reference differs from what verifier_run.txt judged%s" % ("" if not newer else ": " + ", ".join(newer)))
 
 figures = set(re.findall(r"(?<![\w.])\d+\.\d+(?![\w.])", readme))
 pool = "".join(texts.values()) + "".join(text_of(f) for f in files if f.endswith((".md", ".py")) and f != "README.md")
@@ -296,5 +302,5 @@ verdict = rope_bench.judge(os.path.join(BUNDLE, "solution", PROGRAM))
 rule(verdict["accepted"], "the reference, through the bench under umask 077: %s" % "; ".join(
     "%s %.1f s" % (n["works"], n["cpu_seconds"]) for n in verdict["trials"]))
 
-print("\n%d rules, %d hold" % (len(results), sum(results)))
+print("\n%d rules, %d hold, %d failed" % (len(results), sum(results), len(results) - sum(results)))
 sys.exit(0 if all(results) else 1)

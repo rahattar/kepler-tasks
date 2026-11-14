@@ -10,6 +10,7 @@ image, which a study that calls the bench directly does not go through.
 pytest must be installed. Without the pytest-json-ctrf plugin, ctrf_standin.py writes the report, and the
 output says so. /app/output and /logs/verifier are made if missing, and removed again if this script made them.
 """
+import hashlib
 import importlib.util
 import json
 import os
@@ -48,6 +49,9 @@ def reward_for(program):
     return reward, seconds, notes
 
 
+JUDGED = ("tests/rope_bench.py", "tests/test.sh", "tests/test_ropes.py", "tests/Dockerfile", "solution/ropes.py")
+
+
 def main():
     if os.geteuid() != 0:
         print("this study is run as root, as test.sh is; nothing was run")
@@ -64,8 +68,13 @@ def main():
         ("the second solution in plain loops, plain_ropes.py", os.path.join(common.EVIDENCE, "plain_ropes.py"), "0"),
     ]
     print("bash tests/test.sh, unchanged, with each program in turn at %s; the reward read from %s/reward.txt" % (DELIVERED, LOGS))
-    print("the ctrf report is written by %s\n" % ("pytest-json-ctrf" if importlib.util.find_spec("pytest_jsonctrf")
-                                                 else "authoring/evidence/ctrf_standin.py: pytest-json-ctrf is not installed on this machine"))
+    print("the ctrf report is written by %s" % ("pytest-json-ctrf" if importlib.util.find_spec("pytest_jsonctrf")
+                                               else "authoring/evidence/ctrf_standin.py: pytest-json-ctrf is not installed on this machine"))
+    # digests, not file times: an unzipped bundle carries the time of unzipping, so only the content says what was run
+    for name in JUDGED:
+        with open(os.path.join(common.BUNDLE, name), "rb") as handle:
+            print("judged %-22s sha256 %s" % (name, hashlib.sha256(handle.read()).hexdigest()))
+    print()
     unexpected = 0
     try:
         for label, program, expect in programs:

@@ -1346,3 +1346,13 @@ a blocked diffuser shows as a 0.36 K residual (12 times noise) that one constant
 The borefield passes it: groundwater is invisible in a 72-hour test, small in five years of a 4x4 field
 (0.38 K), and 5.8 K on the 20-year minimum of an 8x8 extension. A heat meter set for water on glycol is taken
 up by a conductivity refit to noise yet leaves that forecast 1.4 K out. Each wrong route fails differently.
+
+## Packaging: rope-bending-damage (Nov 14)
+
+- **What happened.** shipcheck refused a bundle whose preflight held 113 of 113 in the working tree. Two
+  causes: zipfile.extractall gives every file the time of unzipping, so a preflight rule comparing file
+  times (verifier files newer than verifier_run.txt) fails on any unzipped copy; and shipcheck reads only
+  the last line, which must say "clean" or "0 failed", and "113 rules, 113 hold" says neither.
+- **Rule.** A study records sha256 digests of what it judged and preflight compares digests, never file
+  times. A preflight's last line ends "N failed". Run shipcheck on the zip before any delivery; `unzip`
+  restores times and so hides the first cause.
