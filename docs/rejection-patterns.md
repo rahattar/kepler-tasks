@@ -512,3 +512,21 @@ which is also the proof that the rule as written decides the truth.
 - **Packing note.** A rebase that re-applies a commit rewrites the mtimes of the files it touches, and
   shipcheck's staleness rule reads zip times: a study whose text did not change in that commit then reads as
   older than the verifier. Rerun the unchanged studies after the rebase, then pack.
+
+## Quality rejection, Nov 13 (engine-indicating-analysis 20261113): the deciding condition was never stated
+"Test instruction alignment" and "well specified" both failed on one point. Five hidden cells need the
+encoder's index and the transducer's gain established from the records, and nothing the agent reads says the
+package's angle and scale may not be the crank angle and the cylinder pressure. "An expert could reasonably
+implement the documented conversion and IS-2 calculation and still fail five of six cells." The reviewer cited
+the bundle's own preflight, which forbade index, gain, calibration and correction in agent-visible text, as
+proof that the gap was intended. Everything else passed, the runtime and tolerance checks included. The
+advisory (name prefix, metadata fields) came too and is not acted on (see the bore-form entries above).
+- **Rule.** A condition that decides hidden cases is a requirement, and it is stated in an agent-visible
+  document: what may differ from what the package gives, and the criterion that settles it. The method can be
+  left open. The difficulty has to come from meeting the stated requirement, never from not knowing it.
+- **Rule.** A preflight check that keeps the deciding condition out of the agent's words is evidence against
+  the task. Check that the requirement is stated, not that it is absent.
+- **For the cores built the same way** (gear-face-load, hoist-rope, twin-oil-lines and any other whose
+  condition shows only in data and never in words): expect the same two failures. Probe rates measured with
+  the condition unstated do not carry over once it is stated; re-probe after stating it.
+
