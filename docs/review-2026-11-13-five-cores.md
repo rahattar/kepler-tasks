@@ -122,8 +122,8 @@ sprinkler core said anything, and it was the one solved fastest and most complet
   results.
 - **One template for everything.** The four later briefs share 71 to 95 per cent of their text, names and
   numbers masked, and every core has the same anatomy: a works standard at a revision, two examples, one pending
-  package, six hidden cases. The similarity gate rejected ventilation-district-airflow today on archetype alone
-  (against impeller-shrink-fits), with text overlap no higher than 0.42.
+  package, six hidden cases. (An earlier draft cited ventilation's "similarity" rejection as an archetype
+  verdict; it was an upload into another task's entry. The text overlap still matters on its own.)
 
 ## What was sound
 
