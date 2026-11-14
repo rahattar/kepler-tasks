@@ -1242,3 +1242,15 @@ easiness probe: claude-opus-5-5 low, 3 of 3 solved in 7 to 10 minutes.
 - **Rule.** Before building on "the numerics are hard", check whether a published correlation of the same
   equations lands inside the band. If it does, the task needs physics the correlation does not cover.
 - **Cost:** about an hour each, against a day per built core.
+
+## heat-network v0: a scheme stated in full is solved at low effort in 7 to 10 minutes (Nov 14)
+
+`cores/heat-network-v0/RESULT.md`. District heating to a standard that states everything: hydraulics with valve
+limits, plug flow with heat loss, mixing, step order. Limit 12 s against a reference of 4.7 s and a plain
+per-pipe simulator of 28 s. Low 3 of 3, each first program vectorised and at the reference's speed, two of
+three having built a maximum-size package from the pending one to time themselves.
+- **A limit set against our own plain loop binds no one.** The low-effort default is numpy over all pipes at
+  once. A limit has to sit below what that default achieves, which needs a method that changes the order of the
+  work (not its constant), and that method has to be one a careful engineer finds.
+- **With nothing left to identify, there is no task.** The approved ventilation task had two conditions read
+  from evidence in the records; this core had none, by design, and the science was implemented in one pass.
