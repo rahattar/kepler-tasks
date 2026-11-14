@@ -997,3 +997,18 @@ as laid); one covering is declining (its coefficient rises campaign by campaign 
   are in scope and asserts it.
 - The limit does not bind (probe programs 1.4 to 9.6 s a site against 60). Cost: v1 low 308k and xhigh 778k
   tokens, v2 low 339k and xhigh 903k.
+
+## Gear face load v1: a found condition the brief does not say to act on is unfair; saying so makes it found (Nov 13)
+
+`cores/gear-face-load-v1`. v0 with the misalignment measured at assembly (no misfit anywhere) and the
+exchanged flank names shown only physically: pits on the flank that carries load, the lead correction on the
+working flank. As first briefed: low 0 of 3 and xhigh 0 of 3, but two xhigh runs found the condition and kept
+the package's flank "as GF-4 and the package format require", asking the owner to confirm. With one sentence
+added to the brief (results used unreviewed): low 1 of 3 solved in 2.5 minutes, a second noticed and deferred.
+
+- **Read the failing runs' reports before counting a 0.** All three failing the same way meant here that the
+  task never asked for the judgement it graded. The Nov 12 tip is right in this exact case.
+- **A program task must say what the program does with contradictory records.** "Nobody reviews the results"
+  is the neutral way, and it costs the difficulty: it is itself the prompt to examine the package.
+- **Physical evidence in the visible package plus two alternatives is found at low effort as soon as the task
+  says to act.** Prefer a deciding condition whose resolution is a quantity to estimate, not a choice to make.

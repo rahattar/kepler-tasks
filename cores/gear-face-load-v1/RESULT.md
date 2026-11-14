@@ -1,4 +1,4 @@
-# gear-face-load bare core v1 (Nov 13): exchanged flank names shown only by pitting; low 0 of 3
+# gear-face-load bare core v1 (Nov 13): exchanged flank names shown only by pitting; unfair as first briefed, solved at low once fair
 
 v0 with the contact pattern check replaced by the mesh misalignment measured at assembly, so no calculation
 shows a misfit. On the pending pair and four of six hidden pairs one gear's lead charts carry the flank names
@@ -54,3 +54,27 @@ Low 0 of 3; xhigh 0 of 3, two of three having found or noticed the condition.
 
 `gf.py`, `gen.py` (specs, shift, `core/manifest.json`; the data is rebuilt by `mk.sh` and kept out of git),
 `ref_faceload.py`, `named_faceload.py`, `grade.py`, `brief.txt`, `mk.sh`.
+
+## Re-run with the decision made explicit (brief: results used unreviewed)
+
+One sentence added to the brief: "The results go straight into the works' rating of each pair: nobody reviews
+a package before it runs or the results after it, so they must be the results for the pair as it runs."
+Nothing added to the package format.
+
+| probe | effort | time | hidden | what it did |
+|---|---|---|---|---|
+| G1 | low | 1.5 min | not accepted, the four exchanged pairs out | noticed the lead correction on GB-P's flank named L; held a second explanation (the correction ground on the wrong flank) and followed `pair.json`; saw one pit as "a local dip" |
+| G2 | low | 2 min | not accepted, the same | did not notice; remarked that GB-P's load is much less even than the examples' |
+| G3 | low | 2.5 min | **accepted, 6 of 6**, worst 0.20 of the band | found the pits on L, the correction on L, the wheel's working flank pitted; rule: use the other flank when at least half its teeth are pitted and the named flank is clean |
+
+Low: 1 of 3 solved, 1 of 3 noticed and deferred. Over the bar. No xhigh round.
+
+## Where this leaves the device
+
+- **The sentence that makes the task fair is the sentence that makes it found.** Without it the condition is
+  found at xhigh and deferred to the records, which grades a judgement the task never asks for. With it a
+  low-effort run examines the pending package in two minutes.
+- **The lead correction alone is a fair tie** (correction on the wrong flank, or names exchanged); the pits
+  break it. That made one low probe defer, which is the most the device gives.
+- With v0 (2 of 3) this closes gears for this device: once the decision is stated, a condition with two
+  alternatives and physical evidence in the visible package is read at low effort.
