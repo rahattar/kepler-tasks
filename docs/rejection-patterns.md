@@ -509,3 +509,6 @@ which is also the proof that the rule as written decides the truth.
   failure of journal-bearing-survey 20261113b rules out) and not by thread variables alone.
 - **Rule.** Evidence for a time limit is a pair: an independent correct method that times out, and the same or
   another independent method, optimised, that is accepted inside the limit at full size.
+- **Packing note.** A rebase that re-applies a commit rewrites the mtimes of the files it touches, and
+  shipcheck's staleness rule reads zip times: a study whose text did not change in that commit then reads as
+  older than the verifier. Rerun the unchanged studies after the rebase, then pack.
