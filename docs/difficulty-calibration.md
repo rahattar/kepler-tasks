@@ -1023,3 +1023,18 @@ Low effort: 2 of 3 accepted on every hidden cell, the third out on one cell. Bef
   fitted to a residual the documents define comes out right in ten minutes, noise included.
 - **Taken with the rejection, the condition cannot be both unstated and fair.** For a task to meet the bar, the
   hard part has to remain once everything that decides a case is written down. Probe that version first.
+
+## Header thermal fatigue v0: a measured quantity the model also predicts is a routine tell (Nov 13)
+
+`cores/header-thermal-fatigue-v0`. A timed program for the fatigue of a steam header from its 1 s record;
+on the pending header and four hidden headers the fluid thermocouple lags 28 to 110 s, and only the
+outer-surface thermocouple shows it. Low effort: 3 of 3 accepted in 4 to 10 minutes.
+
+- **Before building, list every measured quantity in the package that the program's own model also computes.**
+  Each is a validation any careful program makes, and a condition that shows there is found at low effort.
+  This failed twice today (sprinkler v2: flow tests on file; header v0: the outer-surface thermocouple).
+- **Using the record for something else (here only the starting temperature) does not hide it.** The model
+  produces the comparison whether or not the standard asks for it.
+- **A one-parameter estimate with a clean signature is no barrier once the residual is seen**: one lag fitted
+  all 24 events to the noise, and every probe ruled out the alternatives (thickness, diffusivity, a delay).
+- The time limit separated nothing again: modal or closed-form solutions are the first thing low effort writes.
