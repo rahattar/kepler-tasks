@@ -1,0 +1,22 @@
+sites.py run into an empty directory: the nine sites at full size, then at the small size
+  boiler_lane  run      lines 30 pipes 50 records 1249  allowance 4 (recovered 4)  records with a pipe under 0.3: 507  |
+  east_depot   example  lines 30 pipes 50 records 1274  allowance 4 (recovered 4)  records with a pipe under 0.3: 446  |
+  north_quay   example  lines 30 pipes 50 records 1273  allowance 4 (recovered 4)  records with a pipe under 0.3: 391  |
+  tank_row     run      lines 30 pipes 50 records 1250  allowance 5 (recovered 4)  records with a pipe under 0.3: 362  |
+  west_jetty   pending  lines 30 pipes 50 records 1258  allowance 6 (recovered 4)  records with a pipe under 0.3: 506  |
+  canal_basin  run      lines 30 pipes 50 records 1243  allowance 6 (recovered 4)  records with a pipe under 0.3: 473  |
+  kiln_road    run      lines 30 pipes 50 records 1285  allowance 5 (recovered 4)  records with a pipe under 0.3: 483  |
+  south_wharf  run      lines 30 pipes 50 records 1259  allowance 6 (recovered 4)  records with a pipe under 0.3: 386  |
+  upper_yard   run      lines 30 pipes 50 records 1240  allowance 4 (recovered 3)  records with a pipe under 0.3: 460  |
+  boiler_lane  run      lines 6 pipes 10 records 260  allowance 1 (recovered 1)  records with a pipe under 0.3: 84  | FL
+  east_depot   example  lines 6 pipes 10 records 264  allowance 1 (recovered 1)  records with a pipe under 0.3: 75  | FL
+  north_quay   example  lines 6 pipes 10 records 251  allowance 1 (recovered 1)  records with a pipe under 0.3: 89  | FL
+  tank_row     run      lines 6 pipes 10 records 250  allowance 3 (recovered 2)  records with a pipe under 0.3: 48  | FL
+  west_jetty   pending  lines 6 pipes 10 records 236  allowance 4 (recovered 2)  records with a pipe under 0.3: 92  | FL
+  canal_basin  run      lines 6 pipes 10 records 244  allowance 3 (recovered 1)  records with a pipe under 0.3: 76  | FL
+  kiln_road    run      lines 6 pipes 10 records 245  allowance 2 (recovered 1)  records with a pipe under 0.3: 65  | FL
+  south_wharf draw 0: FL-115-A reading 3 moves 0.007 K, drawn again
+  south_wharf  run      lines 6 pipes 10 records 268  allowance 4 (recovered 2)  records with a pipe under 0.3: 114  | F
+  upper_yard   run      lines 6 pipes 10 records 242  allowance 3 (recovered 2)  records with a pipe under 0.3: 88  | FL
+exit statuses [0, 0, 0, 0], 64 minutes
+162 files listed, 0 made differently, 0 made and not listed

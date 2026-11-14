@@ -1,0 +1,82 @@
+ok    the bundle's root holds README.md, authoring, environment, instruction.md, solution, task.toml, tests and nothing else
+ok    no cache, bytecode or dotfile anywhere
+ok    no all-uppercase file or folder name but README.md and Dockerfile
+ok    every file is ASCII
+ok    no encoded strings, decoders, checksum modules or exec in any program
+ok    the task's name is <prefix>/fuel-transfer-lines, at most three hyphenated words
+ok    the one artifact is /app/output/lines.py
+ok    [metadata] carries the whole block
+ok    category "Science", a subcategory, domain engineering-sciences, field mechanical-engineering
+ok    keywords and tags are the same list
+ok    subfield is at most 120 characters (it is 113)
+ok    agent: 28800 s as the user agent; verifier: 600 s, separate, no network
+ok    difficulty_explanation is in task.toml and word for word in the README under ## Difficulty
+ok    solution_explanation is in task.toml and word for word in the README under ## Reference solution
+ok    verification_explanation is in task.toml and word for word in the README under ## Verification
+ok    the difficulty text says the data is synthetic and realistic and names a research analogue
+ok    the difficulty text does not call the work routine and gives no solve counts
+ok    the README's notes say what the shift in the data is and where it is built
+ok    the statement ends with a blank line and the closing sentence
+ok    the statement has no heading
+ok    the statement assigns no role and speaks to no one
+ok    the statement has no grading words
+ok    the statement gives the limit in the required sentence, and it is the checker's: 40 s
+ok    the checker holds a run to 1 CPU by the CPU time of the program and every process it starts, against the same limit as the clock
+ok    the checker holds the run to the limit on the clock too, and a run over it ends the comparison
+ok    nothing in tests/ sets CPU affinity
+ok    the statement gives the checker's cap on the size of OUT_CSV: 1000000 bytes
+ok    the statement's header is the checker's: record,dp_kPa,t_out_C
+ok    the statement's band is the checker's: 2.5 per cent of the pressure drop, 0.5 K of the outlet temperature
+ok    the statement names the command and how the program is run
+ok    every path the statement names is in the image's data
+ok    the statement names both documents and all three packages by absolute path
+ok    TS-2 states how a pair's division is carried from record to record (4.2) and how a run opens (4.3)
+ok    six sites to run on, three beside the program, no name in both
+ok    each of the six is the six files of a package and nothing else
+ok    the sealed results have one row for every record of each of the six, in the statement's columns
+ok    no package the program is run on is larger than site_package.md allows (most: 50 pipes, 1285 records)
+ok    no name of the six, and so no result of theirs, anywhere in the agent's image
+ok    the documents and the statement use none of the authoring vocabulary
+ok    the example packages carry results and the pending package none
+ok    the verifier's copy of /app/data is the image's, file for file
+ok    the survey crew is one program: tests/crew/lab.py is environment/rig/lab.py
+ok    the verifier's heatsurvey leaves an order where the checker looks: /run/heat-desk
+ok    both heatsurvey commands print the crew's usage and the same words for a package without site.json
+ok    where the program is written the crew holds books for the two example sites and none for the pending one, and site_package.md says so
+ok    the crew holds a book for each of the six, with the package's allowance and a reading for every pipe
+ok    the manifest lists every data file with its SHA-256, and every one matches (162 files)
+ok    regenerate.txt records sites.py making every one of those files again, byte for byte
+ok    tests/Dockerfile has the lines intake reads as text
+ok    tests/Dockerfile pins pytest==8.4.1, pytest-json-ctrf==0.3.5, numpy==2.1.3, scipy==1.14.1, pandas==2.2.3
+ok    the agent's image pins the same numpy, scipy and pandas
+ok    threads are held to one in both images and in the run's own environment
+ok    the verifier's image closes /tests and /logs/verifier to every account but root
+ok    the agent's image: users agent and surveyor, one sudo rule checked by visudo, books only surveyor can read, and it ends as root
+ok    the sudo rule allows lab.py heatsurvey and nothing else
+ok    test.sh writes the reward only as the two literal lines, each on a line of its own, the 0 first
+ok    test.sh sets umask 077, runs the one pytest file with the report and cache flags intake looks for, then tally.py
+ok    the verifier's test is one test
+ok    solution/solve.sh puts solution/lines.py at /app/output/lines.py
+ok    every study's output is committed
+ok    no study reports anything unexpected
+ok    reference_run.txt: accepted on the six sites, on the three packages beside the program and on the small sites
+ok    the limit is between 2 and 3.5 times the reference's longest run (14.8 s of CPU)
+ok    second_run.txt: the second solution as first written is right on small sites and stopped at the limit on the six; made fast, it is accepted on every set inside the limit
+ok    the band is at least twice the widest departure of the separately written solution (0.40 of the band)
+ok    records_run.txt: each program written to the examples is accepted on them and not on the six; with no order the examples are out of band; the sound variations are accepted
+ok    design_rules.txt: every rule holds
+ok    verifier_checks.txt and verifier_run.txt end with nothing unexpected
+ok    verifier_run.txt is tests/test.sh itself: reward 1 for the reference, 0 for the other two
+ok    every decimal figure in the README's three sections is in a study, the statement, the documents, the generator, the checker or a solution
+ok    live: the sealed table of a small site is accepted
+ok    live: the same with CRLF line ends and the rows reversed is accepted
+ok    live: the same with a capitalised header is not
+ok    live: the same with one record left out is not
+ok    live: the same with one value nan is not
+ok    live: every pressure drop 2.4 per cent high is accepted
+ok    live: every pressure drop 2.6 per cent high is not
+ok    live: every outlet temperature 0.45 K low is accepted
+ok    live: every outlet temperature 0.55 K low is not
+ok    live: a program that writes the sealed table and is still running at the limit is not accepted, and its table is not opened
+ok    live: the reference on a small site is accepted and places one order of the site's allowance
+81 checks, 0 failed: the bundle is clean
