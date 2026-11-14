@@ -1199,7 +1199,7 @@ propagation of the linear line with the nonlinear torque iterated in windows, or
 fed back through the modes. Each probe also wrote a brute-force simulator and checked against it.
 - **Compute is not a lever on this model when the physics is stated.** Every structure tried tonight (a
   linear recursion, a nonlinear one, a sequence that cannot be batched) was met inside the limit by the first
-  program a low-effort run wrote. Recommended to close the subject; Alex decides.
+  program a low-effort run wrote. Subject closed (Alex moved to a new idea, Nov 14).
 
 ## Twin oil lines v3: both conditions stated, low 2 of 3 (Nov 14, small hours)
 
