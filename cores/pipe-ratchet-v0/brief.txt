@@ -1,0 +1,11 @@
+Work only inside PROBE. Do not read, list or open anything outside PROBE. Everything you need is under PROBE/app.
+
+A power station checks its hot pipework for progressive deformation with its standard PW-5, `PROBE/app/data/docs/pw5_ratchet.md`: for each pipe line, the ratchet strain of the wall at chosen points of the line's plant history. The records of a works are kept as a line package, laid out as `PROBE/app/data/docs/line_package.md` says.
+
+The program `PROBE/app/output/ratchet.py` does this for one package. It is started as `python3 ratchet.py WORKS_DIR OUT_CSV` and writes OUT_CSV as a CSV file with the header `row,ratchet_pct` and one row for every checkpoint of every line, named and in the units that `line_package.md` gives for `expected.csv`.
+
+`PROBE/app/data/examples/kiln_row` and `PROBE/app/data/examples/boiler_east` come with their results to PW-5 in `expected.csv`; `PROBE/app/data/pending/steam_header` has none.
+
+After delivery the program is run once on each of three other works. Their packages have the same layout, with up to 6 lines and 10,000 states a line, and their materials and loadings may lie outside those of the three works on hand. Each run of ratchet.py must finish within LIMIT seconds on 1 CPU. At every checkpoint, the ratchet strain must be within 3 per cent of the greatest ratchet strain of that line's result to PW-5.
+
+A run happens in an empty directory holding a copy of ratchet.py alone, and must end with exit status 0. Python 3 with numpy, scipy and pandas is available. This machine is shared with other jobs, so judge your program's speed by its CPU time, not by the wall clock. Write scratch files under PROBE/app/work. When you are done, report what you did, how you checked it and how long a run takes.

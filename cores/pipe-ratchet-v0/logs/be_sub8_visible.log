@@ -1,0 +1,4 @@
+boiler_east    15.3 s NOT ACCEPTED: over the limit (15.3 s of CPU)
+kiln_row       12.9 s CPU  out 249 of  829 | KI-1 0/124 0.56; KI-2 0/139 0.90; KI-3 84/140 1.48; KI-4 0/148 0.60; KI-5 59/130 1.35; KI-6 106/148 2.53
+steam_header   13.2 s CPU  out 259 of  868 | ST-1 0/146 0.59; ST-2 89/136 1.84; ST-3 74/149 1.18; ST-4 0/148 0.64; ST-5 96/140 1.49; ST-6 0/149 0.58
+NOT ACCEPTED

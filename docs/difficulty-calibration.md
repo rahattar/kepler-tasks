@@ -1254,3 +1254,19 @@ three having built a maximum-size package from the pending one to time themselve
   work (not its constant), and that method has to be one a careful engineer finds.
 - **With nothing left to identify, there is no task.** The approved ventilation task had two conditions read
   from evidence in the records; this core had none, by design, and the science was implemented in one pass.
+
+## Pipe ratchet v0: a stated constitutive integration is written right first time (Nov 14)
+
+`cores/pipe-ratchet-v0`. Built after the design gate, every condition stated: Chaboche hardening with three
+back stresses in a 24-layer Bree wall, irregular plant histories of up to 10,000 states a line, a 15 s limit.
+The chosen hard part was numerical: the usual backward-Euler return mapping is 5 to 9 per cent off with one
+step a ramp and still out of band at 8 substeps, while the exact exponential update is right in one or two.
+Low effort: 2 of 2 accepted in 16 and 20 minutes (third pending when written), both with the exponential
+update, the lines vectorised together, elastic ramps skipped and substeps budgeted against their own CPU.
+- **A textbook integration scheme is not a numerical difficulty for this model.** The exact update of an
+  Armstrong-Frederick back stress under flow of one sign is in the textbooks, and low effort wrote it first.
+- **An error the examples show is an error low effort corrects.** The backward-Euler route fails on the
+  examples by up to 8 bands; a program that started there would have been mended against expected.csv.
+- **The fifth fully stated design of Nov 13 and 14 solved at low effort**, after engine indicating v6 and v7,
+  header thermal fatigue and torsional passage. The open question stands: whether the bar can be met with
+  everything stated, which is worth putting to AfterQuery before another core is built.
