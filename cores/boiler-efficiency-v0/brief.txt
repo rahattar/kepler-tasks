@@ -1,0 +1,13 @@
+Work only inside PROBE. Do not read, list or open anything outside PROBE. Everything needed is under PROBE/app.
+
+The boilers of a power station have their efficiency worked out from a year of plant records. BE-3 in `PROBE/app/data/docs/be3_boiler_efficiency.md` defines what is worked out for each day a boiler runs: its efficiency on the higher heating value and the coal it fired. Each boiler arrives as a package in the format described by `PROBE/app/data/docs/boiler_package.md`.
+
+Write `PROBE/app/output/efficiency.py` to process one boiler with `python3 efficiency.py BOILER_DIR OUT_CSV`. The output must be an ordinary file, not a link, and at most 2 MiB (2,097,152 bytes). Use the exact header `date,efficiency_pct,coal_t`, followed by one row for every date in the package's `hourly.csv`. Write the values as decimal numbers: the efficiency in per cent, the coal in tonnes.
+
+Four boilers are available. `PROBE/app/data/examples/kestrel_1` and `PROBE/app/data/examples/kestrel_2` each include `expected.csv` with that boiler's BE-3 results. `PROBE/app/data/pending/harrow_3` and `PROBE/app/data/pending/harrow_4` are boilers without results.
+
+The same program is later used once on each of six other boilers. Their packages use the same format, and every boiler is within the scope of BE-3 section 1. For every date, the efficiency must be within 0.15 percentage points of the result to BE-3 and the coal fired within 1 per cent of it. Each run of efficiency.py must finish within 20 seconds on 1 CPU.
+
+For each run, a scratch directory contains a copy of `efficiency.py` alone. The process runs as an unprivileged user without network access, the package is read-only, and the program must exit with status 0. Python 3 with numpy, scipy and pandas is available, and nothing else: the machine it runs on has no compiler.
+
+This machine is shared with other jobs, so judge the program's speed by its CPU time (user plus system, as `time` reports it), not by the wall clock. Write any scratch files under PROBE/app/work. At the end, report what was done, how it was checked and how long a run takes.

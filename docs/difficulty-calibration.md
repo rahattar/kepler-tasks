@@ -1290,3 +1290,20 @@ both conditions on the pending package.
   and the rules no evidence settles were already stated. Section 6 withdrawn; low 0 of 3 on the shipping
   documents, xhigh 1 of 3 (round 2). Re-read the gate's history (`git log -- docs/playbook.md`) before acting
   on a rule that is less than a day old.
+
+## Boiler efficiency v0: redundant gas readings are a direct comparison, low 3 of 3 (Nov 14)
+
+`cores/boiler-efficiency-v0/RESULT.md`. The losses method stated in full, with two conditions left unstated
+and shown only as a model residual: the CO2 analyser's zero drifting, and a run of bunker fillings logged as
+the other coal. Both are read from the CO2 reading against what the O2 probes and the stoichiometry imply.
+Routes fail as designed (literal 5 of 6 hidden boilers out, O2 with the log 4 of 6, nearest delivery without
+drift 3 of 6). Low effort: 3 of 3 accepted in 3 to 4 minutes, every run finding both conditions on the pending
+boilers.
+- **Instruments that measure the same gas get cross-checked at any effort.** Two O2 probes and a CO2
+  analyser on one duct are redundant by construction, and the residual comes hour by hour from a closed-form
+  line the stated stoichiometry gives. Where the residual held (ventilation, fuel-transfer-lines) it showed
+  only after a solve of the whole network or pair.
+- **"As it ran" was the cue all three cited.** The general statement of the requirement was enough to send
+  low effort looking, once the evidence could be seen with the stated formulas.
+- **Low effort seeds the examples with faults to test its detectors**, so a combination that is only in the
+  hidden set (both conditions on one boiler, lignite) is not a barrier.
