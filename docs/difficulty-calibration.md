@@ -1052,4 +1052,4 @@ Low effort: 3 of 3 accepted in 10 to 21 minutes, every layer implemented as writ
   examples with known index, gains and shock, and tested their fits on them. A range in the standard is a
   test generator.
 - **For a design to meet the bar with everything stated,** low effort must fail at something it was told
-  exactly how to do. Neither v6 nor v7 found that. Recommended to close the subject; Alex decides.
+  exactly how to do. Neither v6 nor v7 found that. Subject closed by Alex, Nov 13.

@@ -57,3 +57,9 @@ half.
 
 The exponent column is the known lever if the official difficulty count comes out at 0 of 8 and that is
 judged too hard to be credible: it raises xhigh and leaves low where it is.
+
+**Closed, Nov 13.** The bundle failed quality review ("well specified", "test instruction alignment") because
+the deciding condition was never stated (`docs/rejection-patterns.md`). Stated in IS-2 with its criterion
+(core v6), low effort solved it 2 of 3; redesigned with six stated layers (core v7), 3 of 3. Alex closed the
+subject.
+
