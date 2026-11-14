@@ -1,0 +1,8 @@
+{
+ "site": "salt_marsh",
+ "tanks": 6,
+ "test_allowance": 1,
+ "holding_start": "2025-11-20",
+ "holding_days": 24,
+ "close_barg": 2.38
+}

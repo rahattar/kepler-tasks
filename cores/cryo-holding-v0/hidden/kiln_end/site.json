@@ -1,0 +1,8 @@
+{
+ "site": "kiln_end",
+ "tanks": 6,
+ "test_allowance": 2,
+ "holding_start": "2025-11-07",
+ "holding_days": 35,
+ "close_barg": 2.47
+}

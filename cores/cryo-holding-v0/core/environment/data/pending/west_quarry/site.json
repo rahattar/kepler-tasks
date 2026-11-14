@@ -1,0 +1,8 @@
+{
+ "site": "west_quarry",
+ "tanks": 7,
+ "test_allowance": 2,
+ "holding_start": "2025-11-11",
+ "holding_days": 29,
+ "close_barg": 2.7
+}

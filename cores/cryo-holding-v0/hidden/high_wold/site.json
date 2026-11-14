@@ -1,0 +1,8 @@
+{
+ "site": "high_wold",
+ "tanks": 7,
+ "test_allowance": 2,
+ "holding_start": "2025-11-12",
+ "holding_days": 25,
+ "close_barg": 2.79
+}

@@ -1,0 +1,8 @@
+{
+ "site": "south_fen",
+ "tanks": 6,
+ "test_allowance": 2,
+ "holding_start": "2025-11-03",
+ "holding_days": 26,
+ "close_barg": 2.62
+}

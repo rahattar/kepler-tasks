@@ -1,0 +1,8 @@
+{
+ "site": "mill_lane",
+ "tanks": 8,
+ "test_allowance": 3,
+ "holding_start": "2025-11-19",
+ "holding_days": 30,
+ "close_barg": 2.4
+}

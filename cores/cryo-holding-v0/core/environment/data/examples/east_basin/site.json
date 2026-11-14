@@ -1,0 +1,8 @@
+{
+ "site": "east_basin",
+ "tanks": 7,
+ "test_allowance": 2,
+ "holding_start": "2025-11-14",
+ "holding_days": 35,
+ "close_barg": 2.39
+}

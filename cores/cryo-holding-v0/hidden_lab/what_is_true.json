@@ -1,0 +1,247 @@
+{
+ "north_moor": {
+  "kind": "example",
+  "f": 1.0407,
+  "legible": [
+   "T1"
+  ],
+  "degraded": null,
+  "gauge": null,
+  "togglers": [
+   "T5",
+   "T2",
+   "T3"
+  ],
+  "tanks": {
+   "T1": "insulation work",
+   "T2": "sound",
+   "T3": "sound",
+   "T4": "sound",
+   "T5": "sound",
+   "T6": "sound"
+  },
+  "allowance": 1,
+  "states": [
+   "closed",
+   "venting"
+  ]
+ },
+ "east_basin": {
+  "kind": "example",
+  "f": 1.0427,
+  "legible": [
+   "T2",
+   "T1"
+  ],
+  "degraded": null,
+  "gauge": null,
+  "togglers": [
+   "T6",
+   "T2",
+   "T3"
+  ],
+  "tanks": {
+   "T1": "insulation work",
+   "T2": "insulation work",
+   "T3": "sound",
+   "T4": "sound",
+   "T5": "sound",
+   "T6": "sound",
+   "T7": "sound"
+  },
+  "allowance": 2,
+  "states": [
+   "closed",
+   "venting"
+  ]
+ },
+ "west_quarry": {
+  "kind": "pending",
+  "f": 1.0233,
+  "legible": [
+   "T1"
+  ],
+  "degraded": "T3",
+  "gauge": "T7",
+  "togglers": [
+   "T3",
+   "T1",
+   "T5"
+  ],
+  "tanks": {
+   "T1": "insulation work",
+   "T2": "sound",
+   "T3": "vacuum lost x1.74",
+   "T4": "sound",
+   "T5": "sound",
+   "T6": "sound",
+   "T7": "gauge reads x0.881"
+  },
+  "allowance": 2,
+  "states": [
+   "closed"
+  ]
+ },
+ "south_fen": {
+  "kind": "hidden",
+  "f": 1.0148,
+  "legible": [
+   "T2"
+  ],
+  "degraded": "T5",
+  "gauge": "T1",
+  "togglers": [
+   "T5",
+   "T3",
+   "T6"
+  ],
+  "tanks": {
+   "T1": "gauge reads x1.098",
+   "T2": "insulation work",
+   "T3": "sound",
+   "T4": "sound",
+   "T5": "vacuum lost x1.77",
+   "T6": "sound"
+  },
+  "allowance": 2,
+  "states": [
+   "closed"
+  ]
+ },
+ "mill_lane": {
+  "kind": "hidden",
+  "f": 1.0862,
+  "legible": [
+   "T1",
+   "T6"
+  ],
+  "degraded": "T2",
+  "gauge": "T4",
+  "togglers": [
+   "T2",
+   "T1",
+   "T6"
+  ],
+  "tanks": {
+   "T1": "insulation work",
+   "T2": "vacuum lost x1.84",
+   "T3": "sound",
+   "T4": "gauge reads x0.874",
+   "T5": "sound",
+   "T6": "insulation work",
+   "T7": "sound",
+   "T8": "sound"
+  },
+  "allowance": 3,
+  "states": [
+   "closed",
+   "venting"
+  ]
+ },
+ "river_cut": {
+  "kind": "hidden",
+  "f": 1.0832,
+  "legible": [
+   "T5"
+  ],
+  "degraded": "T1",
+  "gauge": null,
+  "togglers": [
+   "T1",
+   "T2",
+   "T4"
+  ],
+  "tanks": {
+   "T1": "vacuum lost x2.06",
+   "T2": "sound",
+   "T3": "sound",
+   "T4": "sound",
+   "T5": "insulation work"
+  },
+  "allowance": 2,
+  "states": [
+   "closed",
+   "venting"
+  ]
+ },
+ "high_wold": {
+  "kind": "hidden",
+  "f": 1.0641,
+  "legible": [
+   "T6"
+  ],
+  "degraded": "T1",
+  "gauge": null,
+  "togglers": [
+   "T1",
+   "T2",
+   "T6"
+  ],
+  "tanks": {
+   "T1": "vacuum lost x2.34",
+   "T2": "sound",
+   "T3": "sound",
+   "T4": "sound",
+   "T5": "sound",
+   "T6": "insulation work",
+   "T7": "sound"
+  },
+  "allowance": 2,
+  "states": [
+   "closed"
+  ]
+ },
+ "kiln_end": {
+  "kind": "hidden",
+  "f": 1.0339,
+  "legible": [
+   "T4",
+   "T5"
+  ],
+  "degraded": null,
+  "gauge": "T2",
+  "togglers": [
+   "T4",
+   "T3",
+   "T5"
+  ],
+  "tanks": {
+   "T1": "sound",
+   "T2": "gauge reads x0.888",
+   "T3": "sound",
+   "T4": "insulation work",
+   "T5": "insulation work",
+   "T6": "sound"
+  },
+  "allowance": 2,
+  "states": [
+   "closed"
+  ]
+ },
+ "salt_marsh": {
+  "kind": "hidden",
+  "f": 1.0673,
+  "legible": [
+   "T4"
+  ],
+  "degraded": null,
+  "gauge": null,
+  "togglers": [
+   "T3",
+   "T4",
+   "T5"
+  ],
+  "tanks": {
+   "T1": "sound",
+   "T2": "sound",
+   "T3": "sound",
+   "T4": "insulation work",
+   "T5": "sound",
+   "T6": "sound"
+  },
+  "allowance": 1,
+  "states": [
+   "closed"
+  ]
+ }
+}

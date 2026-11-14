@@ -1,0 +1,8 @@
+{
+ "site": "river_cut",
+ "tanks": 5,
+ "test_allowance": 2,
+ "holding_start": "2025-11-08",
+ "holding_days": 27,
+ "close_barg": 2.78
+}
