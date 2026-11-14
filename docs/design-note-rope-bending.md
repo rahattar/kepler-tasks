@@ -1,7 +1,10 @@
 # Design note: rope-bending-damage (Nov 13)
 
-**Status: held, not delivered.** Unstated, the conditions met the probe bar (low 0 of 3, xhigh 1 of 3) and fail
-the design gate; stated in RS-4 section 6, low effort solves it 3 of 3. See the end of this note.
+**Status: shipping unstated, under the design gate as corrected at 23:59 Nov 13.** Both conditions are physical
+or a record fault shown wrong by public evidence (a mirrored survey; where the rope goes on thinning), with
+margins far outside the stated accuracy; the rules no evidence settles (damage of the piece of rope, numbering
+from the drum anchorage, d the element's own) are stated. A section 6 that named both conditions, written on the
+uncorrected gate, made it low 3 of 3 and is withdrawn.
 
 A timed program on shifted hidden data, to the Nov 11 ask. Built from bare cores `cores/hoist-rope-v0` and
 `cores/hoist-rope-v1` (their RESULT.md files, and the hoist rope section of `docs/difficulty-calibration.md`).
@@ -51,7 +54,7 @@ stations in numpy, the core's own method, takes 6.9 to 16.1 s; plain loops 85 to
 |---|---|---|
 | first (more revealing) | 0 of 3: two RS-4 as written, one every mirror a turn | 3 of 3 |
 | core v1's wording | not rerun | 1 of 3: one accepted, one every mirror a turn, one missed DS-5 alone |
-| core v1's wording and RS-4 section 6 stating both conditions and their criterion (as committed) | 3 of 3, in 4 to 8 min | not run |
+| core v1's wording and a section 6 naming both conditions (withdrawn) | 3 of 3, in 4 to 8 min | not run |
 
 Every one of the nine probe programs ran in 0.7 to 1.7 s, low effort included: the 4 s limit is met by any run
 that reads it, and it is there because the ask requires it. Brute force, the cores' own method, is what it stops.

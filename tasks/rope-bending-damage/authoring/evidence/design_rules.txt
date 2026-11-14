@@ -16,10 +16,11 @@
 - the day of a turn does not decide: with the turn put at the first or at the last moment of its gap, no station of any turned rope is more than 0.70 of a band out
 - a mirrored survey is plain: across it some station's diameter rises by at least 0.32 mm, against 0.05 mm at most between any two other surveys (the gauge repeats to about 0.02 mm)
 - laid end for end on the survey before, a mirrored survey leaves at most 0.05 of the squared difference it leaves as written; any other survey from the third on leaves at least 2.33 times as much
+- which end a run of surveys was counted from is plain: over the 29 runs of surveys between mirrorings on every rope concerned, the loss of diameter correlates with the bendings of the same days at least 0.88 the right way round and at most 0.59 the other way, and within every run the right way leads by at least 0.36
 - visible: upper block at 12.9 to 26.7 m, ropes of 82 to 224 m with 82 to 224 stations, 4 to 8 falls, greatest damage of a rope 0.086 to 0.212
 - the six works: upper block at 13.3 to 41.5 m, ropes of 74 to 362 m with 74 to 362 stations, 4 to 8 falls, greatest damage of a rope 0.083 to 0.492
 - 11 cranes of the six works have the upper block above every visible crane's, and 8 have a longer rope than any visible one
 - two surveys of a rope are 12.8 to 17.9 days apart
 - no rope was turned within 3.5 days of a survey
 
-23 rules, 23 hold
+24 rules, 24 hold

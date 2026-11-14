@@ -1283,3 +1283,10 @@ both conditions on the pending package.
   physics to see it.
 - **A sensitive output sorts solvers by convergence, not by insight**: low 2 found everything and missed by
   1.46 bands on the cooling rate through 700 C.
+- **Rope-bending ships unstated after all (Nov 14 morning).** The gate was corrected at 23:59; I had read it at
+  23:04 and stated both conditions in a section 6. Under the corrected gate both are identified by public
+  evidence (a mirrored survey rises 0.32 mm against 0.05 mm of noise; the wear after it correlates at least 0.88
+  with the bendings the right way round and at most 0.59 the other, the right way leading by 0.36 in every run),
+  and the rules no evidence settles were already stated. Section 6 withdrawn; low 0 of 3 on the shipping
+  documents, xhigh 1 of 3 (round 2). Re-read the gate's history (`git log -- docs/playbook.md`) before acting
+  on a rule that is less than a day old.

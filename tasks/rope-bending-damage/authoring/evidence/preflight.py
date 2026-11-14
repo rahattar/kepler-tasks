@@ -125,9 +125,17 @@ for phrase in ("python3 %s WORKS_DIR OUT_CSV" % PROGRAM, "exit status has to be 
     rule(phrase in ins, "it says \"%s\", as the bench runs the program" % phrase)
 seen_text = ins + "".join(text_of("environment", "data", "docs", d) for d in sorted(os.listdir(os.path.join(BUNDLE, "environment", "data", "docs"))))
 standard = text_of("environment", "data", "docs", "rs4_rope_bending.md")
-stated = ["turned end for end", "taken from the dead end", "the mirror image", "where the\nrope goes on thinning"]
-rule(all(phrase in standard for phrase in stated),
-     "RS-4 states both conditions that decide hidden works, the turn and the survey from the dead end, and the criterion that tells them apart")
+package = text_of("environment", "data", "docs", "works_package.md")
+rules_stated = [
+    ("every bending it has had since the rope was put on", standard, "damage belongs to the piece of rope"),
+    ("stations numbered along the rope from the drum anchorage", standard.replace("\n", " "), "the result is numbered from the drum anchorage"),
+    ("the diameter of the element as measured at the last survey not later than the movement", standard.replace("\n", " "), "d is the element's own, at the last survey not later than the movement"),
+    ("counted from the drum anchorage from 001", package, "rows of expected.csv are numbered from the drum anchorage"),
+]
+for phrase, where, what in rules_stated:
+    rule(phrase in where, "the rule no evidence settles is stated: %s" % what)
+told = sorted(set(m.group(0).lower() for m in re.finditer(r"end for end|\bturned\b|revers|mirror|\bdead end\b.*survey|survey.*\bdead end\b|other end|\bwrong\b|\berror", seen_text, re.I)))
+rule(not told, "the physical conditions public evidence identifies are not named in any text the agent reads%s" % ("" if not told else ": " + ", ".join(told)))
 
 print("\ntask.toml and the README\n")
 toml = tomllib.loads(text_of("task.toml"))
@@ -244,6 +252,8 @@ for n in names:
 rule(re.search(r"\n45 files compared, 0 differ", texts["regenerate"]) is not None, "regenerate: every shipped data file is what the generator writes")
 m = re.search(r"\n(\d+) rules, (\d+) hold", texts["design_rules"])
 rule(bool(m) and m.group(1) == m.group(2), "design rules: all hold (%s)" % ("/".join(m.groups()) if m else "?"))
+rule("a mirrored survey is plain" in texts["design_rules"] and "which end a run of surveys was counted from is plain" in texts["design_rules"],
+     "design rules: both conditions are identified by public evidence well outside the stated accuracy")
 m = re.search(r"slowest run ([\d.]+) s; the limit of (\d+) s is ([\d.]+) times that", texts["reference_run"])
 rule(bool(m) and int(m.group(2)) == limit and 2.0 <= float(m.group(3)) <= 3.5,
      "the limit is 2 to 3.5 times the reference's slowest run (%s)" % (m.group(3) if m else "?"))

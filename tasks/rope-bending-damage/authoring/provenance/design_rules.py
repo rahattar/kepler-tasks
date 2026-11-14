@@ -163,6 +163,31 @@ def main():
          "laid end for end on the survey before, a mirrored survey leaves at most %.2f of the squared difference it leaves as written; any other survey from the third on leaves at least %.2f times as much"
          % (most_ratio_event, least_ratio_elsewhere))
 
+    # the evidence that tells a turn from a survey taken from the dead end: where the rope goes on thinning
+    right_least, wrong_most, gap_least, runs = 9.0, -9.0, 9.0, 0
+    for spec, c in seen + unseen:
+        if c["what"] == "sound":
+            continue
+        days = drawn[spec["works"]][0]
+        written = [works.as_written(c, k, days[k]) for k in range(len(days))]
+        cuts = [k for k in range(len(days) - 1)
+                if np.sum((written[k + 1] - written[k][::-1]) ** 2) < 0.5 * np.sum((written[k + 1] - written[k]) ** 2)]
+        edges = [0] + [k + 1 for k in cuts] + [len(days)]
+        for a, b in zip(edges[:-1], edges[1:]):
+            first, last = a, b - 1
+            if last <= first:
+                continue
+            from_dead_end = c["first_reversed"] is not None and first >= c["first_reversed"]
+            lost = written[first] - written[last]
+            laid = laid_at_places(c, days[first], days[last])
+            as_is, mirrored = np.corrcoef(lost, laid)[0, 1], np.corrcoef(lost, laid[::-1])[0, 1]
+            right, wrong = (mirrored, as_is) if from_dead_end else (as_is, mirrored)
+            right_least, wrong_most, runs = min(right_least, right), max(wrong_most, wrong), runs + 1
+            gap_least = min(gap_least, right - wrong)
+    rule(right_least >= 0.8 and gap_least >= 0.3,
+         "which end a run of surveys was counted from is plain: over the %d runs of surveys between mirrorings on every rope concerned, the loss of diameter correlates with the bendings of the same days at least %.2f the right way round and at most %.2f the other way, and within every run the right way leads by at least %.2f"
+         % (runs, right_least, wrong_most, gap_least))
+
     for label, group in (("visible", seen), ("the six works", unseen)):
         rule(True, "%s: upper block at %s m, ropes of %s m with %s stations, %s falls, greatest damage of a rope %s"
              % (label, span([c["H"] for _, c in group]), span([c["L"] for _, c in group]),
@@ -182,6 +207,24 @@ def main():
     rule(min(margins) >= 2.3, "no rope was turned within %.1f days of a survey" % min(margins))
     print("\n%d rules, %d hold" % (held + failed, held))
     return 1 if failed else 0
+
+
+def laid_at_places(c, first_day, last_day):
+    """The damage the log lays between two days at the places of the stations along the crane, x from the drum
+    anchorage, on a rope as new: where the bendings fall, whatever piece of rope lies there."""
+    x = c["spacing"] * (0.5 + np.arange(c["damage"].size))
+    day, h_from, h_to, load = c["log"].T
+    chosen = (day >= first_day) & (day < last_day)
+    tension = (load[chosen] + c["block"]) * 1e3 * rope.G / (c["falls"] * c["eff"])
+    low, high = np.minimum(h_from, h_to)[chosen], np.maximum(h_from, h_to)[chosen]
+    out = np.zeros(x.size)
+    for sheave in c["sheaves"]:
+        meets = c["H"] - (c["L"] - sheave["offset"] - x) / sheave["parts"]
+        for s in range(0, low.size, 20000):
+            passed = (low[s:s + 20000, None] < meets[None, :]) & (meets[None, :] <= high[s:s + 20000, None])
+            N = rope.endurance(tension[s:s + 20000, None], sheave["D"], np.full(x.size, c["d"])[None, :], c["construction"])
+            out += sheave["weight"] * (passed / N).sum(0)
+    return out
 
 
 def element_damage(crane_only, c, days, turn_day):

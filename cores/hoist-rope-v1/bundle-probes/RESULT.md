@@ -50,3 +50,14 @@ mirrored), placed the turn within its gap, and counted the bendings by running s
 
 Verdict: unstated, low 0 of 3 and xhigh 1 of 3, but a deciding condition kept out of the words, which the
 quality review rejects; stated, low 3 of 3. Neither meets the bar. The bundle is held in its stated form.
+
+Round 4, Nov 14 morning: the shipping documents (core v1's wording, section 6 withdrawn after reading the
+design gate as corrected at 23:59 Nov 13). Same data, same instruction.
+
+| probe | effort | time | six works |
+|---|---|---|---|
+| low1 | low | 2 min | not accepted, as the surveys as written |
+| low2 | low | 3 min | not accepted, as the surveys as written |
+| low3 | low | 1.5 min | not accepted, as the surveys as written |
+
+The bundle as it ships: low 0 of 3 (round 4), xhigh 1 of 3 (round 2).
