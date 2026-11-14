@@ -1339,3 +1339,10 @@ accepted, and all three found both conditions in 10 to 27 minutes; the two misse
   the package handed it a measurement of something the model computes. A residual holds when it comes from a
   law applied to inputs the method consumes (ventilation: conservation on the campaigns that give the
   resistances), not from the method's output set beside a record.
+## Two more pre-mortems: a storage tank (not built) and a borefield (promising) (Nov 14)
+
+`cores/tank-storage-premortem`, `cores/borefield-premortem`. The tank fails the rule of the piping pre-mortem:
+a blocked diffuser shows as a 0.36 K residual (12 times noise) that one constant of the mixing law takes up.
+The borefield passes it: groundwater is invisible in a 72-hour test, small in five years of a 4x4 field
+(0.38 K), and 5.8 K on the 20-year minimum of an 8x8 extension. A heat meter set for water on glycol is taken
+up by a conductivity refit to noise yet leaves that forecast 1.4 K out. Each wrong route fails differently.
